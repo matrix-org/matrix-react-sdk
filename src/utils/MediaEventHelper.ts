@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, EventType, MsgType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { LazyValue } from "./LazyValue";
 import { Media, mediaFromContent } from "../customisations/Media";
 import { decryptFile } from "./DecryptFile";
-import { IMediaEventContent } from "../customisations/models/IMediaEventContent";
+import { FileContent, ImageContent, IMediaEventContent } from "../customisations/models/IMediaEventContent";
 import { IDestroyable } from "./IDestroyable";
 
 // TODO: We should consider caching the blobs. https://github.com/vector-im/element-web/issues/17192
@@ -48,7 +47,7 @@ export class MediaEventHelper implements IDestroyable {
 
     public get fileName(): string {
         return (
-            this.event.getContent<IMediaEventContent>().filename ||
+            this.event.getContent<FileContent>().filename ||
             this.event.getContent<IMediaEventContent>().body ||
             "download"
         );
@@ -92,7 +91,7 @@ export class MediaEventHelper implements IDestroyable {
         if (!this.media.hasThumbnail) return Promise.resolve(null);
 
         if (this.media.isEncrypted) {
-            const content = this.event.getContent<IMediaEventContent>();
+            const content = this.event.getContent<ImageContent>();
             if (content.info?.thumbnail_file) {
                 return decryptFile(content.info.thumbnail_file, content.info.thumbnail_info);
             } else {

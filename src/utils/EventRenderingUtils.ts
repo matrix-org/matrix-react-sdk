@@ -14,11 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
-import { M_POLL_END, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
-import { IContent, MatrixClient } from "matrix-js-sdk/src/matrix";
+import {
+    MatrixEvent,
+    IContent,
+    MatrixClient,
+    EventType,
+    MsgType,
+    M_POLL_END,
+    M_POLL_START,
+    M_BEACON_INFO,
+} from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "../settings/SettingsStore";
 import { haveRendererForEvent, JitsiEventFactory, JSONEventFactory, pickFactory } from "../events/EventTileFactory";
@@ -101,7 +106,7 @@ export function getEventDisplayInfo(
     // source tile when there's no regular tile for an event and also for
     // replace relations (which otherwise would display as a confusing
     // duplicate of the thing they are replacing).
-    if (hideEvent || !haveRendererForEvent(mxEvent, showHiddenEvents)) {
+    if (hideEvent || !haveRendererForEvent(mxEvent, matrixClient, showHiddenEvents)) {
         // forcefully ask for a factory for a hidden event (hidden event setting is checked internally)
         factory = pickFactory(mxEvent, matrixClient, showHiddenEvents, true);
         if (factory === JSONEventFactory) {

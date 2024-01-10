@@ -51,7 +51,7 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({ beacon, 
         <BeaconStatus
             beacon={beacon}
             displayStatus={ownDisplayStatus}
-            label={_t("Live location enabled")}
+            label={_t("location_sharing|live_location_enabled")}
             displayLiveTimeRemaining
             {...rest}
         >
@@ -65,7 +65,7 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({ beacon, 
                     className="mx_OwnBeaconStatus_button mx_OwnBeaconStatus_destructiveButton"
                     disabled={stoppingInProgress}
                 >
-                    {_t("Stop")}
+                    {_t("action|stop")}
                 </AccessibleButton>
             )}
             {hasLocationPublishError && (
@@ -77,7 +77,7 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({ beacon, 
                     onClick={preventDefaultWrapper(onResetLocationPublishError)}
                     className="mx_OwnBeaconStatus_button mx_OwnBeaconStatus_destructiveButton"
                 >
-                    {_t("Retry")}
+                    {_t("action|retry")}
                 </AccessibleButton>
             )}
             {hasStopSharingError && (
@@ -89,7 +89,7 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({ beacon, 
                     onClick={preventDefaultWrapper(onStopSharing)}
                     className="mx_OwnBeaconStatus_button mx_OwnBeaconStatus_destructiveButton"
                 >
-                    {_t("Retry")}
+                    {_t("action|retry")}
                 </AccessibleButton>
             )}
         </BeaconStatus>

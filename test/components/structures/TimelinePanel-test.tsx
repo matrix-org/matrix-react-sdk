@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import { render, waitFor, screen } from "@testing-library/react";
-import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import {
+    ReceiptType,
     EventTimelineSet,
     EventType,
     MatrixClient,
@@ -28,15 +28,13 @@ import {
     RoomMember,
     RoomState,
     TimelineWindow,
-} from "matrix-js-sdk/src/matrix";
-import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
-import {
+    EventTimeline,
     FeatureSupport,
     Thread,
     THREAD_RELATION_TYPE,
     ThreadEvent,
     ThreadFilterType,
-} from "matrix-js-sdk/src/models/thread";
+} from "matrix-js-sdk/src/matrix";
 import React, { createRef } from "react";
 import { Mocked, mocked } from "jest-mock";
 import { forEachRight } from "lodash";
@@ -70,7 +68,7 @@ const mkTimeline = (room: Room, events: MatrixEvent[]): [EventTimeline, EventTim
         room: room as Room,
         getLiveTimeline: () => timeline,
         getTimelineForEvent: () => timeline,
-        getPendingEvents: () => [],
+        getPendingEvents: () => [] as MatrixEvent[],
     } as unknown as EventTimelineSet;
     const timeline = new EventTimeline(timelineSet);
     events.forEach((event) => timeline.addEvent(event, { toStartOfTimeline: false }));
@@ -91,15 +89,16 @@ const getProps = (room: Room, events: MatrixEvent[]): TimelinePanel["props"] => 
 const mockEvents = (room: Room, count = 2): MatrixEvent[] => {
     const events: MatrixEvent[] = [];
     for (let index = 0; index < count; index++) {
-        events.push(
-            new MatrixEvent({
-                room_id: room.roomId,
-                event_id: `${room.roomId}_event_${index}`,
-                type: EventType.RoomMessage,
-                sender: "userId",
-                content: createMessageEventContent("`Event${index}`"),
-            }),
-        );
+        const event = new MatrixEvent({
+            room_id: room.roomId,
+            event_id: `${room.roomId}_event_${index}`,
+            type: EventType.RoomMessage,
+            sender: "userId",
+            content: createMessageEventContent("`Event${index}`"),
+            origin_server_ts: index,
+        });
+        event.localTimestamp = index;
+        events.push(event);
     }
 
     return events;
@@ -292,6 +291,10 @@ describe("TimelinePanel", () => {
 
                     it("and forgetting the read markers, should send the stored marker again", async () => {
                         timelineSet.addLiveEvent(ev2, {});
+                        // Add the event to the room as well as the timeline, so we can find it when we
+                        // call findEventById in getEventReadUpTo. This is odd because in our test
+                        // setup, timelineSet is not actually the timelineSet of the room.
+                        await room.addLiveEvents([ev2], {});
                         room.addEphemeralEvents([newReceipt(ev2.getId()!, userId, 222, 200)]);
                         await timelinePanel.forgetReadMarker();
                         expect(client.setRoomReadMarkers).toHaveBeenCalledWith(roomId, ev2.getId());
@@ -449,7 +452,7 @@ describe("TimelinePanel", () => {
 
             render(<TimelinePanel {...props} />);
 
-            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: otherTimeline, liveEvent: true };
             client.emit(RoomEvent.Timeline, event, room, false, false, data);
 
@@ -465,7 +468,7 @@ describe("TimelinePanel", () => {
 
             render(<TimelinePanel {...props} />);
 
-            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: false };
             client.emit(RoomEvent.Timeline, event, room, false, false, data);
 
@@ -481,7 +484,7 @@ describe("TimelinePanel", () => {
 
             render(<TimelinePanel {...props} />);
 
-            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: false };
             const toStartOfTimeline = true;
             client.emit(RoomEvent.Timeline, event, room, toStartOfTimeline, false, data);
@@ -498,7 +501,7 @@ describe("TimelinePanel", () => {
 
             render(<TimelinePanel {...props} />);
 
-            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: true };
             client.emit(RoomEvent.Timeline, event, room, false, false, data);
 
@@ -523,7 +526,7 @@ describe("TimelinePanel", () => {
 
             await flushPromises();
 
-            const event = new MatrixEvent({ type: RoomEvent.Timeline });
+            const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: true };
             client.emit(RoomEvent.Timeline, event, room, false, false, data);
 
@@ -541,12 +544,16 @@ describe("TimelinePanel", () => {
                 type: "m.call.invite",
                 room_id: virtualRoom.roomId,
                 event_id: `virtualCallEvent1`,
+                origin_server_ts: 0,
             });
+            virtualCallInvite.localTimestamp = 2;
             const virtualCallMetaEvent = new MatrixEvent({
                 type: "org.matrix.call.sdp_stream_metadata_changed",
                 room_id: virtualRoom.roomId,
                 event_id: `virtualCallEvent2`,
+                origin_server_ts: 0,
             });
+            virtualCallMetaEvent.localTimestamp = 2;
             const virtualEvents = [virtualCallInvite, ...mockEvents(virtualRoom), virtualCallMetaEvent];
             const { timelineSet: overlayTimelineSet } = getProps(virtualRoom, virtualEvents);
 
@@ -557,7 +564,6 @@ describe("TimelinePanel", () => {
                     overlayTimelineSetFilter={isCallEvent}
                 />,
             );
-
             await waitFor(() =>
                 expectEvents(container, [
                     // main timeline events are included
@@ -821,6 +827,7 @@ describe("TimelinePanel", () => {
                 type: EventType.RoomMessage,
                 sender: "userId",
                 content: createMessageEventContent("ReplyEvent1"),
+                origin_server_ts: 0,
             });
 
             reply2 = new MatrixEvent({
@@ -829,6 +836,7 @@ describe("TimelinePanel", () => {
                 type: EventType.RoomMessage,
                 sender: "userId",
                 content: createMessageEventContent("ReplyEvent2"),
+                origin_server_ts: 0,
             });
 
             root = new MatrixEvent({
@@ -837,6 +845,7 @@ describe("TimelinePanel", () => {
                 type: EventType.RoomMessage,
                 sender: "userId",
                 content: createMessageEventContent("RootEvent"),
+                origin_server_ts: 0,
             });
 
             const eventMap: { [key: string]: MatrixEvent } = {
@@ -851,22 +860,22 @@ describe("TimelinePanel", () => {
         });
 
         it("updates thread previews", async () => {
-            root.setUnsigned({
-                "m.relations": {
-                    [THREAD_RELATION_TYPE.name]: {
-                        latest_event: reply1.event,
-                        count: 1,
-                        current_user_participated: true,
-                    },
-                },
-            });
+            mocked(client.supportsThreads).mockReturnValue(true);
+            reply1.getContent()["m.relates_to"] = {
+                rel_type: RelationType.Thread,
+                event_id: root.getId(),
+            };
+            reply2.getContent()["m.relates_to"] = {
+                rel_type: RelationType.Thread,
+                event_id: root.getId(),
+            };
 
             const thread = room.createThread(root.getId()!, root, [], true);
             // So that we do not have to mock the thread loading
             thread.initialEventsFetched = true;
             // @ts-ignore
             thread.fetchEditsWhereNeeded = () => Promise.resolve();
-            await thread.addEvent(reply1, true);
+            await thread.addEvent(reply1, false, true);
             await allThreads.getLiveTimeline().addEvent(thread.rootEvent!, { toStartOfTimeline: true });
             const replyToEvent = jest.spyOn(thread, "replyToEvent", "get");
 
@@ -878,16 +887,6 @@ describe("TimelinePanel", () => {
             await dom.findByText("RootEvent");
             await dom.findByText("ReplyEvent1");
             expect(replyToEvent).toHaveBeenCalled();
-
-            root.setUnsigned({
-                "m.relations": {
-                    [THREAD_RELATION_TYPE.name]: {
-                        latest_event: reply2.event,
-                        count: 2,
-                        current_user_participated: true,
-                    },
-                },
-            });
 
             replyToEvent.mockClear();
             await thread.addEvent(reply2, false, true);

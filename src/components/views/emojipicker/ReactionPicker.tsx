@@ -16,9 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Relations, RelationsEvent } from "matrix-js-sdk/src/models/relations";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, EventType, RelationType, Relations, RelationsEvent } from "matrix-js-sdk/src/matrix";
 
 import EmojiPicker from "./EmojiPicker";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";

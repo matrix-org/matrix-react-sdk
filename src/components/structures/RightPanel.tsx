@@ -16,10 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomState, RoomStateEvent, RoomMember, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { throttle } from "lodash";
 
 import dis from "../../dispatcher/dispatcher";
@@ -60,6 +57,7 @@ interface RoomlessProps extends BaseProps {
 interface RoomProps extends BaseProps {
     room: Room;
     permalinkCreator: RoomPermalinkCreator;
+    onSearchClick?: () => void;
 }
 
 type Props = XOR<RoomlessProps, RoomProps>;
@@ -215,7 +213,9 @@ export default class RightPanel extends React.Component<Props, IState> {
             case RightPanelPhases.Room3pidMemberInfo:
             case RightPanelPhases.Space3pidMemberInfo:
                 if (!!cardState?.memberInfoEvent) {
-                    card = <ThirdPartyMemberInfo event={cardState.memberInfoEvent} key={roomId} />;
+                    card = (
+                        <ThirdPartyMemberInfo event={cardState.memberInfoEvent} key={roomId} onClose={this.onClose} />
+                    );
                 }
                 break;
 
@@ -296,6 +296,7 @@ export default class RightPanel extends React.Component<Props, IState> {
                             onClose={this.onClose}
                             // whenever RightPanel is passed a room it is passed a permalinkcreator
                             permalinkCreator={this.props.permalinkCreator!}
+                            onSearchClick={this.props.onSearchClick}
                         />
                     );
                 }
@@ -309,7 +310,7 @@ export default class RightPanel extends React.Component<Props, IState> {
         }
 
         return (
-            <aside className="mx_RightPanel dark-panel" id="mx_RightPanel">
+            <aside className="mx_RightPanel" id="mx_RightPanel">
                 {card}
             </aside>
         );

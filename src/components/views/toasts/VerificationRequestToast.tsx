@@ -20,8 +20,8 @@ import {
     VerificationRequest,
     VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto-api";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { logger } from "matrix-js-sdk/src/logger";
+import { Device } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -35,6 +35,7 @@ import { Action } from "../../../dispatcher/actions";
 import VerificationRequestDialog from "../dialogs/VerificationRequestDialog";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { getDeviceCryptoInfo } from "../../../utils/crypto/deviceInfo";
 
 interface IProps {
     toastKey: string;
@@ -44,7 +45,7 @@ interface IProps {
 interface IState {
     /** number of seconds left in the timeout counter. Zero if there is no timeout. */
     counter: number;
-    device?: DeviceInfo;
+    device?: Device;
     ip?: string;
 }
 
@@ -74,15 +75,13 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         // a toast hanging around after logging in if you did a verification as part of login).
         this.checkRequestIsPending();
 
-        if (request.isSelfVerification) {
-            const cli = MatrixClientPeg.get();
-            const device = request.otherDeviceId ? await cli.getDevice(request.otherDeviceId) : null;
-            const ip = device?.last_seen_ip;
+        const otherDeviceId = request.otherDeviceId;
+        if (request.isSelfVerification && !!otherDeviceId) {
+            const cli = MatrixClientPeg.safeGet();
+            const device = await cli.getDevice(otherDeviceId);
             this.setState({
-                device:
-                    (request.otherDeviceId && cli.getStoredDevice(cli.getSafeUserId(), request.otherDeviceId)) ||
-                    undefined,
-                ip,
+                ip: device.last_seen_ip,
+                device: await getDeviceCryptoInfo(cli, cli.getSafeUserId(), otherDeviceId),
             });
         }
     }
@@ -113,7 +112,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         ToastStore.sharedInstance().dismissToast(this.props.toastKey);
         const { request } = this.props;
         // no room id for to_device requests
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         try {
             if (request.roomId) {
                 dis.dispatch<ViewRoomPayload>({
@@ -148,7 +147,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
             }
             await request.accept();
         } catch (err) {
-            logger.error(err.message);
+            logger.error("Failed to accept verification request", err);
         }
     };
 
@@ -158,33 +157,35 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         let detail;
         if (request.isSelfVerification) {
             if (this.state.device) {
-                description = this.state.device.getDisplayName();
-                detail = _t("%(deviceId)s from %(ip)s", {
+                description = this.state.device.displayName;
+                detail = _t("encryption|verification|request_toast_detail", {
                     deviceId: this.state.device.deviceId,
                     ip: this.state.ip,
                 });
             }
         } else {
+            const client = MatrixClientPeg.safeGet();
             const userId = request.otherUserId;
             const roomId = request.roomId;
-            description = roomId ? userLabelForEventRoom(MatrixClientPeg.get(), userId, roomId) : userId;
+            description = roomId ? userLabelForEventRoom(client, userId, roomId) : userId;
             // for legacy to_device verification requests
             if (description === userId) {
-                const client = MatrixClientPeg.get();
                 const user = client.getUser(userId);
                 if (user && user.displayName) {
-                    description = _t("%(name)s (%(userId)s)", { name: user.displayName, userId });
+                    description = _t("name_and_id", { name: user.displayName, userId });
                 }
             }
         }
         const declineLabel =
-            this.state.counter === 0 ? _t("Ignore") : _t("Ignore (%(counter)s)", { counter: this.state.counter });
+            this.state.counter === 0
+                ? _t("action|ignore")
+                : _t("encryption|verification|request_toast_decline_counter", { counter: this.state.counter });
 
         return (
             <GenericToast
                 description={description}
                 detail={detail}
-                acceptLabel={_t("Verify Session")}
+                acceptLabel={_t("encryption|verification|request_toast_accept")}
                 onAccept={this.accept}
                 rejectLabel={declineLabel}
                 onReject={this.cancel}

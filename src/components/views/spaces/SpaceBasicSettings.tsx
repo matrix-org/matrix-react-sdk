@@ -67,22 +67,26 @@ export const SpaceAvatar: React.FC<Pick<IProps, "avatarUrl" | "avatarDisabled" |
                         }}
                         kind="link"
                         className="mx_SpaceBasicSettings_avatar_remove"
-                        aria-label={_t("Delete avatar")}
+                        aria-label={_t("room_settings|delete_avatar_label")}
                     >
-                        {_t("Delete")}
+                        {_t("action|delete")}
                     </AccessibleButton>
                 </React.Fragment>
             );
         } else {
             avatarSection = (
                 <React.Fragment>
-                    <div className="mx_SpaceBasicSettings_avatar" onClick={() => avatarUploadRef.current?.click()} />
+                    <AccessibleButton
+                        className="mx_SpaceBasicSettings_avatar"
+                        onClick={() => avatarUploadRef.current?.click()}
+                        alt=""
+                    />
                     <AccessibleButton
                         onClick={() => avatarUploadRef.current?.click()}
                         kind="link"
-                        aria-label={_t("Upload avatar")}
+                        aria-label={_t("room_settings|upload_avatar_label")}
                     >
-                        {_t("Upload")}
+                        {_t("action|upload")}
                     </AccessibleButton>
                 </React.Fragment>
             );
@@ -129,7 +133,7 @@ const SpaceBasicSettings: React.FC<IProps> = ({
 
             <Field
                 name="spaceName"
-                label={_t("Name")}
+                label={_t("common|name")}
                 autoFocus={true}
                 value={name}
                 onChange={(ev: ChangeEvent<HTMLInputElement>) => setName(ev.target.value)}
@@ -139,7 +143,7 @@ const SpaceBasicSettings: React.FC<IProps> = ({
             <Field
                 name="spaceTopic"
                 element="textarea"
-                label={_t("Description")}
+                label={_t("common|description")}
                 value={topic}
                 onChange={(ev: ChangeEvent<HTMLTextAreaElement>) => setTopic(ev.target.value)}
                 rows={3}

@@ -58,8 +58,8 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
     public render(): React.ReactNode {
         const emptyState = (
             <div className="mx_RightPanel_empty mx_NotificationPanel_empty">
-                <h2>{_t("You're all caught up")}</h2>
-                <p>{_t("You have no visible notifications.")}</p>
+                <h2>{_t("notif_panel|empty_heading")}</h2>
+                <p>{_t("notif_panel|empty_description")}</p>
             </div>
         );
 
@@ -94,8 +94,8 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
                 <BaseCard
                     header={
                         <div className="mx_BaseCard_header_title">
-                            <Heading size="h4" className="mx_BaseCard_header_title_heading">
-                                {_t("Notifications")}
+                            <Heading size="4" className="mx_BaseCard_header_title_heading">
+                                {_t("notifications|enable_prompt_toast_title")}
                             </Heading>
                         </div>
                     }

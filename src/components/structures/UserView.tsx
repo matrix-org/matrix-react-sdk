@@ -16,9 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, RoomMember, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import Modal from "../../Modal";
 import { _t } from "../../languageHandler";
@@ -74,8 +72,8 @@ export default class UserView extends React.Component<IProps, IState> {
             profileInfo = await this.context.getProfileInfo(this.props.userId);
         } catch (err) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Could not load user profile"),
-                description: err && err.message ? err.message : _t("Operation failed"),
+                title: _t("error_dialog|error_loading_user_profile"),
+                description: err instanceof Error ? err.message : _t("invite|failed_generic"),
             });
             this.setState({ loading: false });
             return;

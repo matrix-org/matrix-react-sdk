@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FC, ReactNode, useState, useContext, useEffect, useMemo, useRef, useCallback } from "react";
+import React, { FC, ReactNode, useState, useContext, useEffect, useMemo, useRef, useCallback, AriaRole } from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 
-import type { Room } from "matrix-js-sdk/src/models/room";
+import type { Room } from "matrix-js-sdk/src/matrix";
 import type { ConnectionState } from "../../../models/Call";
 import { Call, CallEvent, ElementCall, isConnected } from "../../../models/Call";
 import {
@@ -32,7 +32,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AppTile from "../elements/AppTile";
 import { _t } from "../../../languageHandler";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
-import MediaDeviceHandler from "../../../MediaDeviceHandler";
+import MediaDeviceHandler, { IMediaDevices } from "../../../MediaDeviceHandler";
 import { CallStore } from "../../../stores/CallStore";
 import IconizedContextMenu, {
     IconizedContextMenuOption,
@@ -101,7 +101,7 @@ const DeviceButton: FC<DeviceButtonProps> = ({
         >
             <AccessibleTooltipButton
                 className={`mx_CallView_deviceButton mx_CallView_deviceButton_${kind}`}
-                inputRef={buttonRef}
+                ref={buttonRef}
                 title={muted ? mutedTitle : unmutedTitle}
                 alignment={Alignment.Top}
                 onClick={toggle}
@@ -149,14 +149,32 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
         setVideoMuted(!videoMuted);
     }, [videoMuted, setVideoMuted]);
 
+    // In case we can not fetch media devices we should mute the devices
+    const handleMediaDeviceFailing = (message: string): void => {
+        MediaDeviceHandler.startWithAudioMuted = true;
+        MediaDeviceHandler.startWithVideoMuted = true;
+        logger.warn(message);
+    };
+
     const [videoStream, audioInputs, videoInputs] = useAsyncMemo(
         async (): Promise<[MediaStream | null, MediaDeviceInfo[], MediaDeviceInfo[]]> => {
-            let devices = await MediaDeviceHandler.getDevices();
+            let devices: IMediaDevices | undefined;
+            try {
+                devices = await MediaDeviceHandler.getDevices();
+                if (devices === undefined) {
+                    handleMediaDeviceFailing("Could not access devices!");
+                    return [null, [], []];
+                }
+            } catch (error) {
+                handleMediaDeviceFailing(`Unable to get Media Devices: ${error}`);
+                return [null, [], []];
+            }
 
             // We get the preview stream before requesting devices: this is because
             // we need (in some browsers) an active media stream in order to get
             // non-blank labels for the devices.
             let stream: MediaStream | null = null;
+
             try {
                 if (devices!.audioinput.length > 0) {
                     // Holding just an audio stream will be enough to get us all device labels, so
@@ -170,7 +188,8 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
                     stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: videoInputId } });
                 }
             } catch (e) {
-                logger.error(`Failed to get stream for device ${videoInputId}`, e);
+                logger.warn(`Failed to get stream for device ${videoInputId}`, e);
+                handleMediaDeviceFailing(`Have access to Device list but unable to read from Media Devices`);
             }
 
             // Refresh the devices now that we hold a stream
@@ -227,7 +246,7 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
         <div className="mx_CallView_lobby">
             {children}
             <div className="mx_CallView_preview">
-                <MemberAvatar key={me.userId} member={me} width={200} height={200} resizeMethod="scale" />
+                <MemberAvatar key={me.userId} member={me} size="200px" resizeMethod="scale" />
                 <video
                     ref={videoRef}
                     style={{ visibility: videoMuted ? "hidden" : undefined }}
@@ -240,23 +259,23 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
                         kind="audio"
                         devices={audioInputs}
                         setDevice={setAudioInput}
-                        deviceListLabel={_t("Audio devices")}
+                        deviceListLabel={_t("voip|audio_devices")}
                         muted={audioMuted}
                         disabled={connecting}
                         toggle={toggleAudio}
-                        unmutedTitle={_t("Mute microphone")}
-                        mutedTitle={_t("Unmute microphone")}
+                        unmutedTitle={_t("voip|disable_microphone")}
+                        mutedTitle={_t("voip|enable_microphone")}
                     />
                     <DeviceButton
                         kind="video"
                         devices={videoInputs}
                         setDevice={setVideoInput}
-                        deviceListLabel={_t("Video devices")}
+                        deviceListLabel={_t("voip|video_devices")}
                         muted={videoMuted}
                         disabled={connecting}
                         toggle={toggleVideo}
-                        unmutedTitle={_t("Turn off camera")}
-                        mutedTitle={_t("Turn on camera")}
+                        unmutedTitle={_t("voip|disable_camera")}
+                        mutedTitle={_t("voip|enable_camera")}
                     />
                 </div>
             </div>
@@ -265,8 +284,8 @@ export const Lobby: FC<LobbyProps> = ({ room, joinCallButtonDisabledTooltip, con
                 kind="primary"
                 disabled={connecting || joinCallButtonDisabledTooltip !== undefined}
                 onClick={onConnectClick}
-                label={_t("Join")}
-                tooltip={connecting ? _t("Connecting") : joinCallButtonDisabledTooltip}
+                label={_t("action|join")}
+                tooltip={connecting ? _t("voip|connecting") : joinCallButtonDisabledTooltip}
                 alignment={Alignment.Bottom}
             />
         </div>
@@ -278,9 +297,10 @@ interface StartCallViewProps {
     resizing: boolean;
     call: Call | null;
     setStartingCall: (value: boolean) => void;
+    role?: AriaRole;
 }
 
-const StartCallView: FC<StartCallViewProps> = ({ room, resizing, call, setStartingCall }) => {
+const StartCallView: FC<StartCallViewProps> = ({ room, resizing, call, setStartingCall, role }) => {
     const cli = useContext(MatrixClientContext);
 
     // Since connection has to be split across two different callbacks, we
@@ -329,7 +349,7 @@ const StartCallView: FC<StartCallViewProps> = ({ room, resizing, call, setStarti
     }, [call, connectDeferred]);
 
     return (
-        <div className="mx_CallView">
+        <div className="mx_CallView" role={role}>
             {connected ? null : <Lobby room={room} connect={connect} />}
             {call !== null && (
                 <AppTile
@@ -350,9 +370,10 @@ interface JoinCallViewProps {
     room: Room;
     resizing: boolean;
     call: Call;
+    role?: AriaRole;
 }
 
-const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
+const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, role }) => {
     const cli = useContext(MatrixClientContext);
     const connected = isConnected(useConnectionState(call));
     const members = useParticipatingMembers(call);
@@ -378,8 +399,8 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
 
             facePile = (
                 <div className="mx_CallView_participants">
-                    {_t("%(count)s people joined", { count: members.length })}
-                    <FacePile members={shownMembers} faceSize={24} overflow={overflow} />
+                    {_t("voip|n_people_joined", { count: members.length })}
+                    <FacePile members={shownMembers} size="24px" overflow={overflow} />
                 </div>
             );
         }
@@ -396,7 +417,7 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call }) => {
     }
 
     return (
-        <div className="mx_CallView">
+        <div className="mx_CallView" role={role}>
             {lobby}
             {/* We render the widget even if we're disconnected, so it stays loaded */}
             <AppTile
@@ -420,16 +441,19 @@ interface CallViewProps {
      * button will create a call if there isn't already one.
      */
     waitForCall: boolean;
+    role?: AriaRole;
 }
 
-export const CallView: FC<CallViewProps> = ({ room, resizing, waitForCall }) => {
+export const CallView: FC<CallViewProps> = ({ room, resizing, waitForCall, role }) => {
     const call = useCall(room.roomId);
     const [startingCall, setStartingCall] = useState(false);
 
     if (call === null || startingCall) {
         if (waitForCall) return null;
-        return <StartCallView room={room} resizing={resizing} call={call} setStartingCall={setStartingCall} />;
+        return (
+            <StartCallView room={room} resizing={resizing} call={call} setStartingCall={setStartingCall} role={role} />
+        );
     } else {
-        return <JoinCallView room={room} resizing={resizing} call={call} />;
+        return <JoinCallView room={room} resizing={resizing} call={call} role={role} />;
     }
 };

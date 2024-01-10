@@ -63,12 +63,12 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
         if (currentManager) {
             managerName = `(${currentManager.name})`;
             bodyText = _t(
-                "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, " + "and sticker packs.",
+                "integration_manager|use_im_default",
                 { serverName: currentManager.name },
                 { b: (sub) => <b>{sub}</b> },
             );
         } else {
-            bodyText = _t("Use an integration manager to manage bots, widgets, and sticker packs.");
+            bodyText = _t("integration_manager|use_im");
         }
 
         return (
@@ -79,8 +79,8 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
             >
                 <div className="mx_SettingsFlag">
                     <div className="mx_SetIntegrationManager_heading_manager">
-                        <Heading size="h2">{_t("Manage integrations")}</Heading>
-                        <Heading size="h3">{managerName}</Heading>
+                        <Heading size="2">{_t("integration_manager|manage_title")}</Heading>
+                        <Heading size="3">{managerName}</Heading>
                     </div>
                     <ToggleSwitch
                         id="toggle_integration"
@@ -90,12 +90,7 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
                     />
                 </div>
                 <SettingsSubsectionText>{bodyText}</SettingsSubsectionText>
-                <SettingsSubsectionText>
-                    {_t(
-                        "Integration managers receive configuration data, and can modify widgets, " +
-                            "send room invites, and set power levels on your behalf.",
-                    )}
-                </SettingsSubsectionText>
+                <SettingsSubsectionText>{_t("integration_manager|explainer")}</SettingsSubsectionText>
             </label>
         );
     }

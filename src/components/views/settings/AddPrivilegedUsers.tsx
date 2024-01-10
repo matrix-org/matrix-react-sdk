@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { FormEvent, useCallback, useContext, useRef, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { Room, EventType } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { ICompletion } from "../../../autocomplete/Autocompleter";
@@ -55,8 +54,8 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
         // `RoomPowerLevels` event should exist, but technically it is not guaranteed.
         if (powerLevelEvent === null) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error"),
-                description: _t("Failed to change power level"),
+                title: _t("common|error"),
+                description: _t("error|update_power_level"),
             });
 
             return;
@@ -68,8 +67,8 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
             setPowerLevel(defaultUserLevel);
         } catch (error) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error"),
-                description: _t("Failed to change power level"),
+                title: _t("common|error"),
+                description: _t("error|update_power_level"),
             });
         } finally {
             setIsLoading(false);
@@ -79,13 +78,13 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
     return (
         <form style={{ display: "flex" }} onSubmit={onSubmit}>
             <SettingsFieldset
-                legend={_t("Add privileged users")}
-                description={_t("Give one or multiple users in this room more privileges")}
+                legend={_t("room_settings|permissions|add_privileged_user_heading")}
+                description={_t("room_settings|permissions|add_privileged_user_description")}
                 style={{ flexGrow: 1 }}
             >
                 <AutocompleteInput
                     provider={userProvider.current}
-                    placeholder={_t("Search users in this room…")}
+                    placeholder={_t("room_settings|permissions|add_privileged_user_filter_placeholder")}
                     onSelectionChange={setSelectedUsers}
                     selection={selectedUsers}
                     additionalFilter={hasLowerOrEqualLevelThanDefaultLevelFilter}
@@ -99,7 +98,7 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
                     onClick={null}
                     data-testid="add-privileged-users-submit-button"
                 >
-                    {_t("Apply")}
+                    {_t("action|apply")}
                 </AccessibleButton>
             </SettingsFieldset>
         </form>

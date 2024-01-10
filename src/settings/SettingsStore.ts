@@ -35,9 +35,6 @@ import SettingsHandler from "./handlers/SettingsHandler";
 import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
 import { Action } from "../dispatcher/actions";
 import PlatformSettingsHandler from "./handlers/PlatformSettingsHandler";
-import dispatcher from "../dispatcher/dispatcher";
-import { ActionPayload } from "../dispatcher/payloads";
-import { MatrixClientPeg } from "../MatrixClientPeg";
 
 // Convert the settings to easier to manage objects for the handlers
 const defaultSettings: Record<string, any> = {};
@@ -272,7 +269,7 @@ export default class SettingsStore {
             else displayName = displayName["default"];
         }
 
-        return _t(displayName as string);
+        return displayName ? _t(displayName) : null;
     }
 
     /**
@@ -606,36 +603,7 @@ export default class SettingsStore {
     public static runMigrations(): void {
         // Dev notes: to add your migration, just add a new `migrateMyFeature` function, call it, and
         // add a comment to note when it can be removed.
-
-        SettingsStore.migrateHiddenReadReceipts(); // Can be removed after October 2022.
-    }
-
-    private static migrateHiddenReadReceipts(): void {
-        if (MatrixClientPeg.get().isGuest()) return; // not worth it
-
-        // We wait for the first sync to ensure that the user's existing account data has loaded, as otherwise
-        // getValue() for an account-level setting like sendReadReceipts will return `null`.
-        const disRef = dispatcher.register((payload: ActionPayload) => {
-            if (payload.action === "MatrixActions.sync") {
-                dispatcher.unregister(disRef);
-
-                const rrVal = SettingsStore.getValue("sendReadReceipts", null, true);
-                if (typeof rrVal !== "boolean") {
-                    // new setting isn't set - see if the labs flag was. We have to manually reach into the
-                    // handler for this because it isn't a setting anymore (`getValue` will yell at us).
-                    const handler = LEVEL_HANDLERS[SettingLevel.DEVICE] as DeviceSettingsHandler;
-                    const labsVal = handler.readFeature("feature_hidden_read_receipts");
-                    if (typeof labsVal === "boolean") {
-                        // Inverse of labs flag because negative->positive language switch in setting name
-                        const newVal = !labsVal;
-                        console.log(`Setting sendReadReceipts to ${newVal} because of previously-set labs flag`);
-
-                        // noinspection JSIgnoredPromiseFromCall
-                        SettingsStore.setValue("sendReadReceipts", null, SettingLevel.ACCOUNT, newVal);
-                    }
-                }
-            }
-        });
+        return;
     }
 
     /**
@@ -666,7 +634,9 @@ export default class SettingsStore {
                     logger.log(`---     ${handlerName}@${roomId || "<no_room>"} = ${JSON.stringify(value)}`);
                 } catch (e) {
                     logger.log(
-                        `---     ${handler.constructor.name}@${roomId || "<no_room>"} THREW ERROR: ${e.message}`,
+                        `---     ${handler.constructor.name}@${roomId || "<no_room>"} THREW ERROR: ${
+                            e instanceof Error ? e.message : e
+                        }`,
                     );
                     logger.error(e);
                 }
@@ -676,7 +646,11 @@ export default class SettingsStore {
                         const value = handler.getValue(settingName, null);
                         logger.log(`---     ${handlerName}@<no_room> = ${JSON.stringify(value)}`);
                     } catch (e) {
-                        logger.log(`---     ${handler.constructor.name}@<no_room> THREW ERROR: ${e.message}`);
+                        logger.log(
+                            `---     ${handler.constructor.name}@<no_room> THREW ERROR: ${
+                                e instanceof Error ? e.message : e
+                            }`,
+                        );
                         logger.error(e);
                     }
                 }
@@ -689,7 +663,11 @@ export default class SettingsStore {
                 const value = SettingsStore.getValue(settingName, roomId);
                 logger.log(`---     SettingsStore#generic@${roomId || "<no_room>"}  = ${JSON.stringify(value)}`);
             } catch (e) {
-                logger.log(`---     SettingsStore#generic@${roomId || "<no_room>"} THREW ERROR: ${e.message}`);
+                logger.log(
+                    `---     SettingsStore#generic@${roomId || "<no_room>"} THREW ERROR: ${
+                        e instanceof Error ? e.message : e
+                    }`,
+                );
                 logger.error(e);
             }
 
@@ -698,7 +676,9 @@ export default class SettingsStore {
                     const value = SettingsStore.getValue(settingName, null);
                     logger.log(`---     SettingsStore#generic@<no_room>  = ${JSON.stringify(value)}`);
                 } catch (e) {
-                    logger.log(`---     SettingsStore#generic@$<no_room> THREW ERROR: ${e.message}`);
+                    logger.log(
+                        `---     SettingsStore#generic@$<no_room> THREW ERROR: ${e instanceof Error ? e.message : e}`,
+                    );
                     logger.error(e);
                 }
             }
@@ -708,7 +688,11 @@ export default class SettingsStore {
                     const value = SettingsStore.getValueAt(level, settingName, roomId);
                     logger.log(`---     SettingsStore#${level}@${roomId || "<no_room>"} = ${JSON.stringify(value)}`);
                 } catch (e) {
-                    logger.log(`---     SettingsStore#${level}@${roomId || "<no_room>"} THREW ERROR: ${e.message}`);
+                    logger.log(
+                        `---     SettingsStore#${level}@${roomId || "<no_room>"} THREW ERROR: ${
+                            e instanceof Error ? e.message : e
+                        }`,
+                    );
                     logger.error(e);
                 }
 
@@ -717,7 +701,11 @@ export default class SettingsStore {
                         const value = SettingsStore.getValueAt(level, settingName, null);
                         logger.log(`---     SettingsStore#${level}@<no_room> = ${JSON.stringify(value)}`);
                     } catch (e) {
-                        logger.log(`---     SettingsStore#${level}@$<no_room> THREW ERROR: ${e.message}`);
+                        logger.log(
+                            `---     SettingsStore#${level}@$<no_room> THREW ERROR: ${
+                                e instanceof Error ? e.message : e
+                            }`,
+                        );
                         logger.error(e);
                     }
                 }

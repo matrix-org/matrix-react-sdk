@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ChangeEvent } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td } from "../../../languageHandler";
 import BaseDialog from "../dialogs/BaseDialog";
@@ -42,7 +42,7 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space 
 
     return (
         <SettingsTab>
-            <SettingsSection heading={_t("Sections to show")}>
+            <SettingsSection heading={_t("space|preferences|sections_section")}>
                 <SettingsSubsection>
                     <StyledCheckbox
                         checked={!!showPeople}
@@ -55,16 +55,12 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space 
                             );
                         }}
                     >
-                        {_t("People")}
+                        {_t("common|people")}
                     </StyledCheckbox>
                     <SettingsSubsectionText>
-                        {_t(
-                            "This groups your chats with members of this space. " +
-                                "Turning this off will hide those chats from your view of %(spaceName)s.",
-                            {
-                                spaceName: space.name,
-                            },
-                        )}
+                        {_t("space|preferences|show_people_in_space", {
+                            spaceName: space.name,
+                        })}
                     </SettingsSubsectionText>
                 </SettingsSubsection>
             </SettingsSection>
@@ -76,7 +72,7 @@ const SpacePreferencesDialog: React.FC<IProps> = ({ space, initialTabId, onFinis
     const tabs: NonEmptyArray<Tab<SpacePreferenceTab>> = [
         new Tab(
             SpacePreferenceTab.Appearance,
-            _td("Appearance"),
+            _td("common|appearance"),
             "mx_SpacePreferencesDialog_appearanceIcon",
             <SpacePreferencesAppearanceTab space={space} />,
         ),
@@ -87,7 +83,7 @@ const SpacePreferencesDialog: React.FC<IProps> = ({ space, initialTabId, onFinis
             className="mx_SpacePreferencesDialog"
             hasCancel
             onFinished={onFinished}
-            title={_t("Preferences")}
+            title={_t("common|preferences")}
             fixedWidth={false}
         >
             <h4>

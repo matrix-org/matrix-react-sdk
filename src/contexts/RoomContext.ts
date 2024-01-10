@@ -71,6 +71,9 @@ const RoomContext = createContext<
     narrow: false,
     activeCall: null,
     msc3946ProcessDynamicPredecessor: false,
+    canAskToJoin: false,
+    promptAskToJoin: false,
+    viewRoomOpts: { buttons: [] },
 });
 RoomContext.displayName = "RoomContext";
 export default RoomContext;

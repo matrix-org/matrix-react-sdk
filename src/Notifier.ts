@@ -17,15 +17,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { ClientEvent } from "matrix-js-sdk/src/client";
+import {
+    MatrixEvent,
+    MatrixEventEvent,
+    Room,
+    RoomEvent,
+    ClientEvent,
+    MsgType,
+    SyncState,
+    SyncStateData,
+    IRoomTimelineData,
+    M_LOCATION,
+    EventType,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
-import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { PermissionChanged as PermissionChangedEvent } from "@matrix-org/analytics-events/types/typescript/PermissionChanged";
-import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
-import { IRoomTimelineData } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { PosthogAnalytics } from "./PosthogAnalytics";
@@ -49,9 +55,9 @@ import { SdkContextClass } from "./contexts/SDKContext";
 import { localNotificationsAreSilenced, createLocalNotificationSettingsIfNeeded } from "./utils/notifications";
 import { getIncomingCallToastKey, IncomingCallToast } from "./toasts/IncomingCallToast";
 import ToastStore from "./stores/ToastStore";
-import { ElementCall } from "./models/Call";
 import { VoiceBroadcastChunkEventType, VoiceBroadcastInfoEventType } from "./voice-broadcast";
 import { getSenderName } from "./utils/event/getSenderName";
+import { stripPlainReply } from "./utils/Reply";
 
 /*
  * Dispatches:
@@ -71,7 +77,7 @@ type of tile.
 const msgTypeHandlers: Record<string, (event: MatrixEvent) => string | null> = {
     [MsgType.KeyVerificationRequest]: (event: MatrixEvent) => {
         const name = (event.sender || {}).name;
-        return _t("%(name)s is requesting verification", { name });
+        return _t("notifier|m.key.verification.request", { name });
     },
     [M_LOCATION.name]: (event: MatrixEvent) => {
         return TextForEvent.textForLocationEvent(event)();
@@ -84,14 +90,14 @@ const msgTypeHandlers: Record<string, (event: MatrixEvent) => string | null> = {
             if (event.getContent()?.[VoiceBroadcastChunkEventType]?.sequence === 1) {
                 // Show a notification for the first broadcast chunk.
                 // At this point a user received something to listen to.
-                return _t("%(senderName)s started a voice broadcast", { senderName: getSenderName(event) });
+                return _t("notifier|io.element.voice_broadcast_chunk", { senderName: getSenderName(event) });
             }
 
             // Mute other broadcast chunks
             return null;
         }
 
-        return TextForEvent.textForEvent(event, MatrixClientPeg.get());
+        return TextForEvent.textForEvent(event, MatrixClientPeg.safeGet());
     },
 };
 
@@ -111,13 +117,13 @@ class NotifierClass {
         if (msgType && msgTypeHandlers.hasOwnProperty(msgType)) {
             return msgTypeHandlers[msgType](ev);
         }
-        return TextForEvent.textForEvent(ev, MatrixClientPeg.get());
+        return TextForEvent.textForEvent(ev, MatrixClientPeg.safeGet());
     }
 
     // XXX: exported for tests
     public displayPopupNotification(ev: MatrixEvent, room: Room): void {
         const plaf = PlatformPeg.get();
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         if (!plaf) {
             return;
         }
@@ -138,7 +144,7 @@ class NotifierClass {
             // notificationMessageForEvent includes sender, but we already have the sender here
             const msgType = ev.getContent().msgtype;
             if (ev.getContent().body && (!msgType || !msgTypeHandlers.hasOwnProperty(msgType))) {
-                msg = ev.getContent().body;
+                msg = stripPlainReply(ev.getContent().body);
             }
         } else if (ev.getType() === "m.room.member") {
             // context is all in the message here, we don't need
@@ -149,7 +155,7 @@ class NotifierClass {
             // notificationMessageForEvent includes sender, but we've just out sender in the title
             const msgType = ev.getContent().msgtype;
             if (ev.getContent().body && (!msgType || !msgTypeHandlers.hasOwnProperty(msgType))) {
-                msg = ev.getContent().body;
+                msg = stripPlainReply(ev.getContent().body);
             }
         }
 
@@ -215,7 +221,7 @@ class NotifierClass {
 
     // XXX: Exported for tests
     public async playAudioNotification(ev: MatrixEvent, room: Room): Promise<void> {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         if (localNotificationsAreSilenced(cli)) {
             return;
         }
@@ -246,20 +252,21 @@ class NotifierClass {
     }
 
     public start(): void {
-        MatrixClientPeg.get().on(RoomEvent.Timeline, this.onEvent);
-        MatrixClientPeg.get().on(RoomEvent.Receipt, this.onRoomReceipt);
-        MatrixClientPeg.get().on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
-        MatrixClientPeg.get().on(ClientEvent.Sync, this.onSyncStateChange);
+        const cli = MatrixClientPeg.safeGet();
+        cli.on(RoomEvent.Timeline, this.onEvent);
+        cli.on(RoomEvent.Receipt, this.onRoomReceipt);
+        cli.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        cli.on(ClientEvent.Sync, this.onSyncStateChange);
         this.toolbarHidden = false;
         this.isSyncing = false;
     }
 
     public stop(): void {
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener(RoomEvent.Timeline, this.onEvent);
-            MatrixClientPeg.get().removeListener(RoomEvent.Receipt, this.onRoomReceipt);
-            MatrixClientPeg.get().removeListener(MatrixEventEvent.Decrypted, this.onEventDecrypted);
-            MatrixClientPeg.get().removeListener(ClientEvent.Sync, this.onSyncStateChange);
+            MatrixClientPeg.get()!.removeListener(RoomEvent.Timeline, this.onEvent);
+            MatrixClientPeg.get()!.removeListener(RoomEvent.Receipt, this.onRoomReceipt);
+            MatrixClientPeg.get()!.removeListener(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+            MatrixClientPeg.get()!.removeListener(ClientEvent.Sync, this.onSyncStateChange);
         }
         this.isSyncing = false;
     }
@@ -291,16 +298,12 @@ class NotifierClass {
                     const brand = SdkConfig.get().brand;
                     const description =
                         result === "denied"
-                            ? _t(
-                                  "%(brand)s does not have permission to send you notifications - " +
-                                      "please check your browser settings",
-                                  { brand },
-                              )
-                            : _t("%(brand)s was not given permission to send notifications - please try again", {
+                            ? _t("settings|notifications|error_permissions_denied", { brand })
+                            : _t("settings|notifications|error_permissions_missing", {
                                   brand,
                               });
                     Modal.createDialog(ErrorDialog, {
-                        title: _t("Unable to enable Notifications"),
+                        title: _t("settings|notifications|error_title"),
                         description,
                     });
                     return;
@@ -391,7 +394,7 @@ class NotifierClass {
     }
 
     // XXX: Exported for tests
-    public onSyncStateChange = (state: SyncState, prevState: SyncState | null, data?: ISyncStateData): void => {
+    public onSyncStateChange = (state: SyncState, prevState: SyncState | null, data?: SyncStateData): void => {
         if (state === SyncState.Syncing) {
             this.isSyncing = true;
         } else if (state === SyncState.Stopped || state === SyncState.Error) {
@@ -400,7 +403,7 @@ class NotifierClass {
 
         // wait for first non-cached sync to complete
         if (![SyncState.Stopped, SyncState.Error].includes(state) && !data?.fromCache) {
-            createLocalNotificationSettingsIfNeeded(MatrixClientPeg.get());
+            createLocalNotificationSettingsIfNeeded(MatrixClientPeg.safeGet());
         }
     };
 
@@ -411,11 +414,13 @@ class NotifierClass {
         removed: boolean,
         data: IRoomTimelineData,
     ): void => {
-        if (!data.liveEvent) return; // only notify for new things, not old.
+        if (removed) return; // only notify for new events, not removed ones
+        if (!data.liveEvent || !!toStartOfTimeline) return; // only notify for new things, not old.
         if (!this.isSyncing) return; // don't alert for any messages initially
-        if (ev.getSender() === MatrixClientPeg.get().getUserId()) return;
+        if (ev.getSender() === MatrixClientPeg.safeGet().getUserId()) return;
+        if (data.timeline.getTimelineSet().threadListType !== null) return; // Ignore events on the thread list generated timelines
 
-        MatrixClientPeg.get().decryptEventIfNeeded(ev);
+        MatrixClientPeg.safeGet().decryptEventIfNeeded(ev);
 
         // If it's an encrypted event and the type is still 'm.room.encrypted',
         // it hasn't yet been decrypted, so wait until it is.
@@ -473,14 +478,14 @@ class NotifierClass {
                 roomId = nativeRoomId;
             }
         }
-        const room = MatrixClientPeg.get().getRoom(roomId);
+        const room = MatrixClientPeg.safeGet().getRoom(roomId);
         if (!room) {
             // e.g we are in the process of joining a room.
             // Seen in the cypress lazy-loading test.
             return;
         }
 
-        const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
+        const actions = MatrixClientPeg.safeGet().getPushActionsForEvent(ev);
 
         if (actions?.notify) {
             this.performCustomEventHandling(ev);
@@ -511,13 +516,27 @@ class NotifierClass {
      * Some events require special handling such as showing in-app toasts
      */
     private performCustomEventHandling(ev: MatrixEvent): void {
-        if (ElementCall.CALL_EVENT_TYPE.names.includes(ev.getType()) && SettingsStore.getValue("feature_group_calls")) {
+        if (
+            EventType.CallNotify === ev.getType() &&
+            SettingsStore.getValue("feature_group_calls") &&
+            (ev.getAge() ?? 0) < 10000
+        ) {
+            const content = ev.getContent();
+            const roomId = ev.getRoomId();
+            if (typeof content.call_id !== "string") {
+                logger.warn("Received malformatted CallNotify event. Did not contain 'call_id' of type 'string'");
+                return;
+            }
+            if (!roomId) {
+                logger.warn("Could not get roomId for CallNotify event");
+                return;
+            }
             ToastStore.sharedInstance().addOrReplaceToast({
-                key: getIncomingCallToastKey(ev.getStateKey()!),
+                key: getIncomingCallToastKey(content.call_id, roomId),
                 priority: 100,
                 component: IncomingCallToast,
                 bodyClassName: "mx_IncomingCallToast",
-                props: { callEvent: ev },
+                props: { notifyEvent: ev },
             });
         }
     }

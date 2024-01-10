@@ -16,12 +16,12 @@ limitations under the License.
 */
 
 import React from "react";
-import { Direction } from "matrix-js-sdk/src/models/event-timeline";
+import { Direction, ConnectionError, MatrixError, HTTPError } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ConnectionError, MatrixError, HTTPError } from "matrix-js-sdk/src/http-api";
+import { capitalize } from "lodash";
 
-import { _t } from "../../../languageHandler";
-import { formatFullDateNoDay, formatFullDateNoTime } from "../../../DateUtils";
+import { _t, getUserLanguage } from "../../../languageHandler";
+import { formatFullDateNoDay, formatFullDateNoTime, getDaysArray } from "../../../DateUtils";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -40,10 +40,7 @@ import IconizedContextMenu, {
 import JumpToDatePicker from "./JumpToDatePicker";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { SdkContextClass } from "../../../contexts/SDKContext";
-
-function getDaysArray(): string[] {
-    return [_t("Sunday"), _t("Monday"), _t("Tuesday"), _t("Wednesday"), _t("Thursday"), _t("Friday"), _t("Saturday")];
-}
+import TimelineSeparator from "./TimelineSeparator";
 
 interface IProps {
     roomId: string;
@@ -56,6 +53,11 @@ interface IState {
     jumpToDateEnabled: boolean;
 }
 
+/**
+ * Timeline separator component to render within a MessagePanel bearing the date of the ts given
+ *
+ * Has additional jump to date functionality when labs flag is enabled
+ */
 export default class DateSeparator extends React.Component<IProps, IState> {
     private settingWatcherRef?: string;
 
@@ -97,6 +99,10 @@ export default class DateSeparator extends React.Component<IProps, IState> {
         });
     };
 
+    private get relativeTimeFormat(): Intl.RelativeTimeFormat {
+        return new Intl.RelativeTimeFormat(getUserLanguage(), { style: "long", numeric: "auto" });
+    }
+
     private getLabel(): string {
         const date = new Date(this.props.ts);
         const disableRelativeTimestamps = !SettingsStore.getValue(UIFeature.TimelineEnableRelativeDates);
@@ -106,15 +112,15 @@ export default class DateSeparator extends React.Component<IProps, IState> {
 
         const today = new Date();
         const yesterday = new Date();
-        const days = getDaysArray();
+        const days = getDaysArray("long");
         yesterday.setDate(today.getDate() - 1);
 
         if (date.toDateString() === today.toDateString()) {
-            return _t("Today");
+            return this.relativeTimeFormat.format(0, "day"); // Today
         } else if (date.toDateString() === yesterday.toDateString()) {
-            return _t("Yesterday");
+            return this.relativeTimeFormat.format(-1, "day"); // Yesterday
         } else if (today.getTime() - date.getTime() < 6 * 24 * 60 * 60 * 1000) {
-            return days[date.getDay()];
+            return days[date.getDay()]; // Sunday-Saturday
         } else {
             return formatFullDateNoTime(date);
         }
@@ -170,23 +176,16 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 let friendlyErrorMessage = "An error occured while trying to find and jump to the given date.";
                 let submitDebugLogsContent: JSX.Element = <></>;
                 if (err instanceof ConnectionError) {
-                    friendlyErrorMessage = _t(
-                        "A network error occurred while trying to find and jump to the given date. " +
-                            "Your homeserver might be down or there was just a temporary problem with " +
-                            "your internet connection. Please try again. If this continues, please " +
-                            "contact your homeserver administrator.",
-                    );
+                    friendlyErrorMessage = _t("room|error_jump_to_date_connection");
                 } else if (err instanceof MatrixError) {
                     if (err?.errcode === "M_NOT_FOUND") {
-                        friendlyErrorMessage = _t(
-                            "We were unable to find an event looking forwards from %(dateString)s. " +
-                                "Try choosing an earlier date.",
-                            { dateString: formatFullDateNoDay(new Date(unixTimestamp)) },
-                        );
+                        friendlyErrorMessage = _t("room|error_jump_to_date_not_found", {
+                            dateString: formatFullDateNoDay(new Date(unixTimestamp)),
+                        });
                     } else {
-                        friendlyErrorMessage = _t("Server returned %(statusCode)s with error code %(errorCode)s", {
-                            statusCode: err?.httpStatus || _t("unknown status code"),
-                            errorCode: err?.errcode || _t("unavailable"),
+                        friendlyErrorMessage = _t("room|error_jump_to_date", {
+                            statusCode: err?.httpStatus || _t("room|unknown_status_code_for_timeline_jump"),
+                            errorCode: err?.errcode || _t("common|unavailable"),
                         });
                     }
                 } else if (err instanceof HTTPError) {
@@ -196,8 +195,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                     submitDebugLogsContent = (
                         <p>
                             {_t(
-                                "Please submit <debugLogsLink>debug logs</debugLogsLink> to help us " +
-                                    "track down the problem.",
+                                "room|error_jump_to_date_send_logs_prompt",
                                 {},
                                 {
                                     debugLogsLink: (sub) => (
@@ -220,13 +218,13 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 }
 
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Unable to find event at that date"),
+                    title: _t("room|error_jump_to_date_title"),
                     description: (
                         <div data-testid="jump-to-date-error-content">
                             <p>{friendlyErrorMessage}</p>
                             {submitDebugLogsContent}
                             <details>
-                                <summary>{_t("Error details")}</summary>
+                                <summary>{_t("room|error_jump_to_date_details")}</summary>
                                 <p>{String(err)}</p>
                             </details>
                         </div>
@@ -272,6 +270,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
     private renderJumpToDateMenu(): React.ReactElement {
         let contextMenu: JSX.Element | undefined;
         if (this.state.contextMenuPosition) {
+            const relativeTimeFormat = this.relativeTimeFormat;
             contextMenu = (
                 <IconizedContextMenu
                     {...contextMenuBelow(this.state.contextMenuPosition)}
@@ -279,17 +278,17 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 >
                     <IconizedContextMenuOptionList first>
                         <IconizedContextMenuOption
-                            label={_t("Last week")}
+                            label={capitalize(relativeTimeFormat.format(-1, "week"))}
                             onClick={this.onLastWeekClicked}
                             data-testid="jump-to-date-last-week"
                         />
                         <IconizedContextMenuOption
-                            label={_t("Last month")}
+                            label={capitalize(relativeTimeFormat.format(-1, "month"))}
                             onClick={this.onLastMonthClicked}
                             data-testid="jump-to-date-last-month"
                         />
                         <IconizedContextMenuOption
-                            label={_t("The beginning of the room")}
+                            label={_t("room|jump_to_date_beginning")}
                             onClick={this.onTheBeginningClicked}
                             data-testid="jump-to-date-beginning"
                         />
@@ -308,7 +307,7 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 data-testid="jump-to-date-separator-button"
                 onClick={this.onContextMenuOpenClick}
                 isExpanded={!!this.state.contextMenuPosition}
-                title={_t("Jump to date")}
+                title={_t("room|jump_to_date")}
             >
                 <h2 className="mx_DateSeparator_dateHeading" aria-hidden="true">
                     {this.getLabel()}
@@ -335,13 +334,6 @@ export default class DateSeparator extends React.Component<IProps, IState> {
             );
         }
 
-        // ARIA treats <hr/>s as separators, here we abuse them slightly so manually treat this entire thing as one
-        return (
-            <div className="mx_DateSeparator" role="separator" aria-label={label}>
-                <hr role="none" />
-                {dateHeaderContent}
-                <hr role="none" />
-            </div>
-        );
+        return <TimelineSeparator label={label}>{dateHeaderContent}</TimelineSeparator>;
     }
 }

@@ -25,6 +25,7 @@ import {
     RoomState,
 } from "matrix-js-sdk/src/matrix";
 import fetchMock from "fetch-mock-jest";
+import escapeHtml from "escape-html";
 
 import { filterConsole, mkStubRoom, REPEATABLE_DATE, stubClient } from "../../test-utils";
 import { ExportType, IExportOptions } from "../../../src/utils/exportUtils/exportUtils";
@@ -151,9 +152,10 @@ describe("HTMLExport", () => {
         const stubOptions: IExportOptions = {
             attachmentsIncluded: false,
             maxSize: 50000000,
+            numberOfMessages: 40,
         };
         const stubRoom = mkStubRoom("!myroom:example.org", roomName, client);
-        const exporter = new HTMLExporter(stubRoom, ExportType.Timeline, stubOptions, () => {});
+        const exporter = new HTMLExporter(stubRoom, ExportType.LastNMessages, stubOptions, () => {});
 
         expect(exporter.destinationFileName).toMatchSnapshot();
 
@@ -202,10 +204,11 @@ describe("HTMLExport", () => {
 
         const exporter = new HTMLExporter(
             room,
-            ExportType.Timeline,
+            ExportType.LastNMessages,
             {
                 attachmentsIncluded: false,
                 maxSize: 1_024 * 1_024,
+                numberOfMessages: 40,
             },
             () => {},
         );
@@ -233,10 +236,11 @@ describe("HTMLExport", () => {
 
         const exporter = new HTMLExporter(
             room,
-            ExportType.Timeline,
+            ExportType.LastNMessages,
             {
                 attachmentsIncluded: false,
                 maxSize: 1_024 * 1_024,
+                numberOfMessages: 40,
             },
             () => {},
         );
@@ -263,10 +267,11 @@ describe("HTMLExport", () => {
 
         const exporter = new HTMLExporter(
             room,
-            ExportType.Timeline,
+            ExportType.LastNMessages,
             {
                 attachmentsIncluded: false,
                 maxSize: 1_024 * 1_024,
+                numberOfMessages: 40,
             },
             () => {},
         );
@@ -286,10 +291,11 @@ describe("HTMLExport", () => {
 
         const exporter = new HTMLExporter(
             room,
-            ExportType.Timeline,
+            ExportType.LastNMessages,
             {
                 attachmentsIncluded: false,
                 maxSize: 1_024 * 1_024,
+                numberOfMessages: 40,
             },
             () => {},
         );
@@ -320,10 +326,11 @@ describe("HTMLExport", () => {
 
         const exporter = new HTMLExporter(
             room,
-            ExportType.Timeline,
+            ExportType.LastNMessages,
             {
                 attachmentsIncluded: false,
                 maxSize: 1_024 * 1_024,
+                numberOfMessages: 40,
             },
             () => {},
         );
@@ -341,10 +348,11 @@ describe("HTMLExport", () => {
 
         const exporter = new HTMLExporter(
             room,
-            ExportType.Timeline,
+            ExportType.LastNMessages,
             {
                 attachmentsIncluded: false,
                 maxSize: 1_024 * 1_024,
+                numberOfMessages: 40,
             },
             () => {},
         );
@@ -363,10 +371,11 @@ describe("HTMLExport", () => {
 
         const exporter = new HTMLExporter(
             room,
-            ExportType.Timeline,
+            ExportType.LastNMessages,
             {
                 attachmentsIncluded: true,
                 maxSize: 1_024 * 1_024,
+                numberOfMessages: 40,
             },
             () => {},
         );
@@ -391,10 +400,11 @@ describe("HTMLExport", () => {
 
         const exporter = new HTMLExporter(
             room,
-            ExportType.Timeline,
+            ExportType.LastNMessages,
             {
                 attachmentsIncluded: true,
                 maxSize: 1_024 * 1_024,
+                numberOfMessages: 40,
             },
             () => {},
         );
@@ -425,10 +435,11 @@ describe("HTMLExport", () => {
 
         const exporter = new HTMLExporter(
             room,
-            ExportType.Timeline,
+            ExportType.LastNMessages,
             {
                 attachmentsIncluded: true,
                 maxSize: 1_024 * 1_024,
+                numberOfMessages: 40,
             },
             () => {},
         );
@@ -450,10 +461,11 @@ describe("HTMLExport", () => {
 
         const exporter = new HTMLExporter(
             room,
-            ExportType.Timeline,
+            ExportType.LastNMessages,
             {
                 attachmentsIncluded: false,
                 maxSize: 1_024 * 1_024,
+                numberOfMessages: 40,
             },
             () => {},
         );
@@ -504,5 +516,83 @@ describe("HTMLExport", () => {
             '<div style="text-align:center"><a href="./messages2.html" style="font-weight:bold">Previous group of messages</a></div>',
         );
         expect(result).not.toContain("Next group of messages");
+    });
+
+    it("should not leak javascript from room names or topics", async () => {
+        const name = "<svg onload=alert(3)>";
+        const topic = "<svg onload=alert(5)>";
+        mockMessages(EVENT_MESSAGE);
+        room.currentState.setStateEvents([
+            new MatrixEvent({
+                type: EventType.RoomName,
+                event_id: "$00001",
+                room_id: room.roomId,
+                sender: "@alice:example.com",
+                origin_server_ts: 0,
+                content: { name },
+                state_key: "",
+            }),
+            new MatrixEvent({
+                type: EventType.RoomTopic,
+                event_id: "$00002",
+                room_id: room.roomId,
+                sender: "@alice:example.com",
+                origin_server_ts: 1,
+                content: { topic },
+                state_key: "",
+            }),
+        ]);
+        room.recalculate();
+
+        const exporter = new HTMLExporter(
+            room,
+            ExportType.LastNMessages,
+            {
+                attachmentsIncluded: false,
+                maxSize: 1_024 * 1_024,
+                numberOfMessages: 40,
+            },
+            () => {},
+        );
+
+        await exporter.export();
+        const html = await getMessageFile(exporter).text();
+
+        expect(html).not.toContain(`${name}`);
+        expect(html).toContain(`${escapeHtml(name)}`);
+        expect(html).not.toContain(`${topic}`);
+        expect(html).toContain(`Topic: ${escapeHtml(topic)}`);
+    });
+
+    it("should not make /messages requests when exporting 'Current Timeline'", async () => {
+        client.createMessagesRequest.mockRejectedValue(new Error("Should never be called"));
+        room.addLiveEvents([
+            new MatrixEvent({
+                event_id: `$eventId`,
+                type: EventType.RoomMessage,
+                sender: client.getSafeUserId(),
+                origin_server_ts: 123456789,
+                content: {
+                    msgtype: "m.text",
+                    body: `testing testing`,
+                },
+            }),
+        ]);
+
+        const exporter = new HTMLExporter(
+            room,
+            ExportType.Timeline,
+            {
+                attachmentsIncluded: false,
+                maxSize: 1_024 * 1_024,
+            },
+            () => {},
+        );
+
+        await exporter.export();
+
+        const file = getMessageFile(exporter);
+        expect(await file.text()).toContain("testing testing");
+        expect(client.createMessagesRequest).not.toHaveBeenCalled();
     });
 });

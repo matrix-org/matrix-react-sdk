@@ -57,7 +57,11 @@ export default class EditorModel {
     private autoCompletePartCount = 0;
     private transformCallback: TransformCallback | null = null;
 
-    public constructor(parts: Part[], partCreator: PartCreator, private updateCallback: UpdateCallback | null = null) {
+    public constructor(
+        parts: Part[],
+        partCreator: PartCreator,
+        private updateCallback: UpdateCallback | null = null,
+    ) {
         this._parts = parts;
         this._partCreator = partCreator;
         this.transformCallback = null;
@@ -461,7 +465,7 @@ export default class EditorModel {
      */
     public transform(callback: ManualTransformCallback): Promise<void> {
         const pos = callback();
-        let acPromise: Promise<void> | null = null;
+        let acPromise: Promise<void> | null;
         if (!(pos instanceof Range)) {
             acPromise = this.setActivePart(pos, true);
         } else {

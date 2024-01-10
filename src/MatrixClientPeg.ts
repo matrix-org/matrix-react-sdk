@@ -17,12 +17,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ICreateClientOpts, PendingEventOrdering, RoomNameState, RoomNameType } from "matrix-js-sdk/src/matrix";
-import { IStartClientOpts, MatrixClient } from "matrix-js-sdk/src/client";
-import { MemoryStore } from "matrix-js-sdk/src/store/memory";
+import {
+    ICreateClientOpts,
+    PendingEventOrdering,
+    RoomNameState,
+    RoomNameType,
+    EventTimeline,
+    EventTimelineSet,
+    IStartClientOpts,
+    MatrixClient,
+    MemoryStore,
+    TokenRefreshFunction,
+} from "matrix-js-sdk/src/matrix";
 import * as utils from "matrix-js-sdk/src/utils";
-import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
-import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
 import { verificationMethods } from "matrix-js-sdk/src/crypto";
 import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -43,13 +50,16 @@ import { SettingLevel } from "./settings/SettingLevel";
 import MatrixClientBackedController from "./settings/controllers/MatrixClientBackedController";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import PlatformPeg from "./PlatformPeg";
+import { formatList } from "./utils/FormattingUtils";
+import SdkConfig from "./SdkConfig";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
     identityServerUrl?: string;
     userId: string;
     deviceId?: string;
-    accessToken?: string;
+    accessToken: string;
+    refreshToken?: string;
     guest?: boolean;
     pickleKey?: string;
     freshLogin?: boolean;
@@ -71,15 +81,13 @@ export interface IMatrixClientPeg {
      *
      * @returns {string} The homeserver name, if present.
      */
-    getHomeserverName(): string | null;
+    getHomeserverName(): string;
 
-    get(): MatrixClient;
+    get(): MatrixClient | null;
     safeGet(): MatrixClient;
     unset(): void;
     assign(): Promise<any>;
     start(): Promise<any>;
-
-    getCredentials(): IMatrixClientCreds;
 
     /**
      * If we've registered a user ID we set this to the ID of the
@@ -116,8 +124,10 @@ export interface IMatrixClientPeg {
      * homeserver / identity server URLs and active credentials
      *
      * @param {IMatrixClientCreds} creds The new credentials to use.
+     * @param {TokenRefreshFunction} tokenRefreshFunction OPTIONAL function used by MatrixClient to attempt token refresh
+     *          see {@link ICreateClientOpts.tokenRefreshFunction}
      */
-    replaceUsingCreds(creds: IMatrixClientCreds): void;
+    replaceUsingCreds(creds: IMatrixClientCreds, tokenRefreshFunction?: TokenRefreshFunction): void;
 }
 
 /**
@@ -138,17 +148,13 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     private matrixClient: MatrixClient | null = null;
     private justRegisteredUserId: string | null = null;
 
-    // the credentials used to init the current client object.
-    // used if we tear it down & recreate it with a different store
-    private currentClientCreds: IMatrixClientCreds | null = null;
-
-    public get(): MatrixClient {
+    public get(): MatrixClient | null {
         return this.matrixClient;
     }
 
     public safeGet(): MatrixClient {
         if (!this.matrixClient) {
-            throw new UserFriendlyError("User is not logged in");
+            throw new UserFriendlyError("error_user_not_logged_in");
         }
         return this.matrixClient;
     }
@@ -194,9 +200,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
     }
 
-    public replaceUsingCreds(creds: IMatrixClientCreds): void {
-        this.currentClientCreds = creds;
-        this.createClient(creds);
+    public replaceUsingCreds(creds: IMatrixClientCreds, tokenRefreshFunction?: TokenRefreshFunction): void {
+        this.createClient(creds, tokenRefreshFunction);
     }
 
     private onUnexpectedStoreClose = async (): Promise<void> => {
@@ -208,14 +213,21 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             // If the user is not a guest then prompt them to reload rather than doing it for them
             // For guests this is likely to happen during e-mail verification as part of registration
 
-            const { finished } = Modal.createDialog(ErrorDialog, {
-                title: _t("Database unexpectedly closed"),
-                description: _t(
-                    "This may be caused by having the app open in multiple tabs or due to clearing browser data.",
-                ),
-                button: _t("Reload"),
-            });
-            const [reload] = await finished;
+            const brand = SdkConfig.get().brand;
+            const platform = PlatformPeg.get()?.getHumanReadableName();
+
+            // Determine the description based on the platform
+            const description =
+                platform === "Web Platform"
+                    ? _t("error_database_closed_description|for_web", { brand })
+                    : _t("error_database_closed_description|for_desktop");
+
+            const [reload] = await Modal.createDialog(ErrorDialog, {
+                title: _t("error_database_closed_title", { brand }),
+                description,
+                button: _t("action|reload"),
+            }).finished;
+
             if (!reload) return;
         }
 
@@ -335,33 +347,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         logger.log(`MatrixClientPeg: MatrixClient started`);
     }
 
-    public getCredentials(): IMatrixClientCreds {
-        if (!this.matrixClient) {
-            throw new Error("createClient must be called first");
-        }
-
-        let copiedCredentials: IMatrixClientCreds | null = this.currentClientCreds;
-        if (this.currentClientCreds?.userId !== this.matrixClient?.credentials?.userId) {
-            // cached credentials belong to a different user - don't use them
-            copiedCredentials = null;
-        }
-        return {
-            // Copy the cached credentials before overriding what we can.
-            ...(copiedCredentials ?? {}),
-
-            homeserverUrl: this.matrixClient.baseUrl,
-            identityServerUrl: this.matrixClient.idBaseUrl,
-            userId: this.matrixClient.getSafeUserId(),
-            deviceId: this.matrixClient.getDeviceId() ?? undefined,
-            accessToken: this.matrixClient.getAccessToken() ?? undefined,
-            guest: this.matrixClient.isGuest(),
-        };
-    }
-
-    public getHomeserverName(): string | null {
-        if (!this.matrixClient) return null;
-
-        const matches = /^@[^:]+:(.+)$/.exec(this.matrixClient.getSafeUserId());
+    public getHomeserverName(): string {
+        const matches = /^@[^:]+:(.+)$/.exec(this.safeGet().getSafeUserId());
         if (matches === null || matches.length < 1) {
             throw new Error("Failed to derive homeserver name from user ID!");
         }
@@ -371,7 +358,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     private namesToRoomName(names: string[], count: number): string | undefined {
         const countWithoutMe = count - 1;
         if (!names.length) {
-            return _t("Empty room");
+            return _t("empty_room");
         }
         if (names.length === 1 && countWithoutMe <= 1) {
             return names[0];
@@ -383,15 +370,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         if (name) return name;
 
         if (names.length === 2 && count === 2) {
-            return _t("%(user1)s and %(user2)s", {
-                user1: names[0],
-                user2: names[1],
-            });
+            return formatList(names);
         }
-        return _t("%(user)s and %(count)s others", {
-            user: names[0],
-            count: count - 1,
-        });
+        return formatList(names, 1);
     }
 
     private inviteeNamesToRoomName(names: string[], count: number): string {
@@ -399,22 +380,24 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         if (name) return name;
 
         if (names.length === 2 && count === 2) {
-            return _t("Inviting %(user1)s and %(user2)s", {
+            return _t("inviting_user1_and_user2", {
                 user1: names[0],
                 user2: names[1],
             });
         }
-        return _t("Inviting %(user)s and %(count)s others", {
+        return _t("inviting_user_and_n_others", {
             user: names[0],
             count: count - 1,
         });
     }
 
-    private createClient(creds: IMatrixClientCreds): void {
+    private createClient(creds: IMatrixClientCreds, tokenRefreshFunction?: TokenRefreshFunction): void {
         const opts: ICreateClientOpts = {
             baseUrl: creds.homeserverUrl,
             idBaseUrl: creds.identityServerUrl,
             accessToken: creds.accessToken,
+            refreshToken: creds.refreshToken,
+            tokenRefreshFunction,
             userId: creds.userId,
             deviceId: creds.deviceId,
             pickleKey: creds.pickleKey,
@@ -445,11 +428,11 @@ class MatrixClientPegClass implements IMatrixClientPeg {
                         }
                     case RoomNameType.EmptyRoom:
                         if (state.oldName) {
-                            return _t("Empty room (was %(oldName)s)", {
+                            return _t("empty_room_was_name", {
                                 oldName: state.oldName,
                             });
                         } else {
-                            return _t("Empty room");
+                            return _t("empty_room");
                         }
                     default:
                         return null;
@@ -462,11 +445,6 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
 
         this.matrixClient = createMatrixClient(opts);
-
-        // we're going to add eventlisteners for each matrix event tile, so the
-        // potential number of event listeners is quite high.
-        this.matrixClient.setMaxListeners(500);
-
         this.matrixClient.setGuest(Boolean(creds.guest));
 
         const notifTimelineSet = new EventTimelineSet(undefined, {

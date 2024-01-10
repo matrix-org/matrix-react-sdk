@@ -75,9 +75,9 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
         let leaveSection;
         if (room.getMyMembership() === "join") {
             leaveSection = (
-                <SettingsSubsection heading={_t("Leave room")}>
+                <SettingsSubsection heading={_t("action|leave_room")}>
                     <AccessibleButton kind="danger" onClick={this.onLeaveClick}>
-                        {_t("Leave room")}
+                        {_t("action|leave_room")}
                     </AccessibleButton>
                 </SettingsSubsection>
             );
@@ -85,11 +85,11 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
 
         return (
             <SettingsTab data-testid="General">
-                <SettingsSection heading={_t("General")}>
+                <SettingsSection heading={_t("common|general")}>
                     <RoomProfileSettings roomId={room.roomId} />
                 </SettingsSection>
 
-                <SettingsSection heading={_t("Room Addresses")}>
+                <SettingsSection heading={_t("room_settings|general|aliases_section")}>
                     <AliasSettings
                         roomId={room.roomId}
                         canSetCanonicalAlias={canSetCanonical}
@@ -98,7 +98,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                     />
                 </SettingsSection>
 
-                <SettingsSection heading={_t("Other")}>
+                <SettingsSection heading={_t("room_settings|general|other_section")}>
                     {urlPreviewSettings}
                     {leaveSection}
                 </SettingsSection>

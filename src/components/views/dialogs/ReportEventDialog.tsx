@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { ChangeEvent } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, UserFriendlyError } from "../../../languageHandler";
@@ -216,7 +216,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                 ((this.state.nature == Nature.Other || this.state.nature == NonStandardValue.Admin) && !reason)
             ) {
                 this.setState({
-                    err: _t("Please fill why you're reporting."),
+                    err: _t("report_content|missing_reason"),
                 });
                 return;
             }
@@ -225,7 +225,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             // We need a `reason`.
             if (!reason) {
                 this.setState({
-                    err: _t("Please fill why you're reporting."),
+                    err: _t("report_content|missing_reason"),
                 });
                 return;
             }
@@ -246,7 +246,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                 // as configured in the room's state events.
                 const dmRoomId = await ensureDMExists(client, this.moderation.moderationBotUserId);
                 if (!dmRoomId) {
-                    throw new UserFriendlyError("Unable to create room with moderation bot");
+                    throw new UserFriendlyError("report_content|error_create_room_moderation_bot");
                 }
 
                 await client.sendEvent(dmRoomId, ABUSE_EVENT_TYPE, {
@@ -272,7 +272,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             logger.error(e);
             this.setState({
                 busy: false,
-                err: e.message,
+                err: e instanceof Error ? e.message : String(e),
             });
         }
     };
@@ -295,8 +295,8 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
         const ignoreUserCheckbox = (
             <LabelledCheckbox
                 value={this.state.ignoreUserToo}
-                label={_t("Ignore user")}
-                byline={_t("Check if you want to hide all current and future messages from this user.")}
+                label={_t("report_content|ignore_user")}
+                byline={_t("report_content|hide_messages_from_user")}
                 onChange={this.onIgnoreUserTooChanged}
                 disabled={this.state.busy}
             />
@@ -317,58 +317,31 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             let subtitle: string;
             switch (this.state.nature) {
                 case Nature.Disagreement:
-                    subtitle = _t(
-                        "What this user is writing is wrong.\n" + "This will be reported to the room moderators.",
-                    );
+                    subtitle = _t("report_content|nature_disagreement");
                     break;
                 case Nature.Toxic:
-                    subtitle = _t(
-                        "This user is displaying toxic behaviour, " +
-                            "for instance by insulting other users or sharing " +
-                            "adult-only content in a family-friendly room " +
-                            "or otherwise violating the rules of this room.\n" +
-                            "This will be reported to the room moderators.",
-                    );
+                    subtitle = _t("report_content|nature_toxic");
                     break;
                 case Nature.Illegal:
-                    subtitle = _t(
-                        "This user is displaying illegal behaviour, " +
-                            "for instance by doxing people or threatening violence.\n" +
-                            "This will be reported to the room moderators who may escalate this to legal authorities.",
-                    );
+                    subtitle = _t("report_content|nature_illegal");
                     break;
                 case Nature.Spam:
-                    subtitle = _t(
-                        "This user is spamming the room with ads, links to ads or to propaganda.\n" +
-                            "This will be reported to the room moderators.",
-                    );
+                    subtitle = _t("report_content|nature_spam");
                     break;
                 case NonStandardValue.Admin:
                     if (client.isRoomEncrypted(this.props.mxEvent.getRoomId()!)) {
-                        subtitle = _t(
-                            "This room is dedicated to illegal or toxic content " +
-                                "or the moderators fail to moderate illegal or toxic content.\n" +
-                                "This will be reported to the administrators of %(homeserver)s. " +
-                                "The administrators will NOT be able to read the encrypted content of this room.",
-                            { homeserver: homeServerName },
-                        );
+                        subtitle = _t("report_content|nature_nonstandard_admin_encrypted", {
+                            homeserver: homeServerName,
+                        });
                     } else {
-                        subtitle = _t(
-                            "This room is dedicated to illegal or toxic content " +
-                                "or the moderators fail to moderate illegal or toxic content.\n" +
-                                "This will be reported to the administrators of %(homeserver)s.",
-                            { homeserver: homeServerName },
-                        );
+                        subtitle = _t("report_content|nature_nonstandard_admin", { homeserver: homeServerName });
                     }
                     break;
                 case Nature.Other:
-                    subtitle = _t(
-                        "Any other reason. Please describe the problem.\n" +
-                            "This will be reported to the room moderators.",
-                    );
+                    subtitle = _t("report_content|nature_other");
                     break;
                 default:
-                    subtitle = _t("Please pick a nature and describe what makes this message abusive.");
+                    subtitle = _t("report_content|nature");
                     break;
             }
 
@@ -376,7 +349,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                 <BaseDialog
                     className="mx_ReportEventDialog"
                     onFinished={this.props.onFinished}
-                    title={_t("Report Content")}
+                    title={_t("action|report_content")}
                     contentId="mx_ReportEventDialog"
                 >
                     <div>
@@ -386,7 +359,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked={this.state.nature == Nature.Disagreement}
                             onChange={this.onNatureChosen}
                         >
-                            {_t("Disagree")}
+                            {_t("report_content|disagree")}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name="nature"
@@ -394,7 +367,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked={this.state.nature == Nature.Toxic}
                             onChange={this.onNatureChosen}
                         >
-                            {_t("Toxic Behaviour")}
+                            {_t("report_content|toxic_behaviour")}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name="nature"
@@ -402,7 +375,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked={this.state.nature == Nature.Illegal}
                             onChange={this.onNatureChosen}
                         >
-                            {_t("Illegal Content")}
+                            {_t("report_content|illegal_content")}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name="nature"
@@ -410,7 +383,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked={this.state.nature == Nature.Spam}
                             onChange={this.onNatureChosen}
                         >
-                            {_t("Spam or propaganda")}
+                            {_t("report_content|spam_or_propaganda")}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name="nature"
@@ -418,7 +391,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked={this.state.nature == NonStandardValue.Admin}
                             onChange={this.onNatureChosen}
                         >
-                            {_t("Report the entire room")}
+                            {_t("report_content|report_entire_room")}
                         </StyledRadioButton>
                         <StyledRadioButton
                             name="nature"
@@ -426,13 +399,13 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                             checked={this.state.nature == Nature.Other}
                             onChange={this.onNatureChosen}
                         >
-                            {_t("Other")}
+                            {_t("report_content|other_label")}
                         </StyledRadioButton>
                         <p>{subtitle}</p>
                         <Field
                             className="mx_ReportEventDialog_reason"
                             element="textarea"
-                            label={_t("Reason")}
+                            label={_t("room_settings|permissions|ban_reason")}
                             rows={5}
                             onChange={this.onReasonChange}
                             value={this.state.reason}
@@ -443,7 +416,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                         {ignoreUserCheckbox}
                     </div>
                     <DialogButtons
-                        primaryButton={_t("Send report")}
+                        primaryButton={_t("action|send_report")}
                         onPrimaryButtonClick={this.onSubmit}
                         focus={true}
                         onCancel={this.onCancel}
@@ -458,23 +431,16 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             <BaseDialog
                 className="mx_ReportEventDialog"
                 onFinished={this.props.onFinished}
-                title={_t("Report Content to Your Homeserver Administrator")}
+                title={_t("report_content|report_content_to_homeserver")}
                 contentId="mx_ReportEventDialog"
             >
                 <div className="mx_ReportEventDialog" id="mx_ReportEventDialog">
-                    <p>
-                        {_t(
-                            "Reporting this message will send its unique 'event ID' to the administrator of " +
-                                "your homeserver. If messages in this room are encrypted, your homeserver " +
-                                "administrator will not be able to read the message text or view any files " +
-                                "or images.",
-                        )}
-                    </p>
+                    <p>{_t("report_content|description")}</p>
                     {adminMessage}
                     <Field
                         className="mx_ReportEventDialog_reason"
                         element="textarea"
-                        label={_t("Reason")}
+                        label={_t("room_settings|permissions|ban_reason")}
                         rows={5}
                         onChange={this.onReasonChange}
                         value={this.state.reason}
@@ -485,7 +451,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                     {ignoreUserCheckbox}
                 </div>
                 <DialogButtons
-                    primaryButton={_t("Send report")}
+                    primaryButton={_t("action|send_report")}
                     onPrimaryButtonClick={this.onSubmit}
                     focus={true}
                     onCancel={this.onCancel}

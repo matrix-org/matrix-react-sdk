@@ -18,7 +18,6 @@ import React from "react";
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { mocked, MockedObject } from "jest-mock";
 import { render } from "@testing-library/react";
-import * as prettier from "prettier";
 
 import { getMockClientWithEventEmitter, mkEvent, mkMessage, mkStubRoom } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -199,7 +198,7 @@ describe("<TextualBody />", () => {
             const { container } = getComponent({ mxEvent: ev });
             const content = container.querySelector(".mx_EventTile_body");
             expect(content.innerHTML).toMatchInlineSnapshot(
-                `"Chat with <span><bdi><a class="mx_Pill mx_UserPill mx_UserPill_me" href="https://matrix.to/#/@user:example.com" aria-describedby="mx_Pill_0.123456"><img loading="lazy" class="mx_BaseAvatar mx_BaseAvatar_image" src="mxc://avatar.url/image.png" style="width: 16px; height: 16px;" alt="" data-testid="avatar-img" aria-hidden="true"><span class="mx_Pill_text">Member</span></a></bdi></span>"`,
+                `"Chat with <span><bdi><a class="mx_Pill mx_UserPill mx_UserPill_me" href="https://matrix.to/#/@user:example.com" data-state="closed"><span aria-label="Profile picture" aria-hidden="true" data-testid="avatar-img" data-type="round" data-color="8" class="_avatar_1o69u_17 mx_BaseAvatar" style="--cpd-avatar-size: 16px;"><img loading="lazy" alt="" src="mxc://avatar.url/image.png" crossorigin="anonymous" referrerpolicy="no-referrer" class="_image_1o69u_49" data-type="round" width="16px" height="16px"></span><span class="mx_Pill_text">Member</span></a></bdi></span>"`,
             );
         });
 
@@ -217,7 +216,7 @@ describe("<TextualBody />", () => {
             const { container } = getComponent({ mxEvent: ev });
             const content = container.querySelector(".mx_EventTile_body");
             expect(content.innerHTML).toMatchInlineSnapshot(
-                `"Visit <span><bdi><a class="mx_Pill mx_RoomPill" href="https://matrix.to/#/#room:example.com" aria-describedby="mx_Pill_0.123456"><div class="mx_Pill_LinkIcon mx_BaseAvatar mx_BaseAvatar_image"></div><span class="mx_Pill_text">#room:example.com</span></a></bdi></span>"`,
+                `"Visit <span><bdi><a class="mx_Pill mx_RoomPill" href="https://matrix.to/#/#room:example.com" data-state="closed"><div class="mx_Pill_LinkIcon mx_BaseAvatar"></div><span class="mx_Pill_text">#room:example.com</span></a></bdi></span>"`,
             );
         });
 
@@ -225,11 +224,7 @@ describe("<TextualBody />", () => {
             const ev = mkRoomTextMessage(`Visit https://matrix.to/#/${room1Id}/${defaultEvent.getId()}`);
             const { container } = getComponent({ mxEvent: ev });
             const content = container.querySelector(".mx_EventTile_body");
-            expect(
-                prettier.format(content.innerHTML.replace(defaultEvent.getId(), "%event_id%"), {
-                    parser: "html",
-                }),
-            ).toMatchSnapshot();
+            expect(content.innerHTML.replace(defaultEvent.getId(), "%event_id%")).toMatchSnapshot();
         });
 
         it("should pillify a permalink to an unknown message in the same room with the label »Message«", () => {
@@ -243,11 +238,7 @@ describe("<TextualBody />", () => {
             const ev = mkRoomTextMessage(`Visit https://matrix.to/#/${room2Id}/${defaultEvent.getId()}`);
             const { container } = getComponent({ mxEvent: ev });
             const content = container.querySelector(".mx_EventTile_body");
-            expect(
-                prettier.format(content.innerHTML.replace(defaultEvent.getId(), "%event_id%"), {
-                    parser: "html",
-                }),
-            ).toMatchSnapshot();
+            expect(content.innerHTML.replace(defaultEvent.getId(), "%event_id%")).toMatchSnapshot();
         });
     });
 
@@ -293,10 +284,10 @@ describe("<TextualBody />", () => {
             expect(content).toContainHTML(
                 '<span class="mx_EventTile_body markdown-body" dir="auto">' +
                     "Hey <span>" +
-                    '<span class="mx_EventTile_spoiler">' +
+                    '<button class="mx_EventTile_spoiler">' +
                     '<span class="mx_EventTile_spoiler_reason">(movie)</span>&nbsp;' +
                     '<span class="mx_EventTile_spoiler_content"><span>the movie was awesome</span></span>' +
-                    "</span></span></span>",
+                    "</span></button></span>",
             );
         });
 

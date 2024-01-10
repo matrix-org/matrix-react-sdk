@@ -16,10 +16,7 @@ limitations under the License.
 
 import { sleep } from "matrix-js-sdk/src/utils";
 import React, { ReactNode } from "react";
-import { EventStatus } from "matrix-js-sdk/src/models/event-status";
-import { MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
+import { EventStatus, MatrixEventEvent, Room, MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 
 import Modal, { IHandle } from "../Modal";
 import Spinner from "../components/views/elements/Spinner";
@@ -103,10 +100,12 @@ export async function leaveRoomBehaviour(
             await matrixClient.leave(roomId);
         } catch (e) {
             if (e instanceof MatrixError) {
-                const message = e.data.error || _t("Unexpected server error trying to leave the room");
+                const message = e.data.error || _t("room|leave_unexpected_error");
                 results[roomId] = Object.assign(new Error(message), { errcode: e.data.errcode, data: e.data });
+            } else if (e instanceof Error) {
+                results[roomId] = e;
             } else {
-                results[roomId] = e || new Error("Failed to leave room for unknown causes");
+                results[roomId] = new Error("Failed to leave room for unknown causes");
             }
         }
     } else {
@@ -130,15 +129,12 @@ export async function leaveRoomBehaviour(
         const messages: ReactNode[] = [];
         for (const roomErr of errors) {
             const err = roomErr[1] as MatrixError; // [0] is the roomId
-            let message = _t("Unexpected server error trying to leave the room");
+            let message = _t("room|leave_unexpected_error");
             if (err?.errcode && err.message) {
                 if (err.errcode === "M_CANNOT_LEAVE_SERVER_NOTICE_ROOM") {
                     Modal.createDialog(ErrorDialog, {
-                        title: _t("Can't leave Server Notices room"),
-                        description: _t(
-                            "This room is used for important messages from the Homeserver, " +
-                                "so you cannot leave it.",
-                        ),
+                        title: _t("room|leave_server_notices_title"),
+                        description: _t("room|leave_server_notices_description"),
                     });
                     return;
                 }
@@ -147,7 +143,7 @@ export async function leaveRoomBehaviour(
             messages.push(message, React.createElement("BR")); // createElement to avoid using a tsx file in utils
         }
         Modal.createDialog(ErrorDialog, {
-            title: _t("Error leaving room"),
+            title: _t("room|leave_error_title"),
             description: messages,
         });
         return;

@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { RoomEvent, Room } from "matrix-js-sdk/src/models/room";
+import { RoomEvent, Room, RoomStateEvent, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
@@ -39,9 +39,11 @@ import { ActionPayload } from "../../../dispatcher/payloads";
 import { NonEmptyArray } from "../../../@types/common";
 import { PollHistoryTab } from "../settings/tabs/room/PollHistoryTab";
 import ErrorBoundary from "../elements/ErrorBoundary";
+import { PeopleRoomSettingsTab } from "../settings/tabs/room/PeopleRoomSettingsTab";
 
 export const enum RoomSettingsTab {
     General = "ROOM_GENERAL_TAB",
+    People = "ROOM_PEOPLE_TAB",
     Voip = "ROOM_VOIP_TAB",
     Security = "ROOM_SECURITY_TAB",
     Roles = "ROOM_ROLES_TAB",
@@ -74,6 +76,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.safeGet().on(RoomEvent.Name, this.onRoomName);
+        MatrixClientPeg.safeGet().on(RoomStateEvent.Events, this.onStateEvent);
         this.onRoomName();
     }
 
@@ -90,6 +93,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
         }
 
         MatrixClientPeg.get()?.removeListener(RoomEvent.Name, this.onRoomName);
+        MatrixClientPeg.get()?.removeListener(RoomStateEvent.Events, this.onStateEvent);
     }
 
     /**
@@ -120,23 +124,37 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
         this.forceUpdate();
     };
 
+    private onStateEvent = (event: MatrixEvent): void => {
+        if (event.getType() === EventType.RoomJoinRules) this.forceUpdate();
+    };
+
     private getTabs(): NonEmptyArray<Tab<RoomSettingsTab>> {
         const tabs: Tab<RoomSettingsTab>[] = [];
 
         tabs.push(
             new Tab(
                 RoomSettingsTab.General,
-                _td("General"),
+                _td("common|general"),
                 "mx_RoomSettingsDialog_settingsIcon",
                 <GeneralRoomSettingsTab room={this.state.room} />,
                 "RoomSettingsGeneral",
             ),
         );
+        if (SettingsStore.getValue("feature_ask_to_join") && this.state.room.getJoinRule() === "knock") {
+            tabs.push(
+                new Tab(
+                    RoomSettingsTab.People,
+                    _td("common|people"),
+                    "mx_RoomSettingsDialog_peopleIcon",
+                    <PeopleRoomSettingsTab room={this.state.room} />,
+                ),
+            );
+        }
         if (SettingsStore.getValue("feature_group_calls")) {
             tabs.push(
                 new Tab(
                     RoomSettingsTab.Voip,
-                    _td("Voice & Video"),
+                    _td("settings|voip|title"),
                     "mx_RoomSettingsDialog_voiceIcon",
                     <VoipRoomSettingsTab room={this.state.room} />,
                 ),
@@ -145,7 +163,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
         tabs.push(
             new Tab(
                 RoomSettingsTab.Security,
-                _td("Security & Privacy"),
+                _td("room_settings|security|title"),
                 "mx_RoomSettingsDialog_securityIcon",
                 <SecurityRoomSettingsTab room={this.state.room} closeSettingsFn={() => this.props.onFinished(true)} />,
                 "RoomSettingsSecurityPrivacy",
@@ -154,7 +172,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
         tabs.push(
             new Tab(
                 RoomSettingsTab.Roles,
-                _td("Roles & Permissions"),
+                _td("room_settings|permissions|title"),
                 "mx_RoomSettingsDialog_rolesIcon",
                 <RolesRoomSettingsTab room={this.state.room} />,
                 "RoomSettingsRolesPermissions",
@@ -163,7 +181,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
         tabs.push(
             new Tab(
                 RoomSettingsTab.Notifications,
-                _td("Notifications"),
+                _td("notifications|enable_prompt_toast_title"),
                 "mx_RoomSettingsDialog_notificationsIcon",
                 (
                     <NotificationSettingsTab
@@ -179,7 +197,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
             tabs.push(
                 new Tab(
                     RoomSettingsTab.Bridges,
-                    _td("Bridges"),
+                    _td("room_settings|bridges|title"),
                     "mx_RoomSettingsDialog_bridgesIcon",
                     <BridgeSettingsTab room={this.state.room} />,
                     "RoomSettingsBridges",
@@ -190,7 +208,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
         tabs.push(
             new Tab(
                 RoomSettingsTab.PollHistory,
-                _td("Poll history"),
+                _td("right_panel|polls_button"),
                 "mx_RoomSettingsDialog_pollsIcon",
                 <PollHistoryTab room={this.state.room} onFinished={() => this.props.onFinished(true)} />,
             ),
@@ -200,7 +218,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
             tabs.push(
                 new Tab(
                     RoomSettingsTab.Advanced,
-                    _td("Advanced"),
+                    _td("common|advanced"),
                     "mx_RoomSettingsDialog_warningIcon",
                     (
                         <AdvancedRoomSettingsTab
@@ -223,7 +241,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
                 className="mx_RoomSettingsDialog"
                 hasCancel={true}
                 onFinished={this.props.onFinished}
-                title={_t("Room Settings - %(roomName)s", { roomName })}
+                title={_t("room_settings|title", { roomName })}
             >
                 <div className="mx_SettingsDialog_content">
                     <TabbedView

@@ -20,6 +20,8 @@ limitations under the License.
     &.mx_AccessibleButton_disabled {
         cursor: not-allowed;
 
+        &.mx_AccessibleButton_kind_icon_primary,
+        &.mx_AccessibleButton_kind_icon_primary_outline,
         &.mx_AccessibleButton_kind_primary,
         &.mx_AccessibleButton_kind_primary_outline,
         &.mx_AccessibleButton_kind_primary_sm,
@@ -40,7 +42,7 @@ limitations under the License.
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: $font-14px;
+        font: var(--cpd-font-body-md-regular);
         border: none; /* override default <button /> styles */
         word-break: keep-all; /* prevent button text in Chinese/Japanese/Korean (CJK) from being collapsed */
 
@@ -80,32 +82,39 @@ limitations under the License.
             }
         }
 
-        &.mx_AccessibleButton_kind_icon {
+        &.mx_AccessibleButton_kind_icon,
+        &.mx_AccessibleButton_kind_icon_primary,
+        &.mx_AccessibleButton_kind_icon_primary_outline {
             padding: 0;
             height: 32px;
             width: 32px;
         }
     }
 
+    &.mx_AccessibleButton_kind_icon_primary,
+    &.mx_AccessibleButton_kind_icon_primary_outline,
     &.mx_AccessibleButton_kind_primary,
     &.mx_AccessibleButton_kind_primary_outline,
     &.mx_AccessibleButton_kind_secondary {
-        font-weight: var(--font-semi-bold);
+        font-weight: var(--cpd-font-weight-semibold);
     }
 
+    &.mx_AccessibleButton_kind_icon_primary,
+    &.mx_AccessibleButton_kind_icon_primary_outline,
     &.mx_AccessibleButton_kind_primary,
     &.mx_AccessibleButton_kind_primary_outline {
         border: 1px solid $accent;
     }
 
+    &.mx_AccessibleButton_kind_icon_primary,
     &.mx_AccessibleButton_kind_primary {
         color: $button-primary-fg-color;
         background-color: $accent;
     }
 
+    &.mx_AccessibleButton_kind_icon_primary_outline,
     &.mx_AccessibleButton_kind_primary_outline {
         color: $accent;
-        background-color: $button-secondary-bg-color;
     }
 
     &.mx_AccessibleButton_kind_secondary {

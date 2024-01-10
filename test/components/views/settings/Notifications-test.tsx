@@ -27,9 +27,10 @@ import {
     ConditionKind,
     IPushRuleCondition,
     PushRuleKind,
+    IThreepid,
+    ThreepidMedium,
 } from "matrix-js-sdk/src/matrix";
 import { randomString } from "matrix-js-sdk/src/randomstring";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { act, fireEvent, getByTestId, render, screen, waitFor, within } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import userEvent from "@testing-library/user-event";
@@ -44,11 +45,6 @@ jest.mock("matrix-js-sdk/src/logger");
 
 // Avoid indirectly importing any eagerly created stores that would require extra setup
 jest.mock("../../../../src/Notifier");
-
-// Fake random strings to give a predictable snapshot for IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: jest.fn(),
-}));
 
 const masterRule: IPushRule = {
     actions: [PushRuleActionName.DontNotify],

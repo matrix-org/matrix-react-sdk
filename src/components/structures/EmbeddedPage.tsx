@@ -21,7 +21,7 @@ import sanitizeHtml from "sanitize-html";
 import classnames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from "../../languageHandler";
+import { _t, TranslationKey } from "../../languageHandler";
 import dis from "../../dispatcher/dispatcher";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
@@ -56,7 +56,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         };
     }
 
-    private translate(s: string): string {
+    private translate(s: TranslationKey): string {
         return sanitizeHtml(_t(s));
     }
 
@@ -68,7 +68,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         } catch (err) {
             if (this.unmounted) return;
             logger.warn(`Error loading page: ${err}`);
-            this.setState({ page: _t("Couldn't load page") });
+            this.setState({ page: _t("cant_load_page") });
             return;
         }
 
@@ -76,7 +76,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
 
         if (!res.ok) {
             logger.warn(`Error loading page: ${res.status}`);
-            this.setState({ page: _t("Couldn't load page") });
+            this.setState({ page: _t("cant_load_page") });
             return;
         }
 

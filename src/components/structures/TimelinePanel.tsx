@@ -16,21 +16,31 @@ limitations under the License.
 
 import React, { createRef, ReactNode } from "react";
 import ReactDOM from "react-dom";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
-import { Direction, EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
-import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { SyncState } from "matrix-js-sdk/src/sync";
-import { RoomMember, RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
+import {
+    Room,
+    RoomEvent,
+    RoomMember,
+    RoomMemberEvent,
+    MatrixEvent,
+    MatrixEventEvent,
+    EventTimelineSet,
+    IRoomTimelineData,
+    Direction,
+    EventTimeline,
+    EventType,
+    RelationType,
+    ClientEvent,
+    MatrixClient,
+    Relations,
+    MatrixError,
+    SyncState,
+    TimelineWindow,
+    Thread,
+    ThreadEvent,
+    ReceiptType,
+} from "matrix-js-sdk/src/matrix";
 import { debounce, findLastIndex, throttle } from "lodash";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
-import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
-import { Relations } from "matrix-js-sdk/src/models/relations";
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -58,8 +68,10 @@ import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 
-const PAGINATE_SIZE = 20;
-const INITIAL_SIZE = 20;
+// These pagination sizes are higher than they may possibly need be
+// once https://github.com/matrix-org/matrix-spec-proposals/pull/3874 lands
+const PAGINATE_SIZE = 50;
+const INITIAL_SIZE = 30;
 const READ_RECEIPT_INTERVAL_MS = 500;
 
 const READ_MARKER_DEBOUNCE_MS = 100;
@@ -591,6 +603,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const dir = backwards ? EventTimeline.BACKWARDS : EventTimeline.FORWARDS;
         const canPaginateKey = backwards ? "canBackPaginate" : "canForwardPaginate";
         const paginatingKey = backwards ? "backPaginating" : "forwardPaginating";
+        type CanPaginateKey = typeof canPaginateKey;
+        type PaginatingKey = typeof paginatingKey;
 
         if (!this.state[canPaginateKey]) {
             debuglog("have given up", dir, "paginating this timeline");
@@ -599,7 +613,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         if (!this.timelineWindow?.canPaginate(dir)) {
             debuglog("can't", dir, "paginate any further");
-            this.setState<null>({ [canPaginateKey]: false });
+            this.setState({ [canPaginateKey]: false } as Pick<IState, CanPaginateKey>);
             return Promise.resolve(false);
         }
 
@@ -609,7 +623,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         debuglog("Initiating paginate; backwards:" + backwards);
-        this.setState<null>({ [paginatingKey]: true });
+        this.setState({ [paginatingKey]: true } as Pick<IState, PaginatingKey>);
 
         return this.onPaginationRequest(this.timelineWindow, dir, PAGINATE_SIZE).then(async (r) => {
             if (this.unmounted) {
@@ -624,13 +638,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
             const { events, liveEvents, firstVisibleEventIndex } = this.getEvents();
             this.buildLegacyCallEventGroupers(events);
-            const newState: Partial<IState> = {
+            const newState = {
                 [paginatingKey]: false,
                 [canPaginateKey]: r,
                 events,
                 liveEvents,
                 firstVisibleEventIndex,
-            };
+            } as Pick<IState, PaginatingKey | CanPaginateKey | "events" | "liveEvents" | "firstVisibleEventIndex">;
 
             // moving the window in this direction may mean that we can now
             // paginate in the other where we previously could not.
@@ -647,7 +661,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             // has in memory because we never gave the component a chance to scroll
             // itself into the right place
             return new Promise((resolve) => {
-                this.setState<null>(newState, () => {
+                this.setState(newState, () => {
                     // we can continue paginating in the given direction if:
                     // - timelineWindow.paginate says we can
                     // - we're paginating forwards, or we won't be trying to
@@ -1135,7 +1149,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const lastReadEventIndex = this.getLastDisplayedEventIndex({
             ignoreOwn: true,
         });
-        const lastReadEvent: MatrixEvent | null = this.state.events[lastReadEventIndex ?? 0] ?? null;
+        const lastReadEvent = this.state.events[lastReadEventIndex ?? this.state.events.length - 1] ?? null;
 
         const shouldSendReadReceipt = this.shouldSendReadReceipt(
             currentReadReceiptEventId,
@@ -1623,12 +1637,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
             // dialog, let's jump to the end of the timeline. If we weren't,
             // something has gone badly wrong and rather than causing a loop of
             // undismissable dialogs, let's just give up.
-            if (eventId) {
+            if (eventId && this.props.timelineSet.room) {
                 onFinished = () => {
                     // go via the dispatcher so that the URL is updated
                     dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
-                        room_id: this.props.timelineSet.room.roomId,
+                        room_id: this.props.timelineSet.room!.roomId,
                         metricsTrigger: undefined, // room doesn't change
                     });
                 };
@@ -1636,16 +1650,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
             let description: string;
             if (error.errcode == "M_FORBIDDEN") {
-                description = _t(
-                    "Tried to load a specific point in this room's timeline, but you " +
-                        "do not have permission to view the message in question.",
-                );
+                description = _t("timeline|load_error|no_permission");
             } else {
-                description = _t("Tried to load a specific point in this room's timeline, but was unable to find it.");
+                description = _t("timeline|load_error|unable_to_find");
             }
 
             Modal.createDialog(ErrorDialog, {
-                title: _t("Failed to load timeline position"),
+                title: _t("timeline|load_error|title"),
                 description,
                 onFinished,
             });
@@ -1803,7 +1814,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.context.timelineRenderingType,
         );
         if (events.length === 0 || !room || !cli.isRoomEncrypted(room.roomId) || isThreadTimeline) {
-            logger.info("checkForPreJoinUISI: showing all messages, skipping check");
+            logger.debug("checkForPreJoinUISI: showing all messages, skipping check");
             return 0;
         }
 
@@ -1849,12 +1860,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 // reached an undecryptable message when the user wasn't in the room -- don't try to load any more
                 // Note: for now, we assume that events that are being decrypted are
                 // not decryptable - we will be called once more when it is decrypted.
-                logger.info("checkForPreJoinUISI: reached a pre-join UISI at index ", i);
+                logger.debug("checkForPreJoinUISI: reached a pre-join UISI at index ", i);
                 return i + 1;
             }
         }
 
-        logger.info("checkForPreJoinUISI: did not find pre-join UISI");
+        logger.debug("checkForPreJoinUISI: did not find pre-join UISI");
         return 0;
     }
 
@@ -1965,7 +1976,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 !!ev.status || // local echo
                 (ignoreOwn && ev.getSender() === myUserId); // own message
             const isWithoutTile =
-                !haveRendererForEvent(ev, this.context?.showHiddenEvents) || shouldHideEvent(ev, this.context);
+                !haveRendererForEvent(ev, MatrixClientPeg.safeGet(), this.context?.showHiddenEvents) ||
+                shouldHideEvent(ev, this.context);
 
             if (isWithoutTile || !node) {
                 // don't start counting if the event should be ignored,
@@ -2011,7 +2023,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         return receiptStore?.getEventReadUpTo(myUserId, ignoreSynthesized) ?? null;
     }
 
-    private setReadMarker(eventId: string | null, eventTs: number, inhibitSetState = false): void {
+    private setReadMarker(eventId: string | null, eventTs?: number, inhibitSetState = false): void {
         const roomId = this.props.timelineSet.room?.roomId;
 
         // don't update the state (and cause a re-render) if there is
@@ -2022,7 +2034,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         // in order to later figure out if the read marker is
         // above or below the visible timeline, we stash the timestamp.
-        TimelinePanel.roomReadMarkerTsMap[roomId ?? ""] = eventTs;
+        if (eventTs !== undefined) {
+            TimelinePanel.roomReadMarkerTsMap[roomId ?? ""] = eventTs;
+        } else {
+            delete TimelinePanel.roomReadMarkerTsMap[roomId ?? ""];
+        }
 
         if (inhibitSetState) {
             return;
@@ -2097,7 +2113,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // forwards, otherwise if somebody hits the bottom of the loaded
         // events when viewing historical messages, we get stuck in a loop
         // of paginating our way through the entire history of the room.
-        const stickyBottom = !this.timelineWindow.canPaginate(EventTimeline.FORWARDS);
+        const stickyBottom = !this.timelineWindow?.canPaginate(EventTimeline.FORWARDS);
 
         // If the state is PREPARED or CATCHUP, we're still waiting for the js-sdk to sync with
         // the HS and fetch the latest events, so we are effectively forward paginating.

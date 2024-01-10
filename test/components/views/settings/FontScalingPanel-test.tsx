@@ -21,13 +21,6 @@ import * as TestUtils from "../../../test-utils";
 import FontScalingPanel from "../../../../src/components/views/settings/FontScalingPanel";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 
-// Fake random strings to give a predictable snapshot
-jest.mock("matrix-js-sdk/src/randomstring", () => {
-    return {
-        randomString: () => "abdefghi",
-    };
-});
-
 describe("FontScalingPanel", () => {
     it("renders the font scaling UI", () => {
         TestUtils.stubClient();
@@ -43,10 +36,10 @@ describe("FontScalingPanel", () => {
         await waitFor(() => {
             expect(container.querySelector("input[checked]")).toBeDefined();
         });
-        fireEvent.change(container.querySelector("#font_size_field")!, { target: { value: "20" } });
+        fireEvent.change(container.querySelector("#font_size_field")!, { target: { value: "25" } });
         fireEvent.click(getByText("Use custom size"));
         await waitFor(() => {
-            expect(container.querySelector("#font_size_field")).toHaveValue(18);
+            expect(container.querySelector("#font_size_field")).toHaveValue(21);
         });
     });
 });

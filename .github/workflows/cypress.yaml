@@ -16,12 +16,10 @@ on:
                 type: string
                 required: true
                 description: "The name of the github repository to check out and build."
-            rust-crypto:
-                type: boolean
-                required: false
-                description: "Enable Rust cryptography for the cypress run."
         secrets:
-            CYPRESS_RECORD_KEY:
+            KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS_RUST:
+                required: true
+            KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS_LEGACY:
                 required: true
             TCMS_USERNAME:
                 required: true
@@ -45,15 +43,11 @@ jobs:
         outputs:
             uuid: ${{ steps.uuid.outputs.value }}
             pr_id: ${{ steps.prdetails.outputs.pr_id }}
-            commit_message: ${{ steps.commit.outputs.message }}
-            commit_author: ${{ steps.commit.outputs.author }}
-            commit_email: ${{ steps.commit.outputs.email }}
             percy_enable: ${{ steps.percy.outputs.value || '0' }}
-            kiwi_enable: ${{ steps.kiwi.outputs.value || '1' }}
         steps:
             # We create the status here and then update it to success/failure in the `report` stage
             # This provides an easy link to this workflow_run from the PR before Cypress is done.
-            - uses: Sibz/github-status-action@faaa4d96fecf273bd762985e0e7f9f933c774918 # v1
+            - uses: Sibz/github-status-action@071b5370da85afbb16637d6eed8524a06bc2053e # v1
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: pending
@@ -68,46 +62,26 @@ jobs:
                   owner: ${{ github.event.workflow_run.head_repository.owner.login }}
                   branch: ${{ github.event.workflow_run.head_branch }}
 
-            - name: Get commit details
-              id: commit
-              if: github.event.workflow_run.event == 'pull_request' || github.event.workflow_run.event == 'merge_group'
-              uses: actions/github-script@v6
-              with:
-                  script: |
-                      const response = await github.rest.git.getCommit({
-                        owner: context.repo.owner,
-                        repo: context.repo.repo,
-                        commit_sha: "${{ github.event.workflow_run.head_sha }}",
-                      });
-                      core.setOutput("message", response.data.message);
-                      core.setOutput("author", response.data.author.name);
-                      core.setOutput("email", response.data.author.email);
-
-            # Only run Percy when it is demanded or we are running the daily build
-            - name: Enable Percy if X-Needs-Percy
-              id: percy
-              if: |
-                  github.event.workflow_run.event == 'schedule' ||
-                  (
-                    github.event.workflow_run.event == 'merge_group' &&
-                    contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
-                  )
-              run: echo "value=1" >> $GITHUB_OUTPUT
-
-            # Only export to kiwi when it is demanded or on develop
-            - name: Disable Kiwi if not needed
-              id: kiwi
-              if: |
-                  github.event.workflow_run.event == 'pull_request' &&
-                  !contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Send-Kiwi')
-              run: echo "value=0" >> $GITHUB_OUTPUT
+            # Percy is disabled while we're figuring out https://github.com/vector-im/wat-internal/issues/36
+            # and https://github.com/vector-im/wat-internal/issues/56. We're hoping to turn it back on or switch
+            # to an alternative in the future.
+            # # Only run Percy when it is demanded or we are running the daily build
+            # - name: Enable Percy
+            #   id: percy
+            #   if: |
+            #       github.event.workflow_run.event == 'schedule' ||
+            #       (
+            #         github.event.workflow_run.event == 'merge_group' &&
+            #         contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
+            #       )
+            #   run: echo "value=1" >> $GITHUB_OUTPUT
 
             - name: Generate unique ID 💎
               id: uuid
               run: echo "value=sha-$GITHUB_SHA-time-$(date +"%s")" >> $GITHUB_OUTPUT
 
     tests:
-        name: "Run Tests"
+        name: "Run Tests (${{ matrix.crypto }} crypto)"
         needs: prepare
         runs-on: ubuntu-latest
         permissions:
@@ -118,16 +92,20 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                # Run 4 instances in Parallel
-                runner: [1, 2, 3, 4]
+                # Run tests using both crypto stacks
+                crypto: [legacy, rust]
+                ci_node_total: [2]
+                ci_node_index: [0, 1]
         steps:
-            - uses: browser-actions/setup-chrome@c485fa3bab6be59dce18dbc18ef6ab7cbc8ff5f1
+            # The version of chrome shipped by default may not be consistent across runners
+            # so we explicitly use a specific version of chrome here.
+            - uses: browser-actions/setup-chrome@803ef6dfb4fdf22089c9563225d95e4a515820a0 # v1
             - run: echo "BROWSER_PATH=$(which chrome)" >> $GITHUB_ENV
 
             # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
             # (https://github.com/actions/download-artifact/issues/60) so instead we get this mess:
             - name: 📥 Download artifact
-              uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+              uses: dawidd6/action-download-artifact@f29d1b6a8930683e80acedfbe6baa2930cd646b4 # v2
               with:
                   run_id: ${{ github.event.workflow_run.id }}
                   name: previewbuild
@@ -142,7 +120,7 @@ jobs:
               run: |
                   echo "sha=$(cat webapp/sha)" >> $GITHUB_OUTPUT
 
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   # XXX: We're checking out untrusted code in a secure context
                   # We need to be careful to not trust anything this code outputs/may do
@@ -158,27 +136,29 @@ jobs:
 
             # Enable rust crypto if the calling workflow requests it
             - name: Enable rust crypto
-              if: inputs.rust-crypto
+              if: matrix.crypto == 'rust'
               run: |
                   echo "CYPRESS_RUST_CRYPTO=1" >> "$GITHUB_ENV"
 
-            - name: Run Cypress tests
-              uses: cypress-io/github-action@fbfad281d97a63e3e8a605ebfccba8dbea8aea93
+            - name: Run Cypress tests via knapsack pro
+              uses: cypress-io/github-action@ebe8b24c4428922d0f793a5c4c96853a633180e3 # v6.6.0
               with:
                   working-directory: matrix-react-sdk
-                  # The built-in Electron runner seems to grind to a halt trying
-                  # to run the tests, so use chrome.
-                  browser: "${{ env.BROWSER_PATH }}"
-                  start: npx serve -p 8080 ../webapp
+                  headed: true
+                  start: npx serve -p 8080 -L ../webapp
                   wait-on: "http://localhost:8080"
-                  record: true
-                  parallel: true
-                  command-prefix: "yarn percy exec --parallel --"
-                  config: '{"reporter":"cypress-multi-reporters", "reporterOptions": { "configFile": "cypress-ci-reporter-config.json" } }'
-                  ci-build-id: ${{ needs.prepare.outputs.uuid }}
+                  record: false
+                  parallel: false
+                  # The built-in Electron runner seems to grind to a halt trying to run the tests, so use chrome.
+                  command: yarn percy exec --parallel -- npx knapsack-pro-cypress --config trashAssetsBeforeRuns=false --browser ${{ env.BROWSER_PATH }}
               env:
-                  # pass the Dashboard record key as an environment variable
-                  CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+                  # Knapsack token and config
+                  KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS: ${{ matrix.crypto == 'rust' && secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS_RUST || secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_CYPRESS_LEGACY }}
+                  KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
+                  KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
+                  KNAPSACK_PRO_TEST_FILE_PATTERN: cypress/e2e/**/*.spec.ts
+                  KNAPSACK_PRO_BRANCH: ${{ github.event.workflow_run.head_branch }}
+                  KNAPSACK_PRO_COMMIT_HASH: ${{ github.event.workflow_run.head_sha }}
 
                   # Use existing chromium rather than downloading another
                   PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
@@ -189,20 +169,12 @@ jobs:
                   # make Node's os.tmpdir() return something where we actually have permissions
                   TMPDIR: ${{ runner.temp }}
 
-                  # tell Cypress more details about the context of this run
-                  COMMIT_INFO_BRANCH: ${{ github.event.workflow_run.head_branch }}
-                  COMMIT_INFO_SHA: ${{ github.event.workflow_run.head_sha }}
-                  COMMIT_INFO_REMOTE: ${{ github.repositoryUrl }}
-                  COMMIT_INFO_MESSAGE: ${{ needs.prepare.outputs.commit_message }}
-                  COMMIT_INFO_AUTHOR: ${{ needs.prepare.outputs.commit_author }}
-                  COMMIT_INFO_EMAIL: ${{ needs.prepare.outputs.commit_email }}
-                  CYPRESS_PULL_REQUEST_ID: ${{ needs.prepare.outputs.pr_id }}
-                  CYPRESS_PULL_REQUEST_URL: https://github.com/${{ github.repository }}/pull/${{ needs.prepare.outputs.pr_id }}
-
                   # pass the Percy token as an environment variable
                   PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-                  PERCY_ENABLE: ${{ needs.prepare.outputs.percy_enable }}
-                  PERCY_BROWSER_EXECUTABLE: /usr/bin/chromium-browser
+
+                  # only run percy on legacy crypto (for now)
+                  PERCY_ENABLE: ${{ matrix.crypto == 'legacy' && needs.prepare.outputs.percy_enable || 0 }}
+                  PERCY_BROWSER_EXECUTABLE: ${{ steps.setup-chrome.outputs.chrome-path }}
                   # tell Percy more details about the context of this run
                   PERCY_BRANCH: ${{ github.event.workflow_run.head_branch }}
                   PERCY_COMMIT: ${{ github.event.workflow_run.head_sha }}
@@ -211,25 +183,19 @@ jobs:
                   # We manually finalize the build in the report stage
                   PERCY_PARALLEL_TOTAL: -1
 
-            - name: Upload Artifact
+            - name: 📤 Upload results artifact
               if: failure()
               uses: actions/upload-artifact@v3
               with:
-                  name: cypress-results
+                  name: cypress-results-${{ matrix.crypto }}-crypto
                   path: |
                       matrix-react-sdk/cypress/screenshots
                       matrix-react-sdk/cypress/videos
                       matrix-react-sdk/cypress/synapselogs
-
-            - name: Upload reports
-              if: always()
-              uses: actions/upload-artifact@v3
-              with:
-                  name: cypress-junit
-                  path: matrix-react-sdk/cypress/results
+                      matrix-react-sdk/cypress/results/cypresslogs
 
     report:
-        name: Report results
+        name: Finalize results
         needs:
             - prepare
             - tests
@@ -247,7 +213,7 @@ jobs:
 
             - name: Skip Percy required check
               if: needs.prepare.outputs.percy_enable != '1'
-              uses: Sibz/github-status-action@faaa4d96fecf273bd762985e0e7f9f933c774918 # v1
+              uses: Sibz/github-status-action@071b5370da85afbb16637d6eed8524a06bc2053e # v1
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: success
@@ -256,35 +222,10 @@ jobs:
                   sha: ${{ github.event.workflow_run.head_sha }}
                   target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-            - uses: Sibz/github-status-action@faaa4d96fecf273bd762985e0e7f9f933c774918 # v1
+            - uses: Sibz/github-status-action@071b5370da85afbb16637d6eed8524a06bc2053e # v1
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: ${{ needs.tests.result == 'success' && 'success' || 'failure' }}
                   context: ${{ github.workflow }} / cypress
                   sha: ${{ github.event.workflow_run.head_sha }}
                   target_url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-    kiwi:
-        name: Report results to kiwi
-        needs:
-            - prepare
-            - tests
-        environment: Kiwi
-        runs-on: ubuntu-latest
-        if: ${{ needs.prepare.outputs.kiwi_enable == '1' }}
-        steps:
-            - name: Download all zip files
-              uses: actions/download-artifact@v3
-              with:
-                  name: cypress-junit
-            - name: Upload to kiwi
-              uses: vector-im/kiwitcms-upload-action@main
-              with:
-                  file-pattern: results-*.xml
-                  kiwi-username: ${{ secrets.TCMS_USERNAME }}
-                  kiwi-password: ${{ secrets.TCMS_PASSWORD }}
-                  product: "Element Web"
-                  product-version: ${{ github.event.workflow_run.head_branch }}
-                  build-id: ${{ github.event.workflow_run.head_sha }}
-                  suite-name: "Cypress E2E"
-                  summary-template: "$name"

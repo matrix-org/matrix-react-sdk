@@ -27,6 +27,7 @@ export type InteractionName = InteractionEvent["name"];
 
 const notLoggedInMap: Record<Exclude<Views, Views.LOGGED_IN>, ScreenName> = {
     [Views.LOADING]: "Loading",
+    [Views.CONFIRM_LOCK_THEFT]: "ConfirmStartup",
     [Views.WELCOME]: "Welcome",
     [Views.LOGIN]: "Login",
     [Views.REGISTER]: "Register",
@@ -35,6 +36,7 @@ const notLoggedInMap: Record<Exclude<Views, Views.LOGGED_IN>, ScreenName> = {
     [Views.COMPLETE_SECURITY]: "CompleteSecurity",
     [Views.E2E_SETUP]: "E2ESetup",
     [Views.SOFT_LOGOUT]: "SoftLogout",
+    [Views.LOCK_STOLEN]: "SessionLockStolen",
 };
 
 const loggedInPageTypeMap: Record<PageType, ScreenName> = {
@@ -89,7 +91,7 @@ export default class PosthogTrackers {
         this.trackPage();
     }
 
-    public static trackInteraction(name: InteractionName, ev?: SyntheticEvent, index?: number): void {
+    public static trackInteraction(name: InteractionName, ev?: SyntheticEvent | Event, index?: number): void {
         let interactionType: InteractionEvent["interactionType"];
         if (ev?.type === "click") {
             interactionType = "Pointer";

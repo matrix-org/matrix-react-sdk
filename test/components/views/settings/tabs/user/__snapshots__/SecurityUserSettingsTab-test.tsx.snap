@@ -12,7 +12,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
         class="mx_SettingsSection"
       >
         <h2
-          class="mx_Heading_h2"
+          class="mx_Heading_h3"
         >
           Encryption
         </h2>
@@ -26,7 +26,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               class="mx_SettingsSubsectionHeading"
             >
               <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Secure Backup
               </h3>
@@ -51,7 +51,9 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                 />
               </div>
               <details>
-                <summary>
+                <summary
+                  class="mx_SecureBackupPanel_advanced"
+                >
                   Advanced
                 </summary>
                 <table
@@ -109,7 +111,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               class="mx_SettingsSubsectionHeading"
             >
               <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Message search
               </h3>
@@ -145,7 +147,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               class="mx_SettingsSubsectionHeading"
             >
               <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Cross-signing
               </h3>
@@ -165,72 +167,76 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                 />
               </div>
               <details>
-                <summary>
+                <summary
+                  class="mx_CrossSigningPanel_advanced"
+                >
                   Advanced
                 </summary>
                 <table
                   class="mx_CrossSigningPanel_statusList"
                 >
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Cross-signing public keys:
-                    </th>
-                    <td>
-                      not found
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Cross-signing private keys:
-                    </th>
-                    <td>
-                      not found in storage
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Master private key:
-                    </th>
-                    <td>
-                      not found locally
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Self signing private key:
-                    </th>
-                    <td>
-                      not found locally
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      User signing private key:
-                    </th>
-                    <td>
-                      not found locally
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Homeserver feature support:
-                    </th>
-                    <td>
-                      not found
-                    </td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Cross-signing public keys:
+                      </th>
+                      <td>
+                        not found
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Cross-signing private keys:
+                      </th>
+                      <td>
+                        not found in storage
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Master private key:
+                      </th>
+                      <td>
+                        not found locally
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Self signing private key:
+                      </th>
+                      <td>
+                        not found locally
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        User signing private key:
+                      </th>
+                      <td>
+                        not found locally
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Homeserver feature support:
+                      </th>
+                      <td>
+                        not found
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </details>
             </div>
@@ -242,7 +248,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               class="mx_SettingsSubsectionHeading"
             >
               <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Cryptography
               </h3>
@@ -287,6 +293,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_vY7Q4uEh9K38"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -299,6 +306,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                   aria-disabled="false"
                   aria-label="Never send encrypted messages to unverified sessions from this session"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+                  id="mx_SettingsFlag_vY7Q4uEh9K38"
                   role="switch"
                   tabindex="0"
                 >
@@ -315,7 +323,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
         class="mx_SettingsSection"
       >
         <h2
-          class="mx_Heading_h2"
+          class="mx_Heading_h3"
         >
           Advanced
         </h2>
@@ -329,7 +337,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               class="mx_SettingsSubsectionHeading"
             >
               <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Ignored users
               </h3>
@@ -351,7 +359,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               class="mx_SettingsSubsectionHeading"
             >
               <h3
-                class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
               >
                 Encryption
               </h3>
@@ -364,6 +372,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_QgU2PomxwKpa"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -376,6 +385,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                   aria-disabled="false"
                   aria-label="Manually verify all remote sessions"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+                  id="mx_SettingsFlag_QgU2PomxwKpa"
                   role="switch"
                   tabindex="0"
                 >

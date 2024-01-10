@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef } from "react";
+import React, { forwardRef, ForwardRefExoticComponent } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
@@ -22,17 +22,15 @@ import { IBodyProps } from "./IBodyProps";
 
 function getErrorMessage(mxEvent?: MatrixEvent): string {
     return mxEvent?.isEncryptedDisabledForUnverifiedDevices
-        ? _t("The sender has blocked you from receiving this message")
-        : _t("Unable to decrypt message");
+        ? _t("timeline|decryption_failure_blocked")
+        : _t("threads|unable_to_decrypt");
 }
 
 // A placeholder element for messages that could not be decrypted
-export const DecryptionFailureBody = forwardRef<HTMLDivElement, Partial<IBodyProps>>(
-    ({ mxEvent }, ref): JSX.Element => {
-        return (
-            <div className="mx_DecryptionFailureBody mx_EventTile_content" ref={ref}>
-                {getErrorMessage(mxEvent)}
-            </div>
-        );
-    },
-);
+export const DecryptionFailureBody = forwardRef<HTMLDivElement, IBodyProps>(({ mxEvent }, ref): JSX.Element => {
+    return (
+        <div className="mx_DecryptionFailureBody mx_EventTile_content" ref={ref}>
+            {getErrorMessage(mxEvent)}
+        </div>
+    );
+}) as ForwardRefExoticComponent<IBodyProps>;

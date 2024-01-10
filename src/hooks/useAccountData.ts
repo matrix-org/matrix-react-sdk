@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 import { useCallback, useState } from "react";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { ClientEvent, MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { useTypedEventEmitter } from "./useEventEmitter";
 
@@ -39,18 +37,20 @@ export const useAccountData = <T extends {}>(cli: MatrixClient, eventType: strin
     return value || ({} as T);
 };
 
-// Hook to simplify listening to Matrix room account data
-export const useRoomAccountData = <T extends {}>(room: Room, eventType: string): T => {
-    const [value, setValue] = useState<T | undefined>(() => tryGetContent<T>(room.getAccountData(eventType)));
+// Currently not used, commenting out otherwise the dead code CI is unhappy.
+// But this code is valid and probably will be needed.
 
-    const handler = useCallback(
-        (event) => {
-            if (event.getType() !== eventType) return;
-            setValue(event.getContent());
-        },
-        [eventType],
-    );
-    useTypedEventEmitter(room, RoomEvent.AccountData, handler);
+// export const useRoomAccountData = <T extends {}>(room: Room, eventType: string): T => {
+//     const [value, setValue] = useState<T | undefined>(() => tryGetContent<T>(room.getAccountData(eventType)));
 
-    return value || ({} as T);
-};
+//     const handler = useCallback(
+//         (event) => {
+//             if (event.getType() !== eventType) return;
+//             setValue(event.getContent());
+//         },
+//         [eventType],
+//     );
+//     useTypedEventEmitter(room, RoomEvent.AccountData, handler);
+
+//     return value || ({} as T);
+// };

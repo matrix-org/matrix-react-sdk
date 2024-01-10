@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ChangeEvent, FormEvent, ReactNode } from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
@@ -95,14 +95,14 @@ export default class ConfirmUserActionDialog extends React.Component<IProps, ISt
                         onChange={this.onReasonChange}
                         value={this.state.reason}
                         className="mx_ConfirmUserActionDialog_reasonField"
-                        label={_t("Reason")}
+                        label={_t("room_settings|permissions|ban_reason")}
                         autoFocus={true}
                     />
                 </form>
             );
         }
 
-        const avatar = <MemberAvatar member={this.props.member} width={48} height={48} />;
+        const avatar = <MemberAvatar member={this.props.member} size="48px" />;
         const name = this.props.member.name;
         const userId = this.props.member.userId;
 

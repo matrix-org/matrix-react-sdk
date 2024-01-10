@@ -14,10 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { Room, EventType, ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 
 import { inviteUsersToRoom } from "../RoomInvite";
 import Modal, { IHandle } from "../Modal";
@@ -78,8 +76,8 @@ export async function upgradeRoom(
     if (updateSpaces) {
         parentsToRelink = Array.from(SpaceStore.instance.getKnownParents(room.roomId))
             .map((roomId) => cli.getRoom(roomId))
-            .filter((parent) =>
-                parent?.currentState.maySendStateEvent(EventType.SpaceChild, cli.getUserId()!),
+            .filter(
+                (parent) => parent?.currentState.maySendStateEvent(EventType.SpaceChild, cli.getUserId()!),
             ) as Room[];
     }
 
@@ -101,8 +99,8 @@ export async function upgradeRoom(
         logger.error(e);
 
         Modal.createDialog(ErrorDialog, {
-            title: _t("Error upgrading room"),
-            description: _t("Double check that your server supports the room version chosen and try again."),
+            title: _t("room|upgrade_error_title"),
+            description: _t("room|upgrade_error_description"),
         });
         throw e;
     }

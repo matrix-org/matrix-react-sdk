@@ -31,8 +31,8 @@ const UserAvatar: React.FC = () => {
     const userId = matrixClient.getSafeUserId();
     const displayName = OwnProfileStore.instance.displayName ?? undefined;
     // 40 - 2px border
-    const avatarSize = 36;
-    const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize) ?? undefined;
+    const avatarSize = "36px";
+    const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(parseInt(avatarSize, 10)) ?? undefined;
 
     return (
         <div className={`mx_ShareType_option-icon ${LocationShareType.Own}`}>
@@ -40,9 +40,7 @@ const UserAvatar: React.FC = () => {
                 idName={userId}
                 name={displayName}
                 url={avatarUrl}
-                width={avatarSize}
-                height={avatarSize}
-                resizeMethod="crop"
+                size={avatarSize}
                 className="mx_UserMenu_userAvatar_BaseAvatar"
             />
         </div>
@@ -74,15 +72,15 @@ interface Props {
 }
 const ShareType: React.FC<Props> = ({ setShareType, enabledShareTypes }) => {
     const labels = {
-        [LocationShareType.Own]: _t("My current location"),
-        [LocationShareType.Live]: _t("My live location"),
-        [LocationShareType.Pin]: _t("Drop a Pin"),
+        [LocationShareType.Own]: _t("location_sharing|share_type_own"),
+        [LocationShareType.Live]: _t("location_sharing|share_type_live"),
+        [LocationShareType.Pin]: _t("location_sharing|share_type_pin"),
     };
     return (
         <div className="mx_ShareType">
             <LocationIcon className="mx_ShareType_badge" />
-            <Heading className="mx_ShareType_heading" size="h3">
-                {_t("What location type do you want to share?")}
+            <Heading className="mx_ShareType_heading" size="3">
+                {_t("location_sharing|share_type_prompt")}
             </Heading>
             <div className="mx_ShareType_wrapper_options">
                 {enabledShareTypes.map((type) => (

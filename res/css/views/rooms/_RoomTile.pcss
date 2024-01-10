@@ -24,7 +24,7 @@ limitations under the License.
     contain: content; /* Not strict as it will break when resizing a sublist vertically */
     box-sizing: border-box;
 
-    font-size: $font-13px;
+    font-size: var(--cpd-font-size-body-sm);
 
     &.mx_RoomTile_selected,
     &:hover,
@@ -60,7 +60,9 @@ limitations under the License.
             color: $secondary-content;
             display: flex;
             gap: $spacing-4;
-            line-height: $font-18px;
+            line-height: 1.25;
+            position: relative;
+            top: -1px;
         }
 
         .mx_RoomTile_title,
@@ -71,16 +73,16 @@ limitations under the License.
         }
 
         .mx_RoomTile_title {
-            font-size: $font-14px;
-            line-height: $font-18px;
+            font: var(--cpd-font-body-md-regular);
+            line-height: 1.25;
 
             &.mx_RoomTile_titleHasUnreadEvents {
-                font-weight: var(--font-semi-bold);
+                font-weight: var(--cpd-font-weight-semibold);
             }
         }
 
         .mx_RoomTile_titleWithSubtitle {
-            margin-top: -3px; /* shift the title up a bit more */
+            margin-top: -2px; /* shift the title up a bit more */
         }
     }
 
@@ -142,7 +144,7 @@ limitations under the License.
         mask-image: url("$(res)/img/element-icons/context-menu.svg");
     }
 
-    &:not(.mx_RoomTile_minimized) {
+    &:not(.mx_RoomTile_minimized, .mx_RoomTile_sticky) {
         &:hover,
         &:focus-within,
         &.mx_RoomTile_hasMenuOpen {

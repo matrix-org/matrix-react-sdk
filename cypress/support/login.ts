@@ -62,7 +62,7 @@ declare global {
 Cypress.Commands.add(
     "loginUser",
     (homeserver: HomeserverInstance, username: string, password: string): Chainable<UserCredentials> => {
-        const url = `${homeserver.baseUrl}/_matrix/client/r0/login`;
+        const url = `${homeserver.baseUrl}/_matrix/client/v3/login`;
         return cy
             .request<{
                 access_token: string;
@@ -137,7 +137,14 @@ Cypress.Commands.add(
                 prelaunchFn?.();
 
                 return cy
-                    .visit("/")
+                    .visit("/", {
+                        onBeforeLoad(win) {
+                            // reset notification permissions so we have predictable behaviour
+                            // of notifications toast
+                            // @ts-ignore allow setting default
+                            cy.stub(win.Notification, "permission", "default");
+                        },
+                    })
                     .then(() => {
                         // wait for the app to load
                         return cy.get(".mx_MatrixChat", { timeout: 30000 });

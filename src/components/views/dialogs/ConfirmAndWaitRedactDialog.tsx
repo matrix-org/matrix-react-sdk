@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, HTTPError, MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import ConfirmRedactDialog from "./ConfirmRedactDialog";
@@ -62,7 +62,13 @@ export default class ConfirmAndWaitRedactDialog extends React.PureComponent<IPro
                 await this.props.redact();
                 this.props.onFinished(true);
             } catch (error) {
-                const code = error.errcode || error.statusCode;
+                let code: string | number | undefined;
+                if (error instanceof MatrixError) {
+                    code = error.errcode;
+                } else if (error instanceof HTTPError) {
+                    code = error.httpStatus;
+                }
+
                 if (typeof code !== "undefined") {
                     this.setState({ redactionErrorCode: code });
                 } else {
@@ -81,13 +87,13 @@ export default class ConfirmAndWaitRedactDialog extends React.PureComponent<IPro
                 return (
                     <ErrorDialog
                         onFinished={this.props.onFinished}
-                        title={_t("Error")}
-                        description={_t("You cannot delete this message. (%(code)s)", { code })}
+                        title={_t("common|error")}
+                        description={_t("redact|error", { code })}
                     />
                 );
             } else {
                 return (
-                    <BaseDialog onFinished={this.props.onFinished} hasCancel={false} title={_t("Removing…")}>
+                    <BaseDialog onFinished={this.props.onFinished} hasCancel={false} title={_t("redact|ongoing")}>
                         <Spinner />
                     </BaseDialog>
                 );

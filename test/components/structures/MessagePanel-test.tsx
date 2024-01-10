@@ -17,10 +17,8 @@ limitations under the License.
 
 import React from "react";
 import { EventEmitter } from "events";
-import { MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
-import FakeTimers from "@sinonjs/fake-timers";
+import { MatrixEvent, Room, RoomMember, Thread, ReceiptType } from "matrix-js-sdk/src/matrix";
 import { render } from "@testing-library/react";
-import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import MessagePanel, { shouldFormContinuation } from "../../../src/components/structures/MessagePanel";
 import SettingsStore from "../../../src/settings/SettingsStore";
@@ -29,6 +27,7 @@ import RoomContext, { TimelineRenderingType } from "../../../src/contexts/RoomCo
 import DMRoomMap from "../../../src/utils/DMRoomMap";
 import * as TestUtilsMatrix from "../../test-utils";
 import {
+    createTestClient,
     getMockClientWithEventEmitter,
     makeBeaconInfoEvent,
     mockClientMethodsEvents,
@@ -45,7 +44,6 @@ jest.mock("../../../src/utils/beacon", () => ({
 const roomId = "!roomId:server_name";
 
 describe("MessagePanel", function () {
-    let clock: FakeTimers.InstalledClock;
     const events = mkEvents();
     const userId = "@me:here";
     const client = getMockClientWithEventEmitter({
@@ -113,10 +111,6 @@ describe("MessagePanel", function () {
         });
 
         DMRoomMap.makeShared(client);
-    });
-
-    afterEach(function () {
-        clock?.uninstall();
     });
 
     function mkEvents() {
@@ -405,7 +399,7 @@ describe("MessagePanel", function () {
 
     it("shows a ghost read-marker when the read-marker moves", function () {
         // fake the clock so that we can test the velocity animation.
-        clock = FakeTimers.install();
+        jest.useFakeTimers();
 
         const { container, rerender } = render(
             <div>
@@ -446,7 +440,7 @@ describe("MessagePanel", function () {
         expect(readMarkers[1].previousSibling).toEqual(tiles[6]);
 
         // advance the clock, and then let the browser run an animation frame to let the animation start
-        clock.tick(1500);
+        jest.advanceTimersByTime(1500);
         expect(hr.style.opacity).toEqual("0");
     });
 
@@ -740,6 +734,66 @@ describe("MessagePanel", function () {
 
         expect(cpt).toMatchSnapshot();
     });
+
+    it("should set lastSuccessful=true on non-last event if last event is not eligible for special receipt", () => {
+        client.getRoom.mockImplementation((id) => (id === room.roomId ? room : null));
+        const events = [
+            TestUtilsMatrix.mkMessage({
+                event: true,
+                room: room.roomId,
+                user: client.getSafeUserId(),
+                ts: 1000,
+            }),
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                room: room.roomId,
+                user: client.getSafeUserId(),
+                ts: 1000,
+                type: "m.room.topic",
+                skey: "",
+                content: { topic: "TOPIC" },
+            }),
+        ];
+        const { container } = render(getComponent({ events, showReadReceipts: true }));
+
+        const tiles = container.getElementsByClassName("mx_EventTile");
+        expect(tiles.length).toEqual(2);
+        expect(tiles[0].querySelector(".mx_EventTile_receiptSent")).toBeTruthy();
+        expect(tiles[1].querySelector(".mx_EventTile_receiptSent")).toBeFalsy();
+    });
+
+    it("should set lastSuccessful=false on non-last event if last event has a receipt from someone else", () => {
+        client.getRoom.mockImplementation((id) => (id === room.roomId ? room : null));
+        const events = [
+            TestUtilsMatrix.mkMessage({
+                event: true,
+                room: room.roomId,
+                user: client.getSafeUserId(),
+                ts: 1000,
+            }),
+            TestUtilsMatrix.mkMessage({
+                event: true,
+                room: room.roomId,
+                user: "@other:user",
+                ts: 1001,
+            }),
+        ];
+        room.addReceiptToStructure(
+            events[1].getId()!,
+            ReceiptType.Read,
+            "@other:user",
+            {
+                ts: 1001,
+            },
+            true,
+        );
+        const { container } = render(getComponent({ events, showReadReceipts: true }));
+
+        const tiles = container.getElementsByClassName("mx_EventTile");
+        expect(tiles.length).toEqual(2);
+        expect(tiles[0].querySelector(".mx_EventTile_receiptSent")).toBeFalsy();
+        expect(tiles[1].querySelector(".mx_EventTile_receiptSent")).toBeFalsy();
+    });
 });
 
 describe("shouldFormContinuation", () => {
@@ -773,16 +827,17 @@ describe("shouldFormContinuation", () => {
             msg: "And here's another message in the main timeline after the thread root",
         });
 
-        expect(shouldFormContinuation(message1, message2, false)).toEqual(true);
-        expect(shouldFormContinuation(message2, threadRoot, false)).toEqual(true);
-        expect(shouldFormContinuation(threadRoot, message3, false)).toEqual(true);
+        const client = createTestClient();
+        expect(shouldFormContinuation(message1, message2, client, false)).toEqual(true);
+        expect(shouldFormContinuation(message2, threadRoot, client, false)).toEqual(true);
+        expect(shouldFormContinuation(threadRoot, message3, client, false)).toEqual(true);
 
         const thread = {
             length: 1,
             replyToEvent: {},
         } as unknown as Thread;
         jest.spyOn(threadRoot, "getThread").mockReturnValue(thread);
-        expect(shouldFormContinuation(message2, threadRoot, false)).toEqual(false);
-        expect(shouldFormContinuation(threadRoot, message3, false)).toEqual(false);
+        expect(shouldFormContinuation(message2, threadRoot, client, false)).toEqual(false);
+        expect(shouldFormContinuation(threadRoot, message3, client, false)).toEqual(false);
     });
 });

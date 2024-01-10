@@ -32,7 +32,7 @@ function toastKey(deviceId: string): string {
 }
 
 export const showToast = async (deviceId: string): Promise<void> => {
-    const cli = MatrixClientPeg.get();
+    const cli = MatrixClientPeg.safeGet();
 
     const onAccept = (): void => {
         DeviceListener.sharedInstance().dismissUnverifiedSessions([deviceId]);
@@ -54,14 +54,14 @@ export const showToast = async (deviceId: string): Promise<void> => {
 
     ToastStore.sharedInstance().addOrReplaceToast({
         key: toastKey(deviceId),
-        title: _t("New login. Was this you?"),
+        title: _t("encryption|verification|unverified_session_toast_title"),
         icon: "verification_warning",
         props: {
             description: device.display_name,
             detail: <DeviceMetaData device={extendedDevice} />,
-            acceptLabel: _t("Yes, it was me"),
+            acceptLabel: _t("encryption|verification|unverified_session_toast_accept"),
             onAccept,
-            rejectLabel: _t("No"),
+            rejectLabel: _t("action|no"),
             onReject,
         },
         component: GenericToast,

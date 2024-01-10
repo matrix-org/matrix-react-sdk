@@ -19,7 +19,7 @@ limitations under the License.
 */
 
 import React, { useCallback } from "react";
-import { Device } from "matrix-js-sdk/src/models/device";
+import { Device } from "matrix-js-sdk/src/matrix";
 
 import * as FormattingUtils from "../../../utils/FormattingUtils";
 import { _t } from "../../../languageHandler";
@@ -37,7 +37,7 @@ export function ManualDeviceKeyVerificationDialog({
     device,
     onFinished,
 }: IManualDeviceKeyVerificationDialogProps): JSX.Element {
-    const mxClient = MatrixClientPeg.get();
+    const mxClient = MatrixClientPeg.safeGet();
 
     const onLegacyFinished = useCallback(
         (confirm: boolean) => {
@@ -51,9 +51,9 @@ export function ManualDeviceKeyVerificationDialog({
 
     let text;
     if (mxClient?.getUserId() === userId) {
-        text = _t("Confirm by comparing the following with the User Settings in your other session:");
+        text = _t("encryption|verification|manual_device_verification_self_text");
     } else {
-        text = _t("Confirm this user's session by comparing the following with their User Settings:");
+        text = _t("encryption|verification|manual_device_verification_user_text");
     }
 
     const fingerprint = device.getFingerprint();
@@ -64,16 +64,17 @@ export function ManualDeviceKeyVerificationDialog({
             <div className="mx_DeviceVerifyDialog_cryptoSection">
                 <ul>
                     <li>
-                        <label>{_t("Session name")}:</label> <span>{device.displayName}</span>
+                        <label>{_t("encryption|verification|manual_device_verification_device_name_label")}:</label>{" "}
+                        <span>{device.displayName}</span>
                     </li>
                     <li>
-                        <label>{_t("Session ID")}:</label>{" "}
+                        <label>{_t("encryption|verification|manual_device_verification_device_id_label")}:</label>{" "}
                         <span>
                             <code>{device.deviceId}</code>
                         </span>
                     </li>
                     <li>
-                        <label>{_t("Session key")}:</label>{" "}
+                        <label>{_t("encryption|verification|manual_device_verification_device_key_label")}:</label>{" "}
                         <span>
                             <code>
                                 <b>{key}</b>
@@ -82,15 +83,15 @@ export function ManualDeviceKeyVerificationDialog({
                     </li>
                 </ul>
             </div>
-            <p>{_t("If they don't match, the security of your communication may be compromised.")}</p>
+            <p>{_t("encryption|verification|manual_device_verification_footer")}</p>
         </div>
     );
 
     return (
         <QuestionDialog
-            title={_t("Verify session")}
+            title={_t("settings|sessions|verify_session")}
             description={body}
-            button={_t("Verify session")}
+            button={_t("settings|sessions|verify_session")}
             onFinished={onLegacyFinished}
         />
     );

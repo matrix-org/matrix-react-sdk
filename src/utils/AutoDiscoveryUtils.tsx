@@ -15,17 +15,21 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { AutoDiscovery, ClientConfig } from "matrix-js-sdk/src/autodiscovery";
-import { IDelegatedAuthConfig, M_AUTHENTICATION } from "matrix-js-sdk/src/client";
+import {
+    AutoDiscovery,
+    AutoDiscoveryError,
+    ClientConfig,
+    OidcClientConfig,
+    M_AUTHENTICATION,
+    IClientWellKnown,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IClientWellKnown } from "matrix-js-sdk/src/matrix";
-import { ValidatedIssuerConfig } from "matrix-js-sdk/src/oidc/validate";
 
-import { _t, UserFriendlyError } from "../languageHandler";
+import { _t, _td, TranslationKey, UserFriendlyError } from "../languageHandler";
 import SdkConfig from "../SdkConfig";
 import { ValidatedServerConfig } from "./ValidatedServerConfig";
 
-const LIVELINESS_DISCOVERY_ERRORS: string[] = [
+const LIVELINESS_DISCOVERY_ERRORS: AutoDiscoveryError[] = [
     AutoDiscovery.ERROR_INVALID_HOMESERVER,
     AutoDiscovery.ERROR_INVALID_IDENTITY_SERVER,
 ];
@@ -36,6 +40,37 @@ export interface IAuthComponentState {
     serverDeadError?: ReactNode;
 }
 
+const AutoDiscoveryErrors = Object.values(AutoDiscoveryError);
+
+const isAutoDiscoveryError = (err: unknown): err is AutoDiscoveryError => {
+    return AutoDiscoveryErrors.includes(err as AutoDiscoveryError);
+};
+
+const mapAutoDiscoveryErrorTranslation = (err: AutoDiscoveryError): TranslationKey => {
+    switch (err) {
+        case AutoDiscoveryError.GenericFailure:
+            return _td("auth|autodiscovery_invalid");
+        case AutoDiscoveryError.Invalid:
+            return _td("auth|autodiscovery_generic_failure");
+        case AutoDiscoveryError.InvalidHsBaseUrl:
+            return _td("auth|autodiscovery_invalid_hs_base_url");
+        case AutoDiscoveryError.InvalidHomeserver:
+            return _td("auth|autodiscovery_invalid_hs");
+        case AutoDiscoveryError.InvalidIsBaseUrl:
+            return _td("auth|autodiscovery_invalid_is_base_url");
+        case AutoDiscoveryError.InvalidIdentityServer:
+            return _td("auth|autodiscovery_invalid_is");
+        case AutoDiscoveryError.InvalidIs:
+            return _td("auth|autodiscovery_invalid_is_response");
+        case AutoDiscoveryError.MissingWellknown:
+            return _td("auth|autodiscovery_no_well_known");
+        case AutoDiscoveryError.InvalidJson:
+            return _td("auth|autodiscovery_invalid_json");
+        case AutoDiscoveryError.HomeserverTooOld:
+            return _td("auth|autodiscovery_hs_incompatible");
+    }
+};
+
 export default class AutoDiscoveryUtils {
     /**
      * Checks if a given error or error message is considered an error
@@ -44,11 +79,15 @@ export default class AutoDiscoveryUtils {
      * @param {string | Error} error The error to check
      * @returns {boolean} True if the error is a liveliness error.
      */
-    public static isLivelinessError(error?: string | Error | null): boolean {
+    public static isLivelinessError(error: unknown): boolean {
         if (!error) return false;
-        return !!LIVELINESS_DISCOVERY_ERRORS.find((e) =>
-            typeof error === "string" ? e === error : e === error.message,
-        );
+        let msg: unknown = error;
+        if (error instanceof UserFriendlyError) {
+            msg = error.cause;
+        } else if (error instanceof Error) {
+            msg = error.message;
+        }
+        return LIVELINESS_DISCOVERY_ERRORS.includes(msg as AutoDiscoveryError);
     }
 
     /**
@@ -59,7 +98,7 @@ export default class AutoDiscoveryUtils {
      * implementation for known values.
      * @returns {*} The state for the component, given the error.
      */
-    public static authComponentStateForError(err: string | Error | null, pageName = "login"): IAuthComponentState {
+    public static authComponentStateForError(err: unknown, pageName = "login"): IAuthComponentState {
         if (!err) {
             return {
                 serverIsAlive: true,
@@ -67,13 +106,13 @@ export default class AutoDiscoveryUtils {
                 serverDeadError: null,
             };
         }
-        let title = _t("Cannot reach homeserver");
-        let body: ReactNode = _t("Ensure you have a stable internet connection, or get in touch with the server admin");
+        let title = _t("cannot_reach_homeserver");
+        let body: ReactNode = _t("cannot_reach_homeserver_detail");
         if (!AutoDiscoveryUtils.isLivelinessError(err)) {
             const brand = SdkConfig.get().brand;
-            title = _t("Your %(brand)s is misconfigured", { brand });
+            title = _t("auth|misconfigured_title", { brand });
             body = _t(
-                "Ask your %(brand)s admin to check <a>your config</a> for incorrect or duplicate entries.",
+                "auth|misconfigured_body",
                 {
                     brand,
                 },
@@ -94,31 +133,19 @@ export default class AutoDiscoveryUtils {
         }
 
         let isFatalError = true;
-        const errorMessage = typeof err === "string" ? err : err.message;
+        const errorMessage = err instanceof Error ? err.message : err;
         if (errorMessage === AutoDiscovery.ERROR_INVALID_IDENTITY_SERVER) {
             isFatalError = false;
-            title = _t("Cannot reach identity server");
+            title = _t("auth|failed_connect_identity_server");
 
             // It's annoying having a ladder for the third word in the same sentence, but our translations
             // don't make this easy to avoid.
             if (pageName === "register") {
-                body = _t(
-                    "You can register, but some features will be unavailable until the identity server is " +
-                        "back online. If you keep seeing this warning, check your configuration or contact a server " +
-                        "admin.",
-                );
+                body = _t("auth|failed_connect_identity_server_register");
             } else if (pageName === "reset_password") {
-                body = _t(
-                    "You can reset your password, but some features will be unavailable until the identity " +
-                        "server is back online. If you keep seeing this warning, check your configuration or contact " +
-                        "a server admin.",
-                );
+                body = _t("auth|failed_connect_identity_server_reset_password");
             } else {
-                body = _t(
-                    "You can log in, but some features will be unavailable until the identity server is " +
-                        "back online. If you keep seeing this warning, check your configuration or contact a server " +
-                        "admin.",
-                );
+                body = _t("auth|failed_connect_identity_server_other");
             }
         }
 
@@ -148,7 +175,7 @@ export default class AutoDiscoveryUtils {
         syntaxOnly = false,
     ): Promise<ValidatedServerConfig> {
         if (!homeserverUrl) {
-            throw new UserFriendlyError("No homeserver URL provided");
+            throw new UserFriendlyError("auth|no_hs_url_provided");
         }
 
         const wellknownConfig: IClientWellKnown = {
@@ -200,7 +227,7 @@ export default class AutoDiscoveryUtils {
             // This shouldn't happen without major misconfiguration, so we'll log a bit of information
             // in the log so we can find this bit of code but otherwise tell the user "it broke".
             logger.error("Ended up in a state of not knowing which homeserver to connect to.");
-            throw new UserFriendlyError("Unexpected error resolving homeserver configuration");
+            throw new UserFriendlyError("auth|autodiscovery_unexpected_error_hs");
         }
 
         const hsResult = discoveryResult["m.homeserver"];
@@ -221,10 +248,12 @@ export default class AutoDiscoveryUtils {
         } else if (isResult && isResult.state !== AutoDiscovery.PROMPT) {
             logger.error("Error determining preferred identity server URL:", isResult);
             if (isResult.state === AutoDiscovery.FAIL_ERROR) {
-                if (AutoDiscovery.ALL_ERRORS.indexOf(isResult.error as string) !== -1) {
-                    throw new UserFriendlyError(String(isResult.error));
+                if (isAutoDiscoveryError(isResult.error)) {
+                    throw new UserFriendlyError(mapAutoDiscoveryErrorTranslation(isResult.error), {
+                        cause: hsResult.error,
+                    });
                 }
-                throw new UserFriendlyError("Unexpected error resolving identity server configuration");
+                throw new UserFriendlyError("auth|autodiscovery_unexpected_error_is");
             } // else the error is not related to syntax - continue anyways.
 
             // rewrite homeserver error since we don't care about problems
@@ -237,10 +266,12 @@ export default class AutoDiscoveryUtils {
         if (hsResult.state !== AutoDiscovery.SUCCESS) {
             logger.error("Error processing homeserver config:", hsResult);
             if (!syntaxOnly || !AutoDiscoveryUtils.isLivelinessError(hsResult.error)) {
-                if (AutoDiscovery.ALL_ERRORS.indexOf(hsResult.error as string) !== -1) {
-                    throw new UserFriendlyError(String(hsResult.error));
+                if (isAutoDiscoveryError(hsResult.error)) {
+                    throw new UserFriendlyError(mapAutoDiscoveryErrorTranslation(hsResult.error), {
+                        cause: hsResult.error,
+                    });
                 }
-                throw new UserFriendlyError("Unexpected error resolving homeserver configuration");
+                throw new UserFriendlyError("auth|autodiscovery_unexpected_error_hs");
             } // else the error is not related to syntax - continue anyways.
         }
 
@@ -248,7 +279,7 @@ export default class AutoDiscoveryUtils {
 
         if (!preferredHomeserverUrl) {
             logger.error("No homeserver URL configured");
-            throw new UserFriendlyError("Unexpected error resolving homeserver configuration");
+            throw new UserFriendlyError("auth|autodiscovery_unexpected_error_hs");
         }
 
         let preferredHomeserverName = serverName ?? hsResult["server_name"];
@@ -259,21 +290,29 @@ export default class AutoDiscoveryUtils {
         // It should have been set by now, so check it
         if (!preferredHomeserverName) {
             logger.error("Failed to parse homeserver name from homeserver URL");
-            throw new UserFriendlyError("Unexpected error resolving homeserver configuration");
+            throw new UserFriendlyError("auth|autodiscovery_unexpected_error_hs");
         }
 
-        let delegatedAuthentication = undefined;
+        let delegatedAuthentication: OidcClientConfig | undefined;
         if (discoveryResult[M_AUTHENTICATION.stable!]?.state === AutoDiscovery.SUCCESS) {
-            const { authorizationEndpoint, registrationEndpoint, tokenEndpoint, account, issuer } = discoveryResult[
-                M_AUTHENTICATION.stable!
-            ] as IDelegatedAuthConfig & ValidatedIssuerConfig;
-            delegatedAuthentication = {
+            const {
                 authorizationEndpoint,
                 registrationEndpoint,
                 tokenEndpoint,
                 account,
                 issuer,
-            };
+                metadata,
+                signingKeys,
+            } = discoveryResult[M_AUTHENTICATION.stable!] as OidcClientConfig;
+            delegatedAuthentication = Object.freeze({
+                authorizationEndpoint,
+                registrationEndpoint,
+                tokenEndpoint,
+                account,
+                issuer,
+                metadata,
+                signingKeys,
+            });
         }
 
         return {

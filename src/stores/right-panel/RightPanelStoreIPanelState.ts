@@ -14,10 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { User } from "matrix-js-sdk/src/models/user";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { MatrixEvent, Room, RoomMember, User } from "matrix-js-sdk/src/matrix";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 
 import { RightPanelPhases } from "./RightPanelStorePhases";

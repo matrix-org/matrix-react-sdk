@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useContext, useEffect } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import BaseCard from "./BaseCard";
@@ -73,15 +73,15 @@ const WidgetCard: React.FC<IProps> = ({ room, widgetId, onClose }) => {
 
     const header = (
         <div className="mx_BaseCard_header_title">
-            <Heading size="h4" className="mx_BaseCard_header_title_heading">
+            <Heading size="4" className="mx_BaseCard_header_title_heading">
                 {WidgetUtils.getWidgetName(app)}
             </Heading>
             <ContextMenuButton
                 className="mx_BaseCard_header_title_button--option"
-                inputRef={handle}
+                ref={handle}
                 onClick={openMenu}
                 isExpanded={menuDisplayed}
-                label={_t("Options")}
+                label={_t("common|options")}
             />
             {contextMenu}
         </div>

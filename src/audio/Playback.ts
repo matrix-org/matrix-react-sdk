@@ -20,7 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { defer } from "matrix-js-sdk/src/utils";
 
 // @ts-ignore - `.ts` is needed here to make TS happy
-import PlaybackWorker, { Request, Response } from "../workers/playback.worker.ts";
+import { Request, Response } from "../workers/playback.worker.ts";
 import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { arrayFastResample } from "../utils/arrays";
 import { IDestroyable } from "../utils/IDestroyable";
@@ -29,6 +29,7 @@ import { createAudioContext, decodeOgg } from "./compat";
 import { clamp } from "../utils/numbers";
 import { WorkerManager } from "../WorkerManager";
 import { DEFAULT_WAVEFORM, PLAYBACK_WAVEFORM_SAMPLES } from "./consts";
+import playbackWorkerFactory from "../workers/playbackWorkerFactory";
 
 export enum PlaybackState {
     Decoding = "decoding",
@@ -63,7 +64,7 @@ export class Playback extends EventEmitter implements IDestroyable, PlaybackInte
     private waveformObservable = new SimpleObservable<number[]>();
     private readonly clock: PlaybackClock;
     private readonly fileSize: number;
-    private readonly worker = new WorkerManager<Request, Response>(PlaybackWorker);
+    private readonly worker = new WorkerManager<Request, Response>(playbackWorkerFactory());
 
     /**
      * Creates a new playback instance from a buffer.
@@ -71,7 +72,10 @@ export class Playback extends EventEmitter implements IDestroyable, PlaybackInte
      * @param {number[]} seedWaveform Optional seed waveform to present until the proper waveform
      * can be calculated. Contains values between zero and one, inclusive.
      */
-    public constructor(private buf: ArrayBuffer, seedWaveform = DEFAULT_WAVEFORM) {
+    public constructor(
+        private buf: ArrayBuffer,
+        seedWaveform = DEFAULT_WAVEFORM,
+    ) {
         super();
         // Capture the file size early as reading the buffer will result in a 0-length buffer left behind
         this.fileSize = this.buf.byteLength;

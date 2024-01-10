@@ -18,15 +18,13 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import * as utils from "matrix-js-sdk/src/utils";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
+import { MatrixError, JoinRule, Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
 import { JoinedRoom as JoinedRoomEvent } from "@matrix-org/analytics-events/types/typescript/JoinedRoom";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 import EventEmitter from "events";
+import { RoomViewLifecycle, ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 import { MatrixDispatcher } from "../dispatcher/dispatcher";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -61,6 +59,9 @@ import { IRoomStateEventsActionPayload } from "../actions/MatrixActionCreators";
 import { showCantStartACallDialog } from "../voice-broadcast/utils/showCantStartACallDialog";
 import { pauseNonLiveBroadcastFromOtherRoom } from "../voice-broadcast/utils/pauseNonLiveBroadcastFromOtherRoom";
 import { ActionPayload } from "../dispatcher/payloads";
+import { CancelAskToJoinPayload } from "../dispatcher/payloads/CancelAskToJoinPayload";
+import { SubmitAskToJoinPayload } from "../dispatcher/payloads/SubmitAskToJoinPayload";
+import { ModuleRunner } from "../modules/ModuleRunner";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -118,6 +119,10 @@ interface State {
      * Whether we're viewing a call or call lobby in this room
      */
     viewingCall: boolean;
+
+    promptAskToJoin: boolean;
+
+    viewRoomOpts: ViewRoomOpts;
 }
 
 const INITIAL_STATE: State = {
@@ -138,6 +143,8 @@ const INITIAL_STATE: State = {
     viaServers: [],
     wasContextSwitch: false,
     viewingCall: false,
+    promptAskToJoin: false,
+    viewRoomOpts: { buttons: [] },
 };
 
 type Listener = (isActive: boolean) => void;
@@ -153,7 +160,10 @@ export class RoomViewStore extends EventEmitter {
     private dis?: MatrixDispatcher;
     private dispatchToken?: string;
 
-    public constructor(dis: MatrixDispatcher, private readonly stores: SdkContextClass) {
+    public constructor(
+        dis: MatrixDispatcher,
+        private readonly stores: SdkContextClass,
+    ) {
         super();
         this.resetDispatcher(dis);
         this.stores.voiceBroadcastRecordingsStore.addListener(
@@ -312,14 +322,14 @@ export class RoomViewStore extends EventEmitter {
                         numMembers > 1000
                             ? "MoreThanAThousand"
                             : numMembers > 100
-                            ? "OneHundredAndOneToAThousand"
-                            : numMembers > 10
-                            ? "ElevenToOneHundred"
-                            : numMembers > 2
-                            ? "ThreeToTen"
-                            : numMembers > 1
-                            ? "Two"
-                            : "One";
+                              ? "OneHundredAndOneToAThousand"
+                              : numMembers > 10
+                                ? "ElevenToOneHundred"
+                                : numMembers > 2
+                                  ? "ThreeToTen"
+                                  : numMembers > 1
+                                    ? "Two"
+                                    : "One";
 
                     this.stores.posthogAnalytics.trackEvent<JoinedRoomEvent>({
                         eventName: "JoinedRoom",
@@ -356,6 +366,18 @@ export class RoomViewStore extends EventEmitter {
                     }
                 }
                 break;
+            case Action.PromptAskToJoin: {
+                this.setState({ promptAskToJoin: true });
+                break;
+            }
+            case Action.SubmitAskToJoin: {
+                this.submitAskToJoin(payload as SubmitAskToJoinPayload);
+                break;
+            }
+            case Action.CancelAskToJoin: {
+                this.cancelAskToJoin(payload as CancelAskToJoinPayload);
+                break;
+            }
         }
     }
 
@@ -420,6 +442,10 @@ export class RoomViewStore extends EventEmitter {
                 return;
             }
 
+            const viewRoomOpts: ViewRoomOpts = { buttons: [] };
+            // Allow modules to update the list of buttons for the room by updating `viewRoomOpts`.
+            ModuleRunner.instance.invoke(RoomViewLifecycle.ViewRoom, viewRoomOpts, this.getRoomId());
+
             const newState: Partial<State> = {
                 roomId: payload.room_id,
                 roomAlias: payload.room_alias ?? null,
@@ -441,6 +467,7 @@ export class RoomViewStore extends EventEmitter {
                     (payload.room_id === this.state.roomId
                         ? this.state.viewingCall
                         : CallStore.instance.getActiveCall(payload.room_id) !== null),
+                viewRoomOpts,
             };
 
             // Allow being given an event to be replied to when switching rooms but sanity check its for this room
@@ -497,7 +524,7 @@ export class RoomViewStore extends EventEmitter {
                         action: Action.ViewRoomError,
                         room_id: null,
                         room_alias: payload.room_alias,
-                        err,
+                        err: err instanceof MatrixError ? err : undefined,
                     });
                     return;
                 }
@@ -545,8 +572,8 @@ export class RoomViewStore extends EventEmitter {
                     }),
                 NUM_JOIN_RETRY,
                 (err) => {
-                    // if we received a Gateway timeout then retry
-                    return err.httpStatus === 504;
+                    // if we received a Gateway timeout or Cloudflare timeout then retry
+                    return err.httpStatus === 504 || err.httpStatus === 524;
                 },
             );
 
@@ -563,7 +590,12 @@ export class RoomViewStore extends EventEmitter {
                 action: Action.JoinRoomError,
                 roomId,
                 err,
+                canAskToJoin: payload.canAskToJoin,
             });
+
+            if (payload.canAskToJoin) {
+                this.dis?.dispatch({ action: Action.PromptAskToJoin });
+            }
         }
     }
 
@@ -582,13 +614,13 @@ export class RoomViewStore extends EventEmitter {
         logger.log("Failed to join room:", description);
 
         if (err.name === "ConnectionError") {
-            description = _t("There was an error joining.");
+            description = _t("room|error_join_connection");
         } else if (err.errcode === "M_INCOMPATIBLE_ROOM_VERSION") {
             description = (
                 <div>
-                    {_t("Sorry, your homeserver is too old to participate here.")}
+                    {_t("room|error_join_incompatible_version_1")}
                     <br />
-                    {_t("Please contact your homeserver administrator.")}
+                    {_t("room|error_join_incompatible_version_2")}
                 </div>
             );
         } else if (err.httpStatus === 404) {
@@ -597,9 +629,9 @@ export class RoomViewStore extends EventEmitter {
             if (invitingUserId) {
                 // if the inviting user is on the same HS, there can only be one cause: they left.
                 if (invitingUserId.endsWith(`:${MatrixClientPeg.safeGet().getDomain()}`)) {
-                    description = _t("The person who invited you has already left.");
+                    description = _t("room|error_join_404_invite_same_hs");
                 } else {
-                    description = _t("The person who invited you has already left, or their server is offline.");
+                    description = _t("room|error_join_404_invite");
                 }
             }
 
@@ -608,21 +640,17 @@ export class RoomViewStore extends EventEmitter {
             if (roomId === this.state.roomId && this.state.viaServers.length === 0) {
                 description = (
                     <div>
-                        {_t(
-                            "You attempted to join using a room ID without providing a list " +
-                                "of servers to join through. Room IDs are internal identifiers and " +
-                                "cannot be used to join a room without additional information.",
-                        )}
+                        {_t("room|error_join_404_1")}
                         <br />
                         <br />
-                        {_t("If you know a room address, try joining through that instead.")}
+                        {_t("room|error_join_404_2")}
                     </div>
                 );
             }
         }
 
         Modal.createDialog(ErrorDialog, {
-            title: _t("Failed to join"),
+            title: _t("room|error_join_title"),
             description,
         });
     }
@@ -632,7 +660,7 @@ export class RoomViewStore extends EventEmitter {
             joining: false,
             joinError: payload.err,
         });
-        if (payload.err) {
+        if (payload.err && !payload.canAskToJoin) {
             this.showJoinRoomError(payload.err, payload.roomId);
         }
     }
@@ -745,5 +773,58 @@ export class RoomViewStore extends EventEmitter {
 
     public isViewingCall(): boolean {
         return this.state.viewingCall;
+    }
+
+    /**
+     * Gets the current state of the 'promptForAskToJoin' property.
+     *
+     * @returns {boolean} The value of the 'promptForAskToJoin' property.
+     */
+    public promptAskToJoin(): boolean {
+        return this.state.promptAskToJoin;
+    }
+
+    /**
+     * Submits a request to join a room by sending a knock request.
+     *
+     * @param {SubmitAskToJoinPayload} payload - The payload containing information to submit the request.
+     * @returns {void}
+     */
+    private submitAskToJoin(payload: SubmitAskToJoinPayload): void {
+        MatrixClientPeg.safeGet()
+            .knockRoom(payload.roomId, { viaServers: this.state.viaServers, ...payload.opts })
+            .catch((err: MatrixError) =>
+                Modal.createDialog(ErrorDialog, {
+                    title: _t("room|error_join_title"),
+                    description: err.httpStatus === 403 ? _t("room|error_join_403") : err.message,
+                }),
+            )
+            .finally(() => this.setState({ promptAskToJoin: false }));
+    }
+
+    /**
+     * Cancels a request to join a room by sending a leave request.
+     *
+     * @param {CancelAskToJoinPayload} payload - The payload containing information to cancel the request.
+     * @returns {void}
+     */
+    private cancelAskToJoin(payload: CancelAskToJoinPayload): void {
+        MatrixClientPeg.safeGet()
+            .leave(payload.roomId)
+            .catch((err: MatrixError) =>
+                Modal.createDialog(ErrorDialog, {
+                    title: _t("room|error_cancel_knock_title"),
+                    description: err.message,
+                }),
+            );
+    }
+
+    /**
+     * Gets the current state of the 'viewRoomOpts' property.
+     *
+     * @returns {ViewRoomOpts} The value of the 'viewRoomOpts' property.
+     */
+    public getViewRoomOpts(): ViewRoomOpts {
+        return this.state.viewRoomOpts;
     }
 }

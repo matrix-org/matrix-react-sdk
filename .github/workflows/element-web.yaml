@@ -3,8 +3,12 @@
 # as an artifact and run integration tests.
 name: Element Web - Build
 on:
-    schedule:
-        - cron: "17 4 * * 1-5" # every weekday at 04:17 UTC
+    # We only need the nightly run for Percy which is disabled while we're
+    # figuring out https://github.com/vector-im/wat-internal/issues/36 and
+    # https://github.com/vector-im/wat-internal/issues/56. We're hoping to
+    # turn it back on or switch to an alternative in the future.
+    # schedule:
+    #     - cron: "17 4 * * 1-5" # every weekday at 04:17 UTC
     pull_request: {}
     merge_group:
         types: [checks_requested]
@@ -25,6 +29,10 @@ on:
                 type: string
                 required: false
                 description: "The Git SHA of matrix-js-sdk to build against. By default, will use a matching branch name if it exists, or develop."
+            element-web-sha:
+                type: string
+                required: false
+                description: "The Git SHA of element-web to build against. By default, will use a matching branch name if it exists, or develop."
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
@@ -40,19 +48,20 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   repository: ${{ inputs.react-sdk-repository || github.repository }}
 
-            - uses: actions/setup-node@v3
+            - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
 
             - name: Fetch layered build
               id: layered_build
               env:
-                  # tell layered.sh to check out the right sha of the JS-SDK, if we were given one
+                  # tell layered.sh to check out the right sha of the JS-SDK & EW, if they were given one
                   JS_SDK_GITHUB_BASE_REF: ${{ inputs.matrix-js-sdk-sha }}
+                  ELEMENT_WEB_GITHUB_BASE_REF: ${{ inputs.element-web-sha }}
               run: |
                   scripts/ci/layered.sh
                   JSSDK_SHA=$(git -C matrix-js-sdk rev-parse --short=12 HEAD)

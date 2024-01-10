@@ -15,24 +15,19 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { _t } from "../../../languageHandler";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { IBodyProps } from "./IBodyProps";
 
-interface IProps {
-    mxEvent: MatrixEvent;
-    onMessageAllowed: () => void;
-}
-
-export default class MjolnirBody extends React.Component<IProps> {
-    private onAllowClick = (e: React.MouseEvent): void => {
+export default class MjolnirBody extends React.Component<IBodyProps> {
+    private onAllowClick = (e: ButtonEvent): void => {
         e.preventDefault();
         e.stopPropagation();
 
         const key = `mx_mjolnir_render_${this.props.mxEvent.getRoomId()}__${this.props.mxEvent.getId()}`;
         localStorage.setItem(key, "true");
-        this.props.onMessageAllowed();
+        this.props.onMessageAllowed?.();
     };
 
     public render(): React.ReactNode {
@@ -40,7 +35,7 @@ export default class MjolnirBody extends React.Component<IProps> {
             <div className="mx_MjolnirBody">
                 <i>
                     {_t(
-                        "You have ignored this user, so their message is hidden. <a>Show anyways.</a>",
+                        "timeline|mjolnir|message_hidden",
                         {},
                         {
                             a: (sub) => (

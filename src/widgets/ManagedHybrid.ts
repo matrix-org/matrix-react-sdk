@@ -22,7 +22,7 @@ import { getCallBehaviourWellKnown } from "../utils/WellKnownUtils";
 import WidgetUtils from "../utils/WidgetUtils";
 import { IStoredLayout, WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
 import WidgetEchoStore from "../stores/WidgetEchoStore";
-import WidgetStore from "../stores/WidgetStore";
+import WidgetStore, { IApp } from "../stores/WidgetStore";
 import SdkConfig from "../SdkConfig";
 import DMRoomMap from "../utils/DMRoomMap";
 
@@ -43,7 +43,7 @@ function getWidgetBuildUrl(roomId: string): string | undefined {
         return SdkConfig.get().widget_build_url;
     }
 
-    const wellKnown = getCallBehaviourWellKnown(MatrixClientPeg.get());
+    const wellKnown = getCallBehaviourWellKnown(MatrixClientPeg.safeGet());
     if (isDm && wellKnown?.ignore_dm) {
         return undefined;
     }
@@ -56,7 +56,7 @@ export function isManagedHybridWidgetEnabled(roomId: string): boolean {
 }
 
 export async function addManagedHybridWidget(roomId: string): Promise<void> {
-    const cli = MatrixClientPeg.get();
+    const cli = MatrixClientPeg.safeGet();
     const room = cli.getRoom(roomId);
     if (!room) {
         return;
@@ -97,7 +97,10 @@ export async function addManagedHybridWidget(roomId: string): Promise<void> {
 
     // Add the widget
     try {
-        await WidgetUtils.setRoomWidgetContent(cli, roomId, widgetId, widgetContent);
+        await WidgetUtils.setRoomWidgetContent(cli, roomId, widgetId, {
+            ...widgetContent,
+            "io.element.managed_hybrid": true,
+        });
     } catch (e) {
         logger.error(`Unable to add managed hybrid widget in room ${roomId}`, e);
         return;
@@ -115,4 +118,8 @@ export async function addManagedHybridWidget(roomId: string): Promise<void> {
     WidgetLayoutStore.instance.moveToContainer(room, installedWidget, layout.container);
     WidgetLayoutStore.instance.setContainerHeight(room, layout.container, layout.height);
     WidgetLayoutStore.instance.copyLayoutToRoom(room);
+}
+
+export function isManagedHybridWidget(widget: IApp): boolean {
+    return !!widget["io.element.managed_hybrid"];
 }

@@ -21,14 +21,15 @@ import {
     ISearchResult,
     ISearchResults,
     SearchOrderBy,
-} from "matrix-js-sdk/src/@types/search";
-import { IRoomEventFilter } from "matrix-js-sdk/src/filter";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { SearchResult } from "matrix-js-sdk/src/models/search-result";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+    IRoomEventFilter,
+    EventType,
+    MatrixClient,
+    SearchResult,
+} from "matrix-js-sdk/src/matrix";
 
 import { ISearchArgs } from "./indexing/BaseEventIndexManager";
 import EventIndexPeg from "./indexing/EventIndexPeg";
+import { isNotUndefined } from "./Typeguards";
 
 const SEARCH_LIMIT = 10;
 
@@ -234,9 +235,11 @@ async function localPagination(
 ): Promise<ISeshatSearchResults> {
     const eventIndex = EventIndexPeg.get();
 
-    const searchArgs = searchResult.seshatQuery;
+    if (!searchResult.seshatQuery) {
+        throw new Error("localSearchProcess must be called first");
+    }
 
-    const localResult = await eventIndex!.search(searchArgs);
+    const localResult = await eventIndex!.search(searchResult.seshatQuery);
     if (!localResult) {
         throw new Error("Local search pagination failed");
     }
@@ -408,7 +411,7 @@ function combineEvents(
 ): IResultRoomEvents {
     const response = {} as IResultRoomEvents;
 
-    const cachedEvents = previousSearchResult.cachedEvents;
+    const cachedEvents = previousSearchResult.cachedEvents ?? [];
     let oldestEventFrom = previousSearchResult.oldestEventFrom;
     response.highlights = previousSearchResult.highlights;
 
@@ -466,8 +469,8 @@ function combineEvents(
  */
 function combineResponses(
     previousSearchResult: ISeshatSearchResults,
-    localEvents: IResultRoomEvents,
-    serverEvents: IResultRoomEvents,
+    localEvents?: IResultRoomEvents,
+    serverEvents?: IResultRoomEvents,
 ): IResultRoomEvents {
     // Combine our events first.
     const response = combineEvents(previousSearchResult, localEvents, serverEvents);
@@ -478,11 +481,14 @@ function combineResponses(
     if (previousSearchResult.count) {
         response.count = previousSearchResult.count;
     } else {
-        response.count = localEvents.count + serverEvents.count;
+        const localEventCount = localEvents?.count ?? 0;
+        const serverEventCount = serverEvents?.count ?? 0;
+
+        response.count = localEventCount + serverEventCount;
     }
 
     // Update our next batch tokens for the given search sources.
-    if (localEvents) {
+    if (localEvents && isNotUndefined(previousSearchResult.seshatQuery)) {
         previousSearchResult.seshatQuery.next_batch = localEvents.next_batch;
     }
     if (serverEvents) {
@@ -503,7 +509,11 @@ function combineResponses(
     // pagination request.
     //
     // Provide a fake next batch token for that case.
-    if (!response.next_batch && previousSearchResult.cachedEvents.length > 0) {
+    if (
+        !response.next_batch &&
+        isNotUndefined(previousSearchResult.cachedEvents) &&
+        previousSearchResult.cachedEvents.length > 0
+    ) {
         response.next_batch = "cached";
     }
 
@@ -563,16 +573,12 @@ async function combinedPagination(
 
     // Fetch events from the server if we have a token for it and if it's the
     // local indexes turn or the local index has exhausted its results.
-    if (searchResult.serverSideNextBatch && (oldestEventFrom === "local" || !searchArgs.next_batch)) {
-        const body = { body: searchResult._query, next_batch: searchResult.serverSideNextBatch };
+    if (searchResult.serverSideNextBatch && (oldestEventFrom === "local" || !searchArgs?.next_batch)) {
+        const body = { body: searchResult._query!, next_batch: searchResult.serverSideNextBatch };
         serverSideResult = await client.search(body);
     }
 
-    let serverEvents: IResultRoomEvents | undefined;
-
-    if (serverSideResult) {
-        serverEvents = serverSideResult.search_categories.room_events;
-    }
+    const serverEvents: IResultRoomEvents | undefined = serverSideResult?.search_categories.room_events;
 
     // Combine our events.
     const combinedResult = combineResponses(searchResult, localResult, serverEvents);

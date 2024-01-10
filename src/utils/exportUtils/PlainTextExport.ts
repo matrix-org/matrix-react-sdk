@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, IContent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import React from "react";
 
@@ -24,6 +23,8 @@ import { _t } from "../../languageHandler";
 import { ExportType, IExportOptions } from "./exportUtils";
 import { textForEvent } from "../../TextForEvent";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
+import SettingsStore from "../../settings/SettingsStore";
+import { formatFullDate } from "../../DateUtils";
 
 export default class PlainTextExporter extends Exporter {
     protected totalSize: number;
@@ -38,8 +39,8 @@ export default class PlainTextExporter extends Exporter {
         super(room, exportType, exportOptions, setProgressText);
         this.totalSize = 0;
         this.mediaOmitText = !this.exportOptions.attachmentsIncluded
-            ? _t("Media omitted")
-            : _t("Media omitted - file size limit exceeded");
+            ? _t("export_chat|media_omitted")
+            : _t("export_chat|media_omitted_file_size");
     }
 
     public get destinationFileName(): string {
@@ -91,14 +92,14 @@ export default class PlainTextExporter extends Exporter {
                     } else {
                         this.totalSize += blob.size;
                         const filePath = this.getFilePath(mxEv);
-                        mediaText = " (" + _t("File Attached") + ")";
+                        mediaText = " (" + _t("export_chat|file_attached") + ")";
                         this.addFile(filePath, blob);
                         if (this.totalSize == this.exportOptions.maxSize) {
                             this.exportOptions.attachmentsIncluded = false;
                         }
                     }
                 } catch (error) {
-                    mediaText = " (" + _t("Error fetching file") + ")";
+                    mediaText = " (" + _t("export_chat|error_fetching_file") + ")";
                     logger.log("Error fetching file " + error);
                 }
             } else mediaText = ` (${this.mediaOmitText})`;
@@ -112,7 +113,7 @@ export default class PlainTextExporter extends Exporter {
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
             this.updateProgress(
-                _t("Processing event %(number)s out of %(total)s", {
+                _t("export_chat|processing_event_n", {
                     number: i + 1,
                     total: events.length,
                 }),
@@ -120,16 +121,21 @@ export default class PlainTextExporter extends Exporter {
                 true,
             );
             if (this.cancelled) return this.cleanUp();
-            if (!haveRendererForEvent(event, false)) continue;
+            if (!haveRendererForEvent(event, this.room.client, false)) continue;
             const textForEvent = await this.plainTextForEvent(event);
-            content += textForEvent && `${new Date(event.getTs()).toLocaleString()} - ${textForEvent}\n`;
+            content +=
+                textForEvent &&
+                `${formatFullDate(
+                    new Date(event.getTs()),
+                    SettingsStore.getValue("showTwelveHourTimestamps"),
+                )} - ${textForEvent}\n`;
         }
         return content;
     }
 
     public async export(): Promise<void> {
-        this.updateProgress(_t("Starting export process…"));
-        this.updateProgress(_t("Fetching events…"));
+        this.updateProgress(_t("export_chat|starting_export"));
+        this.updateProgress(_t("export_chat|fetching_events"));
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
@@ -137,7 +143,7 @@ export default class PlainTextExporter extends Exporter {
 
         logger.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart) / 1000}s`);
 
-        this.updateProgress(_t("Creating output…"));
+        this.updateProgress(_t("export_chat|creating_output"));
         const text = await this.createOutput(res);
 
         if (this.files.length) {

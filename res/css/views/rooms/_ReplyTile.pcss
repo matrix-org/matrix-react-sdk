@@ -17,7 +17,7 @@ limitations under the License.
 .mx_ReplyTile {
     position: relative;
     padding: 2px 0;
-    font-size: $font-14px;
+    font: var(--cpd-font-body-md-regular);
 
     &.mx_ReplyTile_audio .mx_MFileBody_info_icon::before {
         mask-image: url("$(res)/img/element-icons/speaker.svg");
@@ -37,7 +37,9 @@ limitations under the License.
         color: $secondary-content;
         transition: color ease 0.15s;
         gap: 2px;
-        max-width: 100%; // avoid overflow with wide content
+        max-width: 100%;
+
+        // avoid overflow with wide content
 
         &:hover {
             color: $primary-content;
@@ -112,7 +114,7 @@ limitations under the License.
         grid-template:
             "sender        message" auto
             / max-content auto;
-        gap: 4px; // increase spacing
+        gap: 4px; /* increase spacing */
     }
 
     .mx_ReplyTile_sender {
@@ -122,20 +124,20 @@ limitations under the License.
         gap: 4px;
 
         .mx_DisambiguatedProfile {
-            font-size: $font-14px;
+            font: var(--cpd-font-body-md-regular);
 
-            display: inline-block; // anti-zalgo, with overflow hidden
+            display: inline-block; /* anti-zalgo, with overflow hidden */
             padding: 0;
             margin: 0;
 
-            // truncate long display names
+            /* truncate long display names */
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
         }
 
         .mx_BaseAvatar {
-            line-height: 14px; // To match size
+            line-height: 14px; /* To match size */
         }
     }
 }

@@ -14,16 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {
-    ComponentClass,
-    createContext,
-    forwardRef,
-    PropsWithoutRef,
-    ForwardRefExoticComponent,
-    useContext,
-    RefAttributes,
-} from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import React, { ComponentClass, createContext, forwardRef, useContext } from "react";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 // This context is available to components under LoggedInView,
 // the context must not be used by components outside a MatrixClientContext tree.
@@ -42,10 +34,9 @@ export function useMatrixClientContext(): MatrixClient {
 
 const matrixHOC = <ComposedComponentProps extends {}>(
     ComposedComponent: ComponentClass<ComposedComponentProps>,
-): ForwardRefExoticComponent<
-    PropsWithoutRef<Omit<ComposedComponentProps, "mxClient">> &
-        RefAttributes<InstanceType<ComponentClass<ComposedComponentProps>>>
-> => {
+): ((
+    props: Omit<ComposedComponentProps, "mxClient"> & React.RefAttributes<InstanceType<typeof ComposedComponent>>,
+) => React.ReactElement | null) => {
     type ComposedComponentInstance = InstanceType<typeof ComposedComponent>;
 
     // eslint-disable-next-line react-hooks/rules-of-hooks

@@ -18,7 +18,7 @@ limitations under the License.
 .mx_IconizedContextMenu {
     min-width: 146px;
     width: max-content;
-    // override default ul styles
+    /* override default ul styles */
     margin: 0;
     padding: 0;
 
@@ -30,7 +30,7 @@ limitations under the License.
 
         .mx_IconizedContextMenu_optionList_label {
             font-size: $font-15px;
-            font-weight: var(--font-semi-bold);
+            font-weight: var(--cpd-font-weight-semibold);
         }
 
         /* the notFirst class is for cases where the optionList might be under a header of sorts. */
@@ -79,8 +79,7 @@ limitations under the License.
             padding-bottom: 12px;
             text-decoration: none;
             color: $primary-content;
-            font-size: $font-15px;
-            line-height: $font-24px;
+            font: var(--cpd-font-body-md-regular);
 
             /* Create a flexbox to more easily define the list items */
             display: flex;
@@ -138,7 +137,7 @@ limitations under the License.
             mask-position: center;
             mask-size: contain;
             mask-repeat: no-repeat;
-            background-color: $secondary-content;
+            background-color: $icon-button-color;
         }
     }
 

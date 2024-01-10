@@ -14,10 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IOpenIDToken } from "matrix-js-sdk/src/matrix";
+import { SERVICE_TYPES, Room, IOpenIDToken } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "./settings/SettingsStore";
 import { Service, startTermsFlow, TermsInteractionCallback, TermsNotSignedError } from "./Terms";
@@ -36,7 +34,10 @@ export default class ScalarAuthClient {
     private termsInteractionCallback?: TermsInteractionCallback;
     private isDefaultManager: boolean;
 
-    public constructor(private apiUrl: string, private uiUrl: string) {
+    public constructor(
+        private apiUrl: string,
+        private uiUrl: string,
+    ) {
         this.scalarToken = null;
         // `undefined` to allow `startTermsFlow` to fallback to a default
         // callback if this is unset.
@@ -131,7 +132,7 @@ export default class ScalarAuthClient {
     private checkToken(token: string): Promise<string> {
         return this.getAccountName(token)
             .then((userId) => {
-                const me = MatrixClientPeg.get().getUserId();
+                const me = MatrixClientPeg.safeGet().getUserId();
                 if (userId !== me) {
                     throw new Error("Scalar token is owned by someone else: " + me);
                 }
@@ -157,7 +158,7 @@ export default class ScalarAuthClient {
                     const parsedImRestUrl = parseUrl(this.apiUrl);
                     parsedImRestUrl.pathname = "";
                     return startTermsFlow(
-                        MatrixClientPeg.get(),
+                        MatrixClientPeg.safeGet(),
                         [new Service(SERVICE_TYPES.IM, parsedImRestUrl.toString(), token)],
                         this.termsInteractionCallback,
                     ).then(() => {
@@ -171,7 +172,7 @@ export default class ScalarAuthClient {
 
     public registerForToken(): Promise<string> {
         // Get openid bearer token from the HS as the first part of our dance
-        return MatrixClientPeg.get()
+        return MatrixClientPeg.safeGet()
             .getOpenIdToken()
             .then((tokenObject) => {
                 // Now we can send that to scalar and exchange it for a scalar token

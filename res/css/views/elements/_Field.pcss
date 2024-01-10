@@ -38,9 +38,7 @@ limitations under the License.
 .mx_Field input,
 .mx_Field select,
 .mx_Field textarea {
-    font-family: inherit;
-    font-weight: normal;
-    font-size: $font-14px;
+    font: var(--cpd-font-body-md-regular);
     border: none;
     /* Even without a border here, we still need this avoid overlapping the rounded */
     /* corners on the field above. */
@@ -55,6 +53,7 @@ limitations under the License.
 .mx_Field select {
     -moz-appearance: none;
     -webkit-appearance: none;
+    text-overflow: ellipsis;
 }
 
 /* Can't add pseudo-elements to a select directly, so we use its parent. */
@@ -96,10 +95,13 @@ limitations under the License.
 }
 
 .mx_Field label {
-    transition: font-size 0.25s ease-out 0.1s, color 0.25s ease-out 0.1s, transform 0.25s ease-out 0.1s,
+    transition:
+        font-size 0.25s ease-out 0.1s,
+        color 0.25s ease-out 0.1s,
+        transform 0.25s ease-out 0.1s,
         background-color 0.25s ease-out 0.1s;
     background-color: transparent;
-    font-size: $font-14px;
+    font: var(--cpd-font-body-md-regular);
     transform: translateY(0);
     position: absolute;
     left: 0px;
@@ -118,7 +120,10 @@ limitations under the License.
 .mx_Field input:not(:placeholder-shown) + label,
 .mx_Field textarea:focus + label,
 .mx_Field textarea:not(:placeholder-shown) + label {
-    transition: font-size 0.25s ease-out 0s, color 0.25s ease-out 0s, transform 0.25s ease-out 0s,
+    transition:
+        font-size 0.25s ease-out 0s,
+        color 0.25s ease-out 0s,
+        transform 0.25s ease-out 0s,
         background-color 0.25s ease-out 0s;
     font-size: $font-10px;
     transform: translateY(-13px);
@@ -183,5 +188,5 @@ limitations under the License.
 }
 
 .mx_Field .mx_CountryDropdown {
-    width: $font-78px;
+    width: fit-content;
 }

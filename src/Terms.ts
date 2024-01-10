@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
+import { SERVICE_TYPES, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import Modal from "./Modal";
 import TermsDialog from "./components/views/dialogs/TermsDialog";
@@ -34,7 +33,11 @@ export class Service {
      * @param {string} baseUrl The Base URL of the service (ie. before '/_matrix')
      * @param {string} accessToken The user's access token for the service
      */
-    public constructor(public serviceType: SERVICE_TYPES, public baseUrl: string, public accessToken: string) {}
+    public constructor(
+        public serviceType: SERVICE_TYPES,
+        public baseUrl: string,
+        public accessToken: string,
+    ) {}
 }
 
 export interface LocalisedPolicy {

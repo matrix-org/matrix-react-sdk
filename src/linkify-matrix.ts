@@ -19,7 +19,7 @@ import * as linkifyjs from "linkifyjs";
 import { EventListeners, Opts, registerCustomProtocol, registerPlugin } from "linkifyjs";
 import linkifyElement from "linkify-element";
 import linkifyString from "linkify-string";
-import { User } from "matrix-js-sdk/src/matrix";
+import { getHttpUriForMxc, User } from "matrix-js-sdk/src/matrix";
 
 import {
     parsePermalink,
@@ -31,6 +31,7 @@ import { Action } from "./dispatcher/actions";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { MatrixClientPeg } from "./MatrixClientPeg";
+import { PERMITTED_URL_SCHEMES } from "./utils/UrlUtils";
 
 export enum Type {
     URL = "url",
@@ -38,17 +39,14 @@ export enum Type {
     RoomAlias = "roomalias",
 }
 
-// Linkify stuff doesn't type scanner/parser/utils properly :/
 function matrixOpaqueIdLinkifyParser({
     scanner,
     parser,
-    utils,
     token,
     name,
 }: {
-    scanner: any;
-    parser: any;
-    utils: any;
+    scanner: linkifyjs.ScannerInit;
+    parser: linkifyjs.ParserInit;
     token: "#" | "+" | "@";
     name: Type;
 }): void {
@@ -56,54 +54,48 @@ function matrixOpaqueIdLinkifyParser({
         DOT,
         // IPV4 necessity
         NUM,
-        TLD,
         COLON,
         SYM,
         SLASH,
         EQUALS,
         HYPHEN,
         UNDERSCORE,
-        // because 'localhost' is tokenised to the localhost token,
-        // usernames @localhost:foo.com are otherwise not matched!
-        LOCALHOST,
-        domain,
     } = scanner.tokens;
 
-    const S_START = parser.start;
-    const matrixSymbol = utils.createTokenClass(name, { isLink: true });
+    // Contains NUM, WORD, UWORD, EMOJI, TLD, UTLD, SCHEME, SLASH_SCHEME and LOCALHOST plus custom protocols (e.g. "matrix")
+    const { domain } = scanner.tokens.groups;
 
-    const localpartTokens = [domain, TLD, DOT, LOCALHOST, SYM, SLASH, EQUALS, UNDERSCORE, HYPHEN];
-    const domainpartTokens = [domain, TLD, LOCALHOST, HYPHEN];
+    // Tokens we need that are not contained in the domain group
+    const additionalLocalpartTokens = [DOT, SYM, SLASH, EQUALS, UNDERSCORE, HYPHEN];
+    const additionalDomainpartTokens = [HYPHEN];
 
-    const INITIAL_STATE = S_START.tt(token);
+    const matrixToken = linkifyjs.createTokenClass(name, { isLink: true });
+    const matrixTokenState = new linkifyjs.State(matrixToken) as any as linkifyjs.State<linkifyjs.MultiToken>; // linkify doesn't appear to type this correctly
 
-    const LOCALPART_STATE = INITIAL_STATE.tt(domain);
-    for (const token of localpartTokens) {
-        INITIAL_STATE.tt(token, LOCALPART_STATE);
-        LOCALPART_STATE.tt(token, LOCALPART_STATE);
-    }
-    const LOCALPART_STATE_DOT = LOCALPART_STATE.tt(DOT);
-    for (const token of localpartTokens) {
-        LOCALPART_STATE_DOT.tt(token, LOCALPART_STATE);
-    }
+    const matrixTokenWithPort = linkifyjs.createTokenClass(name, { isLink: true });
+    const matrixTokenWithPortState = new linkifyjs.State(
+        matrixTokenWithPort,
+    ) as any as linkifyjs.State<linkifyjs.MultiToken>; // linkify doesn't appear to type this correctly
 
+    const INITIAL_STATE = parser.start.tt(token);
+
+    // Localpart
+    const LOCALPART_STATE = new linkifyjs.State<linkifyjs.MultiToken>();
+    INITIAL_STATE.ta(domain, LOCALPART_STATE);
+    INITIAL_STATE.ta(additionalLocalpartTokens, LOCALPART_STATE);
+    LOCALPART_STATE.ta(domain, LOCALPART_STATE);
+    LOCALPART_STATE.ta(additionalLocalpartTokens, LOCALPART_STATE);
+
+    // Domainpart
     const DOMAINPART_STATE_DOT = LOCALPART_STATE.tt(COLON);
-    const DOMAINPART_STATE = DOMAINPART_STATE_DOT.tt(domain);
-    DOMAINPART_STATE.tt(DOT, DOMAINPART_STATE_DOT);
-    for (const token of domainpartTokens) {
-        DOMAINPART_STATE.tt(token, DOMAINPART_STATE);
-        // we are done if we have a domain
-        DOMAINPART_STATE.tt(token, matrixSymbol);
-    }
+    DOMAINPART_STATE_DOT.ta(domain, matrixTokenState);
+    DOMAINPART_STATE_DOT.ta(additionalDomainpartTokens, matrixTokenState);
+    matrixTokenState.ta(domain, matrixTokenState);
+    matrixTokenState.ta(additionalDomainpartTokens, matrixTokenState);
+    matrixTokenState.tt(DOT, DOMAINPART_STATE_DOT);
 
-    // accept repeated TLDs (e.g .org.uk) but do not accept double dots: ..
-    for (const token of domainpartTokens) {
-        DOMAINPART_STATE_DOT.tt(token, DOMAINPART_STATE);
-    }
-
-    const PORT_STATE = DOMAINPART_STATE.tt(COLON);
-
-    PORT_STATE.tt(NUM, matrixSymbol);
+    // Port suffixes
+    matrixTokenState.tt(COLON).tt(NUM, matrixTokenWithPortState);
 }
 
 function onUserClick(event: MouseEvent, userId: string): void {
@@ -147,7 +139,6 @@ export const options: Opts = {
                     const permalink = parsePermalink(href);
                     if (permalink?.userId) {
                         return {
-                            // @ts-ignore see https://linkify.js.org/docs/options.html
                             click: function (e: MouseEvent) {
                                 onUserClick(e, permalink.userId!);
                             },
@@ -158,7 +149,6 @@ export const options: Opts = {
                         if (localHref !== href) {
                             // it could be converted to a localHref -> therefore handle locally
                             return {
-                                // @ts-ignore see https://linkify.js.org/docs/options.html
                                 click: function (e: MouseEvent) {
                                     e.preventDefault();
                                     window.location.hash = localHref;
@@ -173,17 +163,15 @@ export const options: Opts = {
             }
             case Type.UserId:
                 return {
-                    // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function (e: MouseEvent) {
-                        const userId = parsePermalink(href)?.userId;
+                        const userId = parsePermalink(href)?.userId ?? href;
                         if (userId) onUserClick(e, userId);
                     },
                 };
             case Type.RoomAlias:
                 return {
-                    // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function (e: MouseEvent) {
-                        const alias = parsePermalink(href)?.roomIdOrAlias;
+                        const alias = parsePermalink(href)?.roomIdOrAlias ?? href;
                         if (alias) onAliasClick(e, alias);
                     },
                 };
@@ -194,10 +182,15 @@ export const options: Opts = {
 
     formatHref: function (href: string, type: Type | string): string {
         switch (type) {
+            case "url":
+                if (href.startsWith("mxc://") && MatrixClientPeg.get()) {
+                    return getHttpUriForMxc(MatrixClientPeg.get()!.baseUrl, href);
+                }
+            // fallthrough
             case Type.RoomAlias:
             case Type.UserId:
             default: {
-                return tryTransformEntityToPermalink(MatrixClientPeg.get(), href) ?? "";
+                return tryTransformEntityToPermalink(MatrixClientPeg.safeGet(), href) ?? "";
             }
         }
     },
@@ -231,29 +224,54 @@ export const options: Opts = {
 };
 
 // Run the plugins
-registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }: any) => {
+registerPlugin(Type.RoomAlias, ({ scanner, parser }) => {
     const token = scanner.tokens.POUND as "#";
     matrixOpaqueIdLinkifyParser({
         scanner,
         parser,
-        utils,
         token,
         name: Type.RoomAlias,
     });
 });
 
-registerPlugin(Type.UserId, ({ scanner, parser, utils }: any) => {
+registerPlugin(Type.UserId, ({ scanner, parser }) => {
     const token = scanner.tokens.AT as "@";
     matrixOpaqueIdLinkifyParser({
         scanner,
         parser,
-        utils,
         token,
         name: Type.UserId,
     });
 });
 
-registerCustomProtocol("matrix", true);
+// Linkify supports some common protocols but not others, register all permitted url schemes if unsupported
+// https://github.com/Hypercontext/linkifyjs/blob/f4fad9df1870259622992bbfba38bfe3d0515609/packages/linkifyjs/src/scanner.js#L133-L141
+// This also handles registering the `matrix:` protocol scheme
+const linkifySupportedProtocols = ["file", "mailto", "http", "https", "ftp", "ftps"];
+const optionalSlashProtocols = [
+    "bitcoin",
+    "geo",
+    "im",
+    "magnet",
+    "mailto",
+    "matrix",
+    "news",
+    "openpgp4fpr",
+    "sip",
+    "sms",
+    "smsto",
+    "tel",
+    "urn",
+    "xmpp",
+];
+
+PERMITTED_URL_SCHEMES.forEach((scheme) => {
+    if (!linkifySupportedProtocols.includes(scheme)) {
+        registerCustomProtocol(scheme, optionalSlashProtocols.includes(scheme));
+    }
+});
+
+registerCustomProtocol("mxc", false);
 
 export const linkify = linkifyjs;
 export const _linkifyElement = linkifyElement;

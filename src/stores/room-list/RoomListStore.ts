@@ -14,11 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient, Room, RoomState, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { RoomState } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "../../settings/SettingsStore";
 import { DefaultTagID, OrderedDefaultTagIDs, RoomUpdateCause, TagID } from "./models";
@@ -28,7 +25,7 @@ import defaultDispatcher, { MatrixDispatcher } from "../../dispatcher/dispatcher
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import { FILTER_CHANGED, IFilterCondition } from "./filters/IFilterCondition";
 import { Algorithm, LIST_UPDATED_EVENT } from "./algorithms/Algorithm";
-import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
+import { EffectiveMembership, getEffectiveMembership, getEffectiveMembershipTag } from "../../utils/membership";
 import RoomListLayoutStore from "./RoomListLayoutStore";
 import { MarkedExecution } from "../../utils/MarkedExecution";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -311,7 +308,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
     public async onDispatchMyMembership(membershipPayload: any): Promise<void> {
         // TODO: Type out the dispatcher types so membershipPayload is not any
         const oldMembership = getEffectiveMembership(membershipPayload.oldMembership);
-        const newMembership = getEffectiveMembership(membershipPayload.membership);
+        const newMembership = getEffectiveMembershipTag(membershipPayload.room, membershipPayload.membership);
         if (oldMembership !== EffectiveMembership.Join && newMembership === EffectiveMembership.Join) {
             // If we're joining an upgraded room, we'll want to make sure we don't proliferate
             // the dead room in the list.
@@ -580,10 +577,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
      * @param {IFilterCondition} filter The filter condition to add.
      */
     public async addFilter(filter: IFilterCondition): Promise<void> {
-        let promise = Promise.resolve();
         filter.on(FILTER_CHANGED, this.onPrefilterUpdated);
         this.prefilterConditions.push(filter);
-        promise = this.recalculatePrefiltering();
+        const promise = this.recalculatePrefiltering();
         promise.then(() => this.updateFn.trigger());
     }
 

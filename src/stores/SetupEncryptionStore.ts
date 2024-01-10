@@ -20,6 +20,7 @@ import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { Device } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { AccessCancelledError, accessSecretStorage } from "../SecurityManager";
@@ -63,7 +64,7 @@ export class SetupEncryptionStore extends EventEmitter {
         this.phase = Phase.Loading;
 
         const cli = MatrixClientPeg.safeGet();
-        cli.on(CryptoEvent.VerificationRequest, this.onVerificationRequest);
+        cli.on(CryptoEvent.VerificationRequestReceived, this.onVerificationRequest);
         cli.on(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
 
         const requestsInProgress = cli.getCrypto()!.getVerificationRequestsToDeviceInProgress(cli.getUserId()!);
@@ -86,7 +87,7 @@ export class SetupEncryptionStore extends EventEmitter {
 
         const cli = MatrixClientPeg.get();
         if (!!cli) {
-            cli.removeListener(CryptoEvent.VerificationRequest, this.onVerificationRequest);
+            cli.removeListener(CryptoEvent.VerificationRequestReceived, this.onVerificationRequest);
             cli.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
         }
     }
@@ -94,7 +95,7 @@ export class SetupEncryptionStore extends EventEmitter {
     public async fetchKeyInfo(): Promise<void> {
         if (!this.started) return; // bail if we were stopped
         const cli = MatrixClientPeg.safeGet();
-        const keys = await cli.isSecretStored("m.cross_signing.master");
+        const keys = await cli.secretStorage.isStored("m.cross_signing.master");
         if (keys === null || Object.keys(keys).length === 0) {
             this.keyId = null;
             this.keyInfo = null;
@@ -107,11 +108,17 @@ export class SetupEncryptionStore extends EventEmitter {
         // do we have any other verified devices which are E2EE which we can verify against?
         const dehydratedDevice = await cli.getDehydratedDevice();
         const ownUserId = cli.getUserId()!;
-        this.hasDevicesToVerifyAgainst = await asyncSome(cli.getStoredDevicesForUser(ownUserId), async (device) => {
-            if (!device.getIdentityKey() || (dehydratedDevice && device.deviceId == dehydratedDevice?.device_id)) {
-                return false;
-            }
-            const verificationStatus = await cli.getCrypto()?.getDeviceVerificationStatus(ownUserId, device.deviceId);
+        const crypto = cli.getCrypto()!;
+        const userDevices: Iterable<Device> =
+            (await crypto.getUserDeviceInfo([ownUserId])).get(ownUserId)?.values() ?? [];
+        this.hasDevicesToVerifyAgainst = await asyncSome(userDevices, async (device) => {
+            // ignore the dehydrated device
+            if (dehydratedDevice && device.deviceId == dehydratedDevice?.device_id) return false;
+
+            // ignore devices without an identity key
+            if (!device.getIdentityKey()) return false;
+
+            const verificationStatus = await crypto.getDeviceVerificationStatus(ownUserId, device.deviceId);
             return !!verificationStatus?.signedByOwner;
         });
 
@@ -220,7 +227,7 @@ export class SetupEncryptionStore extends EventEmitter {
             // create new cross-signing keys once that succeeds.
             await accessSecretStorage(async (): Promise<void> => {
                 const cli = MatrixClientPeg.safeGet();
-                await cli.bootstrapCrossSigning({
+                await cli.getCrypto()?.bootstrapCrossSigning({
                     authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
                         const cachedPassword = SdkContextClass.instance.accountPasswordStore.getPassword();
 
@@ -238,7 +245,7 @@ export class SetupEncryptionStore extends EventEmitter {
                         }
 
                         const { finished } = Modal.createDialog(InteractiveAuthDialog, {
-                            title: _t("Setting up keys"),
+                            title: _t("encryption|bootstrap_title"),
                             matrixClient: cli,
                             makeRequest,
                         });

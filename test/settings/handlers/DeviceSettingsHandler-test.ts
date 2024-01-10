@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import DeviceSettingsHandler from "../../../src/settings/handlers/DeviceSettingsHandler";
@@ -66,7 +66,7 @@ describe("DeviceSettingsHandler", () => {
 
         afterEach(() => {
             MatrixClientPeg.get = () => null;
-            MatrixClientPeg.safeGet = () => null;
+            MatrixClientPeg.safeGet = () => new MatrixClient({ baseUrl: "foobar" });
         });
 
         it("Returns the value for a disabled feature", () => {

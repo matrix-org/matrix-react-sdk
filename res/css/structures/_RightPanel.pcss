@@ -21,11 +21,11 @@ limitations under the License.
     position: relative;
     display: flex;
     flex-direction: column;
-    border-radius: 8px;
-    padding: var(--container-border-width) 0;
+    border-left: 1px solid $separator;
     box-sizing: border-box;
     height: 100%;
     contain: strict;
+    background-color: var(--cpd-color-bg-canvas-default);
 
     .mx_RoomView_MessageList {
         padding: 14px 18px; /* top and bottom is 4px smaller to balance with the padding set above */
@@ -83,7 +83,7 @@ limitations under the License.
 
     h2,
     p {
-        font-size: $font-14px;
+        font: var(--cpd-font-body-md-regular);
     }
 
     &::before {
@@ -97,22 +97,5 @@ limitations under the License.
         mask-repeat: no-repeat;
         mask-size: contain;
         mask-position: center;
-    }
-}
-
-.mx_RightPanel_scopeHeader {
-    margin: 24px;
-    text-align: center;
-    font-weight: var(--font-semi-bold);
-    font-size: $font-18px;
-    line-height: $font-22px;
-
-    .mx_BaseAvatar {
-        margin-right: 8px;
-        vertical-align: middle;
-    }
-
-    .mx_BaseAvatar_image {
-        border-radius: 8px;
     }
 }

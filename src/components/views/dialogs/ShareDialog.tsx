@@ -16,10 +16,7 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { User } from "matrix-js-sdk/src/models/user";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomMember, MatrixEvent, User } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import QRCode from "../elements/QRCode";
@@ -133,7 +130,7 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
         let checkbox: JSX.Element | undefined;
 
         if (this.props.target instanceof Room) {
-            title = _t("Share Room");
+            title = _t("share|title_room");
 
             const events = this.props.target.getLiveTimeline().getEvents();
             if (events.length > 0) {
@@ -143,22 +140,22 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
                             checked={this.state.linkSpecificEvent}
                             onChange={this.onLinkSpecificEventCheckboxClick}
                         >
-                            {_t("Link to most recent message")}
+                            {_t("share|permalink_most_recent")}
                         </StyledCheckbox>
                     </div>
                 );
             }
         } else if (this.props.target instanceof User || this.props.target instanceof RoomMember) {
-            title = _t("Share User");
+            title = _t("share|title_user");
         } else if (this.props.target instanceof MatrixEvent) {
-            title = _t("Share Room Message");
+            title = _t("share|title_message");
             checkbox = (
                 <div>
                     <StyledCheckbox
                         checked={this.state.linkSpecificEvent}
                         onChange={this.onLinkSpecificEventCheckboxClick}
                     >
-                        {_t("Link to selected message")}
+                        {_t("share|permalink_message")}
                     </StyledCheckbox>
                 </div>
             );
@@ -211,7 +208,7 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
             >
                 <div className="mx_ShareDialog_content">
                     <CopyableText getTextToCopy={() => matrixToUrl}>
-                        <a title={_t("Link to room")} href={matrixToUrl} onClick={ShareDialog.onLinkClick}>
+                        <a title={_t("share|link_title")} href={matrixToUrl} onClick={ShareDialog.onLinkClick}>
                             {matrixToUrl}
                         </a>
                     </CopyableText>

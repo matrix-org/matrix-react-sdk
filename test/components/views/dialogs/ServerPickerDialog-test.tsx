@@ -23,10 +23,8 @@ import SdkConfig from "../../../../src/SdkConfig";
 import { flushPromises } from "../../../test-utils";
 import { ValidatedServerConfig } from "../../../../src/utils/ValidatedServerConfig";
 
-// Fake random strings to give a predictable snapshot for IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: () => "abdefghi",
-}));
+/** The matrix versions our mock server claims to support */
+const SERVER_SUPPORTED_MATRIX_VERSIONS = ["v1.1", "v1.5", "v1.6", "v1.8", "v1.9"];
 
 describe("<ServerPickerDialog />", () => {
     const defaultServerConfig = {
@@ -114,11 +112,40 @@ describe("<ServerPickerDialog />", () => {
             expect(onFinished).toHaveBeenCalledWith(defaultServerConfig);
         });
 
+        it("should allow user to revert from a custom server to the default", async () => {
+            fetchMock.get(`https://custom.org/_matrix/client/versions`, {
+                unstable_features: {},
+                versions: SERVER_SUPPORTED_MATRIX_VERSIONS,
+            });
+
+            const onFinished = jest.fn();
+            const serverConfig = {
+                hsUrl: "https://custom.org",
+                hsName: "custom.org",
+                hsNameIsDifferent: true,
+                isUrl: "https://is.org",
+                isDefault: false,
+                isNameResolvable: true,
+                warning: "",
+            };
+            getComponent({ onFinished, serverConfig });
+
+            fireEvent.click(screen.getByTestId("defaultHomeserver"));
+            expect(screen.getByTestId("defaultHomeserver")).toBeChecked();
+
+            fireEvent.click(screen.getByText("Continue"));
+            await flushPromises();
+
+            // closed dialog with default server and nothing else
+            expect(onFinished).toHaveBeenCalledWith(defaultServerConfig);
+            expect(onFinished).toHaveBeenCalledTimes(1);
+        });
+
         it("should submit successfully with a valid custom homeserver", async () => {
             const homeserver = "https://myhomeserver.site";
             fetchMock.get(`${homeserver}/_matrix/client/versions`, {
                 unstable_features: {},
-                versions: [],
+                versions: SERVER_SUPPORTED_MATRIX_VERSIONS,
             });
             const onFinished = jest.fn();
             getComponent({ onFinished });
@@ -171,7 +198,7 @@ describe("<ServerPickerDialog />", () => {
 
                 fetchMock.getOnce(wellKnownUrl, validWellKnown);
                 fetchMock.getOnce(versionsUrl, {
-                    versions: [],
+                    versions: SERVER_SUPPORTED_MATRIX_VERSIONS,
                 });
                 fetchMock.getOnce(isWellKnownUrl, {});
                 const onFinished = jest.fn();
@@ -207,7 +234,9 @@ describe("<ServerPickerDialog />", () => {
                 const wellKnownUrl = `https://${homeserver}/.well-known/matrix/client`;
                 fetchMock.get(wellKnownUrl, { status: 404 });
                 // but is otherwise live (happy versions response)
-                fetchMock.get(`https://${homeserver}/_matrix/client/versions`, { versions: ["1"] });
+                fetchMock.get(`https://${homeserver}/_matrix/client/versions`, {
+                    versions: SERVER_SUPPORTED_MATRIX_VERSIONS,
+                });
                 const onFinished = jest.fn();
                 getComponent({ onFinished });
 

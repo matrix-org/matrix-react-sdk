@@ -19,7 +19,7 @@ import { MSC3906Rendezvous, MSC3906RendezvousPayload, RendezvousFailureReason } 
 import { MSC3886SimpleHttpRendezvousTransport } from "matrix-js-sdk/src/rendezvous/transports";
 import { MSC3903ECDHPayload, MSC3903ECDHv2RendezvousChannel } from "matrix-js-sdk/src/rendezvous/channels";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { wrapRequestWithDialog } from "../../../utils/UserInteractiveAuth";
@@ -126,7 +126,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
             const { login_token: loginToken } = await wrapRequestWithDialog(this.props.client.requestLoginToken, {
                 matrixClient: this.props.client,
-                title: _t("Sign in new device"),
+                title: _t("auth|qr_code_login|sign_in_new_device"),
             })();
 
             this.setState({ phase: Phase.WaitingForDevice });
@@ -153,9 +153,11 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     private generateCode = async (): Promise<void> => {
         let rendezvous: MSC3906Rendezvous;
         try {
+            const fallbackRzServer = this.props.client.getClientWellKnown()?.["io.element.rendezvous"]?.server;
             const transport = new MSC3886SimpleHttpRendezvousTransport<MSC3903ECDHPayload>({
                 onFailure: this.onFailure,
                 client: this.props.client,
+                fallbackRzServer,
             });
 
             const channel = new MSC3903ECDHv2RendezvousChannel<MSC3906RendezvousPayload>(

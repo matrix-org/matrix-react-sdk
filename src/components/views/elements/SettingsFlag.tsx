@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
+import { randomString } from "matrix-js-sdk/src/randomstring";
 
 import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from "../../../languageHandler";
@@ -29,7 +30,7 @@ interface IProps {
     name: string;
     level: SettingLevel;
     roomId?: string; // for per-room settings
-    label?: string; // untranslated
+    label?: string;
     isExplicit?: boolean;
     // XXX: once design replaces all toggles make this the default
     useCheckbox?: boolean;
@@ -44,6 +45,8 @@ interface IState {
 }
 
 export default class SettingsFlag extends React.Component<IProps, IState> {
+    private readonly id = `mx_SettingsFlag_${randomString(12)}`;
+
     public constructor(props: IProps) {
         super(props);
 
@@ -105,10 +108,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
 
         if (!canChange && this.props.hideIfCannotSet) return null;
 
-        const label =
-            (this.props.label
-                ? _t(this.props.label)
-                : SettingsStore.getDisplayName(this.props.name, this.props.level)) ?? undefined;
+        const label = this.props.label ?? SettingsStore.getDisplayName(this.props.name, this.props.level);
         const description = SettingsStore.getDescription(this.props.name);
         const shouldWarn = SettingsStore.shouldHaveWarning(this.props.name);
         const disabled = this.state.disabled || !canChange;
@@ -122,13 +122,13 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
         } else {
             return (
                 <div className="mx_SettingsFlag">
-                    <label className="mx_SettingsFlag_label">
+                    <label className="mx_SettingsFlag_label" htmlFor={this.id}>
                         <span className="mx_SettingsFlag_labelText">{label}</span>
                         {description && (
                             <div className="mx_SettingsFlag_microcopy">
                                 {shouldWarn
                                     ? _t(
-                                          "<w>WARNING:</w> <description/>",
+                                          "settings|warning",
                                           {},
                                           {
                                               w: (sub) => (
@@ -142,11 +142,12 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
                         )}
                     </label>
                     <ToggleSwitch
+                        id={this.id}
                         checked={this.state.value}
                         onChange={this.onChange}
                         disabled={disabled}
                         tooltip={disabled ? SettingsStore.disabledMessage(this.props.name) : undefined}
-                        title={label}
+                        title={label ?? undefined}
                     />
                 </div>
             );

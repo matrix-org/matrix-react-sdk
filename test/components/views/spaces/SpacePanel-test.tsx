@@ -17,17 +17,18 @@ limitations under the License.
 import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import { mocked } from "jest-mock";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 import UnwrappedSpacePanel from "../../../../src/components/views/spaces/SpacePanel";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { MetaSpace, SpaceKey } from "../../../../src/stores/spaces";
 import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
 import { UIComponent } from "../../../../src/settings/UIFeature";
-import { mkStubRoom, wrapInSdkContext } from "../../../test-utils";
+import { mkStubRoom, wrapInMatrixClientContext, wrapInSdkContext } from "../../../test-utils";
 import { SdkContextClass } from "../../../../src/contexts/SDKContext";
 import SpaceStore from "../../../../src/stores/spaces/SpaceStore";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
+import { SpaceNotificationState } from "../../../../src/stores/notifications/SpaceNotificationState";
 
 // DND test utilities based on
 // https://github.com/colinrobertbrooks/react-beautiful-dnd-test-utils/issues/18#issuecomment-1373388693
@@ -98,8 +99,8 @@ jest.mock("../../../../src/stores/spaces/SpaceStore", () => {
         enabledMetaSpaces: MetaSpace[] = [];
         spacePanelSpaces: string[] = [];
         activeSpace: SpaceKey = "!space1";
-        getChildSpaces = () => [];
-        getNotificationState = () => null;
+        getChildSpaces = () => [] as Room[];
+        getNotificationState = () => null as SpaceNotificationState | null;
         setActiveSpace = jest.fn();
         moveRootSpace = jest.fn();
     }
@@ -121,9 +122,12 @@ describe("<SpacePanel />", () => {
         isGuest: jest.fn(),
         getAccountData: jest.fn(),
         on: jest.fn(),
+        off: jest.fn(),
         removeListener: jest.fn(),
+        isVersionSupported: jest.fn().mockResolvedValue(true),
+        doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(false),
     } as unknown as MatrixClient;
-    const SpacePanel = wrapInSdkContext(UnwrappedSpacePanel, SdkContextClass.instance);
+    const SpacePanel = wrapInSdkContext(wrapInMatrixClientContext(UnwrappedSpacePanel), SdkContextClass.instance);
 
     beforeAll(() => {
         jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
