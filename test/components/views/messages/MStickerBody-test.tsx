@@ -87,7 +87,7 @@ describe("<MStickerBody/>", () => {
 
         render(<MStickerBody {...props} mxEvent={mediaEvent} />);
 
-        expect(screen.getByRole("tooltip")).not.toBeVisible();
+        expect(screen.queryByRole("tooltip")).toBeNull();
         await userEvent.hover(screen.getByRole("img"));
         await expect(screen.findByRole("tooltip")).resolves.toHaveTextContent("sticker description");
     });
