@@ -521,10 +521,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             );
         }
 
+        const tooltipProps = this.getTooltipProps();
         let thumbnail = (
             <div
                 className="mx_MImageBody_thumbnail_container"
                 style={{ maxHeight, maxWidth, aspectRatio: `${infoWidth}/${infoHeight}` }}
+                tabIndex={tooltipProps ? 0 : undefined}
             >
                 {placeholder}
 
@@ -541,10 +543,11 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             </div>
         );
 
-        const tooltipProps = this.getTooltipProps();
         if (tooltipProps) {
+            // We specify isTriggerInteractive=true and make the div interactive manually as a workaround for
+            // https://github.com/element-hq/compound/issues/294
             thumbnail = (
-                <Tooltip {...tooltipProps} isTriggerInteractive={false} open={this.state.hover}>
+                <Tooltip {...tooltipProps} isTriggerInteractive={true}>
                     {thumbnail}
                 </Tooltip>
             );
