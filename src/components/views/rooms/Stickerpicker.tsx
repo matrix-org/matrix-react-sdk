@@ -25,6 +25,7 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
 import AccessibleButton from "../elements/AccessibleButton";
 import WidgetUtils, { UserWidget } from "../../../utils/WidgetUtils";
+import PersistedElement from "../elements/PersistedElement";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import ContextMenu, { ChevronFace } from "../../structures/ContextMenu";
 import { WidgetType } from "../../../widgets/WidgetType";
@@ -38,6 +39,9 @@ import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 // This should be below the dialog level (4000), but above the rest of the UI (1000-2000).
 // We sit in a context menu, so this should be given to the context menu.
 const STICKERPICKER_Z_INDEX = 3500;
+
+// Key to store the widget's AppTile under in PersistedElement
+const PERSISTED_ELEMENT_KEY = "stickerPicker";
 
 interface IProps {
     room: Room;
@@ -57,6 +61,8 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
     public static defaultProps: Partial<IProps> = {
         threadId: null,
     };
+
+    public static currentWidget?: UserWidget;
 
     private dispatcherRef?: string;
 
@@ -164,10 +170,21 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
     private updateWidget = (): void => {
         const stickerpickerWidget = WidgetUtils.getStickerpickerWidgets(this.props.room.client)[0];
         if (!stickerpickerWidget) {
+            Stickerpicker.currentWidget = undefined;
             this.setState({ stickerpickerWidget: null, widgetId: null });
             return;
         }
 
+        const currentWidget = Stickerpicker.currentWidget;
+        const currentUrl = currentWidget?.content?.url ?? null;
+        const newUrl = stickerpickerWidget?.content?.url ?? null;
+
+        if (newUrl !== currentUrl) {
+            // Destroy the existing frame so a new one can be created
+            PersistedElement.destroyElement(PERSISTED_ELEMENT_KEY);
+        }
+
+        Stickerpicker.currentWidget = stickerpickerWidget;
         this.setState({
             stickerpickerWidget,
             widgetId: stickerpickerWidget ? stickerpickerWidget.id : null,
@@ -267,23 +284,27 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                             width: this.popoverWidth,
                         }}
                     >
-                        <AppTile
-                            app={stickerApp}
-                            room={this.props.room}
-                            threadId={this.props.threadId}
-                            fullWidth={true}
-                            userId={MatrixClientPeg.safeGet().credentials.userId!}
-                            creatorUserId={stickerpickerWidget.sender || MatrixClientPeg.safeGet().credentials.userId!}
-                            waitForIframeLoad={true}
-                            showMenubar={true}
-                            onEditClick={this.launchManageIntegrations}
-                            onDeleteClick={this.removeStickerpickerWidgets}
-                            showTitle={false}
-                            showPopout={false}
-                            handleMinimisePointerEvents={true}
-                            userWidget={true}
-                            showLayoutButtons={false}
-                        />
+                        <PersistedElement persistKey={PERSISTED_ELEMENT_KEY} zIndex={STICKERPICKER_Z_INDEX}>
+                            <AppTile
+                                app={stickerApp}
+                                room={this.props.room}
+                                threadId={this.props.threadId}
+                                fullWidth={true}
+                                userId={MatrixClientPeg.safeGet().credentials.userId!}
+                                creatorUserId={
+                                    stickerpickerWidget.sender || MatrixClientPeg.safeGet().credentials.userId!
+                                }
+                                waitForIframeLoad={true}
+                                showMenubar={true}
+                                onEditClick={this.launchManageIntegrations}
+                                onDeleteClick={this.removeStickerpickerWidgets}
+                                showTitle={false}
+                                showPopout={false}
+                                handleMinimisePointerEvents={true}
+                                userWidget={true}
+                                showLayoutButtons={false}
+                            />
+                        </PersistedElement>
                     </div>
                 </div>
             );
@@ -335,6 +356,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                 menuPaddingLeft={0}
                 menuPaddingRight={0}
                 zIndex={STICKERPICKER_Z_INDEX}
+                mountAsChild={true}
                 {...this.props.menuPosition}
             >
                 <GenericElementContextMenu element={this.getStickerpickerContent()} onResize={this.onFinished} />
