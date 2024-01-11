@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import isIp from "is-ip";
+import { isIP } from "is-ip";
 import * as utils from "matrix-js-sdk/src/utils";
 import { Room, MatrixClient, RoomStateEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -470,7 +470,7 @@ function isHostnameIpAddress(hostname: string): boolean {
         hostname = hostname.substring(1, hostname.length - 1);
     }
 
-    return isIp(hostname);
+    return isIP(hostname);
 }
 
 export const calculateRoomVia = (room: Room): string[] => {
