@@ -1467,7 +1467,7 @@ describe("SpaceStore", () => {
             const room = mkRoom(room1);
             const state = RoomNotificationStateStore.instance.getRoomState(room);
             // @ts-ignore
-            state._color = NotificationLevel.Notification;
+            state._level = NotificationLevel.Notification;
             jest.spyOn(RoomListStore.instance, "orderedLists", "get").mockReturnValue({
                 [DefaultTagID.Untagged]: [room],
             });
