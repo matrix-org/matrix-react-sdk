@@ -382,6 +382,7 @@ describe("MemberList", () => {
                             roomId={room.roomId}
                         />
                     </SDKContext.Provider>,
+                    { wrapper: TooltipProvider },
                 );
             };
 

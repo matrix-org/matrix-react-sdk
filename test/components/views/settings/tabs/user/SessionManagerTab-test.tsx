@@ -53,6 +53,7 @@ import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import { getClientInformationEventType } from "../../../../../../src/utils/device/clientInformation";
 import { SDKContext, SdkContextClass } from "../../../../../../src/contexts/SDKContext";
 import { OidcClientStore } from "../../../../../../src/stores/oidc/OidcClientStore";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 mockPlatformPeg();
 
@@ -97,9 +98,11 @@ describe("<SessionManagerTab />", () => {
 
     const defaultProps = {};
     const getComponent = (props = {}): React.ReactElement => (
-        <SDKContext.Provider value={sdkContext}>
-            <SessionManagerTab {...defaultProps} {...props} />
-        </SDKContext.Provider>
+        <TooltipProvider>
+            <SDKContext.Provider value={sdkContext}>
+                <SessionManagerTab {...defaultProps} {...props} />
+            </SDKContext.Provider>
+        </TooltipProvider>
     );
 
     const toggleDeviceDetails = (
