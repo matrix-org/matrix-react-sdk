@@ -284,25 +284,27 @@ export default class HTMLExporter extends Exporter {
         return (
             <div className="mx_Export_EventWrapper" id={mxEv.getId()}>
                 <MatrixClientContext.Provider value={this.room.client}>
-                    <EventTile
-                        mxEvent={mxEv}
-                        continuation={continuation}
-                        isRedacted={mxEv.isRedacted()}
-                        replacingEventId={mxEv.replacingEventId()}
-                        forExport={true}
-                        alwaysShowTimestamps={true}
-                        showUrlPreview={false}
-                        checkUnmounting={() => false}
-                        isTwelveHour={false}
-                        last={false}
-                        lastInSection={false}
-                        permalinkCreator={this.permalinkCreator}
-                        lastSuccessful={false}
-                        isSelectedEvent={false}
-                        showReactions={false}
-                        layout={Layout.Group}
-                        showReadReceipts={false}
-                    />
+                    <TooltipProvider>
+                        <EventTile
+                            mxEvent={mxEv}
+                            continuation={continuation}
+                            isRedacted={mxEv.isRedacted()}
+                            replacingEventId={mxEv.replacingEventId()}
+                            forExport={true}
+                            alwaysShowTimestamps={true}
+                            showUrlPreview={false}
+                            checkUnmounting={() => false}
+                            isTwelveHour={false}
+                            last={false}
+                            lastInSection={false}
+                            permalinkCreator={this.permalinkCreator}
+                            lastSuccessful={false}
+                            isSelectedEvent={false}
+                            showReactions={false}
+                            layout={Layout.Group}
+                            showReadReceipts={false}
+                        />
+                    </TooltipProvider>
                 </MatrixClientContext.Provider>
             </div>
         );
@@ -323,7 +325,7 @@ export default class HTMLExporter extends Exporter {
             // to linkify textual events, we'll need lifecycle methods which won't be invoked in renderToString
             // So, we'll have to render the component into a temporary root element
             const tempRoot = document.createElement("div");
-            ReactDOM.render(<TooltipProvider>{EventTile}</TooltipProvider>, tempRoot);
+            ReactDOM.render(EventTile, tempRoot);
             eventTileMarkup = tempRoot.innerHTML;
         } else {
             eventTileMarkup = renderToStaticMarkup(EventTile);
