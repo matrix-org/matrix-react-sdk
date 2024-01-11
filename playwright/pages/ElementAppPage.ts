@@ -56,15 +56,6 @@ export class ElementAppPage {
     }
 
     /**
-     * Find an open dialog by its title
-     */
-    public async getDialogByTitle(title: string, timeout = 5000): Promise<Locator> {
-        const dialog = this.page.locator(".mx_Dialog");
-        await dialog.getByRole("heading", { name: title }).waitFor({ timeout });
-        return dialog;
-    }
-
-    /**
      * Opens the given room by name. The room must be visible in the
      * room list, but the room list may be folded horizontally, and the
      * room may contain unread messages.
