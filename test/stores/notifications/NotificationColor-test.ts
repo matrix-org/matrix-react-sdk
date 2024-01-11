@@ -16,8 +16,8 @@ limitations under the License.
 
 import { humanReadableNotificationLevel, NotificationLevel } from "../../../src/stores/notifications/NotificationLevel";
 
-describe("NotificationColor", () => {
-    describe("humanReadableNotificationColor", () => {
+describe("NotificationLevel", () => {
+    describe("humanReadableNotificationLevel", () => {
         it.each([
             [NotificationLevel.None, "None"],
             [NotificationLevel.Activity, "Activity"],

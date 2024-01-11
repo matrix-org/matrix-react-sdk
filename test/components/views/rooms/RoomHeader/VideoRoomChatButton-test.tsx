@@ -118,7 +118,7 @@ describe("<VideoRoomChatButton />", () => {
         expect(screen.getByLabelText("Chat").hasAttribute("data-indicator")).toBeFalsy();
 
         // @ts-ignore ugly mocking
-        notificationState._color = NotificationColor.Red;
+        notificationState._color = NotificationColor.Highlight;
         notificationState.emit(NotificationStateEvents.Update);
 
         // unread marker
