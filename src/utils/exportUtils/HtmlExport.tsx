@@ -20,6 +20,7 @@ import { Room, MatrixEvent, EventType, MsgType } from "matrix-js-sdk/src/matrix"
 import { renderToStaticMarkup } from "react-dom/server";
 import { logger } from "matrix-js-sdk/src/logger";
 import escapeHtml from "escape-html";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import Exporter from "./Exporter";
 import { mediaFromMxc } from "../../customisations/Media";
@@ -322,7 +323,7 @@ export default class HTMLExporter extends Exporter {
             // to linkify textual events, we'll need lifecycle methods which won't be invoked in renderToString
             // So, we'll have to render the component into a temporary root element
             const tempRoot = document.createElement("div");
-            ReactDOM.render(EventTile, tempRoot);
+            ReactDOM.render(<TooltipProvider>{EventTile}</TooltipProvider>, tempRoot);
             eventTileMarkup = tempRoot.innerHTML;
         } else {
             eventTileMarkup = renderToStaticMarkup(EventTile);
