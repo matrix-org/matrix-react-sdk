@@ -133,7 +133,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
     }
 
     private get fileName(): string {
-        return this.content.body && this.content.body.length > 0 ? this.content.body : _t("Attachment");
+        return this.content.body && this.content.body.length > 0 ? this.content.body : _t("common|attachment");
     }
 
     private get linkText(): string {
@@ -150,7 +150,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                 imgSrc: DOWNLOAD_ICON_URL,
                 imgStyle: null,
                 style: computedStyle(this.dummyLink.current),
-                textContent: _t("Download %(text)s", { text }),
+                textContent: _t("timeline|m.file|download_label", { text }),
             },
         });
     }
@@ -168,13 +168,13 @@ export default class MFileBody extends React.Component<IProps, IState> {
         try {
             this.userDidClick = true;
             this.setState({
-                decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
+                decryptedBlob: await this.props.mediaEventHelper!.sourceBlob.value,
             });
         } catch (err) {
             logger.warn("Unable to decrypt attachment: ", err);
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error"),
-                description: _t("Error decrypting attachment"),
+                title: _t("common|error"),
+                description: _t("timeline|m.file|error_decrypting"),
             });
         }
     };
@@ -188,7 +188,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
             // As a button we're missing the `download` attribute for styling reasons, so
             // download with the file downloader.
             this.fileDownloader.download({
-                blob: await mediaHelper.sourceBlob.value,
+                blob: await mediaHelper!.sourceBlob.value,
                 name: this.fileName,
             });
         }
@@ -198,16 +198,16 @@ export default class MFileBody extends React.Component<IProps, IState> {
         const isEncrypted = this.props.mediaEventHelper?.media.isEncrypted;
         const contentUrl = this.getContentUrl();
         const contentFileSize = this.content.info ? this.content.info.size : null;
-        const fileType = this.content.info ? this.content.info.mimetype : "application/octet-stream";
+        const fileType = this.content.info?.mimetype ?? "application/octet-stream";
 
         let placeholder: React.ReactNode = null;
         if (this.props.showGenericPlaceholder) {
             placeholder = (
                 <AccessibleButton className="mx_MediaBody mx_MFileBody_info" onClick={this.onPlaceholderClick}>
                     <span className="mx_MFileBody_info_icon" />
-                    <TextWithTooltip tooltip={presentableTextForFile(this.content, _t("Attachment"), true)}>
+                    <TextWithTooltip tooltip={presentableTextForFile(this.content, _t("common|attachment"), true)}>
                         <span className="mx_MFileBody_info_filename">
-                            {presentableTextForFile(this.content, _t("Attachment"), true, true)}
+                            {presentableTextForFile(this.content, _t("common|attachment"), true, true)}
                         </span>
                     </TextWithTooltip>
                 </AccessibleButton>
@@ -248,7 +248,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                         {showDownloadLink && (
                             <div className="mx_MFileBody_download">
                                 <AccessibleButton onClick={this.decryptFile}>
-                                    {_t("Decrypt %(text)s", { text: this.linkText })}
+                                    {_t("timeline|m.file|decrypt_label", { text: this.linkText })}
                                 </AccessibleButton>
                             </div>
                         )}
@@ -284,7 +284,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                          */}
                             <iframe
                                 aria-hidden
-                                title={presentableTextForFile(this.content, _t("Attachment"), true, true)}
+                                title={presentableTextForFile(this.content, _t("common|attachment"), true, true)}
                                 src={url}
                                 onLoad={() => this.downloadFile(this.fileName, this.linkText)}
                                 ref={this.iframe}
@@ -322,7 +322,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
 
                     // Start a fetch for the download
                     // Based upon https://stackoverflow.com/a/49500465
-                    this.props.mediaEventHelper.sourceBlob.value.then((blob) => {
+                    this.props.mediaEventHelper?.sourceBlob.value.then((blob) => {
                         const blobUrl = URL.createObjectURL(blob);
 
                         // We have to create an anchor to download the file
@@ -346,7 +346,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                         <div className="mx_MFileBody_download">
                             <a {...downloadProps}>
                                 <span className="mx_MFileBody_download_icon" />
-                                {_t("Download %(text)s", { text: this.linkText })}
+                                {_t("timeline|m.file|download_label", { text: this.linkText })}
                             </a>
                             {this.context.timelineRenderingType === TimelineRenderingType.File && (
                                 <div className="mx_MImageBody_size">
@@ -362,7 +362,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
             return (
                 <span className="mx_MFileBody">
                     {placeholder}
-                    {_t("Invalid file%(extra)s", { extra: extra })}
+                    {_t("timeline|m.file|error_invalid", { extra: extra })}
                 </span>
             );
         }

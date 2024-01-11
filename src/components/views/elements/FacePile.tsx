@@ -15,55 +15,68 @@ limitations under the License.
 */
 
 import React, { FC, HTMLAttributes, ReactNode } from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
+import { AvatarStack, Tooltip } from "@vector-im/compound-web";
 
 import MemberAvatar from "../avatars/MemberAvatar";
-import TooltipTarget from "./TooltipTarget";
-import TextWithTooltip from "./TextWithTooltip";
+import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
 
 interface IProps extends HTMLAttributes<HTMLSpanElement> {
     members: RoomMember[];
-    faceSize: number;
+    size: string;
     overflow: boolean;
-    tooltip?: ReactNode;
+    tooltipLabel?: string;
+    tooltipShortcut?: string;
     children?: ReactNode;
+    viewUserOnClick?: boolean;
+    onClick?: (e: ButtonEvent) => void | Promise<void>;
 }
 
-const FacePile: FC<IProps> = ({ members, faceSize, overflow, tooltip, children, ...props }) => {
+const FacePile: FC<IProps> = ({
+    members,
+    size,
+    overflow,
+    tooltipLabel,
+    tooltipShortcut,
+    children,
+    viewUserOnClick = true,
+    ...props
+}) => {
     const faces = members.map(
-        tooltip
-            ? (m) => <MemberAvatar key={m.userId} member={m} width={faceSize} height={faceSize} hideTitle />
+        tooltipLabel
+            ? (m) => <MemberAvatar key={m.userId} member={m} size={size} hideTitle />
             : (m) => (
-                  <TooltipTarget key={m.userId} label={m.name}>
+                  <Tooltip key={m.userId} label={m.name} shortcut={tooltipShortcut}>
                       <MemberAvatar
                           member={m}
-                          width={faceSize}
-                          height={faceSize}
-                          viewUserOnClick={!props.onClick}
+                          size={size}
+                          viewUserOnClick={!props.onClick && viewUserOnClick}
                           hideTitle
                       />
-                  </TooltipTarget>
+                  </Tooltip>
               ),
     );
 
     const pileContents = (
         <>
-            {overflow ? <span className="mx_FacePile_more" /> : null}
             {faces}
+            {overflow ? <span className="mx_FacePile_more" /> : null}
         </>
     );
 
-    return (
-        <div {...props} className="mx_FacePile">
-            {tooltip ? (
-                <TextWithTooltip class="mx_FacePile_faces" tooltip={tooltip}>
-                    {pileContents}
-                </TextWithTooltip>
-            ) : (
-                <div className="mx_FacePile_faces">{pileContents}</div>
-            )}
+    const content = (
+        <AccessibleButton className="mx_FacePile" kind="link_inline" onClick={props.onClick ?? null}>
+            <AvatarStack>{pileContents}</AvatarStack>
             {children}
-        </div>
+        </AccessibleButton>
+    );
+
+    return tooltipLabel ? (
+        <Tooltip label={tooltipLabel} shortcut={tooltipShortcut}>
+            {content}
+        </Tooltip>
+    ) : (
+        content
     );
 };
 

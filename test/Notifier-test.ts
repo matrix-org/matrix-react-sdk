@@ -13,17 +13,21 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 import { mocked, MockedObject } from "jest-mock";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { SyncState } from "matrix-js-sdk/src/sync";
+import {
+    ClientEvent,
+    MatrixClient,
+    Room,
+    RoomEvent,
+    EventType,
+    MsgType,
+    IContent,
+    MatrixEvent,
+    SyncState,
+} from "matrix-js-sdk/src/matrix";
 import { waitFor } from "@testing-library/react";
-import { EventType, MsgType } from "matrix-js-sdk/src/matrix";
 
 import BasePlatform from "../src/BasePlatform";
-import { ElementCall } from "../src/models/Call";
 import Notifier from "../src/Notifier";
 import SettingsStore from "../src/settings/SettingsStore";
 import ToastStore from "../src/stores/ToastStore";
@@ -31,8 +35,14 @@ import {
     createLocalNotificationSettingsIfNeeded,
     getLocalNotificationAccountDataEventType,
 } from "../src/utils/notifications";
-import { getMockClientWithEventEmitter, mkEvent, mockClientMethodsUser, mockPlatformPeg } from "./test-utils";
-import { IncomingCallToast } from "../src/toasts/IncomingCallToast";
+import {
+    getMockClientWithEventEmitter,
+    mkEvent,
+    mkMessage,
+    mockClientMethodsUser,
+    mockPlatformPeg,
+} from "./test-utils";
+import { getIncomingCallToastKey, IncomingCallToast } from "../src/toasts/IncomingCallToast";
 import { SdkContextClass } from "../src/contexts/SDKContext";
 import UserActivity from "../src/UserActivity";
 import Modal from "../src/Modal";
@@ -42,6 +52,7 @@ import { ThreadPayload } from "../src/dispatcher/payloads/ThreadPayload";
 import { Action } from "../src/dispatcher/actions";
 import { VoiceBroadcastChunkEventType, VoiceBroadcastInfoState } from "../src/voice-broadcast";
 import { mkVoiceBroadcastInfoStateEvent } from "./voice-broadcast/utils/test-utils";
+import { addReplyToMessageContent } from "../src/utils/Reply";
 
 jest.mock("../src/utils/notifications", () => ({
     // @ts-ignore
@@ -307,6 +318,30 @@ describe("Notifier", () => {
             Notifier.displayPopupNotification(audioEvent, testRoom);
             expect(MockPlatform.displayNotification).not.toHaveBeenCalled();
         });
+
+        it("should strip reply fallback", () => {
+            const event = mkMessage({
+                msg: "Test",
+                event: true,
+                user: mockClient.getSafeUserId(),
+                room: testRoom.roomId,
+            });
+            const reply = mkMessage({
+                msg: "This was a triumph",
+                event: true,
+                user: mockClient.getSafeUserId(),
+                room: testRoom.roomId,
+            });
+            addReplyToMessageContent(reply.getContent(), event, { includeLegacyFallback: true });
+            Notifier.displayPopupNotification(reply, testRoom);
+            expect(MockPlatform.displayNotification).toHaveBeenCalledWith(
+                "@bob:example.org (!room1:server)",
+                "This was a triumph",
+                expect.any(String),
+                testRoom,
+                reply,
+            );
+        });
     });
 
     describe("getSoundForRoom", () => {
@@ -352,12 +387,17 @@ describe("Notifier", () => {
             jest.resetAllMocks();
         });
 
-        const callOnEvent = (type?: string) => {
+        const emitCallNotifyEvent = (type?: string, roomMention = true) => {
             const callEvent = mkEvent({
-                type: type ?? ElementCall.CALL_EVENT_TYPE.name,
+                type: type ?? EventType.CallNotify,
                 user: "@alice:foo",
                 room: roomId,
-                content: {},
+                content: {
+                    "application": "m.call",
+                    "m.mentions": { user_ids: [], room: roomMention },
+                    "notify_type": "ring",
+                    "call_id": "abc123",
+                },
                 event: true,
             });
             emitLiveEvent(callEvent);
@@ -373,15 +413,15 @@ describe("Notifier", () => {
         it("should show toast when group calls are supported", () => {
             setGroupCallsEnabled(true);
 
-            const callEvent = callOnEvent();
+            const notifyEvent = emitCallNotifyEvent();
 
             expect(ToastStore.sharedInstance().addOrReplaceToast).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    key: `call_${callEvent.getStateKey()}`,
+                    key: getIncomingCallToastKey(notifyEvent.getContent().call_id ?? "", roomId),
                     priority: 100,
                     component: IncomingCallToast,
                     bodyClassName: "mx_IncomingCallToast",
-                    props: { callEvent },
+                    props: { notifyEvent },
                 }),
             );
         });
@@ -389,7 +429,7 @@ describe("Notifier", () => {
         it("should not show toast when group calls are not supported", () => {
             setGroupCallsEnabled(false);
 
-            callOnEvent();
+            emitCallNotifyEvent();
 
             expect(ToastStore.sharedInstance().addOrReplaceToast).not.toHaveBeenCalled();
         });
@@ -397,7 +437,7 @@ describe("Notifier", () => {
         it("should not show toast when calling with non-group call event", () => {
             setGroupCallsEnabled(true);
 
-            callOnEvent("event_type");
+            emitCallNotifyEvent("event_type");
 
             expect(ToastStore.sharedInstance().addOrReplaceToast).not.toHaveBeenCalled();
         });

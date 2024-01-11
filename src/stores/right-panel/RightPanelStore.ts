@@ -29,6 +29,7 @@ import {
     convertToStatePanel,
     convertToStorePanel,
     IRightPanelCard,
+    IRightPanelCardState,
     IRightPanelForRoom,
 } from "./RightPanelStoreIPanelState";
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -226,6 +227,24 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
     }
 
+    /**
+     * Helper to show a right panel phase.
+     * If the UI is already showing that phase, the right panel will be hidden.
+     *
+     * Calling the same phase twice with a different state will update the current
+     * phase and push the old state in the right panel history.
+     * @param phase The right panel phase.
+     * @param cardState The state within the phase.
+     */
+    public showOrHidePanel(phase: RightPanelPhases, cardState?: Partial<IRightPanelCardState>): void {
+        if (this.currentCard.phase == phase && !cardState && this.isOpen) {
+            this.togglePanel(null);
+        } else {
+            this.setCard({ phase, state: cardState });
+            if (!this.isOpen) this.togglePanel(null);
+        }
+    }
+
     private loadCacheFromSettings(): void {
         if (this.viewedRoomId) {
             const room = this.mxClient?.getRoom(this.viewedRoomId);
@@ -377,23 +396,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
             this.currentCard.state.initialEventScrollIntoView = undefined;
         }
 
-        // If the right panel stays open mode is used, and the panel was either
-        // closed or never shown for that room, then force it open and display
-        // the room member list.
-        if (
-            SettingsStore.getValue("feature_right_panel_default_open") &&
-            !this.byRoom[this.viewedRoomId ?? ""]?.isOpen
-        ) {
-            const history = [{ phase: RightPanelPhases.RoomMemberList }];
-            const room = this.viewedRoomId ? this.mxClient?.getRoom(this.viewedRoomId) : undefined;
-            if (!room?.isSpaceRoom()) {
-                history.unshift({ phase: RightPanelPhases.RoomSummary });
-            }
-            this.byRoom[this.viewedRoomId ?? ""] = {
-                isOpen: true,
-                history,
-            };
-        }
         this.emitAndUpdateSettings();
     }
 

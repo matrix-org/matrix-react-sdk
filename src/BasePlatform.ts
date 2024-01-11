@@ -17,12 +17,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { encodeUnpaddedBase64 } from "matrix-js-sdk/src/crypto/olmlib";
+import { MatrixClient, MatrixEvent, Room, SSOAction, encodeUnpaddedBase64 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { SSOAction } from "matrix-js-sdk/src/@types/auth";
 
 import dis from "./dispatcher/dispatcher";
 import BaseEventIndexManager from "./indexing/BaseEventIndexManager";
@@ -70,7 +66,7 @@ export default abstract class BasePlatform {
     protected notificationCount = 0;
     protected errorDidOccur = false;
 
-    public constructor() {
+    protected constructor() {
         dis.register(this.onAction);
         this.startUpdateCheck = this.startUpdateCheck.bind(this);
     }
@@ -368,14 +364,7 @@ export default abstract class BasePlatform {
             return null;
         }
 
-        const additionalData = new Uint8Array(userId.length + deviceId.length + 1);
-        for (let i = 0; i < userId.length; i++) {
-            additionalData[i] = userId.charCodeAt(i);
-        }
-        additionalData[userId.length] = 124; // "|"
-        for (let i = 0; i < deviceId.length; i++) {
-            additionalData[userId.length + 1 + i] = deviceId.charCodeAt(i);
-        }
+        const additionalData = this.getPickleAdditionalData(userId, deviceId);
 
         try {
             const key = await crypto.subtle.decrypt(
@@ -388,6 +377,18 @@ export default abstract class BasePlatform {
             logger.error("Error decrypting pickle key");
             return null;
         }
+    }
+
+    private getPickleAdditionalData(userId: string, deviceId: string): Uint8Array {
+        const additionalData = new Uint8Array(userId.length + deviceId.length + 1);
+        for (let i = 0; i < userId.length; i++) {
+            additionalData[i] = userId.charCodeAt(i);
+        }
+        additionalData[userId.length] = 124; // "|"
+        for (let i = 0; i < deviceId.length; i++) {
+            additionalData[userId.length + 1 + i] = deviceId.charCodeAt(i);
+        }
+        return additionalData;
     }
 
     /**
@@ -411,15 +412,7 @@ export default abstract class BasePlatform {
         const iv = new Uint8Array(32);
         crypto.getRandomValues(iv);
 
-        const additionalData = new Uint8Array(userId.length + deviceId.length + 1);
-        for (let i = 0; i < userId.length; i++) {
-            additionalData[i] = userId.charCodeAt(i);
-        }
-        additionalData[userId.length] = 124; // "|"
-        for (let i = 0; i < deviceId.length; i++) {
-            additionalData[userId.length + 1 + i] = deviceId.charCodeAt(i);
-        }
-
+        const additionalData = this.getPickleAdditionalData(userId, deviceId);
         const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv, additionalData }, cryptoKey, randomArray);
 
         try {

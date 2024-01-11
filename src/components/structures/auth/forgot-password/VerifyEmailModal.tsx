@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode, useRef } from "react";
+import React, { ReactNode } from "react";
+import { Tooltip } from "@vector-im/compound-web";
 
 import { _t } from "../../../../languageHandler";
 import AccessibleButton from "../../../views/elements/AccessibleButton";
 import { Icon as RetryIcon } from "../../../../../res/img/compound/retry-16px.svg";
 import { Icon as EmailPromptIcon } from "../../../../../res/img/element-icons/email-prompt.svg";
-import Tooltip, { Alignment } from "../../../views/elements/Tooltip";
 import { useTimeoutToggle } from "../../../../hooks/useTimeoutToggle";
 import { ErrorMessage } from "../../ErrorMessage";
 
@@ -40,7 +40,6 @@ export const VerifyEmailModal: React.FC<Props> = ({
     onReEnterEmailClick,
     onResendClick,
 }) => {
-    const tooltipId = useRef(`mx_VerifyEmailModal_${Math.random()}`).current;
     const { toggle: toggleTooltipVisible, value: tooltipVisible } = useTimeoutToggle(false, 2500);
 
     const onResendClickFn = async (): Promise<void> => {
@@ -51,11 +50,10 @@ export const VerifyEmailModal: React.FC<Props> = ({
     return (
         <>
             <EmailPromptIcon className="mx_AuthBody_emailPromptIcon" />
-            <h1>{_t("Verify your email to continue")}</h1>
+            <h1>{_t("auth|verify_email_heading")}</h1>
             <p>
                 {_t(
-                    "We need to know it’s you before resetting your password. " +
-                        "Click the link in the email we just sent to <b>%(email)s</b>",
+                    "auth|verify_email_explainer",
                     {
                         email,
                     },
@@ -66,36 +64,27 @@ export const VerifyEmailModal: React.FC<Props> = ({
             </p>
 
             <div className="mx_AuthBody_did-not-receive">
-                <span className="mx_VerifyEMailDialog_text-light">{_t("Did not receive it?")}</span>
-                <AccessibleButton
-                    className="mx_AuthBody_resend-button"
-                    kind="link"
-                    onClick={onResendClickFn}
-                    aria-describedby={tooltipVisible ? tooltipId : undefined}
-                >
-                    <RetryIcon className="mx_Icon mx_Icon_16" />
-                    {_t("Resend")}
-                    <Tooltip
-                        id={tooltipId}
-                        label={_t("Verification link email resent!")}
-                        alignment={Alignment.Top}
-                        visible={tooltipVisible}
-                    />
-                </AccessibleButton>
+                <span className="mx_VerifyEMailDialog_text-light">{_t("auth|check_email_resend_prompt")}</span>
+                <Tooltip label={_t("auth|check_email_resend_tooltip")} side="top" open={tooltipVisible}>
+                    <AccessibleButton className="mx_AuthBody_resend-button" kind="link" onClick={onResendClickFn}>
+                        <RetryIcon className="mx_Icon mx_Icon_16" />
+                        {_t("action|resend")}
+                    </AccessibleButton>
+                </Tooltip>
                 {errorText && <ErrorMessage message={errorText} />}
             </div>
 
             <div className="mx_AuthBody_did-not-receive">
-                <span className="mx_VerifyEMailDialog_text-light">{_t("Wrong email address?")}</span>
+                <span className="mx_VerifyEMailDialog_text-light">{_t("auth|check_email_wrong_email_prompt")}</span>
                 <AccessibleButton className="mx_AuthBody_resend-button" kind="link" onClick={onReEnterEmailClick}>
-                    {_t("Re-enter email address")}
+                    {_t("auth|check_email_wrong_email_button")}
                 </AccessibleButton>
             </div>
 
             <AccessibleButton
                 onClick={onCloseClick}
                 className="mx_Dialog_cancelButton"
-                aria-label={_t("Close dialog")}
+                aria-label={_t("dialog_close_label")}
             />
         </>
     );

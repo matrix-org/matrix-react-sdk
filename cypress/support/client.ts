@@ -16,14 +16,17 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { FileType, Upload, UploadOpts } from "matrix-js-sdk/src/http-api";
-import type { ICreateRoomOpts, ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
-import type { MatrixClient } from "matrix-js-sdk/src/client";
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import type { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
+import type {
+    MatrixClient,
+    Room,
+    IContent,
+    FileType,
+    Upload,
+    UploadOpts,
+    ICreateRoomOpts,
+    ISendEventResponse,
+} from "matrix-js-sdk/src/matrix";
 import Chainable = Cypress.Chainable;
-import { UserCredentials } from "./login";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -70,13 +73,6 @@ declare global {
                 eventType: string,
                 content: IContent,
             ): Chainable<ISendEventResponse>;
-            /**
-             * @param {MatrixEvent} event
-             * @param {ReceiptType} receiptType
-             * @param {boolean} unthreaded
-             * @return {module:http-api.MatrixError} Rejects: with an error response.
-             */
-            sendReadReceipt(event: MatrixEvent, receiptType?: ReceiptType, unthreaded?: boolean): Chainable<{}>;
             /**
              * @param {string} name
              * @param {module:client.callback} callback Optional.
@@ -125,10 +121,6 @@ declare global {
              * @return the list of DMs with that user
              */
             getDmRooms(userId: string): Chainable<string[]>;
-            /**
-             * Boostraps cross-signing.
-             */
-            bootstrapCrossSigning(credendtials: UserCredentials): Chainable<void>;
             /**
              * Joins the given room by alias or ID
              * @param roomIdOrAlias the id or alias of the room to join
@@ -203,15 +195,6 @@ Cypress.Commands.add(
     },
 );
 
-Cypress.Commands.add(
-    "sendReadReceipt",
-    (event: MatrixEvent, receiptType?: ReceiptType, unthreaded?: boolean): Chainable<{}> => {
-        return cy.getClient().then(async (cli: MatrixClient) => {
-            return cli.sendReadReceipt(event, receiptType, unthreaded);
-        });
-    },
-);
-
 Cypress.Commands.add("setDisplayName", (name: string): Chainable<{}> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
         return cli.setDisplayName(name);
@@ -227,23 +210,6 @@ Cypress.Commands.add("uploadContent", (file: FileType, opts?: UploadOpts): Chain
 Cypress.Commands.add("setAvatarUrl", (url: string): Chainable<{}> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
         return cli.setAvatarUrl(url);
-    });
-});
-
-Cypress.Commands.add("bootstrapCrossSigning", (credentials: UserCredentials) => {
-    cy.window({ log: false }).then((win) => {
-        win.mxMatrixClientPeg.matrixClient.bootstrapCrossSigning({
-            authUploadDeviceSigningKeys: async (func) => {
-                await func({
-                    type: "m.login.password",
-                    identifier: {
-                        type: "m.id.user",
-                        user: credentials.userId,
-                    },
-                    password: credentials.password,
-                });
-            },
-        });
     });
 });
 

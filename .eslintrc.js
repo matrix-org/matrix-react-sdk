@@ -36,6 +36,7 @@ module.exports = {
             ),
         ],
 
+        "import/no-duplicates": ["error"],
         // Ban matrix-js-sdk/src imports in favour of matrix-js-sdk/src/matrix imports to prevent unleashing hell.
         "no-restricted-imports": [
             "error",
@@ -72,8 +73,79 @@ module.exports = {
                 ],
                 patterns: [
                     {
-                        group: ["matrix-js-sdk/lib", "matrix-js-sdk/lib/", "matrix-js-sdk/lib/**"],
-                        message: "Please use matrix-js-sdk/src/* instead",
+                        group: [
+                            "matrix-js-sdk/src/**",
+                            "!matrix-js-sdk/src/matrix",
+                            "matrix-js-sdk/lib",
+                            "matrix-js-sdk/lib/",
+                            "matrix-js-sdk/lib/**",
+                            // XXX: Temporarily allow these as they are not available via the main export
+                            "!matrix-js-sdk/src/logger",
+                            "!matrix-js-sdk/src/errors",
+                            "!matrix-js-sdk/src/utils",
+                            "!matrix-js-sdk/src/version-support",
+                            "!matrix-js-sdk/src/randomstring",
+                            "!matrix-js-sdk/src/sliding-sync",
+                            "!matrix-js-sdk/src/browser-index",
+                            "!matrix-js-sdk/src/feature",
+                            "!matrix-js-sdk/src/NamespacedValue",
+                            "!matrix-js-sdk/src/ReEmitter",
+                            "!matrix-js-sdk/src/event-mapper",
+                            "!matrix-js-sdk/src/interactive-auth",
+                            "!matrix-js-sdk/src/secret-storage",
+                            "!matrix-js-sdk/src/room-hierarchy",
+                            "!matrix-js-sdk/src/rendezvous",
+                            "!matrix-js-sdk/src/rendezvous/transports",
+                            "!matrix-js-sdk/src/rendezvous/channels",
+                            "!matrix-js-sdk/src/indexeddb-worker",
+                            "!matrix-js-sdk/src/pushprocessor",
+                            "!matrix-js-sdk/src/extensible_events_v1",
+                            "!matrix-js-sdk/src/extensible_events_v1/PollStartEvent",
+                            "!matrix-js-sdk/src/extensible_events_v1/PollResponseEvent",
+                            "!matrix-js-sdk/src/extensible_events_v1/PollEndEvent",
+                            "!matrix-js-sdk/src/extensible_events_v1/InvalidEventError",
+                            "!matrix-js-sdk/src/crypto-api",
+                            "!matrix-js-sdk/src/crypto-api/verification",
+                            "!matrix-js-sdk/src/crypto",
+                            "!matrix-js-sdk/src/crypto/algorithms",
+                            "!matrix-js-sdk/src/crypto/api",
+                            "!matrix-js-sdk/src/crypto/aes",
+                            "!matrix-js-sdk/src/crypto/backup",
+                            "!matrix-js-sdk/src/crypto/olmlib",
+                            "!matrix-js-sdk/src/crypto/crypto",
+                            "!matrix-js-sdk/src/crypto/keybackup",
+                            "!matrix-js-sdk/src/crypto/RoomList",
+                            "!matrix-js-sdk/src/crypto/deviceinfo",
+                            "!matrix-js-sdk/src/crypto/key_passphrase",
+                            "!matrix-js-sdk/src/crypto/CrossSigning",
+                            "!matrix-js-sdk/src/crypto/recoverykey",
+                            "!matrix-js-sdk/src/crypto/dehydration",
+                            "!matrix-js-sdk/src/crypto/verification",
+                            "!matrix-js-sdk/src/crypto/verification/SAS",
+                            "!matrix-js-sdk/src/crypto/verification/QRCode",
+                            "!matrix-js-sdk/src/crypto/verification/request",
+                            "!matrix-js-sdk/src/crypto/verification/request/VerificationRequest",
+                            "!matrix-js-sdk/src/common-crypto",
+                            "!matrix-js-sdk/src/common-crypto/CryptoBackend",
+                            "!matrix-js-sdk/src/oidc",
+                            "!matrix-js-sdk/src/oidc/discovery",
+                            "!matrix-js-sdk/src/oidc/authorize",
+                            "!matrix-js-sdk/src/oidc/validate",
+                            "!matrix-js-sdk/src/oidc/error",
+                            "!matrix-js-sdk/src/oidc/register",
+                            "!matrix-js-sdk/src/webrtc",
+                            "!matrix-js-sdk/src/webrtc/call",
+                            "!matrix-js-sdk/src/webrtc/callFeed",
+                            "!matrix-js-sdk/src/webrtc/mediaHandler",
+                            "!matrix-js-sdk/src/webrtc/callEventTypes",
+                            "!matrix-js-sdk/src/webrtc/callEventHandler",
+                            "!matrix-js-sdk/src/webrtc/groupCallEventHandler",
+                            "!matrix-js-sdk/src/models",
+                            "!matrix-js-sdk/src/models/read-receipt",
+                            "!matrix-js-sdk/src/models/relations-container",
+                            "!matrix-js-sdk/src/models/related-relations",
+                        ],
+                        message: "Please use matrix-js-sdk/src/matrix instead",
                     },
                 ],
             },
@@ -92,13 +164,12 @@ module.exports = {
         "jsx-a11y/no-noninteractive-tabindex": "off",
         "jsx-a11y/no-static-element-interactions": "off",
         "jsx-a11y/role-supports-aria-props": "off",
-        "jsx-a11y/tabindex-no-positive": "off",
 
         "matrix-org/require-copyright-header": "error",
     },
     overrides: [
         {
-            files: ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "cypress/**/*.ts"],
+            files: ["src/**/*.{ts,tsx}", "test/**/*.{ts,tsx}", "cypress/**/*.ts", "playwright/**/*.ts"],
             extends: ["plugin:matrix-org/typescript", "plugin:matrix-org/react"],
             rules: {
                 "@typescript-eslint/explicit-function-return-type": [
@@ -162,7 +233,7 @@ module.exports = {
             },
         },
         {
-            files: ["test/**/*.{ts,tsx}", "cypress/**/*.ts"],
+            files: ["test/**/*.{ts,tsx}", "cypress/**/*.ts", "playwright/**/*.ts"],
             extends: ["plugin:matrix-org/jest"],
             rules: {
                 // We don't need super strict typing in test utilities
@@ -174,9 +245,6 @@ module.exports = {
                 // Disabled tests are a reality for now but as soon as all of the xits are
                 // eliminated, we should enforce this.
                 "jest/no-disabled-tests": "off",
-                // TODO: There are many tests with invalid expects that should be fixed,
-                // https://github.com/vector-im/element-web/issues/24709
-                "jest/valid-expect": "off",
                 // Also treat "oldBackendOnly" as a test function.
                 // Used in some crypto tests.
                 "jest/no-standalone-expect": [
@@ -194,6 +262,19 @@ module.exports = {
             },
             rules: {
                 // Cypress "promises" work differently - disable some related rules
+                "jest/valid-expect": "off",
+                "jest/valid-expect-in-promise": "off",
+                "jest/no-done-callback": "off",
+            },
+        },
+        {
+            files: ["playwright/**/*.ts"],
+            parserOptions: {
+                project: ["./playwright/tsconfig.json"],
+            },
+            rules: {
+                // Cypress "promises" work differently - disable some related rules
+                "jest/valid-expect": "off",
                 "jest/valid-expect-in-promise": "off",
                 "jest/no-done-callback": "off",
             },

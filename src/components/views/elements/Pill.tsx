@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement, useRef, useState } from "react";
+import React, { ReactElement } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/matrix";
+import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
+import { Tooltip } from "@vector-im/compound-web";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import Tooltip, { Alignment } from "../elements/Tooltip";
 import { usePermalink } from "../../../hooks/usePermalink";
 import RoomAvatar from "../avatars/RoomAvatar";
 import MemberAvatar from "../avatars/MemberAvatar";
@@ -45,7 +44,7 @@ export const pillRoomNotifLen = (): number => {
     return "@room".length;
 };
 
-const linkIcon = <LinkIcon className="mx_Pill_LinkIcon mx_BaseAvatar mx_BaseAvatar_image" />;
+const linkIcon = <LinkIcon className="mx_Pill_LinkIcon mx_BaseAvatar" />;
 
 const PillRoomAvatar: React.FC<{
     shouldShowPillAvatar: boolean;
@@ -56,7 +55,7 @@ const PillRoomAvatar: React.FC<{
     }
 
     if (room) {
-        return <RoomAvatar room={room} width={16} height={16} aria-hidden="true" />;
+        return <RoomAvatar room={room} size="16px" aria-hidden="true" />;
     }
     return linkIcon;
 };
@@ -70,9 +69,9 @@ const PillMemberAvatar: React.FC<{
     }
 
     if (member) {
-        return <MemberAvatar member={member} width={16} height={16} aria-hidden="true" hideTitle />;
+        return <MemberAvatar member={member} size="16px" aria-hidden="true" hideTitle />;
     }
-    return <UserIcon className="mx_Pill_UserIcon mx_BaseAvatar mx_BaseAvatar_image" />;
+    return <UserIcon className="mx_Pill_UserIcon mx_BaseAvatar" />;
 };
 
 export interface PillProps {
@@ -89,8 +88,6 @@ export interface PillProps {
 }
 
 export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room, shouldShowPillAvatar = true }) => {
-    const tooltipId = useRef(`mx_Pill_${Math.random()}`).current;
-    const [hover, setHover] = useState(false);
     const { event, member, onClick, resourceId, targetRoom, text, type } = usePermalink({
         room,
         type: propType,
@@ -104,21 +101,12 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
     const classes = classNames("mx_Pill", {
         mx_AtRoomPill: type === PillType.AtRoomMention,
         mx_RoomPill: type === PillType.RoomMention,
-        mx_SpacePill: type === "space",
+        mx_SpacePill: type === "space" || targetRoom?.isSpaceRoom(),
         mx_UserPill: type === PillType.UserMention,
         mx_UserPill_me: resourceId === MatrixClientPeg.safeGet().getUserId(),
         mx_EventPill: type === PillType.EventInOtherRoom || type === PillType.EventInSameRoom,
     });
 
-    const onMouseOver = (): void => {
-        setHover(true);
-    };
-
-    const onMouseLeave = (): void => {
-        setHover(false);
-    };
-
-    const tip = hover && resourceId ? <Tooltip id={tooltipId} label={resourceId} alignment={Alignment.Right} /> : null;
     let avatar: ReactElement | null = null;
     let pillText: string | null = text;
 
@@ -126,7 +114,7 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
         case PillType.EventInOtherRoom:
             {
                 avatar = <PillRoomAvatar shouldShowPillAvatar={shouldShowPillAvatar} room={targetRoom} />;
-                pillText = _t("Message in %(room)s", {
+                pillText = _t("pill|permalink_other_room", {
                     room: text,
                 });
             }
@@ -135,12 +123,12 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
             {
                 if (event) {
                     avatar = <PillMemberAvatar shouldShowPillAvatar={shouldShowPillAvatar} member={member} />;
-                    pillText = _t("Message from %(user)s", {
+                    pillText = _t("pill|permalink_this_room", {
                         user: text,
                     });
                 } else {
                     avatar = linkIcon;
-                    pillText = _t("Message");
+                    pillText = _t("common|message");
                 }
             }
             break;
@@ -156,34 +144,28 @@ export const Pill: React.FC<PillProps> = ({ type: propType, url, inMessage, room
             return null;
     }
 
+    const isAnchor = !!inMessage && !!url;
     return (
         <bdi>
             <MatrixClientContext.Provider value={MatrixClientPeg.safeGet()}>
-                {inMessage && url ? (
-                    <a
-                        className={classes}
-                        href={url}
-                        onClick={onClick}
-                        onMouseOver={onMouseOver}
-                        onMouseLeave={onMouseLeave}
-                        aria-describedby={tooltipId}
-                    >
-                        {avatar}
-                        <span className="mx_Pill_text">{pillText}</span>
-                        {tip}
-                    </a>
-                ) : (
-                    <span
-                        className={classes}
-                        onMouseOver={onMouseOver}
-                        onMouseLeave={onMouseLeave}
-                        aria-describedby={tooltipId}
-                    >
-                        {avatar}
-                        <span className="mx_Pill_text">{pillText}</span>
-                        {tip}
-                    </span>
-                )}
+                <Tooltip
+                    label={resourceId ?? ""}
+                    open={resourceId ? undefined : false}
+                    side="right"
+                    isTriggerInteractive={isAnchor}
+                >
+                    {isAnchor ? (
+                        <a className={classes} href={url} onClick={onClick}>
+                            {avatar}
+                            <span className="mx_Pill_text">{pillText}</span>
+                        </a>
+                    ) : (
+                        <span className={classes}>
+                            {avatar}
+                            <span className="mx_Pill_text">{pillText}</span>
+                        </span>
+                    )}
+                </Tooltip>
             </MatrixClientContext.Provider>
         </bdi>
     );

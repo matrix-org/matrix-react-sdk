@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
 import type { Call } from "../../../models/Call";
@@ -51,6 +51,8 @@ import { useHasRoomLiveVoiceBroadcast } from "../../../voice-broadcast";
 import { RoomTileSubtitle } from "./RoomTileSubtitle";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import { isKnockDenied } from "../../../utils/membership";
+import SettingsStore from "../../../settings/SettingsStore";
 
 interface Props {
     room: Room;
@@ -120,7 +122,12 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
     };
 
     private get showContextMenu(): boolean {
-        return this.props.tag !== DefaultTagID.Invite && shouldShowComponent(UIComponent.RoomOptionsMenu);
+        return (
+            this.props.tag !== DefaultTagID.Invite &&
+            this.props.room.getMyMembership() !== "knock" &&
+            !isKnockDenied(this.props.room) &&
+            shouldShowComponent(UIComponent.RoomOptionsMenu)
+        );
     }
 
     private get showMessagePreview(): boolean {
@@ -313,7 +320,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
                 <ContextMenuTooltipButton
                     className={classes}
                     onClick={this.onNotificationsMenuOpenClick}
-                    title={_t("Notification options")}
+                    title={_t("room_list|notification_options")}
                     isExpanded={!!this.state.notificationsMenuPosition}
                     tabIndex={isActive ? 0 : -1}
                 />
@@ -335,7 +342,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
                 <ContextMenuTooltipButton
                     className="mx_RoomTile_menuButton"
                     onClick={this.onGeneralMenuOpenClick}
-                    title={_t("Room options")}
+                    title={_t("room|context_menu|title")}
                     isExpanded={!!this.state.generalMenuPosition}
                 />
                 {this.state.generalMenuPosition && (
@@ -378,6 +385,9 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
     public render(): React.ReactElement {
         const classes = classNames({
             mx_RoomTile: true,
+            mx_RoomTile_sticky:
+                SettingsStore.getValue("feature_ask_to_join") &&
+                (this.props.room.getMyMembership() === "knock" || isKnockDenied(this.props.room)),
             mx_RoomTile_selected: this.state.selected,
             mx_RoomTile_hasMenuOpen: !!(this.state.generalMenuPosition || this.state.notificationsMenuPosition),
             mx_RoomTile_minimized: this.props.isMinimized,
@@ -433,17 +443,17 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
         } else if (this.notificationState.hasMentions) {
             ariaLabel +=
                 " " +
-                _t("%(count)s unread messages including mentions.", {
+                _t("a11y|n_unread_messages_mentions", {
                     count: this.notificationState.count,
                 });
         } else if (this.notificationState.hasUnreadCount) {
             ariaLabel +=
                 " " +
-                _t("%(count)s unread messages.", {
+                _t("a11y|n_unread_messages", {
                     count: this.notificationState.count,
                 });
         } else if (this.notificationState.isUnread) {
-            ariaLabel += " " + _t("Unread messages.");
+            ariaLabel += " " + _t("a11y|unread_messages");
         }
 
         let ariaDescribedBy: string;
@@ -468,7 +478,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
                             {...props}
                             onFocus={onFocus}
                             tabIndex={isActive ? 0 : -1}
-                            inputRef={ref}
+                            ref={ref}
                             className={classes}
                             onClick={this.onTileClick}
                             onContextMenu={this.onContextMenu}
@@ -479,7 +489,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
                         >
                             <DecoratedRoomAvatar
                                 room={this.props.room}
-                                avatarSize={32}
+                                size="32px"
                                 displayBadge={this.props.isMinimized}
                                 tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
                             />

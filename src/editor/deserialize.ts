@@ -15,8 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
 
 import { checkBlockNode } from "../HtmlUtils";
 import { getPrimaryPermalinkEntity } from "../utils/permalinks/Permalinks";
@@ -247,6 +246,10 @@ function parseNode(n: Node, pc: PartCreator, opts: IParseOptions, mkListItem?: (
                         const tex = (n as Element).getAttribute("data-mx-maths");
 
                         return pc.plainWithEmoji(`${delimLeft}${tex}${delimRight}`);
+                    }
+                    // Spoilers are translated back into their slash command form
+                    else if ((n as Element).hasAttribute("data-mx-spoiler")) {
+                        return [pc.plain("/spoiler "), ...parseChildren(n, pc, opts)];
                     }
             }
     }

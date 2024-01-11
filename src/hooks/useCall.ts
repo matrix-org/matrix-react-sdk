@@ -16,12 +16,10 @@ limitations under the License.
 
 import { useState, useCallback, useMemo } from "react";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { Call, ConnectionState, ElementCall, Layout } from "../models/Call";
-import { useTypedEventEmitterState } from "./useEventEmitter";
-import { CallEvent } from "../models/Call";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
+import { Call, ConnectionState, ElementCall, Layout, CallEvent } from "../models/Call";
+import { useTypedEventEmitterState, useEventEmitter } from "./useEventEmitter";
 import { CallStore, CallStoreEvent } from "../stores/CallStore";
-import { useEventEmitter } from "./useEventEmitter";
 import SdkConfig, { DEFAULTS } from "../SdkConfig";
 import { _t } from "../languageHandler";
 
@@ -86,8 +84,8 @@ export const useJoinCallButtonDisabledTooltip = (call: Call): string | null => {
     const isFull = useFull(call);
     const state = useConnectionState(call);
 
-    if (state === ConnectionState.Connecting) return _t("Connecting");
-    if (isFull) return _t("Sorry — this call is currently full");
+    if (state === ConnectionState.Connecting) return _t("voip|join_button_tooltip_connecting");
+    if (isFull) return _t("voip|join_button_tooltip_call_full");
     return null;
 };
 

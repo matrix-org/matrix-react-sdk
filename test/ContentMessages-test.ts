@@ -23,7 +23,6 @@ import ContentMessages, { UploadCanceledError, uploadFile } from "../src/Content
 import { doMaybeLocalRoomAction } from "../src/utils/local-room";
 import { createTestClient, mkEvent } from "./test-utils";
 import { BlurhashEncoder } from "../src/BlurhashEncoder";
-import SettingsStore from "../src/settings/SettingsStore";
 
 jest.mock("matrix-encrypt-attachment", () => ({ encryptAttachment: jest.fn().mockResolvedValue({}) }));
 
@@ -163,6 +162,11 @@ describe("ContentMessages", () => {
                             return 800;
                         },
                     });
+                    Object.defineProperty(element, "duration", {
+                        get() {
+                            return 123;
+                        },
+                    });
                 }
                 return element;
             });
@@ -176,11 +180,31 @@ describe("ContentMessages", () => {
                 expect.objectContaining({
                     url: "mxc://server/file",
                     msgtype: "m.video",
+                    info: expect.objectContaining({
+                        duration: 123000,
+                    }),
                 }),
             );
         });
 
         it("should use m.audio for audio files", async () => {
+            jest.spyOn(document, "createElement").mockImplementation((tagName) => {
+                const element = createElement(tagName);
+                if (tagName === "audio") {
+                    Object.defineProperty(element, "duration", {
+                        get() {
+                            return 621;
+                        },
+                    });
+                    Object.defineProperty(element, "src", {
+                        set() {
+                            element.onloadedmetadata!(new Event("loadedmetadata"));
+                        },
+                    });
+                }
+                return element;
+            });
+
             mocked(client.uploadContent).mockResolvedValue({ content_uri: "mxc://server/file" });
             const file = new File([], "fileName", { type: "audio/mp3" });
             await contentMessages.sendContentToRoom(file, roomId, undefined, client, undefined);
@@ -190,6 +214,34 @@ describe("ContentMessages", () => {
                 expect.objectContaining({
                     url: "mxc://server/file",
                     msgtype: "m.audio",
+                    info: expect.objectContaining({
+                        duration: 621000,
+                    }),
+                }),
+            );
+        });
+
+        it("should fall back to m.file for invalid audio files", async () => {
+            jest.spyOn(document, "createElement").mockImplementation((tagName) => {
+                const element = createElement(tagName);
+                if (tagName === "audio") {
+                    Object.defineProperty(element, "src", {
+                        set() {
+                            element.onerror!("fail");
+                        },
+                    });
+                }
+                return element;
+            });
+            mocked(client.uploadContent).mockResolvedValue({ content_uri: "mxc://server/file" });
+            const file = new File([], "fileName", { type: "audio/mp3" });
+            await contentMessages.sendContentToRoom(file, roomId, undefined, client, undefined);
+            expect(client.sendMessage).toHaveBeenCalledWith(
+                roomId,
+                null,
+                expect.objectContaining({
+                    url: "mxc://server/file",
+                    msgtype: "m.file",
                 }),
             );
         });
@@ -225,10 +277,6 @@ describe("ContentMessages", () => {
         });
 
         it("properly handles replies", async () => {
-            jest.spyOn(SettingsStore, "getValue").mockImplementation(
-                (settingName) => settingName === "feature_intentional_mentions",
-            );
-
             mocked(client.uploadContent).mockResolvedValue({ content_uri: "mxc://server/file" });
             const file = new File([], "fileName", { type: "image/jpeg" });
             const replyToEvent = mkEvent({
@@ -245,7 +293,7 @@ describe("ContentMessages", () => {
                 expect.objectContaining({
                     "url": "mxc://server/file",
                     "msgtype": "m.image",
-                    "org.matrix.msc3952.mentions": {
+                    "m.mentions": {
                         user_ids: ["@bob:test"],
                     },
                 }),

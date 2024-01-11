@@ -46,13 +46,13 @@ export const showToast = (version: string, newVersion: string, releaseNotes?: st
     }
 
     let onAccept;
-    let acceptLabel = _t("What's new?");
+    let acceptLabel = _t("update|see_changes_button");
     if (releaseNotes) {
         onAccept = () => {
             Modal.createDialog(QuestionDialog, {
-                title: _t("What's New"),
+                title: _t("update|release_notes_toast_title"),
                 description: <pre>{releaseNotes}</pre>,
-                button: _t("Update"),
+                button: _t("action|update"),
                 onFinished: (update) => {
                     if (update && PlatformPeg.get()) {
                         PlatformPeg.get()!.installUpdate();
@@ -74,18 +74,18 @@ export const showToast = (version: string, newVersion: string, releaseNotes?: st
         };
     } else {
         onAccept = installUpdate;
-        acceptLabel = _t("Update");
+        acceptLabel = _t("action|update");
     }
 
     const brand = SdkConfig.get().brand;
     ToastStore.sharedInstance().addOrReplaceToast({
         key: TOAST_KEY,
-        title: _t("Update %(brand)s", { brand }),
+        title: _t("update|toast_title", { brand }),
         props: {
-            description: _t("New version of %(brand)s is available", { brand }),
+            description: _t("update|toast_description", { brand }),
             acceptLabel,
             onAccept,
-            rejectLabel: _t("Dismiss"),
+            rejectLabel: _t("action|dismiss"),
             onReject,
         },
         component: GenericToast,

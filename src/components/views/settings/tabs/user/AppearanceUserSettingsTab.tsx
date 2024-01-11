@@ -38,6 +38,7 @@ import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 interface IProps {}
 
 interface IState {
+    useBundledEmojiFont: boolean;
     useSystemFont: boolean;
     systemFont: string;
     showAdvanced: boolean;
@@ -52,7 +53,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
 
-    private readonly MESSAGE_PREVIEW_TEXT = _t("Hey you. You're the best!");
+    private readonly MESSAGE_PREVIEW_TEXT = _t("common|preview_message");
 
     private unmounted = false;
 
@@ -60,6 +61,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         super(props);
 
         this.state = {
+            useBundledEmojiFont: SettingsStore.getValue("useBundledEmojiFont"),
             useSystemFont: SettingsStore.getValue("useSystemFont"),
             systemFont: SettingsStore.getValue("systemFont"),
             showAdvanced: false,
@@ -99,21 +101,24 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                 onClick={() => this.setState({ showAdvanced: !this.state.showAdvanced })}
                 aria-expanded={this.state.showAdvanced}
             >
-                {this.state.showAdvanced ? _t("Hide advanced") : _t("Show advanced")}
+                {this.state.showAdvanced ? _t("action|hide_advanced") : _t("action|show_advanced")}
             </AccessibleButton>
         );
 
         let advanced: React.ReactNode;
 
         if (this.state.showAdvanced) {
-            const tooltipContent = _t(
-                "Set the name of a font installed on your system & %(brand)s will attempt to use it.",
-                { brand },
-            );
+            const tooltipContent = _t("settings|appearance|custom_font_description", { brand });
             advanced = (
                 <>
                     <SettingsFlag name="useCompactLayout" level={SettingLevel.DEVICE} useCheckbox={true} />
 
+                    <SettingsFlag
+                        name="useBundledEmojiFont"
+                        level={SettingLevel.DEVICE}
+                        useCheckbox={true}
+                        onChange={(checked) => this.setState({ useBundledEmojiFont: checked })}
+                    />
                     <SettingsFlag
                         name="useSystemFont"
                         level={SettingLevel.DEVICE}
@@ -151,10 +156,8 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
 
         return (
             <SettingsTab data-testid="mx_AppearanceUserSettingsTab">
-                <SettingsSection heading={_t("Customise your appearance")}>
-                    <SettingsSubsectionText>
-                        {_t("Appearance Settings only affect this %(brand)s session.", { brand })}
-                    </SettingsSubsectionText>
+                <SettingsSection heading={_t("settings|appearance|heading")}>
+                    <SettingsSubsectionText>{_t("settings|appearance|subheading", { brand })}</SettingsSubsectionText>
                     <ThemeChoicePanel />
                     <LayoutSwitcher
                         userId={this.state.userId}

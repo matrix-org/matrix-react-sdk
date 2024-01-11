@@ -16,11 +16,8 @@ limitations under the License.
 
 import isIp from "is-ip";
 import * as utils from "matrix-js-sdk/src/utils";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, MatrixClient, RoomStateEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import MatrixToPermalinkConstructor, {
     baseUrl as matrixtoBaseUrl,
@@ -96,7 +93,11 @@ export class RoomPermalinkCreator {
     // Some of the tests done by this class are relatively expensive, so normally
     // throttled to not happen on every update. Pass false as the shouldThrottle
     // param to disable this behaviour, eg. for tests.
-    public constructor(private room: Room | null, roomId: string | null = null, shouldThrottle = true) {
+    public constructor(
+        private room: Room | null,
+        roomId: string | null = null,
+        shouldThrottle = true,
+    ) {
         this.roomId = room ? room.roomId : roomId!;
 
         if (!this.roomId) {
@@ -117,6 +118,7 @@ export class RoomPermalinkCreator {
     }
 
     public start(): void {
+        if (this.started) return;
         this.load();
         this.room?.currentState.on(RoomStateEvent.Update, this.onRoomStateUpdate);
         this.started = true;
@@ -129,10 +131,6 @@ export class RoomPermalinkCreator {
 
     public get serverCandidates(): string[] | undefined {
         return this._serverCandidates;
-    }
-
-    public isStarted(): boolean {
-        return this.started;
     }
 
     public forEvent(eventId: string): string {

@@ -26,12 +26,10 @@ const SETTING_MANUALLY_VERIFY_ALL_SESSIONS = "e2ee.manuallyVerifyAllSessions";
 
 const E2eAdvancedPanel: React.FC = () => {
     return (
-        <SettingsSubsection heading={_t("Encryption")}>
+        <SettingsSubsection heading={_t("settings|security|encryption_section")}>
             <SettingsFlag name={SETTING_MANUALLY_VERIFY_ALL_SESSIONS} level={SettingLevel.DEVICE} />
             <SettingsSubsectionText>
-                {_t(
-                    "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.",
-                )}
+                {_t("settings|security|encryption_individual_verification_mode")}
             </SettingsSubsectionText>
         </SettingsSubsection>
     );
@@ -40,5 +38,5 @@ const E2eAdvancedPanel: React.FC = () => {
 export default E2eAdvancedPanel;
 
 export function isE2eAdvancedPanelPossible(): boolean {
-    return SettingsStore.isEnabled(SETTING_MANUALLY_VERIFY_ALL_SESSIONS);
+    return SettingsStore.canSetValue(SETTING_MANUALLY_VERIFY_ALL_SESSIONS, null, SettingLevel.DEVICE);
 }

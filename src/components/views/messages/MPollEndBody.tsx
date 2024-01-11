@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState, useContext } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
+import React, { useEffect, useState, useContext, ForwardRefExoticComponent } from "react";
+import { MatrixEvent, M_TEXT } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { Icon as PollIcon } from "../../../../res/img/element-icons/room/composer/poll.svg";
@@ -109,9 +108,9 @@ export const MPollEndBody = React.forwardRef<any, IBodyProps>(({ mxEvent, ...pro
     }
 
     return (
-        <div>
-            <Caption>{_t("Ended a poll")}</Caption>
+        <div className="mx_MPollEndBody" ref={ref}>
+            <Caption>{_t("timeline|m.poll.end|ended")}</Caption>
             <MPollBody mxEvent={pollStartEvent} {...props} />
         </div>
     );
-});
+}) as ForwardRefExoticComponent<IBodyProps>;

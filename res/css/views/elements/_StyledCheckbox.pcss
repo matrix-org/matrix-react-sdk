@@ -16,7 +16,7 @@ limitations under the License.
 
 .mx_Checkbox {
     $size: $font-16px;
-    $border-radius: 0.4rem;
+    $border-radius: 0.27rem;
 
     display: flex;
     align-items: flex-start;
@@ -42,8 +42,7 @@ limitations under the License.
             height: $size;
             width: $size;
             size: 0.5rem;
-
-            border: 1px solid rgba($muted-fg-color, 0.5);
+            border: 1px solid $strong-input-border-color;
             box-sizing: border-box;
             border-radius: $border-radius;
 
@@ -68,11 +67,10 @@ limitations under the License.
         }
 
         &:disabled + label {
-            opacity: 0.5;
             cursor: not-allowed;
         }
 
-        &.focus-visible {
+        &:focus-visible {
             & + label .mx_Checkbox_background {
                 @mixin unreal-focus;
             }
@@ -88,6 +86,10 @@ limitations under the License.
     &:checked + label > .mx_Checkbox_background {
         background: $accent;
         border-color: $accent;
+    }
+
+    &:checked:disabled + label > .mx_Checkbox_background {
+        opacity: 0.5;
     }
 }
 

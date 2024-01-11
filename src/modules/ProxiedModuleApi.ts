@@ -15,17 +15,17 @@ limitations under the License.
 */
 
 import { ModuleApi } from "@matrix-org/react-sdk-module-api/lib/ModuleApi";
-import { TranslationStringsObject } from "@matrix-org/react-sdk-module-api/lib/types/translations";
+import { TranslationStringsObject, PlainSubstitution } from "@matrix-org/react-sdk-module-api/lib/types/translations";
 import { Optional } from "matrix-events-sdk";
-import { DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
+import { DialogContent, DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
 import React from "react";
 import { AccountAuthInfo } from "@matrix-org/react-sdk-module-api/lib/types/AccountAuthInfo";
-import { PlainSubstitution } from "@matrix-org/react-sdk-module-api/lib/types/translations";
 import * as Matrix from "matrix-js-sdk/src/matrix";
 import { IRegisterRequestParams } from "matrix-js-sdk/src/matrix";
+import { ModuleUiDialogOptions } from "@matrix-org/react-sdk-module-api/lib/types/ModuleUiDialogOptions";
 
 import Modal from "../Modal";
-import { _t } from "../languageHandler";
+import { _t, TranslationKey } from "../languageHandler";
 import { ModuleUiDialog } from "../components/views/dialogs/ModuleUiDialog";
 import SdkConfig from "../SdkConfig";
 import PlatformPeg from "../PlatformPeg";
@@ -37,6 +37,7 @@ import { getCachedRoomIDForAlias } from "../RoomAliasCache";
 import { Action } from "../dispatcher/actions";
 import { OverwriteLoginPayload } from "../dispatcher/payloads/OverwriteLoginPayload";
 import { ActionPayload } from "../dispatcher/payloads";
+import SettingsStore from "../settings/SettingsStore";
 
 /**
  * Glue between the `ModuleApi` interface and the react-sdk. Anticipates one instance
@@ -74,30 +75,29 @@ export class ProxiedModuleApi implements ModuleApi {
     /**
      * @override
      */
-    public translateString(s: string, variables?: Record<string, PlainSubstitution>): string {
+    public translateString(s: TranslationKey, variables?: Record<string, PlainSubstitution>): string {
         return _t(s, variables);
     }
 
     /**
      * @override
      */
-    public openDialog<
-        M extends object,
-        P extends DialogProps = DialogProps,
-        C extends React.Component = React.Component,
-    >(
-        title: string,
+    public openDialog<M extends object, P extends DialogProps, C extends DialogContent<P>>(
+        initialTitleOrOptions: string | ModuleUiDialogOptions,
         body: (props: P, ref: React.RefObject<C>) => React.ReactNode,
+        props?: Omit<P, keyof DialogProps>,
     ): Promise<{ didOkOrSubmit: boolean; model: M }> {
+        const initialOptions: ModuleUiDialogOptions =
+            typeof initialTitleOrOptions === "string" ? { title: initialTitleOrOptions } : initialTitleOrOptions;
+
         return new Promise<{ didOkOrSubmit: boolean; model: M }>((resolve) => {
             Modal.createDialog(
-                ModuleUiDialog,
+                ModuleUiDialog<P, C>,
                 {
-                    title: title,
+                    initialOptions,
                     contentFactory: body,
-                    contentProps: <DialogProps>{
-                        moduleApi: this,
-                    },
+                    moduleApi: this,
+                    additionalContentProps: props,
                 },
                 "mx_CompoundDialog",
             ).finished.then(([didOkOrSubmit, model]) => {
@@ -203,6 +203,7 @@ export class ProxiedModuleApi implements ModuleApi {
             if (andJoin) {
                 dispatcher.dispatch({
                     action: Action.JoinRoom,
+                    canAskToJoin: SettingsStore.getValue("feature_ask_to_join"),
                 });
             }
         }

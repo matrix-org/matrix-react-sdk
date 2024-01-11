@@ -315,6 +315,8 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         if (this.state.showBreadcrumbs === BreadcrumbsMode.Legacy && !this.props.isMinimized) {
             return (
                 <IndicatorScrollbar
+                    role="navigation"
+                    aria-label={_t("a11y|recent_rooms")}
                     className="mx_LeftPanel_breadcrumbsContainer mx_AutoHideScrollbar"
                     verticalScrollsHorizontally={true}
                 >
@@ -334,7 +336,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 <AccessibleTooltipButton
                     className={classNames("mx_LeftPanel_dialPadButton", {})}
                     onClick={this.onDialPad}
-                    title={_t("Open dial pad")}
+                    title={_t("left_panel|open_dial_pad")}
                 />
             );
         }
@@ -345,7 +347,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 <AccessibleTooltipButton
                     className="mx_LeftPanel_exploreButton"
                     onClick={this.onExplore}
-                    title={_t("Explore rooms")}
+                    title={_t("action|explore_rooms")}
                 />
             );
         }
@@ -356,6 +358,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 onFocus={this.onFocus}
                 onBlur={this.onBlur}
                 onKeyDown={this.onKeyDown}
+                role="search"
             >
                 <RoomSearch isMinimized={this.props.isMinimized} />
 
@@ -397,7 +400,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                         selected={this.props.pageType === PageType.HomePage}
                         minimized={this.props.isMinimized}
                     />
-                    <div className="mx_LeftPanel_roomListWrapper">
+                    <nav className="mx_LeftPanel_roomListWrapper" aria-label={_t("common|rooms")}>
                         <div
                             className={roomListClasses}
                             ref={this.listContainerRef}
@@ -407,7 +410,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                         >
                             {roomList}
                         </div>
-                    </div>
+                    </nav>
                 </div>
             </div>
         );

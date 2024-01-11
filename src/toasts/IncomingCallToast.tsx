@@ -14,8 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useEffect } from "react";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import React, { useCallback, useEffect, useMemo } from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 
 import { _t } from "../languageHandler";
 import RoomAvatar from "../components/views/avatars/RoomAvatar";
@@ -31,14 +35,15 @@ import {
     LiveContentType,
 } from "../components/views/rooms/LiveContentSummary";
 import { useCall, useJoinCallButtonDisabledTooltip } from "../hooks/useCall";
-import { useRoomState } from "../hooks/useRoomState";
 import { ButtonEvent } from "../components/views/elements/AccessibleButton";
 import { useDispatcher } from "../hooks/useDispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { Call } from "../models/Call";
+import { AudioID } from "../LegacyCallHandler";
 import { useTypedEventEmitter } from "../hooks/useEventEmitter";
 
-export const getIncomingCallToastKey = (stateKey: string): string => `call_${stateKey}`;
+export const getIncomingCallToastKey = (callId: string, roomId: string): string => `call_${callId}_${roomId}`;
+const MAX_RING_TIME_MS = 10 * 1000;
 
 interface JoinCallButtonWithCallProps {
     onClick: (e: ButtonEvent) => void;
@@ -53,45 +58,57 @@ function JoinCallButtonWithCall({ onClick, call }: JoinCallButtonWithCallProps):
             className="mx_IncomingCallToast_joinButton"
             onClick={onClick}
             disabled={disabledTooltip !== null}
-            tooltip={disabledTooltip}
+            tooltip={disabledTooltip ?? undefined}
             kind="primary"
         >
-            {_t("Join")}
+            {_t("action|join")}
         </AccessibleTooltipButton>
     );
 }
 
 interface Props {
-    callEvent: MatrixEvent;
+    notifyEvent: MatrixEvent;
 }
 
-export function IncomingCallToast({ callEvent }: Props): JSX.Element {
-    const roomId = callEvent.getRoomId()!;
+export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
+    const roomId = notifyEvent.getRoomId()!;
     const room = MatrixClientPeg.safeGet().getRoom(roomId) ?? undefined;
     const call = useCall(roomId);
+    const audio = useMemo(() => document.getElementById(AudioID.Ring) as HTMLMediaElement, []);
 
+    // Start ringing if not already.
+    useEffect(() => {
+        const isRingToast = (notifyEvent.getContent() as unknown as { notify_type: string })["notify_type"] == "ring";
+        if (isRingToast && audio.paused) {
+            audio.play();
+        }
+    }, [audio, notifyEvent]);
+
+    // Stop ringing on dismiss.
     const dismissToast = useCallback((): void => {
-        ToastStore.sharedInstance().dismissToast(getIncomingCallToastKey(callEvent.getStateKey()!));
-    }, [callEvent]);
+        ToastStore.sharedInstance().dismissToast(
+            getIncomingCallToastKey(notifyEvent.getContent().call_id ?? "", roomId),
+        );
+        audio.pause();
+    }, [audio, notifyEvent, roomId]);
 
-    const latestEvent = useRoomState(
-        room,
-        useCallback(
-            (state) => {
-                return state.getStateEvents(callEvent.getType(), callEvent.getStateKey()!);
-            },
-            [callEvent],
-        ),
+    // Dismiss if session got ended remotely.
+    const onSessionEnded = useCallback(
+        (endedSessionRoomId: string, session: MatrixRTCSession): void => {
+            if (roomId == endedSessionRoomId && session.callId == notifyEvent.getContent().call_id) {
+                dismissToast();
+            }
+        },
+        [dismissToast, notifyEvent, roomId],
     );
 
+    // Dismiss on timeout.
     useEffect(() => {
-        if ("m.terminated" in latestEvent.getContent()) {
-            dismissToast();
-        }
-    }, [latestEvent, dismissToast]);
+        const timeout = setTimeout(dismissToast, MAX_RING_TIME_MS);
+        return () => clearTimeout(timeout);
+    });
 
-    useTypedEventEmitter(latestEvent, MatrixEventEvent.BeforeRedaction, dismissToast);
-
+    // Dismiss on viewing call.
     useDispatcher(
         defaultDispatcher,
         useCallback(
@@ -104,21 +121,23 @@ export function IncomingCallToast({ callEvent }: Props): JSX.Element {
         ),
     );
 
+    // Dismiss on clicking join.
     const onJoinClick = useCallback(
         (e: ButtonEvent): void => {
             e.stopPropagation();
 
+            // The toast will be automatically dismissed by the dispatcher callback above
             defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: room?.roomId,
                 view_call: true,
                 metricsTrigger: undefined,
             });
-            dismissToast();
         },
-        [room, dismissToast],
+        [room],
     );
 
+    // Dismiss on closing toast.
     const onCloseClick = useCallback(
         (e: ButtonEvent): void => {
             e.stopPropagation();
@@ -128,19 +147,29 @@ export function IncomingCallToast({ callEvent }: Props): JSX.Element {
         [dismissToast],
     );
 
+    useTypedEventEmitter(
+        MatrixClientPeg.safeGet().matrixRTC,
+        MatrixRTCSessionManagerEvents.SessionEnded,
+        onSessionEnded,
+    );
+
     return (
         <React.Fragment>
-            <RoomAvatar room={room ?? undefined} height={24} width={24} />
+            <div>
+                <RoomAvatar room={room ?? undefined} size="24px" />
+            </div>
             <div className="mx_IncomingCallToast_content">
                 <div className="mx_IncomingCallToast_info">
-                    <span className="mx_IncomingCallToast_room">{room ? room.name : _t("Unknown room")}</span>
-                    <div className="mx_IncomingCallToast_message">{_t("Video call started")}</div>
+                    <span className="mx_IncomingCallToast_room">
+                        {room ? room.name : _t("voip|call_toast_unknown_room")}
+                    </span>
+                    <div className="mx_IncomingCallToast_message">{_t("voip|video_call_started")}</div>
                     {call ? (
                         <LiveContentSummaryWithCall call={call} />
                     ) : (
                         <LiveContentSummary
                             type={LiveContentType.Video}
-                            text={_t("Video")}
+                            text={_t("common|video")}
                             active={false}
                             participantCount={0}
                         />
@@ -154,14 +183,14 @@ export function IncomingCallToast({ callEvent }: Props): JSX.Element {
                         onClick={onJoinClick}
                         kind="primary"
                     >
-                        {_t("Join")}
+                        {_t("action|join")}
                     </AccessibleTooltipButton>
                 )}
             </div>
             <AccessibleTooltipButton
                 className="mx_IncomingCallToast_closeButton"
                 onClick={onCloseClick}
-                title={_t("Close")}
+                title={_t("action|close")}
             />
         </React.Fragment>
     );

@@ -20,7 +20,7 @@ import { Blurhash } from "react-blurhash";
 import classNames from "classnames";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/client";
+import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
 
 import MFileBody from "./MFileBody";
 import Modal from "../../../Modal";
@@ -29,7 +29,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import Spinner from "../elements/Spinner";
 import { Media, mediaFromContent } from "../../../customisations/Media";
 import { BLURHASH_FIELD, createThumbnail } from "../../../utils/image-media";
-import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
+import { ImageContent } from "../../../customisations/models/IMediaEventContent";
 import ImageView from "../elements/ImageView";
 import { IBodyProps } from "./IBodyProps";
 import { ImageSize, suggestedSize as suggestedImageSize } from "../../../settings/enums/ImageSize";
@@ -50,7 +50,7 @@ interface IState {
     contentUrl: string | null;
     thumbUrl: string | null;
     isAnimated?: boolean;
-    error?: Error;
+    error?: unknown;
     imgError: boolean;
     imgLoaded: boolean;
     loadedImageDimensions?: {
@@ -102,12 +102,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 return;
             }
 
-            const content = this.props.mxEvent.getContent<IMediaEventContent>();
+            const content = this.props.mxEvent.getContent<ImageContent>();
             const httpUrl = this.state.contentUrl;
             if (!httpUrl) return;
             const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
                 src: httpUrl,
-                name: content.body && content.body.length > 0 ? content.body : _t("Attachment"),
+                name: content.body && content.body.length > 0 ? content.body : _t("common|attachment"),
                 mxEvent: this.props.mxEvent,
                 permalinkCreator: this.props.permalinkCreator,
             };
@@ -212,7 +212,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         const thumbWidth = 800;
         const thumbHeight = 600;
 
-        const content = this.props.mxEvent.getContent<IMediaEventContent>();
+        const content = this.props.mxEvent.getContent<ImageContent>();
         const media = mediaFromContent(content);
         const info = content.info;
 
@@ -261,7 +261,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
         let thumbUrl: string | null;
         let contentUrl: string | null;
-        if (this.props.mediaEventHelper.media.isEncrypted) {
+        if (this.props.mediaEventHelper?.media.isEncrypted) {
             try {
                 [contentUrl, thumbUrl] = await Promise.all([
                     this.props.mediaEventHelper.sourceUrl.value,
@@ -287,7 +287,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             contentUrl = this.getContentUrl();
         }
 
-        const content = this.props.mxEvent.getContent<IMediaEventContent>();
+        const content = this.props.mxEvent.getContent<ImageContent>();
         let isAnimated = mayBeAnimated(content.info?.mimetype);
 
         // If there is no included non-animated thumbnail then we will generate our own, we can't depend on the server
@@ -311,13 +311,19 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 }
 
                 try {
-                    const blob = await this.props.mediaEventHelper.sourceBlob.value;
+                    const blob = await this.props.mediaEventHelper!.sourceBlob.value;
                     if (!(await blobIsAnimated(content.info?.mimetype, blob))) {
                         isAnimated = false;
                     }
 
                     if (isAnimated) {
-                        const thumb = await createThumbnail(img, img.width, img.height, content.info!.mimetype, false);
+                        const thumb = await createThumbnail(
+                            img,
+                            img.width,
+                            img.height,
+                            content.info?.mimetype ?? "image/jpeg",
+                            false,
+                        );
                         thumbUrl = URL.createObjectURL(thumb.thumbnail);
                     }
                 } catch (error) {
@@ -381,7 +387,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
     }
 
-    protected getBanner(content: IMediaEventContent): ReactNode {
+    protected getBanner(content: ImageContent): ReactNode {
         // Hide it for the threads list & the file panel where we show it as text anyway.
         if (
             [TimelineRenderingType.ThreadsList, TimelineRenderingType.File].includes(this.context.timelineRenderingType)
@@ -389,13 +395,17 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             return null;
         }
 
-        return <span className="mx_MImageBody_banner">{presentableTextForFile(content, _t("Image"), true, true)}</span>;
+        return (
+            <span className="mx_MImageBody_banner">
+                {presentableTextForFile(content, _t("common|image"), true, true)}
+            </span>
+        );
     }
 
     protected messageContent(
         contentUrl: string | null,
         thumbUrl: string | null,
-        content: IMediaEventContent,
+        content: ImageContent,
         forcedHeight?: number,
     ): ReactNode {
         if (!thumbUrl) thumbUrl = contentUrl; // fallback
@@ -591,14 +601,14 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     public render(): React.ReactNode {
-        const content = this.props.mxEvent.getContent<IMediaEventContent>();
+        const content = this.props.mxEvent.getContent<ImageContent>();
 
         if (this.state.error) {
-            let errorText = _t("Unable to show image due to error");
+            let errorText = _t("timeline|m.image|error");
             if (this.state.error instanceof DecryptError) {
-                errorText = _t("Error decrypting image");
+                errorText = _t("timeline|m.image|error_decrypting");
             } else if (this.state.error instanceof DownloadError) {
-                errorText = _t("Error downloading image");
+                errorText = _t("timeline|m.image|error_downloading");
             }
 
             return <MediaProcessingError className="mx_MImageBody">{errorText}</MediaProcessingError>;
@@ -641,7 +651,7 @@ export class HiddenImagePlaceholder extends React.PureComponent<PlaceholderIProp
             <div className={className} style={{ maxWidth: `min(100%, ${maxWidth}px)` }}>
                 <div className="mx_HiddenImagePlaceholder_button">
                     <span className="mx_HiddenImagePlaceholder_eye" />
-                    <span>{_t("Show image")}</span>
+                    <span>{_t("timeline|m.image|show_image")}</span>
                 </div>
             </div>
         );

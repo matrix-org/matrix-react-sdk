@@ -18,9 +18,9 @@ import React from "react";
 import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import { mocked, MockedObject } from "jest-mock";
 import fetchMock from "fetch-mock-jest";
-import { DELEGATED_OIDC_COMPATIBILITY, IdentityProviderBrand } from "matrix-js-sdk/src/@types/auth";
+import { DELEGATED_OIDC_COMPATIBILITY, IdentityProviderBrand, OidcClientConfig } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
+import * as Matrix from "matrix-js-sdk/src/matrix";
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
 
 import SdkConfig from "../../../../src/SdkConfig";
@@ -29,15 +29,15 @@ import Login from "../../../../src/components/structures/auth/Login";
 import BasePlatform from "../../../../src/BasePlatform";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { Features } from "../../../../src/settings/Settings";
-import { ValidatedDelegatedAuthConfig } from "../../../../src/utils/ValidatedServerConfig";
 import * as registerClientUtils from "../../../../src/utils/oidc/registerClient";
-
-jest.mock("matrix-js-sdk/src/matrix");
+import { makeDelegatedAuthConfig } from "../../../test-utils/oidc";
 
 jest.useRealTimers();
 
 const oidcStaticClientsConfig = {
-    "https://staticallyregisteredissuer.org/": "static-clientId-123",
+    "https://staticallyregisteredissuer.org/": {
+        client_id: "static-clientId-123",
+    },
 };
 
 describe("Login", function () {
@@ -46,17 +46,21 @@ describe("Login", function () {
     const mockClient = mocked({
         login: jest.fn().mockResolvedValue({}),
         loginFlows: jest.fn(),
-    } as unknown as MatrixClient);
+    } as unknown as Matrix.MatrixClient);
 
     beforeEach(function () {
         SdkConfig.put({
             brand: "test-brand",
             disable_custom_urls: true,
-            oidc_static_client_ids: oidcStaticClientsConfig,
+            oidc_static_clients: oidcStaticClientsConfig,
         });
-        mockClient.login.mockClear().mockResolvedValue({});
+        mockClient.login.mockClear().mockResolvedValue({
+            access_token: "TOKEN",
+            device_id: "IAMADEVICE",
+            user_id: "@user:server",
+        });
         mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
-        mocked(createClient).mockImplementation((opts) => {
+        jest.spyOn(Matrix, "createClient").mockImplementation((opts) => {
             mockClient.idBaseUrl = opts.idBaseUrl;
             mockClient.baseUrl = opts.baseUrl;
             return mockClient;
@@ -65,7 +69,7 @@ describe("Login", function () {
         fetchMock.resetHistory();
         fetchMock.get("https://matrix.org/_matrix/client/versions", {
             unstable_features: {},
-            versions: [],
+            versions: ["v1.1"],
         });
         platform = mockPlatformPeg({
             startSingleSignOn: jest.fn(),
@@ -81,7 +85,7 @@ describe("Login", function () {
     function getRawComponent(
         hsUrl = "https://matrix.org",
         isUrl = "https://vector.im",
-        delegatedAuthentication?: ValidatedDelegatedAuthConfig,
+        delegatedAuthentication?: OidcClientConfig,
     ) {
         return (
             <Login
@@ -93,7 +97,7 @@ describe("Login", function () {
         );
     }
 
-    function getComponent(hsUrl?: string, isUrl?: string, delegatedAuthentication?: ValidatedDelegatedAuthConfig) {
+    function getComponent(hsUrl?: string, isUrl?: string, delegatedAuthentication?: OidcClientConfig) {
         return render(getRawComponent(hsUrl, isUrl, delegatedAuthentication));
     }
 
@@ -203,13 +207,45 @@ describe("Login", function () {
 
         fetchMock.get("https://server2/_matrix/client/versions", {
             unstable_features: {},
-            versions: [],
+            versions: ["v1.1"],
         });
         rerender(getRawComponent("https://server2"));
         await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
         fireEvent.click(container.querySelector(".mx_SSOButton")!);
         expect(platform.startSingleSignOn.mock.calls[1][0].baseUrl).toBe("https://server2");
+    });
+
+    it("should handle updating to a server with no supported flows", async () => {
+        mockClient.loginFlows.mockResolvedValue({
+            flows: [
+                {
+                    type: "m.login.sso",
+                },
+            ],
+        });
+
+        const { container, rerender } = render(getRawComponent());
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
+
+        // update the mock for the new server with no supported flows
+        mockClient.loginFlows.mockResolvedValue({
+            flows: [
+                {
+                    type: "just something weird",
+                },
+            ],
+        });
+        // render with a new server
+        rerender(getRawComponent("https://server2"));
+        await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
+
+        expect(
+            screen.getByText("This homeserver doesn't offer any login flows that are supported by this client."),
+        ).toBeInTheDocument();
+
+        // no sso button because server2 doesnt support sso
+        expect(container.querySelector(".mx_SSOButton")).not.toBeInTheDocument();
     });
 
     it("should show single Continue button if OIDC MSC3824 compatibility is given by server", async () => {
@@ -285,7 +321,7 @@ describe("Login", function () {
         await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
         expect(
-            screen.getByText("This homeserver doesn't offer any login flows which are supported by this client."),
+            screen.getByText("This homeserver doesn't offer any login flows that are supported by this client."),
         ).toBeInTheDocument();
     });
 
@@ -303,13 +339,13 @@ describe("Login", function () {
     it("should display an error when homeserver fails liveliness check", async () => {
         fetchMock.resetBehavior();
         fetchMock.get("https://matrix.org/_matrix/client/versions", {
-            status: 400,
+            status: 0,
         });
         getComponent();
         await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
         // error displayed
-        expect(screen.getByText("Your test-brand is misconfigured")).toBeInTheDocument();
+        expect(screen.getByText("Cannot reach homeserver")).toBeInTheDocument();
     });
 
     it("should reset liveliness error when server config changes", async () => {
@@ -321,32 +357,27 @@ describe("Login", function () {
         // but server2 is
         fetchMock.get("https://server2/_matrix/client/versions", {
             unstable_features: {},
-            versions: [],
+            versions: ["v1.1"],
         });
         const { rerender } = render(getRawComponent());
         await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
         // error displayed
-        expect(screen.getByText("Your test-brand is misconfigured")).toBeInTheDocument();
+        expect(screen.getByText("Cannot reach homeserver")).toBeInTheDocument();
 
         rerender(getRawComponent("https://server2"));
 
         await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
         // error cleared
-        expect(screen.queryByText("Your test-brand is misconfigured")).not.toBeInTheDocument();
+        expect(screen.queryByText("Cannot reach homeserver")).not.toBeInTheDocument();
     });
 
     describe("OIDC native flow", () => {
         const hsUrl = "https://matrix.org";
         const isUrl = "https://vector.im";
         const issuer = "https://test.com/";
-        const delegatedAuth = {
-            issuer,
-            registrationEndpoint: issuer + "register",
-            tokenEndpoint: issuer + "token",
-            authorizationEndpoint: issuer + "authorization",
-        };
+        const delegatedAuth = makeDelegatedAuthConfig(issuer);
         beforeEach(() => {
             jest.spyOn(logger, "error");
             jest.spyOn(SettingsStore, "getValue").mockImplementation(
@@ -376,7 +407,7 @@ describe("Login", function () {
         it("should attempt to register oidc client", async () => {
             // dont mock, spy so we can check config values were correctly passed
             jest.spyOn(registerClientUtils, "getOidcClientId");
-            fetchMock.post(delegatedAuth.registrationEndpoint, { status: 500 });
+            fetchMock.post(delegatedAuth.registrationEndpoint!, { status: 500 });
             getComponent(hsUrl, isUrl, delegatedAuth);
 
             await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
@@ -393,7 +424,7 @@ describe("Login", function () {
         });
 
         it("should fallback to normal login when client registration fails", async () => {
-            fetchMock.post(delegatedAuth.registrationEndpoint, { status: 500 });
+            fetchMock.post(delegatedAuth.registrationEndpoint!, { status: 500 });
             getComponent(hsUrl, isUrl, delegatedAuth);
 
             await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
@@ -410,7 +441,7 @@ describe("Login", function () {
 
         // short term during active development, UI will be added in next PRs
         it("should show continue button when oidc native flow is correctly configured", async () => {
-            fetchMock.post(delegatedAuth.registrationEndpoint, { client_id: "abc123" });
+            fetchMock.post(delegatedAuth.registrationEndpoint!, { client_id: "abc123" });
             getComponent(hsUrl, isUrl, delegatedAuth);
 
             await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));

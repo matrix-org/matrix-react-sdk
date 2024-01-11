@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { Method } from "matrix-js-sdk/src/matrix";
 
 import type * as Pako from "pako";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -25,6 +26,7 @@ import { _t } from "../languageHandler";
 import * as rageshake from "./rageshake";
 import SettingsStore from "../settings/SettingsStore";
 import SdkConfig from "../SdkConfig";
+import { getServerVersionFromFederationApi } from "../components/views/dialogs/devtools/ServerInfo";
 
 interface IOpts {
     labels?: string[];
@@ -38,7 +40,7 @@ interface IOpts {
 async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<FormData> {
     const progressCallback = opts.progressCallback || ((): void => {});
 
-    progressCallback(_t("Collecting app version information"));
+    progressCallback(_t("bug_reporting|collecting_information"));
     let version: string | undefined;
     try {
         version = await PlatformPeg.get()?.getAppVersion();
@@ -80,47 +82,85 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
         body.append("user_id", client.credentials.userId!);
         body.append("device_id", client.deviceId!);
 
-        // TODO: make this work with rust crypto
-        if (client.isCryptoEnabled() && client.crypto) {
+        const cryptoApi = client.getCrypto();
+
+        if (cryptoApi) {
+            body.append("crypto_version", cryptoApi.getVersion());
+
             const keys = [`ed25519:${client.getDeviceEd25519Key()}`];
             if (client.getDeviceCurve25519Key) {
                 keys.push(`curve25519:${client.getDeviceCurve25519Key()}`);
             }
             body.append("device_keys", keys.join(", "));
-            body.append("cross_signing_key", (await client.getCrypto()?.getCrossSigningKeyId()) ?? "n/a");
 
             // add cross-signing status information
-            const crossSigning = client.crypto.crossSigningInfo;
-            const secretStorage = client.crypto.secretStorage;
+            const crossSigningStatus = await cryptoApi.getCrossSigningStatus();
+            const secretStorage = client.secretStorage;
 
-            body.append("cross_signing_ready", String(await client.isCrossSigningReady()));
-            body.append("cross_signing_key", crossSigning.getId() ?? "n/a");
+            body.append("cross_signing_ready", String(await cryptoApi.isCrossSigningReady()));
+            body.append("cross_signing_key", (await cryptoApi.getCrossSigningKeyId()) ?? "n/a");
             body.append(
                 "cross_signing_privkey_in_secret_storage",
-                String(!!(await crossSigning.isStoredInSecretStorage(secretStorage))),
+                String(crossSigningStatus.privateKeysInSecretStorage),
             );
 
-            const pkCache = client.getCrossSigningCacheCallbacks();
             body.append(
                 "cross_signing_master_privkey_cached",
-                String(!!(pkCache && (await pkCache?.getCrossSigningKeyCache?.("master")))),
+                String(crossSigningStatus.privateKeysCachedLocally.masterKey),
             );
             body.append(
                 "cross_signing_self_signing_privkey_cached",
-                String(!!(pkCache && (await pkCache?.getCrossSigningKeyCache?.("self_signing")))),
+                String(crossSigningStatus.privateKeysCachedLocally.selfSigningKey),
             );
             body.append(
                 "cross_signing_user_signing_privkey_cached",
-                String(!!(pkCache && (await pkCache?.getCrossSigningKeyCache?.("user_signing")))),
+                String(crossSigningStatus.privateKeysCachedLocally.userSigningKey),
             );
 
-            body.append("secret_storage_ready", String(await client.isSecretStorageReady()));
-            body.append("secret_storage_key_in_account", String(!!(await secretStorage.hasKey())));
+            body.append("secret_storage_ready", String(await cryptoApi.isSecretStorageReady()));
+            body.append("secret_storage_key_in_account", String(await secretStorage.hasKey()));
 
             body.append("session_backup_key_in_secret_storage", String(!!(await client.isKeyBackupKeyStored())));
-            const sessionBackupKeyFromCache = await client.crypto.getSessionBackupPrivateKey();
+            const sessionBackupKeyFromCache = await cryptoApi.getSessionBackupPrivateKey();
             body.append("session_backup_key_cached", String(!!sessionBackupKeyFromCache));
             body.append("session_backup_key_well_formed", String(sessionBackupKeyFromCache instanceof Uint8Array));
+        }
+
+        try {
+            // XXX: This is synapse-specific but better than nothing until MSC support for a server version endpoint
+            const data = await client.http.request<Record<string, any>>(
+                Method.Get,
+                "/server_version",
+                undefined,
+                undefined,
+                {
+                    prefix: "/_synapse/admin/v1",
+                },
+            );
+            Object.keys(data).forEach((key) => {
+                body.append(`matrix_hs_${key}`, data[key]);
+            });
+        } catch {
+            try {
+                // XXX: This relies on the federation listener being delegated via well-known
+                // or at the same place as the client server endpoint
+                const data = await getServerVersionFromFederationApi(client);
+                body.append("matrix_hs_name", data.server.name);
+                body.append("matrix_hs_version", data.server.version);
+            } catch {
+                try {
+                    // If that fails we'll hit any endpoint and look at the server response header
+                    const res = await window.fetch(client.http.getUrl("/login"), {
+                        method: "GET",
+                        mode: "cors",
+                    });
+                    if (res.headers.has("server")) {
+                        body.append("matrix_hs_server", res.headers.get("server")!);
+                    }
+                } catch {
+                    // Could not determine server version
+                }
+            }
         }
     }
 
@@ -181,7 +221,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
             pako = await import("pako");
         }
 
-        progressCallback(_t("Collecting logs"));
+        progressCallback(_t("bug_reporting|collecting_logs"));
         const logs = await rageshake.getLogsForReport();
         for (const entry of logs) {
             // encode as UTF-8
@@ -222,7 +262,7 @@ export default async function sendBugReport(bugReportEndpoint?: string, opts: IO
     const progressCallback = opts.progressCallback || ((): void => {});
     const body = await collectBugReport(opts);
 
-    progressCallback(_t("Uploading logs"));
+    progressCallback(_t("bug_reporting|uploading_logs"));
     return submitReport(bugReportEndpoint, body, progressCallback);
 }
 
@@ -245,7 +285,7 @@ export async function downloadBugReport(opts: IOpts = {}): Promise<void> {
     const progressCallback = opts.progressCallback || ((): void => {});
     const body = await collectBugReport(opts, false);
 
-    progressCallback(_t("Downloading logs"));
+    progressCallback(_t("bug_reporting|downloading_logs"));
     let metadata = "";
     const tape = new Tar();
     let i = 0;
@@ -324,7 +364,7 @@ function submitReport(endpoint: string, body: FormData, progressCallback: (str: 
         req.timeout = 5 * 60 * 1000;
         req.onreadystatechange = function (): void {
             if (req.readyState === XMLHttpRequest.LOADING) {
-                progressCallback(_t("Waiting for response from server"));
+                progressCallback(_t("bug_reporting|waiting_for_server"));
             } else if (req.readyState === XMLHttpRequest.DONE) {
                 // on done
                 if (req.status < 200 || req.status >= 400) {

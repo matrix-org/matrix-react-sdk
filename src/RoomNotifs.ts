@@ -15,16 +15,19 @@ limitations under the License.
 */
 
 import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
-import { NotificationCountType } from "matrix-js-sdk/src/models/room";
-import { ConditionKind, PushRuleActionName, PushRuleKind, TweakName } from "matrix-js-sdk/src/@types/PushRules";
+import {
+    NotificationCountType,
+    ConditionKind,
+    PushRuleActionName,
+    PushRuleKind,
+    TweakName,
+} from "matrix-js-sdk/src/matrix";
 
-import type { IPushRule } from "matrix-js-sdk/src/@types/PushRules";
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { MatrixClient } from "matrix-js-sdk/src/matrix";
+import type { IPushRule, Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { NotificationColor } from "./stores/notifications/NotificationColor";
 import { getUnsentMessages } from "./components/structures/RoomStatusBar";
 import { doesRoomHaveUnreadMessages, doesRoomOrThreadHaveUnreadMessages } from "./Unread";
-import { EffectiveMembership, getEffectiveMembership } from "./utils/membership";
+import { EffectiveMembership, getEffectiveMembership, isKnockDenied } from "./utils/membership";
 import SettingsStore from "./settings/SettingsStore";
 
 export enum RoomNotifState {
@@ -152,8 +155,6 @@ function setRoomNotifsStateUnmuted(cli: MatrixClient, roomId: string, newState: 
                 actions: [PushRuleActionName.DontNotify],
             }),
         );
-        // https://matrix.org/jira/browse/SPEC-400
-        promises.push(cli.setPushRuleEnabled("global", PushRuleKind.RoomSpecific, roomId, true));
     } else if (newState === RoomNotifState.AllMessagesLoud) {
         promises.push(
             cli.addPushRule("global", PushRuleKind.RoomSpecific, roomId, {
@@ -166,8 +167,6 @@ function setRoomNotifsStateUnmuted(cli: MatrixClient, roomId: string, newState: 
                 ],
             }),
         );
-        // https://matrix.org/jira/browse/SPEC-400
-        promises.push(cli.setPushRuleEnabled("global", PushRuleKind.RoomSpecific, roomId, true));
     }
 
     return Promise.all(promises);
@@ -241,6 +240,10 @@ export function determineUnreadState(
         return { symbol: "!", count: 1, color: NotificationColor.Red };
     }
 
+    if (SettingsStore.getValue("feature_ask_to_join") && isKnockDenied(room)) {
+        return { symbol: "!", count: 1, color: NotificationColor.Red };
+    }
+
     if (getRoomNotifsState(room.client, room.roomId) === RoomNotifState.Mute) {
         return { symbol: null, count: 0, color: NotificationColor.None };
     }
@@ -257,11 +260,17 @@ export function determineUnreadState(
         return { symbol: null, count: trueCount, color: NotificationColor.Grey };
     }
 
-    // We don't have any notified messages, but we might have unread messages. Let's
-    // find out.
+    // We don't have any notified messages, but we might have unread messages. Let's find out.
     let hasUnread = false;
-    if (threadId) hasUnread = doesRoomOrThreadHaveUnreadMessages(room.getThread(threadId)!);
-    else hasUnread = doesRoomHaveUnreadMessages(room);
+    if (threadId) {
+        const thread = room.getThread(threadId);
+        if (thread) {
+            hasUnread = doesRoomOrThreadHaveUnreadMessages(thread);
+        }
+        // If the thread does not exist, assume it contains no unreads
+    } else {
+        hasUnread = doesRoomHaveUnreadMessages(room);
+    }
 
     return {
         symbol: null,

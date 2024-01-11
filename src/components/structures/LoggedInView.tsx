@@ -15,14 +15,18 @@ limitations under the License.
 */
 
 import React, { ClipboardEvent } from "react";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import {
+    ClientEvent,
+    MatrixClient,
+    MatrixEvent,
+    RoomStateEvent,
+    MatrixError,
+    IUsageLimit,
+    SyncStateData,
+    SyncState,
+} from "matrix-js-sdk/src/matrix";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import classNames from "classnames";
-import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
-import { IUsageLimit } from "matrix-js-sdk/src/@types/partials";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { isOnlyCtrlOrCmdKeyEvent, Key } from "../../Keyboard";
 import PageTypes from "../../PageTypes";
@@ -46,7 +50,7 @@ import RoomListStore from "../../stores/room-list/RoomListStore";
 import NonUrgentToastContainer from "./NonUrgentToastContainer";
 import { IOOBData, IThreepidInvite } from "../../stores/ThreepidInviteStore";
 import Modal from "../../Modal";
-import { ICollapseConfig } from "../../resizer/distributors/collapse";
+import { CollapseItem, ICollapseConfig } from "../../resizer/distributors/collapse";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { IOpts } from "../../createRoom";
 import SpacePanel from "../views/spaces/SpacePanel";
@@ -106,7 +110,7 @@ interface IProps {
 }
 
 interface IState {
-    syncErrorData?: ISyncStateData;
+    syncErrorData?: SyncStateData;
     usageLimitDismissed: boolean;
     usageLimitEventContent?: IUsageLimit;
     usageLimitEventTs?: number;
@@ -134,7 +138,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     protected layoutWatcherRef?: string;
     protected compactLayoutWatcherRef?: string;
     protected backgroundImageWatcherRef?: string;
-    protected resizer?: Resizer;
+    protected resizer?: Resizer<ICollapseConfig, CollapseItem>;
 
     public constructor(props: IProps) {
         super(props);
@@ -230,7 +234,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         return this._roomView.current.canResetTimeline();
     };
 
-    private createResizer(): Resizer {
+    private createResizer(): Resizer<ICollapseConfig, CollapseItem> {
         let panelSize: number | null;
         let panelCollapsed: boolean;
         const collapseConfig: ICollapseConfig = {
@@ -291,7 +295,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         });
     };
 
-    private onSync = (syncState: SyncState | null, oldSyncState: SyncState | null, data?: ISyncStateData): void => {
+    private onSync = (syncState: SyncState | null, oldSyncState: SyncState | null, data?: SyncStateData): void => {
         const oldErrCode = (this.state.syncErrorData?.error as MatrixError)?.errcode;
         const newErrCode = (data?.error as MatrixError)?.errcode;
         if (syncState === oldSyncState && oldErrCode === newErrCode) return;
@@ -679,7 +683,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                     <div className={bodyClasses}>
                         <div className="mx_LeftPanel_outerWrapper">
                             <LeftPanelLiveShareWarning isMinimized={this.props.collapseLhs || false} />
-                            <nav className="mx_LeftPanel_wrapper">
+                            <div className="mx_LeftPanel_wrapper">
                                 <BackdropPanel blurMultiplier={0.5} backgroundImage={this.state.backgroundImage} />
                                 <SpacePanel />
                                 <BackdropPanel backgroundImage={this.state.backgroundImage} />
@@ -694,7 +698,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                                         resizeNotifier={this.props.resizeNotifier}
                                     />
                                 </div>
-                            </nav>
+                            </div>
                         </div>
                         <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
                         <div className="mx_RoomView_wrapper">{pageElement}</div>

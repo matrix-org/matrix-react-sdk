@@ -15,18 +15,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// @ts-ignore - XXX: tsc doesn't like this: our js-sdk imports are complex so this isn't surprising
-import { createClient } from "matrix-js-sdk/src/matrix";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import {
+    createClient,
+    MatrixClient,
+    LoginFlow,
+    DELEGATED_OIDC_COMPATIBILITY,
+    ILoginFlow,
+    LoginRequest,
+    OidcClientConfig,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { DELEGATED_OIDC_COMPATIBILITY, ILoginFlow, ILoginParams, LoginFlow } from "matrix-js-sdk/src/@types/auth";
 
 import { IMatrixClientCreds } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
-import { ValidatedDelegatedAuthConfig } from "./utils/ValidatedServerConfig";
 import { getOidcClientId } from "./utils/oidc/registerClient";
 import { IConfigOptions } from "./IConfigOptions";
 import SdkConfig from "./SdkConfig";
+import { isUserRegistrationSupported } from "./utils/oidc/isUserRegistrationSupported";
 
 /**
  * Login flows supported by this client
@@ -43,13 +48,13 @@ interface ILoginOptions {
      * If this property is set, we will attempt an OIDC login using the delegated auth settings.
      * The caller is responsible for checking that OIDC is enabled in the labs settings.
      */
-    delegatedAuthentication?: ValidatedDelegatedAuthConfig;
+    delegatedAuthentication?: OidcClientConfig;
 }
 
 export default class Login {
     private flows: Array<ClientLoginFlow> = [];
     private readonly defaultDeviceDisplayName?: string;
-    private readonly delegatedAuthentication?: ValidatedDelegatedAuthConfig;
+    private delegatedAuthentication?: OidcClientConfig;
     private tempClient: MatrixClient | null = null; // memoize
 
     public constructor(
@@ -81,6 +86,15 @@ export default class Login {
     }
 
     /**
+     * Set delegated authentication config, clears tempClient.
+     * @param delegatedAuthentication delegated auth config, from ValidatedServerConfig
+     */
+    public setDelegatedAuthentication(delegatedAuthentication?: OidcClientConfig): void {
+        this.tempClient = null; // clear memoization
+        this.delegatedAuthentication = delegatedAuthentication;
+    }
+
+    /**
      * Get a temporary MatrixClient, which can be used for login or register
      * requests.
      * @returns {MatrixClient}
@@ -95,14 +109,20 @@ export default class Login {
         return this.tempClient;
     }
 
-    public async getFlows(): Promise<Array<ClientLoginFlow>> {
+    /**
+     * Get supported login flows
+     * @param isRegistration OPTIONAL used to verify registration is supported in delegated authentication config
+     * @returns Promise that resolves to supported login flows
+     */
+    public async getFlows(isRegistration?: boolean): Promise<Array<ClientLoginFlow>> {
         // try to use oidc native flow if we have delegated auth config
         if (this.delegatedAuthentication) {
             try {
                 const oidcFlow = await tryInitOidcNativeFlow(
                     this.delegatedAuthentication,
                     SdkConfig.get().brand,
-                    SdkConfig.get().oidc_static_client_ids,
+                    SdkConfig.get().oidc_static_clients,
+                    isRegistration,
                 );
                 return [oidcFlow];
             } catch (error) {
@@ -205,15 +225,21 @@ export interface OidcNativeFlow extends ILoginFlow {
  * @param delegatedAuthConfig  Auth config from ValidatedServerConfig
  * @param clientName Client name to register with the OP, eg 'Element', used during client registration with OP
  * @param staticOidcClientIds static client config from config.json, used during client registration with OP
+ * @param isRegistration true when we are attempting registration
  * @returns Promise<OidcNativeFlow> when oidc native authentication flow is supported and correctly configured
  * @throws when client can't register with OP, or any unexpected error
  */
 const tryInitOidcNativeFlow = async (
-    delegatedAuthConfig: ValidatedDelegatedAuthConfig,
+    delegatedAuthConfig: OidcClientConfig,
     brand: string,
-    oidcStaticClientIds?: IConfigOptions["oidc_static_client_ids"],
+    oidcStaticClients?: IConfigOptions["oidc_static_clients"],
+    isRegistration?: boolean,
 ): Promise<OidcNativeFlow> => {
-    const clientId = await getOidcClientId(delegatedAuthConfig, brand, window.location.origin, oidcStaticClientIds);
+    // if registration is not supported, bail before attempting to get the clientId
+    if (isRegistration && !isUserRegistrationSupported(delegatedAuthConfig)) {
+        throw new Error("Registration is not supported by OP");
+    }
+    const clientId = await getOidcClientId(delegatedAuthConfig, brand, window.location.origin, oidcStaticClients);
 
     const flow = {
         type: "oidcNativeFlow",
@@ -238,7 +264,7 @@ export async function sendLoginRequest(
     hsUrl: string,
     isUrl: string | undefined,
     loginType: string,
-    loginParams: ILoginParams,
+    loginParams: Omit<LoginRequest, "type">,
 ): Promise<IMatrixClientCreds> {
     const client = createClient({
         baseUrl: hsUrl,

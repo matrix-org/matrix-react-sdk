@@ -14,11 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomMember, RoomState, RoomStateEvent, MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
+
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import SettingsStore from "../settings/SettingsStore";
 
 /**
  * Approximation of a membership status for a given room.
@@ -56,7 +55,11 @@ export function splitRoomsByMembership(rooms: Room[]): MembershipSplit {
     };
 
     for (const room of rooms) {
-        split[getEffectiveMembership(room.getMyMembership())].push(room);
+        const membership = room.getMyMembership();
+        // Filter out falsey relationship as this will be peeked rooms
+        if (!!membership) {
+            split[getEffectiveMembershipTag(room)].push(room);
+        }
     }
 
     return split;
@@ -65,13 +68,26 @@ export function splitRoomsByMembership(rooms: Room[]): MembershipSplit {
 export function getEffectiveMembership(membership: string): EffectiveMembership {
     if (membership === "invite") {
         return EffectiveMembership.Invite;
-    } else if (membership === "join") {
-        // TODO: Include knocks? Update docs as needed in the enum. https://github.com/vector-im/element-web/issues/14237
+    } else if (membership === "join" || (SettingsStore.getValue("feature_ask_to_join") && membership === "knock")) {
         return EffectiveMembership.Join;
     } else {
         // Probably a leave, kick, or ban
         return EffectiveMembership.Leave;
     }
+}
+
+export function isKnockDenied(room: Room): boolean | undefined {
+    const memberId = MatrixClientPeg.get()?.getSafeUserId();
+    const member = memberId ? room.getMember(memberId) : null;
+    const previousMembership = member?.events.member?.getPrevContent().membership;
+
+    return member?.isKicked() && previousMembership === "knock";
+}
+
+export function getEffectiveMembershipTag(room: Room, membership?: string): EffectiveMembership {
+    return isKnockDenied(room)
+        ? EffectiveMembership.Join
+        : getEffectiveMembership(membership ?? room.getMyMembership());
 }
 
 export function isJoinedOrNearlyJoined(membership: string): boolean {

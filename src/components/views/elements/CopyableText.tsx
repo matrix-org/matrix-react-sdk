@@ -37,7 +37,7 @@ const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border = true
         e.preventDefault();
         const text = getTextToCopy();
         const successful = !!text && (await copyPlaintext(text));
-        setTooltip(successful ? _t("Copied!") : _t("Failed to copy"));
+        setTooltip(successful ? _t("common|copied") : _t("error|failed_copy"));
     };
 
     const onHideTooltip = (): void => {
@@ -54,7 +54,7 @@ const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border = true
         <div className={combinedClassName}>
             {children}
             <AccessibleTooltipButton
-                title={tooltip ?? _t("Copy")}
+                title={tooltip ?? _t("action|copy")}
                 onClick={onCopyClickInternal}
                 className="mx_CopyableText_copyButton"
                 onHideTooltip={onHideTooltip}

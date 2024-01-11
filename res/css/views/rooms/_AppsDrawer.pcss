@@ -218,6 +218,9 @@ limitations under the License.
 
         > :last-child {
             margin-left: 9px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
 
@@ -317,6 +320,13 @@ limitations under the License.
         iframe {
             display: none;
         }
+    }
+
+    &.mx_AppTileBody--call {
+        border-radius: 0px;
+    }
+    &.mx_AppTileBody--call.mx_AppTileBody--mini {
+        border-radius: 8px;
     }
 }
 

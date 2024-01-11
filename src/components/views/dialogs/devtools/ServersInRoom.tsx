@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { useContext, useMemo } from "react";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventType } from "matrix-js-sdk/src/matrix";
 
 import BaseTool, { DevtoolsContext, IDevtoolsProps } from "./BaseTool";
 import { _t } from "../../../../languageHandler";
@@ -39,8 +39,8 @@ const ServersInRoom: React.FC<IDevtoolsProps> = ({ onBack }) => {
             <table>
                 <thead>
                     <tr>
-                        <th>{_t("Server")}</th>
-                        <th>{_t("Number of users")}</th>
+                        <th>{_t("common|server")}</th>
+                        <th>{_t("devtools|number_of_users")}</th>
                     </tr>
                 </thead>
                 <tbody>

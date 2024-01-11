@@ -15,8 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { asyncAction } from "./actionCreators";
@@ -87,8 +86,8 @@ export default class RoomListActions {
                     return Rooms.guessAndSetDMRoom(room, newTag === DefaultTagID.DM).catch((err) => {
                         logger.error("Failed to set DM tag " + err);
                         Modal.createDialog(ErrorDialog, {
-                            title: _t("Failed to set direct message tag"),
-                            description: err && err.message ? err.message : _t("Operation failed"),
+                            title: _t("room_list|failed_set_dm_tag"),
+                            description: err && err.message ? err.message : _t("invite|failed_generic"),
                         });
                     });
                 }
@@ -103,8 +102,8 @@ export default class RoomListActions {
                     const promiseToDelete = matrixClient.deleteRoomTag(roomId, oldTag).catch(function (err) {
                         logger.error("Failed to remove tag " + oldTag + " from room: " + err);
                         Modal.createDialog(ErrorDialog, {
-                            title: _t("Failed to remove tag %(tagName)s from room", { tagName: oldTag }),
-                            description: err && err.message ? err.message : _t("Operation failed"),
+                            title: _t("room_list|failed_remove_tag", { tagName: oldTag }),
+                            description: err && err.message ? err.message : _t("invite|failed_generic"),
                         });
                     });
 
@@ -116,8 +115,8 @@ export default class RoomListActions {
                     const promiseToAdd = matrixClient.setRoomTag(roomId, newTag, metaData).catch(function (err) {
                         logger.error("Failed to add tag " + newTag + " to room: " + err);
                         Modal.createDialog(ErrorDialog, {
-                            title: _t("Failed to add tag %(tagName)s to room", { tagName: newTag }),
-                            description: err && err.message ? err.message : _t("Operation failed"),
+                            title: _t("room_list|failed_add_tag", { tagName: newTag }),
+                            description: err && err.message ? err.message : _t("invite|failed_generic"),
                         });
 
                         throw err;

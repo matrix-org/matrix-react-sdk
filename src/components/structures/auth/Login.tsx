@@ -17,9 +17,9 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ISSOFlow, SSOAction } from "matrix-js-sdk/src/@types/auth";
+import { SSOFlow, SSOAction } from "matrix-js-sdk/src/matrix";
 
-import { _t, _td, UserFriendlyError } from "../../../languageHandler";
+import { _t, UserFriendlyError } from "../../../languageHandler";
 import Login, { ClientLoginFlow, OidcNativeFlow } from "../../../Login";
 import { messageForConnectionError, messageForLoginError } from "../../../utils/ErrorUtils";
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
@@ -41,16 +41,6 @@ import { filterBoolean } from "../../../utils/arrays";
 import { Features } from "../../../settings/Settings";
 import { startOidcLogin } from "../../../utils/oidc/authorize";
 
-// These are used in several places, and come from the js-sdk's autodiscovery
-// stuff. We define them here so that they'll be picked up by i18n.
-_td("Invalid homeserver discovery response");
-_td("Failed to get autodiscovery configuration from server");
-_td("Invalid base_url for m.homeserver");
-_td("Homeserver URL does not appear to be a valid Matrix homeserver");
-_td("Invalid identity server discovery response");
-_td("Invalid base_url for m.identity_server");
-_td("Identity server URL does not appear to be a valid identity server");
-_td("General failure");
 interface IProps {
     serverConfig: ValidatedServerConfig;
     // If true, the component will consider itself busy.
@@ -224,7 +214,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 let errorText: ReactNode;
                 // Some error strings only apply for logging in
                 if (error.httpStatus === 400 && username && username.indexOf("@") > 0) {
-                    errorText = _t("This homeserver does not support login using email address.");
+                    errorText = _t("auth|unsupported_auth_email");
                 } else {
                     errorText = messageForLoginError(error, this.props.serverConfig);
                 }
@@ -273,7 +263,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             } catch (e) {
                 logger.error("Problem parsing URL or unhandled error doing .well-known discovery:", e);
 
-                let message = _t("Failed to perform homeserver discovery");
+                let message = _t("auth|failed_homeserver_discovery");
                 if (e instanceof UserFriendlyError && e.translatedMessage) {
                     message = e.translatedMessage;
                 }
@@ -392,19 +382,15 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     // look for a flow where we understand all of the steps.
                     const supportedFlows = flows.filter(this.isSupportedFlow);
 
-                    if (supportedFlows.length > 0) {
-                        this.setState({
-                            flows: supportedFlows,
-                        });
-                        return;
-                    }
-
-                    // we got to the end of the list without finding a suitable flow.
                     this.setState({
-                        errorText: _t(
-                            "This homeserver doesn't offer any login flows which are supported by this client.",
-                        ),
+                        flows: supportedFlows,
                     });
+
+                    if (supportedFlows.length === 0) {
+                        this.setState({
+                            errorText: _t("auth|unsupported_auth"),
+                        });
+                    }
                 },
                 (err) => {
                     this.setState({
@@ -479,16 +465,17 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                         this.props.serverConfig.delegatedAuthentication!,
                         flow.clientId,
                         this.props.serverConfig.hsUrl,
+                        this.props.serverConfig.isUrl,
                     );
                 }}
             >
-                {_t("Continue")}
+                {_t("action|continue")}
             </AccessibleButton>
         );
     };
 
     private renderSsoStep = (loginType: "cas" | "sso"): JSX.Element => {
-        const flow = this.state.flows?.find((flow) => flow.type === "m.login." + loginType) as ISSOFlow;
+        const flow = this.state.flows?.find((flow) => flow.type === "m.login." + loginType) as SSOFlow;
 
         return (
             <SSOButtons
@@ -533,12 +520,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 <div className="mx_AuthBody_paddedFooter">
                     <div className="mx_AuthBody_paddedFooter_title">
                         <InlineSpinner w={20} h={20} />
-                        {this.props.isSyncing ? _t("Syncing…") : _t("Signing In…")}
+                        {this.props.isSyncing ? _t("auth|syncing") : _t("auth|signing_in")}
                     </div>
                     {this.props.isSyncing && (
-                        <div className="mx_AuthBody_paddedFooter_subtitle">
-                            {_t("If you've joined lots of rooms, this might take a while")}
-                        </div>
+                        <div className="mx_AuthBody_paddedFooter_subtitle">{_t("auth|sync_footer_subtitle")}</div>
                     )}
                 </div>
             );
@@ -546,7 +531,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             footer = (
                 <span className="mx_AuthBody_changeFlow">
                     {_t(
-                        "New? <a>Create account</a>",
+                        "auth|create_account_prompt",
                         {},
                         {
                             a: (sub) => (
@@ -565,7 +550,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
                 <AuthBody>
                     <h1>
-                        {_t("Sign in")}
+                        {_t("action|sign_in")}
                         {loader}
                     </h1>
                     {errorTextSection}

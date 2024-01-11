@@ -14,37 +14,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import fetchMockJest from "fetch-mock-jest";
+import fetchMock from "fetch-mock-jest";
+import { completeAuthorizationCodeGrant } from "matrix-js-sdk/src/oidc/authorize";
 import * as randomStringUtils from "matrix-js-sdk/src/randomstring";
+import { BearerTokenResponse } from "matrix-js-sdk/src/oidc/validate";
+import { mocked } from "jest-mock";
 
-import { startOidcLogin } from "../../../src/utils/oidc/authorize";
+import { completeOidcLogin, startOidcLogin } from "../../../src/utils/oidc/authorize";
+import { makeDelegatedAuthConfig } from "../../test-utils/oidc";
+import { OidcClientError } from "../../../src/utils/oidc/error";
 
-describe("startOidcLogin()", () => {
+jest.unmock("matrix-js-sdk/src/randomstring");
+
+jest.mock("matrix-js-sdk/src/oidc/authorize", () => ({
+    ...jest.requireActual("matrix-js-sdk/src/oidc/authorize"),
+    completeAuthorizationCodeGrant: jest.fn(),
+}));
+
+describe("OIDC authorization", () => {
     const issuer = "https://auth.com/";
-    const authorizationEndpoint = "https://auth.com/authorization";
-    const homeserver = "https://matrix.org";
+    const homeserverUrl = "https://matrix.org";
+    const identityServerUrl = "https://is.org";
     const clientId = "xyz789";
     const baseUrl = "https://test.com";
 
-    const delegatedAuthConfig = {
-        issuer,
-        registrationEndpoint: issuer + "registration",
-        authorizationEndpoint,
-        tokenEndpoint: issuer + "token",
-    };
-
-    const sessionStorageGetSpy = jest.spyOn(sessionStorage.__proto__, "setItem").mockReturnValue(undefined);
-    const randomStringMockImpl = (length: number) => new Array(length).fill("x").join("");
+    const delegatedAuthConfig = makeDelegatedAuthConfig(issuer);
 
     // to restore later
     const realWindowLocation = window.location;
 
     beforeEach(() => {
-        fetchMockJest.mockClear();
-        fetchMockJest.resetBehavior();
-
-        sessionStorageGetSpy.mockClear();
-
         // @ts-ignore allow delete of non-optional prop
         delete window.location;
         // @ts-ignore ugly mocking
@@ -56,47 +55,100 @@ describe("startOidcLogin()", () => {
         jest.spyOn(randomStringUtils, "randomString").mockRestore();
     });
 
+    beforeAll(() => {
+        fetchMock.get(`${delegatedAuthConfig.issuer}.well-known/openid-configuration`, delegatedAuthConfig.metadata);
+    });
+
     afterAll(() => {
         window.location = realWindowLocation;
     });
 
-    it("should store authorization params in session storage", async () => {
-        jest.spyOn(randomStringUtils, "randomString").mockReset().mockImplementation(randomStringMockImpl);
-        await startOidcLogin(delegatedAuthConfig, clientId, homeserver);
+    describe("startOidcLogin()", () => {
+        it("navigates to authorization endpoint with correct parameters", async () => {
+            await startOidcLogin(delegatedAuthConfig, clientId, homeserverUrl);
 
-        const state = randomStringUtils.randomString(8);
+            const expectedScopeWithoutDeviceId = `openid urn:matrix:org.matrix.msc2967.client:api:* urn:matrix:org.matrix.msc2967.client:device:`;
 
-        expect(sessionStorageGetSpy).toHaveBeenCalledWith(`oidc_${state}_nonce`, randomStringUtils.randomString(8));
-        expect(sessionStorageGetSpy).toHaveBeenCalledWith(`oidc_${state}_redirectUri`, baseUrl);
-        expect(sessionStorageGetSpy).toHaveBeenCalledWith(
-            `oidc_${state}_codeVerifier`,
-            randomStringUtils.randomString(64),
-        );
-        expect(sessionStorageGetSpy).toHaveBeenCalledWith(`oidc_${state}_clientId`, clientId);
-        expect(sessionStorageGetSpy).toHaveBeenCalledWith(`oidc_${state}_issuer`, issuer);
-        expect(sessionStorageGetSpy).toHaveBeenCalledWith(`oidc_${state}_homeserver`, homeserver);
+            const authUrl = new URL(window.location.href);
+
+            expect(authUrl.searchParams.get("response_mode")).toEqual("query");
+            expect(authUrl.searchParams.get("response_type")).toEqual("code");
+            expect(authUrl.searchParams.get("client_id")).toEqual(clientId);
+            expect(authUrl.searchParams.get("code_challenge_method")).toEqual("S256");
+
+            // scope ends with a 10char randomstring deviceId
+            const scope = authUrl.searchParams.get("scope")!;
+            expect(scope.substring(0, scope.length - 10)).toEqual(expectedScopeWithoutDeviceId);
+            expect(scope.substring(scope.length - 10)).toBeTruthy();
+
+            // random string, just check they are set
+            expect(authUrl.searchParams.has("state")).toBeTruthy();
+            expect(authUrl.searchParams.has("nonce")).toBeTruthy();
+            expect(authUrl.searchParams.has("code_challenge")).toBeTruthy();
+        });
     });
 
-    it("navigates to authorization endpoint with correct parameters", async () => {
-        await startOidcLogin(delegatedAuthConfig, clientId, homeserver);
+    describe("completeOidcLogin()", () => {
+        const state = "test-state-444";
+        const code = "test-code-777";
+        const queryDict = {
+            code,
+            state: state,
+        };
 
-        const expectedScopeWithoutDeviceId = `openid urn:matrix:org.matrix.msc2967.client:api:* urn:matrix:org.matrix.msc2967.client:device:`;
+        const tokenResponse: BearerTokenResponse = {
+            access_token: "abc123",
+            refresh_token: "def456",
+            scope: "test",
+            token_type: "Bearer",
+            expires_at: 12345,
+        };
 
-        const authUrl = new URL(window.location.href);
+        beforeEach(() => {
+            mocked(completeAuthorizationCodeGrant)
+                .mockClear()
+                .mockResolvedValue({
+                    oidcClientSettings: {
+                        clientId,
+                        issuer,
+                    },
+                    tokenResponse,
+                    homeserverUrl,
+                    identityServerUrl,
+                    idTokenClaims: {
+                        aud: "123",
+                        iss: issuer,
+                        sub: "123",
+                        exp: 123,
+                        iat: 456,
+                    },
+                });
+        });
 
-        expect(authUrl.searchParams.get("response_mode")).toEqual("query");
-        expect(authUrl.searchParams.get("response_type")).toEqual("code");
-        expect(authUrl.searchParams.get("client_id")).toEqual(clientId);
-        expect(authUrl.searchParams.get("code_challenge_method")).toEqual("S256");
+        it("should throw when query params do not include state and code", async () => {
+            await expect(async () => await completeOidcLogin({})).rejects.toThrow(
+                OidcClientError.InvalidQueryParameters,
+            );
+        });
 
-        // scope ends with a 10char randomstring deviceId
-        const scope = authUrl.searchParams.get("scope")!;
-        expect(scope.substring(0, scope.length - 10)).toEqual(expectedScopeWithoutDeviceId);
-        expect(scope.substring(scope.length - 10)).toBeTruthy();
+        it("should make request complete authorization code grant", async () => {
+            await completeOidcLogin(queryDict);
 
-        // random string, just check they are set
-        expect(authUrl.searchParams.has("state")).toBeTruthy();
-        expect(authUrl.searchParams.has("nonce")).toBeTruthy();
-        expect(authUrl.searchParams.has("code_challenge")).toBeTruthy();
+            expect(completeAuthorizationCodeGrant).toHaveBeenCalledWith(code, state);
+        });
+
+        it("should return accessToken, configured homeserver and identityServer", async () => {
+            const result = await completeOidcLogin(queryDict);
+
+            expect(result).toEqual({
+                accessToken: tokenResponse.access_token,
+                refreshToken: tokenResponse.refresh_token,
+                homeserverUrl,
+                identityServerUrl,
+                issuer,
+                clientId,
+                idTokenClaims: result.idTokenClaims,
+            });
+        });
     });
 });

@@ -30,14 +30,19 @@ jobs:
     jest:
         name: Jest
         runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                # Run multiple instances in parallel to speed up the tests
+                runner: [1, 2]
         steps:
             - name: Checkout code
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               with:
                   repository: ${{ inputs.matrix-js-sdk-sha && 'matrix-org/matrix-react-sdk' || github.repository }}
 
             - name: Yarn cache
-              uses: actions/setup-node@v3
+              uses: actions/setup-node@v4
               with:
                   cache: "yarn"
 
@@ -54,7 +59,7 @@ jobs:
 
             - name: Get number of CPU cores
               id: cpu-cores
-              uses: SimenB/github-actions-cpu-cores@410541432439795d30db6501fb1d8178eb41e502 # v1
+              uses: SimenB/github-actions-cpu-cores@97ba232459a8e02ff6121db9362b09661c875ab8 # v2
 
             - name: Run tests
               run: |
@@ -62,7 +67,17 @@ jobs:
                       --coverage=${{ env.ENABLE_COVERAGE }} \
                       --ci \
                       --max-workers ${{ steps.cpu-cores.outputs.count }} \
+                      --shard ${{ matrix.runner }}/${{ strategy.job-total }} \
                       --cacheDirectory /tmp/jest_cache
+              env:
+                  JEST_SONAR_UNIQUE_OUTPUT_NAME: true
+
+                  # tell jest to use coloured output
+                  FORCE_COLOR: true
+
+            - name: Move coverage files into place
+              if: env.ENABLE_COVERAGE == 'true'
+              run: mv coverage/lcov.info coverage/${{ steps.setupNode.outputs.node-version }}-${{ matrix.runner }}.lcov.info
 
             - name: Upload Artifact
               if: env.ENABLE_COVERAGE == 'true'
@@ -80,7 +95,7 @@ jobs:
         needs: jest
         steps:
             - name: Skip SonarCloud
-              uses: Sibz/github-status-action@faaa4d96fecf273bd762985e0e7f9f933c774918 # v1
+              uses: Sibz/github-status-action@071b5370da85afbb16637d6eed8524a06bc2053e # v1
               with:
                   authToken: ${{ secrets.GITHUB_TOKEN }}
                   state: success
@@ -93,11 +108,11 @@ jobs:
         name: Element Web Integration Tests
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
               with:
                   repository: ${{ inputs.matrix-js-sdk-sha && 'matrix-org/matrix-react-sdk' || github.repository }}
 
-            - uses: actions/setup-node@v3
+            - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
 

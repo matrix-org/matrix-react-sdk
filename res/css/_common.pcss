@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 @import url("@vector-im/compound-design-tokens/assets/web/css/compound-design-tokens.css");
+@import url("@vector-im/compound-web/dist/style.css");
 @import "./_font-sizes.pcss";
 @import "./_animations.pcss";
 @import "./_spacing.pcss";
@@ -51,12 +52,30 @@ limitations under the License.
     --dialog-zIndex-standard: calc(var(--dialog-zIndex-standard-background) + 1); /* 4012 */
 }
 
-@media only percy {
-    :root {
-        --percy-color-avatar: $username-variant2-color;
-        --percy-color-displayName: $username-variant1-color;
-        --percy-color-replyChain-border: $username-variant1-color;
-    }
+#matrixchat {
+    /* This is required to ensure Compound tooltips correctly draw where they should with z-index: auto */
+    contain: strict;
+}
+#mx_ContextualMenu_Container,
+#mx_PersistedElement_container,
+#mx_Dialog_Container,
+#mx_Dialog_StaticContainer {
+    /* This is required to ensure Compound tooltips correctly draw where they should with z-index: auto */
+    isolation: isolate;
+}
+
+/**
+ * We need to increase the specificity of the selector to override the
+ * custom property set by the design tokens package
+ */
+[class^="cpd-theme"][class^="cpd-theme"] {
+    /**
+     * The design tokens package currently does not expose the fallback fonts
+     * We want to keep on re-using `$font-family` to not break custom themes
+     * and because we can to use `Twemoji` to display emoji rather than using
+     * system ones
+     */
+    --cpd-font-family-sans: $font-family;
 }
 
 @media (prefers-reduced-motion) {
@@ -78,6 +97,17 @@ html {
 body {
     font: var(--cpd-font-body-md-regular);
     letter-spacing: var(--cpd-font-letter-spacing-body-md);
+    /**
+     * We want to apply Inter Dynamic metrics (https://rsms.me/inter/dynmetrics/)
+     * We need to tweak the `letter-spacing` property and doing so, disables by
+     * default the optional ligatures
+     * `font-feature-settings` allows us to override this behaviour and have the
+     * correct ligatures and the proper dynamic metric spacing.
+     */
+    font-feature-settings:
+        "kern" 1,
+        "liga" 1,
+        "calt" 1;
 
     background-color: $background;
     color: $primary-content;
@@ -109,6 +139,22 @@ code {
 
 .text-muted {
     color: $muted-fg-color;
+}
+
+.text-primary {
+    color: $primary-content;
+}
+
+.text-secondary {
+    color: $secondary-content;
+}
+
+.mx_Verified {
+    color: $e2e-verified-color;
+}
+
+.mx_Untrusted {
+    color: $e2e-warning-color;
 }
 
 b {
@@ -191,7 +237,7 @@ textarea:focus {
 /* accessible (focusable) components. Not intended for buttons, but */
 /* should be used on things like focusable containers where the outline */
 /* is usually not helping anyone. */
-*:focus:not(.focus-visible) {
+*:focus:not(:focus-visible) {
     outline: none;
 }
 
@@ -236,7 +282,7 @@ legend {
         background-color: transparent;
         color: $input-darker-fg-color;
         border-radius: 4px;
-        border: 1px solid rgba($primary-content, 0.1);
+        border: 1px solid $secondary-hairline-color;
         /* these things should probably not be defined globally */
         margin: 9px;
     }
@@ -249,30 +295,7 @@ legend {
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type="text"]::placeholder,
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type="search"]::placeholder,
     .mx_textinput input::placeholder {
-        color: rgba($input-darker-fg-color, 0.75);
-    }
-}
-
-/*** panels ***/
-.dark-panel {
-    background-color: $dark-panel-bg-color;
-
-    :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type="text"],
-    :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type="search"],
-    .mx_textinput {
-        color: $input-darker-fg-color;
-        background-color: $background;
-        border: none;
-    }
-}
-
-.light-panel {
-    :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type="text"],
-    :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type="search"],
-    .mx_textinput {
-        color: $input-darker-fg-color;
-        background-color: $input-lighter-bg-color;
-        border: none;
+        color: $input-placeholder;
     }
 }
 
@@ -338,6 +361,9 @@ legend {
     .markdown-body {
         font: var(--cpd-font-body-md-regular) !important;
         letter-spacing: var(--cpd-font-letter-spacing-body-md);
+        font-family: inherit !important;
+        white-space: normal !important;
+        line-height: inherit !important;
         color: inherit; /* inherit the colour from the dark or light theme by default (but not for code blocks) */
 
         pre,
@@ -394,6 +420,7 @@ legend {
 
         blockquote {
             border-left: 2px solid $blockquote-bar-color;
+            color: $secondary-content;
             border-radius: 2px;
             padding: 0 10px;
         }
@@ -542,7 +569,7 @@ legend {
     cursor: pointer;
     display: inline-block;
 
-    &:not(.focus-visible) {
+    &:not(:focus-visible) {
         outline: none;
     }
 }
@@ -567,9 +594,9 @@ legend {
 
     /* flip colours for the secondary ones */
     font-weight: var(--cpd-font-weight-semibold);
-    border: 1px solid $accent;
+    border: 1px solid currentColor;
     color: $accent;
-    background-color: $button-secondary-bg-color;
+    background-color: transparent;
     font-family: inherit;
 }
 
@@ -791,18 +818,19 @@ legend {
     mask-size: contain;
     height: 18px;
     min-width: 18px;
-    background-color: $secondary-content !important;
+    background-color: $icon-button-color !important;
 }
 
 @define-mixin composerButtonHighLight {
-    background: rgba($accent, 0.25);
+    /* TODO: Refactor as this will break for apps that override the accent color */
+    background: var(--cpd-color-green-300);
     /* make the icon the accent color too */
     &::before {
         background-color: $accent !important;
     }
 }
 
-@define-mixin composerButton $border-radius, $hover-color {
+@define-mixin composerButton $border-radius, $hover-color, $hover-bg {
     --size: 26px;
     position: relative;
     cursor: pointer;
@@ -823,6 +851,7 @@ legend {
         mask-repeat: no-repeat;
         mask-size: contain;
         mask-position: center;
+        z-index: 2;
     }
 
     &::after {
@@ -838,11 +867,18 @@ legend {
 
     &:hover {
         &::after {
-            background: rgba($hover-color, 0.1);
+            background: $hover-bg;
         }
 
         &::before {
             background-color: $hover-color;
         }
     }
+}
+
+.mx_lineClamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--mx-line-clamp, 1);
+    overflow: hidden;
 }

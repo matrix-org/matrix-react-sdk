@@ -59,7 +59,7 @@ const getOwnProfile = (
     avatarUrl?: string;
 } => ({
     displayName: OwnProfileStore.instance.displayName || userId,
-    avatarUrl: OwnProfileStore.instance.getHttpAvatarUrl(AVATAR_SIZE) ?? undefined,
+    avatarUrl: OwnProfileStore.instance.getHttpAvatarUrl(parseInt(AVATAR_SIZE, 10)) ?? undefined,
 });
 
 const UserWelcomeTop: React.FC = () => {
@@ -74,8 +74,8 @@ const UserWelcomeTop: React.FC = () => {
         <div>
             <MiniAvatarUploader
                 hasAvatar={!!ownProfile.avatarUrl}
-                hasAvatarLabel={_tDom("Great, that'll help people know it's you")}
-                noAvatarLabel={_tDom("Add a photo so people know it's you.")}
+                hasAvatarLabel={_tDom("onboarding|has_avatar_label")}
+                noAvatarLabel={_tDom("onboarding|no_avatar_label")}
                 setAvatarUrl={(url) => cli.setAvatarUrl(url)}
                 isUserAvatar
                 onClick={(ev) => PosthogTrackers.trackInteraction("WebHomeMiniAvatarUploadButton", ev)}
@@ -84,14 +84,12 @@ const UserWelcomeTop: React.FC = () => {
                     idName={userId}
                     name={ownProfile.displayName}
                     url={ownProfile.avatarUrl}
-                    width={AVATAR_SIZE}
-                    height={AVATAR_SIZE}
-                    resizeMethod="crop"
+                    size={AVATAR_SIZE}
                 />
             </MiniAvatarUploader>
 
-            <h1>{_tDom("Welcome %(name)s", { name: ownProfile.displayName })}</h1>
-            <h2>{_tDom("Now, let's help you get started")}</h2>
+            <h1>{_tDom("onboarding|welcome_user", { name: ownProfile.displayName })}</h1>
+            <h2>{_tDom("onboarding|welcome_detail")}</h2>
         </div>
     );
 };
@@ -106,7 +104,7 @@ const HomePage: React.FC<IProps> = ({ justRegistered = false }) => {
     }
 
     let introSection: JSX.Element;
-    if (justRegistered || !OwnProfileStore.instance.getHttpAvatarUrl(AVATAR_SIZE)) {
+    if (justRegistered || !OwnProfileStore.instance.getHttpAvatarUrl(parseInt(AVATAR_SIZE, 10))) {
         introSection = <UserWelcomeTop />;
     } else {
         const brandingConfig = SdkConfig.getObject("branding");
@@ -115,8 +113,8 @@ const HomePage: React.FC<IProps> = ({ justRegistered = false }) => {
         introSection = (
             <React.Fragment>
                 <img src={logoUrl} alt={config.brand} />
-                <h1>{_tDom("Welcome to %(appName)s", { appName: config.brand })}</h1>
-                <h2>{_tDom("Own your conversations.")}</h2>
+                <h1>{_tDom("onboarding|intro_welcome", { appName: config.brand })}</h1>
+                <h2>{_tDom("onboarding|intro_byline")}</h2>
             </React.Fragment>
         );
     }
@@ -127,13 +125,13 @@ const HomePage: React.FC<IProps> = ({ justRegistered = false }) => {
                 {introSection}
                 <div className="mx_HomePage_default_buttons">
                     <AccessibleButton onClick={onClickSendDm} className="mx_HomePage_button_sendDm">
-                        {_tDom("Send a Direct Message")}
+                        {_tDom("onboarding|send_dm")}
                     </AccessibleButton>
                     <AccessibleButton onClick={onClickExplore} className="mx_HomePage_button_explore">
-                        {_tDom("Explore Public Rooms")}
+                        {_tDom("onboarding|explore_rooms")}
                     </AccessibleButton>
                     <AccessibleButton onClick={onClickNewRoom} className="mx_HomePage_button_createGroup">
-                        {_tDom("Create a Group Chat")}
+                        {_tDom("onboarding|create_room")}
                     </AccessibleButton>
                 </div>
             </div>

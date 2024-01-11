@@ -15,8 +15,9 @@ limitations under the License.
 */
 
 import { mocked, Mocked } from "jest-mock";
-import { CryptoApi, MatrixClient, Device, Preset } from "matrix-js-sdk/src/matrix";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
+import { CryptoApi, MatrixClient, Device, Preset, RoomType } from "matrix-js-sdk/src/matrix";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 
 import { stubClient, setupAsyncStoreWithClient, mockPlatformPeg, getMockClientWithEventEmitter } from "./test-utils";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
@@ -75,6 +76,9 @@ describe("createRoom", () => {
     it("sets up Element video rooms correctly", async () => {
         const userId = client.getUserId()!;
         const createCallSpy = jest.spyOn(ElementCall, "create");
+        const callMembershipSpy = jest.spyOn(MatrixRTCSession, "callMembershipsForRoom");
+        callMembershipSpy.mockReturnValue([]);
+
         const roomId = await createRoom(client, { roomType: RoomType.UnstableCall });
 
         const userPower = client.createRoom.mock.calls[0][0].power_level_content_override?.users?.[userId];
@@ -123,7 +127,7 @@ describe("createRoom", () => {
             ];
 
         expect(callPower).toBe(100);
-        expect(callMemberPower).toBe(100);
+        expect(callMemberPower).toBe(0);
     });
 
     it("should upload avatar if one is passed", async () => {
@@ -140,6 +144,15 @@ describe("createRoom", () => {
                         type: "m.room.avatar",
                     },
                 ]),
+            }),
+        );
+    });
+
+    it("should strip self-invite", async () => {
+        await createRoom(client, { dmUserId: client.getSafeUserId() });
+        expect(client.createRoom).toHaveBeenCalledWith(
+            expect.not.objectContaining({
+                invite: expect.any(Array),
             }),
         );
     });

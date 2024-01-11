@@ -31,6 +31,11 @@ limitations under the License.
         }
     }
 
+    .mx_GenericEventListSummary_toggle {
+        /* We reuse a title cased translation */
+        text-transform: lowercase;
+    }
+
     &[data-layout="irc"],
     &[data-layout="group"] {
         .mx_GenericEventListSummary_toggle {
@@ -110,6 +115,7 @@ limitations under the License.
     /* Make all state events one order smaller than the other events */
     .mx_EventTile {
         font: var(--cpd-font-body-sm-regular);
+        color: $secondary-content;
     }
 }
 
@@ -121,6 +127,7 @@ limitations under the License.
 .mx_TextualEvent.mx_GenericEventListSummary_summary {
     font: var(--cpd-font-body-sm-regular);
     display: inline-flex;
+    color: $secondary-content;
 }
 
 .mx_GenericEventListSummary_avatars {

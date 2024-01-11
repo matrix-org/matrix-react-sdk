@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { ContextType, CSSProperties, MutableRefObject } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import WidgetUtils from "../../../utils/WidgetUtils";
 import AppTile from "./AppTile";
@@ -58,6 +58,7 @@ export default class PersistentApp extends React.Component<IProps> {
                 showMenubar={false}
                 pointerEvents={this.props.pointerEvents}
                 movePersistedElement={this.props.movePersistedElement}
+                overlay={this.props.children}
             />
         );
     }

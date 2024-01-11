@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, MsgType, RelationType } from "matrix-js-sdk/src/matrix";
 
 import { IPreview } from "./IPreview";
 import { TagID } from "../models";
@@ -69,7 +68,7 @@ export class MessageEventPreview implements IPreview {
         body = sanitizeForTranslation(body);
 
         if (msgtype === MsgType.Emote) {
-            return _t("* %(senderName)s %(emote)s", { senderName: getSenderName(event), emote: body });
+            return _t("event_preview|m.emote", { senderName: getSenderName(event), emote: body });
         }
 
         const roomId = event.getRoomId();
@@ -77,7 +76,7 @@ export class MessageEventPreview implements IPreview {
         if (isThread || isSelf(event) || (roomId && !shouldPrefixMessagesIn(roomId, tagId))) {
             return body;
         } else {
-            return _t("%(senderName)s: %(message)s", { senderName: getSenderName(event), message: body });
+            return _t("event_preview|m.text", { senderName: getSenderName(event), message: body });
         }
     }
 }

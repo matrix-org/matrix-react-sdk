@@ -16,9 +16,7 @@ limitations under the License.
 */
 
 import EMOJIBASE_REGEX from "emojibase-regex";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient, RoomMember, Room } from "matrix-js-sdk/src/matrix";
 import GraphemeSplitter from "graphemer";
 
 import AutocompleteWrapperModel, { GetAutocompleterComponent, UpdateCallback, UpdateQuery } from "./autocomplete";
@@ -256,7 +254,10 @@ export class PlainPart extends PlainBasePart implements IBasePart {
 }
 
 export abstract class PillPart extends BasePart implements IPillPart {
-    public constructor(public resourceId: string, label: string) {
+    public constructor(
+        public resourceId: string,
+        label: string,
+    ) {
         super(label);
     }
 
@@ -416,7 +417,11 @@ export class EmojiPart extends BasePart implements IBasePart {
 }
 
 class RoomPillPart extends PillPart {
-    public constructor(resourceId: string, label: string, private room?: Room) {
+    public constructor(
+        resourceId: string,
+        label: string,
+        private room?: Room,
+    ) {
         super(resourceId, label);
     }
 
@@ -457,7 +462,11 @@ class AtRoomPillPart extends RoomPillPart {
 }
 
 class UserPillPart extends PillPart {
-    public constructor(userId: string, displayName: string, private member?: RoomMember) {
+    public constructor(
+        userId: string,
+        displayName: string,
+        private member?: RoomMember,
+    ) {
         super(userId, displayName);
     }
 
@@ -492,7 +501,10 @@ class UserPillPart extends PillPart {
 }
 
 class PillCandidatePart extends PlainBasePart implements IPillCandidatePart {
-    public constructor(text: string, private autoCompleteCreator: IAutocompleteCreator) {
+    public constructor(
+        text: string,
+        private autoCompleteCreator: IAutocompleteCreator,
+    ) {
         super(text);
     }
 

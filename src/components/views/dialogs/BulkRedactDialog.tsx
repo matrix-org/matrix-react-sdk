@@ -16,12 +16,7 @@ limitations under the License.
 
 import React, { useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixClient, RoomMember, Room, MatrixEvent, EventTimeline, EventType } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -67,10 +62,10 @@ const BulkRedactDialog: React.FC<Props> = (props) => {
         return (
             <InfoDialog
                 onFinished={onFinished}
-                title={_t("No recent messages by %(user)s found", { user: member.name })}
+                title={_t("user_info|redact|no_recent_messages_title", { user: member.name })}
                 description={
                     <div>
-                        <p>{_t("Try scrolling up in the timeline to see if there are any earlier ones.")}</p>
+                        <p>{_t("user_info|redact|no_recent_messages_description")}</p>
                     </div>
                 }
             />
@@ -113,36 +108,21 @@ const BulkRedactDialog: React.FC<Props> = (props) => {
             <BaseDialog
                 className="mx_BulkRedactDialog"
                 onFinished={onFinished}
-                title={_t("Remove recent messages by %(user)s", { user })}
+                title={_t("user_info|redact|confirm_title", { user })}
                 contentId="mx_Dialog_content"
             >
                 <div className="mx_Dialog_content" id="mx_Dialog_content">
-                    <p>
-                        {_t(
-                            "You are about to remove %(count)s messages by %(user)s. " +
-                                "This will remove them permanently for everyone in the conversation. " +
-                                "Do you wish to continue?",
-                            { count, user },
-                        )}
-                    </p>
-                    <p>
-                        {_t(
-                            "For a large amount of messages, this might take some time. " +
-                                "Please don't refresh your client in the meantime.",
-                        )}
-                    </p>
+                    <p>{_t("user_info|redact|confirm_description_1", { count, user })}</p>
+                    <p>{_t("user_info|redact|confirm_description_2")}</p>
                     <StyledCheckbox checked={keepStateEvents} onChange={(e) => setKeepStateEvents(e.target.checked)}>
-                        {_t("Preserve system messages")}
+                        {_t("user_info|redact|confirm_keep_state_label")}
                     </StyledCheckbox>
                     <div className="mx_BulkRedactDialog_checkboxMicrocopy">
-                        {_t(
-                            "Uncheck if you also want to remove system messages on this user " +
-                                "(e.g. membership change, profile change…)",
-                        )}
+                        {_t("user_info|redact|confirm_keep_state_explainer")}
                     </div>
                 </div>
                 <DialogButtons
-                    primaryButton={_t("Remove %(count)s messages", { count })}
+                    primaryButton={_t("user_info|redact|confirm_button", { count })}
                     primaryButtonClass="danger"
                     primaryDisabled={count === 0}
                     onPrimaryButtonClick={() => {

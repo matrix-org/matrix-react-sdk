@@ -1,11 +1,12 @@
 # Cypress in Element Web
 
-## Scope of this Document
+# 🚨 We are moving away from Cypress in favour of Playwright.
 
-This doc is about our Cypress tests in Element Web and how we use Cypress to write tests.
-It aims to cover:
+Please do not write any new tests in Cypress and check out [the Playwright docs](playwright.md).
 
--   How to run the tests yourself
+## Contents
+
+-   How to run the tests
 -   How the tests work
 -   How to write great Cypress tests
 -   Visual testing
@@ -27,10 +28,14 @@ need to have Docker installed and working in order to run the Cypress tests.
 There are a few different ways to run the tests yourself. The simplest is to run:
 
 ```
+docker pull matrixdotorg/synapse:develop
 yarn run test:cypress
 ```
 
 This will run the Cypress tests once, non-interactively.
+
+Note: you don't need to run the `docker pull` command every time, but you should
+do it regularly to ensure you are running against an up-to-date Synapse.
 
 You can also run individual tests this way too, as you'd expect:
 
@@ -44,6 +49,39 @@ To launch it:
 ```
 yarn run test:cypress:open
 ```
+
+### Matching the CI environment
+
+In our Continuous Integration environment, we run the Cypress tests in the
+Chrome browser, and with the latest Synapse image from Docker Hub.
+
+In some rare cases, tests behave differently between different browsers, so if
+you see CI failures for the Cypress tests, but those tests work OK on your local
+machine, try running them in Chrome like this:
+
+```bash
+yarn run test:cypress --browser=chrome
+```
+
+(Use `--browser=chromium` if you'd prefer to use Chromium.)
+
+If you launch the interactive UI you can choose the browser you want to use. To
+match the CI setup, choose Chrome.
+
+Note that you will need to have Chrome installed on your system to run the tests
+inside those browsers, whereas the default is to use Electron, which is included
+within the Cypress dependency.
+
+Another cause of inconsistency between local and CI is the Synapse version. The
+first time you run the tests, they automatically fetch the latest Docker image
+of Synapse, but this won't update again unless you do it explicitly. To update
+the Synapse you are using, run:
+
+```
+docker pull matrixdotorg/synapse:develop
+```
+
+and then run the tests as normal.
 
 ### Running with Rust cryptography
 
@@ -204,6 +242,10 @@ should generally try to adhere to them.
 
 ## Screenshot testing with Percy
 
+**⚠️ Percy is disabled while we're figuring out https://github.com/vector-im/wat-internal/issues/36**
+**and https://github.com/vector-im/wat-internal/issues/56. We're hoping to turn it back on or switch**
+**to an alternative in the future.**
+
 We also support visual testing via [Percy](https://percy.io). Within many of our
 Cypress tests you can see lines calling `cy.percySnapshot()`. This creates a
 screenshot and uses Percy to check whether it has changed from the last time
@@ -230,3 +272,10 @@ having to figure it out later after the nightly build. If you don't have
 permission to add a label, please ask your reviewer to do it. Note: it's best to
 add this label when the change is nearly ready, because the screenshots will be
 re-created every time you make a change to your PR.
+
+Some UI elements render differently between test runs, such as BaseAvatar when
+there is no avatar set, choosing a colour from the theme palette based on the
+hash of the user/room's Matrix ID. To avoid this creating flaky tests we can use
+the `@media only percy` CSS query to override the variable colour into a fixed one
+for tests where it is not feasible to fix the underlying identifiers issued by the
+server. See https://docs.percy.io/docs/percy-specific-css#percy-css-media-query.

@@ -17,12 +17,10 @@ limitations under the License.
 import React from "react";
 import { render, screen, act, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { Room, RoomStateEvent, MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import {
     useMockedCalls,
     MockedCall,
@@ -31,6 +29,7 @@ import {
     setupAsyncStoreWithClient,
     resetAsyncStoreWithClient,
     wrapInMatrixClientContext,
+    useMockMediaDevices,
 } from "../../../test-utils";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
@@ -43,9 +42,6 @@ import { ConnectionState } from "../../../../src/models/Call";
 const CallEvent = wrapInMatrixClientContext(UnwrappedCallEvent);
 
 describe("CallEvent", () => {
-    useMockedCalls();
-    jest.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(async () => {});
-
     let client: Mocked<MatrixClient>;
     let room: Room;
     let alice: RoomMember;
@@ -56,6 +52,10 @@ describe("CallEvent", () => {
     beforeEach(async () => {
         jest.useFakeTimers();
         jest.setSystemTime(0);
+
+        useMockMediaDevices();
+        useMockedCalls();
+        jest.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(async () => {});
 
         stubClient();
         client = mocked(MatrixClientPeg.safeGet());
@@ -141,7 +141,6 @@ describe("CallEvent", () => {
 
         screen.getByText("@alice:example.org started a video call");
         screen.getByLabelText("2 participants");
-        screen.getByText("1m 30s");
 
         // Test that the join button works
         const dispatcherSpy = jest.fn();

@@ -15,11 +15,8 @@ limitations under the License.
 */
 
 import { uniq } from "lodash";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
+import { Room, MatrixEvent, EventType, ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Optional } from "matrix-events-sdk";
 
 import { filterValidMDirect } from "./dm/filterValidMDirect";
@@ -205,15 +202,18 @@ export default class DMRoomMap {
     public getUniqueRoomsWithIndividuals(): { [userId: string]: Room } {
         if (!this.roomToUser) return {}; // No rooms means no map.
         // map roomToUser to valid rooms with two participants
-        return Object.keys(this.roomToUser).reduce((acc, roomId: string) => {
-            const userId = this.getUserIdForRoomId(roomId);
-            const room = this.matrixClient.getRoom(roomId);
-            const hasTwoMembers = room?.getInvitedAndJoinedMemberCount() === 2;
-            if (userId && room && hasTwoMembers) {
-                acc[userId] = room;
-            }
-            return acc;
-        }, {} as Record<string, Room>);
+        return Object.keys(this.roomToUser).reduce(
+            (acc, roomId: string) => {
+                const userId = this.getUserIdForRoomId(roomId);
+                const room = this.matrixClient.getRoom(roomId);
+                const hasTwoMembers = room?.getInvitedAndJoinedMemberCount() === 2;
+                if (userId && room && hasTwoMembers) {
+                    acc[userId] = room;
+                }
+                return acc;
+            },
+            {} as Record<string, Room>,
+        );
     }
 
     /**

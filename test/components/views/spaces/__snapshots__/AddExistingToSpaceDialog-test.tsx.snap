@@ -18,20 +18,32 @@ exports[`<AddExistingToSpaceDialog /> looks as expected 1`] = `
       class="mx_Dialog_header mx_Dialog_headerWithCancel"
     >
       <h2
-        class="mx_Heading_h4 mx_Dialog_title"
+        class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         <div
           class="mx_SubspaceSelector"
         >
-          <img
-            alt=""
-            class="mx_BaseAvatar mx_BaseAvatar_image mx_RoomAvatar_isSpaceRoom"
+          <span
+            aria-label="Avatar"
+            class="_avatar_1o69u_17 mx_BaseAvatar"
+            data-color="6"
             data-testid="avatar-img"
-            loading="lazy"
-            src="http://this.is.a.url/avatar.url/room.png"
-            style="width: 40px; height: 40px;"
-          />
+            data-type="square"
+            style="--cpd-avatar-size: 40px;"
+          >
+            <img
+              alt=""
+              class="_image_1o69u_49"
+              crossorigin="anonymous"
+              data-type="square"
+              height="40px"
+              loading="lazy"
+              referrerpolicy="no-referrer"
+              src="http://this.is.a.url/avatar.url/room.png"
+              width="40px"
+            />
+          </span>
           <div>
             <h1>
               Add existing rooms

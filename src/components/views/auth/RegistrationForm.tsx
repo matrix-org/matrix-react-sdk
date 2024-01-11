@@ -16,9 +16,8 @@ limitations under the License.
 */
 
 import React, { BaseSyntheticEvent, ReactNode } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import * as Email from "../../../email";
 import { looksValid as phoneNumberLooksValid, PhoneNumberCountryDefinition } from "../../../phonenumber";
@@ -268,7 +267,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     };
 
     private validateEmailRules = withValidation({
-        description: () => _t("Use an email address to recover your account"),
+        description: () => _t("auth|reset_password_email_field_description"),
         hideDescriptionIfValid: true,
         rules: [
             {
@@ -276,12 +275,12 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 test(this: RegistrationForm, { value, allowEmpty }) {
                     return allowEmpty || !this.authStepIsRequired("m.login.email.identity") || !!value;
                 },
-                invalid: () => _t("Enter email address (required on this homeserver)"),
+                invalid: () => _t("auth|reset_password_email_field_required_invalid"),
             },
             {
                 key: "email",
                 test: ({ value }) => !value || Email.looksValid(value),
-                invalid: () => _t("Doesn't look like a valid email address"),
+                invalid: () => _t("auth|email_field_label_invalid"),
             },
         ],
     });
@@ -325,7 +324,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     };
 
     private validatePhoneNumberRules = withValidation({
-        description: () => _t("Other users can invite you to rooms using your contact details"),
+        description: () => _t("auth|msisdn_field_description"),
         hideDescriptionIfValid: true,
         rules: [
             {
@@ -333,12 +332,12 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 test(this: RegistrationForm, { value, allowEmpty }) {
                     return allowEmpty || !this.authStepIsRequired("m.login.msisdn") || !!value;
                 },
-                invalid: () => _t("Enter phone number (required on this homeserver)"),
+                invalid: () => _t("auth|registration_msisdn_field_required_invalid"),
             },
             {
                 key: "email",
                 test: ({ value }) => !value || phoneNumberLooksValid(value),
-                invalid: () => _t("That phone number doesn't look quite right, please check and try again"),
+                invalid: () => _t("auth|msisdn_field_number_invalid"),
             },
         ],
     });
@@ -359,7 +358,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         description: (_, results) => {
             // omit the description if the only failing result is the `available` one as it makes no sense for it.
             if (results.every(({ key, valid }) => key === "available" || valid)) return null;
-            return _t("Use lowercase letters, numbers, dashes and underscores only");
+            return _t("auth|registration_username_validation");
         },
         hideDescriptionIfValid: true,
         async deriveData(this: RegistrationForm, { value }) {
@@ -381,14 +380,14 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             {
                 key: "required",
                 test: ({ value, allowEmpty }) => allowEmpty || !!value,
-                invalid: () => _t("Enter username"),
+                invalid: () => _t("auth|username_field_required_invalid"),
             },
             {
                 key: "safeLocalpart",
                 test: ({ value }, usernameAvailable) =>
                     (!value || SAFE_LOCALPART_REGEX.test(value)) &&
                     usernameAvailable !== UsernameAvailableStatus.Invalid,
-                invalid: () => _t("Some characters not allowed"),
+                invalid: () => _t("room_settings|general|alias_field_safe_localpart_invalid"),
             },
             {
                 key: "available",
@@ -402,8 +401,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 },
                 invalid: (usernameAvailable) =>
                     usernameAvailable === UsernameAvailableStatus.Error
-                        ? _t("Unable to check if username has been taken. Try again later.")
-                        : _t("Someone already has that username. Try another or if it is you, sign in below."),
+                        ? _t("auth|registration_username_unable_check")
+                        : _t("auth|registration_username_in_use"),
             },
         ],
     });
@@ -433,7 +432,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     }
 
     private showEmail(): boolean {
-        if (!this.authStepIsUsed("m.login.email.identity")) {
+        const threePidLogin = !SdkConfig.get().disable_3pid_login;
+        if (!threePidLogin || !this.authStepIsUsed("m.login.email.identity")) {
             return false;
         }
         return true;
@@ -451,7 +451,9 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         if (!this.showEmail()) {
             return null;
         }
-        const emailLabel = this.authStepIsRequired("m.login.email.identity") ? _td("Email") : _td("Email (optional)");
+        const emailLabel = this.authStepIsRequired("m.login.email.identity")
+            ? _td("auth|email_field_label")
+            : _td("auth|registration|continue_without_email_field_label");
         return (
             <EmailField
                 fieldRef={(field) => (this[RegistrationField.Email] = field)}
@@ -473,6 +475,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 value={this.state.password}
                 onChange={this.onPasswordChange}
                 onValidate={this.onPasswordValidate}
+                userInputs={[this.state.username]}
             />
         );
     }
@@ -495,7 +498,9 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         if (!this.showPhoneNumber()) {
             return null;
         }
-        const phoneLabel = this.authStepIsRequired("m.login.msisdn") ? _t("Phone") : _t("Phone (optional)");
+        const phoneLabel = this.authStepIsRequired("m.login.msisdn")
+            ? _t("auth|phone_label")
+            : _t("auth|phone_optional_label");
         const phoneCountry = (
             <CountryDropdown
                 value={this.state.phoneCountry}
@@ -524,8 +529,8 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 ref={(field) => (this[RegistrationField.Username] = field)}
                 type="text"
                 autoFocus={true}
-                label={_t("Username")}
-                placeholder={_t("Username").toLocaleLowerCase()}
+                label={_t("common|username")}
+                placeholder={_t("common|username").toLocaleLowerCase()}
                 value={this.state.username}
                 onChange={this.onUsernameChange}
                 onValidate={this.onUsernameValidate}
@@ -535,7 +540,12 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
     public render(): ReactNode {
         const registerButton = (
-            <input className="mx_Login_submit" type="submit" value={_t("Register")} disabled={!this.props.canSubmit} />
+            <input
+                className="mx_Login_submit"
+                type="submit"
+                value={_t("action|register")}
+                disabled={!this.props.canSubmit}
+            />
         );
 
         let emailHelperText: JSX.Element | undefined;
@@ -543,15 +553,13 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             if (this.showPhoneNumber()) {
                 emailHelperText = (
                     <div>
-                        {_t("Add an email to be able to reset your password.")}{" "}
-                        {_t("Use email or phone to optionally be discoverable by existing contacts.")}
+                        {_t("auth|email_help_text")} {_t("auth|email_phone_discovery_text")}
                     </div>
                 );
             } else {
                 emailHelperText = (
                     <div>
-                        {_t("Add an email to be able to reset your password.")}{" "}
-                        {_t("Use email to optionally be discoverable by existing contacts.")}
+                        {_t("auth|email_help_text")} {_t("auth|email_discovery_text")}
                     </div>
                 );
             }

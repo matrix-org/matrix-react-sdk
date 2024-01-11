@@ -16,10 +16,10 @@ limitations under the License.
 */
 
 import React, { Dispatch } from "react";
+import { DATA_BY_CATEGORY, getEmojiFromUnicode, Emoji as IEmoji } from "@matrix-org/emojibase-bindings";
 
 import { _t } from "../../../languageHandler";
 import * as recent from "../../../emojipicker/recent";
-import { DATA_BY_CATEGORY, getEmojiFromUnicode, IEmoji } from "../../../emoji";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import Header from "./Header";
 import Search from "./Search";
@@ -87,63 +87,63 @@ class EmojiPicker extends React.Component<IProps, IState> {
         this.categories = [
             {
                 id: "recent",
-                name: _t("Frequently Used"),
+                name: _t("emoji|category_frequently_used"),
                 enabled: this.recentlyUsed.length > 0,
                 visible: this.recentlyUsed.length > 0,
                 ref: React.createRef(),
             },
             {
                 id: "people",
-                name: _t("Smileys & People"),
+                name: _t("emoji|category_smileys_people"),
                 enabled: true,
                 visible: true,
                 ref: React.createRef(),
             },
             {
                 id: "nature",
-                name: _t("Animals & Nature"),
+                name: _t("emoji|category_animals_nature"),
                 enabled: true,
                 visible: false,
                 ref: React.createRef(),
             },
             {
                 id: "foods",
-                name: _t("Food & Drink"),
+                name: _t("emoji|category_food_drink"),
                 enabled: true,
                 visible: false,
                 ref: React.createRef(),
             },
             {
                 id: "activity",
-                name: _t("Activities"),
+                name: _t("emoji|category_activities"),
                 enabled: true,
                 visible: false,
                 ref: React.createRef(),
             },
             {
                 id: "places",
-                name: _t("Travel & Places"),
+                name: _t("emoji|category_travel_places"),
                 enabled: true,
                 visible: false,
                 ref: React.createRef(),
             },
             {
                 id: "objects",
-                name: _t("Objects"),
+                name: _t("emoji|category_objects"),
                 enabled: true,
                 visible: false,
                 ref: React.createRef(),
             },
             {
                 id: "symbols",
-                name: _t("Symbols"),
+                name: _t("emoji|category_symbols"),
                 enabled: true,
                 visible: false,
                 ref: React.createRef(),
             },
             {
                 id: "flags",
-                name: _t("Flags"),
+                name: _t("emoji|category_flags"),
                 enabled: true,
                 visible: false,
                 ref: React.createRef(),
@@ -306,6 +306,10 @@ class EmojiPicker extends React.Component<IProps, IState> {
     };
 
     private emojiMatchesFilter = (emoji: IEmoji, filter: string): boolean => {
+        // If the query is an emoji containing a variation then strip it to provide more useful matches
+        if (filter.includes(ZERO_WIDTH_JOINER)) {
+            filter = filter.split(ZERO_WIDTH_JOINER, 2)[0];
+        }
         return (
             emoji.label.toLowerCase().includes(filter) ||
             (Array.isArray(emoji.emoticon)
@@ -358,7 +362,12 @@ class EmojiPicker extends React.Component<IProps, IState> {
                 {({ onKeyDownHandler }) => {
                     let heightBefore = 0;
                     return (
-                        <div className="mx_EmojiPicker" data-testid="mx_EmojiPicker" onKeyDown={onKeyDownHandler}>
+                        <section
+                            className="mx_EmojiPicker"
+                            data-testid="mx_EmojiPicker"
+                            onKeyDown={onKeyDownHandler}
+                            aria-label={_t("a11y|emoji_picker")}
+                        >
                             <Header categories={this.categories} onAnchorClick={this.scrollToCategory} />
                             <Search
                                 query={this.state.filter}
@@ -403,7 +412,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                                     selectedEmojis={this.props.selectedEmojis}
                                 />
                             )}
-                        </div>
+                        </section>
                     );
                 }}
             </RovingTabIndexProvider>
