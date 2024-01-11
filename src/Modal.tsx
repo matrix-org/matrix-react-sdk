@@ -20,11 +20,11 @@ import ReactDOM from "react-dom";
 import classNames from "classnames";
 import { defer, sleep } from "matrix-js-sdk/src/utils";
 import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import dis from "./dispatcher/dispatcher";
 import AsyncWrapper from "./AsyncWrapper";
 import { Defaultize } from "./@types/common";
-import { TooltipProvider } from "@vector-im/compound-web";
 
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
 const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";

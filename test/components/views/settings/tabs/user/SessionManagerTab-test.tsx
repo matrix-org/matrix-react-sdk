@@ -35,6 +35,7 @@ import {
     MatrixClient,
 } from "matrix-js-sdk/src/matrix";
 import { mocked, MockedObject } from "jest-mock";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import {
     clearAllModals,
@@ -53,7 +54,6 @@ import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import { getClientInformationEventType } from "../../../../../../src/utils/device/clientInformation";
 import { SDKContext, SdkContextClass } from "../../../../../../src/contexts/SDKContext";
 import { OidcClientStore } from "../../../../../../src/stores/oidc/OidcClientStore";
-import { TooltipProvider } from "@vector-im/compound-web";
 
 mockPlatformPeg();
 
