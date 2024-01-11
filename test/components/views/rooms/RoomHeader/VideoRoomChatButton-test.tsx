@@ -118,7 +118,7 @@ describe("<VideoRoomChatButton />", () => {
         expect(screen.getByLabelText("Chat").hasAttribute("data-indicator")).toBeFalsy();
 
         // @ts-ignore ugly mocking
-        notificationState._color = NotificationColor.Highlight;
+        notificationState._level = NotificationLevel.Highlight;
         notificationState.emit(NotificationStateEvents.Update);
 
         // unread marker
@@ -135,7 +135,7 @@ describe("<VideoRoomChatButton />", () => {
         expect(screen.getByLabelText("Chat").hasAttribute("data-indicator")).toBeTruthy();
 
         // @ts-ignore ugly mocking
-        notificationState._color = NotificationColor.None;
+        notificationState._level = NotificationLevel.None;
         notificationState.emit(NotificationStateEvents.Update);
 
         // unread marker cleared
