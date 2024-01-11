@@ -72,6 +72,7 @@ import { NotificationState } from "../../../stores/notifications/NotificationSta
 import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import { ThreadActivityCentre } from "./thread-activity-centre/";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -350,6 +351,8 @@ const SpacePanel: React.FC = () => {
         }
     });
 
+    const isThreadActivityCentreEnabled = useSettingValue<boolean>("threadActivityCentre");
+
     return (
         <RovingTabIndexProvider handleHomeEnd handleUpDown={!dragging}>
             {({ onKeyDownHandler, onDragEndHandler }) => (
@@ -406,6 +409,9 @@ const SpacePanel: React.FC = () => {
                             )}
                         </Droppable>
 
+                        {isThreadActivityCentreEnabled && (
+                            <ThreadActivityCentre displayButtonLabel={!isPanelCollapsed} />
+                        )}
                         <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
                     </nav>
                 </DragDropContext>

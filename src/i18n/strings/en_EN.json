@@ -3136,7 +3136,8 @@
         "match_system": "Match system"
     },
     "thread_activity_centre": {
-        "title": "Thread activity centre"
+        "title": "Thread activity centre",
+        "header": "Threads activity"
     },
     "thread_view_back_action_label": "Back to thread",
     "threads": {

@@ -1,0 +1,92 @@
+/*
+ *
+ * Copyright 2024 The Matrix.org Foundation C.I.C.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * /
+ */
+
+.mx_ThreadActivityCentreButton {
+    color: $secondary-content;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin: auto;
+
+    &.expanded {
+        /* align with settings icon */
+        margin-left: 20px;
+
+        .mx_ThreadActivityCentreButton_Icon {
+            /* align with settings label */
+            margin-right: 12px;
+        }
+    }
+
+    &:not(.expanded) {
+        &:hover {
+            background-color: $quaternary-content;
+        }
+    }
+
+    .mx_ThreadActivityCentreButton_Icon {
+        height: 24px;
+        width: 24px;
+        padding: 4px;
+    }
+}
+
+.mx_ThreadActivityRows {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    .mx_ThreadActivityRow {
+        /* remove button style */
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        text-align: start;
+
+        /* align button content */
+        display: flex;
+        align-items: center;
+        margin: 0 16px;
+        gap: 12px;
+
+        .mx_ThreadActivityRow_room {
+            flex: 1 auto;
+        }
+    }
+}
+
+.mx_ThreadActivityCentreBadge {
+    background-color: $primary-content;
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+
+    &.mx_ThreadActivityCentreBadge_alert {
+        background-color: $alert;
+    }
+
+    &.mx_ThreadActivityCentreBadge_highlight {
+        background-color: var(--cpd-color-icon-accent-tertiary);
+    }
+}
+
+
+
