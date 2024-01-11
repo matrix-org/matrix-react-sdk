@@ -267,6 +267,7 @@ export default class ContextMenu extends React.PureComponent<React.PropsWithChil
             wrapperClassName,
             chevronFace: propsChevronFace,
             chevronOffset: propsChevronOffset,
+            mountAsChild,
             ...props
         } = this.props;
 
