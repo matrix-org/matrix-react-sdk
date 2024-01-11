@@ -24,7 +24,7 @@ import { SDKContext, SdkContextClass } from "../../../../../src/contexts/SDKCont
 import RightPanelStore from "../../../../../src/stores/right-panel/RightPanelStore";
 import { getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../../test-utils";
 import { RoomNotificationState } from "../../../../../src/stores/notifications/RoomNotificationState";
-import { NotificationColor } from "../../../../../src/stores/notifications/NotificationColor";
+import { NotificationLevel } from "../../../../../src/stores/notifications/NotificationLevel";
 import { NotificationStateEvents } from "../../../../../src/stores/notifications/NotificationState";
 import { RightPanelPhases } from "../../../../../src/stores/right-panel/RightPanelStorePhases";
 
@@ -45,11 +45,11 @@ describe("<VideoRoomChatButton />", () => {
         return room;
     };
 
-    const mockRoomNotificationState = (room: Room, color: NotificationColor): RoomNotificationState => {
+    const mockRoomNotificationState = (room: Room, level: NotificationLevel): RoomNotificationState => {
         const roomNotificationState = new RoomNotificationState(room);
 
         // @ts-ignore ugly mocking
-        roomNotificationState._color = color;
+        roomNotificationState._level = level;
         jest.spyOn(sdkContext.roomNotificationStateStore, "getRoomState").mockReturnValue(roomNotificationState);
         return roomNotificationState;
     };
@@ -100,7 +100,7 @@ describe("<VideoRoomChatButton />", () => {
 
     it("renders button with an unread marker when room is unread", () => {
         const room = makeRoom();
-        mockRoomNotificationState(room, NotificationColor.Bold);
+        mockRoomNotificationState(room, NotificationLevel.Activity);
         getComponent(room);
 
         // snapshot includes `data-indicator` attribute
@@ -111,7 +111,7 @@ describe("<VideoRoomChatButton />", () => {
     it("adds unread marker when room notification state changes to unread", () => {
         const room = makeRoom();
         // start in read state
-        const notificationState = mockRoomNotificationState(room, NotificationColor.None);
+        const notificationState = mockRoomNotificationState(room, NotificationLevel.None);
         getComponent(room);
 
         // no unread marker
@@ -128,7 +128,7 @@ describe("<VideoRoomChatButton />", () => {
     it("clears unread marker when room notification state changes to read", () => {
         const room = makeRoom();
         // start in unread state
-        const notificationState = mockRoomNotificationState(room, NotificationColor.Red);
+        const notificationState = mockRoomNotificationState(room, NotificationLevel.Highlight);
         getComponent(room);
 
         // unread marker
