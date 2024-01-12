@@ -1106,6 +1106,13 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: [],
     },
+    "threadActivityCentre": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        labsGroup: LabGroup.Threads,
+        displayName: _td("thread_activity_centre|title"),
+        default: false,
+        isFeature: true,
+    },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
@@ -1175,13 +1182,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     [UIFeature.BulkUnverifiedSessionsReminder]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
-    },
-    "threadActivityCentre": {
-        supportedLevels: LEVELS_FEATURE,
-        isFeature: true,
-        labsGroup: LabGroup.Threads,
-        displayName: _td("thread_activity_centre|title"),
-        default: false,
     },
 
     // Electron-specific settings, they are stored by Electron and set/read over an IPC.
