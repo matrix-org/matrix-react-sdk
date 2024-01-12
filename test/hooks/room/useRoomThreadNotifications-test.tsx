@@ -55,11 +55,6 @@ describe("useRoomThreadNotifications", () => {
         room.setThreadUnreadNotificationCount("flooble", NotificationCountType.Total, 1);
         const { result } = render(room);
 
-        /*act(() => {
-            result.current.search({ limit: 1, query });
-        });*/
-        //await waitFor(() => expect(result.current.ready).toBe(true));
-
         expect(result.current).toBe(NotificationColor.Grey);
     });
 
