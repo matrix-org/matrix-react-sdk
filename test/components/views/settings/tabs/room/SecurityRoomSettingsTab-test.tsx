@@ -18,6 +18,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { EventType, GuestAccess, HistoryVisibility, JoinRule, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import SecurityRoomSettingsTab from "../../../../../../src/components/views/settings/tabs/room/SecurityRoomSettingsTab";
 import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
@@ -29,7 +30,6 @@ import {
     mockClientMethodsUser,
 } from "../../../../../test-utils";
 import { filterBoolean } from "../../../../../../src/utils/arrays";
-import { TooltipProvider } from "@vector-im/compound-web";
 
 describe("<SecurityRoomSettingsTab />", () => {
     const userId = "@alice:server.org";
