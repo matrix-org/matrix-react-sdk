@@ -353,6 +353,5 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
       </div>
     </li>
   </ul>
-  ;
 </DocumentFragment>
 `;

@@ -265,7 +265,8 @@
             "select_qr_code": "Select '%(scanQRCode)s'",
             "sign_in_new_device": "Sign in new device",
             "start_at_sign_in_screen": "Start at the sign in screen",
-            "waiting_for_device": "Waiting for device to sign in"
+            "waiting_for_device": "Waiting for device to sign in",
+            "error_rate_limited": "Too many attempts in a short time. Wait some time before trying again."
         },
         "register_action": "Create Account",
         "registration": {
