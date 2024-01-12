@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { render } from "@testing-library/react";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
+import { render } from "../../..";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import * as TestUtils from "../../../test-utils";
 import CryptographyPanel from "../../../../src/components/views/settings/CryptographyPanel";

@@ -13,11 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { render } from "@testing-library/react";
 import { LOCAL_NOTIFICATION_SETTINGS_PREFIX, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import React from "react";
 
+import { render } from "..";
 import LegacyCallHandler from "../../src/LegacyCallHandler";
 import IncomingLegacyCallToast from "../../src/toasts/IncomingLegacyCallToast";
 import DMRoomMap from "../../src/utils/DMRoomMap";

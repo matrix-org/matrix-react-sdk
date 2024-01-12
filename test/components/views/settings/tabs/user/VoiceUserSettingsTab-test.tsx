@@ -16,9 +16,9 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { fireEvent, render, screen } from "@testing-library/react";
 import { logger } from "matrix-js-sdk/src/logger";
 
+import { fireEvent, render, screen } from "../../../../..";
 import VoiceUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/VoiceUserSettingsTab";
 import MediaDeviceHandler, { IMediaDevices, MediaDeviceKindEnum } from "../../../../../../src/MediaDeviceHandler";
 import { flushPromises } from "../../../../../test-utils";

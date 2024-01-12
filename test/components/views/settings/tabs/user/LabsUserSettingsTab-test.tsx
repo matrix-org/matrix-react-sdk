@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
 
+import { render, screen } from "../../../../..";
 import LabsUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/LabsUserSettingsTab";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import SdkConfig from "../../../../../../src/SdkConfig";

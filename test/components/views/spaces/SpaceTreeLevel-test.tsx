@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, getByTestId, render } from "@testing-library/react";
 
+import { fireEvent, getByTestId, render } from "../../..";
 import { mkRoom, stubClient } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";

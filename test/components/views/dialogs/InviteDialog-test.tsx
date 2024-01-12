@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RoomType, MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { mocked, Mocked } from "jest-mock";
 
+import { fireEvent, render, screen } from "../../..";
 import InviteDialog from "../../../../src/components/views/dialogs/InviteDialog";
 import { InviteKind } from "../../../../src/components/views/dialogs/InviteDialogTypes";
 import {

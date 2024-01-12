@@ -38,6 +38,7 @@ import { DEFAULT_DURATION_MS } from "../../../../src/components/views/location/L
 import { OwnBeaconStore } from "../../../../src/stores/OwnBeaconStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
 import QuestionDialog from "../../../../src/components/views/dialogs/QuestionDialog";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 jest.useFakeTimers();
 
@@ -120,7 +121,9 @@ describe("<LocationShareMenu />", () => {
     const getComponent = (props = {}): RenderResult =>
         render(<LocationShareMenu {...defaultProps} {...props} />, {
             wrapper: ({ children }) => (
-                <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+                <TooltipProvider>
+                    <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+                </TooltipProvider>
             ),
         });
 

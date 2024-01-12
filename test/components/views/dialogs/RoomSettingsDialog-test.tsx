@@ -25,6 +25,7 @@ import {
     RoomStateEvent,
     Visibility,
 } from "matrix-js-sdk/src/matrix";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import { getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
 import RoomSettingsDialog from "../../../../src/components/views/dialogs/RoomSettingsDialog";
@@ -67,7 +68,9 @@ describe("<RoomSettingsDialog />", () => {
     const getComponent = (onFinished = jest.fn(), propRoomId = roomId) =>
         render(<RoomSettingsDialog roomId={propRoomId} onFinished={onFinished} />, {
             wrapper: ({ children }) => (
-                <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+                <TooltipProvider>
+                    <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+                </TooltipProvider>
             ),
         });
 

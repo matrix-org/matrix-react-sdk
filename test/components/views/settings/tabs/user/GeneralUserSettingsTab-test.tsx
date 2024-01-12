@@ -11,11 +11,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { fireEvent, render, screen, within } from "@testing-library/react";
 import React from "react";
 import { ThreepidMedium } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
+import { fireEvent, render, screen, within } from "../../../../..";
 import GeneralUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/GeneralUserSettingsTab";
 import { SdkContextClass, SDKContext } from "../../../../../../src/contexts/SDKContext";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";

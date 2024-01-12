@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 
+import { render, screen } from "../../..";
 import QuickSettingsButton from "../../../../src/components/views/spaces/QuickSettingsButton";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SdkContextClass } from "../../../../src/contexts/SDKContext";

@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { render } from "@testing-library/react";
 import {
     MatrixEvent,
     MsgType,
@@ -27,6 +26,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
+import { render } from "../../..";
 import LegacyRoomHeaderButtons from "../../../../src/components/views/right_panel/LegacyRoomHeaderButtons";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { mkEvent, stubClient } from "../../../test-utils";

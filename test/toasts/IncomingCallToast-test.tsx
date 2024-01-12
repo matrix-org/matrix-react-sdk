@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
 import { Room, RoomStateEvent, MatrixEvent, MatrixEventEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
@@ -26,6 +25,7 @@ import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 // eslint-disable-next-line no-restricted-imports
 import { ICallNotifyContent } from "matrix-js-sdk/src/matrixrtc/types";
 
+import { render, screen, cleanup, fireEvent, waitFor } from "..";
 import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import {
     useMockedCalls,

@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { getByTestId, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 import { MatrixClient, PendingEventOrdering, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
+import { getByTestId, render, screen } from "../../..";
 import ThreadListContextMenu, {
     ThreadListContextMenuProps,
 } from "../../../../src/components/views/context_menus/ThreadListContextMenu";

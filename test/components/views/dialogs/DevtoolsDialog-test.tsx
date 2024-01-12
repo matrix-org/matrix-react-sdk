@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { screen, render } from "@testing-library/react";
 import { Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
 
+import { screen, render } from "../../..";
 import { stubClient } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";

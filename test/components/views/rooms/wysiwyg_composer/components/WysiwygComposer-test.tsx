@@ -16,9 +16,9 @@ limitations under the License.
 
 import "@testing-library/jest-dom";
 import React from "react";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import { act, fireEvent, render, screen, waitFor } from "../../../../..";
 import { WysiwygComposer } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/WysiwygComposer";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import { flushPromises, mockPlatformPeg, stubClient, mkStubRoom } from "../../../../../test-utils";

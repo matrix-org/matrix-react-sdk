@@ -29,6 +29,7 @@ import {
     mockClientMethodsUser,
 } from "../../../../../test-utils";
 import { filterBoolean } from "../../../../../../src/utils/arrays";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 describe("<SecurityRoomSettingsTab />", () => {
     const userId = "@alice:server.org";
@@ -45,7 +46,9 @@ describe("<SecurityRoomSettingsTab />", () => {
     const getComponent = (room: Room, closeSettingsFn = jest.fn()) =>
         render(<SecurityRoomSettingsTab room={room} closeSettingsFn={closeSettingsFn} />, {
             wrapper: ({ children }) => (
-                <MatrixClientContext.Provider value={client}>{children}</MatrixClientContext.Provider>
+                <TooltipProvider>
+                    <MatrixClientContext.Provider value={client}>{children}</MatrixClientContext.Provider>
+                </TooltipProvider>
             ),
         });
 

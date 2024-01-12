@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ActionState, ActionTypes, AllActionStates, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
 
+import { cleanup, render, screen } from "../../../../..";
 import { FormattingButtons } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/FormattingButtons";
 import * as LinkModal from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/LinkModal";
 import { setLanguage } from "../../../../../../src/languageHandler";

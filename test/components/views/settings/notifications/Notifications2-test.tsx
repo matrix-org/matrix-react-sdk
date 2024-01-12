@@ -12,7 +12,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { act, findByRole, getByRole, queryByRole, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import {
     ThreepidMedium,
@@ -25,6 +24,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
+import { act, findByRole, getByRole, queryByRole, render, waitFor } from "../../../..";
 import NotificationSettings2 from "../../../../../src/components/views/settings/notifications/NotificationSettings2";
 import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../../../src/MatrixClientPeg";

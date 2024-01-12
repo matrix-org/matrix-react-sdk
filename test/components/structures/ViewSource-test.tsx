@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { render } from "@testing-library/react";
 import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
+import { render } from "../..";
 import ViewSource from "../../../src/components/structures/ViewSource";
 import { mkEvent, stubClient, mkMessage } from "../../test-utils/test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";

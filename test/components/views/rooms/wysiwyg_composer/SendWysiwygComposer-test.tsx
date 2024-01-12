@@ -16,8 +16,8 @@ limitations under the License.
 
 import "@testing-library/jest-dom";
 import React from "react";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 
+import { act, fireEvent, render, screen, waitFor } from "../../../..";
 import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../../../src/contexts/RoomContext";
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";

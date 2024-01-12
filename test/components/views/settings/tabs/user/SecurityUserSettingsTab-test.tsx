@@ -13,9 +13,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { render } from "@testing-library/react";
+
 import React from "react";
 
+import { render } from "../../../../..";
 import SecurityUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/SecurityUserSettingsTab";
 import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 import {

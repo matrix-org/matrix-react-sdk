@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import { MatrixClient, Room, EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
+import { fireEvent, render, RenderResult, screen } from "../../../../..";
 import AdvancedRoomSettingsTab from "../../../../../../src/components/views/settings/tabs/room/AdvancedRoomSettingsTab";
 import { mkEvent, mkStubRoom, stubClient } from "../../../../../test-utils";
 import dis from "../../../../../../src/dispatcher/dispatcher";

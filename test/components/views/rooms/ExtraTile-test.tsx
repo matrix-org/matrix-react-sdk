@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { getByRole, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React, { ComponentProps } from "react";
 
+import { getByRole, render } from "../../..";
 import ExtraTile from "../../../../src/components/views/rooms/ExtraTile";
 
 describe("ExtraTile", () => {

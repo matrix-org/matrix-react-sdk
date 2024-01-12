@@ -16,10 +16,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen, RenderResult } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import { Room, MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
 
+import { render, screen, RenderResult } from "../../../..";
 import { RoomResultContextMenus } from "../../../../../src/components/views/dialogs/spotlight/RoomResultContextMenus";
 import { filterConsole, stubClient } from "../../../../test-utils";
 import { shouldShowComponent } from "../../../../../src/customisations/helpers/UIComponents";

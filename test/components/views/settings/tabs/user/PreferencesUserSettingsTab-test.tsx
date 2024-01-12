@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, RenderResult, waitFor } from "@testing-library/react";
 
+import { fireEvent, render, RenderResult, waitFor } from "../../../../..";
 import PreferencesUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/PreferencesUserSettingsTab";
 import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
 import { mockPlatformPeg, stubClient } from "../../../../../test-utils";

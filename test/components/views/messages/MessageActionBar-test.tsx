@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from "react";
-import { act, render, fireEvent } from "@testing-library/react";
 import {
     EventType,
     EventStatus,
@@ -27,6 +26,7 @@ import {
     Thread,
 } from "matrix-js-sdk/src/matrix";
 
+import { act, render, fireEvent } from "../../..";
 import MessageActionBar from "../../../../src/components/views/messages/MessageActionBar";
 import {
     getMockClientWithEventEmitter,

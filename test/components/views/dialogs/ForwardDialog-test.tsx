@@ -24,9 +24,9 @@ import {
     M_TIMESTAMP,
     M_TEXT,
 } from "matrix-js-sdk/src/matrix";
-import { act, fireEvent, getByTestId, render, RenderResult, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import { act, fireEvent, getByTestId, render, RenderResult, screen } from "../../..";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import ForwardDialog from "../../../../src/components/views/dialogs/ForwardDialog";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
