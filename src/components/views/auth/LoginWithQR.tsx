@@ -136,7 +136,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 // user denied
                 return;
             }
-            if (!this.props.client.crypto) {
+            if (!this.props.client.getCrypto()) {
                 // no E2EE to set up
                 this.props.onFinished(true);
                 return;
