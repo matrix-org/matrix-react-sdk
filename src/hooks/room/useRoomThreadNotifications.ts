@@ -27,7 +27,7 @@ import { useEventEmitter } from "../useEventEmitter";
  * @returns the type of notification for this room
  */
 export const useRoomThreadNotifications = (room: Room): NotificationLevel => {
-    const [notificationColor, setNotificationColor] = useState(NotificationLevel.None);
+    const [notificationLevel, setNotificationLevel] = useState(NotificationLevel.None);
 
     const updateNotification = useCallback(() => {
         switch (room?.threadsAggregateNotificationType) {

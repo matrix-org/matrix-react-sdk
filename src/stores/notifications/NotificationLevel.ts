@@ -27,7 +27,7 @@ export enum NotificationLevel {
     Unsent, // some messages failed to send
 }
 
-export function humanReadableNotificationLevel(color: NotificationLevel): string {
+export function humanReadableNotificationLevel(level: NotificationLevel): string {
     switch (color) {
         case NotificationLevel.None:
             return _t("notifications|level_none");
