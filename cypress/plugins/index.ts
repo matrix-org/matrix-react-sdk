@@ -15,11 +15,13 @@ limitations under the License.
 */
 
 /// <reference types="cypress" />
+import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
+import { initPlugins } from "cypress-plugin-init";
 
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
-import { performance } from "./performance";
 import { synapseDocker } from "./synapsedocker";
+import { dendriteDocker } from "./dendritedocker";
 import { webserver } from "./webserver";
 import { docker } from "./docker";
 import { log } from "./log";
@@ -27,10 +29,18 @@ import { log } from "./log";
 /**
  * @type {Cypress.PluginConfig}
  */
-export default function(on: PluginEvents, config: PluginConfigOptions) {
-    docker(on, config);
-    performance(on, config);
-    synapseDocker(on, config);
-    webserver(on, config);
-    log(on, config);
+export default function (on: PluginEvents, config: PluginConfigOptions) {
+    initPlugins(on, [docker, synapseDocker, dendriteDocker, webserver, log], config);
+    installLogsPrinter(on, {
+        printLogsToConsole: "never",
+
+        // write logs to cypress/results/cypresslogs/<spec>.txt
+        outputRoot: "cypress/results",
+        outputTarget: {
+            "cypresslogs|txt": "txt",
+        },
+
+        // strip 'cypress/e2e' from log filenames
+        specRoot: "cypress/e2e",
+    });
 }

@@ -17,7 +17,7 @@
 import { IWidgetApiRequest } from "matrix-widget-api";
 
 export enum ElementWidgetActions {
-    // All of these actions are currently specific to Jitsi
+    // All of these actions are currently specific to Jitsi and Element Call
     JoinCall = "io.element.join",
     HangupCall = "im.vector.hangup",
     CallParticipants = "io.element.participants",
@@ -26,6 +26,7 @@ export enum ElementWidgetActions {
     MuteVideo = "io.element.mute_video",
     UnmuteVideo = "io.element.unmute_video",
     StartLiveStream = "im.vector.start_live_stream",
+
     // Actions for switching layouts
     TileLayout = "io.element.tile_layout",
     SpotlightLayout = "io.element.spotlight_layout",

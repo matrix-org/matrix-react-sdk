@@ -15,17 +15,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { compare } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "./languageHandler";
 import SettingsStore from "./settings/SettingsStore";
 import ThemeWatcher from "./settings/watchers/ThemeWatcher";
-import { compare } from "./utils/strings";
 
 export const DEFAULT_THEME = "light";
-const HIGH_CONTRAST_THEMES = {
-    "light": "light-high-contrast",
+const HIGH_CONTRAST_THEMES: Record<string, string> = {
+    light: "light-high-contrast",
 };
 
-interface IFontFaces {
+interface IFontFaces extends Omit<Record<(typeof allowedFontFaceProps)[number], string>, "src"> {
     src: {
         format: string;
         url: string;
@@ -33,7 +35,8 @@ interface IFontFaces {
     }[];
 }
 
-interface ICustomTheme {
+export type CustomTheme = {
+    name: string;
     colors: {
         [key: string]: string;
     };
@@ -43,13 +46,13 @@ interface ICustomTheme {
         monospace: string;
     };
     is_dark?: boolean; // eslint-disable-line camelcase
-}
+};
 
 /**
  * Given a non-high-contrast theme, find the corresponding high-contrast one
  * if it exists, or return undefined if not.
  */
-export function findHighContrastTheme(theme: string) {
+export function findHighContrastTheme(theme: string): string | undefined {
     return HIGH_CONTRAST_THEMES[theme];
 }
 
@@ -57,7 +60,7 @@ export function findHighContrastTheme(theme: string) {
  * Given a high-contrast theme, find the corresponding non-high-contrast one
  * if it exists, or return undefined if not.
  */
-export function findNonHighContrastTheme(hcTheme: string) {
+export function findNonHighContrastTheme(hcTheme: string): string | undefined {
     for (const theme in HIGH_CONTRAST_THEMES) {
         if (HIGH_CONTRAST_THEMES[theme] === hcTheme) {
             return theme;
@@ -68,21 +71,30 @@ export function findNonHighContrastTheme(hcTheme: string) {
 /**
  * Decide whether the supplied theme is high contrast.
  */
-export function isHighContrastTheme(theme: string) {
+export function isHighContrastTheme(theme: string): boolean {
     return Object.values(HIGH_CONTRAST_THEMES).includes(theme);
 }
 
-export function enumerateThemes(): {[key: string]: string} {
+export function enumerateThemes(): { [key: string]: string } {
     const BUILTIN_THEMES = {
-        "light": _t("Light"),
-        "light-high-contrast": _t("Light high contrast"),
-        "dark": _t("Dark"),
+        "light": _t("common|light"),
+        "light-high-contrast": _t("theme|light_high_contrast"),
+        "dark": _t("common|dark"),
     };
-    const customThemes = SettingsStore.getValue("custom_themes");
-    const customThemeNames = {};
-    for (const { name } of customThemes) {
-        customThemeNames[`custom-${name}`] = name;
+    const customThemes = SettingsStore.getValue("custom_themes") || [];
+    const customThemeNames: Record<string, string> = {};
+
+    try {
+        for (const { name } of customThemes) {
+            customThemeNames[`custom-${name}`] = name;
+        }
+    } catch (err) {
+        logger.warn("Error loading custom themes", {
+            err,
+            customThemes,
+        });
     }
+
     return Object.assign({}, customThemeNames, BUILTIN_THEMES);
 }
 
@@ -93,11 +105,10 @@ interface ITheme {
 
 export function getOrderedThemes(): ITheme[] {
     const themes = Object.entries(enumerateThemes())
-        .map(p => ({ id: p[0], name: p[1] })) // convert pairs to objects for code readability
-        .filter(p => !isHighContrastTheme(p.id));
-    const builtInThemes = themes.filter(p => !p.id.startsWith("custom-"));
-    const customThemes = themes.filter(p => !builtInThemes.includes(p))
-        .sort((a, b) => compare(a.name, b.name));
+        .map((p) => ({ id: p[0], name: p[1] })) // convert pairs to objects for code readability
+        .filter((p) => !isHighContrastTheme(p.id));
+    const builtInThemes = themes.filter((p) => !p.id.startsWith("custom-"));
+    const customThemes = themes.filter((p) => !builtInThemes.includes(p)).sort((a, b) => compare(a.name, b.name));
     return [...builtInThemes, ...customThemes];
 }
 
@@ -126,42 +137,50 @@ const allowedFontFaceProps = [
     "font-variation-settings",
     "src",
     "unicode-range",
-];
+] as const;
 
 function generateCustomFontFaceCSS(faces: IFontFaces[]): string {
-    return faces.map(face => {
-        const src = face.src && face.src.map(srcElement => {
-            let format;
-            if (srcElement.format) {
-                format = `format("${srcElement.format}")`;
-            }
-            if (srcElement.url) {
-                return `url("${srcElement.url}") ${format}`;
-            } else if (srcElement.local) {
-                return `local("${srcElement.local}") ${format}`;
-            }
-            return "";
-        }).join(", ");
-        const props = Object.keys(face).filter(prop => allowedFontFaceProps.includes(prop));
-        const body = props.map(prop => {
-            let value;
-            if (prop === "src") {
-                value = src;
-            } else if (prop === "font-family") {
-                value = `"${face[prop]}"`;
-            } else {
-                value = face[prop];
-            }
-            return `${prop}: ${value}`;
-        }).join(";");
-        return `@font-face {${body}}`;
-    }).join("\n");
+    return faces
+        .map((face) => {
+            const src = face.src
+                ?.map((srcElement) => {
+                    let format = "";
+                    if (srcElement.format) {
+                        format = `format("${srcElement.format}")`;
+                    }
+                    if (srcElement.url) {
+                        return `url("${srcElement.url}") ${format}`;
+                    } else if (srcElement.local) {
+                        return `local("${srcElement.local}") ${format}`;
+                    }
+                    return "";
+                })
+                .join(", ");
+            const props = Object.keys(face).filter((prop) =>
+                allowedFontFaceProps.includes(prop as (typeof allowedFontFaceProps)[number]),
+            ) as Array<(typeof allowedFontFaceProps)[number]>;
+            const body = props
+                .map((prop) => {
+                    let value: string;
+                    if (prop === "src") {
+                        value = src;
+                    } else if (prop === "font-family") {
+                        value = `"${face[prop]}"`;
+                    } else {
+                        value = face[prop];
+                    }
+                    return `${prop}: ${value}`;
+                })
+                .join(";");
+            return `@font-face {${body}}`;
+        })
+        .join("\n");
 }
 
-function setCustomThemeVars(customTheme: ICustomTheme): void {
+function setCustomThemeVars(customTheme: CustomTheme): void {
     const { style } = document.body;
 
-    function setCSSColorVariable(name, hexColor, doPct = true) {
+    function setCSSColorVariable(name: string, hexColor: string, doPct = true): void {
         style.setProperty(`--${name}`, hexColor);
         if (doPct) {
             // uses #rrggbbaa to define the color with alpha values at 0%, 15% and 50%
@@ -201,15 +220,15 @@ function setCustomThemeVars(customTheme: ICustomTheme): void {
     }
 }
 
-export function getCustomTheme(themeName: string): ICustomTheme {
+export function getCustomTheme(themeName: string): CustomTheme {
     // set css variables
     const customThemes = SettingsStore.getValue("custom_themes");
     if (!customThemes) {
         throw new Error(`No custom themes set, can't set custom theme "${themeName}"`);
     }
-    const customTheme = customThemes.find(t => t.name === themeName);
+    const customTheme = customThemes.find((t: ITheme) => t.name === themeName);
     if (!customTheme) {
-        const knownNames = customThemes.map(t => t.name).join(", ");
+        const knownNames = customThemes.map((t: ITheme) => t.name).join(", ");
         throw new Error(`Can't find custom theme "${themeName}", only know ${knownNames}`);
     }
     return customTheme;
@@ -237,13 +256,13 @@ export async function setTheme(theme?: string): Promise<void> {
 
     // look for the stylesheet elements.
     // styleElements is a map from style name to HTMLLinkElement.
-    const styleElements = Object.create(null);
-    const themes = Array.from(document.querySelectorAll('[data-mx-theme]'));
-    themes.forEach(theme => {
-        styleElements[theme.attributes['data-mx-theme'].value.toLowerCase()] = theme;
+    const styleElements = new Map<string, HTMLLinkElement>();
+    const themes = Array.from(document.querySelectorAll<HTMLLinkElement>("[data-mx-theme]"));
+    themes.forEach((theme) => {
+        styleElements.set(theme.dataset.mxTheme!.toLowerCase(), theme);
     });
 
-    if (!(stylesheetName in styleElements)) {
+    if (!styleElements.has(stylesheetName)) {
         throw new Error("Unknown theme " + stylesheetName);
     }
 
@@ -258,47 +277,88 @@ export async function setTheme(theme?: string): Promise<void> {
     // having them interact badly... but this causes a flash of unstyled app
     // which is even uglier.  So we don't.
 
-    styleElements[stylesheetName].disabled = false;
+    const styleSheet = styleElements.get(stylesheetName)!;
+    styleSheet.disabled = false;
 
-    return new Promise((resolve) => {
-        const switchTheme = function() {
+    /**
+     * Adds the Compound theme class to the top-most element in the document
+     * This will automatically refresh the colour scales based on the OS or user
+     * preferences
+     *
+     * Note: Theming through Compound is not yet established. Brand theming should
+     * be done in a similar manner as it used to be done.
+     */
+    document.body.classList.remove("cpd-theme-light", "cpd-theme-dark", "cpd-theme-light-hc", "cpd-theme-dark-hc");
+
+    let compoundThemeClassName = `cpd-theme-` + (stylesheetName.includes("light") ? "light" : "dark");
+    // Always respect user OS preference!
+    if (isHighContrastTheme(theme) || window.matchMedia("(prefers-contrast: more)").matches) {
+        compoundThemeClassName += "-hc";
+    }
+
+    document.body.classList.add(compoundThemeClassName);
+
+    return new Promise((resolve, reject) => {
+        const switchTheme = function (): void {
             // we re-enable our theme here just in case we raced with another
             // theme set request as per https://github.com/vector-im/element-web/issues/5601.
             // We could alternatively lock or similar to stop the race, but
             // this is probably good enough for now.
-            styleElements[stylesheetName].disabled = false;
-            Object.values(styleElements).forEach((a: HTMLStyleElement) => {
-                if (a == styleElements[stylesheetName]) return;
+            styleSheet.disabled = false;
+            styleElements.forEach((a) => {
+                if (a == styleSheet) return;
                 a.disabled = true;
             });
             const bodyStyles = global.getComputedStyle(document.body);
             if (bodyStyles.backgroundColor) {
-                const metaElement: HTMLMetaElement = document.querySelector('meta[name="theme-color"]');
+                const metaElement = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')!;
                 metaElement.content = bodyStyles.backgroundColor;
             }
             resolve();
         };
 
-        // turns out that Firefox preloads the CSS for link elements with
-        // the disabled attribute, but Chrome doesn't.
+        const isStyleSheetLoaded = (): boolean =>
+            Boolean([...document.styleSheets].find((_styleSheet) => _styleSheet?.href === styleSheet.href));
 
-        let cssLoaded = false;
-
-        styleElements[stylesheetName].onload = () => {
-            switchTheme();
-        };
-
-        for (let i = 0; i < document.styleSheets.length; i++) {
-            const ss = document.styleSheets[i];
-            if (ss && ss.href === styleElements[stylesheetName].href) {
-                cssLoaded = true;
-                break;
+        function waitForStyleSheetLoading(): void {
+            // turns out that Firefox preloads the CSS for link elements with
+            // the disabled attribute, but Chrome doesn't.
+            if (isStyleSheetLoaded()) {
+                switchTheme();
+                return;
             }
+
+            let counter = 0;
+
+            // In case of theme toggling (white => black => white)
+            // Chrome doesn't fire the `load` event when the white theme is selected the second times
+            const intervalId = window.setInterval(() => {
+                if (isStyleSheetLoaded()) {
+                    clearInterval(intervalId);
+                    styleSheet.onload = null;
+                    styleSheet.onerror = null;
+                    switchTheme();
+                }
+
+                // Avoid to be stuck in an endless loop if there is an issue in the stylesheet loading
+                counter++;
+                if (counter === 10) {
+                    clearInterval(intervalId);
+                    reject();
+                }
+            }, 200);
+
+            styleSheet.onload = () => {
+                clearInterval(intervalId);
+                switchTheme();
+            };
+
+            styleSheet.onerror = (e) => {
+                clearInterval(intervalId);
+                reject(e);
+            };
         }
 
-        if (cssLoaded) {
-            styleElements[stylesheetName].onload = undefined;
-            switchTheme();
-        }
+        waitForStyleSheetLoading();
     });
 }

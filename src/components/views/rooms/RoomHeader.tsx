@@ -1,6 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2019, 2021 The Matrix.org Foundation C.I.C.
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,328 +14,273 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
-import { throttle } from 'lodash';
-import { MatrixEvent, Room, RoomStateEvent } from 'matrix-js-sdk/src/matrix';
-import { CallType } from "matrix-js-sdk/src/webrtc/call";
+import React, { useEffect, useMemo, useState } from "react";
+import { Body as BodyText, IconButton, Tooltip } from "@vector-im/compound-web";
+import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
+import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
+import { Icon as ThreadsIcon } from "@vector-im/compound-design-tokens/icons/threads-solid.svg";
+import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/icons/notifications-solid.svg";
+import { Icon as VerifiedIcon } from "@vector-im/compound-design-tokens/icons/verified.svg";
+import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
+import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
+import { EventType, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
+import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
-import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { Action } from "../../../dispatcher/actions";
-import { UserTab } from "../dialogs/UserTab";
-import SettingsStore from "../../../settings/SettingsStore";
-import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
-import E2EIcon from './E2EIcon';
-import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import RoomTopic from "../elements/RoomTopic";
-import RoomName from "../elements/RoomName";
-import { E2EStatus } from '../../../utils/ShieldUtils';
-import { IOOBData } from '../../../stores/ThreepidInviteStore';
-import { SearchScope } from './SearchBar';
-import { ContextMenuTooltipButton } from '../../structures/ContextMenu';
-import RoomContextMenu from "../context_menus/RoomContextMenu";
-import { contextMenuBelow } from './RoomTile';
-import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
-import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
-import RoomContext from "../../../contexts/RoomContext";
-import RoomLiveShareWarning from '../beacon/RoomLiveShareWarning';
-import { BetaPill } from "../beta/BetaCard";
+import { useRoomName } from "../../../hooks/useRoomName";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
+import { useTopic } from "../../../hooks/room/useTopic";
+import { useAccountData } from "../../../hooks/useAccountData";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
+import { useRoomMemberCount, useRoomMembers } from "../../../hooks/useRoomMembers";
+import { _t } from "../../../languageHandler";
+import { Flex } from "../../utils/Flex";
+import { Box } from "../../utils/Box";
+import { useRoomCall } from "../../../hooks/room/useRoomCall";
+import { useRoomThreadNotifications } from "../../../hooks/room/useRoomThreadNotifications";
+import { NotificationColor } from "../../../stores/notifications/NotificationColor";
+import { useGlobalNotificationState } from "../../../hooks/useGlobalNotificationState";
+import SdkConfig from "../../../SdkConfig";
+import { useFeatureEnabled } from "../../../hooks/useSettings";
+import { useEncryptionStatus } from "../../../hooks/useEncryptionStatus";
+import { E2EStatus } from "../../../utils/ShieldUtils";
+import FacePile from "../elements/FacePile";
+import { useRoomState } from "../../../hooks/useRoomState";
+import RoomAvatar from "../avatars/RoomAvatar";
+import { formatCount } from "../../../utils/FormattingUtils";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
-import { UPDATE_EVENT } from "../../../stores/AsyncStore";
+import { Linkify, topicToHtml } from "../../../HtmlUtils";
+import PosthogTrackers from "../../../PosthogTrackers";
+import { VideoRoomChatButton } from "./RoomHeader/VideoRoomChatButton";
+import { RoomKnocksBar } from "./RoomKnocksBar";
 
-export interface ISearchInfo {
-    searchTerm: string;
-    searchScope: SearchScope;
-    searchCount: number;
+/**
+ * A helper to transform a notification color to the what the Compound Icon Button
+ * expects
+ */
+function notificationColorToIndicator(color: NotificationColor): React.ComponentProps<typeof IconButton>["indicator"] {
+    if (color <= NotificationColor.None) {
+        return undefined;
+    } else if (color <= NotificationColor.Grey) {
+        return "default";
+    } else {
+        return "highlight";
+    }
 }
 
-interface IProps {
+export default function RoomHeader({
+    room,
+    additionalButtons,
+}: {
     room: Room;
-    oobData?: IOOBData;
-    inRoom: boolean;
-    onSearchClick: () => void;
-    onInviteClick: () => void;
-    onForgetClick: () => void;
-    onCallPlaced: (type: CallType) => void;
-    onAppsClick: () => void;
-    e2eStatus: E2EStatus;
-    appsShown: boolean;
-    searchInfo: ISearchInfo;
-    excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
-    showButtons?: boolean;
-    enableRoomOptionsMenu?: boolean;
-}
+    additionalButtons?: ViewRoomOpts["buttons"];
+}): JSX.Element {
+    const client = useMatrixClientContext();
 
-interface IState {
-    contextMenuPosition?: DOMRect;
-    rightPanelOpen: boolean;
-}
+    const roomName = useRoomName(room);
+    const roomTopic = useTopic(room);
+    const roomState = useRoomState(room);
 
-export default class RoomHeader extends React.Component<IProps, IState> {
-    static defaultProps = {
-        editing: false,
-        inRoom: false,
-        excludedRightPanelPhaseButtons: [],
-        showButtons: true,
-        enableRoomOptionsMenu: true,
-    };
+    const members = useRoomMembers(room, 2500);
+    const memberCount = useRoomMemberCount(room, { throttleWait: 2500 });
 
-    static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    const { voiceCallDisabledReason, voiceCallClick, videoCallDisabledReason, videoCallClick } = useRoomCall(room);
 
-    constructor(props, context) {
-        super(props, context);
-        const notiStore = RoomNotificationStateStore.instance.getRoomState(props.room);
-        notiStore.on(NotificationStateEvents.Update, this.onNotificationUpdate);
-        this.state = {
-            rightPanelOpen: RightPanelStore.instance.isOpen,
-        };
-    }
+    const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
+    /**
+     * A special mode where only Element Call is used. In this case we want to
+     * hide the voice call button
+     */
+    const useElementCallExclusively = useMemo(() => {
+        return SdkConfig.get("element_call").use_exclusively && groupCallsEnabled;
+    }, [groupCallsEnabled]);
 
-    public componentDidMount() {
-        const cli = MatrixClientPeg.get();
-        cli.on(RoomStateEvent.Events, this.onRoomStateEvents);
-        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
-    }
+    const threadNotifications = useRoomThreadNotifications(room);
+    const globalNotificationState = useGlobalNotificationState();
 
-    public componentWillUnmount() {
-        const cli = MatrixClientPeg.get();
-        cli?.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
-        const notiStore = RoomNotificationStateStore.instance.getRoomState(this.props.room);
-        notiStore.removeListener(NotificationStateEvents.Update, this.onNotificationUpdate);
-        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
-    }
-
-    private onRightPanelStoreUpdate = () => {
-        this.setState({ rightPanelOpen: RightPanelStore.instance.isOpen });
-    };
-
-    private onRoomStateEvents = (event: MatrixEvent) => {
-        if (!this.props.room || event.getRoomId() !== this.props.room.roomId) {
-            return;
-        }
-
-        // redisplay the room name, topic, etc.
-        this.rateLimitedUpdate();
-    };
-
-    private onNotificationUpdate = () => {
-        this.forceUpdate();
-    };
-
-    private rateLimitedUpdate = throttle(() => {
-        this.forceUpdate();
-    }, 500, { leading: true, trailing: true });
-
-    private onContextMenuOpenClick = (ev: React.MouseEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-        const target = ev.target as HTMLButtonElement;
-        this.setState({ contextMenuPosition: target.getBoundingClientRect() });
-    };
-
-    private onContextMenuCloseClick = () => {
-        this.setState({ contextMenuPosition: null });
-    };
-
-    private renderButtons(): JSX.Element[] {
-        const buttons: JSX.Element[] = [];
-
-        if (this.props.inRoom &&
-            this.props.onCallPlaced &&
-            !this.context.tombstone &&
-            SettingsStore.getValue("showCallButtonsInComposer")
-        ) {
-            const voiceCallButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
-                onClick={() => this.props.onCallPlaced(CallType.Voice)}
-                title={_t("Voice call")}
-                key="voice"
-            />;
-            const videoCallButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
-                onClick={() => this.props.onCallPlaced(CallType.Video)}
-                title={_t("Video call")}
-                key="video"
-            />;
-            buttons.push(voiceCallButton, videoCallButton);
-        }
-
-        if (this.props.onForgetClick) {
-            const forgetButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_forgetButton"
-                onClick={this.props.onForgetClick}
-                title={_t("Forget room")}
-                key="forget"
-            />;
-            buttons.push(forgetButton);
-        }
-
-        if (this.props.onAppsClick) {
-            const appsButton = <AccessibleTooltipButton
-                className={classNames("mx_RoomHeader_button mx_RoomHeader_appsButton", {
-                    mx_RoomHeader_appsButton_highlight: this.props.appsShown,
-                })}
-                onClick={this.props.onAppsClick}
-                title={this.props.appsShown ? _t("Hide Widgets") : _t("Show Widgets")}
-                key="apps"
-            />;
-            buttons.push(appsButton);
-        }
-
-        if (this.props.onSearchClick && this.props.inRoom) {
-            const searchButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_searchButton"
-                onClick={this.props.onSearchClick}
-                title={_t("Search")}
-                key="search"
-            />;
-            buttons.push(searchButton);
-        }
-
-        if (this.props.onInviteClick && this.props.inRoom) {
-            const inviteButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_inviteButton"
-                onClick={this.props.onInviteClick}
-                title={_t("Invite")}
-                key="invite"
-            />;
-            buttons.push(inviteButton);
-        }
-
-        return buttons;
-    }
-
-    private renderName(oobName) {
-        let contextMenu: JSX.Element;
-        if (this.state.contextMenuPosition && this.props.room) {
-            contextMenu = (
-                <RoomContextMenu
-                    {...contextMenuBelow(this.state.contextMenuPosition)}
-                    room={this.props.room}
-                    onFinished={this.onContextMenuCloseClick}
-                />
-            );
-        }
-
-        // XXX: this is a bit inefficient - we could just compare room.name for 'Empty room'...
-        let settingsHint = false;
-        const members = this.props.room ? this.props.room.getJoinedMembers() : undefined;
-        if (members) {
-            if (members.length === 1 && members[0].userId === MatrixClientPeg.get().credentials.userId) {
-                const nameEvent = this.props.room.currentState.getStateEvents('m.room.name', '');
-                if (!nameEvent || !nameEvent.getContent().name) {
-                    settingsHint = true;
-                }
+    const directRoomsList = useAccountData<Record<string, string[]>>(client, EventType.Direct);
+    const [isDirectMessage, setDirectMessage] = useState(false);
+    useEffect(() => {
+        for (const [, dmRoomList] of Object.entries(directRoomsList)) {
+            if (dmRoomList.includes(room?.roomId ?? "")) {
+                setDirectMessage(true);
+                break;
             }
         }
+    }, [room, directRoomsList]);
+    const e2eStatus = useEncryptionStatus(client, room);
 
-        const textClasses = classNames('mx_RoomHeader_nametext', { mx_RoomHeader_settingsHint: settingsHint });
-        const roomName = <RoomName room={this.props.room}>
-            { (name) => {
-                const roomName = name || oobName;
-                return <div dir="auto" className={textClasses} title={roomName} role="heading" aria-level={1}>
-                    { roomName }
-                </div>;
-            } }
-        </RoomName>;
+    const notificationsEnabled = useFeatureEnabled("feature_notifications");
 
-        if (this.props.enableRoomOptionsMenu) {
-            return (
-                <ContextMenuTooltipButton
-                    className="mx_RoomHeader_name"
-                    onClick={this.onContextMenuOpenClick}
-                    isExpanded={!!this.state.contextMenuPosition}
-                    title={_t("Room options")}
+    const roomTopicBody = useMemo(
+        () => topicToHtml(roomTopic?.text, roomTopic?.html),
+        [roomTopic?.html, roomTopic?.text],
+    );
+
+    const askToJoinEnabled = useFeatureEnabled("feature_ask_to_join");
+
+    return (
+        <>
+            <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
+                <button
+                    aria-label={_t("right_panel|room_summary_card|title")}
+                    tabIndex={0}
+                    onClick={() => {
+                        RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomSummary);
+                    }}
+                    className="mx_RoomHeader_infoWrapper"
                 >
-                    { roomName }
-                    { this.props.room && <div className="mx_RoomHeader_chevron" /> }
-                    { contextMenu }
-                </ContextMenuTooltipButton>
-            );
-        }
+                    <RoomAvatar room={room} size="40px" />
+                    <Box flex="1" className="mx_RoomHeader_info">
+                        <BodyText
+                            as="div"
+                            size="lg"
+                            weight="semibold"
+                            dir="auto"
+                            role="heading"
+                            aria-level={1}
+                            className="mx_RoomHeader_heading"
+                        >
+                            <span className="mx_RoomHeader_truncated mx_lineClamp">{roomName}</span>
 
-        return <div className="mx_RoomHeader_name mx_RoomHeader_name--textonly">
-            { roomName }
-        </div>;
-    }
+                            {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
+                                <Tooltip label={_t("common|public_room")} side="right">
+                                    <PublicIcon
+                                        width="16px"
+                                        height="16px"
+                                        className="mx_RoomHeader_icon text-secondary"
+                                        aria-label={_t("common|public_room")}
+                                    />
+                                </Tooltip>
+                            )}
 
-    public render() {
-        let searchStatus = null;
+                            {isDirectMessage && e2eStatus === E2EStatus.Verified && (
+                                <Tooltip label={_t("common|verified")} side="right">
+                                    <VerifiedIcon
+                                        width="16px"
+                                        height="16px"
+                                        className="mx_RoomHeader_icon mx_Verified"
+                                        aria-label={_t("common|verified")}
+                                    />
+                                </Tooltip>
+                            )}
 
-        // don't display the search count until the search completes and
-        // gives us a valid (possibly zero) searchCount.
-        if (this.props.searchInfo &&
-            this.props.searchInfo.searchCount !== undefined &&
-            this.props.searchInfo.searchCount !== null) {
-            searchStatus = <div className="mx_RoomHeader_searchStatus">&nbsp;
-                { _t("(~%(count)s results)", { count: this.props.searchInfo.searchCount }) }
-            </div>;
-        }
+                            {isDirectMessage && e2eStatus === E2EStatus.Warning && (
+                                <Tooltip label={_t("room|header_untrusted_label")} side="right">
+                                    <ErrorIcon
+                                        width="16px"
+                                        height="16px"
+                                        className="mx_RoomHeader_icon mx_Untrusted"
+                                        aria-label={_t("room|header_untrusted_label")}
+                                    />
+                                </Tooltip>
+                            )}
+                        </BodyText>
+                        {roomTopic && (
+                            <BodyText
+                                as="div"
+                                size="sm"
+                                className="mx_RoomHeader_topic mx_RoomHeader_truncated mx_lineClamp"
+                            >
+                                <Linkify>{roomTopicBody}</Linkify>
+                            </BodyText>
+                        )}
+                    </Box>
+                </button>
+                <Flex align="center" gap="var(--cpd-space-2x)">
+                    {additionalButtons?.map((props) => {
+                        const label = props.label();
 
-        let oobName = _t("Join Room");
-        if (this.props.oobData && this.props.oobData.name) {
-            oobName = this.props.oobData.name;
-        }
+                        return (
+                            <Tooltip label={label} key={props.id}>
+                                <IconButton
+                                    aria-label={label}
+                                    onClick={(event) => {
+                                        event.stopPropagation();
+                                        props.onClick();
+                                    }}
+                                >
+                                    {typeof props.icon === "function" ? props.icon() : props.icon}
+                                </IconButton>
+                            </Tooltip>
+                        );
+                    })}
+                    <Tooltip label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}>
+                        <IconButton
+                            disabled={!!videoCallDisabledReason}
+                            aria-label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}
+                            onClick={videoCallClick}
+                        >
+                            <VideoCallIcon />
+                        </IconButton>
+                    </Tooltip>
+                    {!useElementCallExclusively && (
+                        <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
+                            <IconButton
+                                disabled={!!voiceCallDisabledReason}
+                                aria-label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}
+                                onClick={voiceCallClick}
+                            >
+                                <VoiceCallIcon />
+                            </IconButton>
+                        </Tooltip>
+                    )}
 
-        const name = this.renderName(oobName);
+                    {/* Renders nothing when room is not a video room */}
+                    <VideoRoomChatButton room={room} />
 
-        const topicElement = <RoomTopic
-            room={this.props.room}
-            className="mx_RoomHeader_topic"
-        />;
-
-        let roomAvatar;
-        if (this.props.room) {
-            roomAvatar = <DecoratedRoomAvatar
-                room={this.props.room}
-                avatarSize={24}
-                oobData={this.props.oobData}
-                viewAvatarOnClick={true}
-            />;
-        }
-
-        let buttons;
-        if (this.props.showButtons) {
-            buttons = <React.Fragment>
-                <div className="mx_RoomHeader_buttons">
-                    { this.renderButtons() }
-                </div>
-                <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
-            </React.Fragment>;
-        }
-
-        const e2eIcon = this.props.e2eStatus ? <E2EIcon status={this.props.e2eStatus} /> : undefined;
-
-        const isVideoRoom = SettingsStore.getValue("feature_video_rooms") && this.props.room.isElementVideoRoom();
-        const viewLabs = () => defaultDispatcher.dispatch({
-            action: Action.ViewUserSettings,
-            initialTabId: UserTab.Labs,
-        });
-        const betaPill = isVideoRoom ? (
-            <BetaPill onClick={viewLabs} tooltipTitle={_t("Video rooms are a beta feature")} />
-        ) : null;
-
-        return (
-            <header className="mx_RoomHeader light-panel">
-                <div
-                    className="mx_RoomHeader_wrapper"
-                    aria-owns={this.state.rightPanelOpen ? "mx_RightPanel" : undefined}
-                >
-                    <div className="mx_RoomHeader_avatar">{ roomAvatar }</div>
-                    <div className="mx_RoomHeader_e2eIcon">{ e2eIcon }</div>
-                    { name }
-                    { searchStatus }
-                    { topicElement }
-                    { betaPill }
-                    { buttons }
-                </div>
-                <RoomLiveShareWarning roomId={this.props.room.roomId} />
-            </header>
-        );
-    }
+                    <Tooltip label={_t("common|threads")}>
+                        <IconButton
+                            indicator={notificationColorToIndicator(threadNotifications)}
+                            onClick={(evt) => {
+                                evt.stopPropagation();
+                                RightPanelStore.instance.showOrHidePanel(RightPanelPhases.ThreadPanel);
+                                PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", evt);
+                            }}
+                            aria-label={_t("common|threads")}
+                        >
+                            <ThreadsIcon />
+                        </IconButton>
+                    </Tooltip>
+                    {notificationsEnabled && (
+                        <Tooltip label={_t("notifications|enable_prompt_toast_title")}>
+                            <IconButton
+                                indicator={notificationColorToIndicator(globalNotificationState.color)}
+                                onClick={(evt) => {
+                                    evt.stopPropagation();
+                                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.NotificationPanel);
+                                }}
+                                aria-label={_t("notifications|enable_prompt_toast_title")}
+                            >
+                                <NotificationsIcon />
+                            </IconButton>
+                        </Tooltip>
+                    )}
+                </Flex>
+                {!isDirectMessage && (
+                    <BodyText
+                        as="div"
+                        size="sm"
+                        weight="medium"
+                        aria-label={_t("common|n_members", { count: memberCount })}
+                        onClick={(e: React.MouseEvent) => {
+                            RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
+                            e.stopPropagation();
+                        }}
+                    >
+                        <FacePile
+                            className="mx_RoomHeader_members"
+                            members={members.slice(0, 3)}
+                            size="20px"
+                            overflow={false}
+                            viewUserOnClick={false}
+                            tooltipLabel={_t("room|header_face_pile_tooltip")}
+                        >
+                            {formatCount(memberCount)}
+                        </FacePile>
+                    </BodyText>
+                )}
+            </Flex>
+            {askToJoinEnabled && <RoomKnocksBar room={room} />}
+        </>
+    );
 }

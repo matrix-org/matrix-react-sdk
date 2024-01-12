@@ -14,47 +14,44 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-// eslint-disable-next-line deprecate/import
-import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
+import React from "react";
+import { fireEvent, render } from "@testing-library/react";
+import { TooltipProvider } from "@vector-im/compound-web";
 
-import ShareLatestLocation from '../../../../src/components/views/beacon/ShareLatestLocation';
-import { copyPlaintext } from '../../../../src/utils/strings';
-import { flushPromises } from '../../../test-utils';
+import ShareLatestLocation from "../../../../src/components/views/beacon/ShareLatestLocation";
+import { copyPlaintext } from "../../../../src/utils/strings";
+import { flushPromises } from "../../../test-utils";
 
-jest.mock('../../../../src/utils/strings', () => ({
+jest.mock("../../../../src/utils/strings", () => ({
     copyPlaintext: jest.fn().mockResolvedValue(undefined),
 }));
 
-describe('<ShareLatestLocation />', () => {
+describe("<ShareLatestLocation />", () => {
     const defaultProps = {
         latestLocationState: {
-            uri: 'geo:51,42;u=35',
+            uri: "geo:51,42;u=35",
             timestamp: 123,
         },
     };
     const getComponent = (props = {}) =>
-        mount(<ShareLatestLocation {...defaultProps} {...props} />);
+        render(<ShareLatestLocation {...defaultProps} {...props} />, { wrapper: TooltipProvider });
 
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
-    it('renders null when no location', () => {
-        const component = getComponent({ latestLocationState: undefined });
-        expect(component.html()).toBeNull();
+    it("renders null when no location", () => {
+        const { container } = getComponent({ latestLocationState: undefined });
+        expect(container.innerHTML).toBeFalsy();
     });
 
-    it('renders share buttons when there is a location', async () => {
-        const component = getComponent();
-        expect(component).toMatchSnapshot();
+    it("renders share buttons when there is a location", async () => {
+        const { container, asFragment } = getComponent();
+        expect(asFragment()).toMatchSnapshot();
 
-        await act(async () => {
-            component.find('.mx_CopyableText_copyButton').at(0).simulate('click');
-            await flushPromises();
-        });
+        fireEvent.click(container.querySelector(".mx_CopyableText_copyButton")!);
+        await flushPromises();
 
-        expect(copyPlaintext).toHaveBeenCalledWith('51,42');
+        expect(copyPlaintext).toHaveBeenCalledWith("51,42");
     });
 });

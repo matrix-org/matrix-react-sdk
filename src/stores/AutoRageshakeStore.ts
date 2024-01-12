@@ -14,15 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ClientEvent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
+import { ClientEvent, MatrixEvent, MatrixEventEvent, SyncStateData, SyncState } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
 
-import SdkConfig from '../SdkConfig';
-import sendBugReport from '../rageshake/submit-rageshake';
-import defaultDispatcher from '../dispatcher/dispatcher';
-import { AsyncStoreWithClient } from './AsyncStoreWithClient';
-import { ActionPayload } from '../dispatcher/payloads';
+import SdkConfig from "../SdkConfig";
+import sendBugReport from "../rageshake/submit-rageshake";
+import defaultDispatcher from "../dispatcher/dispatcher";
+import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
+import { ActionPayload } from "../dispatcher/payloads";
 import SettingsStore from "../settings/SettingsStore";
 import { Action } from "../dispatcher/actions";
 
@@ -66,14 +65,14 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
         return AutoRageshakeStore.internalInstance;
     }
 
-    protected async onAction(payload: ActionPayload) {
+    protected async onAction(payload: ActionPayload): Promise<void> {
         switch (payload.action) {
             case Action.ReportKeyBackupNotEnabled:
                 this.onReportKeyBackupNotEnabled();
         }
     }
 
-    protected async onReady() {
+    protected async onReady(): Promise<void> {
         if (!SettingsStore.getValue("automaticDecryptionErrorReporting")) return;
 
         if (this.matrixClient) {
@@ -83,7 +82,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
         }
     }
 
-    protected async onNotReady() {
+    protected async onNotReady(): Promise<void> {
         if (this.matrixClient) {
             this.matrixClient.removeListener(ClientEvent.ToDeviceEvent, this.onDeviceMessage);
             this.matrixClient.removeListener(MatrixEventEvent.Decrypted, this.onDecryptionAttempt);
@@ -92,29 +91,35 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
     }
 
     private async onDecryptionAttempt(ev: MatrixEvent): Promise<void> {
-        if (!this.state.initialSyncCompleted) { return; }
+        if (!this.state.initialSyncCompleted) {
+            return;
+        }
 
         const wireContent = ev.getWireContent();
         const sessionId = wireContent.session_id;
         if (ev.isDecryptionFailure() && !this.state.reportedSessionIds.has(sessionId)) {
             await sleep(GRACE_PERIOD);
-            if (!ev.isDecryptionFailure()) { return; }
+            if (!ev.isDecryptionFailure()) {
+                return;
+            }
 
             const newReportedSessionIds = new Set(this.state.reportedSessionIds);
             await this.updateState({ reportedSessionIds: newReportedSessionIds.add(sessionId) });
 
             const now = new Date().getTime();
-            if (now - this.state.lastRageshakeTime < RAGESHAKE_INTERVAL) { return; }
+            if (now - this.state.lastRageshakeTime < RAGESHAKE_INTERVAL) {
+                return;
+            }
 
             await this.updateState({ lastRageshakeTime: now });
 
             const eventInfo = {
-                "event_id": ev.getId(),
-                "room_id": ev.getRoomId(),
-                "session_id": sessionId,
-                "device_id": wireContent.device_id,
-                "user_id": ev.getSender(),
-                "sender_key": wireContent.sender_key,
+                event_id: ev.getId(),
+                room_id: ev.getRoomId(),
+                session_id: sessionId,
+                device_id: wireContent.device_id,
+                user_id: ev.getSender()!,
+                sender_key: wireContent.sender_key,
             };
 
             const rageshakeURL = await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
@@ -122,23 +127,27 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 sendLogs: true,
                 labels: ["Z-UISI", "web", "uisi-recipient"],
                 customApp: SdkConfig.get().uisi_autorageshake_app,
-                customFields: { "auto_uisi": JSON.stringify(eventInfo) },
+                customFields: { auto_uisi: JSON.stringify(eventInfo) },
             });
 
             const messageContent = {
                 ...eventInfo,
-                "recipient_rageshake": rageshakeURL,
+                recipient_rageshake: rageshakeURL,
             };
-            this.matrixClient.sendToDevice(
+            this.matrixClient?.sendToDevice(
                 AUTO_RS_REQUEST,
-                { [messageContent.user_id]: { [messageContent.device_id]: messageContent } },
+                new Map([["messageContent.user_id", new Map([[messageContent.device_id, messageContent]])]]),
             );
         }
     }
 
-    private async onSyncStateChange(_state: SyncState, _prevState: SyncState, data: ISyncStateData) {
+    private async onSyncStateChange(
+        _state: SyncState,
+        _prevState: SyncState | null,
+        data?: SyncStateData,
+    ): Promise<void> {
         if (!this.state.initialSyncCompleted) {
-            await this.updateState({ initialSyncCompleted: !!data.nextSyncToken });
+            await this.updateState({ initialSyncCompleted: !!data?.nextSyncToken });
         }
     }
 
@@ -155,8 +164,8 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 labels: ["Z-UISI", "web", "uisi-sender"],
                 customApp: SdkConfig.get().uisi_autorageshake_app,
                 customFields: {
-                    "recipient_rageshake": recipientRageshake,
-                    "auto_uisi": JSON.stringify(messageContent),
+                    recipient_rageshake: recipientRageshake,
+                    auto_uisi: JSON.stringify(messageContent),
                 },
             });
         }

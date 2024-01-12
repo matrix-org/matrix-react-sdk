@@ -20,7 +20,7 @@ limitations under the License.
 */
 
 .mx_StyledRadioButton {
-    $radio-circle-color: $quaternary-content;
+    $radio-circle-color: $strong-input-border-color;
     $active-radio-circle-color: $accent;
     position: relative;
 
@@ -65,7 +65,7 @@ limitations under the License.
             width: $font-16px;
             margin-left: 2px; /* For the highlight on focus */
 
-            border: $font-1-5px solid $radio-circle-color;
+            border: 1px solid $radio-circle-color;
             border-radius: $font-16px;
 
             > div {
@@ -78,7 +78,7 @@ limitations under the License.
             }
         }
 
-        &.focus-visible {
+        &:focus-visible {
             & + div {
                 @mixin unreal-focus;
             }

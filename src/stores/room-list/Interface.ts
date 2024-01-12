@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Room } from "matrix-js-sdk/src/models/room";
+import type { Room } from "matrix-js-sdk/src/matrix";
 import type { EventEmitter } from "events";
 import { ITagMap, ListAlgorithm, SortAlgorithm } from "./algorithms/models";
 import { RoomUpdateCause, TagID } from "./models";
@@ -23,6 +23,9 @@ import { IFilterCondition } from "./filters/IFilterCondition";
 export enum RoomListStoreEvent {
     // The event/channel which is called when the room lists have been changed.
     ListsUpdate = "lists_update",
+    // The event which is called when the room list is loading.
+    // Called with the (tagId, bool) which is true when the list is loading, else false.
+    ListsLoading = "lists_loading",
 }
 
 export interface RoomListStore extends EventEmitter {
@@ -32,6 +35,15 @@ export interface RoomListStore extends EventEmitter {
      * for each tag. May be empty, but never null/undefined.
      */
     get orderedLists(): ITagMap;
+
+    /**
+     * Return the total number of rooms in this list. Prefer this method to
+     * RoomListStore.orderedLists[tagId].length because the client may not
+     * be aware of all the rooms in this list (e.g in Sliding Sync).
+     * @param tagId the tag to get the room count for.
+     * @returns the number of rooms in this list, or 0 if the list is unknown.
+     */
+    getCount(tagId: TagID): number;
 
     /**
      * Set the sort algorithm for the specified tag.
@@ -45,7 +57,7 @@ export interface RoomListStore extends EventEmitter {
      * @param tagId tag to get the sort algorithm for
      * @returns the sort algorithm
      */
-    getTagSorting(tagId: TagID): SortAlgorithm;
+    getTagSorting(tagId: TagID): SortAlgorithm | null;
 
     /**
      * Set the list algorithm for the specified tag.
@@ -59,7 +71,7 @@ export interface RoomListStore extends EventEmitter {
      * @param tagId tag to get the list algorithm for
      * @returns the list algorithm
      */
-    getListOrder(tagId: TagID): ListAlgorithm;
+    getListOrder(tagId: TagID): ListAlgorithm | null;
 
     /**
      * Regenerates the room whole room list, discarding any previous results.

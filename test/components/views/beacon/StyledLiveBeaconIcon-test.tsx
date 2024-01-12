@@ -14,19 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-// eslint-disable-next-line deprecate/import
-import { mount } from 'enzyme';
+import React from "react";
+import { render } from "@testing-library/react";
 
-import StyledLiveBeaconIcon from '../../../../src/components/views/beacon/StyledLiveBeaconIcon';
+import StyledLiveBeaconIcon from "../../../../src/components/views/beacon/StyledLiveBeaconIcon";
 
-describe('<StyledLiveBeaconIcon />', () => {
+describe("<StyledLiveBeaconIcon />", () => {
     const defaultProps = {};
-    const getComponent = (props = {}) =>
-        mount(<StyledLiveBeaconIcon {...defaultProps} {...props} />);
+    const getComponent = (props = {}) => render(<StyledLiveBeaconIcon {...defaultProps} {...props} />);
 
-    it('renders', () => {
-        const component = getComponent();
-        expect(component).toBeTruthy();
+    it("renders", () => {
+        const { asFragment } = getComponent();
+        expect(asFragment()).toMatchSnapshot();
     });
 });
