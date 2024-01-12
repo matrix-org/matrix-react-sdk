@@ -18,7 +18,6 @@ import React, {
     createContext,
     useCallback,
     useContext,
-    useLayoutEffect,
     useMemo,
     useRef,
     useReducer,
@@ -26,6 +25,7 @@ import React, {
     Dispatch,
     RefObject,
     ReactNode,
+    useEffect,
 } from "react";
 
 import { getKeyBindingsManager } from "../KeyBindingsManager";
@@ -346,7 +346,7 @@ export const useRovingTabIndex = <T extends HTMLElement>(
     }
 
     // setup (after refs)
-    useLayoutEffect(() => {
+    useEffect(() => {
         context.dispatch({
             type: Type.Register,
             payload: { ref },

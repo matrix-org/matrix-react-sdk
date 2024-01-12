@@ -27,6 +27,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import sanitizeHtml from "sanitize-html";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import SpotlightDialog from "../../../../src/components/views/dialogs/spotlight/SpotlightDialog";
 import { Filter } from "../../../../src/components/views/dialogs/spotlight/Filter";
@@ -183,14 +184,16 @@ describe("Spotlight Dialog", () => {
 
     describe("should apply filters supplied via props", () => {
         it("without filter", async () => {
-            render(<SpotlightDialog onFinished={() => null} />);
+            render(<SpotlightDialog onFinished={() => null} />, { wrapper: TooltipProvider });
 
             const filterChip = document.querySelector("div.mx_SpotlightDialog_filter");
             expect(filterChip).not.toBeInTheDocument();
         });
 
         it("with public room filter", async () => {
-            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />, {
+                wrapper: TooltipProvider,
+            });
 
             // search is debounced
             jest.advanceTimersByTime(200);
@@ -213,6 +216,7 @@ describe("Spotlight Dialog", () => {
                     initialText={testPerson.display_name}
                     onFinished={() => null}
                 />,
+                { wrapper: TooltipProvider },
             );
             // search is debounced
             jest.advanceTimersByTime(200);
@@ -245,7 +249,7 @@ describe("Spotlight Dialog", () => {
         });
 
         it("should call getVisibleRooms with MSC3946 dynamic room predecessors", async () => {
-            render(<SpotlightDialog onFinished={() => null} />);
+            render(<SpotlightDialog onFinished={() => null} />, { wrapper: TooltipProvider });
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
             expect(mockedClient.getVisibleRooms).toHaveBeenCalledWith(true);
@@ -254,7 +258,7 @@ describe("Spotlight Dialog", () => {
 
     describe("should apply manually selected filter", () => {
         it("with public rooms", async () => {
-            render(<SpotlightDialog onFinished={() => null} />);
+            render(<SpotlightDialog onFinished={() => null} />, { wrapper: TooltipProvider });
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
@@ -277,7 +281,9 @@ describe("Spotlight Dialog", () => {
             expect(mockedClient.getVisibleRooms).toHaveBeenCalledWith(false);
         });
         it("with people", async () => {
-            render(<SpotlightDialog initialText={testPerson.display_name} onFinished={() => null} />);
+            render(<SpotlightDialog initialText={testPerson.display_name} onFinished={() => null} />, {
+                wrapper: TooltipProvider,
+            });
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
 
@@ -300,7 +306,9 @@ describe("Spotlight Dialog", () => {
 
     describe("should allow clearing filter manually", () => {
         it("with public room filter", async () => {
-            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />, {
+                wrapper: TooltipProvider,
+            });
             // search is debounced
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
@@ -323,6 +331,7 @@ describe("Spotlight Dialog", () => {
                     initialText={testPerson.display_name}
                     onFinished={() => null}
                 />,
+                { wrapper: TooltipProvider },
             );
             // search is debounced
             jest.advanceTimersByTime(200);
@@ -345,7 +354,7 @@ describe("Spotlight Dialog", () => {
         let options: NodeListOf<Element>;
 
         beforeAll(async () => {
-            render(<SpotlightDialog initialText="test23" onFinished={() => null} />);
+            render(<SpotlightDialog initialText="test23" onFinished={() => null} />, { wrapper: TooltipProvider });
             // search is debounced
             jest.advanceTimersByTime(200);
             await flushPromisesWithFakeTimers();
@@ -374,7 +383,9 @@ describe("Spotlight Dialog", () => {
             limited: false,
         });
 
-        render(<SpotlightDialog initialFilter={Filter.People} initialText="Alpha" onFinished={() => null} />);
+        render(<SpotlightDialog initialFilter={Filter.People} initialText="Alpha" onFinished={() => null} />, {
+            wrapper: TooltipProvider,
+        });
         // search is debounced
         jest.advanceTimersByTime(200);
         await flushPromisesWithFakeTimers();
@@ -399,7 +410,9 @@ describe("Spotlight Dialog", () => {
             limited: false,
         });
 
-        render(<SpotlightDialog initialFilter={Filter.People} initialText="Beta" onFinished={() => null} />);
+        render(<SpotlightDialog initialFilter={Filter.People} initialText="Beta" onFinished={() => null} />, {
+            wrapper: TooltipProvider,
+        });
         // search is debounced
         jest.advanceTimersByTime(200);
         await flushPromisesWithFakeTimers();
@@ -421,6 +434,7 @@ describe("Spotlight Dialog", () => {
         });
         render(
             <SpotlightDialog initialFilter={Filter.People} initialText="Something Wonder" onFinished={() => null} />,
+            { wrapper: TooltipProvider },
         );
         // search is debounced
         jest.advanceTimersByTime(200);
@@ -443,7 +457,9 @@ describe("Spotlight Dialog", () => {
             limited: false,
         });
 
-        render(<SpotlightDialog initialFilter={Filter.People} initialText="User" onFinished={() => null} />);
+        render(<SpotlightDialog initialFilter={Filter.People} initialText="User" onFinished={() => null} />, {
+            wrapper: TooltipProvider,
+        });
         // search is debounced
         jest.advanceTimersByTime(200);
         await flushPromisesWithFakeTimers();
@@ -462,6 +478,7 @@ describe("Spotlight Dialog", () => {
                 initialText={testPerson.display_name}
                 onFinished={() => null}
             />,
+            { wrapper: TooltipProvider },
         );
 
         jest.advanceTimersByTime(200);
@@ -483,7 +500,9 @@ describe("Spotlight Dialog", () => {
         });
         localStorage.setItem("mx_last_room_directory_server", "example.tld");
 
-        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />, {
+            wrapper: TooltipProvider,
+        });
 
         jest.advanceTimersByTime(200);
         await flushPromisesWithFakeTimers();
@@ -542,7 +561,9 @@ describe("Spotlight Dialog", () => {
         });
 
         it("does not display rooms with nsfw keywords in results when showNsfwPublicRooms is falsy", async () => {
-            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />, {
+                wrapper: TooltipProvider,
+            });
 
             // search is debounced
             jest.advanceTimersByTime(200);
@@ -555,7 +576,9 @@ describe("Spotlight Dialog", () => {
 
         it("displays rooms with nsfw keywords in results when showNsfwPublicRooms is truthy", async () => {
             SettingsStore.setValue("SpotlightSearch.showNsfwPublicRooms", null, SettingLevel.DEVICE, true);
-            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+            render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />, {
+                wrapper: TooltipProvider,
+            });
 
             // search is debounced
             jest.advanceTimersByTime(200);
@@ -569,7 +592,9 @@ describe("Spotlight Dialog", () => {
 
     it("should show error if /publicRooms API failed", async () => {
         mocked(mockedClient.publicRooms).mockRejectedValue(new ConnectionError("Failed to fetch"));
-        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />);
+        render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => null} />, {
+            wrapper: TooltipProvider,
+        });
 
         jest.advanceTimersByTime(200);
         await flushPromisesWithFakeTimers();
@@ -604,7 +629,9 @@ describe("Spotlight Dialog", () => {
                     setting === "feature_ask_to_join" ? false : [],
                 );
 
-                render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => {}} />);
+                render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => {}} />, {
+                    wrapper: TooltipProvider,
+                });
 
                 // search is debounced
                 jest.advanceTimersByTime(200);
@@ -629,7 +656,9 @@ describe("Spotlight Dialog", () => {
                 );
                 jest.spyOn(mockedClient, "getRoom").mockReturnValue(null);
 
-                render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => {}} />);
+                render(<SpotlightDialog initialFilter={Filter.PublicRooms} onFinished={() => {}} />, {
+                    wrapper: TooltipProvider,
+                });
 
                 // search is debounced
                 jest.advanceTimersByTime(200);
