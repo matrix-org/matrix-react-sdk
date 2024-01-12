@@ -32,10 +32,10 @@ export const useRoomThreadNotifications = (room: Room): NotificationLevel => {
     const updateNotification = useCallback(() => {
         switch (room?.threadsAggregateNotificationType) {
             case NotificationCountType.Highlight:
-                setNotificationColor(NotificationLevel.Highlight);
+                setNotificationLevel(NotificationLevel.Highlight);
                 break;
             case NotificationCountType.Total:
-                setNotificationColor(NotificationLevel.Notification);
+                setNotificationLevel(NotificationLevel.Notification);
                 break;
         }
         // We don't have any notified messages, but we might have unread messages. Let's
@@ -43,7 +43,7 @@ export const useRoomThreadNotifications = (room: Room): NotificationLevel => {
         for (const thread of room!.getThreads()) {
             // If the current thread has unread messages, we're done.
             if (doesRoomOrThreadHaveUnreadMessages(thread)) {
-                setNotificationColor(NotificationLevel.Activity);
+                setNotificationLevel(NotificationLevel.Activity);
                 break;
             }
         }
@@ -63,5 +63,5 @@ export const useRoomThreadNotifications = (room: Room): NotificationLevel => {
         updateNotification();
     }, [updateNotification]);
 
-    return notificationColor;
+    return notificationLevel;
 };

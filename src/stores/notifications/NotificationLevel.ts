@@ -28,7 +28,7 @@ export enum NotificationLevel {
 }
 
 export function humanReadableNotificationLevel(level: NotificationLevel): string {
-    switch (color) {
+    switch (level) {
         case NotificationLevel.None:
             return _t("notifications|level_none");
         case NotificationLevel.Activity:
