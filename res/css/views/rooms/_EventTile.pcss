@@ -1066,6 +1066,15 @@ $left-gutter: 64px;
         inset: $notification-inset-block-start $spacing-8 auto auto;
     }
 
+    /* Redundant sounding name, but a notification badge that indicates there is a regular,
+     * non-highlight notification
+     * The green colour only applies for notification dot: badges indicating the same notification
+     * level are the standard grey.
+     */
+    .mx_NotificationBadge_level_notification {
+        background-color: var(--cpd-color-icon-success-primary);
+    }
+
     .mx_NotificationBadge_count {
         display: none;
     }

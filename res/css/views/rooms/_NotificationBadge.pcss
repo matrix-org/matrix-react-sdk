@@ -33,9 +33,12 @@ limitations under the License.
         align-items: center;
         justify-content: center;
 
-        &.mx_NotificationBadge_highlighted {
-            /* TODO: Use a more specific variable */
-            background-color: $alert;
+        /* Badges for highlight notifications. Style for notificvation level
+         * badges is in _EventTile.scss because it applies only to notification
+         * dots, not badges.
+         */
+        &.mx_NotificationBadge_level_highlight {
+            background-color: var(--cpd-color-icon-critical-primary);
         }
 
         /* These are the 3 background types */
