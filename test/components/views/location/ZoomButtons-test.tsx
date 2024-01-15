@@ -16,8 +16,8 @@ limitations under the License.
 
 import React from "react";
 import * as maplibregl from "maplibre-gl";
-import { render, screen } from "@testing-library/react";
 
+import { render, screen } from "../../..";
 import ZoomButtons from "../../../../src/components/views/location/ZoomButtons";
 
 describe("<ZoomButtons />", () => {
