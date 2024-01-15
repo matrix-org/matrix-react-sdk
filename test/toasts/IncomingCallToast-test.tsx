@@ -127,8 +127,8 @@ describe("IncomingCallEvent", () => {
         screen.getByText("Video");
         screen.getByLabelText("3 participants");
 
-        screen.getByRole("button", { name: "Join" });
-        screen.getByRole("button", { name: "Close" });
+        screen.getByTestId("Join");
+        screen.getByTestId("Close");
     });
 
     it("start ringing on ring notify event", () => {
@@ -152,8 +152,8 @@ describe("IncomingCallEvent", () => {
         screen.getByText("Video call started");
         screen.getByText("Video");
 
-        screen.getByRole("button", { name: "Join" });
-        screen.getByRole("button", { name: "Close" });
+        screen.getByTestId("Join");
+        screen.getByTestId("Close");
     });
 
     it("joins the call and closes the toast", async () => {

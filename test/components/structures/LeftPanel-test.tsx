@@ -49,6 +49,6 @@ describe("LeftPanel", () => {
         renderComponent();
         expect(shouldShowComponent).toHaveBeenCalledWith(UIComponent.FilterContainer);
         expect(screen.getByRole("button", { name: /search/i })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Explore rooms" })).toBeInTheDocument();
+        expect(screen.getByTestId("Explore rooms")).toBeInTheDocument();
     });
 });

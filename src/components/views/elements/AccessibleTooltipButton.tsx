@@ -82,6 +82,8 @@ const AccessibleTooltipButton = forwardRef(function <T extends keyof JSX.Intrins
     return (
         <Tooltip label={title ?? ""} caption={caption} side={side} align={align} open={hover && !!title}>
             <AccessibleButton
+                // Compound tooltips use aria-describeddby instead of aria-label which makes it hard for tests to target buttons by label
+                data-testid={title}
                 {...props}
                 onMouseOver={showTooltip}
                 onMouseLeave={hideTooltip}

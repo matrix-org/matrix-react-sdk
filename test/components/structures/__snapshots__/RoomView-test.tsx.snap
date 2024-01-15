@@ -397,6 +397,7 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                   <button
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconBold"
                     data-state="closed"
+                    data-testid="Bold"
                     role="button"
                     tabindex="0"
                     type="button"
@@ -404,6 +405,7 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                   <button
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconItalic"
                     data-state="closed"
+                    data-testid="Italics"
                     role="button"
                     tabindex="-1"
                     type="button"
@@ -411,6 +413,7 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                   <button
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconStrikethrough"
                     data-state="closed"
+                    data-testid="Strikethrough"
                     role="button"
                     tabindex="-1"
                     type="button"
@@ -418,6 +421,7 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                   <button
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconCode"
                     data-state="closed"
+                    data-testid="Code block"
                     role="button"
                     tabindex="-1"
                     type="button"
@@ -425,6 +429,7 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                   <button
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconQuote"
                     data-state="closed"
+                    data-testid="Quote"
                     role="button"
                     tabindex="-1"
                     type="button"
@@ -432,6 +437,7 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                   <button
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconInsertLink"
                     data-state="closed"
+                    data-testid="Insert link"
                     role="button"
                     tabindex="-1"
                     type="button"
@@ -464,18 +470,21 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
               <div
                 class="mx_AccessibleButton mx_EmojiButton mx_MessageComposer_button mx_EmojiButton_icon"
                 data-state="closed"
+                data-testid="Emoji"
                 role="button"
                 tabindex="0"
               />
               <div
                 class="mx_AccessibleButton mx_MessageComposer_button mx_MessageComposer_upload"
                 data-state="closed"
+                data-testid="Attachment"
                 role="button"
                 tabindex="0"
               />
               <div
                 class="mx_AccessibleButton mx_MessageComposer_button mx_MessageComposer_buttonMenu"
                 data-state="closed"
+                data-testid="More options"
                 role="button"
                 tabindex="0"
               />
@@ -644,6 +653,7 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                   <button
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconBold"
                     data-state="closed"
+                    data-testid="Bold"
                     role="button"
                     tabindex="0"
                     type="button"
@@ -651,6 +661,7 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                   <button
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconItalic"
                     data-state="closed"
+                    data-testid="Italics"
                     role="button"
                     tabindex="-1"
                     type="button"
@@ -658,6 +669,7 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                   <button
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconStrikethrough"
                     data-state="closed"
+                    data-testid="Strikethrough"
                     role="button"
                     tabindex="-1"
                     type="button"
@@ -665,6 +677,7 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                   <button
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconCode"
                     data-state="closed"
+                    data-testid="Code block"
                     role="button"
                     tabindex="-1"
                     type="button"
@@ -672,6 +685,7 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                   <button
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconQuote"
                     data-state="closed"
+                    data-testid="Quote"
                     role="button"
                     tabindex="-1"
                     type="button"
@@ -679,6 +693,7 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                   <button
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconInsertLink"
                     data-state="closed"
+                    data-testid="Insert link"
                     role="button"
                     tabindex="-1"
                     type="button"
@@ -711,18 +726,21 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
               <div
                 class="mx_AccessibleButton mx_EmojiButton mx_MessageComposer_button mx_EmojiButton_icon"
                 data-state="closed"
+                data-testid="Emoji"
                 role="button"
                 tabindex="0"
               />
               <div
                 class="mx_AccessibleButton mx_MessageComposer_button mx_MessageComposer_upload"
                 data-state="closed"
+                data-testid="Attachment"
                 role="button"
                 tabindex="0"
               />
               <div
                 class="mx_AccessibleButton mx_MessageComposer_button mx_MessageComposer_buttonMenu"
                 data-state="closed"
+                data-testid="More options"
                 role="button"
                 tabindex="0"
               />

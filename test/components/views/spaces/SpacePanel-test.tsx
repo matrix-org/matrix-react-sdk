@@ -167,9 +167,9 @@ describe("<SpacePanel />", () => {
         DMRoomMap.makeShared(mockClient);
         jest.useFakeTimers();
 
-        const { getByLabelText } = render(<SpacePanel />);
+        const { getByTestId } = render(<SpacePanel />);
 
-        const room1 = getByLabelText("Room 1");
+        const room1 = getByTestId("Room 1");
         await pickUp(room1);
         await move(room1, DragDirection.DOWN);
         await drop(room1);

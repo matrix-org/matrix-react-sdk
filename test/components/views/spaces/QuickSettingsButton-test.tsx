@@ -31,7 +31,7 @@ describe("QuickSettingsButton", () => {
     };
 
     const getQuickSettingsButton = () => {
-        return screen.getByRole("button", { name: "Quick settings" });
+        return screen.getByTestId("Quick settings");
     };
 
     const openQuickSettings = async () => {

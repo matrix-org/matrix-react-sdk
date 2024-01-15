@@ -230,7 +230,7 @@ describe("EditWysiwygComposer", () => {
     it("Should focus when receiving an Action.FocusEditMessageComposer action", async () => {
         // Given we don't have focus
         customRender();
-        screen.getByLabelText("Bold").focus();
+        screen.getByTestId("Bold").focus();
         expect(screen.getByRole("textbox")).not.toHaveFocus();
 
         // When we send the right action
@@ -246,7 +246,7 @@ describe("EditWysiwygComposer", () => {
     it("Should not focus when disabled", async () => {
         // Given we don't have focus and we are disabled
         customRender(true);
-        screen.getByLabelText("Bold").focus();
+        screen.getByTestId("Bold").focus();
         expect(screen.getByRole("textbox")).not.toHaveFocus();
 
         // When we send an action that would cause us to get focus

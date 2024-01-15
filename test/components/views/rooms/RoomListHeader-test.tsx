@@ -122,7 +122,7 @@ describe("RoomListHeader", () => {
         const { container } = render(<RoomListHeader />);
 
         expect(container.textContent).toBe("Home");
-        fireEvent.click(screen.getByLabelText("Home options"));
+        fireEvent.click(screen.getByTestId("Home options"));
 
         const menu = screen.getByRole("menu");
         const items = menu.querySelectorAll(".mx_IconizedContextMenu_item");

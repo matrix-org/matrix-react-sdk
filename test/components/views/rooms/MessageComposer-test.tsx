@@ -56,14 +56,14 @@ jest.mock("../../../../src/components/views/rooms/wysiwyg_composer", () => ({
 
 const openStickerPicker = async (): Promise<void> => {
     await act(async () => {
-        await userEvent.click(screen.getByLabelText("More options"));
+        await userEvent.click(screen.getByTestId("More options"));
         await userEvent.click(screen.getByLabelText("Sticker"));
     });
 };
 
 const startVoiceMessage = async (): Promise<void> => {
     await act(async () => {
-        await userEvent.click(screen.getByLabelText("More options"));
+        await userEvent.click(screen.getByTestId("More options"));
         await userEvent.click(screen.getByLabelText("Voice Message"));
     });
 };
@@ -206,7 +206,7 @@ describe("MessageComposer", () => {
                         SettingsStore.setValue(setting, null, SettingLevel.DEVICE, value);
                         wrapAndRender({ room });
                         await act(async () => {
-                            await userEvent.click(screen.getByLabelText("More options"));
+                            await userEvent.click(screen.getByTestId("More options"));
                         });
                     });
 
@@ -260,7 +260,7 @@ describe("MessageComposer", () => {
             });
 
             it("should render the send button", () => {
-                expect(screen.getByLabelText("Send message")).toBeInTheDocument();
+                expect(screen.getByTestId("sendmessagebtn")).toBeInTheDocument();
             });
         });
 
@@ -321,7 +321,7 @@ describe("MessageComposer", () => {
                 });
 
                 it("should show the attachment button", () => {
-                    expect(screen.getByLabelText("Attachment")).toBeInTheDocument();
+                    expect(screen.getByTestId("Attachment")).toBeInTheDocument();
                 });
 
                 it("should close the sticker picker", () => {
@@ -462,7 +462,7 @@ describe("MessageComposer", () => {
         it("should not show the stickers button", async () => {
             wrapAndRender({ room: localRoom });
             await act(async () => {
-                await userEvent.click(screen.getByLabelText("More options"));
+                await userEvent.click(screen.getByTestId("More options"));
             });
             expect(screen.queryByLabelText("Sticker")).not.toBeInTheDocument();
         });

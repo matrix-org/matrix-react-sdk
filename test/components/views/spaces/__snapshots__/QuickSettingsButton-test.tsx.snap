@@ -6,6 +6,7 @@ exports[`QuickSettingsButton should render the quick settings button in expanded
     aria-expanded="true"
     class="mx_AccessibleButton mx_QuickSettingsButton expanded"
     data-state="closed"
+    data-testid="Quick settings"
     role="button"
     tabindex="0"
   >
