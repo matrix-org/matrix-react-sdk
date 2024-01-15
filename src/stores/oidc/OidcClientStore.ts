@@ -20,6 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { OidcClient } from "oidc-client-ts";
 
 import { getStoredOidcTokenIssuer, getStoredOidcClientId } from "../../utils/oidc/persistOidcSettings";
+import { getDelegatedAuthAccountUrl } from "../../utils/oidc/getDelegatedAuthAccountUrl";
 
 /**
  * @experimental
@@ -33,9 +34,11 @@ export class OidcClientStore {
 
     public constructor(private readonly matrixClient: MatrixClient) {
         this.authenticatedIssuer = getStoredOidcTokenIssuer();
-        // don't bother initialising store when we didnt authenticate via oidc
+        // don't bother initialising store when we didn't authenticate via oidc
         if (this.authenticatedIssuer) {
             this.getOidcClient();
+        } else {
+            this._accountManagementEndpoint = getDelegatedAuthAccountUrl(matrixClient);
         }
     }
 
