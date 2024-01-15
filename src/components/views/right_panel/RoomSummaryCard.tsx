@@ -206,13 +206,13 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
                 />
             )}
 
-            <AccessibleTooltipButton
+            <AccessibleButton
                 className="mx_RoomSummaryCard_app_pinToggle"
                 onClick={togglePin}
                 title={pinTitle}
                 disabled={cannotPin}
             />
-            <AccessibleTooltipButton
+            <AccessibleButton
                 className="mx_RoomSummaryCard_app_maximiseToggle"
                 onClick={toggleMaximised}
                 title={maximiseTitle}

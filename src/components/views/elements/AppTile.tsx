@@ -24,7 +24,6 @@ import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ApprovalOpts, WidgetLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
 
-import AccessibleButton from "./AccessibleButton";
 import { _t } from "../../../languageHandler";
 import AppPermission from "./AppPermission";
 import AppWarning from "./AppWarning";
@@ -57,6 +56,7 @@ import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingSto
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { ModuleRunner } from "../../../modules/ModuleRunner";
 import { parseUrl } from "../../../utils/UrlUtils";
+import AccessibleTooltipButton from "./AccessibleTooltipButton";
 
 interface IProps {
     app: IWidget | IApp;
@@ -741,7 +741,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center);
 
             layoutButtons.push(
-                <AccessibleButton
+                <AccessibleTooltipButton
                     key="toggleMaximised"
                     className="mx_AppTileMenuBar_widgets_button"
                     title={isMaximised ? _t("widget|unmaximise") : _t("action|maximise")}
@@ -752,18 +752,18 @@ export default class AppTile extends React.Component<IProps, IState> {
                     ) : (
                         <MaximiseIcon className="mx_Icon mx_Icon_12" />
                     )}
-                </AccessibleButton>,
+                </AccessibleTooltipButton>,
             );
 
             layoutButtons.push(
-                <AccessibleButton
+                <AccessibleTooltipButton
                     key="minimise"
                     className="mx_AppTileMenuBar_widgets_button"
                     title={_t("action|minimise")}
                     onClick={this.onMinimiseClicked}
                 >
                     <MinimiseIcon className="mx_Icon mx_Icon_12" />
-                </AccessibleButton>,
+                </AccessibleTooltipButton>,
             );
         }
 
@@ -781,13 +781,13 @@ export default class AppTile extends React.Component<IProps, IState> {
                             <span className="mx_AppTileMenuBar_widgets">
                                 {layoutButtons}
                                 {this.props.showPopout && !this.state.requiresClient && (
-                                    <AccessibleButton
+                                    <AccessibleTooltipButton
                                         className="mx_AppTileMenuBar_widgets_button"
                                         title={_t("widget|popout")}
                                         onClick={this.onPopoutWidgetClick}
                                     >
                                         <PopoutIcon className="mx_Icon mx_Icon_12 mx_Icon--stroke" />
-                                    </AccessibleButton>
+                                    </AccessibleTooltipButton>
                                 )}
                                 {this.state.hasContextMenuOptions && (
                                     <ContextMenuButton

@@ -61,6 +61,7 @@ export function EmojiButton({ addEmoji, menuPosition, className }: IEmojiButtonP
                 iconClassName="mx_EmojiButton_icon"
                 onClick={openMenu}
                 title={_t("common|emoji")}
+                aria-label={_t("common|emoji")}
                 inputRef={button}
             />
 

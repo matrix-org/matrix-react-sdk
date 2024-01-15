@@ -98,6 +98,7 @@ export const RoomKnocksBar: VFC<{ room: Room }> = ({ room }) => {
                     kind="icon_primary_outline"
                     onClick={() => handleDeny(knockMembers[0].userId)}
                     title={_t("action|deny")}
+                    aria-label={_t("action|deny")}
                 >
                     <XIcon width={18} height={18} />
                 </AccessibleButton>
@@ -107,6 +108,7 @@ export const RoomKnocksBar: VFC<{ room: Room }> = ({ room }) => {
                     kind="icon_primary"
                     onClick={() => handleApprove(knockMembers[0].userId)}
                     title={_t("action|approve")}
+                    aria-label={_t("action|approve")}
                 >
                     <CheckIcon width={18} height={18} />
                 </AccessibleButton>

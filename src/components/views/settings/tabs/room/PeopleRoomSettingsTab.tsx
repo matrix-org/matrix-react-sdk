@@ -95,6 +95,7 @@ const Knock: VFC<{
                 kind="icon_primary_outline"
                 onClick={() => handleDeny(roomMember.userId)}
                 title={_t("action|deny")}
+                aria-label={_t("action|deny")}
             >
                 <XIcon width={18} height={18} />
             </AccessibleButton>
@@ -104,6 +105,7 @@ const Knock: VFC<{
                 kind="icon_primary"
                 onClick={() => handleApprove(roomMember.userId)}
                 title={_t("action|approve")}
+                aria-label={_t("action|approve")}
             >
                 <CheckIcon width={18} height={18} />
             </AccessibleButton>
