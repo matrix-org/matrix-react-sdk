@@ -34,7 +34,6 @@ export class OidcClientStore {
 
     public constructor(private readonly matrixClient: MatrixClient) {
         this.authenticatedIssuer = getStoredOidcTokenIssuer();
-        // don't bother initialising store when we didn't authenticate via oidc
         if (this.authenticatedIssuer) {
             this.getOidcClient();
         } else {
