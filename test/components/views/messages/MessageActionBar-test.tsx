@@ -164,10 +164,10 @@ describe("<MessageActionBar />", () => {
                 content: {},
             });
             jest.spyOn(decryptingEvent, "isBeingDecrypted").mockReturnValue(true);
-            const { queryByLabelText } = getComponent({ mxEvent: decryptingEvent });
+            const { queryByTestId } = getComponent({ mxEvent: decryptingEvent });
 
             // still encrypted event is not actionable => no reply button
-            expect(queryByLabelText("Reply")).toBeFalsy();
+            expect(queryByTestId("Reply")).toBeFalsy();
 
             act(() => {
                 // ''decrypt'' the event
@@ -177,24 +177,24 @@ describe("<MessageActionBar />", () => {
             });
 
             // new available actions after decryption
-            expect(queryByLabelText("Reply")).toBeTruthy();
+            expect(queryByTestId("Reply")).toBeTruthy();
         });
     });
 
     describe("status", () => {
         it("updates component when event status changes", () => {
             alicesMessageEvent.setStatus(EventStatus.QUEUED);
-            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+            const { queryByTestId } = getComponent({ mxEvent: alicesMessageEvent });
 
             // pending event status, cancel action available
-            expect(queryByLabelText("Delete")).toBeTruthy();
+            expect(queryByTestId("Delete")).toBeTruthy();
 
             act(() => {
                 alicesMessageEvent.setStatus(EventStatus.SENT);
             });
 
             // event is sent, no longer cancelable
-            expect(queryByLabelText("Delete")).toBeFalsy();
+            expect(queryByTestId("Delete")).toBeFalsy();
         });
     });
 
@@ -213,10 +213,10 @@ describe("<MessageActionBar />", () => {
                     body: "Hello",
                 },
             });
-            const { queryByLabelText } = getComponent({ mxEvent: event });
+            const { queryByTestId } = getComponent({ mxEvent: event });
 
             // no pending redaction => no delete button
-            expect(queryByLabelText("Delete")).toBeFalsy();
+            expect(queryByTestId("Delete")).toBeFalsy();
 
             act(() => {
                 const redactionEvent = new MatrixEvent({
@@ -229,50 +229,50 @@ describe("<MessageActionBar />", () => {
             });
 
             // updated with local redaction event, delete now available
-            expect(queryByLabelText("Delete")).toBeTruthy();
+            expect(queryByTestId("Delete")).toBeTruthy();
         });
     });
 
     describe("options button", () => {
         it("renders options menu", () => {
-            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-            expect(queryByLabelText("Options")).toBeTruthy();
+            const { queryByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+            expect(queryByTestId("Options")).toBeTruthy();
         });
 
         it("opens message context menu on click", () => {
-            const { getByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-            fireEvent.click(queryByLabelText("Options")!);
+            const { getByTestId, queryByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+            fireEvent.click(queryByTestId("Options")!);
             expect(getByTestId("mx_MessageContextMenu")).toBeTruthy();
         });
     });
 
     describe("reply button", () => {
         it("renders reply button on own actionable event", () => {
-            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-            expect(queryByLabelText("Reply")).toBeTruthy();
+            const { queryByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+            expect(queryByTestId("Reply")).toBeTruthy();
         });
 
         it("renders reply button on others actionable event", () => {
-            const { queryByLabelText } = getComponent({ mxEvent: bobsMessageEvent }, { canSendMessages: true });
-            expect(queryByLabelText("Reply")).toBeTruthy();
+            const { queryByTestId } = getComponent({ mxEvent: bobsMessageEvent }, { canSendMessages: true });
+            expect(queryByTestId("Reply")).toBeTruthy();
         });
 
         it("does not render reply button on non-actionable event", () => {
             // redacted event is not actionable
-            const { queryByLabelText } = getComponent({ mxEvent: redactedEvent });
-            expect(queryByLabelText("Reply")).toBeFalsy();
+            const { queryByTestId } = getComponent({ mxEvent: redactedEvent });
+            expect(queryByTestId("Reply")).toBeFalsy();
         });
 
         it("does not render reply button when user cannot send messaged", () => {
             // redacted event is not actionable
-            const { queryByLabelText } = getComponent({ mxEvent: redactedEvent }, { canSendMessages: false });
-            expect(queryByLabelText("Reply")).toBeFalsy();
+            const { queryByTestId } = getComponent({ mxEvent: redactedEvent }, { canSendMessages: false });
+            expect(queryByTestId("Reply")).toBeFalsy();
         });
 
         it("dispatches reply event on click", () => {
-            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+            const { queryByTestId } = getComponent({ mxEvent: alicesMessageEvent });
 
-            fireEvent.click(queryByLabelText("Reply")!);
+            fireEvent.click(queryByTestId("Reply")!);
 
             expect(dispatcher.dispatch).toHaveBeenCalledWith({
                 action: "reply_to_event",
@@ -284,30 +284,30 @@ describe("<MessageActionBar />", () => {
 
     describe("react button", () => {
         it("renders react button on own actionable event", () => {
-            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-            expect(queryByLabelText("React")).toBeTruthy();
+            const { queryByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+            expect(queryByTestId("React")).toBeTruthy();
         });
 
         it("renders react button on others actionable event", () => {
-            const { queryByLabelText } = getComponent({ mxEvent: bobsMessageEvent });
-            expect(queryByLabelText("React")).toBeTruthy();
+            const { queryByTestId } = getComponent({ mxEvent: bobsMessageEvent });
+            expect(queryByTestId("React")).toBeTruthy();
         });
 
         it("does not render react button on non-actionable event", () => {
             // redacted event is not actionable
-            const { queryByLabelText } = getComponent({ mxEvent: redactedEvent });
-            expect(queryByLabelText("React")).toBeFalsy();
+            const { queryByTestId } = getComponent({ mxEvent: redactedEvent });
+            expect(queryByTestId("React")).toBeFalsy();
         });
 
         it("does not render react button when user cannot react", () => {
             // redacted event is not actionable
-            const { queryByLabelText } = getComponent({ mxEvent: redactedEvent }, { canReact: false });
-            expect(queryByLabelText("React")).toBeFalsy();
+            const { queryByTestId } = getComponent({ mxEvent: redactedEvent }, { canReact: false });
+            expect(queryByTestId("React")).toBeFalsy();
         });
 
         it("opens reaction picker on click", () => {
-            const { queryByLabelText, getByTestId } = getComponent({ mxEvent: alicesMessageEvent });
-            fireEvent.click(queryByLabelText("React")!);
+            const { queryByTestId, getByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+            fireEvent.click(queryByTestId("React")!);
             expect(getByTestId("mx_EmojiPicker")).toBeTruthy();
         });
     });
@@ -315,8 +315,8 @@ describe("<MessageActionBar />", () => {
     describe("cancel button", () => {
         it("renders cancel button for an event with a cancelable status", () => {
             alicesMessageEvent.setStatus(EventStatus.QUEUED);
-            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-            expect(queryByLabelText("Delete")).toBeTruthy();
+            const { queryByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+            expect(queryByTestId("Delete")).toBeTruthy();
         });
 
         it("renders cancel button for an event with a pending edit", () => {
@@ -341,8 +341,8 @@ describe("<MessageActionBar />", () => {
             });
             replacingEvent.setStatus(EventStatus.QUEUED);
             event.makeReplaced(replacingEvent);
-            const { queryByLabelText } = getComponent({ mxEvent: event });
-            expect(queryByLabelText("Delete")).toBeTruthy();
+            const { queryByTestId } = getComponent({ mxEvent: event });
+            expect(queryByTestId("Delete")).toBeTruthy();
         });
 
         it("renders cancel button for an event with a pending redaction", () => {
@@ -365,15 +365,15 @@ describe("<MessageActionBar />", () => {
             redactionEvent.setStatus(EventStatus.QUEUED);
 
             event.markLocallyRedacted(redactionEvent);
-            const { queryByLabelText } = getComponent({ mxEvent: event });
-            expect(queryByLabelText("Delete")).toBeTruthy();
+            const { queryByTestId } = getComponent({ mxEvent: event });
+            expect(queryByTestId("Delete")).toBeTruthy();
         });
 
         it("renders cancel and retry button for an event with NOT_SENT status", () => {
             alicesMessageEvent.setStatus(EventStatus.NOT_SENT);
-            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-            expect(queryByLabelText("Retry")).toBeTruthy();
-            expect(queryByLabelText("Delete")).toBeTruthy();
+            const { queryByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+            expect(queryByTestId("Retry")).toBeTruthy();
+            expect(queryByTestId("Delete")).toBeTruthy();
         });
 
         it.todo("unsends event on cancel click");
@@ -387,20 +387,20 @@ describe("<MessageActionBar />", () => {
 
         describe("when threads feature is enabled", () => {
             it("renders thread button on own actionable event", () => {
-                const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-                expect(queryByLabelText("Reply in thread")).toBeTruthy();
+                const { queryByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+                expect(queryByTestId("Reply in thread")).toBeTruthy();
             });
 
             it("does not render thread button for a beacon_info event", () => {
                 const beaconInfoEvent = makeBeaconInfoEvent(userId, roomId);
-                const { queryByLabelText } = getComponent({ mxEvent: beaconInfoEvent });
-                expect(queryByLabelText("Reply in thread")).toBeFalsy();
+                const { queryByTestId } = getComponent({ mxEvent: beaconInfoEvent });
+                expect(queryByTestId("Reply in thread")).toBeFalsy();
             });
 
             it("opens thread on click", () => {
-                const { getByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+                const { getByTestId } = getComponent({ mxEvent: alicesMessageEvent });
 
-                fireEvent.click(getByLabelText("Reply in thread"));
+                fireEvent.click(getByTestId("Reply in thread"));
 
                 expect(dispatcher.dispatch).toHaveBeenCalledWith({
                     action: Action.ShowThread,
@@ -425,9 +425,9 @@ describe("<MessageActionBar />", () => {
                 jest.spyOn(threadReplyEvent, "getThread").mockReturnValue({
                     rootEvent: alicesMessageEvent,
                 } as unknown as Thread);
-                const { getByLabelText } = getComponent({ mxEvent: threadReplyEvent });
+                const { getByTestId } = getComponent({ mxEvent: threadReplyEvent });
 
-                fireEvent.click(getByLabelText("Reply in thread"));
+                fireEvent.click(getByTestId("Reply in thread"));
 
                 expect(dispatcher.dispatch).toHaveBeenCalledWith({
                     action: Action.ShowThread,
@@ -454,8 +454,8 @@ describe("<MessageActionBar />", () => {
             event.stopPropagation = jest.fn();
             event.preventDefault = jest.fn();
 
-            const { queryByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-            fireEvent(queryByLabelText(buttonLabel)!, event);
+            const { queryByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+            fireEvent(queryByTestId(buttonLabel)!, event);
             expect(event.stopPropagation).toHaveBeenCalled();
             expect(event.preventDefault).toHaveBeenCalled();
             expect(queryByTestId("mx_MessageContextMenu")).toBeFalsy();
@@ -463,8 +463,8 @@ describe("<MessageActionBar />", () => {
     );
 
     it("does shows context menu when right-clicking options", () => {
-        const { queryByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-        fireEvent.contextMenu(queryByLabelText("Options")!);
+        const { queryByTestId } = getComponent({ mxEvent: alicesMessageEvent });
+        fireEvent.contextMenu(queryByTestId("Options")!);
         expect(queryByTestId("mx_MessageContextMenu")).toBeTruthy();
     });
 });

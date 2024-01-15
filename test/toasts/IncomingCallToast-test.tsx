@@ -127,7 +127,7 @@ describe("IncomingCallEvent", () => {
         screen.getByText("Video");
         screen.getByLabelText("3 participants");
 
-        screen.getByTestId("Join");
+        screen.getByText("Join");
         screen.getByTestId("Close");
     });
 
@@ -152,7 +152,7 @@ describe("IncomingCallEvent", () => {
         screen.getByText("Video call started");
         screen.getByText("Video");
 
-        screen.getByTestId("Join");
+        screen.getByText("Join");
         screen.getByTestId("Close");
     });
 
@@ -185,7 +185,7 @@ describe("IncomingCallEvent", () => {
         const dispatcherSpy = jest.fn();
         const dispatcherRef = defaultDispatcher.register(dispatcherSpy);
 
-        fireEvent.click(screen.getByRole("button", { name: "Close" }));
+        fireEvent.click(screen.getByTestId("Close"));
         await waitFor(() =>
             expect(toastStore.dismissToast).toHaveBeenCalledWith(
                 getIncomingCallToastKey(notifyContent.call_id, room.roomId),

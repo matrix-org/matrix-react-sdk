@@ -178,7 +178,7 @@ describe("RoomTile", () => {
             mocked(shouldShowComponent).mockReturnValue(true);
             renderRoomTile();
             expect(shouldShowComponent).toHaveBeenCalledWith(UIComponent.RoomOptionsMenu);
-            expect(screen.queryByRole("button", { name: "Room options" })).toBeInTheDocument();
+            expect(screen.queryByTestId("Room options")).toBeInTheDocument();
         });
 
         it("does not render the room options context menu when knocked to the room", () => {

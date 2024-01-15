@@ -6,6 +6,7 @@ exports[`LegacyRoomHeaderButtons-test.tsx should render 1`] = `
     aria-current="false"
     class="mx_AccessibleButton mx_LegacyRoomHeader_button mx_RightPanel_timelineCardButton"
     data-state="closed"
+    data-testid="Chat"
     role="button"
     tabindex="0"
   />
@@ -21,6 +22,7 @@ exports[`LegacyRoomHeaderButtons-test.tsx should render 1`] = `
     aria-current="false"
     class="mx_AccessibleButton mx_LegacyRoomHeader_button mx_RightPanel_roomSummaryButton"
     data-state="closed"
+    data-testid="Room info"
     role="button"
     tabindex="0"
   />

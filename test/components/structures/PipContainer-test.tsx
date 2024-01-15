@@ -268,7 +268,7 @@ describe("PipContainer", () => {
 
             // The leave button should disconnect from the call
             const disconnectSpy = jest.spyOn(call, "disconnect");
-            await user.click(screen.getByRole("button", { name: "Leave" }));
+            await user.click(screen.getByTestId("Leave"));
             expect(disconnectSpy).toHaveBeenCalled();
         });
     });
@@ -296,7 +296,7 @@ describe("PipContainer", () => {
             await user.click(await screen.findByRole("button", { name: "Back" }));
             expect(moveSpy).toHaveBeenCalledWith(room, widget, Container.Center);
 
-            expect(screen.queryByRole("button", { name: "Leave" })).toBeNull();
+            expect(screen.queryByTestId("Leave")).toBeNull();
         });
 
         WidgetStore.instance.removeVirtualWidget("1", room.roomId);
@@ -341,7 +341,7 @@ describe("PipContainer", () => {
                 .mockResolvedValue({});
             const mockMessaging = { transport: { send: sendSpy }, stop: () => {} } as unknown as ClientWidgetApi;
             WidgetMessagingStore.instance.storeMessaging(new Widget(widget), room.roomId, mockMessaging);
-            await user.click(screen.getByRole("button", { name: "Leave" }));
+            await user.click(screen.getByTestId("Leave"));
             expect(sendSpy).toHaveBeenCalledWith(ElementWidgetActions.HangupCall, {});
         });
 
@@ -366,7 +366,7 @@ describe("PipContainer", () => {
                 // Broadcast: Check for the „Live“ badge to be present
                 expect(screen.queryByText("Live")).toBeInTheDocument();
                 // Call: Check for the „Leave“ button to be present
-                screen.getByRole("button", { name: "Leave" });
+                screen.getByTestId("Leave");
             });
         });
     });

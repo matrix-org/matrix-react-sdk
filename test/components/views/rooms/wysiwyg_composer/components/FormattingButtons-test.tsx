@@ -93,7 +93,7 @@ describe("FormattingButtons", () => {
         renderComponent();
 
         Object.values(testCases).forEach(({ label }) => {
-            expect(screen.getByLabelText(label)).not.toHaveClass(classes.active);
+            expect(screen.getByTestId(label)).not.toHaveClass(classes.active);
         });
     });
 
@@ -103,7 +103,7 @@ describe("FormattingButtons", () => {
 
         Object.values(testCases).forEach((testCase) => {
             const { label } = testCase;
-            expect(screen.getByLabelText(label)).toHaveClass(classes.active);
+            expect(screen.getByTestId(label)).toHaveClass(classes.active);
         });
     });
 
@@ -113,7 +113,7 @@ describe("FormattingButtons", () => {
 
         Object.values(testCases).forEach((testCase) => {
             const { label } = testCase;
-            expect(screen.getByLabelText(label)).toHaveClass(classes.disabled);
+            expect(screen.getByTestId(label)).toHaveClass(classes.disabled);
         });
     });
 
@@ -123,7 +123,7 @@ describe("FormattingButtons", () => {
         for (const testCase of Object.values(testCases)) {
             const { label, mockFormatFn } = testCase;
 
-            screen.getByLabelText(label).click();
+            screen.getByTestId(label).click();
             expect(mockFormatFn).toHaveBeenCalledTimes(1);
         }
     });
@@ -134,8 +134,8 @@ describe("FormattingButtons", () => {
         for (const testCase of Object.values(testCases)) {
             const { label } = testCase;
 
-            await userEvent.hover(screen.getByLabelText(label));
-            expect(screen.getByText(label)).toBeInTheDocument();
+            await userEvent.hover(screen.getByTestId(label));
+            expect(screen.getByRole("tooltip", { name: new RegExp(label) })).toBeInTheDocument();
         }
     });
 
@@ -146,7 +146,7 @@ describe("FormattingButtons", () => {
         for (const testCase of Object.values(testCases)) {
             const { label } = testCase;
 
-            await userEvent.hover(screen.getByLabelText(label));
+            await userEvent.hover(screen.getByTestId(label));
             expect(screen.queryByText(label)).not.toBeInTheDocument();
         }
     });
@@ -157,8 +157,8 @@ describe("FormattingButtons", () => {
         for (const testCase of Object.values(testCases)) {
             const { label } = testCase;
 
-            await userEvent.hover(screen.getByLabelText(label));
-            expect(screen.getByLabelText(label)).toHaveClass("mx_FormattingButtons_Button_hover");
+            await userEvent.hover(screen.getByTestId(label));
+            expect(screen.getByTestId(label)).toHaveClass("mx_FormattingButtons_Button_hover");
         }
     });
 
@@ -169,8 +169,8 @@ describe("FormattingButtons", () => {
         for (const testCase of Object.values(testCases)) {
             const { label } = testCase;
 
-            await userEvent.hover(screen.getByLabelText(label));
-            expect(screen.getByLabelText(label)).not.toHaveClass("mx_FormattingButtons_Button_hover");
+            await userEvent.hover(screen.getByTestId(label));
+            expect(screen.getByTestId(label)).not.toHaveClass("mx_FormattingButtons_Button_hover");
         }
     });
 
@@ -185,8 +185,8 @@ describe("FormattingButtons", () => {
         const orderedListActive = { ...defaultActionStates, orderedList: "reversed" };
         renderComponent({ actionStates: orderedListActive });
 
-        expect(screen.getByLabelText("Indent increase")).toBeInTheDocument();
-        expect(screen.getByLabelText("Indent decrease")).toBeInTheDocument();
+        expect(screen.getByTestId("Indent increase")).toBeInTheDocument();
+        expect(screen.getByTestId("Indent decrease")).toBeInTheDocument();
 
         cleanup();
 
@@ -194,7 +194,7 @@ describe("FormattingButtons", () => {
 
         renderComponent({ actionStates: unorderedListActive });
 
-        expect(screen.getByLabelText("Indent increase")).toBeInTheDocument();
-        expect(screen.getByLabelText("Indent decrease")).toBeInTheDocument();
+        expect(screen.getByTestId("Indent increase")).toBeInTheDocument();
+        expect(screen.getByTestId("Indent decrease")).toBeInTheDocument();
     });
 });

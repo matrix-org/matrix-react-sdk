@@ -43,7 +43,7 @@ describe("MessageComposerButtons", () => {
     function getButtonLabels() {
         const getLabels = (elements: HTMLElement[]): string[] =>
             elements
-                .map((element) => element.getAttribute("aria-label"))
+                .map((element) => element.getAttribute("aria-label") ?? element.getAttribute("data-testid"))
                 .filter((label): label is string => label !== null);
 
         const mainLabels: Array<string | string[]> = getLabels(screen.queryAllByRole("button"));
