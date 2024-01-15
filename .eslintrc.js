@@ -254,7 +254,13 @@ module.exports = {
                     },
                 ],
             },
-        }
+        },
+        {
+            files: ["playwright/**/*.ts"],
+            parserOptions: {
+                project: ["./playwright/tsconfig.json"],
+            },
+        },
     ],
     settings: {
         react: {
