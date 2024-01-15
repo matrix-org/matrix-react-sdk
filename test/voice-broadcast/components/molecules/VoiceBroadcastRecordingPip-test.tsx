@@ -118,7 +118,7 @@ describe("VoiceBroadcastRecordingPip", () => {
         describe("and selecting another input device", () => {
             beforeEach(async () => {
                 await act(async () => {
-                    await userEvent.click(screen.getByLabelText("Change input device"));
+                    await userEvent.click(screen.getByTestId("Change input device"));
                     await userEvent.click(screen.getByText("Device 1"));
                 });
             });

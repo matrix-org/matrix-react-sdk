@@ -45,6 +45,7 @@ exports[`AdvancedRoomSettingsTab should render as expected 1`] = `
                   <div
                     class="mx_AccessibleButton mx_CopyableText_copyButton"
                     data-state="closed"
+                    data-testid="Copy"
                     role="button"
                     tabindex="0"
                   />

@@ -60,6 +60,6 @@ describe("RoomResultContextMenus", () => {
         mocked(shouldShowComponent).mockReturnValue(true);
         renderRoomResultContextMenus();
         expect(shouldShowComponent).toHaveBeenCalledWith(UIComponent.RoomOptionsMenu);
-        expect(screen.queryByRole("button", { name: "Room options" })).toBeInTheDocument();
+        expect(screen.queryByTestId("Room options")).toBeInTheDocument();
     });
 });

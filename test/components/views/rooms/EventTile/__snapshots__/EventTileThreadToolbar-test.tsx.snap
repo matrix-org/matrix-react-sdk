@@ -11,6 +11,7 @@ exports[`EventTileThreadToolbar renders 1`] = `
     <div
       class="mx_AccessibleButton mx_MessageActionBar_iconButton"
       data-state="closed"
+      data-testid="View in room"
       role="button"
       tabindex="0"
     >
@@ -19,6 +20,7 @@ exports[`EventTileThreadToolbar renders 1`] = `
     <div
       class="mx_AccessibleButton mx_MessageActionBar_iconButton"
       data-state="closed"
+      data-testid="Copy link to thread"
       role="button"
       tabindex="-1"
     >

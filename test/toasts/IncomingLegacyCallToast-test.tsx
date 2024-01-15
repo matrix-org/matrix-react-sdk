@@ -52,14 +52,14 @@ describe("<IncomingLegacyCallToast />", () => {
     });
 
     it("renders when silence button when call is not silenced", () => {
-        const { getByLabelText } = render(getComponent());
-        expect(getByLabelText("Silence call")).toMatchSnapshot();
+        const { getByTestId } = render(getComponent());
+        expect(getByTestId("Silence call")).toMatchSnapshot();
     });
 
     it("renders sound on button when call is silenced", () => {
         LegacyCallHandler.instance.silenceCall(call.callId);
-        const { getByLabelText } = render(getComponent());
-        expect(getByLabelText("Sound on")).toMatchSnapshot();
+        const { getByTestId } = render(getComponent());
+        expect(getByTestId("Sound on")).toMatchSnapshot();
     });
 
     it("renders disabled silenced button when call is forced to silent", () => {
@@ -74,7 +74,7 @@ describe("<IncomingLegacyCallToast />", () => {
                 });
             }
         });
-        const { getByLabelText } = render(getComponent());
-        expect(getByLabelText("Notifications silenced")).toMatchSnapshot();
+        const { getByTestId } = render(getComponent());
+        expect(getByTestId("Notifications silenced")).toMatchSnapshot();
     });
 });

@@ -29,6 +29,7 @@ exports[`VoiceBroadcastRecordingBody when rendering a live broadcast should rend
         <div
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
           data-state="closed"
+          data-testid="Change input device"
           role="button"
           tabindex="0"
         >
@@ -82,6 +83,7 @@ exports[`VoiceBroadcastRecordingBody when rendering a paused broadcast should re
         <div
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
           data-state="closed"
+          data-testid="Change input device"
           role="button"
           tabindex="0"
         >

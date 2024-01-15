@@ -17,7 +17,7 @@ limitations under the License.
 import userEvent from "@testing-library/user-event";
 import React, { ComponentProps } from "react";
 
-import { getByLabelText, render, RenderResult } from "../../../..";
+import { getByTestId, render, RenderResult } from "../../../..";
 import { EventTileThreadToolbar } from "../../../../../src/components/views/rooms/EventTile/EventTileThreadToolbar";
 
 describe("EventTileThreadToolbar", () => {
@@ -40,8 +40,8 @@ describe("EventTileThreadToolbar", () => {
     it("calls the right callbacks", async () => {
         const { container } = renderComponent();
 
-        const copyBtn = getByLabelText(container, "Copy link to thread");
-        const viewInRoomBtn = getByLabelText(container, "View in room");
+        const copyBtn = getByTestId(container, "Copy link to thread");
+        const viewInRoomBtn = getByTestId(container, "View in room");
 
         await userEvent.click(copyBtn);
         expect(copyLink).toHaveBeenCalledTimes(1);

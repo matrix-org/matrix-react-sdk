@@ -3,8 +3,9 @@
 exports[`<IncomingLegacyCallToast /> renders disabled silenced button when call is forced to silent 1`] = `
 <div
   aria-disabled="true"
-  aria-label="Notifications silenced"
   class="mx_AccessibleButton mx_IncomingLegacyCallToast_iconButton mx_IncomingLegacyCallToast_unSilence mx_AccessibleButton_disabled"
+  data-state="closed"
+  data-testid="Notifications silenced"
   disabled=""
   role="button"
   tabindex="0"
@@ -13,8 +14,9 @@ exports[`<IncomingLegacyCallToast /> renders disabled silenced button when call 
 
 exports[`<IncomingLegacyCallToast /> renders sound on button when call is silenced 1`] = `
 <div
-  aria-label="Sound on"
   class="mx_AccessibleButton mx_IncomingLegacyCallToast_iconButton mx_IncomingLegacyCallToast_unSilence"
+  data-state="closed"
+  data-testid="Sound on"
   role="button"
   tabindex="0"
 />
@@ -22,8 +24,9 @@ exports[`<IncomingLegacyCallToast /> renders sound on button when call is silenc
 
 exports[`<IncomingLegacyCallToast /> renders when silence button when call is not silenced 1`] = `
 <div
-  aria-label="Silence call"
   class="mx_AccessibleButton mx_IncomingLegacyCallToast_iconButton mx_IncomingLegacyCallToast_silence"
+  data-state="closed"
+  data-testid="Silence call"
   role="button"
   tabindex="0"
 />

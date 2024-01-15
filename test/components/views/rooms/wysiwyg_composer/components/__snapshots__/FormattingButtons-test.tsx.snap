@@ -8,6 +8,7 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
       data-state="closed"
+      data-testid="Fett"
       role="button"
       tabindex="0"
     >
@@ -18,6 +19,7 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
       data-state="closed"
+      data-testid="Kursiv"
       role="button"
       tabindex="0"
     >
@@ -28,6 +30,7 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
       data-state="closed"
+      data-testid="Unterstrichen"
       role="button"
       tabindex="0"
     >
@@ -38,6 +41,7 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
       data-state="closed"
+      data-testid="Durchgestrichen"
       role="button"
       tabindex="0"
     >
@@ -48,6 +52,7 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
       data-state="closed"
+      data-testid="Ungeordnete Liste"
       role="button"
       tabindex="0"
     >
@@ -58,6 +63,7 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
       data-state="closed"
+      data-testid="Nummerierte Liste"
       role="button"
       tabindex="0"
     >
@@ -68,6 +74,7 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
       data-state="closed"
+      data-testid="Zitieren"
       role="button"
       tabindex="0"
     >
@@ -78,6 +85,7 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
       data-state="closed"
+      data-testid="Code"
       role="button"
       tabindex="0"
     >
@@ -88,6 +96,7 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
       data-state="closed"
+      data-testid="Quelltextblock"
       role="button"
       tabindex="0"
     >
@@ -98,6 +107,7 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
       data-state="closed"
+      data-testid="Link"
       role="button"
       tabindex="0"
     >

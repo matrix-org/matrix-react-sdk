@@ -7,6 +7,7 @@ exports[`<DeviceExpandDetailsButton /> renders when expanded 1`] = `
       aria-label="Hide details"
       class="mx_AccessibleButton mx_DeviceExpandDetailsButton mx_DeviceExpandDetailsButton_expanded mx_AccessibleButton_hasKind mx_AccessibleButton_kind_icon"
       data-state="closed"
+      data-testid="Hide details"
       role="button"
       tabindex="0"
     >
@@ -25,6 +26,7 @@ exports[`<DeviceExpandDetailsButton /> renders when not expanded 1`] = `
       aria-label="Show details"
       class="mx_AccessibleButton mx_DeviceExpandDetailsButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_icon"
       data-state="closed"
+      data-testid="Show details"
       role="button"
       tabindex="0"
     >

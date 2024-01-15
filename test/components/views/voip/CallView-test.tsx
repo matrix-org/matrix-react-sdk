@@ -275,7 +275,7 @@ describe("CallView", () => {
             mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([fakeVideoInput1]);
 
             await renderView();
-            screen.getByRole("button", { name: /camera/ });
+            screen.getByTestId("Turn on camera");
             expect(screen.queryByRole("button", { name: "Video devices" })).toBe(null);
         });
 
@@ -283,7 +283,7 @@ describe("CallView", () => {
             mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([fakeAudioInput1, fakeAudioInput2]);
 
             await renderView();
-            screen.getByRole("button", { name: /microphone/ });
+            screen.getByTestId("Unmute microphone");
             fireEvent.click(screen.getByRole("button", { name: "Audio devices" }));
             screen.getByRole("menuitem", { name: "Headphones" });
             screen.getByRole("menuitem", { name: "Tailphones" });
@@ -293,7 +293,7 @@ describe("CallView", () => {
             mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([fakeVideoInput1, fakeVideoInput2]);
 
             await renderView();
-            screen.getByRole("button", { name: /camera/ });
+            screen.getByTestId("Turn on camera");
             fireEvent.click(screen.getByRole("button", { name: "Video devices" }));
             fireEvent.click(screen.getByRole("menuitem", { name: fakeVideoInput2.label }));
 
@@ -304,7 +304,7 @@ describe("CallView", () => {
             mocked(navigator.mediaDevices.enumerateDevices).mockResolvedValue([fakeAudioInput1, fakeAudioInput2]);
 
             await renderView();
-            screen.getByRole("button", { name: /microphone/ });
+            screen.getByTestId("Unmute microphone");
             fireEvent.click(screen.getByRole("button", { name: "Audio devices" }));
             fireEvent.click(screen.getByRole("menuitem", { name: fakeAudioInput2.label }));
 

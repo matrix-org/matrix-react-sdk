@@ -29,6 +29,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a buffering voice broadcast s
         <div
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
           data-state="closed"
+          data-testid="Change input device"
           role="button"
           tabindex="0"
         >
@@ -159,6 +160,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a pause/not-live broadcast sh
         <div
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
           data-state="closed"
+          data-testid="Change input device"
           role="button"
           tabindex="0"
         >
@@ -285,6 +287,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a playing broadcast in pip mo
         <div
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
           data-state="closed"
+          data-testid="Change input device"
           role="button"
           tabindex="0"
         >
@@ -399,6 +402,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a playing broadcast should re
         <div
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
           data-state="closed"
+          data-testid="Change input device"
           role="button"
           tabindex="0"
         >
@@ -513,6 +517,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a playing/live broadcast shou
         <div
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
           data-state="closed"
+          data-testid="Change input device"
           role="button"
           tabindex="0"
         >
@@ -635,6 +640,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a stopped broadcast should re
         <div
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
           data-state="closed"
+          data-testid="Change input device"
           role="button"
           tabindex="0"
         >
@@ -729,6 +735,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering an error broadcast should ren
         <div
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
           data-state="closed"
+          data-testid="Change input device"
           role="button"
           tabindex="0"
         >
