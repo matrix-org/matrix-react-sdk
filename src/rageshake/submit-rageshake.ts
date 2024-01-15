@@ -88,10 +88,7 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
             body.append("crypto_version", cryptoApi.getVersion());
 
             const ownDeviceKeys = await cryptoApi.getOwnDeviceKeys();
-            const keys = [
-                `curve25519:${ownDeviceKeys.curve25519}`,
-                `ed25519:${ownDeviceKeys.ed25519}`,
-            ];
+            const keys = [`curve25519:${ownDeviceKeys.curve25519}`, `ed25519:${ownDeviceKeys.ed25519}`];
 
             body.append("device_keys", keys.join(", "));
 

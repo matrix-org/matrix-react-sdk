@@ -124,10 +124,7 @@ async function getCryptoContext(client: MatrixClient): Promise<CryptoContext> {
 
     const ownDeviceKeys = await cryptoApi.getOwnDeviceKeys();
 
-    const keys = [
-        `curve25519:${ownDeviceKeys.curve25519}`,
-        `ed25519:${ownDeviceKeys.ed25519}`,
-    ];
+    const keys = [`curve25519:${ownDeviceKeys.curve25519}`, `ed25519:${ownDeviceKeys.ed25519}`];
 
     const crossSigningStatus = await cryptoApi.getCrossSigningStatus();
     const secretStorage = client.secretStorage;
