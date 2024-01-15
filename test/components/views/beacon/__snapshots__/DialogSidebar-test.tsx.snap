@@ -15,10 +15,10 @@ exports[`<DialogSidebar /> renders sidebar correctly with beacons 1`] = `
       </h4>
       <div
         class="mx_AccessibleButton mx_DialogSidebar_closeButton"
+        data-state="closed"
         data-testid="dialog-sidebar-close"
         role="button"
         tabindex="0"
-        title="Close sidebar"
       >
         <div
           class="mx_DialogSidebar_closeButtonIcon"
@@ -114,10 +114,10 @@ exports[`<DialogSidebar /> renders sidebar correctly without beacons 1`] = `
       </h4>
       <div
         class="mx_AccessibleButton mx_DialogSidebar_closeButton"
+        data-state="closed"
         data-testid="dialog-sidebar-close"
         role="button"
         tabindex="0"
-        title="Close sidebar"
       >
         <div
           class="mx_DialogSidebar_closeButtonIcon"

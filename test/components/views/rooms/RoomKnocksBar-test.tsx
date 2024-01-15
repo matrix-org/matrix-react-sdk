@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { act, fireEvent, render, screen } from "@testing-library/react";
 import {
     EventTimeline,
     EventType,
@@ -27,6 +26,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
+import { act, fireEvent, render, screen } from "../../..";
 import ErrorDialog from "../../../../src/components/views/dialogs/ErrorDialog";
 import { RoomSettingsTab } from "../../../../src/components/views/dialogs/RoomSettingsDialog";
 import { RoomKnocksBar } from "../../../../src/components/views/rooms/RoomKnocksBar";

@@ -17,8 +17,8 @@ limitations under the License.
 import React from "react";
 import { mocked } from "jest-mock";
 import { logger } from "matrix-js-sdk/src/logger";
-import { fireEvent, render, RenderResult } from "@testing-library/react";
 
+import { fireEvent, render, RenderResult } from "../../..";
 import RecordingPlayback, { PlaybackLayout } from "../../../../src/components/views/audio_messages/RecordingPlayback";
 import { Playback } from "../../../../src/audio/Playback";
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";

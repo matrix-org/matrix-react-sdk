@@ -26,6 +26,7 @@ import { HEADER_HEIGHT } from "../views/rooms/RoomSublist";
 import { Action } from "../../dispatcher/actions";
 import RoomSearch from "./RoomSearch";
 import ResizeNotifier from "../../utils/ResizeNotifier";
+import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
@@ -40,7 +41,7 @@ import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
-import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
+import { ButtonEvent } from "../views/elements/AccessibleButton";
 import PosthogTrackers from "../../PosthogTrackers";
 import PageType from "../../PageTypes";
 import { UserOnboardingButton } from "../views/user-onboarding/UserOnboardingButton";
@@ -332,7 +333,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         // to start a new call
         if (LegacyCallHandler.instance.getSupportsPstnProtocol()) {
             dialPadButton = (
-                <AccessibleButton
+                <AccessibleTooltipButton
                     className={classNames("mx_LeftPanel_dialPadButton", {})}
                     onClick={this.onDialPad}
                     title={_t("left_panel|open_dial_pad")}
@@ -343,7 +344,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         let rightButton: JSX.Element | undefined;
         if (this.state.activeSpace === MetaSpace.Home && shouldShowComponent(UIComponent.ExploreRooms)) {
             rightButton = (
-                <AccessibleButton
+                <AccessibleTooltipButton
                     className="mx_LeftPanel_exploreButton"
                     onClick={this.onExplore}
                     title={_t("action|explore_rooms")}

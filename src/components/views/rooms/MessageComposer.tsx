@@ -35,6 +35,7 @@ import { makeRoomPermalink, RoomPermalinkCreator } from "../../../utils/permalin
 import E2EIcon from "./E2EIcon";
 import SettingsStore from "../../../settings/SettingsStore";
 import { aboveLeftOf, MenuProps } from "../../structures/ContextMenu";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ReplyPreview from "./ReplyPreview";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
@@ -51,7 +52,7 @@ import UIStore, { UI_EVENTS } from "../../../stores/UIStore";
 import RoomContext from "../../../contexts/RoomContext";
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 import MessageComposerButtons from "./MessageComposerButtons";
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { ButtonEvent } from "../elements/AccessibleButton";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { isLocalRoom } from "../../../utils/localRoom/isLocalRoom";
 import { Features } from "../../../settings/Settings";
@@ -74,7 +75,7 @@ interface ISendButtonProps {
 
 function SendButton(props: ISendButtonProps): JSX.Element {
     return (
-        <AccessibleButton
+        <AccessibleTooltipButton
             className="mx_MessageComposer_sendMessage"
             onClick={props.onClick}
             title={props.title ?? _t("composer|send_button_title")}

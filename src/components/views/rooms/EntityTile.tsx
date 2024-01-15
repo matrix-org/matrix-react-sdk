@@ -178,6 +178,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
                 <AccessibleButton
                     className={classNames(mainClassNames)}
                     title={this.props.title}
+                    aria-label={this.props.title}
                     onClick={this.props.onClick}
                 >
                     <div className="mx_EntityTile_avatar">

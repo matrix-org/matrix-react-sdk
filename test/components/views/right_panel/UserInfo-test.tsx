@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen, waitFor, cleanup, act, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, cleanup, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Mocked, mocked } from "jest-mock";
 import {
@@ -288,7 +288,8 @@ describe("<UserInfo />", () => {
 
         it("renders close button correctly when encryption panel with a pending verification request", () => {
             renderComponent({ phase: RightPanelPhases.EncryptionPanel, verificationRequest });
-            expect(screen.getByTestId("base-card-close-button")).toHaveAttribute("title", "Cancel");
+            screen.getByTestId("base-card-close-button").focus();
+            expect(screen.getByRole("tooltip")).toHaveTextContent("Cancel");
         });
     });
 
@@ -355,11 +356,8 @@ describe("<UserInfo />", () => {
             // click it
             await userEvent.click(devicesButton);
 
-            // there should now be a button with the device id ...
-            const deviceButton = screen.getByRole("button", { description: "d1" });
-
-            // ... which should contain the device name
-            expect(within(deviceButton).getByText("my device")).toBeInTheDocument();
+            // there should now be a button with the device id which should contain the device name
+            expect(screen.getByRole("button", { name: "my device" })).toBeInTheDocument();
         });
 
         it("renders <BasicUserInfo />", async () => {
@@ -460,7 +458,11 @@ describe("<DeviceItem />", () => {
 
     const renderComponent = (props = {}) => {
         const Wrapper = (wrapperProps = {}) => {
-            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
+            return (
+                <TooltipProvider>
+                    <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />
+                </TooltipProvider>
+            );
         };
 
         return render(<DeviceItem {...defaultProps} {...props} />, {
