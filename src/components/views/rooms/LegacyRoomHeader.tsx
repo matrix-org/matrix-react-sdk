@@ -32,7 +32,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from "../right_panel/LegacyRoomHeaderButtons";
 import E2EIcon from "./E2EIcon";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import { ButtonEvent } from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
@@ -654,7 +654,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (this.props.viewingCall && !isVideoRoom) {
             if (this.props.activeCall === null) {
                 endButtons.push(
-                    <AccessibleButton
+                    <AccessibleTooltipButton
                         className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_closeButton"
                         onClick={this.onHideCallClick}
                         title={_t("room|header|close_call_button")}

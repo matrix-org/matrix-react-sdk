@@ -19,11 +19,11 @@ import React, { ComponentProps } from "react";
 
 import { Icon as CaretIcon } from "../../../../../res/img/feather-customised/dropdown-arrow.svg";
 import { _t } from "../../../../languageHandler";
-import AccessibleButton from "../../elements/AccessibleButton";
+import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
 
 type Props<T extends keyof JSX.IntrinsicElements> = Omit<
-    ComponentProps<typeof AccessibleButton<T>>,
-    "title" | "kind" | "className" | "onClick"
+    ComponentProps<typeof AccessibleTooltipButton<T>>,
+    "aria-label" | "title" | "kind" | "className" | "onClick"
 > & {
     isExpanded: boolean;
     onClick: () => void;
@@ -36,8 +36,9 @@ export const DeviceExpandDetailsButton = <T extends keyof JSX.IntrinsicElements>
 }: Props<T>): JSX.Element => {
     const label = isExpanded ? _t("settings|sessions|hide_details") : _t("settings|sessions|show_details");
     return (
-        <AccessibleButton
+        <AccessibleTooltipButton
             {...rest}
+            aria-label={label}
             title={label}
             kind="icon"
             className={classNames("mx_DeviceExpandDetailsButton", {
@@ -46,6 +47,6 @@ export const DeviceExpandDetailsButton = <T extends keyof JSX.IntrinsicElements>
             onClick={onClick}
         >
             <CaretIcon className="mx_DeviceExpandDetailsButton_icon" />
-        </AccessibleButton>
+        </AccessibleTooltipButton>
     );
 };

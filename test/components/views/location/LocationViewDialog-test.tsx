@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, RenderResult } from "@testing-library/react";
 import { RoomMember, LocationAssetType } from "matrix-js-sdk/src/matrix";
 
+import { render, RenderResult } from "../../..";
 import LocationViewDialog from "../../../../src/components/views/location/LocationViewDialog";
 import { TILE_SERVER_WK_KEY } from "../../../../src/utils/WellKnownUtils";
 import { getMockClientWithEventEmitter, makeLocationEvent } from "../../../test-utils";
