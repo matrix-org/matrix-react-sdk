@@ -31,6 +31,7 @@ import { SettingLevel } from "../settings/SettingLevel";
 import { Call, CallEvent, ConnectionState } from "../models/Call";
 import { SdkContextClass } from "../contexts/SDKContext";
 import ActiveWidgetStore from "./ActiveWidgetStore";
+import { isVideoRoom } from "../utils/video-rooms";
 
 export enum CallStoreEvent {
     // Signals a change in the call associated with a given room
@@ -212,7 +213,10 @@ export class CallStore extends AsyncStoreWithClient<{}> {
             // should be destroyed if the user does not view the call anymore.
             // A call in lobby state can easily be closed by not viewing the call anymore.
             let viewedCallRoomId = null;
-            if (SdkContextClass.instance.roomViewStore.isViewingCall()) {
+            const roomId = SdkContextClass.instance.roomViewStore.getRoomId();
+            const room = roomId ? this.matrixClient?.getRoom(roomId) : undefined;
+            const videoRoom = room ? isVideoRoom(room) : false;
+            if (SdkContextClass.instance.roomViewStore.isViewingCall() || videoRoom) {
                 viewedCallRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
             }
 
@@ -221,10 +225,12 @@ export class CallStore extends AsyncStoreWithClient<{}> {
                     (call.connectionState === ConnectionState.Disconnected ||
                         call.connectionState === ConnectionState.Lobby) &&
                     // Only destroy the call if it is associated with an active widget. (the call is already shown)
-                    ActiveWidgetStore.instance.getWidgetPersistence(call.widget.id, call.roomId)) ||
+                    ActiveWidgetStore.instance.isLive(call.widget.id, call.roomId)) ||
                 call.connectionState === ConnectionState.WidgetLoading
             ) {
                 call.destroy();
+            } else if (viewedCallRoomId === call.roomId && call.connectionState === ConnectionState.Disconnected) {
+                call.connect();
             }
         });
     };

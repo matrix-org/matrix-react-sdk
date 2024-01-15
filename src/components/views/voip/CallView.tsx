@@ -23,6 +23,7 @@ import { useCall } from "../../../hooks/useCall";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AppTile from "../elements/AppTile";
 import { CallStore } from "../../../stores/CallStore";
+import { Lobby } from "./LegacyLobby";
 
 interface StartCallViewProps {
     room: Room;
@@ -59,7 +60,7 @@ const StartCallView: FC<StartCallViewProps> = ({
 
     useEffect(() => {
         (async (): Promise<void> => {
-            // If the call was successfully started, connect automatically
+            // If the call was successfully created, connect automatically
             if (call !== null) {
                 try {
                     // Disconnect from any other active calls first, since we don't yet support holding
@@ -73,7 +74,8 @@ const StartCallView: FC<StartCallViewProps> = ({
     }, [call]);
 
     return (
-        <div className="mx_CallView">
+        <div className="mx_CallView" role={role}>
+            {/* {!!call?.connected && !!(call?.widget?.type == "jitsi") ? <Lobby room={room} /> : null} */}
             {call !== null && (
                 <AppTile
                     app={call.widget}
@@ -109,13 +111,18 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby, 
     // We'll take this opportunity to tidy up our room state
     useEffect(() => {
         call.clean();
+        // return () => {
+        //     if (call.connectionState === ConnectionState.Lobby) call.setDisconnected();
+        // };
     }, [call]);
     useEffect(() => {
         (call.widget.data ?? { skipLobby }).skipLobby = skipLobby;
         if (call.connectionState == ConnectionState.Disconnected) {
-            connect();
+            // immediately connect (this will start the lobby view in the widget)
+            // connect();
         }
-    }, [call.connectionState, call.widget.data, connect, skipLobby]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [call.widget.data, connect, skipLobby]);
 
     return (
         <div className="mx_CallView">
