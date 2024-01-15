@@ -300,6 +300,28 @@ export async function promptForBackupPassphrase(): Promise<Uint8Array> {
 }
 
 /**
+ * Carry out an operation that may require multiple accesses to secret storage, caching the key.
+ *
+ * Use this helper to wrap an operation that may require multiple accesses to secret storage; the user will be prompted
+ * to enter the 4S key or passphrase on the first access, and the key will be cached for the rest of the operation.
+ *
+ * @param func - The operation to be wrapped.
+ */
+export async function withSecretStorageKeyCache<T>(func: () => Promise<T>): Promise<T> {
+    secretStorageBeingAccessed = true;
+    try {
+        return await func();
+    } finally {
+        // Clear secret storage key cache now that work is complete
+        secretStorageBeingAccessed = false;
+        if (!isCachingAllowed()) {
+            secretStorageKeys = {};
+            secretStorageKeyInfo = {};
+        }
+    }
+}
+
+/**
  * This helper should be used whenever you need to access secret storage. It
  * ensures that secret storage (and also cross-signing since they each depend on
  * each other in a cycle of sorts) have been bootstrapped before running the
@@ -321,7 +343,11 @@ export async function promptForBackupPassphrase(): Promise<Uint8Array> {
  * @param {bool} [forceReset] Reset secret storage even if it's already set up
  */
 export async function accessSecretStorage(func = async (): Promise<void> => {}, forceReset = false): Promise<void> {
-    secretStorageBeingAccessed = true;
+    await withSecretStorageKeyCache(() => doAccessSecretStorage(func, forceReset));
+}
+
+/** Helper for {@link #accessSecretStorage} */
+async function doAccessSecretStorage(func: () => Promise<void>, forceReset: boolean): Promise<void> {
     try {
         const cli = MatrixClientPeg.safeGet();
         if (!(await cli.hasSecretStorageKey()) || forceReset) {
@@ -352,7 +378,12 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
                 throw new Error("Secret storage creation canceled");
             }
         } else {
-            await cli.bootstrapCrossSigning({
+            const crypto = cli.getCrypto();
+            if (!crypto) {
+                throw new Error("End-to-end encryption is disabled - unable to access secret storage.");
+            }
+
+            await crypto.bootstrapCrossSigning({
                 authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
                     const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                         title: _t("encryption|bootstrap_title"),
@@ -365,7 +396,7 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
                     }
                 },
             });
-            await cli.bootstrapSecretStorage({
+            await crypto.bootstrapSecretStorage({
                 getKeyBackupPassphrase: promptForBackupPassphrase,
             });
 
@@ -392,13 +423,6 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
         logger.error(e);
         // Re-throw so that higher level logic can abort as needed
         throw e;
-    } finally {
-        // Clear secret storage key cache now that work is complete
-        secretStorageBeingAccessed = false;
-        if (!isCachingAllowed()) {
-            secretStorageKeys = {};
-            secretStorageKeyInfo = {};
-        }
     }
 }
 

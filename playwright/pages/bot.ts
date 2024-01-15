@@ -18,8 +18,10 @@ import { JSHandle, Page } from "@playwright/test";
 import { uniqueId } from "lodash";
 
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
-import type { AddSecretStorageKeyOpts } from "matrix-js-sdk/src/secret-storage";
+import type { Logger } from "matrix-js-sdk/src/logger";
+import type { SecretStorageKeyDescription } from "matrix-js-sdk/src/secret-storage";
 import type { Credentials, HomeserverInstance } from "../plugins/homeserver";
+import type { GeneratedSecretStorageKey } from "matrix-js-sdk/src/crypto-api";
 import { Client } from "./client";
 
 export interface CreateBotOpts {
@@ -60,26 +62,75 @@ const defaultCreateBotOptions = {
     bootstrapCrossSigning: true,
 } satisfies CreateBotOpts;
 
+type ExtendedMatrixClient = MatrixClient & { __playwright_recovery_key: GeneratedSecretStorageKey };
+
 export class Bot extends Client {
     public credentials?: Credentials;
+    private handlePromise: Promise<JSHandle<ExtendedMatrixClient>>;
 
-    constructor(page: Page, private homeserver: HomeserverInstance, private readonly opts: CreateBotOpts) {
+    constructor(
+        page: Page,
+        private homeserver: HomeserverInstance,
+        private readonly opts: CreateBotOpts,
+    ) {
         super(page);
         this.opts = Object.assign({}, defaultCreateBotOptions, opts);
     }
 
+    public setCredentials(credentials: Credentials): void {
+        if (this.credentials) throw new Error("Bot has already started");
+        this.credentials = credentials;
+    }
+
+    public async getRecoveryKey(): Promise<GeneratedSecretStorageKey> {
+        const client = await this.getClientHandle();
+        return client.evaluate((cli) => cli.__playwright_recovery_key);
+    }
+
     private async getCredentials(): Promise<Credentials> {
         if (this.credentials) return this.credentials;
-        const username = uniqueId(this.opts.userIdPrefix);
+        // We want to pad the uniqueId but not the prefix
+        const username =
+            this.opts.userIdPrefix +
+            uniqueId(this.opts.userIdPrefix)
+                .substring(this.opts.userIdPrefix?.length ?? 0)
+                .padStart(4, "0");
         const password = uniqueId("password_");
         console.log(`getBot: Create bot user ${username} with opts ${JSON.stringify(this.opts)}`);
         this.credentials = await this.homeserver.registerUser(username, password, this.opts.displayName);
         return this.credentials;
     }
 
-    protected async getClientHandle(): Promise<JSHandle<MatrixClient>> {
-        return this.page.evaluateHandle(
+    protected async getClientHandle(): Promise<JSHandle<ExtendedMatrixClient>> {
+        if (this.handlePromise) return this.handlePromise;
+
+        this.handlePromise = this.page.evaluateHandle(
             async ({ homeserver, credentials, opts }) => {
+                function getLogger(loggerName: string): Logger {
+                    const logger = {
+                        getChild: (namespace: string) => getLogger(`${loggerName}:${namespace}`),
+                        trace(...msg: any[]): void {
+                            console.trace(loggerName, ...msg);
+                        },
+                        debug(...msg: any[]): void {
+                            console.debug(loggerName, ...msg);
+                        },
+                        info(...msg: any[]): void {
+                            console.info(loggerName, ...msg);
+                        },
+                        warn(...msg: any[]): void {
+                            console.warn(loggerName, ...msg);
+                        },
+                        error(...msg: any[]): void {
+                            console.error(loggerName, ...msg);
+                        },
+                    } satisfies Logger;
+
+                    return logger as unknown as Logger;
+                }
+
+                const logger = getLogger(`cypress bot ${credentials.userId}`);
+
                 const keys = {};
 
                 const getCrossSigningKey = (type: string) => {
@@ -92,7 +143,11 @@ export class Bot extends Client {
 
                 // Store the cached secret storage key and return it when `getSecretStorageKey` is called
                 let cachedKey: { keyId: string; key: Uint8Array };
-                const cacheSecretStorageKey = (keyId: string, keyInfo: AddSecretStorageKeyOpts, key: Uint8Array) => {
+                const cacheSecretStorageKey = (
+                    keyId: string,
+                    keyInfo: SecretStorageKeyDescription,
+                    key: Uint8Array,
+                ) => {
                     cachedKey = {
                         keyId,
                         key,
@@ -118,7 +173,8 @@ export class Bot extends Client {
                     scheduler: new window.matrixcs.MatrixScheduler(),
                     cryptoStore: new window.matrixcs.MemoryCryptoStore(),
                     cryptoCallbacks,
-                });
+                    logger,
+                }) as ExtendedMatrixClient;
 
                 if (opts.autoAcceptInvites) {
                     cli.on(window.matrixcs.RoomMemberEvent.Membership, (event, member) => {
@@ -141,6 +197,10 @@ export class Bot extends Client {
                 await cli.startClient();
 
                 if (opts.bootstrapCrossSigning) {
+                    // XXX: workaround https://github.com/element-hq/element-web/issues/26755
+                    //   wait for out device list to be available, as a proxy for the device keys having been uploaded.
+                    await cli.getCrypto()!.getUserDeviceInfo([credentials.userId]);
+
                     await cli.getCrypto()!.bootstrapCrossSigning({
                         authUploadDeviceSigningKeys: async (func) => {
                             await func({
@@ -175,5 +235,6 @@ export class Bot extends Client {
                 opts: this.opts,
             },
         );
+        return this.handlePromise;
     }
 }

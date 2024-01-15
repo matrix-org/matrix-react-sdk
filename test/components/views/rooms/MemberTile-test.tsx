@@ -20,6 +20,8 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { MatrixClient, RoomMember, Device } from "matrix-js-sdk/src/matrix";
 import { UserVerificationStatus, DeviceVerificationStatus } from "matrix-js-sdk/src/crypto-api";
 import { mocked } from "jest-mock";
+import userEvent from "@testing-library/user-event";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import * as TestUtils from "../../../test-utils";
 import MemberTile from "../../../../src/components/views/rooms/MemberTile";
@@ -35,7 +37,7 @@ describe("MemberTile", () => {
     });
 
     it("should not display an E2EIcon when the e2E status = normal", () => {
-        const { container } = render(<MemberTile member={member} />);
+        const { container } = render(<MemberTile member={member} />, { wrapper: TooltipProvider });
 
         expect(container).toMatchSnapshot();
     });
@@ -46,12 +48,15 @@ describe("MemberTile", () => {
             wasCrossSigningVerified: jest.fn().mockReturnValue(true),
         } as unknown as UserVerificationStatus);
 
-        const { container } = render(<MemberTile member={member} />);
+        const { container } = render(<MemberTile member={member} />, { wrapper: TooltipProvider });
 
-        await waitFor(() =>
-            expect(screen.getByLabelText("This user has not verified all of their sessions.")).toBeInTheDocument(),
-        );
         expect(container).toMatchSnapshot();
+        await waitFor(async () => {
+            await userEvent.hover(container.querySelector(".mx_E2EIcon")!);
+            expect(
+                screen.getByRole("tooltip", { name: "This user has not verified all of their sessions." }),
+            ).toBeInTheDocument();
+        });
     });
 
     it("should display an verified E2EIcon when the e2E status = Verified", async () => {
@@ -67,13 +72,16 @@ describe("MemberTile", () => {
             crossSigningVerified: true,
         } as DeviceVerificationStatus);
 
-        const { container } = render(<MemberTile member={member} />);
+        const { container } = render(<MemberTile member={member} />, { wrapper: TooltipProvider });
 
-        await waitFor(() =>
-            expect(
-                screen.getByLabelText("You have verified this user. This user has verified all of their sessions."),
-            ).toBeInTheDocument(),
-        );
         expect(container).toMatchSnapshot();
+        await waitFor(async () => {
+            await userEvent.hover(container.querySelector(".mx_E2EIcon")!);
+            expect(
+                screen.getByRole("tooltip", {
+                    name: "You have verified this user. This user has verified all of their sessions.",
+                }),
+            ).toBeInTheDocument();
+        });
     });
 });

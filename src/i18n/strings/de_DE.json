@@ -79,6 +79,7 @@
         "next": "Weiter",
         "no": "Nein",
         "ok": "Ok",
+        "pause": "Pausieren",
         "pin": "Anheften",
         "play": "Abspielen",
         "proceed": "Fortfahren",
@@ -162,6 +163,7 @@
         "autodiscovery_invalid_is_base_url": "Ungültige base_url für m.identity_server",
         "autodiscovery_invalid_is_response": "Ungültige Antwort beim Aufspüren des Identitäts-Servers",
         "autodiscovery_invalid_json": "Ungültiges JSON",
+        "autodiscovery_no_well_known": "Keine .well-known-JSON-Datei gefunden",
         "autodiscovery_unexpected_error_hs": "Ein unerwarteter Fehler ist beim Laden der Heim-Server-Konfiguration aufgetreten",
         "autodiscovery_unexpected_error_is": "Ein unerwarteter Fehler ist beim Laden der Identitäts-Server-Konfiguration aufgetreten",
         "captcha_description": "Dieser Heim-Server möchte sicherstellen, dass du kein Roboter bist.",
@@ -227,6 +229,7 @@
         "no_hs_url_provided": "Keine Heim-Server-URL angegeben",
         "oidc": {
             "error_title": "Wir konnten dich nicht anmelden",
+            "logout_redirect_warning": "Sie werden zum Server Authentifizierungsanbieter weitergeleitet, um die Abmeldung abzuschließen.",
             "missing_or_invalid_stored_state": "Wir haben deinen Browser gebeten, sich zu merken, bei welchem Heim-Server du dich anmeldest, aber dein Browser hat dies leider vergessen. Gehe zur Anmeldeseite und versuche es erneut."
         },
         "password_field_keep_going_prompt": "Fortfahren …",
@@ -284,6 +287,7 @@
             "sign_out_other_devices": "Auf allen Geräten abmelden"
         },
         "reset_password_action": "Passwort zurücksetzen",
+        "reset_password_button": "Passwort vergessen?",
         "reset_password_email_field_description": "Verwende eine E-Mail-Adresse, um dein Konto wiederherzustellen",
         "reset_password_email_field_required_invalid": "E-Mail-Adresse eingeben (auf diesem Heim-Server erforderlich)",
         "reset_password_email_not_associated": "Deine E-Mail-Adresse scheint nicht mit einer Matrix-ID auf diesem Heim-Server verknüpft zu sein.",
@@ -422,11 +426,14 @@
             "other": "und %(count)s weitere …",
             "one": "und ein weiterer …"
         },
+        "android": "Android",
         "appearance": "Erscheinungsbild",
         "application": "Anwendung",
         "are_you_sure": "Bist du sicher?",
         "attachment": "Anhang",
         "authentication": "Authentifizierung",
+        "avatar": "Profilbild",
+        "beta": "Beta",
         "camera": "Kamera",
         "cameras": "Kameras",
         "capabilities": "Funktionen",
@@ -459,6 +466,7 @@
         "identity_server": "Identitäts-Server",
         "image": "Bild",
         "integration_manager": "Integrationsverwaltung",
+        "ios": "iOS",
         "joined": "Beigetreten",
         "labs": "Labor",
         "legal": "Rechtliches",
@@ -466,10 +474,12 @@
         "loading": "Lade …",
         "location": "Standort",
         "low_priority": "Niedrige Priorität",
+        "matrix": "Matrix",
         "message": "Nachricht",
         "message_layout": "Nachrichtenlayout",
         "microphone": "Mikrofon",
         "model": "Modell",
+        "modern": "Modern",
         "mute": "Stummschalten",
         "n_members": {
             "other": "%(count)s Mitglieder",
@@ -483,10 +493,12 @@
             "one": "%(count)s Raum",
             "other": "%(count)s Räume"
         },
+        "name": "Name",
         "no_results": "Keine Ergebnisse",
         "no_results_found": "Keine Ergebnisse",
         "not_trusted": "Nicht vertrauenswürdig",
         "off": "Aus",
+        "offline": "Offline",
         "on": "An",
         "options": "Optionen",
         "orphan_rooms": "Andere Räume",
@@ -514,16 +526,21 @@
         "secure_backup": "Verschlüsselte Sicherung",
         "security": "Sicherheit",
         "select_all": "Alle auswählen",
+        "server": "Server",
         "settings": "Einstellungen",
         "setup_secure_messages": "Richte sichere Nachrichten ein",
         "show_more": "Mehr zeigen",
         "someone": "Jemand",
+        "space": "Raum",
+        "sticker": "Sticker",
         "stickerpack": "Sticker-Paket",
         "success": "Erfolg",
         "suggestions": "Vorschläge",
         "support": "Unterstützung",
         "system_alerts": "Systembenachrichtigung",
         "theme": "Design",
+        "thread": "Thema",
+        "threads": "Themen",
         "timeline": "Verlauf",
         "trusted": "Vertrauenswürdig",
         "unavailable": "Nicht verfügbar",
@@ -538,6 +555,8 @@
         "username": "Benutzername",
         "verification_cancelled": "Verifikation abgebrochen",
         "verified": "Verifiziert",
+        "version": "Version",
+        "video": "Video",
         "video_room": "Videoraum",
         "view_message": "Nachricht anzeigen",
         "warning": "Warnung",
@@ -704,7 +723,9 @@
         "failed_to_load": "Fehler beim Laden.",
         "failed_to_save": "Speichern der Einstellungen fehlgeschlagen.",
         "failed_to_send": "Übertragung des Ereignisses fehlgeschlagen!",
+        "id": "ID: ",
         "invalid_json": "Scheint kein gültiges JSON zu sein.",
+        "level": "Level",
         "low_bandwidth_mode": "Modus für geringe Bandbreite",
         "low_bandwidth_mode_description": "Benötigt kompatiblen Heim-Server.",
         "main_timeline": "Hauptverlauf",
@@ -716,6 +737,7 @@
         "number_of_users": "Benutzeranzahl",
         "observe_only": "Nur beobachten",
         "original_event_source": "Ursprüngliche Rohdaten",
+        "phase": "Phase",
         "phase_cancelled": "Abgebrochen",
         "phase_ready": "Bereit",
         "phase_requested": "Angefragt",
@@ -843,6 +865,9 @@
         },
         "event_shield_reason_authenticity_not_guaranteed": "Die Echtheit dieser verschlüsselten Nachricht kann auf diesem Gerät nicht garantiert werden.",
         "event_shield_reason_mismatched_sender_key": "Von einer nicht verifizierten Sitzung verschlüsselt",
+        "event_shield_reason_unknown_device": "Durch ein unbekanntes oder gelöschtes Gerät verschlüsselt.",
+        "event_shield_reason_unsigned_device": "Durch ein von Besitzer nicht verifiziertes Gerät verschlüsselt.",
+        "event_shield_reason_unverified_identity": "Durch einen nicht verifizierten Benutzer verschlüsselt.",
         "export_unsupported": "Dein Browser unterstützt die benötigten Verschlüsselungserweiterungen nicht",
         "import_invalid_keyfile": "Keine gültige %(brand)s-Schlüsseldatei",
         "import_invalid_passphrase": "Authentifizierung fehlgeschlagen: Falsches Passwort?",
@@ -1027,7 +1052,6 @@
         "unknown_error_code": "Unbekannter Fehlercode",
         "update_power_level": "Ändern der Berechtigungsstufe fehlgeschlagen"
     },
-    "error_database_closed_description": "Dies wurde eventuell durch das Öffnen der App in mehreren Tabs oder das Löschen der Browser-Daten verursacht.",
     "error_database_closed_title": "Datenbank unerwartet geschlossen",
     "error_dialog": {
         "copy_room_link_failed": {
@@ -1062,10 +1086,13 @@
             "user": "%(senderName)s hat einen Anruf gestartet",
             "you": "Du hast einen Anruf gestartet"
         },
+        "m.emote": "* %(senderName)s %(emote)s",
         "m.reaction": {
             "user": "%(sender)s reagierte mit %(reaction)s auf %(message)s",
             "you": "Du reagiertest mit %(reaction)s auf %(message)s"
-        }
+        },
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "m.text": "%(senderName)s: %(message)s"
     },
     "export_chat": {
         "cancelled": "Exportieren abgebrochen",
@@ -1098,10 +1125,13 @@
         },
         "fetching_events": "Rufe Ereignisse ab …",
         "file_attached": "Datei angehängt",
+        "format": "Format",
         "from_the_beginning": "Von Anfang an",
         "generating_zip": "ZIP-Archiv wird generiert",
+        "html": "HTML",
         "html_title": "Exportierte Daten",
         "include_attachments": "Anhänge einbeziehen",
+        "json": "JSON",
         "media_omitted": "Medien ausgelassen",
         "media_omitted_file_size": "Medien ausgelassen - Datei zu groß",
         "messages": "Nachrichten",
@@ -1115,6 +1145,7 @@
         "select_option": "Wähle die gewünschten Optionen für den Export des Verlaufs",
         "size_limit": "Größenlimit",
         "size_limit_min_max": "Die Größe muss eine Zahl zwischen %(min)s MB und %(max)s MB sein",
+        "size_limit_postfix": "MB",
         "starting_export": "Beginne Export …",
         "successful": "Exportieren erfolgreich",
         "successful_detail": "Export erfolgreich. Du kannst ihn in deinem Download-Verzeichnis finden.",
@@ -1263,6 +1294,7 @@
     },
     "keyboard": {
         "activate_button": "Ausgewählten Button aktivieren",
+        "alt": "Alt",
         "autocomplete_cancel": "Autovervollständigung deaktivieren",
         "autocomplete_force": "Vervollständigung erzwingen",
         "autocomplete_navigate_next": "Nächster Vorschlag der Autovervollständigung",
@@ -1317,6 +1349,7 @@
         "search": "Suchen (muss in den Einstellungen aktiviert sein)",
         "send_sticker": "Sticker senden",
         "shift": "Umschalt",
+        "space": "Leertaste",
         "switch_to_space": "Mit Nummer zu Space springen",
         "toggle_hidden_events": "Sichtbarkeit versteckter Ereignisse umschalten",
         "toggle_microphone_mute": "Mikrofon an-/ausschalten",
@@ -1525,6 +1558,7 @@
         "toast_description": "%(brand)s ist in mobilen Browsern experimentell. Für eine bessere Erfahrung nutze unsere App.",
         "toast_title": "Nutze die App für eine bessere Erfahrung"
     },
+    "name_and_id": "%(name)s (%(userId)s)",
     "no_more_results": "Keine weiteren Ergebnisse",
     "notif_panel": {
         "empty_description": "Du hast keine sichtbaren Benachrichtigungen.",
@@ -1533,9 +1567,11 @@
     "notifications": {
         "all_messages": "Alle Nachrichten",
         "all_messages_description": "Bei jeder Nachricht benachrichtigen",
+        "class_global": "Global",
         "class_other": "Sonstiges",
         "colour_bold": "Fett",
         "colour_grey": "Grau",
+        "colour_muted": "Stumm",
         "colour_none": "Nichts",
         "colour_red": "Rot",
         "colour_unsent": "Nicht gesendet",
@@ -1660,11 +1696,13 @@
         "unable_edit_title": "Umfrage kann nicht bearbeitet werden"
     },
     "power_level": {
+        "admin": "Administrator",
         "custom": "Benutzerdefiniert (%(level)s)",
         "custom_level": "Selbstdefiniertes Berechtigungslevel",
         "default": "Standard",
         "label": "Berechtigungsstufe",
         "mod": "Moderator",
+        "moderator": "Moderator",
         "restricted": "Eingeschränkt"
     },
     "presence": {
@@ -1672,7 +1710,9 @@
         "busy": "Beschäftigt",
         "idle": "Abwesend",
         "idle_for": "Abwesend seit %(duration)s",
+        "offline": "Offline",
         "offline_for": "Offline seit %(duration)s",
+        "online": "Online",
         "online_for": "Online seit %(duration)s",
         "unknown": "Unbekannt",
         "unknown_for": "Unbekannt seit %(duration)s"
@@ -1868,6 +1908,7 @@
             "video_call_ec_layout_spotlight": "Rampenlicht",
             "video_room_view_chat_button": "Nachrichtenverlauf anzeigen"
         },
+        "header_untrusted_label": "Nicht vertrauenswürdig",
         "inaccessible": "Dieser Raum oder Space ist im Moment nicht zugänglich.",
         "inaccessible_name": "Auf %(roomName)s kann momentan nicht zugegriffen werden.",
         "inaccessible_subtitle_1": "Versuche es später erneut oder bitte einen Raum- oder Space-Admin um eine Zutrittserlaubnis.",
@@ -1964,7 +2005,7 @@
             "server_connectivity_lost_title": "Verbindung zum Server wurde unterbrochen.",
             "some_messages_not_sent": "Einige Nachrichten konnten nicht gesendet werden"
         },
-        "unknown_status_code_for_timeline_jump": "Unbekannter Statuscode",
+        "unknown_status_code_for_timeline_jump": "unbekannter Statuscode",
         "unread_notifications_predecessor": {
             "one": "Du hast %(count)s ungelesene Benachrichtigungen in einer früheren Version dieses Raumes.",
             "other": "Du hast %(count)s ungelesene Benachrichtigungen in einer früheren Version dieses Raums."
@@ -2552,6 +2593,7 @@
             "voip": "Audio- und Videoanrufe"
         },
         "preferences": {
+            "Electron.enableHardwareAcceleration": "Hardwarebeschleunigung einschalten (Neustart von %(appName)s notwendig)",
             "always_show_menu_bar": "Fenstermenüleiste immer anzeigen",
             "autocomplete_delay": "Verzögerung vor Autovervollständigung (ms)",
             "code_blocks_heading": "Quelltextblöcke",
@@ -2578,6 +2620,7 @@
         "security": {
             "4s_public_key_in_account_data": "in den Kontodaten",
             "4s_public_key_status": "Öffentlicher Schlüssel des sicheren Speichers:",
+            "analytics_description": "Anonym Daten teilen um bei der Identifizierung von Fehlern zu helfen. Keine persönlichen Daten. Keine Daten von Dritt-Anbietern.",
             "backup_key_cached_status": "Sicherungsschlüssel zwischengespeichert:",
             "backup_key_stored_status": "Sicherungsschlüssel gespeichert:",
             "backup_key_unexpected_type": "unbekannter Typ",
@@ -2613,14 +2656,17 @@
             "ignore_users_section": "Blockierte Benutzer",
             "import_megolm_keys": "E2E-Raumschlüssel importieren",
             "key_backup_active": "Diese Sitzung sichert deine Schlüssel.",
+            "key_backup_active_version": "Aktive Backup-Version:",
             "key_backup_active_version_none": "Nichts",
             "key_backup_algorithm": "Algorithmus:",
+            "key_backup_can_be_restored": "Dieses Backup kann in dieser Sitzung wiederhergestellt werden",
             "key_backup_complete": "Alle Schlüssel gesichert",
             "key_backup_connect": "Verbinde diese Sitzung mit einer Schlüsselsicherung",
             "key_backup_connect_prompt": "Verbinde diese Sitzung mit deiner Schlüsselsicherung bevor du dich abmeldest, um den Verlust von Schlüsseln zu vermeiden.",
             "key_backup_in_progress": "Sichere %(sessionsRemaining)s Schlüssel …",
             "key_backup_inactive": "Diese Sitzung <b>sichert deine Schlüssel nicht</b>, aber du hast eine vorhandene Sicherung, die du wiederherstellen und in Zukunft hinzufügen kannst.",
             "key_backup_inactive_warning": "Deine Schlüssel werden von dieser Sitzung <b>nicht gesichert</b>.",
+            "key_backup_latest_version": "Letzte Backup-Version auf diesen Server:",
             "manually_verify_all_sessions": "Indirekte Sitzungen manuell verifizieren",
             "message_search_disable_warning": "Wenn deaktiviert, werden Nachrichten von verschlüsselten Räumen nicht in den Ergebnissen auftauchen.",
             "message_search_disabled": "Speichere verschlüsselte Nachrichten lokal, sodass sie deinen Suchergebnissen erscheinen können.",
@@ -2654,6 +2700,8 @@
         "send_read_receipts_unsupported": "Dein Server unterstützt das Deaktivieren von Lesebestätigungen nicht.",
         "send_typing_notifications": "Tippbenachrichtigungen senden",
         "sessions": {
+            "best_security_note": "Um die beste Sicherheit zu gewährleisten, verifizieren Sie Ihre Sitzungen und melden Sie sich von jeder Sitzung ab, die Sie nicht mehr kennen oder nicht mehr verwenden.",
+            "browser": "Internet Browser",
             "confirm_sign_out": {
                 "one": "Abmelden des Geräts bestätigen",
                 "other": "Abmelden dieser Geräte bestätigen"
@@ -2678,6 +2726,7 @@
             "device_verified_description": "Diese Sitzung ist für sichere Kommunikation bereit.",
             "device_verified_description_current": "Deine aktuelle Sitzung ist für sichere Kommunikation bereit.",
             "error_pusher_state": "Konfigurieren des Push-Dienstes fehlgeschlagen",
+            "error_set_name": "Es konnte kein Sitzungsname gesetzt werden",
             "filter_all": "Alle",
             "filter_inactive": "Inaktiv",
             "filter_inactive_description": "Seit %(inactiveAgeDays)s oder mehr Tagen inaktiv",
@@ -2738,6 +2787,7 @@
             "unverified_sessions_explainer_1": "Nicht verifizierte Sitzungen sind jene, die mit deinen Daten angemeldet, aber nicht quer signiert wurden.",
             "unverified_sessions_explainer_2": "Du solltest besonders sicher gehen, dass du diese Sitzungen kennst, da sie die unbefugte Nutzung deines Kontos durch Dritte bedeuten könnten.",
             "unverified_sessions_list_description": "Für besonders sichere Kommunikation verifiziere deine Sitzungen oder melde dich von ihnen ab, falls du sie nicht mehr identifizieren kannst.",
+            "url": "Link",
             "verified_session": "Verifizierte Sitzung",
             "verified_sessions": "Verifizierte Sitzungen",
             "verified_sessions_explainer_1": "Auf verifizierte Sitzungen kannst du überall mit deinem Konto zugreifen, wenn du deine Passphrase eingegeben oder deine Identität mit einer anderen Sitzung verifiziert hast.",
@@ -2765,6 +2815,7 @@
             "metaspaces_orphans_description": "Gruppiere all deine Räume, die nicht Teil eines Spaces sind, an einem Ort.",
             "metaspaces_people_description": "Gruppiere all deine Direktnachrichten an einem Ort.",
             "metaspaces_subsection": "Anzuzeigende Spaces",
+            "spaces_explainer": "Räume sind Möglichkeiten, Personen zu gruppieren. Neben den Räumen, in denen du dich befindest, kannst du auch einige vorgefertigte verwenden.",
             "title": "Seitenleiste"
         },
         "start_automatically": "Nach Systemstart automatisch starten",
@@ -2814,6 +2865,7 @@
         "addwidget_no_permissions": "Du darfst in diesem Raum keine Widgets verändern.",
         "ban": "Verbannt den Benutzer mit der angegebenen ID",
         "category_actions": "Aktionen",
+        "category_admin": "Administrator",
         "category_advanced": "Erweitert",
         "category_effects": "Effekte",
         "category_messages": "Nachrichten",
@@ -2826,7 +2878,9 @@
         "devtools": "Öffnet die Entwicklungswerkzeuge",
         "discardsession": "Erzwingt, dass die aktuell ausgehende Gruppensitzung in einem verschlüsseltem Raum verworfen wird",
         "error_invalid_rendering_type": "Befehlsfehler: Rendering-Typ kann nicht gefunden werden (%(renderingType)s)",
+        "error_invalid_room": "Eingabe fehlgeschlagen: Raum (%(roomId)s) nicht auffindbar",
         "error_invalid_runfn": "Befehlsfehler: Slash-Befehl kann nicht verarbeitet werden.",
+        "error_invalid_user_in_room": "Kann Benutzer in Raum nicht finden",
         "help": "Zeigt die Liste verfügbarer Befehle mit Verwendungen und Beschreibungen an",
         "help_dialog_title": "Befehl Hilfe",
         "holdcall": "Den aktuellen Anruf halten",
@@ -3078,10 +3132,13 @@
         "n_hours_ago": "vor %(num)s Stunden",
         "n_minutes_ago": "vor %(num)s Minuten",
         "seconds_left": "%(seconds)s verbleibend",
+        "short_days": "%(value)sd",
         "short_days_hours_minutes_seconds": "%(days)s d %(hours)s h %(minutes)s m %(seconds)s s",
+        "short_hours": "%(value)sh",
         "short_hours_minutes_seconds": "%(hours)s h %(minutes)s m %(seconds)s s",
         "short_minutes": "%(value)smin",
-        "short_minutes_seconds": "%(minutes)s m %(seconds)s s"
+        "short_minutes_seconds": "%(minutes)s m %(seconds)s s",
+        "short_seconds": "%(value)ss"
     },
     "timeline": {
         "context_menu": {
@@ -3097,6 +3154,7 @@
         "creation_summary_dm": "%(creator)s hat diese Direktnachricht erstellt.",
         "creation_summary_room": "%(creator)s hat den Raum erstellt und konfiguriert.",
         "decryption_failure_blocked": "Der Absender hat dich vom Erhalt dieser Nachricht ausgeschlossen",
+        "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
         "download_action_decrypting": "Entschlüsseln",
         "download_action_downloading": "Herunterladen",
         "edits": {
@@ -3108,6 +3166,7 @@
         "error_no_renderer": "Dieses Ereignis konnte nicht angezeigt werden",
         "error_rendering_message": "Diese Nachricht kann nicht geladen werden",
         "historical_messages_unavailable": "Du kannst keine älteren Nachrichten lesen",
+        "in_room_name": " in <strong>%(room)s</strong>",
         "io.element.voice_broadcast_info": {
             "user": "%(senderName)s beendete eine <a>Sprachübertragung</a>",
             "you": "Du hast eine <a>Sprachübertragung</a> beendet"
@@ -3341,6 +3400,7 @@
         "pending_moderation_reason": "Nachricht erwartet Moderation: %(reason)s",
         "reactions": {
             "add_reaction_prompt": "Reaktion hinzufügen",
+            "custom_reaction_fallback_label": "Benutzerdefinierte Reaktion",
             "label": "%(reactors)s hat mit %(content)s reagiert",
             "tooltip": "<reactors/><reactedWith>hat mit %(shortName)s reagiert</reactedWith>"
         },
@@ -3392,6 +3452,7 @@
                 "other": "%(severalUsers)s haben %(count)s-mal ihren Namen geändert",
                 "one": "%(severalUsers)shaben ihren Namen geändert"
             },
+            "format": "%(nameList)s %(transitionList)s",
             "hidden_event": {
                 "one": "%(oneUser)s hat eine versteckte Nachricht gesendet",
                 "other": "%(oneUser)s hat %(count)s versteckte Nachrichten gesendet"
@@ -3881,6 +3942,7 @@
         "shared_data_name": "Dein Anzeigename",
         "shared_data_room_id": "Raum-ID",
         "shared_data_theme": "Dein Design",
+        "shared_data_url": "%(brand)s URL",
         "shared_data_warning": "Wenn du dieses Widget verwendest, können Daten <helpIcon /> zu %(widgetDomain)s übertragen werden.",
         "shared_data_warning_im": "Wenn du dieses Widget verwendest, können Daten <helpIcon /> zu %(widgetDomain)s und deinem Integrationsmanager übertragen werden.",
         "shared_data_widget_id": "Widget-ID",
@@ -3898,6 +3960,7 @@
             "l33t": "Vorhersagbare Ersetzungen wie „@“ anstelle von „a“ helfen nicht besonders",
             "longerKeyboardPattern": "Nutze ein längeres Tastaturmuster mit mehr Abwechslung",
             "noNeed": "Kein Bedarf an Symbolen, Zahlen oder Großbuchstaben",
+            "pwned": "Wenn Sie dieses Passwort woanders verwenden, sollten Sie es ändern.",
             "recentYears": "Vermeide die letzten Jahre",
             "repeated": "Vermeide wiederholte Worte und Zeichen",
             "reverseWords": "Umgedrehte Worte sind nicht schwerer zu erraten",
