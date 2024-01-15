@@ -14,6 +14,7 @@
         "recent_rooms": "Recent rooms",
         "room_name": "Room %(name)s",
         "room_status_bar": "Room status bar",
+        "seek_bar_label": "Audio seek bar",
         "unread_messages": "Unread messages.",
         "user_menu": "User menu"
     },
@@ -255,6 +256,7 @@
             "error_homeserver_lacks_support": "The homeserver doesn't support signing in another device.",
             "error_invalid_scanned_code": "The scanned code is invalid.",
             "error_linking_incomplete": "The linking wasn't completed in the required time.",
+            "error_rate_limited": "Too many attempts in a short time. Wait some time before trying again.",
             "error_request_cancelled": "The request was cancelled.",
             "error_request_declined": "The request was declined on the other device.",
             "error_unexpected": "An unexpected error occurred.",
@@ -1060,8 +1062,11 @@
     "error_app_open_in_another_tab": "Switch to the other tab to connect to %(brand)s. This tab can now be closed.",
     "error_app_open_in_another_tab_title": "%(brand)s is connected in another tab",
     "error_app_opened_in_another_window": "%(brand)s is open in another window. Click \"%(label)s\" to use %(brand)s here and disconnect the other window.",
-    "error_database_closed_description": "This may be caused by having the app open in multiple tabs or due to clearing browser data.",
-    "error_database_closed_title": "Database unexpectedly closed",
+    "error_database_closed_description": {
+        "for_desktop": "Your disk may be full. Please clear up some space and reload.",
+        "for_web": "If you cleared browsing data then this message is expected. %(brand)s may also be open in another tab, or your disk is full. Please clear up some space and reload"
+    },
+    "error_database_closed_title": "%(brand)s stopped working",
     "error_dialog": {
         "copy_room_link_failed": {
             "description": "Unable to copy a link to the room to the clipboard.",
@@ -1940,6 +1945,7 @@
             "video_call_ec_layout_spotlight": "Spotlight",
             "video_room_view_chat_button": "View chat timeline"
         },
+        "header_face_pile_tooltip": "Toggle member list",
         "header_untrusted_label": "Untrusted",
         "inaccessible": "This room or space is not accessible at this time.",
         "inaccessible_name": "%(roomName)s is not accessible at this time.",

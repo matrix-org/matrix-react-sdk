@@ -116,6 +116,10 @@ export function createTestClient(): MatrixClient {
         bootstrapCrossSigning: jest.fn(),
         hasSecretStorageKey: jest.fn(),
 
+        secretStorage: {
+            get: jest.fn(),
+        },
+
         store: {
             getPendingEvents: jest.fn().mockResolvedValue([]),
             setPendingEvents: jest.fn().mockResolvedValue(undefined),

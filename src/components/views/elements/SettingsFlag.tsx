@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
+import { randomString } from "matrix-js-sdk/src/randomstring";
 
 import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from "../../../languageHandler";
@@ -39,17 +40,16 @@ interface IProps {
 
 interface IState {
     value: boolean;
-    /** true if `SettingsStore.isEnabled` returned false. */
-    disabled: boolean;
 }
 
 export default class SettingsFlag extends React.Component<IProps, IState> {
+    private readonly id = `mx_SettingsFlag_${randomString(12)}`;
+
     public constructor(props: IProps) {
         super(props);
 
         this.state = {
             value: this.getSettingValue(),
-            disabled: this.isSettingDisabled(),
         };
     }
 
@@ -69,15 +69,9 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
             this.props.isExplicit,
         );
     }
-
-    private isSettingDisabled(): boolean {
-        return !SettingsStore.isEnabled(this.props.name);
-    }
-
     private onSettingChange = (): void => {
         this.setState({
             value: this.getSettingValue(),
-            disabled: this.isSettingDisabled(),
         });
     };
 
@@ -101,14 +95,13 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
     };
 
     public render(): React.ReactNode {
-        const canChange = SettingsStore.canSetValue(this.props.name, this.props.roomId ?? null, this.props.level);
+        const disabled = !SettingsStore.canSetValue(this.props.name, this.props.roomId ?? null, this.props.level);
 
-        if (!canChange && this.props.hideIfCannotSet) return null;
+        if (disabled && this.props.hideIfCannotSet) return null;
 
         const label = this.props.label ?? SettingsStore.getDisplayName(this.props.name, this.props.level);
         const description = SettingsStore.getDescription(this.props.name);
         const shouldWarn = SettingsStore.shouldHaveWarning(this.props.name);
-        const disabled = this.state.disabled || !canChange;
 
         if (this.props.useCheckbox) {
             return (
@@ -119,7 +112,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
         } else {
             return (
                 <div className="mx_SettingsFlag">
-                    <label className="mx_SettingsFlag_label">
+                    <label className="mx_SettingsFlag_label" htmlFor={this.id}>
                         <span className="mx_SettingsFlag_labelText">{label}</span>
                         {description && (
                             <div className="mx_SettingsFlag_microcopy">
@@ -139,6 +132,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
                         )}
                     </label>
                     <ToggleSwitch
+                        id={this.id}
                         checked={this.state.value}
                         onChange={this.onChange}
                         disabled={disabled}

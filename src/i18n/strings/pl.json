@@ -1,6 +1,8 @@
 {
     "a11y": {
+        "emoji_picker": "Selektor emoji",
         "jump_first_invite": "Przejdź do pierwszego zaproszenia.",
+        "message_composer": "Kompozytor wiadomości",
         "n_unread_messages": {
             "other": "%(count)s nieprzeczytanych wiadomości.",
             "one": "1 nieprzeczytana wiadomość."
@@ -9,7 +11,10 @@
             "other": "%(count)s nieprzeczytanych wiadomości, wliczając wzmianki.",
             "one": "1 nieprzeczytana wzmianka."
         },
+        "recent_rooms": "Ostatnie pokoje",
         "room_name": "Pokój %(name)s",
+        "room_status_bar": "Pasek stanu pokoju",
+        "seek_bar_label": "Pasek wyszukiwania audio",
         "unread_messages": "Nieprzeczytane wiadomości.",
         "user_menu": "Menu użytkownika"
     },
@@ -1058,9 +1063,13 @@
         "update_power_level": "Nie udało się zmienić poziomu mocy"
     },
     "error_app_open_in_another_tab": "Zmień kartę aby połączyć się do %(brand)s. Ta karta może zostać zamknięta.",
+    "error_app_open_in_another_tab_title": "%(brand)s jest włączony na innej karcie",
     "error_app_opened_in_another_window": "%(brand)s jest już otwarty w innym oknie. Kliknij \"%(label)s\", aby otworzyć tutaj %(brand)s i odłączyć drugie okno.",
-    "error_database_closed_description": "Może być to spowodowane przez aplikacje otwartą w wielu kartach lub po wyczyszczeniu danych przeglądarki.",
-    "error_database_closed_title": "Baza danych została nieoczekiwanie zamknięta",
+    "error_database_closed_description": {
+        "for_desktop": "Twój dysk może być pełny. Zwolnij trochę miejsca i wczytaj ponownie.",
+        "for_web": "Jeśli niedawno czyściłeś dane przeglądania, można się spodziewać tej wiadomości. %(brand)s może być otwarty na innej karcie lub Twój dysk jest pełny. Zwolnij trochę miejsca i spróbuj ponownie"
+    },
+    "error_database_closed_title": "%(brand)s przestał działać",
     "error_dialog": {
         "copy_room_link_failed": {
             "description": "Nie można skopiować linku pokoju do schowka.",
@@ -1940,6 +1949,7 @@
             "video_call_ec_layout_spotlight": "Centrum uwagi",
             "video_room_view_chat_button": "Wyświetl oś czasu czatu"
         },
+        "header_face_pile_tooltip": "Przełącz listę członków",
         "header_untrusted_label": "Niezaufany",
         "inaccessible": "Ten pokój lub przestrzeń nie jest dostępna w tym momencie.",
         "inaccessible_name": "%(roomName)s nie jest dostępny w tym momencie.",
