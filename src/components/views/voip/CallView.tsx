@@ -75,7 +75,6 @@ const StartCallView: FC<StartCallViewProps> = ({
 
     return (
         <div className="mx_CallView" role={role}>
-            {/* {!!call?.connected && !!(call?.widget?.type == "jitsi") ? <Lobby room={room} /> : null} */}
             {call !== null && (
                 <AppTile
                     app={call.widget}
@@ -104,6 +103,7 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby, 
 
     const connect = useCallback(async (): Promise<void> => {
         // Disconnect from any other active calls first, since we don't yet support holding
+        // TODO: disconnect only after the call has been connected (after Lobby)
         await Promise.all([...CallStore.instance.activeCalls].map((call) => call.disconnect()));
         await call.connect();
     }, [call]);
@@ -111,9 +111,6 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby, 
     // We'll take this opportunity to tidy up our room state
     useEffect(() => {
         call.clean();
-        // return () => {
-        //     if (call.connectionState === ConnectionState.Lobby) call.setDisconnected();
-        // };
     }, [call]);
     useEffect(() => {
         (call.widget.data ?? { skipLobby }).skipLobby = skipLobby;

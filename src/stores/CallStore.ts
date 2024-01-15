@@ -60,10 +60,10 @@ export class CallStore extends AsyncStoreWithClient<{}> {
     }
 
     protected async onAction(payload: ActionPayload): Promise<void> {
-        if (payload.action !== Action.ActiveRoomChanged) return;
-
-        const changePayload = <ActiveRoomChangedPayload>payload;
-        this.handleViewedRoomChange(changePayload.oldRoomId, changePayload.newRoomId);
+        if (payload.action === Action.ActiveRoomChanged) {
+            const changePayload = <ActiveRoomChangedPayload>payload;
+            this.handleViewedRoomChange(changePayload.oldRoomId, changePayload.newRoomId);
+        }
     }
 
     protected async onReady(): Promise<any> {
