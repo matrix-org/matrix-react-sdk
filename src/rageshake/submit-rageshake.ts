@@ -18,7 +18,6 @@ limitations under the License.
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { Method } from "matrix-js-sdk/src/matrix";
-import { OwnDeviceKeys } from "matrix-js-sdk/src/crypto-api";
 
 import type * as Pako from "pako";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -88,20 +87,13 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
         if (cryptoApi) {
             body.append("crypto_version", cryptoApi.getVersion());
 
-            let ownDeviceKeys: OwnDeviceKeys | null = null;
-            try {
-                ownDeviceKeys = await cryptoApi.getOwnDeviceKeys();
-            } catch (e) {
-                // Ignore. We'll just not send the keys
-            }
+            const ownDeviceKeys = await cryptoApi.getOwnDeviceKeys();
 
-            if (ownDeviceKeys) {
-                const keys = [];
-                keys.push(`curve25519:${ownDeviceKeys.curve25519}`);
-                keys.push(`ed25519:${ownDeviceKeys.ed25519}`);
+            const keys = [];
+            keys.push(`curve25519:${ownDeviceKeys.curve25519}`);
+            keys.push(`ed25519:${ownDeviceKeys.ed25519}`);
 
-                body.append("device_keys", keys.join(", "));
-            }
+            body.append("device_keys", keys.join(", "));
 
             // add cross-signing status information
             const crossSigningStatus = await cryptoApi.getCrossSigningStatus();
