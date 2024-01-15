@@ -180,8 +180,8 @@ describe("<MImageBody/>", () => {
     });
 
     it("should fall back to /download/ if /thumbnail/ fails", async () => {
-        const thumbUrl = "https://server/_matrix/media/v3/thumbnail/server/image?width=800&height=600&method=scale";
-        const downloadUrl = "https://server/_matrix/media/v3/download/server/image";
+        const thumbUrl = "https://server/_matrix/media/v3/thumbnail/server/image?width=800&height=600&method=scale&allow_redirect=false";
+        const downloadUrl = "https://server/_matrix/media/v3/download/server/image?allow_redirect=false";
 
         const event = new MatrixEvent({
             room_id: "!room:server",
@@ -228,7 +228,7 @@ describe("<MImageBody/>", () => {
         mocked(global.URL.createObjectURL).mockReturnValue("blob:generated-thumb");
 
         fetchMock.getOnce(
-            "https://server/_matrix/media/v3/download/server/image",
+            "https://server/_matrix/media/v3/download/server/image?allow_redirect=false",
             {
                 body: fs.readFileSync(path.resolve(__dirname, "..", "..", "..", "images", "animated-logo.webp")),
             },
