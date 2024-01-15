@@ -57,7 +57,7 @@ describe("<MImageBody/>", () => {
             },
         }),
     });
-    const url = "https://server/_matrix/media/v3/download/server/encrypted-image";
+    const url = "https://server/_matrix/media/v3/download/server/encrypted-image?allow_redirect=false";
     // eslint-disable-next-line no-restricted-properties
     cli.mxcUrlToHttp.mockImplementation(
         (mxcUrl: string, width?: number, height?: number, resizeMethod?: string, allowDirectLinks?: boolean) => {
@@ -180,7 +180,8 @@ describe("<MImageBody/>", () => {
     });
 
     it("should fall back to /download/ if /thumbnail/ fails", async () => {
-        const thumbUrl = "https://server/_matrix/media/v3/thumbnail/server/image?width=800&height=600&method=scale&allow_redirect=false";
+        const thumbUrl =
+            "https://server/_matrix/media/v3/thumbnail/server/image?width=800&height=600&method=scale&allow_redirect=false";
         const downloadUrl = "https://server/_matrix/media/v3/download/server/image?allow_redirect=false";
 
         const event = new MatrixEvent({
