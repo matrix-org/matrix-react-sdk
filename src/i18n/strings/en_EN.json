@@ -3139,9 +3139,6 @@
         "light_high_contrast": "Light high contrast",
         "match_system": "Match system"
     },
-    "thread_activity_centre": {
-        "header": "Threads activity"
-    },
     "thread_view_back_action_label": "Back to thread",
     "threads": {
         "all_threads": "All threads",
@@ -3161,6 +3158,9 @@
         "show_all_threads": "Show all threads",
         "show_thread_filter": "Show:",
         "unable_to_decrypt": "Unable to decrypt message"
+    },
+    "threads_activity_centre": {
+        "header": "Threads activity"
     },
     "time": {
         "about_day_ago": "about a day ago",

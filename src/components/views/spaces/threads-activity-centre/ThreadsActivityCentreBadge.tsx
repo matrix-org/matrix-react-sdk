@@ -19,7 +19,7 @@
 import React, { JSX } from "react";
 import classNames from "classnames";
 
-interface ThreadActivityCentreBadgeProps {
+interface ThreadsActivityCentreBadgeProps {
     /**
      * The state of the badge.
      */
@@ -27,12 +27,12 @@ interface ThreadActivityCentreBadgeProps {
 }
 
 /**
- * A badge to show the unread state of the room in the ThreadActivityCentre.
+ * A badge to show the unread state of the room in the ThreadsActivityCentre.
  */
-export function ThreadActivityCentreBadge({ state }: ThreadActivityCentreBadgeProps): JSX.Element {
-    const className = classNames("mx_ThreadActivityCentreBadge", {
-        mx_ThreadActivityCentreBadge_highlight: state === "highlight",
-        mx_ThreadActivityCentreBadge_alert: state === "alert",
+export function ThreadsActivityCentreBadge({ state }: ThreadsActivityCentreBadgeProps): JSX.Element {
+    const className = classNames("mx_ThreadsActivityCentreBadge", {
+        mx_ThreadsActivityCentreBadge_highlight: state === "highlight",
+        mx_ThreadsActivityCentreBadge_alert: state === "alert",
     });
 
     return <div className={className} />;

@@ -23,7 +23,7 @@ import classNames from "classnames";
 import { _t } from "../../../../languageHandler";
 import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
 
-interface ThreadActivityCentreButtonProps extends HTMLProps<HTMLDivElement> {
+interface ThreadsActivityCentreButtonProps extends HTMLProps<HTMLDivElement> {
     /**
      * Display the `Treads` label next to the icon.
      */
@@ -33,11 +33,11 @@ interface ThreadActivityCentreButtonProps extends HTMLProps<HTMLDivElement> {
 /**
  * A button to open the thread activity centre.
  */
-export const ThreadActivityCentreButton = forwardRef<HTMLDivElement, ThreadActivityCentreButtonProps>(
-    function ThreadActivityCentreButton({ displayLabel, ...props }, ref): React.JSX.Element {
+export const ThreadsActivityCentreButton = forwardRef<HTMLDivElement, ThreadsActivityCentreButtonProps>(
+    function ThreadsActivityCentreButton({ displayLabel, ...props }, ref): React.JSX.Element {
         return (
             <AccessibleTooltipButton
-                className={classNames("mx_ThreadActivityCentreButton", { expanded: displayLabel })}
+                className={classNames("mx_ThreadsActivityCentreButton", { expanded: displayLabel })}
                 title={_t("common|threads")}
                 // @ts-ignore
                 // ref nightmare...
@@ -46,7 +46,7 @@ export const ThreadActivityCentreButton = forwardRef<HTMLDivElement, ThreadActiv
                 aria-expanded={displayLabel}
                 {...props}
             >
-                <Icon className="mx_ThreadActivityCentreButton_Icon" />
+                <Icon className="mx_ThreadsActivityCentreButton_Icon" />
                 {displayLabel && _t("common|threads")}
             </AccessibleTooltipButton>
         );

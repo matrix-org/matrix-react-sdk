@@ -16,4 +16,4 @@
  * /
  */
 
-export { ThreadActivityCentre } from "./ThreadActivityCentre";
+export { ThreadsActivityCentre } from "./ThreadsActivityCentre";

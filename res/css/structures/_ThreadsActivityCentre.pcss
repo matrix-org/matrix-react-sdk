@@ -16,7 +16,7 @@
  * /
  */
 
-.mx_ThreadActivityCentreButton {
+.mx_ThreadsActivityCentreButton {
     color: $secondary-content;
     height: 32px;
     display: flex;
@@ -29,7 +29,7 @@
         /* align with settings icon */
         margin-left: 20px;
 
-        .mx_ThreadActivityCentreButton_Icon {
+        .mx_ThreadsActivityCentreButton_Icon {
             /* align with settings label */
             margin-right: 12px;
         }
@@ -41,20 +41,20 @@
         }
     }
 
-    .mx_ThreadActivityCentreButton_Icon {
+    .mx_ThreadsActivityCentreButton_Icon {
         height: 24px;
         width: 24px;
         padding: 4px;
     }
 }
 
-.mx_ThreadActivityRows {
+.mx_ThreadsActivityRows {
     width: 300px;
     display: flex;
     flex-direction: column;
     gap: 24px;
 
-    .mx_ThreadActivityRow {
+    .mx_ThreadsActivityRow {
         /* remove button style */
         background-color: transparent;
         border: none;
@@ -67,23 +67,23 @@
         margin: 0 16px;
         gap: 12px;
 
-        .mx_ThreadActivityRow_room {
+        .mx_ThreadsActivityRow_room {
             flex: 1 auto;
         }
     }
 }
 
-.mx_ThreadActivityCentreBadge {
+.mx_ThreadsActivityCentreBadge {
     background-color: $primary-content;
     width: 8px;
     height: 8px;
     border-radius: 8px;
 
-    &.mx_ThreadActivityCentreBadge_alert {
+    &.mx_ThreadsActivityCentreBadge_alert {
         background-color: $alert;
     }
 
-    &.mx_ThreadActivityCentreBadge_highlight {
+    &.mx_ThreadsActivityCentreBadge_highlight {
         background-color: var(--cpd-color-icon-accent-tertiary);
     }
 }

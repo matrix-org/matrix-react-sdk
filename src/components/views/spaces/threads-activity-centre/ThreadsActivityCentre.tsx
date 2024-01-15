@@ -20,7 +20,7 @@ import React, { JSX, useMemo, useState } from "react";
 import { Menu, Text } from "@vector-im/compound-web";
 import { Room } from "matrix-js-sdk/src/matrix";
 
-import { ThreadActivityCentreButton } from "./ThreadActivityCentreButton";
+import { ThreadsActivityCentreButton } from "./ThreadsActivityCentreButton";
 import { _t } from "../../../../languageHandler";
 import RoomListStore from "../../../../stores/room-list/RoomListStore";
 import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
@@ -29,9 +29,9 @@ import { showThreadPanel } from "../../../../dispatcher/dispatch-actions/threads
 import { Action } from "../../../../dispatcher/actions";
 import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
-import { ThreadActivityCentreBadge } from "./ThreadActivityCentreBadge";
+import { ThreadsActivityCentreBadge } from "./ThreadsActivityCentreBadge";
 
-interface ThreadActivityCentreProps {
+interface ThreadsActivityCentreProps {
     /**
      * Display the `Treads` label next to the icon.
      */
@@ -42,7 +42,7 @@ interface ThreadActivityCentreProps {
  * Display in a popup the list of rooms with unread threads.
  * The popup is displayed when the user clicks on the `Threads` button.
  */
-export function ThreadActivityCentre({ displayButtonLabel }: ThreadActivityCentreProps): JSX.Element {
+export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCentreProps): JSX.Element {
     const [open, setOpen] = useState(false);
     const rooms = useUnreadThreadRooms(open);
 
@@ -52,12 +52,12 @@ export function ThreadActivityCentre({ displayButtonLabel }: ThreadActivityCentr
             open={open}
             onOpenChange={setOpen}
             side="right"
-            title={_t("thread_activity_centre|header")}
-            trigger={<ThreadActivityCentreButton displayLabel={displayButtonLabel} />}
+            title={_t("threads_activity_centre|header")}
+            trigger={<ThreadsActivityCentreButton displayLabel={displayButtonLabel} />}
         >
-            <div className="mx_ThreadActivityRows">
+            <div className="mx_ThreadsActivityRows">
                 {rooms.map((room) => (
-                    <ThreadActivityRow key={room.roomId} room={room} onClick={() => setOpen(false)} />
+                    <ThreadsActivityRow key={room.roomId} room={room} onClick={() => setOpen(false)} />
                 ))}
             </div>
             {/*<MenuItem Icon={Icon} label="Profile" onSelect={function io() {}} />*/}
@@ -65,7 +65,7 @@ export function ThreadActivityCentre({ displayButtonLabel }: ThreadActivityCentr
     );
 }
 
-interface ThreadActivityRow {
+interface ThreadsActivityRow {
     /**
      * The room with unread threads.
      */
@@ -79,10 +79,10 @@ interface ThreadActivityRow {
 /**
  * Display a room with unread threads.
  */
-function ThreadActivityRow({ room, onClick }: ThreadActivityRow): JSX.Element {
+function ThreadsActivityRow({ room, onClick }: ThreadsActivityRow): JSX.Element {
     return (
         <AccessibleButton
-            className="mx_ThreadActivityRow"
+            className="mx_ThreadsActivityRow"
             element="button"
             onClick={(event) => {
                 onClick();
@@ -105,11 +105,11 @@ function ThreadActivityRow({ room, onClick }: ThreadActivityRow): JSX.Element {
             }}
         >
             <DecoratedRoomAvatar room={room} size="32px" />
-            <Text as="span" size="sm" weight="semibold" className="mx_ThreadActivityRow_room">
+            <Text as="span" size="sm" weight="semibold" className="mx_ThreadsActivityRow_room">
                 {room.name}
             </Text>
             {/* TODO set the unread state of the room threads */}
-            <ThreadActivityCentreBadge state="highlight" />
+            <ThreadsActivityCentreBadge state="highlight" />
         </AccessibleButton>
     );
 }
