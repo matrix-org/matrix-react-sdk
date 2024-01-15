@@ -1106,10 +1106,10 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: [],
     },
-    "threadActivityCentre": {
+    "threadsActivityCentre": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         labsGroup: LabGroup.Threads,
-        displayName: _td("thread_activity_centre|title"),
+        displayName: _td("labs|threads_activity_centre"),
         default: false,
         isFeature: true,
     },
