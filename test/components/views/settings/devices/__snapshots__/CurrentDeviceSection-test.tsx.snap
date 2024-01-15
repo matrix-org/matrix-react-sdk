@@ -237,8 +237,8 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
           class="mx_DeviceTile_actions"
         >
           <div
+            aria-label="Show details"
             class="mx_AccessibleButton mx_DeviceExpandDetailsButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_icon"
-            data-state="closed"
             data-testid="current-session-toggle-details"
             role="button"
             tabindex="0"
@@ -380,8 +380,8 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
           class="mx_DeviceTile_actions"
         >
           <div
+            aria-label="Show details"
             class="mx_AccessibleButton mx_DeviceExpandDetailsButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_icon"
-            data-state="closed"
             data-testid="current-session-toggle-details"
             role="button"
             tabindex="0"

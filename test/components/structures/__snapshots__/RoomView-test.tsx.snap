@@ -462,20 +462,22 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
               class="mx_MessageComposer_actions"
             >
               <div
+                aria-label="Emoji"
                 class="mx_AccessibleButton mx_EmojiButton mx_MessageComposer_button mx_EmojiButton_icon"
                 data-state="closed"
                 role="button"
                 tabindex="0"
               />
               <div
+                aria-label="Attachment"
                 class="mx_AccessibleButton mx_MessageComposer_button mx_MessageComposer_upload"
                 data-state="closed"
                 role="button"
                 tabindex="0"
               />
               <div
+                aria-label="More options"
                 class="mx_AccessibleButton mx_MessageComposer_button mx_MessageComposer_buttonMenu"
-                data-state="closed"
                 role="button"
                 tabindex="0"
               />
@@ -709,20 +711,22 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
               class="mx_MessageComposer_actions"
             >
               <div
+                aria-label="Emoji"
                 class="mx_AccessibleButton mx_EmojiButton mx_MessageComposer_button mx_EmojiButton_icon"
                 data-state="closed"
                 role="button"
                 tabindex="0"
               />
               <div
+                aria-label="Attachment"
                 class="mx_AccessibleButton mx_MessageComposer_button mx_MessageComposer_upload"
                 data-state="closed"
                 role="button"
                 tabindex="0"
               />
               <div
+                aria-label="More options"
                 class="mx_AccessibleButton mx_MessageComposer_button mx_MessageComposer_buttonMenu"
-                data-state="closed"
                 role="button"
                 tabindex="0"
               />
