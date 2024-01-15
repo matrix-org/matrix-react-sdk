@@ -21,7 +21,7 @@ import FocusLock from "react-focus-lock";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
-import AccessibleTooltipButton from "./AccessibleTooltipButton";
+import AccessibleButton from "./AccessibleButton";
 import MemberAvatar from "../avatars/MemberAvatar";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
 import MessageContextMenu from "../context_menus/MessageContextMenu";
@@ -513,14 +513,14 @@ export default class ImageView extends React.Component<IProps, IState> {
         }
 
         const zoomOutButton = (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 className="mx_ImageView_button mx_ImageView_button_zoomOut"
                 title={_t("action|zoom_out")}
                 onClick={this.onZoomOutClick}
             />
         );
         const zoomInButton = (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 className="mx_ImageView_button mx_ImageView_button_zoomIn"
                 title={_t("action|zoom_in")}
                 onClick={this.onZoomInClick}
@@ -553,23 +553,23 @@ export default class ImageView extends React.Component<IProps, IState> {
                     <div className="mx_ImageView_toolbar">
                         {zoomOutButton}
                         {zoomInButton}
-                        <AccessibleTooltipButton
+                        <AccessibleButton
                             className="mx_ImageView_button mx_ImageView_button_rotateCCW"
                             title={_t("lightbox|rotate_left")}
                             onClick={this.onRotateCounterClockwiseClick}
                         />
-                        <AccessibleTooltipButton
+                        <AccessibleButton
                             className="mx_ImageView_button mx_ImageView_button_rotateCW"
                             title={_t("lightbox|rotate_right")}
                             onClick={this.onRotateClockwiseClick}
                         />
-                        <AccessibleTooltipButton
+                        <AccessibleButton
                             className="mx_ImageView_button mx_ImageView_button_download"
                             title={_t("action|download")}
                             onClick={this.onDownloadClick}
                         />
                         {contextMenuButton}
-                        <AccessibleTooltipButton
+                        <AccessibleButton
                             className="mx_ImageView_button mx_ImageView_button_close"
                             title={_t("action|close")}
                             onClick={this.props.onFinished}

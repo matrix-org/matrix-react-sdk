@@ -34,7 +34,7 @@ import { LiveContentSummary, LiveContentType } from "../rooms/LiveContentSummary
 import FacePile from "../elements/FacePile";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { CallDuration, SessionDuration } from "../voip/CallDuration";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import AccessibleButton from "../elements/AccessibleButton";
 
 const MAX_FACES = 8;
 
@@ -78,15 +78,15 @@ const ActiveCallEvent = forwardRef<any, ActiveCallEventProps>(
                             <FacePile members={facePileMembers} size="24px" overflow={facePileOverflow} />
                         </div>
                         {call && <SessionDuration session={call.session} />}
-                        <AccessibleTooltipButton
+                        <AccessibleButton
                             className="mx_CallEvent_button"
                             kind={buttonKind}
                             disabled={onButtonClick === null || buttonDisabledTooltip !== undefined}
                             onClick={onButtonClick}
-                            tooltip={buttonDisabledTooltip}
+                            title={buttonDisabledTooltip}
                         >
                             {buttonText}
-                        </AccessibleTooltipButton>
+                        </AccessibleButton>
                     </div>
                 </div>
             </div>

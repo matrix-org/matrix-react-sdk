@@ -28,14 +28,13 @@ import defaultDispatcher from "../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../dispatcher/actions";
 import ToastStore from "../stores/ToastStore";
-import AccessibleTooltipButton from "../components/views/elements/AccessibleTooltipButton";
 import {
     LiveContentSummary,
     LiveContentSummaryWithCall,
     LiveContentType,
 } from "../components/views/rooms/LiveContentSummary";
 import { useCall, useJoinCallButtonDisabledTooltip } from "../hooks/useCall";
-import { ButtonEvent } from "../components/views/elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../components/views/elements/AccessibleButton";
 import { useDispatcher } from "../hooks/useDispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { Call } from "../models/Call";
@@ -54,15 +53,15 @@ function JoinCallButtonWithCall({ onClick, call }: JoinCallButtonWithCallProps):
     const disabledTooltip = useJoinCallButtonDisabledTooltip(call);
 
     return (
-        <AccessibleTooltipButton
+        <AccessibleButton
             className="mx_IncomingCallToast_joinButton"
             onClick={onClick}
             disabled={disabledTooltip !== null}
-            tooltip={disabledTooltip ?? undefined}
+            title={disabledTooltip ?? undefined}
             kind="primary"
         >
             {_t("action|join")}
-        </AccessibleTooltipButton>
+        </AccessibleButton>
     );
 }
 
@@ -178,16 +177,12 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
                 {call ? (
                     <JoinCallButtonWithCall onClick={onJoinClick} call={call} />
                 ) : (
-                    <AccessibleTooltipButton
-                        className="mx_IncomingCallToast_joinButton"
-                        onClick={onJoinClick}
-                        kind="primary"
-                    >
+                    <AccessibleButton className="mx_IncomingCallToast_joinButton" onClick={onJoinClick} kind="primary">
                         {_t("action|join")}
-                    </AccessibleTooltipButton>
+                    </AccessibleButton>
                 )}
             </div>
-            <AccessibleTooltipButton
+            <AccessibleButton
                 className="mx_IncomingCallToast_closeButton"
                 onClick={onCloseClick}
                 title={_t("action|close")}

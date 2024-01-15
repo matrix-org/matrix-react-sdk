@@ -19,7 +19,7 @@ import React, { ComponentProps, ReactNode } from "react";
 
 import { RovingAccessibleTooltipButton } from "../../../../accessibility/roving/RovingAccessibleTooltipButton";
 import { useRovingTabIndex } from "../../../../accessibility/RovingTabIndex";
-import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
+import AccessibleButton from "../../elements/AccessibleButton";
 
 interface TooltipOptionProps extends ComponentProps<typeof RovingAccessibleTooltipButton> {
     endAdornment?: ReactNode;
@@ -28,7 +28,7 @@ interface TooltipOptionProps extends ComponentProps<typeof RovingAccessibleToolt
 export const TooltipOption: React.FC<TooltipOptionProps> = ({ inputRef, className, ...props }) => {
     const [onFocus, isActive, ref] = useRovingTabIndex(inputRef);
     return (
-        <AccessibleTooltipButton
+        <AccessibleButton
             {...props}
             className={classNames(className, "mx_SpotlightDialog_option")}
             onFocus={onFocus}

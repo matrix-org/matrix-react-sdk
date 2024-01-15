@@ -145,7 +145,7 @@ const Tile: React.FC<ITileProps> = ({
     let button: ReactElement;
     if (busy) {
         button = (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 disabled={true}
                 onClick={onJoinClick}
                 kind="primary_outline"
@@ -154,7 +154,7 @@ const Tile: React.FC<ITileProps> = ({
                 title={_t("space|joining_space")}
             >
                 <Spinner w={24} h={24} />
-            </AccessibleTooltipButton>
+            </AccessibleButton>
         );
     } else if (joinedRoom) {
         button = (
