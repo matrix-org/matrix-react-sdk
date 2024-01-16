@@ -33,11 +33,13 @@ interface JoinCallViewProps {
 const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby, role }) => {
     const cli = useContext(MatrixClientContext);
 
-    // We'll take this opportunity to tidy up our room state
     useEffect(() => {
+        // We'll take this opportunity to tidy up our room state
         call.clean();
     }, [call]);
+
     useEffect(() => {
+        // Always update the widget data so that we don't ignore "skipLobby" accidentally.
         (call.widget.data ?? { skipLobby }).skipLobby = skipLobby;
     }, [call.widget.data, skipLobby]);
 
@@ -81,17 +83,12 @@ interface CallViewProps {
 
 export const CallView: FC<CallViewProps> = ({ room, resizing, waitForCall, skipLobby, role }) => {
     const call = useCall(room.roomId);
-    const [shouldCreateCall, setShouldCreateCall] = useState(false);
+
     useEffect(() => {
-        if (!waitForCall) {
-            setShouldCreateCall(true);
-        }
-    }, [waitForCall]);
-    useEffect(() => {
-        if (call === null && shouldCreateCall) {
+        if (call === null && !waitForCall) {
             ElementCall.create(room, skipLobby);
         }
-    }, [call, room, shouldCreateCall, skipLobby, waitForCall]);
+    }, [call, room, skipLobby, waitForCall]);
     if (call === null) {
         return null;
     } else {

@@ -120,7 +120,7 @@ interface State {
      */
     viewingCall: boolean;
     /**
-     * Whether want the call to skip the lobby and immediately join
+     * If we want the call to skip the lobby and immediately join
      */
     skipLobby?: boolean;
 

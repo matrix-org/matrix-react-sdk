@@ -565,7 +565,7 @@ describe("LegacyRoomHeader", () => {
         mockEnabledSettings(["feature_group_calls"]);
 
         await withCall(async (call) => {
-            // we set the call to skip lobby because otherwise the connection will wait until
+            // We set the call to skip lobby because otherwise the connection will wait until
             // the user clicks the "join" button, inside the widget lobby which is hard to mock.
             call.widget.data = { ...call.widget.data, skipLobby: true };
             await call.connect();

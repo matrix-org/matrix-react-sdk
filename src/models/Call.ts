@@ -666,7 +666,7 @@ export class ElementCall extends Call {
             // Template variables are used, so that this can be configured using the widget data.
             preload: "$preload", // We want it to load in the background.
             skipLobby: "$skipLobby", // Skip the lobby in case we show a lobby component of our own.
-            returnToLobby: "$returnToLobby", // Skip the lobby in case we show a lobby component of our own.
+            returnToLobby: "$returnToLobby", // Returns to the lobby (instead of blank screen) when the call ends. (For video rooms)
             perParticipantE2EE: "$perParticipantE2EE",
             hideHeader: "true", // Hide the header since our room header is enough
             userId: client.getUserId()!,
