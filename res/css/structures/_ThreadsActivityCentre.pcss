@@ -48,28 +48,18 @@
     }
 }
 
-.mx_ThreadsActivityRows {
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+.mx_ThreadsActivityMenu {
+    width: 330px;
+}
 
-    .mx_ThreadsActivityRow {
-        /* remove button style */
-        background-color: transparent;
-        border: none;
-        padding: 0;
-        text-align: start;
+.mx_ThreadsActivityRow {
+    height: 48px;
 
-        /* align button content */
-        display: flex;
-        align-items: center;
-        margin: 0 16px;
-        gap: 12px;
-
-        .mx_ThreadsActivityRow_room {
-            flex: 1 auto;
-        }
+    & > span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 210px;
     }
 }
 

@@ -17,14 +17,13 @@
  */
 
 import React, { JSX, useMemo, useState } from "react";
-import { Menu, Text } from "@vector-im/compound-web";
+import { Menu, MenuItem } from "@vector-im/compound-web";
 import { Room } from "matrix-js-sdk/src/matrix";
 
 import { ThreadsActivityCentreButton } from "./ThreadsActivityCentreButton";
 import { _t } from "../../../../languageHandler";
 import RoomListStore from "../../../../stores/room-list/RoomListStore";
 import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
-import AccessibleButton from "../../elements/AccessibleButton";
 import { showThreadPanel } from "../../../../dispatcher/dispatch-actions/threads";
 import { Action } from "../../../../dispatcher/actions";
 import defaultDispatcher from "../../../../dispatcher/dispatcher";
@@ -48,6 +47,7 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
 
     return (
         <Menu
+            className="mx_ThreadsActivityMenu"
             align="end"
             open={open}
             onOpenChange={setOpen}
@@ -55,12 +55,9 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
             title={_t("threads_activity_centre|header")}
             trigger={<ThreadsActivityCentreButton displayLabel={displayButtonLabel} />}
         >
-            <div className="mx_ThreadsActivityRows">
-                {rooms.map((room) => (
-                    <ThreadsActivityRow key={room.roomId} room={room} onClick={() => setOpen(false)} />
-                ))}
-            </div>
-            {/*<MenuItem Icon={Icon} label="Profile" onSelect={function io() {}} />*/}
+            {rooms.map((room) => (
+                <ThreadsActivityRow key={room.roomId} room={room} onClick={() => setOpen(false)} />
+            ))}
         </Menu>
     );
 }
@@ -81,10 +78,9 @@ interface ThreadsActivityRow {
  */
 function ThreadsActivityRow({ room, onClick }: ThreadsActivityRow): JSX.Element {
     return (
-        <AccessibleButton
+        <MenuItem
             className="mx_ThreadsActivityRow"
-            element="button"
-            onClick={(event) => {
+            onSelect={(event: Event) => {
                 onClick();
 
                 // Display the selected room in the timeline
@@ -103,14 +99,12 @@ function ThreadsActivityRow({ room, onClick }: ThreadsActivityRow): JSX.Element 
                     //RightPanelStore.instance.togglePanel(room.roomId);
                 }, 1000);
             }}
+            label={room.name}
+            Icon={<DecoratedRoomAvatar room={room} size="32px" />}
         >
-            <DecoratedRoomAvatar room={room} size="32px" />
-            <Text as="span" size="sm" weight="semibold" className="mx_ThreadsActivityRow_room">
-                {room.name}
-            </Text>
             {/* TODO set the unread state of the room threads */}
             <ThreadsActivityCentreBadge state="highlight" />
-        </AccessibleButton>
+        </MenuItem>
     );
 }
 
