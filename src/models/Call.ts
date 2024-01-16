@@ -579,10 +579,13 @@ export class JitsiCall extends Call {
             // Tell others that we're connected, by adding our device to room state
             await this.addOurDevice();
             // Re-add this device every so often so our video member event doesn't become stale
-            this.resendDevicesTimer = window.setInterval(async (): Promise<void> => {
-                logger.log(`Resending video member event for ${this.roomId}`);
-                await this.addOurDevice();
-            }, (this.STUCK_DEVICE_TIMEOUT_MS * 3) / 4);
+            this.resendDevicesTimer = window.setInterval(
+                async (): Promise<void> => {
+                    logger.log(`Resending video member event for ${this.roomId}`);
+                    await this.addOurDevice();
+                },
+                (this.STUCK_DEVICE_TIMEOUT_MS * 3) / 4,
+            );
         } else if (state === ConnectionState.Disconnected && isConnected(prevState)) {
             this.updateParticipants(); // Local echo
 
@@ -780,7 +783,11 @@ export class ElementCall extends Call {
         this.widget.data = ElementCall.getWidgetData(this.client, this.roomId, this.widget.data ?? {}, {});
     }
 
-    private constructor(public session: MatrixRTCSession, widget: IApp, client: MatrixClient) {
+    private constructor(
+        public session: MatrixRTCSession,
+        widget: IApp,
+        client: MatrixClient,
+    ) {
         super(widget, client);
 
         this.session.on(MatrixRTCSessionEvent.MembershipsChanged, this.onMembershipChanged);
@@ -880,35 +887,35 @@ export class ElementCall extends Call {
             // or the MatrixRTCSessionManager session started event.
             this.connectionState = ConnectionState.Lobby;
         }
-        await new Promise<void>((resolve) => {
-            const session = this.client.matrixRTC.getActiveRoomSession(this.room);
-            if (session) {
-                const waitForJoin = (oldMemberships: CallMembership[], newMemberships: CallMembership[]): void => {
-                    if (newMemberships.some((m) => m.sender === this.client.getUserId())) {
-                        resolve();
-                        // This listener is not needed anymore. The promise resolved and we updated to the connection state
-                        // when `performConnection` resolves.
-                        session.off(MatrixRTCSessionEvent.MembershipsChanged, waitForJoin);
-                    }
-                };
-                session.on(MatrixRTCSessionEvent.MembershipsChanged, waitForJoin);
-            } else {
-                const waitForJoin = (roomId: string, session: MatrixRTCSession): void => {
-                    if (this.session.callId === session.callId && roomId === this.roomId) {
-                        resolve();
-                        // This listener is not needed anymore. The promise resolved and we updated to the connection state
-                        // when `performConnection` resolves.
-                        this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionStarted, waitForJoin);
-                    }
-                };
-                this.client.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionStarted, waitForJoin);
-            }
-        });
+
+        const session = this.client.matrixRTC.getActiveRoomSession(this.room);
+        if (session) {
+            await waitForEvent(
+                session,
+                MatrixRTCSessionEvent.MembershipsChanged,
+                (_, newMemberships: CallMembership[]) =>
+                    newMemberships.some((m) => m.sender === this.client.getUserId()),
+            );
+        } else {
+            await waitForEvent(
+                this.client.matrixRTC,
+                MatrixRTCSessionEvent.MembershipsChanged,
+                (roomId: string, session: MatrixRTCSession) =>
+                    this.session.callId === session.callId && roomId === this.roomId,
+            );
+        }
     }
 
     protected async performDisconnection(): Promise<void> {
         try {
             await this.messaging!.transport.send(ElementWidgetActions.HangupCall, {});
+
+            await waitForEvent(
+                this.session,
+                MatrixRTCSessionEvent.MembershipsChanged,
+                (_, newMemberships: CallMembership[]) =>
+                    !newMemberships.some((m) => m.sender === this.client.getUserId()),
+            );
         } catch (e) {
             throw new Error(`Failed to hangup call in room ${this.roomId}: ${e}`);
         }

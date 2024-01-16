@@ -14,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FC, useContext, useEffect, AriaRole, useState } from "react";
+import React, { FC, useContext, useEffect, AriaRole, useCallback } from "react";
 
 import type { Room } from "matrix-js-sdk/src/matrix";
 import { Call, ConnectionState, ElementCall } from "../../../models/Call";
 import { useCall } from "../../../hooks/useCall";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AppTile from "../elements/AppTile";
+import { CallStore } from "../../../stores/CallStore";
+import { SdkContextClass } from "../../../contexts/SDKContext";
 
 interface JoinCallViewProps {
     room: Room;
@@ -53,7 +55,14 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby, 
             if (!call.connected) call.destroy();
         };
     }, [call]);
-
+    const allOtherCallsDisconnected: () => Promise<void> = useCallback(async () => {
+        // The stickyPromise has to resolve before the widget actually becomes sticky.
+        // We only let the widget become sticky after disconnecting all other active calls.
+        const calls = [...CallStore.instance.activeCalls].filter(
+            (call) => SdkContextClass.instance.roomViewStore.getRoomId() !== call.roomId,
+        );
+        await Promise.all(calls.map(async (call) => await call.disconnect()));
+    }, []);
     return (
         <div className="mx_CallView">
             <AppTile
@@ -64,6 +73,7 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby, 
                 waitForIframeLoad={call.widget.waitForIframeLoad}
                 showMenubar={false}
                 pointerEvents={resizing ? "none" : undefined}
+                stickyPromise={allOtherCallsDisconnected}
             />
         </div>
     );

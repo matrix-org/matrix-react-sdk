@@ -95,6 +95,11 @@ interface IProps {
     movePersistedElement?: MutableRefObject<(() => void) | undefined>;
     // An element to render after the iframe as an overlay
     overlay?: ReactNode;
+    // If defined this async method will be called when the widget requests to become sticky.
+    // It will only become sticky once the returned promise resolves.
+    // This is useful because: Widget B is sticky. Making widget A sticky will kill widget B immediately.
+    // This promise allows to do Widget B related cleanup before Widget A becomes sticky.
+    stickyPromise: (() => Promise<void>) | null;
 }
 
 interface IState {
