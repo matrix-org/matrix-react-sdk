@@ -20,22 +20,16 @@ import { GroupCallEventHandlerEvent } from "matrix-js-sdk/src/webrtc/groupCallEv
 import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
-import { Optional } from "matrix-events-sdk";
+import { GroupCall, Room } from "matrix-js-sdk/src/matrix";
 
-import type { GroupCall, Room } from "matrix-js-sdk/src/matrix";
 import { UPDATE_EVENT } from "./AsyncStore";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import WidgetStore from "./WidgetStore";
 import SettingsStore from "../settings/SettingsStore";
 import { SettingLevel } from "../settings/SettingLevel";
 import { Call, CallEvent, ConnectionState } from "../models/Call";
-import { SdkContextClass } from "../contexts/SDKContext";
-import ActiveWidgetStore from "./ActiveWidgetStore";
-import { isVideoRoom } from "../utils/video-rooms";
-import { ActionPayload } from "../dispatcher/payloads";
-import { Action } from "../dispatcher/actions";
-import { ActiveRoomChangedPayload } from "../dispatcher/payloads/ActiveRoomChangedPayload";
 import defaultDispatcher from "../dispatcher/dispatcher";
+import { ActionPayload } from "../dispatcher/payloads";
 
 export enum CallStoreEvent {
     // Signals a change in the call associated with a given room
@@ -60,10 +54,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
     }
 
     protected async onAction(payload: ActionPayload): Promise<void> {
-        if (payload.action === Action.ActiveRoomChanged) {
-            const changePayload = <ActiveRoomChangedPayload>payload;
-            this.handleViewedRoomChange(changePayload.oldRoomId, changePayload.newRoomId);
-        }
+        // nothing to do
     }
 
     protected async onReady(): Promise<any> {
@@ -212,36 +203,5 @@ export class CallStore extends AsyncStoreWithClient<{}> {
     private onGroupCall = (groupCall: GroupCall): void => this.updateRoom(groupCall.room);
     private onRTCSession = (roomId: string, session: MatrixRTCSession): void => {
         this.updateRoom(session.room);
-    };
-    private handleViewedRoomChange = (_oldRoomId: Optional<string>, newRoomId: Optional<string>): void => {
-        this.calls.forEach((call) => {
-            // All calls where the user has not connected (calls in lobby or disconnected)
-            // should be destroyed if the user does not view the call anymore.
-            // A call in lobby state can easily be closed by not viewing the call anymore.
-            let viewedCallRoomId = null;
-            const newRoom = newRoomId ? this.matrixClient?.getRoom(newRoomId) : undefined;
-            const videoRoom = newRoom ? isVideoRoom(newRoom) : false;
-            const connState = call.connectionState;
-            const isDisconnceted = connState === ConnectionState.Disconnected;
-            const isInLobby = connState === ConnectionState.Lobby;
-            const isWidgetLive = ActiveWidgetStore.instance.isLive(call.widget.id, call.roomId);
-            const isWidgetLoading = connState === ConnectionState.WidgetLoading;
-            if (SdkContextClass.instance.roomViewStore.isViewingCall() || videoRoom) {
-                viewedCallRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
-            }
-            if (viewedCallRoomId !== call.roomId) {
-                if (
-                    // Only destroy the call if it is associated with an active widget. (the call is already shown)
-                    ((isDisconnceted || isInLobby) && isWidgetLive) ||
-                    isWidgetLoading
-                ) {
-                    call.destroy();
-                }
-            } else {
-                if (call.connectionState === ConnectionState.Disconnected) {
-                    call.connect();
-                }
-            }
-        });
     };
 }

@@ -14,81 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FC, useState, useContext, useEffect, useCallback, AriaRole } from "react";
-import { logger } from "matrix-js-sdk/src/logger";
+import React, { FC, useContext, useEffect, AriaRole, useState } from "react";
 
 import type { Room } from "matrix-js-sdk/src/matrix";
 import { Call, ConnectionState, ElementCall } from "../../../models/Call";
 import { useCall } from "../../../hooks/useCall";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AppTile from "../elements/AppTile";
-import { CallStore } from "../../../stores/CallStore";
-import { Lobby } from "./LegacyLobby";
-
-interface StartCallViewProps {
-    room: Room;
-    resizing: boolean;
-    call: Call | null;
-    setStartingCall: (value: boolean) => void;
-    startingCall: boolean;
-    skipLobby?: boolean;
-    role?: AriaRole;
-}
-
-const StartCallView: FC<StartCallViewProps> = ({
-    room,
-    resizing,
-    call,
-    setStartingCall,
-    startingCall,
-    skipLobby,
-    role,
-}) => {
-    const cli = useContext(MatrixClientContext);
-
-    // We need to do this awkward double effect system,
-    // because otherwise we will not have subscribed to the CallStore
-    // before we create the call which emits the UPDATE_ROOM event.
-    useEffect(() => {
-        setStartingCall(true);
-    }, [setStartingCall]);
-    useEffect(() => {
-        if (startingCall) {
-            ElementCall.create(room, skipLobby);
-        }
-    }, [room, skipLobby, startingCall]);
-
-    useEffect(() => {
-        (async (): Promise<void> => {
-            // If the call was successfully created, connect automatically
-            if (call !== null) {
-                try {
-                    // Disconnect from any other active calls first, since we don't yet support holding
-                    await Promise.all([...CallStore.instance.activeCalls].map((call) => call.disconnect()));
-                    await call.connect();
-                } catch (e) {
-                    logger.error(e);
-                }
-            }
-        })();
-    }, [call]);
-
-    return (
-        <div className="mx_CallView" role={role}>
-            {call !== null && (
-                <AppTile
-                    app={call.widget}
-                    room={room}
-                    userId={cli.credentials.userId!}
-                    creatorUserId={call.widget.creatorUserId}
-                    waitForIframeLoad={call.widget.waitForIframeLoad}
-                    showMenubar={false}
-                    pointerEvents={resizing ? "none" : undefined}
-                />
-            )}
-        </div>
-    );
-};
 
 interface JoinCallViewProps {
     room: Room;
@@ -101,25 +33,24 @@ interface JoinCallViewProps {
 const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby, role }) => {
     const cli = useContext(MatrixClientContext);
 
-    const connect = useCallback(async (): Promise<void> => {
-        // Disconnect from any other active calls first, since we don't yet support holding
-        // TODO: disconnect only after the call has been connected (after Lobby)
-        await Promise.all([...CallStore.instance.activeCalls].map((call) => call.disconnect()));
-        await call.connect();
-    }, [call]);
-
     // We'll take this opportunity to tidy up our room state
     useEffect(() => {
         call.clean();
     }, [call]);
     useEffect(() => {
         (call.widget.data ?? { skipLobby }).skipLobby = skipLobby;
-        if (call.connectionState == ConnectionState.Disconnected) {
+    }, [call.widget.data, skipLobby]);
+
+    useEffect(() => {
+        if (call.connectionState === ConnectionState.Disconnected) {
             // immediately connect (this will start the lobby view in the widget)
-            // connect();
+            call.connect();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [call.widget.data, connect, skipLobby]);
+        return (): void => {
+            // If we are connected the widget is sticky and we do not want to destroy the call.
+            if (!call.connected) call.destroy();
+        };
+    }, [call]);
 
     return (
         <div className="mx_CallView">
@@ -150,22 +81,21 @@ interface CallViewProps {
 
 export const CallView: FC<CallViewProps> = ({ room, resizing, waitForCall, skipLobby, role }) => {
     const call = useCall(room.roomId);
-    const [startingCall, setStartingCall] = useState(false);
-
-    if (call === null || startingCall) {
-        if (waitForCall) return null;
-        return (
-            <StartCallView
-                room={room}
-                resizing={resizing}
-                call={call}
-                setStartingCall={setStartingCall}
-                startingCall={startingCall}
-                skipLobby={skipLobby}
-                role={role}
-            />
-        );
+    const [shouldCreateCall, setShouldCreateCall] = useState(false);
+    useEffect(() => {
+        if (!waitForCall) {
+            setShouldCreateCall(true);
+        }
+    }, [waitForCall]);
+    useEffect(() => {
+        if (call === null && shouldCreateCall) {
+            ElementCall.create(room, skipLobby);
+        }
+    }, [call, room, shouldCreateCall, skipLobby, waitForCall]);
+    if (call === null) {
+        return null;
     } else {
         return <JoinCallView room={room} resizing={resizing} call={call} skipLobby={skipLobby} role={role} />;
     }
+    // }
 };

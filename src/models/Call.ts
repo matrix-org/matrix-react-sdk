@@ -56,6 +56,7 @@ import { FontWatcher } from "../settings/watchers/FontWatcher";
 import { PosthogAnalytics } from "../PosthogAnalytics";
 import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { getJoinedNonFunctionalMembers } from "../utils/room/getJoinedNonFunctionalMembers";
+import { isVideoRoom } from "../utils/video-rooms";
 
 const TIMEOUT_MS = 16000;
 
@@ -620,6 +621,11 @@ export class JitsiCall extends Call {
 
         await this.messaging!.transport.reply(ev.detail, {}); // ack
         this.setDisconnected();
+        // In video rooms we immediately want to reconnect after hangup
+        // This starts the lobby again and connects to all signals from EC.
+        if (isVideoRoom(this.room)) {
+            this.connect();
+        }
     };
 }
 
@@ -660,6 +666,7 @@ export class ElementCall extends Call {
             // Template variables are used, so that this can be configured using the widget data.
             preload: "$preload", // We want it to load in the background.
             skipLobby: "$skipLobby", // Skip the lobby in case we show a lobby component of our own.
+            returnToLobby: "$returnToLobby", // Skip the lobby in case we show a lobby component of our own.
             perParticipantE2EE: "$perParticipantE2EE",
             hideHeader: "true", // Hide the header since our room header is enough
             userId: client.getUserId()!,
@@ -707,6 +714,7 @@ export class ElementCall extends Call {
         client: MatrixClient,
         skipLobby: boolean | undefined,
         preload: boolean | undefined,
+        returnToLobby: boolean | undefined,
     ): IApp {
         const ecWidget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.CALL.matches(app.type));
         if (ecWidget) {
@@ -718,6 +726,9 @@ export class ElementCall extends Call {
             }
             if (preload !== undefined) {
                 overwrites.preload = preload;
+            }
+            if (returnToLobby !== undefined) {
+                overwrites.returnToLobby = returnToLobby;
             }
             ecWidget.data = ElementCall.getWidgetData(client, roomId, ecWidget?.data ?? {}, overwrites);
             return ecWidget;
@@ -741,6 +752,7 @@ export class ElementCall extends Call {
                     {
                         skipLobby: skipLobby ?? false,
                         preload: preload ?? false,
+                        returnToLobby: returnToLobby ?? false,
                     },
                 ),
             },
@@ -783,6 +795,7 @@ export class ElementCall extends Call {
 
     public static get(room: Room): ElementCall | null {
         // Only supported in the new group call experience or in video rooms.
+
         if (
             SettingsStore.getValue("feature_group_calls") ||
             (SettingsStore.getValue("feature_video_rooms") &&
@@ -804,6 +817,7 @@ export class ElementCall extends Call {
                     room.client,
                     undefined,
                     undefined,
+                    isVideoRoom(room),
                 );
                 return new ElementCall(session, availableOrCreatedWidget, room.client);
             }
@@ -813,12 +827,9 @@ export class ElementCall extends Call {
     }
 
     public static async create(room: Room, skipLobby = false): Promise<void> {
-        const isVideoRoom =
-            SettingsStore.getValue("feature_video_rooms") &&
-            SettingsStore.getValue("feature_element_call_video_rooms") &&
-            room.isCallRoom();
+        const isVidRoom = isVideoRoom(room);
 
-        ElementCall.createOrGetCallWidget(room.roomId, room.client, skipLobby, false);
+        ElementCall.createOrGetCallWidget(room.roomId, room.client, skipLobby, false, isVidRoom);
         WidgetStore.instance.emit(UPDATE_EVENT, null);
 
         // Send Call notify
@@ -829,7 +840,7 @@ export class ElementCall extends Call {
         );
 
         const memberCount = getJoinedNonFunctionalMembers(room).length;
-        if (!isVideoRoom && existingRoomCallMembers.length == 0) {
+        if (!isVidRoom && existingRoomCallMembers.length == 0) {
             // send ringing event
             const content: ICallNotifyContent = {
                 "application": "m.call",
@@ -967,6 +978,11 @@ export class ElementCall extends Call {
         ev.preventDefault();
         await this.messaging!.transport.reply(ev.detail, {}); // ack
         this.setDisconnected();
+        // In video rooms we immediately want to reconnect after hangup
+        // This starts the lobby again and connects to all signals from EC.
+        if (isVideoRoom(this.room)) {
+            this.connect();
+        }
     };
 
     private onTileLayout = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
