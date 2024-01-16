@@ -75,7 +75,7 @@ interface IAppTileProps {
     waitForIframeLoad: boolean;
     whitelistCapabilities?: string[];
     userWidget: boolean;
-    stickyPromise: (() => Promise<void>) | null;
+    stickyPromise?: () => Promise<void>;
 }
 
 // TODO: Don't use this because it's wrong
@@ -161,7 +161,7 @@ export class StopGapWidget extends EventEmitter {
     private kind: WidgetKind;
     private readonly virtual: boolean;
     private readUpToMap: { [roomId: string]: string } = {}; // room ID to event ID
-    private stickyPromise: (() => Promise<void>) | null = null; // This promise will be called and needs to resolve before the widget will actually become sticky.
+    private stickyPromise?: () => Promise<void>; // This promise will be called and needs to resolve before the widget will actually become sticky.
 
     public constructor(private appTileProps: IAppTileProps) {
         super();
