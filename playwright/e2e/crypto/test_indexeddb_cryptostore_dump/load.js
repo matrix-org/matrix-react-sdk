@@ -157,6 +157,15 @@ function getPickleAdditionalData(userId, deviceId) {
     return additionalData;
 }
 
+/** Save an entry to the `matrix-react-sdk` indexeddb database.
+ *
+ * If `matrix-react-sdk` does not yet exist, it will be created with the correct schema.
+ *
+ * @param {String} table
+ * @param {String} key
+ * @param {String} data
+ * @returns {Promise<void>}
+ */
 async function idbSave(table, key, data) {
     const idb = await new Promise((resolve, reject) => {
         const request = indexedDB.open("matrix-react-sdk", 1);
