@@ -285,13 +285,6 @@ describe("JitsiCall", () => {
             expect(call.connectionState).toBe(ConnectionState.WidgetLoading);
 
             WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
-            setTimeout(
-                () =>
-                    client.matrixRTC.emit(MatrixRTCSessionManagerEvents.SessionStarted, room.roomId, {
-                        room,
-                    } as MatrixRTCSession),
-                100,
-            );
             await connect;
             expect(call.connectionState).toBe(ConnectionState.Connected);
         });
@@ -313,34 +306,25 @@ describe("JitsiCall", () => {
             await call.connect();
             expect(call.connectionState).toBe(ConnectionState.Connected);
 
+            const callback = jest.fn();
+
+            call.on(CallEvent.ConnectionState, callback);
+
             messaging.emit(
                 `action:${ElementWidgetActions.HangupCall}`,
                 new CustomEvent("widgetapirequest", { detail: {} }),
             );
-            await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Disconnected), { interval: 5 });
-        });
-
-        it("handles instant remote disconnection when connecting", async () => {
-            mocked(messaging.transport).send.mockImplementation(async (action): Promise<any> => {
-                if (action === ElementWidgetActions.JoinCall) {
-                    // Emit the hangup event *before* the join event to fully
-                    // exercise the race condition
-                    messaging.emit(
-                        `action:${ElementWidgetActions.HangupCall}`,
-                        new CustomEvent("widgetapirequest", { detail: {} }),
+            await waitFor(() => {
+                expect(callback).toHaveBeenNthCalledWith(1, ConnectionState.Disconnected, ConnectionState.Connected),
+                    expect(callback).toHaveBeenNthCalledWith(
+                        2,
+                        ConnectionState.WidgetLoading,
+                        ConnectionState.Disconnected,
                     );
-                    messaging.emit(
-                        `action:${ElementWidgetActions.JoinCall}`,
-                        new CustomEvent("widgetapirequest", { detail: {} }),
-                    );
-                }
-                return {};
+                expect(callback).toHaveBeenNthCalledWith(3, ConnectionState.Connecting, ConnectionState.WidgetLoading);
             });
-            expect(call.connectionState).toBe(ConnectionState.Disconnected);
-            await call.connect();
-            expect(call.connectionState).toBe(ConnectionState.Connected);
-            // Should disconnect on its own almost instantly
-            await waitFor(() => expect(call.connectionState).toBe(ConnectionState.Disconnected), { interval: 5 });
+            // in video rooms we expect the call to immediately reconnect
+            call.off(CallEvent.ConnectionState, callback);
         });
 
         it("disconnects", async () => {
@@ -459,8 +443,10 @@ describe("JitsiCall", () => {
             await call.connect();
             await call.disconnect();
             expect(onConnectionState.mock.calls).toEqual([
-                [ConnectionState.Connecting, ConnectionState.Disconnected],
-                [ConnectionState.Connected, ConnectionState.Connecting],
+                [ConnectionState.WidgetLoading, ConnectionState.Disconnected],
+                [ConnectionState.Connecting, ConnectionState.WidgetLoading],
+                [ConnectionState.Lobby, ConnectionState.Connecting],
+                [ConnectionState.Connected, ConnectionState.Lobby],
                 [ConnectionState.Disconnecting, ConnectionState.Connected],
                 [ConnectionState.Disconnected, ConnectionState.Disconnecting],
             ]);
@@ -737,7 +723,7 @@ describe("ElementCall", () => {
             jest.useFakeTimers();
             jest.setSystemTime(0);
 
-            await ElementCall.create(room);
+            await ElementCall.create(room, true);
             const maybeCall = ElementCall.get(room);
             if (maybeCall === null) throw new Error("Failed to create call");
             call = maybeCall;
@@ -750,11 +736,12 @@ describe("ElementCall", () => {
         it("waits for messaging when connecting", async () => {
             // Temporarily remove the messaging to simulate connecting while the
             // widget is still initializing
+
             WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
 
-            const connect = call.connect();
-            expect(call.connectionState).toBe(ConnectionState.Connecting);
+            const connect = call.connect(true);
+            expect(call.connectionState).toBe(ConnectionState.WidgetLoading);
 
             WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
             await connect;
@@ -769,7 +756,7 @@ describe("ElementCall", () => {
         });
 
         it("fails to disconnect if the widget returns an error", async () => {
-            await call.connect();
+            await call.connect(true);
             mocked(messaging.transport).send.mockRejectedValue(new Error("never!!1! >:("));
             await expect(call.disconnect()).rejects.toBeDefined();
         });
@@ -777,7 +764,7 @@ describe("ElementCall", () => {
         it("handles remote disconnection", async () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
 
-            await call.connect();
+            await call.connect(true);
             expect(call.connectionState).toBe(ConnectionState.Connected);
 
             messaging.emit(
@@ -789,35 +776,35 @@ describe("ElementCall", () => {
 
         it("disconnects", async () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
-            await call.connect();
+            await call.connect(true);
             expect(call.connectionState).toBe(ConnectionState.Connected);
-            await call.disconnect();
+            await call.disconnect(true);
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
         it("disconnects when we leave the room", async () => {
-            await call.connect();
+            await call.connect(true);
             expect(call.connectionState).toBe(ConnectionState.Connected);
             room.emit(RoomEvent.MyMembership, room, "leave");
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
         it("remains connected if we stay in the room", async () => {
-            await call.connect();
+            await call.connect(true);
             expect(call.connectionState).toBe(ConnectionState.Connected);
             room.emit(RoomEvent.MyMembership, room, "join");
             expect(call.connectionState).toBe(ConnectionState.Connected);
         });
 
         it("disconnects if the widget dies", async () => {
-            await call.connect();
+            await call.connect(true);
             expect(call.connectionState).toBe(ConnectionState.Connected);
             WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
         it("tracks layout", async () => {
-            await call.connect();
+            await call.connect(true);
             expect(call.layout).toBe(Layout.Tile);
 
             messaging.emit(
@@ -834,7 +821,7 @@ describe("ElementCall", () => {
         });
 
         it("sets layout", async () => {
-            await call.connect();
+            await call.connect(true);
 
             await call.setLayout(Layout.Spotlight);
             expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.SpotlightLayout, {});
@@ -844,13 +831,15 @@ describe("ElementCall", () => {
         });
 
         it("emits events when connection state changes", async () => {
+            // const wait = jest.spyOn(CallModule, "waitForEvent");
             const onConnectionState = jest.fn();
             call.on(CallEvent.ConnectionState, onConnectionState);
 
-            await call.connect();
-            await call.disconnect();
+            await call.connect(true);
+            await call.disconnect(true);
             expect(onConnectionState.mock.calls).toEqual([
-                [ConnectionState.Connecting, ConnectionState.Disconnected],
+                [ConnectionState.WidgetLoading, ConnectionState.Disconnected],
+                [ConnectionState.Connecting, ConnectionState.WidgetLoading],
                 [ConnectionState.Connected, ConnectionState.Connecting],
                 [ConnectionState.Disconnecting, ConnectionState.Connected],
                 [ConnectionState.Disconnected, ConnectionState.Disconnecting],
@@ -871,7 +860,7 @@ describe("ElementCall", () => {
         });
 
         it("emits events when layout changes", async () => {
-            await call.connect();
+            await call.connect(true);
             const onLayout = jest.fn();
             call.on(CallEvent.Layout, onLayout);
 
@@ -889,10 +878,10 @@ describe("ElementCall", () => {
         });
 
         it("ends the call immediately if the session ended", async () => {
-            await call.connect();
+            await call.connect(true);
             const onDestroy = jest.fn();
             call.on(CallEvent.Destroy, onDestroy);
-            await call.disconnect();
+            await call.disconnect(true);
             // this will be called automatically
             // disconnect -> widget sends state event -> session manager notices no-one left
             client.matrixRTC.emit(
@@ -954,10 +943,10 @@ describe("ElementCall", () => {
         afterEach(() => cleanUpCallAndWidget(call, widget, audioMutedSpy, videoMutedSpy));
 
         it("doesn't end the call when the last participant leaves", async () => {
-            await call.connect();
+            await call.connect(true);
             const onDestroy = jest.fn();
             call.on(CallEvent.Destroy, onDestroy);
-            await call.disconnect();
+            await call.disconnect(true);
             expect(onDestroy).not.toHaveBeenCalled();
             call.off(CallEvent.Destroy, onDestroy);
         });

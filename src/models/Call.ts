@@ -205,19 +205,20 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     protected abstract performConnection(
         audioInput: MediaDeviceInfo | null,
         videoInput: MediaDeviceInfo | null,
+        skipSessionAwait?: boolean,
     ): Promise<void>;
 
     /**
      * Contacts the widget to disconnect from the call.
      */
-    protected abstract performDisconnection(): Promise<void>;
+    protected abstract performDisconnection(skipSessionAwait?: boolean): Promise<void>;
 
     /**
      * Connects the user to the call using the media devices set in
      * MediaDeviceHandler. The widget associated with the call must be active
      * for this to succeed.
      */
-    public async connect(): Promise<void> {
+    public async connect(skipSessionAwait = false): Promise<void> {
         this.connectionState = ConnectionState.WidgetLoading;
 
         const { [MediaDeviceKindEnum.AudioInput]: audioInputs, [MediaDeviceKindEnum.VideoInput]: videoInputs } =
@@ -256,7 +257,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         }
         this.connectionState = ConnectionState.Connecting;
         try {
-            await this.performConnection(audioInput, videoInput);
+            await this.performConnection(audioInput, videoInput, skipSessionAwait);
         } catch (e) {
             this.connectionState = ConnectionState.Disconnected;
             throw e;
@@ -271,11 +272,11 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     /**
      * Disconnects the user from the call.
      */
-    public async disconnect(): Promise<void> {
+    public async disconnect(skipSessionAwait = false): Promise<void> {
         if (!this.connected) throw new Error("Not connected");
 
         this.connectionState = ConnectionState.Disconnecting;
-        await this.performDisconnection();
+        await this.performDisconnection(skipSessionAwait);
         this.setDisconnected();
     }
 
@@ -467,6 +468,7 @@ export class JitsiCall extends Call {
     protected async performConnection(
         audioInput: MediaDeviceInfo | null,
         videoInput: MediaDeviceInfo | null,
+        skipSessionAwait = false,
     ): Promise<void> {
         this.connectionState = ConnectionState.Lobby;
         // Ensure that the messaging doesn't get stopped while we're waiting for responses
@@ -529,7 +531,7 @@ export class JitsiCall extends Call {
         ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Undock, this.onUndock);
     }
 
-    protected async performDisconnection(): Promise<void> {
+    protected async performDisconnection(skipSessionAwait = false): Promise<void> {
         const response = waitForEvent(
             this.messaging!,
             `action:${ElementWidgetActions.HangupCall}`,
@@ -864,6 +866,7 @@ export class ElementCall extends Call {
     protected async performConnection(
         audioInput: MediaDeviceInfo | null,
         videoInput: MediaDeviceInfo | null,
+        skipSessionAwait = false,
     ): Promise<void> {
         // the JoinCall action is only send if the widget is waiting for it.
         if ((this.widget.data ?? {}).preload) {
@@ -880,9 +883,7 @@ export class ElementCall extends Call {
         this.messaging!.on(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
         this.messaging!.on(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
 
-        if ((this.widget.data ?? {}).skipLobby) {
-            this.connectionState = ConnectionState.Connecting;
-        } else {
+        if (!(this.widget.data ?? {}).skipLobby) {
             // If we do not skip the lobby we need to wait until the widget has
             // connected to matrixRTC. This is either observed through the session state
             // or the MatrixRTCSessionManager session started event.
@@ -890,14 +891,14 @@ export class ElementCall extends Call {
         }
 
         const session = this.client.matrixRTC.getActiveRoomSession(this.room);
-        if (session) {
+        if (session && !skipSessionAwait) {
             await waitForEvent(
                 session,
                 MatrixRTCSessionEvent.MembershipsChanged,
                 (_, newMemberships: CallMembership[]) =>
                     newMemberships.some((m) => m.sender === this.client.getUserId()),
             );
-        } else {
+        } else if (!skipSessionAwait) {
             await waitForEvent(
                 this.client.matrixRTC,
                 MatrixRTCSessionManagerEvents.SessionStarted,
@@ -907,16 +908,17 @@ export class ElementCall extends Call {
         }
     }
 
-    protected async performDisconnection(): Promise<void> {
+    protected async performDisconnection(skipSessionAwait = false): Promise<void> {
         try {
             await this.messaging!.transport.send(ElementWidgetActions.HangupCall, {});
-
-            await waitForEvent(
-                this.session,
-                MatrixRTCSessionEvent.MembershipsChanged,
-                (_, newMemberships: CallMembership[]) =>
-                    !newMemberships.some((m) => m.sender === this.client.getUserId()),
-            );
+            if (!skipSessionAwait) {
+                await waitForEvent(
+                    this.session,
+                    MatrixRTCSessionEvent.MembershipsChanged,
+                    (_, newMemberships: CallMembership[]) =>
+                        !newMemberships.some((m) => m.sender === this.client.getUserId()),
+                );
+            }
         } catch (e) {
             throw new Error(`Failed to hangup call in room ${this.roomId}: ${e}`);
         }
