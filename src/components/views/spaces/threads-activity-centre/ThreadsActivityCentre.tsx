@@ -47,7 +47,6 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
 
     return (
         <Menu
-            className="mx_ThreadsActivityMenu"
             align="end"
             open={open}
             onOpenChange={setOpen}
