@@ -282,9 +282,16 @@ describe("JitsiCall", () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
 
             const connect = call.connect();
-            expect(call.connectionState).toBe(ConnectionState.Connecting);
+            expect(call.connectionState).toBe(ConnectionState.WidgetLoading);
 
             WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
+            setTimeout(
+                () =>
+                    client.matrixRTC.emit(MatrixRTCSessionManagerEvents.SessionStarted, room.roomId, {
+                        room,
+                    } as MatrixRTCSession),
+                100,
+            );
             await connect;
             expect(call.connectionState).toBe(ConnectionState.Connected);
         });
