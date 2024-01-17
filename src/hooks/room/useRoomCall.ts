@@ -32,7 +32,7 @@ import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutS
 import { useRoomState } from "../useRoomState";
 import { _t } from "../../languageHandler";
 import { isManagedHybridWidget } from "../../widgets/ManagedHybrid";
-import { IApp } from "../../stores/WidgetStore";
+import { IApp, isVirtualWidget } from "../../stores/WidgetStore";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../dispatcher/actions";
@@ -126,7 +126,8 @@ export const useRoomCall = (
 
     const [canPinWidget, setCanPinWidget] = useState(false);
     const [widgetPinned, setWidgetPinned] = useState(false);
-    const promptPinWidget = canPinWidget && !widgetPinned;
+    // We only want to prompt to pin the widget if it's not virtual (not element call based)
+    const promptPinWidget = widget ? !isVirtualWidget(widget) : true && canPinWidget && !widgetPinned;
 
     const updateWidgetState = useCallback((): void => {
         setCanPinWidget(WidgetLayoutStore.instance.canAddToContainer(room, Container.Top));
@@ -187,13 +188,7 @@ export const useRoomCall = (
         (evt: React.MouseEvent): void => {
             evt.stopPropagation();
             if (widget && promptPinWidget) {
-                defaultDispatcher.dispatch<ViewRoomPayload>({
-                    action: Action.ViewRoom,
-                    room_id: room.roomId,
-                    view_call: true,
-                    metricsTrigger: undefined,
-                    skipLobby: evt.shiftKey,
-                });
+                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
             } else {
                 placeCall(room, CallType.Video, callType, evt.shiftKey);
             }
