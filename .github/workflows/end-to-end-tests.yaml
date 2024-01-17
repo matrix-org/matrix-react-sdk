@@ -94,6 +94,7 @@ jobs:
 
             - name: Get installed Playwright version
               id: playwright
+              working-directory: matrix-react-sdk
               run: echo "version=$(yarn list --pattern @playwright/test --depth=0 --json --non-interactive --no-progress | jq -r '.data.trees[].name')" >> $GITHUB_OUTPUT
 
             - name: Cache playwright binaries
