@@ -899,7 +899,7 @@ export class ElementCall extends Call {
         } else {
             await waitForEvent(
                 this.client.matrixRTC,
-                MatrixRTCSessionEvent.MembershipsChanged,
+                MatrixRTCSessionManagerEvents.SessionStarted,
                 (roomId: string, session: MatrixRTCSession) =>
                     this.session.callId === session.callId && roomId === this.roomId,
             );
