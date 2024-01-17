@@ -20,7 +20,7 @@ limitations under the License.
     margin: auto;
     border-top: 1px solid $primary-hairline-color;
     position: relative;
-    padding-left: 16px;
+    padding-left: 42px;
     padding-right: 16px;
 }
 
@@ -80,9 +80,13 @@ limitations under the License.
     width: 100%;
 }
 .mx_MessageComposer_e2eIconWrapper {
-    height: 12px; /* Match the height of the E2E icon for alignment*/
+    height: 12px; /* Match the height of the E2E icon for alignment */
 }
 .mx_MessageComposer_e2eIcon.mx_E2EIcon {
+    position: absolute;
+    left: 20px;
+    margin-right: 0; /* Counteract the E2EIcon class */
+    margin-left: 3px; /* Counteract the E2EIcon class */
     width: 12px;
     height: 12px;
 }
