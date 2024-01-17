@@ -55,9 +55,16 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
             title={_t("threads_activity_centre|header")}
             trigger={<ThreadsActivityCentreButton displayLabel={displayButtonLabel} />}
         >
-            {rooms.map((room) => (
-                <ThreadsActivityRow key={room.roomId} room={room} onClick={() => setOpen(false)} />
-            ))}
+            {/* Make the content of the pop-up scrollable */}
+            <div className="mx_ThreadsActivity_rows">
+                {rooms.map((room) => (
+                    <ThreadsActivityRow
+                        key={`${room.roomId}-${Math.random() * 10 * Math.random() * 10}`}
+                        room={room}
+                        onClick={() => setOpen(false)}
+                    />
+                ))}
+            </div>
         </Menu>
     );
 }

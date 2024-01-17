@@ -53,14 +53,20 @@
     width: 330px;
 }
 
-.mx_ThreadsActivityRow {
-    height: 48px;
+.mx_ThreadsActivity_rows {
+    overflow-y: scroll;
+    // Let some space at the top and the bottom of the pop-up
+    max-height: calc(100vh - 200px);
 
-    & > span {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: 210px;
+    .mx_ThreadsActivityRow {
+        height: 48px;
+
+        & > span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 210px;
+        }
     }
 }
 
