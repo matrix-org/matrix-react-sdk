@@ -114,9 +114,9 @@ jobs:
 
             - name: Upload blob report to GitHub Actions Artifacts
               if: always()
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
-                  name: all-blob-reports
+                  name: all-blob-reports-${{ matrix.runner }}
                   path: matrix-react-sdk/blob-report
                   retention-days: 1
 
@@ -143,16 +143,17 @@ jobs:
               run: yarn install --frozen-lockfile
 
             - name: Download blob reports from GitHub Actions Artifacts
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4
               with:
-                  name: all-blob-reports
+                  pattern: all-blob-reports-*
                   path: all-blob-reports
+                  merge-multiple: true
 
             - name: Merge into HTML Report
               run: yarn playwright merge-reports --reporter=html,github ./all-blob-reports
 
             - name: Upload HTML report
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: html-report--attempt-${{ github.run_attempt }}
                   path: playwright-report
