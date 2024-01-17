@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen, within } from "@testing-library/react";
 import { JoinRule, MatrixError, Preset, Visibility } from "matrix-js-sdk/src/matrix";
 
+import { fireEvent, render, screen, within } from "../../..";
 import CreateRoomDialog from "../../../../src/components/views/dialogs/CreateRoomDialog";
 import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
 import SettingsStore from "../../../../src/settings/SettingsStore";

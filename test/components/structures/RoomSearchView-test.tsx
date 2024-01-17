@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { render, screen } from "@testing-library/react";
 import {
     Room,
     MatrixClient,
@@ -28,6 +27,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { defer } from "matrix-js-sdk/src/utils";
 
+import { render, screen } from "../..";
 import { RoomSearchView } from "../../../src/components/structures/RoomSearchView";
 import { SearchScope } from "../../../src/components/views/rooms/SearchBar";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";

@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, RenderResult, waitFor } from "@testing-library/react";
 import { MatrixClient, Room, MatrixEvent, EventType, JoinRule } from "matrix-js-sdk/src/matrix";
 
+import { fireEvent, render, RenderResult, waitFor } from "../../../../..";
 import { mkStubRoom, stubClient } from "../../../../../test-utils";
 import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
 import { VoipRoomSettingsTab } from "../../../../../../src/components/views/settings/tabs/room/VoipRoomSettingsTab";

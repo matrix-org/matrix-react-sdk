@@ -36,6 +36,7 @@ exports[`<LocationShareMenu /> with live location disabled goes to labs flag scr
       aria-disabled="false"
       aria-labelledby="mx_LabelledToggleSwitch_vY7Q4uEh9K38"
       class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+      data-state="closed"
       role="switch"
       tabindex="0"
     >

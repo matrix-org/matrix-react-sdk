@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, waitFor } from "@testing-library/react";
 import { IContent, MatrixClient, MsgType } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 import userEvent from "@testing-library/user-event";
 
+import { fireEvent, render, waitFor } from "../../..";
 import SendMessageComposer, {
     attachMentions,
     createMessageContent,

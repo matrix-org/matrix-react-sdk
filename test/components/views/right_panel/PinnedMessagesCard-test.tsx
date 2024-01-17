@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, act, RenderResult, fireEvent, waitForElementToBeRemoved, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import {
     MatrixEvent,
@@ -33,6 +32,7 @@ import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStart
 import { PollResponseEvent } from "matrix-js-sdk/src/extensible_events_v1/PollResponseEvent";
 import { PollEndEvent } from "matrix-js-sdk/src/extensible_events_v1/PollEndEvent";
 
+import { render, act, RenderResult, fireEvent, waitForElementToBeRemoved, screen } from "../../..";
 import { stubClient, mkEvent, mkMessage, flushPromises } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import PinnedMessagesCard from "../../../../src/components/views/right_panel/PinnedMessagesCard";

@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, {
     ComponentProps,
+    ComponentType,
     Dispatch,
     KeyboardEvent,
     KeyboardEventHandler,
@@ -73,7 +74,6 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { JoinRoomReadyPayload } from "../../dispatcher/payloads/JoinRoomReadyPayload";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
-import { Alignment } from "../views/elements/Tooltip";
 import { getTopic } from "../../hooks/room/useTopic";
 import { SdkContextClass } from "../../contexts/SDKContext";
 import { getDisplayAliasForAliasSet } from "../../Rooms";
@@ -664,13 +664,13 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
 
     const disabled = !selectedRelations.length || removing || saving;
 
-    let Button: React.ComponentType<React.ComponentProps<typeof AccessibleButton>> = AccessibleButton;
+    let Button: ComponentType<ComponentProps<typeof AccessibleTooltipButton>> = AccessibleButton;
     let props: Partial<ComponentProps<typeof AccessibleTooltipButton>> = {};
     if (!selectedRelations.length) {
         Button = AccessibleTooltipButton;
         props = {
-            tooltip: _t("space|select_room_below"),
-            alignment: Alignment.Top,
+            title: _t("space|select_room_below"),
+            side: "top",
         };
     }
 

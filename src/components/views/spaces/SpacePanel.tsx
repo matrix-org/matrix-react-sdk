@@ -375,20 +375,13 @@ const SpacePanel: React.FC = () => {
                                 className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
                                 onClick={() => setPanelCollapsed(!isPanelCollapsed)}
                                 title={isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
-                                tooltip={
-                                    <div>
-                                        <div className="mx_Tooltip_title">
-                                            {isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
-                                        </div>
-                                        <div className="mx_Tooltip_sub">
-                                            {IS_MAC
-                                                ? "⌘ + ⇧ + D"
-                                                : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) +
-                                                  " + " +
-                                                  _t(ALTERNATE_KEY_NAME[Key.SHIFT]) +
-                                                  " + D"}
-                                        </div>
-                                    </div>
+                                caption={
+                                    IS_MAC
+                                        ? "⌘ + ⇧ + D"
+                                        : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) +
+                                          " + " +
+                                          _t(ALTERNATE_KEY_NAME[Key.SHIFT]) +
+                                          " + D"
                                 }
                             />
                         </UserMenu>

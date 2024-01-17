@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen, fireEvent, act } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
+import { render, screen, fireEvent, act } from "../../..";
 import UnwrappedSpacePanel from "../../../../src/components/views/spaces/SpacePanel";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { MetaSpace, SpaceKey } from "../../../../src/stores/spaces";
@@ -167,9 +167,9 @@ describe("<SpacePanel />", () => {
         DMRoomMap.makeShared(mockClient);
         jest.useFakeTimers();
 
-        const { getByLabelText } = render(<SpacePanel />);
+        const { getByTestId } = render(<SpacePanel />);
 
-        const room1 = getByLabelText("Room 1");
+        const room1 = getByTestId("Room 1");
         await pickUp(room1);
         await move(room1, DragDirection.DOWN);
         await drop(room1);

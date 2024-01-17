@@ -31,10 +31,10 @@ import {
     ThreepidMedium,
 } from "matrix-js-sdk/src/matrix";
 import { randomString } from "matrix-js-sdk/src/randomstring";
-import { act, fireEvent, getByTestId, render, screen, waitFor, within } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import userEvent from "@testing-library/user-event";
 
+import { act, fireEvent, getByTestId, render, screen, waitFor, within } from "../../..";
 import Notifications from "../../../../src/components/views/settings/Notifications";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { StandardActions } from "../../../../src/notifications/StandardActions";

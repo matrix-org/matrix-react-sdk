@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { getByLabelText, getAllByLabelText, render } from "@testing-library/react";
 import { Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
 
+import { screen, render } from "../../..";
 import { stubClient } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
@@ -59,9 +59,9 @@ describe("DevtoolsDialog", () => {
 
         const { container } = getComponent(room.roomId);
 
-        const copyBtn = getByLabelText(container, "Copy");
+        const copyBtn = container.querySelector(".mx_CopyableText_copyButton")!;
         await user.click(copyBtn);
-        const copiedBtn = getByLabelText(container, "Copied!");
+        const copiedBtn = screen.getByRole("tooltip", { name: "Copied!" });
 
         expect(copiedBtn).toBeInTheDocument();
         expect(navigator.clipboard.writeText).toHaveBeenCalled();
@@ -75,9 +75,9 @@ describe("DevtoolsDialog", () => {
         const threadRootId = "$test_event_id_goes_here";
         const { container } = getComponent(room.roomId, threadRootId);
 
-        const copyBtn = getAllByLabelText(container, "Copy")[1];
+        const copyBtn = container.querySelectorAll(".mx_CopyableText_copyButton").item(1)!; // second button
         await user.click(copyBtn);
-        const copiedBtn = getByLabelText(container, "Copied!");
+        const copiedBtn = screen.getByRole("tooltip", { name: "Copied!" });
 
         expect(copiedBtn).toBeInTheDocument();
         expect(navigator.clipboard.writeText).toHaveBeenCalled();

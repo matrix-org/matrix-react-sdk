@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React, { HTMLAttributes } from "react";
-import { render } from "@testing-library/react";
 
+import { render } from "..";
 import {
     IState,
     reducer,

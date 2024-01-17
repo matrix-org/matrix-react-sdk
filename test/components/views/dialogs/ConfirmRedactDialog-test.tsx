@@ -16,9 +16,9 @@ limitations under the License.
 
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
 import { MatrixClient, MatrixEvent, RelationType } from "matrix-js-sdk/src/matrix";
-import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import { screen } from "../../..";
 import { flushPromises, mkEvent, stubClient } from "../../../test-utils";
 import { mkVoiceBroadcastInfoStateEvent } from "../../../voice-broadcast/utils/test-utils";
 import { VoiceBroadcastInfoState } from "../../../../src/voice-broadcast";

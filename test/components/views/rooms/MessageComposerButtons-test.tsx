@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
 
+import { render, screen } from "../../..";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../../src/contexts/RoomContext";
 import { createTestClient, getRoomContext, mkStubRoom } from "../../../test-utils";
@@ -43,7 +43,7 @@ describe("MessageComposerButtons", () => {
     function getButtonLabels() {
         const getLabels = (elements: HTMLElement[]): string[] =>
             elements
-                .map((element) => element.getAttribute("aria-label"))
+                .map((element) => element.getAttribute("aria-label") ?? element.getAttribute("data-testid"))
                 .filter((label): label is string => label !== null);
 
         const mainLabels: Array<string | string[]> = getLabels(screen.queryAllByRole("button"));

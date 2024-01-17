@@ -39,8 +39,9 @@ exports[`DevtoolsDialog renders the devtools dialog 1`] = `
     >
       Room ID: !id
       <div
-        aria-label="Copy"
         class="mx_AccessibleButton mx_CopyableText_copyButton"
+        data-state="closed"
+        data-testid="Copy"
         role="button"
         tabindex="0"
       />
@@ -131,8 +132,9 @@ exports[`DevtoolsDialog renders the devtools dialog 1`] = `
           <div
             aria-checked="false"
             aria-disabled="false"
-            aria-label="Developer mode"
             class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+            data-state="closed"
+            data-testid="Developer mode"
             id="mx_SettingsFlag_vY7Q4uEh9K38"
             role="switch"
             tabindex="0"
@@ -158,8 +160,9 @@ exports[`DevtoolsDialog renders the devtools dialog 1`] = `
           <div
             aria-checked="false"
             aria-disabled="false"
-            aria-label="Show hidden events in timeline"
             class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+            data-state="closed"
+            data-testid="Show hidden events in timeline"
             id="mx_SettingsFlag_QgU2PomxwKpa"
             role="switch"
             tabindex="0"
@@ -185,8 +188,9 @@ exports[`DevtoolsDialog renders the devtools dialog 1`] = `
           <div
             aria-checked="false"
             aria-disabled="false"
-            aria-label="Enable widget screenshots on supported widgets"
             class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+            data-state="closed"
+            data-testid="Enable widget screenshots on supported widgets"
             id="mx_SettingsFlag_6hpi3YEetmBG"
             role="switch"
             tabindex="0"
@@ -212,8 +216,9 @@ exports[`DevtoolsDialog renders the devtools dialog 1`] = `
           <div
             aria-checked="false"
             aria-disabled="false"
-            aria-label="Force 15s voice broadcast chunk length"
             class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+            data-state="closed"
+            data-testid="Force 15s voice broadcast chunk length"
             id="mx_SettingsFlag_4yVCeEefiPqp"
             role="switch"
             tabindex="0"

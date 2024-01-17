@@ -40,8 +40,8 @@ exports[`DateSeparator when feature_jump_to_date is enabled renders the date sep
     <div
       aria-expanded="false"
       aria-haspopup="true"
-      aria-label="Jump to date"
       class="mx_AccessibleButton mx_DateSeparator_jumpToDateMenu mx_DateSeparator_dateContent"
+      data-state="closed"
       data-testid="jump-to-date-separator-button"
       role="button"
       tabindex="0"

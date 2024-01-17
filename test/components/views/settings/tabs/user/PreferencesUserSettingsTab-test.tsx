@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, RenderResult, waitFor } from "@testing-library/react";
 
+import { fireEvent, render, RenderResult, waitFor } from "../../../../..";
 import PreferencesUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/PreferencesUserSettingsTab";
 import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
 import { mockPlatformPeg, stubClient } from "../../../../../test-utils";
@@ -49,7 +49,11 @@ describe("PreferencesUserSettingsTab", () => {
             jest.resetAllMocks();
         });
 
-        const getToggle = () => renderTab().getByRole("switch", { name: "Send read receipts" });
+        const getToggle = () => {
+            const tab = renderTab();
+            const label = tab.getByText("Send read receipts").parentElement!;
+            return tab.container.querySelector(`#${label.attributes.getNamedItem("for")?.value}`)!;
+        };
 
         const mockIsVersionSupported = (val: boolean) => {
             const client = MatrixClientPeg.safeGet();

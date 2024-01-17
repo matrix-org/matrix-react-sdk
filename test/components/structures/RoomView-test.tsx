@@ -546,7 +546,7 @@ describe("RoomView", () => {
             mocked(cli.isGuest).mockReturnValue(false);
             await mountRoomView();
 
-            expect(screen.getByLabelText("Forget room")).toBeInTheDocument();
+            expect(screen.getByTestId("Forget room")).toBeInTheDocument();
         });
 
         it("should not show forget room button for guests", async () => {
@@ -599,7 +599,7 @@ describe("RoomView", () => {
         const eventMapper = (obj: Partial<IEvent>) => new MatrixEvent(obj);
 
         const roomViewRef = createRef<_RoomView>();
-        const { container, getByText, findByLabelText } = await mountRoomView(roomViewRef);
+        const { container, getByText, findByTestId } = await mountRoomView(roomViewRef);
         // @ts-ignore - triggering a search organically is a lot of work
         roomViewRef.current!.setState({
             search: {
@@ -646,7 +646,7 @@ describe("RoomView", () => {
         const prom = waitForElementToBeRemoved(() => container.querySelector(".mx_RoomView_searchResultsPanel"));
 
         await userEvent.hover(getByText("search term"));
-        await userEvent.click(await findByLabelText("Edit"));
+        await userEvent.click(await findByTestId("Edit"));
 
         await prom;
     });
@@ -660,7 +660,7 @@ describe("RoomView", () => {
         const eventMapper = (obj: Partial<IEvent>) => new MatrixEvent(obj);
 
         const roomViewRef = createRef<_RoomView>();
-        const { container, getByText, findByLabelText } = await mountRoomView(roomViewRef);
+        const { container, getByText, findByTestId } = await mountRoomView(roomViewRef);
         // @ts-ignore - triggering a search organically is a lot of work
         roomViewRef.current!.setState({
             search: {
@@ -707,7 +707,7 @@ describe("RoomView", () => {
         const prom = untilDispatch(Action.ViewRoom, dis);
 
         await userEvent.hover(getByText("search term"));
-        await userEvent.click(await findByLabelText("Edit"));
+        await userEvent.click(await findByTestId("Edit"));
 
         await expect(prom).resolves.toEqual(expect.objectContaining({ room_id: room2.roomId }));
     });

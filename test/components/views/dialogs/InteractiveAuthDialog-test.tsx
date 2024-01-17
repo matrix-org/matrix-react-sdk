@@ -16,11 +16,11 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 import { MatrixError } from "matrix-js-sdk/src/matrix";
 
+import { fireEvent, render, screen, act } from "../../..";
 import InteractiveAuthDialog from "../../../../src/components/views/dialogs/InteractiveAuthDialog";
 import { clearAllModals, flushPromises, getMockClientWithEventEmitter, unmockClientPeg } from "../../../test-utils";
 

@@ -18,6 +18,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { EventType, GuestAccess, HistoryVisibility, JoinRule, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import SecurityRoomSettingsTab from "../../../../../../src/components/views/settings/tabs/room/SecurityRoomSettingsTab";
 import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
@@ -45,7 +46,9 @@ describe("<SecurityRoomSettingsTab />", () => {
     const getComponent = (room: Room, closeSettingsFn = jest.fn()) =>
         render(<SecurityRoomSettingsTab room={room} closeSettingsFn={closeSettingsFn} />, {
             wrapper: ({ children }) => (
-                <MatrixClientContext.Provider value={client}>{children}</MatrixClientContext.Provider>
+                <TooltipProvider>
+                    <MatrixClientContext.Provider value={client}>{children}</MatrixClientContext.Provider>
+                </TooltipProvider>
             ),
         });
 

@@ -52,7 +52,6 @@ const RoomBreadcrumbTile: React.FC<{ room: Room; onClick: (ev: ButtonEvent) => v
             onClick={onClick}
             aria-label={_t("a11y|room_name", { name: room.name })}
             title={room.name}
-            tooltipClassName="mx_RoomBreadcrumbs_Tooltip"
             onFocus={onFocus}
             ref={ref}
             tabIndex={isActive ? 0 : -1}

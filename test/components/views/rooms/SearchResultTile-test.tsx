@@ -16,8 +16,8 @@ limitations under the License.
 
 import * as React from "react";
 import { MatrixEvent, Room, EventType } from "matrix-js-sdk/src/matrix";
-import { render, type RenderResult } from "@testing-library/react";
 
+import { render, type RenderResult } from "../../..";
 import { stubClient } from "../../../test-utils";
 import SearchResultTile from "../../../../src/components/views/rooms/SearchResultTile";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";

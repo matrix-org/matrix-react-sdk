@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React, { ReactElement } from "react";
-import { render } from "@testing-library/react";
 import { mocked, MockedObject } from "jest-mock";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
+import { render } from "../../..";
 import SettingsStore, { CallbackFn } from "../../../../src/settings/SettingsStore";
 import SdkConfig from "../../../../src/SdkConfig";
 import { UserTab } from "../../../../src/components/views/dialogs/UserTab";

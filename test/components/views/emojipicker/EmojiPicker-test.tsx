@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
-import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import { render } from "../../..";
 import EmojiPicker from "../../../../src/components/views/emojipicker/EmojiPicker";
 import { stubClient } from "../../../test-utils";
 

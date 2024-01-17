@@ -127,16 +127,6 @@ interface IFormatButtonProps {
 class FormatButton extends React.PureComponent<IFormatButtonProps> {
     public render(): React.ReactNode {
         const className = `mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIcon${this.props.icon}`;
-        let shortcut;
-        if (this.props.shortcut) {
-            shortcut = <div className="mx_MessageComposerFormatBar_tooltipShortcut">{this.props.shortcut}</div>;
-        }
-        const tooltip = (
-            <div>
-                <div className="mx_Tooltip_title">{this.props.label}</div>
-                <div className="mx_Tooltip_sub">{shortcut}</div>
-            </div>
-        );
 
         // element="button" and type="button" are necessary for the buttons to work on WebKit,
         // otherwise the text is deselected before onClick can ever be called
@@ -146,7 +136,7 @@ class FormatButton extends React.PureComponent<IFormatButtonProps> {
                 type="button"
                 onClick={this.props.onClick}
                 title={this.props.label}
-                tooltip={tooltip}
+                caption={this.props.shortcut}
                 className={className}
             />
         );

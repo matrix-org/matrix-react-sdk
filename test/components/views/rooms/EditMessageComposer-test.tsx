@@ -18,6 +18,7 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Room } from "matrix-js-sdk/src/matrix";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import EditMessageComposerWithMatrixClient, {
     createEditContent,
@@ -85,9 +86,11 @@ describe("<EditMessageComposer/>", () => {
     const getComponent = (editState: EditorStateTransfer, roomContext: IRoomState = defaultRoomContext) =>
         render(<EditMessageComposerWithMatrixClient editState={editState} />, {
             wrapper: ({ children }) => (
-                <MatrixClientContext.Provider value={mockClient}>
-                    <RoomContext.Provider value={roomContext}>{children}</RoomContext.Provider>
-                </MatrixClientContext.Provider>
+                <TooltipProvider>
+                    <MatrixClientContext.Provider value={mockClient}>
+                        <RoomContext.Provider value={roomContext}>{children}</RoomContext.Provider>
+                    </MatrixClientContext.Provider>
+                </TooltipProvider>
             ),
         });
 

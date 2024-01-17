@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import { mocked, MockedObject } from "jest-mock";
 import fetchMock from "fetch-mock-jest";
 import { DELEGATED_OIDC_COMPATIBILITY, IdentityProviderBrand, OidcClientConfig } from "matrix-js-sdk/src/matrix";
@@ -23,6 +22,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import * as Matrix from "matrix-js-sdk/src/matrix";
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
 
+import { fireEvent, render, screen, waitForElementToBeRemoved } from "../../..";
 import SdkConfig from "../../../../src/SdkConfig";
 import { mkServerConfig, mockPlatformPeg, unmockPlatformPeg } from "../../../test-utils";
 import Login from "../../../../src/components/structures/auth/Login";

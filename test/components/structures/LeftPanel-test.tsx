@@ -16,9 +16,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, RenderResult, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
 
+import { render, RenderResult, screen } from "../..";
 import LeftPanel from "../../../src/components/structures/LeftPanel";
 import PageType from "../../../src/PageTypes";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
@@ -49,6 +49,6 @@ describe("LeftPanel", () => {
         renderComponent();
         expect(shouldShowComponent).toHaveBeenCalledWith(UIComponent.FilterContainer);
         expect(screen.getByRole("button", { name: /search/i })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: "Explore rooms" })).toBeInTheDocument();
+        expect(screen.getByTestId("Explore rooms")).toBeInTheDocument();
     });
 });

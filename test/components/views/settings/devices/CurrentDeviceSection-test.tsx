@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { act, fireEvent, render } from "@testing-library/react";
 
+import { act, fireEvent, render } from "../../../..";
 import CurrentDeviceSection from "../../../../../src/components/views/settings/devices/CurrentDeviceSection";
 import { DeviceType } from "../../../../../src/utils/device/parseUserAgent";
 

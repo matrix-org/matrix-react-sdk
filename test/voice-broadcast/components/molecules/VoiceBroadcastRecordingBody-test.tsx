@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, RenderResult } from "@testing-library/react";
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
+import { render, RenderResult } from "../../..";
 import {
     VoiceBroadcastInfoEventType,
     VoiceBroadcastInfoState,

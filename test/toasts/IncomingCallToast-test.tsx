@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen, cleanup, fireEvent, waitFor } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
 import { Room, RoomStateEvent, MatrixEvent, MatrixEventEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
@@ -26,6 +25,7 @@ import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 // eslint-disable-next-line no-restricted-imports
 import { ICallNotifyContent } from "matrix-js-sdk/src/matrixrtc/types";
 
+import { render, screen, cleanup, fireEvent, waitFor } from "..";
 import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import {
     useMockedCalls,
@@ -127,8 +127,8 @@ describe("IncomingCallEvent", () => {
         screen.getByText("Video");
         screen.getByLabelText("3 participants");
 
-        screen.getByRole("button", { name: "Join" });
-        screen.getByRole("button", { name: "Close" });
+        screen.getByText("Join");
+        screen.getByTestId("Close");
     });
 
     it("start ringing on ring notify event", () => {
@@ -152,8 +152,8 @@ describe("IncomingCallEvent", () => {
         screen.getByText("Video call started");
         screen.getByText("Video");
 
-        screen.getByRole("button", { name: "Join" });
-        screen.getByRole("button", { name: "Close" });
+        screen.getByText("Join");
+        screen.getByTestId("Close");
     });
 
     it("joins the call and closes the toast", async () => {
@@ -185,7 +185,7 @@ describe("IncomingCallEvent", () => {
         const dispatcherSpy = jest.fn();
         const dispatcherRef = defaultDispatcher.register(dispatcherSpy);
 
-        fireEvent.click(screen.getByRole("button", { name: "Close" }));
+        fireEvent.click(screen.getByTestId("Close"));
         await waitFor(() =>
             expect(toastStore.dismissToast).toHaveBeenCalledWith(
                 getIncomingCallToastKey(notifyContent.call_id, room.roomId),

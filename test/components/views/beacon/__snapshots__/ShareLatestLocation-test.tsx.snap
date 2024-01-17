@@ -17,8 +17,9 @@ exports[`<ShareLatestLocation /> renders share buttons when there is a location 
     class="mx_CopyableText mx_ShareLatestLocation_copy"
   >
     <div
-      aria-label="Copy"
       class="mx_AccessibleButton mx_CopyableText_copyButton"
+      data-state="closed"
+      data-testid="Copy"
       role="button"
       tabindex="0"
     />

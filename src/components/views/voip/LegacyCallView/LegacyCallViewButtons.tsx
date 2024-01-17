@@ -23,7 +23,6 @@ import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
 import LegacyCallContextMenu from "../../context_menus/LegacyCallContextMenu";
 import DialpadContextMenu from "../../context_menus/DialpadContextMenu";
-import { Alignment } from "../../elements/Tooltip";
 import {
     alwaysMenuProps,
     alwaysAboveRightOf,
@@ -60,7 +59,7 @@ const LegacyCallViewToggleButton = forwardRef<HTMLElement, ButtonProps>(
                 ref={ref}
                 className={classes}
                 title={isOn ? onLabel : offLabel}
-                alignment={Alignment.Top}
+                side="top"
                 {...props}
             >
                 {children}
@@ -265,7 +264,7 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                         onClick={this.onDialpadClick}
                         isExpanded={this.state.showDialpad}
                         title={_t("voip|dialpad")}
-                        alignment={Alignment.Top}
+                        side="top"
                     />
                 )}
                 <LegacyCallViewDropdownButton
@@ -311,14 +310,14 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                         ref={this.contextMenuButton}
                         isExpanded={this.state.showMoreMenu}
                         title={_t("voip|more_button")}
-                        alignment={Alignment.Top}
+                        side="top"
                     />
                 )}
                 <AccessibleTooltipButton
                     className="mx_LegacyCallViewButtons_button mx_LegacyCallViewButtons_button_hangup"
                     onClick={this.props.handlers.onHangupClick}
                     title={_t("voip|hangup")}
-                    alignment={Alignment.Top}
+                    side="top"
                 />
             </div>
         );

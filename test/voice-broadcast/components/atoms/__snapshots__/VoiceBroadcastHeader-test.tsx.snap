@@ -24,8 +24,9 @@ exports[`VoiceBroadcastHeader when rendering a buffering live broadcast header w
         </div>
       </div>
       <div
-        aria-label="Change input device"
         class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+        data-state="closed"
+        data-testid="Change input device"
         role="button"
         tabindex="0"
       >
@@ -81,8 +82,9 @@ exports[`VoiceBroadcastHeader when rendering a live (grey) broadcast header with
         </div>
       </div>
       <div
-        aria-label="Change input device"
         class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+        data-state="closed"
+        data-testid="Change input device"
         role="button"
         tabindex="0"
       >
@@ -138,8 +140,9 @@ exports[`VoiceBroadcastHeader when rendering a live broadcast header with broadc
         </div>
       </div>
       <div
-        aria-label="Change input device"
         class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+        data-state="closed"
+        data-testid="Change input device"
         role="button"
         tabindex="0"
       >
@@ -211,8 +214,9 @@ exports[`VoiceBroadcastHeader when rendering a non-live broadcast header should 
         </div>
       </div>
       <div
-        aria-label="Change input device"
         class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+        data-state="closed"
+        data-testid="Change input device"
         role="button"
         tabindex="0"
       >

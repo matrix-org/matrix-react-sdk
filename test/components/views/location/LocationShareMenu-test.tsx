@@ -20,6 +20,7 @@ import { RoomMember, RelationType, MatrixClient, M_ASSET, LocationAssetType } fr
 import { logger } from "matrix-js-sdk/src/logger";
 import { act, fireEvent, render, RenderResult } from "@testing-library/react";
 import * as maplibregl from "maplibre-gl";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import LocationShareMenu from "../../../../src/components/views/location/LocationShareMenu";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
@@ -120,7 +121,9 @@ describe("<LocationShareMenu />", () => {
     const getComponent = (props = {}): RenderResult =>
         render(<LocationShareMenu {...defaultProps} {...props} />, {
             wrapper: ({ children }) => (
-                <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+                <TooltipProvider>
+                    <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+                </TooltipProvider>
             ),
         });
 

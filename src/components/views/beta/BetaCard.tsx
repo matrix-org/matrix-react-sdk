@@ -52,13 +52,8 @@ export const BetaPill: React.FC<IBetaPillProps> = ({
         return (
             <AccessibleTooltipButton
                 className="mx_BetaCard_betaPill"
-                title={`${tooltipTitle} ${tooltipCaption}`}
-                tooltip={
-                    <div>
-                        <div className="mx_Tooltip_title">{tooltipTitle}</div>
-                        <div className="mx_Tooltip_sub">{tooltipCaption}</div>
-                    </div>
-                }
+                title={tooltipTitle}
+                caption={tooltipCaption}
                 onClick={onClick}
             >
                 {_t("common|beta")}
