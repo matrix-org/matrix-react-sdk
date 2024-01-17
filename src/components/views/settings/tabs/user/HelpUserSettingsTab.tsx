@@ -31,9 +31,7 @@ import SettingsSubsection, { SettingsSubsectionText } from "../../shared/Setting
 import ExternalLink from "../../../elements/ExternalLink";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 
-interface IProps {
-    closeSettingsFn: () => void;
-}
+interface IProps {}
 
 interface IState {
     appVersion: string | null;
