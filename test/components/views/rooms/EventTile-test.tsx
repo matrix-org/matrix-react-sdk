@@ -30,6 +30,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { EventEncryptionInfo, EventShieldColour, EventShieldReason } from "matrix-js-sdk/src/crypto-api";
 import { CryptoBackend } from "matrix-js-sdk/src/common-crypto/CryptoBackend";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import EventTile, { EventTileProps } from "../../../../src/components/views/rooms/EventTile";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
@@ -66,11 +67,13 @@ describe("EventTile", () => {
         return (
             <MatrixClientContext.Provider value={client}>
                 <RoomContext.Provider value={props.roomContext}>
-                    <EventTile
-                        mxEvent={mxEvent}
-                        replacingEventId={mxEvent.replacingEventId()}
-                        {...(props.eventTilePropertyOverrides ?? {})}
-                    />
+                    <TooltipProvider>
+                        <EventTile
+                            mxEvent={mxEvent}
+                            replacingEventId={mxEvent.replacingEventId()}
+                            {...(props.eventTilePropertyOverrides ?? {})}
+                        />
+                    </TooltipProvider>
                 </RoomContext.Provider>
             </MatrixClientContext.Provider>
         );
@@ -294,7 +297,11 @@ describe("EventTile", () => {
             const e2eIcons = container.getElementsByClassName("mx_EventTile_e2eIcon");
             expect(e2eIcons).toHaveLength(1);
             expect(e2eIcons[0].classList).toContain("mx_EventTile_e2eIcon_normal");
-            expect(e2eIcons[0].getAttribute("aria-label")).toContain(expectedText);
+            fireEvent.focus(e2eIcons[0]);
+            expect(e2eIcons[0].getAttribute("aria-describedby")).toBeTruthy();
+            expect(document.getElementById(e2eIcons[0].getAttribute("aria-describedby")!)).toHaveTextContent(
+                expectedText,
+            );
         });
 
         describe("undecryptable event", () => {
