@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, ReactNode, ChangeEvent, KeyboardEvent, useRef, ReactElement } from 'react';
-import classNames from 'classnames';
+import React, { useState, ReactNode, ChangeEvent, KeyboardEvent, useRef, ReactElement } from "react";
+import classNames from "classnames";
 
 import Autocompleter from "../../autocomplete/AutocompleteProvider";
-import { Key } from '../../Keyboard';
-import { ICompletion } from '../../autocomplete/Autocompleter';
-import AccessibleButton from '../../components/views/elements/AccessibleButton';
-import { Icon as PillRemoveIcon } from '../../../res/img/icon-pill-remove.svg';
-import { Icon as SearchIcon } from '../../../res/img/element-icons/roomlist/search.svg';
+import { Key } from "../../Keyboard";
+import { ICompletion } from "../../autocomplete/Autocompleter";
+import AccessibleButton from "../../components/views/elements/AccessibleButton";
+import { Icon as PillRemoveIcon } from "../../../res/img/icon-pill-remove.svg";
+import { Icon as SearchIcon } from "../../../res/img/element-icons/roomlist/search.svg";
 import useFocus from "../../hooks/useFocus";
 
 interface AutocompleteInputProps {
@@ -46,17 +46,17 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
     selection,
     additionalFilter,
 }) => {
-    const [query, setQuery] = useState<string>('');
+    const [query, setQuery] = useState<string>("");
     const [suggestions, setSuggestions] = useState<ICompletion[]>([]);
     const [isFocused, onFocusChangeHandlerFunctions] = useFocus();
     const editorContainerRef = useRef<HTMLDivElement>(null);
     const editorRef = useRef<HTMLInputElement>(null);
 
-    const focusEditor = () => {
+    const focusEditor = (): void => {
         editorRef?.current?.focus();
     };
 
-    const onQueryChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const onQueryChange = async (e: ChangeEvent<HTMLInputElement>): Promise<void> => {
         const value = e.target.value.trim();
         setQuery(value);
 
@@ -74,11 +74,11 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
         setSuggestions(matches);
     };
 
-    const onClickInputArea = () => {
+    const onClickInputArea = (): void => {
         focusEditor();
     };
 
-    const onKeyDown = (e: KeyboardEvent) => {
+    const onKeyDown = (e: KeyboardEvent): void => {
         const hasModifiers = e.ctrlKey || e.shiftKey || e.metaKey;
 
         // when the field is empty and the user hits backspace remove the right-most target
@@ -87,9 +87,9 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
         }
     };
 
-    const toggleSelection = (completion: ICompletion) => {
+    const toggleSelection = (completion: ICompletion): void => {
         const newSelection = [...selection];
-        const index = selection.findIndex(selection => selection.completionId === completion.completionId);
+        const index = selection.findIndex((selection) => selection.completionId === completion.completionId);
 
         if (index >= 0) {
             newSelection.splice(index, 1);
@@ -101,9 +101,9 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
         focusEditor();
     };
 
-    const removeSelection = (completion: ICompletion) => {
+    const removeSelection = (completion: ICompletion): void => {
         const newSelection = [...selection];
-        const index = selection.findIndex(selection => selection.completionId === completion.completionId);
+        const index = selection.findIndex((selection) => selection.completionId === completion.completionId);
 
         if (index >= 0) {
             newSelection.splice(index, 1);
@@ -118,24 +118,22 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
             <div
                 ref={editorContainerRef}
                 className={classNames({
-                    'mx_AutocompleteInput_editor': true,
-                    'mx_AutocompleteInput_editor--focused': isFocused,
-                    'mx_AutocompleteInput_editor--has-suggestions': suggestions.length > 0,
+                    "mx_AutocompleteInput_editor": true,
+                    "mx_AutocompleteInput_editor--focused": isFocused,
+                    "mx_AutocompleteInput_editor--has-suggestions": suggestions.length > 0,
                 })}
                 onClick={onClickInputArea}
                 data-testid="autocomplete-editor"
             >
                 <SearchIcon className="mx_AutocompleteInput_search_icon" width={16} height={16} />
-                {
-                    selection.map(item => (
-                        <SelectionItem
-                            key={item.completionId}
-                            item={item}
-                            onClick={removeSelection}
-                            render={renderSelection}
-                        />
-                    ))
-                }
+                {selection.map((item) => (
+                    <SelectionItem
+                        key={item.completionId}
+                        item={item}
+                        onClick={removeSelection}
+                        render={renderSelection}
+                    />
+                ))}
                 <input
                     ref={editorRef}
                     type="text"
@@ -148,27 +146,23 @@ export const AutocompleteInput: React.FC<AutocompleteInputProps> = ({
                     {...onFocusChangeHandlerFunctions}
                 />
             </div>
-            {
-                (isFocused && suggestions.length) ? (
-                    <div
-                        className="mx_AutocompleteInput_matches"
-                        style={{ top: editorContainerRef.current?.clientHeight }}
-                        data-testid="autocomplete-matches"
-                    >
-                        {
-                            suggestions.map((item) => (
-                                <SuggestionItem
-                                    key={item.completionId}
-                                    item={item}
-                                    selection={selection}
-                                    onClick={toggleSelection}
-                                    render={renderSuggestion}
-                                />
-                            ))
-                        }
-                    </div>
-                ) : null
-            }
+            {isFocused && suggestions.length ? (
+                <div
+                    className="mx_AutocompleteInput_matches"
+                    style={{ top: editorContainerRef.current?.clientHeight }}
+                    data-testid="autocomplete-matches"
+                >
+                    {suggestions.map((item) => (
+                        <SuggestionItem
+                            key={item.completionId}
+                            item={item}
+                            selection={selection}
+                            onClick={toggleSelection}
+                            render={renderSuggestion}
+                        />
+                    ))}
+                </div>
+            ) : null}
         </div>
     );
 };
@@ -182,14 +176,12 @@ type SelectionItemProps = {
 const SelectionItem: React.FC<SelectionItemProps> = ({ item, onClick, render }) => {
     const withContainer = (children: ReactNode): ReactElement => (
         <span
-            className='mx_AutocompleteInput_editor_selection'
+            className="mx_AutocompleteInput_editor_selection"
             data-testid={`autocomplete-selection-item-${item.completionId}`}
         >
-            <span className='mx_AutocompleteInput_editor_selection_pill'>
-                { children }
-            </span>
+            <span className="mx_AutocompleteInput_editor_selection_pill">{children}</span>
             <AccessibleButton
-                className='mx_AutocompleteInput_editor_selection_remove_button'
+                className="mx_AutocompleteInput_editor_selection_remove_button"
                 onClick={() => onClick(item)}
                 data-testid={`autocomplete-selection-remove-button-${item.completionId}`}
             >
@@ -202,9 +194,7 @@ const SelectionItem: React.FC<SelectionItemProps> = ({ item, onClick, render }) 
         return withContainer(render(item));
     }
 
-    return withContainer(
-        <span className='mx_AutocompleteInput_editor_selection_text'>{ item.completion }</span>,
-    );
+    return withContainer(<span className="mx_AutocompleteInput_editor_selection_text">{item.completion}</span>);
 };
 
 type SuggestionItemProps = {
@@ -215,10 +205,10 @@ type SuggestionItemProps = {
 };
 
 const SuggestionItem: React.FC<SuggestionItemProps> = ({ item, selection, onClick, render }) => {
-    const isSelected = selection.some(selection => selection.completionId === item.completionId);
+    const isSelected = selection.some((selection) => selection.completionId === item.completionId);
     const classes = classNames({
-        'mx_AutocompleteInput_suggestion': true,
-        'mx_AutocompleteInput_suggestion--selected': isSelected,
+        "mx_AutocompleteInput_suggestion": true,
+        "mx_AutocompleteInput_suggestion--selected": isSelected,
     });
 
     const withContainer = (children: ReactNode): ReactElement => (
@@ -231,7 +221,7 @@ const SuggestionItem: React.FC<SuggestionItemProps> = ({ item, selection, onClic
             }}
             data-testid={`autocomplete-suggestion-item-${item.completionId}`}
         >
-            { children }
+            {children}
         </div>
     );
 
@@ -241,8 +231,8 @@ const SuggestionItem: React.FC<SuggestionItemProps> = ({ item, selection, onClic
 
     return withContainer(
         <>
-            <span className='mx_AutocompleteInput_suggestion_title'>{ item.completion }</span>
-            <span className='mx_AutocompleteInput_suggestion_description'>{ item.completionId }</span>
+            <span className="mx_AutocompleteInput_suggestion_title">{item.completion}</span>
+            <span className="mx_AutocompleteInput_suggestion_description">{item.completionId}</span>
         </>,
     );
 };

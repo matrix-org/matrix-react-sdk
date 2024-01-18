@@ -27,7 +27,12 @@ interface State {
 
 export const useAudioDeviceSelection = (
     onDeviceChanged?: (device: MediaDeviceInfo) => void,
-) => {
+): {
+    currentDevice: MediaDeviceInfo | null;
+    currentDeviceLabel: string;
+    devices: MediaDeviceInfo[];
+    setDevice(device: MediaDeviceInfo): void;
+} => {
     const shouldRequestPermissionsRef = useRef<boolean>(true);
     const [state, setState] = useState<State>({
         devices: [],
@@ -37,23 +42,26 @@ export const useAudioDeviceSelection = (
     if (shouldRequestPermissionsRef.current) {
         shouldRequestPermissionsRef.current = false;
         requestMediaPermissions(false).then((stream: MediaStream | undefined) => {
-            MediaDeviceHandler.getDevices().then(({ audioinput }) => {
+            MediaDeviceHandler.getDevices().then((devices) => {
+                if (!devices) return;
+                const { audioinput } = devices;
                 MediaDeviceHandler.getDefaultDevice(audioinput);
                 const deviceFromSettings = MediaDeviceHandler.getAudioInput();
-                const device = audioinput.find((d) => {
-                    return d.deviceId === deviceFromSettings;
-                }) || audioinput[0];
+                const device =
+                    audioinput.find((d) => {
+                        return d.deviceId === deviceFromSettings;
+                    }) || audioinput[0];
                 setState({
                     ...state,
                     devices: audioinput,
                     device,
                 });
-                stream?.getTracks().forEach(t => t.stop());
+                stream?.getTracks().forEach((t) => t.stop());
             });
         });
     }
 
-    const setDevice = (device: MediaDeviceInfo) => {
+    const setDevice = (device: MediaDeviceInfo): void => {
         const shouldNotify = device.deviceId !== state.device?.deviceId;
         MediaDeviceHandler.instance.setDevice(device.deviceId, MediaDeviceKindEnum.AudioInput);
 
@@ -69,7 +77,7 @@ export const useAudioDeviceSelection = (
 
     return {
         currentDevice: state.device,
-        currentDeviceLabel: state.device?.label || _t("Default Device"),
+        currentDeviceLabel: state.device?.label || _t("voip|default_device"),
         devices: state.devices,
         setDevice,
     };

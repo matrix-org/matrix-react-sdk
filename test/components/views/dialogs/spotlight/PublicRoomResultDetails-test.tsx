@@ -16,25 +16,27 @@ limitations under the License.
 
 import React from "react";
 import { render } from "@testing-library/react";
-import { IPublicRoomsChunkRoom } from "matrix-js-sdk/src/client";
+import { IPublicRoomsChunkRoom } from "matrix-js-sdk/src/matrix";
 
 import { PublicRoomResultDetails } from "../../../../../src/components/views/dialogs/spotlight/PublicRoomResultDetails";
 
 describe("PublicRoomResultDetails", () => {
     it("renders", () => {
-        const { asFragment } = render(<PublicRoomResultDetails
-            room={{
-                room_id: "room-id",
-                name: "hello?",
-                canonical_alias: "canonical-alias",
-                world_readable: true,
-                guest_can_join: false,
-                num_joined_members: 666,
-            }}
-            labelId="label-id"
-            descriptionId="description-id"
-            detailsId="details-id"
-        />);
+        const { asFragment } = render(
+            <PublicRoomResultDetails
+                room={{
+                    room_id: "room-id",
+                    name: "hello?",
+                    canonical_alias: "canonical-alias",
+                    world_readable: true,
+                    guest_can_join: false,
+                    num_joined_members: 666,
+                }}
+                labelId="label-id"
+                descriptionId="description-id"
+                detailsId="details-id"
+            />,
+        );
 
         expect(asFragment()).toMatchSnapshot();
     });
@@ -57,12 +59,14 @@ describe("PublicRoomResultDetails", () => {
             ...partialPublicRoomChunk,
         };
 
-        const { asFragment } = render(<PublicRoomResultDetails
-            room={roomChunk}
-            labelId="label-id"
-            descriptionId="description-id"
-            detailsId="details-id"
-        />);
+        const { asFragment } = render(
+            <PublicRoomResultDetails
+                room={roomChunk}
+                labelId="label-id"
+                descriptionId="description-id"
+                detailsId="details-id"
+            />,
+        );
 
         expect(asFragment()).toMatchSnapshot();
     });

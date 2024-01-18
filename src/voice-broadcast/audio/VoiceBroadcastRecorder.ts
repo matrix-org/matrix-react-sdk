@@ -14,8 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { isEqual } from "lodash";
 import { Optional } from "matrix-events-sdk";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import { logger } from "matrix-js-sdk/src/logger";
+import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
 
 import { getChunkLength } from "..";
 import { IRecordingUpdate, VoiceRecording } from "../../audio/VoiceRecording";
@@ -38,6 +40,12 @@ export interface ChunkRecordedPayload {
     length: number;
 }
 
+// char sequence of "OpusHead"
+const OpusHead = [79, 112, 117, 115, 72, 101, 97, 100];
+
+// char sequence of "OpusTags"
+const OpusTags = [79, 112, 117, 115, 84, 97, 103, 115];
+
 /**
  * This class provides the function to seamlessly record fixed length chunks.
  * Subscribe with on(VoiceBroadcastRecordingEvents.ChunkRecorded, (payload: ChunkRecordedPayload) => {})
@@ -45,12 +53,13 @@ export interface ChunkRecordedPayload {
  */
 export class VoiceBroadcastRecorder
     extends TypedEventEmitter<VoiceBroadcastRecorderEvent, EventMap>
-    implements IDestroyable {
-    private headers = new Uint8Array(0);
+    implements IDestroyable
+{
+    private opusHead?: Uint8Array;
+    private opusTags?: Uint8Array;
     private chunkBuffer = new Uint8Array(0);
     // position of the previous chunk in seconds
     private previousChunkEndTimePosition = 0;
-    private pagesFromRecorderCount = 0;
     // current chunk length in seconds
     private currentChunkLength = 0;
 
@@ -67,20 +76,23 @@ export class VoiceBroadcastRecorder
         this.voiceRecording.liveData.onUpdate((data: IRecordingUpdate) => {
             this.setCurrentChunkLength(data.timeSeconds - this.previousChunkEndTimePosition);
         });
-        return;
     }
 
     /**
      * Stops the recording and returns the remaining chunk (if any).
      */
     public async stop(): Promise<Optional<ChunkRecordedPayload>> {
-        await this.voiceRecording.stop();
+        try {
+            await this.voiceRecording.stop();
+        } catch (e) {
+            // Ignore if the recording raises any error.
+        }
+
         // forget about that call, so that we can stop it again later
         Singleflight.forgetAllFor(this.voiceRecording);
         const chunk = this.extractChunk();
         this.currentChunkLength = 0;
         this.previousChunkEndTimePosition = 0;
-        this.headers = new Uint8Array(0);
         return chunk;
     }
 
@@ -101,15 +113,23 @@ export class VoiceBroadcastRecorder
 
     private onDataAvailable = (data: ArrayBuffer): void => {
         const dataArray = new Uint8Array(data);
-        this.pagesFromRecorderCount++;
 
-        if (this.pagesFromRecorderCount <= 2) {
-            // first two pages contain the headers
-            this.headers = concat(this.headers, dataArray);
+        // extract the part, that contains the header type info
+        const headerType = Array.from(dataArray.slice(28, 36));
+
+        if (isEqual(OpusHead, headerType)) {
+            // data seems to be an "OpusHead" header
+            this.opusHead = dataArray;
             return;
         }
 
-        this.setCurrentChunkLength(this.voiceRecording.recorderSeconds - this.previousChunkEndTimePosition);
+        if (isEqual(OpusTags, headerType)) {
+            // data seems to be an "OpusTags" header
+            this.opusTags = dataArray;
+            return;
+        }
+
+        this.setCurrentChunkLength(this.voiceRecording.recorderSeconds! - this.previousChunkEndTimePosition);
         this.handleData(dataArray);
     };
 
@@ -132,9 +152,14 @@ export class VoiceBroadcastRecorder
             return null;
         }
 
-        const currentRecorderTime = this.voiceRecording.recorderSeconds;
+        if (!this.opusHead || !this.opusTags) {
+            logger.warn("Broadcast chunk cannot be extracted. OpusHead or OpusTags is missing.");
+            return null;
+        }
+
+        const currentRecorderTime = this.voiceRecording.recorderSeconds!;
         const payload: ChunkRecordedPayload = {
-            buffer: concat(this.headers, this.chunkBuffer),
+            buffer: concat(this.opusHead!, this.opusTags!, this.chunkBuffer),
             length: this.getCurrentChunkLength(),
         };
         this.chunkBuffer = new Uint8Array(0);
@@ -148,10 +173,7 @@ export class VoiceBroadcastRecorder
             return;
         }
 
-        this.emit(
-            VoiceBroadcastRecorderEvent.ChunkRecorded,
-            this.extractChunk(),
-        );
+        this.emit(VoiceBroadcastRecorderEvent.ChunkRecorded, this.extractChunk()!);
     }
 
     public destroy(): void {

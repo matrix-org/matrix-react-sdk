@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import { mocked, Mocked } from "jest-mock";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import { mkRoom, resetAsyncStoreWithClient, setupAsyncStoreWithClient, stubClient } from "../test-utils";
@@ -29,6 +28,7 @@ import DMRoomMap from "../../src/utils/DMRoomMap";
 import SpaceStore from "../../src/stores/spaces/SpaceStore";
 import { MetaSpace } from "../../src/stores/spaces";
 import { ActionPayload } from "../../src/dispatcher/payloads";
+import SettingsStore from "../../src/settings/SettingsStore";
 
 describe("leaveRoomBehaviour", () => {
     SdkContextClass.instance.constructEagerStores(); // Initialize RoomViewStore
@@ -39,17 +39,20 @@ describe("leaveRoomBehaviour", () => {
 
     beforeEach(async () => {
         stubClient();
-        client = mocked(MatrixClientPeg.get());
-        DMRoomMap.makeShared();
+        client = mocked(MatrixClientPeg.safeGet());
+        DMRoomMap.makeShared(client);
 
         room = mkRoom(client, "!1:example.org");
         space = mkRoom(client, "!2:example.org");
         space.isSpaceRoom.mockReturnValue(true);
-        client.getRoom.mockImplementation(roomId => {
+        client.getRoom.mockImplementation((roomId) => {
             switch (roomId) {
-                case room.roomId: return room;
-                case space.roomId: return space;
-                default: return null;
+                case room.roomId:
+                    return room;
+                case space.roomId:
+                    return space;
+                default:
+                    return null;
             }
         });
 
@@ -62,16 +65,20 @@ describe("leaveRoomBehaviour", () => {
         jest.restoreAllMocks();
     });
 
-    const viewRoom = (room: Room) => defaultDispatcher.dispatch<ViewRoomPayload>({
-        action: Action.ViewRoom,
-        room_id: room.roomId,
-        metricsTrigger: undefined,
-    }, true);
+    const viewRoom = (room: Room) =>
+        defaultDispatcher.dispatch<ViewRoomPayload>(
+            {
+                action: Action.ViewRoom,
+                room_id: room.roomId,
+                metricsTrigger: undefined,
+            },
+            true,
+        );
 
     const expectDispatch = async <T extends ActionPayload>(payload: T) => {
         const dispatcherSpy = jest.fn();
         const dispatcherRef = defaultDispatcher.register(dispatcherSpy);
-        await new Promise<void>(resolve => setImmediate(resolve)); // Flush the dispatcher
+        await new Promise<void>((resolve) => setImmediate(resolve)); // Flush the dispatcher
         expect(dispatcherSpy).toHaveBeenCalledWith(payload);
         defaultDispatcher.unregister(dispatcherRef);
     };
@@ -79,18 +86,18 @@ describe("leaveRoomBehaviour", () => {
     it("returns to the home page after leaving a room outside of a space that was being viewed", async () => {
         viewRoom(room);
 
-        await leaveRoomBehaviour(room.roomId);
+        await leaveRoomBehaviour(client, room.roomId);
         await expectDispatch({ action: Action.ViewHomePage });
     });
 
     it("returns to the parent space after leaving a room inside of a space that was being viewed", async () => {
-        jest.spyOn(SpaceStore.instance, "getCanonicalParent").mockImplementation(
-            roomId => roomId === room.roomId ? space : null,
+        jest.spyOn(SpaceStore.instance, "getCanonicalParent").mockImplementation((roomId) =>
+            roomId === room.roomId ? space : null,
         );
         viewRoom(room);
         SpaceStore.instance.setActiveSpace(space.roomId, false);
 
-        await leaveRoomBehaviour(room.roomId);
+        await leaveRoomBehaviour(client, room.roomId);
         await expectDispatch({
             action: Action.ViewRoom,
             room_id: space.roomId,
@@ -102,23 +109,48 @@ describe("leaveRoomBehaviour", () => {
         viewRoom(space);
         SpaceStore.instance.setActiveSpace(space.roomId, false);
 
-        await leaveRoomBehaviour(space.roomId);
+        await leaveRoomBehaviour(client, space.roomId);
         await expectDispatch({ action: Action.ViewHomePage });
     });
 
     it("returns to the parent space after leaving a subspace that was being viewed", async () => {
         room.isSpaceRoom.mockReturnValue(true);
-        jest.spyOn(SpaceStore.instance, "getCanonicalParent").mockImplementation(
-            roomId => roomId === room.roomId ? space : null,
+        jest.spyOn(SpaceStore.instance, "getCanonicalParent").mockImplementation((roomId) =>
+            roomId === room.roomId ? space : null,
         );
         viewRoom(room);
         SpaceStore.instance.setActiveSpace(room.roomId, false);
 
-        await leaveRoomBehaviour(room.roomId);
+        await leaveRoomBehaviour(client, room.roomId);
         await expectDispatch({
             action: Action.ViewRoom,
             room_id: space.roomId,
             metricsTrigger: undefined,
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors is not enabled", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+        });
+
+        it("Passes through the dynamic predecessor setting", async () => {
+            await leaveRoomBehaviour(client, room.roomId);
+            expect(client.getRoomUpgradeHistory).toHaveBeenCalledWith(room.roomId, false, false);
+        });
+    });
+
+    describe("If the feature_dynamic_room_predecessors is enabled", () => {
+        beforeEach(() => {
+            // Turn on feature_dynamic_room_predecessors setting
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (settingName) => settingName === "feature_dynamic_room_predecessors",
+            );
+        });
+
+        it("Passes through the dynamic predecessor setting", async () => {
+            await leaveRoomBehaviour(client, room.roomId);
+            expect(client.getRoomUpgradeHistory).toHaveBeenCalledWith(room.roomId, false, true);
         });
     });
 });

@@ -16,12 +16,12 @@ limitations under the License.
 
 import fetchMock from "fetch-mock-jest";
 import { TextDecoder, TextEncoder } from "util";
-import fetch from 'node-fetch';
+import { Response } from "node-fetch";
 
 // jest 27 removes setImmediate from jsdom
 // polyfill until setImmediate use in client can be removed
 // @ts-ignore - we know the contract is wrong. That's why we're stubbing it.
-global.setImmediate = callback => window.setTimeout(callback, 0);
+global.setImmediate = (callback) => window.setTimeout(callback, 0);
 
 // Stub ResizeObserver
 // @ts-ignore - we know it's a duplicate (that's why we're stubbing it)
@@ -56,7 +56,8 @@ class MyClipboardEvent extends Event {}
 window.ClipboardEvent = MyClipboardEvent as any;
 
 // matchMedia is not included in jsdom
-const mockMatchMedia = jest.fn().mockImplementation(query => ({
+// TODO: Extract this to a function and have tests that need it opt into it.
+const mockMatchMedia = (query: string) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -65,7 +66,7 @@ const mockMatchMedia = jest.fn().mockImplementation(query => ({
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
-}));
+});
 global.matchMedia = mockMatchMedia;
 
 // maplibre requires a createObjectURL mock
@@ -85,15 +86,9 @@ window.HTMLElement.prototype.scrollIntoView = jest.fn();
 fetchMock.config.overwriteRoutes = false;
 fetchMock.catch("");
 fetchMock.get("/image-file-stub", "image file stub");
+fetchMock.get("/_matrix/client/versions", {});
 // @ts-ignore
 window.fetch = fetchMock.sandbox();
 
-window.Response = fetch.Response;
-
-// set up mediaDevices mock
-Object.defineProperty(navigator, "mediaDevices", {
-    value: {
-        enumerateDevices: jest.fn().mockResolvedValue([]),
-        getUserMedia: jest.fn(),
-    },
-});
+// @ts-ignore
+window.Response = Response;

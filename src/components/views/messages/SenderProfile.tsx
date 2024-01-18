@@ -1,4 +1,5 @@
 /*
+ Copyright 2023 The Matrix.org Foundation C.I.C.
  Copyright 2015, 2016 OpenMarket Ltd
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,31 +15,34 @@
  limitations under the License.
  */
 
-import React from 'react';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
+import React from "react";
+import { MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
 
 import DisambiguatedProfile from "./DisambiguatedProfile";
-import { useRoomMemberProfile } from '../../../hooks/room/useRoomMemberProfile';
+import { useRoomMemberProfile } from "../../../hooks/room/useRoomMemberProfile";
 
 interface IProps {
     mxEvent: MatrixEvent;
     onClick?(): void;
+    withTooltip?: boolean;
 }
 
-export default function SenderProfile({ mxEvent, onClick }: IProps) {
+export default function SenderProfile({ mxEvent, onClick, withTooltip }: IProps): JSX.Element {
     const member = useRoomMemberProfile({
         userId: mxEvent.getSender(),
         member: mxEvent.sender,
     });
 
-    return mxEvent.getContent().msgtype !== MsgType.Emote
-        ? <DisambiguatedProfile
+    return mxEvent.getContent().msgtype !== MsgType.Emote ? (
+        <DisambiguatedProfile
             fallbackName={mxEvent.getSender() ?? ""}
             onClick={onClick}
             member={member}
             colored={true}
             emphasizeDisplayName={true}
+            withTooltip={withTooltip}
         />
-        : null;
+    ) : (
+        <></>
+    );
 }

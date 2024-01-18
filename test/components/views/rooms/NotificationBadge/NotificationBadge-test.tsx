@@ -17,34 +17,21 @@ limitations under the License.
 import { fireEvent, render } from "@testing-library/react";
 import React from "react";
 
-import {
-    StatelessNotificationBadge,
-} from "../../../../../src/components/views/rooms/NotificationBadge/StatelessNotificationBadge";
+import { StatelessNotificationBadge } from "../../../../../src/components/views/rooms/NotificationBadge/StatelessNotificationBadge";
 import SettingsStore from "../../../../../src/settings/SettingsStore";
-import { NotificationColor } from "../../../../../src/stores/notifications/NotificationColor";
+import { NotificationLevel } from "../../../../../src/stores/notifications/NotificationLevel";
 
 describe("NotificationBadge", () => {
     describe("StatelessNotificationBadge", () => {
         it("lets you click it", () => {
             const cb = jest.fn();
 
-            const { container } = render(<StatelessNotificationBadge
-                symbol=""
-                color={NotificationColor.Red}
-                count={5}
-                onClick={cb}
-                onMouseOver={cb}
-                onMouseLeave={cb}
-            />);
+            const { getByRole } = render(
+                <StatelessNotificationBadge symbol="" level={NotificationLevel.Highlight} count={5} onClick={cb} />,
+            );
 
-            fireEvent.click(container.firstChild);
+            fireEvent.click(getByRole("button")!);
             expect(cb).toHaveBeenCalledTimes(1);
-
-            fireEvent.mouseEnter(container.firstChild);
-            expect(cb).toHaveBeenCalledTimes(2);
-
-            fireEvent.mouseLeave(container.firstChild);
-            expect(cb).toHaveBeenCalledTimes(3);
         });
 
         it("hides the bold icon when the settings is set", () => {
@@ -52,11 +39,9 @@ describe("NotificationBadge", () => {
                 return name === "feature_hidebold";
             });
 
-            const { container } = render(<StatelessNotificationBadge
-                symbol=""
-                color={NotificationColor.Bold}
-                count={1}
-            />);
+            const { container } = render(
+                <StatelessNotificationBadge symbol="" level={NotificationLevel.Activity} count={1} />,
+            );
 
             expect(container.firstChild).toBeNull();
         });

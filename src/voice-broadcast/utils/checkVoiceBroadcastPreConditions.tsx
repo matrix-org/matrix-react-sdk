@@ -15,45 +15,50 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Room, SyncState } from "matrix-js-sdk/src/matrix";
 
 import { hasRoomLiveVoiceBroadcast, VoiceBroadcastInfoEventType, VoiceBroadcastRecordingsStore } from "..";
 import InfoDialog from "../../components/views/dialogs/InfoDialog";
 import { _t } from "../../languageHandler";
 import Modal from "../../Modal";
 
-const showAlreadyRecordingDialog = () => {
+const showAlreadyRecordingDialog = (): void => {
     Modal.createDialog(InfoDialog, {
-        title: _t("Can't start a new voice broadcast"),
-        description: <p>{ _t("You are already recording a voice broadcast. "
-                             + "Please end your current voice broadcast to start a new one.") }</p>,
+        title: _t("voice_broadcast|failed_already_recording_title"),
+        description: <p>{_t("voice_broadcast|failed_already_recording_description")}</p>,
         hasCloseButton: true,
     });
 };
 
-const showInsufficientPermissionsDialog = () => {
+const showInsufficientPermissionsDialog = (): void => {
     Modal.createDialog(InfoDialog, {
-        title: _t("Can't start a new voice broadcast"),
-        description: <p>{ _t("You don't have the required permissions to start a voice broadcast in this room. "
-                             + "Contact a room administrator to upgrade your permissions.") }</p>,
+        title: _t("voice_broadcast|failed_insufficient_permission_title"),
+        description: <p>{_t("voice_broadcast|failed_insufficient_permission_description")}</p>,
         hasCloseButton: true,
     });
 };
 
-const showOthersAlreadyRecordingDialog = () => {
+const showOthersAlreadyRecordingDialog = (): void => {
     Modal.createDialog(InfoDialog, {
-        title: _t("Can't start a new voice broadcast"),
-        description: <p>{ _t("Someone else is already recording a voice broadcast. "
-                             + "Wait for their voice broadcast to end to start a new one.") }</p>,
+        title: _t("voice_broadcast|failed_others_already_recording_title"),
+        description: <p>{_t("voice_broadcast|failed_others_already_recording_description")}</p>,
         hasCloseButton: true,
     });
 };
 
-export const checkVoiceBroadcastPreConditions = (
+const showNoConnectionDialog = (): void => {
+    Modal.createDialog(InfoDialog, {
+        title: _t("voice_broadcast|failed_no_connection_title"),
+        description: <p>{_t("voice_broadcast|failed_no_connection_description")}</p>,
+        hasCloseButton: true,
+    });
+};
+
+export const checkVoiceBroadcastPreConditions = async (
     room: Room,
     client: MatrixClient,
     recordingsStore: VoiceBroadcastRecordingsStore,
-): boolean => {
+): Promise<boolean> => {
     if (recordingsStore.getCurrent()) {
         showAlreadyRecordingDialog();
         return false;
@@ -68,7 +73,12 @@ export const checkVoiceBroadcastPreConditions = (
         return false;
     }
 
-    const { hasBroadcast, startedByUser } = hasRoomLiveVoiceBroadcast(room, currentUserId);
+    if (client.getSyncState() === SyncState.Error) {
+        showNoConnectionDialog();
+        return false;
+    }
+
+    const { hasBroadcast, startedByUser } = await hasRoomLiveVoiceBroadcast(client, room, currentUserId);
 
     if (hasBroadcast && startedByUser) {
         showAlreadyRecordingDialog();

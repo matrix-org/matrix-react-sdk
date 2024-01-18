@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { EventType, ISendEventResponse, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import { EventType, ISendEventResponse, MatrixClient, MatrixEvent, Room, SyncState } from "matrix-js-sdk/src/matrix";
 
 import Modal from "../../../src/Modal";
 import {
@@ -59,18 +59,15 @@ describe("startNewVoiceBroadcastRecording", () => {
 
             return null;
         });
-        mocked(client.sendStateEvent).mockImplementation((
-            sendRoomId: string,
-            eventType: string,
-            content: any,
-            stateKey: string,
-        ): Promise<ISendEventResponse> => {
-            if (sendRoomId === roomId && eventType === VoiceBroadcastInfoEventType) {
-                return Promise.resolve({ event_id: infoEvent.getId()! });
-            }
+        mocked(client.sendStateEvent).mockImplementation(
+            (sendRoomId: string, eventType: string, content: any, stateKey: string): Promise<ISendEventResponse> => {
+                if (sendRoomId === roomId && eventType === VoiceBroadcastInfoEventType) {
+                    return Promise.resolve({ event_id: infoEvent.getId()! });
+                }
 
-            throw new Error("Unexpected sendStateEvent call");
-        });
+                throw new Error("Unexpected sendStateEvent call");
+            },
+        );
 
         infoEvent = mkVoiceBroadcastInfoStateEvent(
             roomId,
@@ -87,16 +84,13 @@ describe("startNewVoiceBroadcastRecording", () => {
             skey: "",
         });
 
-        playbacksStore = new VoiceBroadcastPlaybacksStore();
+        playbacksStore = new VoiceBroadcastPlaybacksStore(recordingsStore);
         recordingsStore = {
             setCurrent: jest.fn(),
             getCurrent: jest.fn(),
         } as unknown as VoiceBroadcastRecordingsStore;
 
-        mocked(VoiceBroadcastRecording).mockImplementation((
-            infoEvent: MatrixEvent,
-            client: MatrixClient,
-        ): any => {
+        mocked(VoiceBroadcastRecording).mockImplementation((infoEvent: MatrixEvent, client: MatrixClient): any => {
             return {
                 infoEvent,
                 client,
@@ -109,6 +103,18 @@ describe("startNewVoiceBroadcastRecording", () => {
         jest.clearAllMocks();
     });
 
+    describe("when trying to start a broadcast if there is no connection", () => {
+        beforeEach(async () => {
+            mocked(client.getSyncState).mockReturnValue(SyncState.Error);
+            result = await startNewVoiceBroadcastRecording(room, client, playbacksStore, recordingsStore);
+        });
+
+        it("should show an info dialog and not start a recording", () => {
+            expect(result).toBeNull();
+            expect(Modal.createDialog).toMatchSnapshot();
+        });
+    });
+
     describe("when the current user is allowed to send voice broadcast info state events", () => {
         beforeEach(() => {
             mocked(room.currentState.maySendStateEvent).mockReturnValue(true);
@@ -118,25 +124,27 @@ describe("startNewVoiceBroadcastRecording", () => {
             let playback: VoiceBroadcastPlayback;
 
             beforeEach(() => {
-                playback = new VoiceBroadcastPlayback(infoEvent, client);
+                playback = new VoiceBroadcastPlayback(infoEvent, client, recordingsStore);
                 jest.spyOn(playback, "pause");
                 playbacksStore.setCurrent(playback);
             });
 
             it("should stop listen to the current broadcast and create a new recording", async () => {
-                mocked(client.sendStateEvent).mockImplementation(async (
-                    _roomId: string,
-                    _eventType: string,
-                    _content: any,
-                    _stateKey = "",
-                ): Promise<ISendEventResponse> => {
-                    window.setTimeout(() => {
-                        // emit state events after resolving the promise
-                        room.currentState.setStateEvents([otherEvent]);
-                        room.currentState.setStateEvents([infoEvent]);
-                    }, 0);
-                    return { event_id: infoEvent.getId()! };
-                });
+                mocked(client.sendStateEvent).mockImplementation(
+                    async (
+                        _roomId: string,
+                        _eventType: string,
+                        _content: any,
+                        _stateKey = "",
+                    ): Promise<ISendEventResponse> => {
+                        window.setTimeout(() => {
+                            // emit state events after resolving the promise
+                            room.currentState.setStateEvents([otherEvent]);
+                            room.currentState.setStateEvents([infoEvent]);
+                        }, 0);
+                        return { event_id: infoEvent.getId()! };
+                    },
+                );
                 const recording = await startNewVoiceBroadcastRecording(room, client, playbacksStore, recordingsStore);
                 expect(recording).not.toBeNull();
 
@@ -152,7 +160,7 @@ describe("startNewVoiceBroadcastRecording", () => {
                         device_id: client.getDeviceId(),
                         state: VoiceBroadcastInfoState.Started,
                     },
-                    client.getUserId(),
+                    client.getUserId()!,
                 );
                 expect(recording!.infoEvent).toBe(infoEvent);
                 expect(recording!.start).toHaveBeenCalled();
@@ -161,9 +169,7 @@ describe("startNewVoiceBroadcastRecording", () => {
 
         describe("when there is already a current voice broadcast", () => {
             beforeEach(async () => {
-                mocked(recordingsStore.getCurrent).mockReturnValue(
-                    new VoiceBroadcastRecording(infoEvent, client),
-                );
+                mocked(recordingsStore.getCurrent).mockReturnValue(new VoiceBroadcastRecording(infoEvent, client));
 
                 result = await startNewVoiceBroadcastRecording(room, client, playbacksStore, recordingsStore);
             });
@@ -203,12 +209,7 @@ describe("startNewVoiceBroadcastRecording", () => {
         describe("when there already is a live broadcast of another user", () => {
             beforeEach(async () => {
                 room.currentState.setStateEvents([
-                    mkVoiceBroadcastInfoStateEvent(
-                        roomId,
-                        VoiceBroadcastInfoState.Resumed,
-                        otherUserId,
-                        "ASD123",
-                    ),
+                    mkVoiceBroadcastInfoStateEvent(roomId, VoiceBroadcastInfoState.Resumed, otherUserId, "ASD123"),
                 ]);
 
                 result = await startNewVoiceBroadcastRecording(room, client, playbacksStore, recordingsStore);

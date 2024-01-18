@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from "react";
-
-import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
+import { useTypedEventEmitterState } from "../../hooks/useEventEmitter";
 import { VoiceBroadcastPlayback } from "../models/VoiceBroadcastPlayback";
 import {
     VoiceBroadcastPlaybacksStore,
@@ -25,16 +23,14 @@ import {
 
 export const useCurrentVoiceBroadcastPlayback = (
     voiceBroadcastPlaybackStore: VoiceBroadcastPlaybacksStore,
-) => {
-    const [currentVoiceBroadcastPlayback, setVoiceBroadcastPlayback] = useState(
-        voiceBroadcastPlaybackStore.getCurrent(),
-    );
-
-    useTypedEventEmitter(
+): {
+    currentVoiceBroadcastPlayback: VoiceBroadcastPlayback | null;
+} => {
+    const currentVoiceBroadcastPlayback = useTypedEventEmitterState(
         voiceBroadcastPlaybackStore,
         VoiceBroadcastPlaybacksStoreEvent.CurrentChanged,
-        (playback: VoiceBroadcastPlayback) => {
-            setVoiceBroadcastPlayback(playback);
+        (playback?: VoiceBroadcastPlayback) => {
+            return playback ?? voiceBroadcastPlaybackStore.getCurrent();
         },
     );
 

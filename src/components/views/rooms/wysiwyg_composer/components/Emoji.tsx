@@ -14,32 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
-import { AboveLeftOf } from "../../../../structures/ContextMenu";
+import { MenuProps } from "../../../../structures/ContextMenu";
 import { EmojiButton } from "../../EmojiButton";
-import dis from '../../../../../dispatcher/dispatcher';
+import dis from "../../../../../dispatcher/dispatcher";
 import { ComposerInsertPayload } from "../../../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from "../../../../../dispatcher/actions";
 import { useRoomContext } from "../../../../../contexts/RoomContext";
 
 interface EmojiProps {
-    selectPreviousSelection: () => void;
-    menuPosition: AboveLeftOf;
+    menuPosition: MenuProps;
 }
 
-export function Emoji({ selectPreviousSelection, menuPosition }: EmojiProps) {
+export function Emoji({ menuPosition }: EmojiProps): JSX.Element {
     const roomContext = useRoomContext();
 
-    return <EmojiButton menuPosition={menuPosition}
-        addEmoji={(emoji) => {
-            selectPreviousSelection();
-            dis.dispatch<ComposerInsertPayload>({
-                action: Action.ComposerInsert,
-                text: emoji,
-                timelineRenderingType: roomContext.timelineRenderingType,
-            });
-            return true;
-        }}
-    />;
+    return (
+        <EmojiButton
+            menuPosition={menuPosition}
+            addEmoji={(emoji) => {
+                dis.dispatch<ComposerInsertPayload>({
+                    action: Action.ComposerInsert,
+                    text: emoji,
+                    timelineRenderingType: roomContext.timelineRenderingType,
+                });
+                return true;
+            }}
+        />
+    );
 }

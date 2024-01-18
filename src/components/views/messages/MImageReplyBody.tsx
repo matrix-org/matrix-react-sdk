@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 
 import MImageBody from "./MImageBody";
-import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
+import { ImageContent } from "../../../customisations/models/IMediaEventContent";
 
 const FORCED_IMAGE_HEIGHT = 44;
 
@@ -30,16 +30,16 @@ export default class MImageReplyBody extends MImageBody {
         return children;
     }
 
-    render() {
+    public render(): React.ReactNode {
         if (this.state.error) {
             return super.render();
         }
 
-        const content = this.props.mxEvent.getContent<IMediaEventContent>();
-        const thumbnail = this.messageContent(this.state.contentUrl, this.state.thumbUrl, content, FORCED_IMAGE_HEIGHT);
+        const content = this.props.mxEvent.getContent<ImageContent>();
+        const thumbnail = this.state.contentUrl
+            ? this.messageContent(this.state.contentUrl, this.state.thumbUrl, content, FORCED_IMAGE_HEIGHT)
+            : undefined;
 
-        return <div className="mx_MImageReplyBody">
-            { thumbnail }
-        </div>;
+        return <div className="mx_MImageReplyBody">{thumbnail}</div>;
     }
 }

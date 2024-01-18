@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 
 interface IProps {
     className: string;
@@ -34,7 +34,7 @@ export interface ILocationState {
 }
 
 export default class Draggable extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -73,7 +73,7 @@ export default class Draggable extends React.Component<IProps, IState> {
         });
     }
 
-    render() {
+    public render(): React.ReactNode {
         return <div className={this.props.className} onMouseDown={this.onMouseDown} />;
     }
 }

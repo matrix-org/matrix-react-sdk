@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,55 +14,77 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useState } from "react";
+import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
 
-import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
+import { useTypedEventEmitterState } from "../../hooks/useEventEmitter";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import {
+    VoiceBroadcastLiveness,
     VoiceBroadcastPlayback,
     VoiceBroadcastPlaybackEvent,
     VoiceBroadcastPlaybackState,
+    VoiceBroadcastPlaybackTimes,
 } from "..";
 
-export const useVoiceBroadcastPlayback = (playback: VoiceBroadcastPlayback) => {
-    const client = MatrixClientPeg.get();
+export const useVoiceBroadcastPlayback = (
+    playback: VoiceBroadcastPlayback,
+): {
+    times: {
+        duration: number;
+        position: number;
+        timeLeft: number;
+    };
+    sender: RoomMember | null;
+    liveness: VoiceBroadcastLiveness;
+    playbackState: VoiceBroadcastPlaybackState;
+    toggle(): void;
+    room: Room;
+} => {
+    const client = MatrixClientPeg.safeGet();
     const room = client.getRoom(playback.infoEvent.getRoomId());
 
     if (!room) {
-        throw new Error(
-            `Voice Broadcast room not found (event ${playback.infoEvent.getId()})`,
-        );
+        throw new Error(`Voice Broadcast room not found (event ${playback.infoEvent.getId()})`);
     }
 
-    const playbackToggle = () => {
+    const sender = playback.infoEvent.sender;
+
+    if (!sender) {
+        throw new Error(`Voice Broadcast sender not found (event ${playback.infoEvent.getId()})`);
+    }
+
+    const playbackToggle = (): void => {
         playback.toggle();
     };
 
-    const [playbackState, setPlaybackState] = useState(playback.getState());
-    useTypedEventEmitter(
+    const playbackState = useTypedEventEmitterState(
         playback,
         VoiceBroadcastPlaybackEvent.StateChanged,
-        (state: VoiceBroadcastPlaybackState, _playback: VoiceBroadcastPlayback) => {
-            setPlaybackState(state);
+        (state?: VoiceBroadcastPlaybackState) => {
+            return state ?? playback.getState();
         },
     );
 
-    const [times, setTimes] = useState({
-        duration: playback.durationSeconds,
-        position: playback.timeSeconds,
-        timeLeft: playback.timeLeftSeconds,
-    });
-    useTypedEventEmitter(
+    const times = useTypedEventEmitterState(
         playback,
         VoiceBroadcastPlaybackEvent.TimesChanged,
-        t => setTimes(t),
+        (t?: VoiceBroadcastPlaybackTimes) => {
+            return (
+                t ?? {
+                    duration: playback.durationSeconds,
+                    position: playback.timeSeconds,
+                    timeLeft: playback.timeLeftSeconds,
+                }
+            );
+        },
     );
 
-    const [liveness, setLiveness] = useState(playback.getLiveness());
-    useTypedEventEmitter(
+    const liveness = useTypedEventEmitterState(
         playback,
         VoiceBroadcastPlaybackEvent.LivenessChanged,
-        l => setLiveness(l),
+        (l?: VoiceBroadcastLiveness) => {
+            return l ?? playback.getLiveness();
+        },
     );
 
     return {
@@ -70,7 +92,7 @@ export const useVoiceBroadcastPlayback = (playback: VoiceBroadcastPlayback) => {
         liveness: liveness,
         playbackState,
         room: room,
-        sender: playback.infoEvent.sender,
+        sender,
         toggle: playbackToggle,
     };
 };

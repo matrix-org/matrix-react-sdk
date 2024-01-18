@@ -17,18 +17,20 @@ limitations under the License.
 import React from "react";
 import { mocked } from "jest-mock";
 import { render, screen } from "@testing-library/react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { ISearchResults } from "matrix-js-sdk/src/@types/search";
+import {
+    Room,
+    MatrixClient,
+    IEvent,
+    MatrixEvent,
+    EventType,
+    SearchResult,
+    ISearchResults,
+} from "matrix-js-sdk/src/matrix";
 import { defer } from "matrix-js-sdk/src/utils";
-import { SearchResult } from "matrix-js-sdk/src/models/search-result";
-import { IEvent, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { RoomSearchView } from "../../../src/components/structures/RoomSearchView";
 import { SearchScope } from "../../../src/components/views/rooms/SearchBar";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
-import { RoomPermalinkCreator } from "../../../src/utils/permalinks/Permalinks";
 import { stubClient } from "../../test-utils";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
@@ -43,15 +45,13 @@ describe("<RoomSearchView/>", () => {
     const resizeNotifier = new ResizeNotifier();
     let client: MatrixClient;
     let room: Room;
-    let permalinkCreator: RoomPermalinkCreator;
 
     beforeEach(async () => {
         stubClient();
-        client = MatrixClientPeg.get();
-        client.supportsExperimentalThreads = jest.fn().mockReturnValue(true);
-        room = new Room("!room:server", client, client.getUserId());
+        client = MatrixClientPeg.safeGet();
+        client.supportsThreads = jest.fn().mockReturnValue(true);
+        room = new Room("!room:server", client, client.getSafeUserId());
         mocked(client.getRoom).mockReturnValue(room);
-        permalinkCreator = new RoomPermalinkCreator(room, room.roomId);
 
         jest.spyOn(Element.prototype, "clientHeight", "get").mockReturnValue(100);
     });
@@ -63,70 +63,75 @@ describe("<RoomSearchView/>", () => {
     it("should show a spinner before the promise resolves", async () => {
         const deferred = defer<ISearchResults>();
 
-        render((
+        render(
             <RoomSearchView
                 term="search term"
                 scope={SearchScope.All}
                 promise={deferred.promise}
                 resizeNotifier={resizeNotifier}
-                permalinkCreator={permalinkCreator}
                 className="someClass"
                 onUpdate={jest.fn()}
-            />
-        ));
+            />,
+        );
 
         await screen.findByTestId("messagePanelSearchSpinner");
     });
 
     it("should render results when the promise resolves", async () => {
-        render((
+        render(
             <MatrixClientContext.Provider value={client}>
                 <RoomSearchView
                     term="search term"
                     scope={SearchScope.All}
                     promise={Promise.resolve<ISearchResults>({
                         results: [
-                            SearchResult.fromJson({
-                                rank: 1,
-                                result: {
-                                    room_id: room.roomId,
-                                    event_id: "$2",
-                                    sender: client.getUserId(),
-                                    origin_server_ts: 1,
-                                    content: { body: "Foo Test Bar", msgtype: "m.text" },
-                                    type: EventType.RoomMessage,
-                                },
-                                context: {
-                                    profile_info: {},
-                                    events_before: [{
+                            SearchResult.fromJson(
+                                {
+                                    rank: 1,
+                                    result: {
                                         room_id: room.roomId,
-                                        event_id: "$1",
-                                        sender: client.getUserId(),
+                                        event_id: "$2",
+                                        sender: client.getSafeUserId(),
                                         origin_server_ts: 1,
-                                        content: { body: "Before", msgtype: "m.text" },
+                                        content: { body: "Foo Test Bar", msgtype: "m.text" },
                                         type: EventType.RoomMessage,
-                                    }],
-                                    events_after: [{
-                                        room_id: room.roomId,
-                                        event_id: "$3",
-                                        sender: client.getUserId(),
-                                        origin_server_ts: 1,
-                                        content: { body: "After", msgtype: "m.text" },
-                                        type: EventType.RoomMessage,
-                                    }],
+                                    },
+                                    context: {
+                                        profile_info: {},
+                                        events_before: [
+                                            {
+                                                room_id: room.roomId,
+                                                event_id: "$1",
+                                                sender: client.getSafeUserId(),
+                                                origin_server_ts: 1,
+                                                content: { body: "Before", msgtype: "m.text" },
+                                                type: EventType.RoomMessage,
+                                            },
+                                        ],
+                                        events_after: [
+                                            {
+                                                room_id: room.roomId,
+                                                event_id: "$3",
+                                                sender: client.getSafeUserId(),
+                                                origin_server_ts: 1,
+                                                content: { body: "After", msgtype: "m.text" },
+                                                type: EventType.RoomMessage,
+                                            },
+                                        ],
+                                    },
                                 },
-                            }, eventMapper),
+                                eventMapper,
+                            ),
                         ],
                         highlights: [],
                         count: 1,
                     })}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
-            </MatrixClientContext.Provider>
-        ));
+            </MatrixClientContext.Provider>,
+        );
 
         await screen.findByText("Before");
         await screen.findByText("Foo Test Bar");
@@ -134,40 +139,42 @@ describe("<RoomSearchView/>", () => {
     });
 
     it("should highlight words correctly", async () => {
-        render((
+        render(
             <MatrixClientContext.Provider value={client}>
                 <RoomSearchView
                     term="search term"
                     scope={SearchScope.Room}
                     promise={Promise.resolve<ISearchResults>({
                         results: [
-                            SearchResult.fromJson({
-                                rank: 1,
-                                result: {
-                                    room_id: room.roomId,
-                                    event_id: "$2",
-                                    sender: client.getUserId(),
-                                    origin_server_ts: 1,
-                                    content: { body: "Foo Test Bar", msgtype: "m.text" },
-                                    type: EventType.RoomMessage,
+                            SearchResult.fromJson(
+                                {
+                                    rank: 1,
+                                    result: {
+                                        room_id: room.roomId,
+                                        event_id: "$2",
+                                        sender: client.getSafeUserId(),
+                                        origin_server_ts: 1,
+                                        content: { body: "Foo Test Bar", msgtype: "m.text" },
+                                        type: EventType.RoomMessage,
+                                    },
+                                    context: {
+                                        profile_info: {},
+                                        events_before: [],
+                                        events_after: [],
+                                    },
                                 },
-                                context: {
-                                    profile_info: {},
-                                    events_before: [],
-                                    events_after: [],
-                                },
-                            }, eventMapper),
+                                eventMapper,
+                            ),
                         ],
                         highlights: ["test"],
                         count: 1,
                     })}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
-            </MatrixClientContext.Provider>
-        ));
+            </MatrixClientContext.Provider>,
+        );
 
         const text = await screen.findByText("Test");
         expect(text).toHaveClass("mx_EventTile_searchHighlight");
@@ -176,22 +183,25 @@ describe("<RoomSearchView/>", () => {
     it("should show spinner above results when backpaginating", async () => {
         const searchResults: ISearchResults = {
             results: [
-                SearchResult.fromJson({
-                    rank: 1,
-                    result: {
-                        room_id: room.roomId,
-                        event_id: "$2",
-                        sender: client.getUserId(),
-                        origin_server_ts: 1,
-                        content: { body: "Foo Test Bar", msgtype: "m.text" },
-                        type: EventType.RoomMessage,
+                SearchResult.fromJson(
+                    {
+                        rank: 1,
+                        result: {
+                            room_id: room.roomId,
+                            event_id: "$2",
+                            sender: client.getSafeUserId(),
+                            origin_server_ts: 1,
+                            content: { body: "Foo Test Bar", msgtype: "m.text" },
+                            type: EventType.RoomMessage,
+                        },
+                        context: {
+                            profile_info: {},
+                            events_before: [],
+                            events_after: [],
+                        },
                     },
-                    context: {
-                        profile_info: {},
-                        events_before: [],
-                        events_after: [],
-                    },
-                }, eventMapper),
+                    eventMapper,
+                ),
             ],
             highlights: ["test"],
             next_batch: "next_batch",
@@ -202,39 +212,41 @@ describe("<RoomSearchView/>", () => {
             ...searchResults,
             results: [
                 ...searchResults.results,
-                SearchResult.fromJson({
-                    rank: 1,
-                    result: {
-                        room_id: room.roomId,
-                        event_id: "$4",
-                        sender: client.getUserId(),
-                        origin_server_ts: 4,
-                        content: { body: "Potato", msgtype: "m.text" },
-                        type: EventType.RoomMessage,
+                SearchResult.fromJson(
+                    {
+                        rank: 1,
+                        result: {
+                            room_id: room.roomId,
+                            event_id: "$4",
+                            sender: client.getSafeUserId(),
+                            origin_server_ts: 4,
+                            content: { body: "Potato", msgtype: "m.text" },
+                            type: EventType.RoomMessage,
+                        },
+                        context: {
+                            profile_info: {},
+                            events_before: [],
+                            events_after: [],
+                        },
                     },
-                    context: {
-                        profile_info: {},
-                        events_before: [],
-                        events_after: [],
-                    },
-                }, eventMapper),
+                    eventMapper,
+                ),
             ],
             next_batch: undefined,
         });
 
-        render((
+        render(
             <MatrixClientContext.Provider value={client}>
                 <RoomSearchView
                     term="search term"
                     scope={SearchScope.All}
                     promise={Promise.resolve(searchResults)}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
-            </MatrixClientContext.Provider>
-        ));
+            </MatrixClientContext.Provider>,
+        );
 
         await screen.findByRole("progressbar");
         await screen.findByText("Potato");
@@ -244,19 +256,18 @@ describe("<RoomSearchView/>", () => {
     it("should handle resolutions after unmounting sanely", async () => {
         const deferred = defer<ISearchResults>();
 
-        const { unmount } = render((
+        const { unmount } = render(
             <MatrixClientContext.Provider value={client}>
                 <RoomSearchView
                     term="search term"
                     scope={SearchScope.All}
                     promise={deferred.promise}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
-            </MatrixClientContext.Provider>
-        ));
+            </MatrixClientContext.Provider>,
+        );
 
         unmount();
         deferred.resolve({
@@ -268,19 +279,18 @@ describe("<RoomSearchView/>", () => {
     it("should handle rejections after unmounting sanely", async () => {
         const deferred = defer<ISearchResults>();
 
-        const { unmount } = render((
+        const { unmount } = render(
             <MatrixClientContext.Provider value={client}>
                 <RoomSearchView
                     term="search term"
                     scope={SearchScope.All}
                     promise={deferred.promise}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
-            </MatrixClientContext.Provider>
-        ));
+            </MatrixClientContext.Provider>,
+        );
 
         unmount();
         deferred.reject({
@@ -292,22 +302,257 @@ describe("<RoomSearchView/>", () => {
     it("should show modal if error is encountered", async () => {
         const deferred = defer<ISearchResults>();
 
-        render((
+        render(
             <MatrixClientContext.Provider value={client}>
                 <RoomSearchView
                     term="search term"
                     scope={SearchScope.All}
                     promise={deferred.promise}
                     resizeNotifier={resizeNotifier}
-                    permalinkCreator={permalinkCreator}
                     className="someClass"
                     onUpdate={jest.fn()}
                 />
-            </MatrixClientContext.Provider>
-        ));
+            </MatrixClientContext.Provider>,
+        );
         deferred.reject(new Error("Some error"));
 
         await screen.findByText("Search failed");
         await screen.findByText("Some error");
+    });
+
+    it("should combine search results when the query is present in multiple sucessive messages", async () => {
+        const searchResults: ISearchResults = {
+            results: [
+                SearchResult.fromJson(
+                    {
+                        rank: 1,
+                        result: {
+                            room_id: room.roomId,
+                            event_id: "$4",
+                            sender: client.getUserId() ?? "",
+                            origin_server_ts: 1,
+                            content: { body: "Foo2", msgtype: "m.text" },
+                            type: EventType.RoomMessage,
+                        },
+                        context: {
+                            profile_info: {},
+                            events_before: [
+                                {
+                                    room_id: room.roomId,
+                                    event_id: "$3",
+                                    sender: client.getUserId() ?? "",
+                                    origin_server_ts: 1,
+                                    content: { body: "Between", msgtype: "m.text" },
+                                    type: EventType.RoomMessage,
+                                },
+                            ],
+                            events_after: [
+                                {
+                                    room_id: room.roomId,
+                                    event_id: "$5",
+                                    sender: client.getUserId() ?? "",
+                                    origin_server_ts: 1,
+                                    content: { body: "After", msgtype: "m.text" },
+                                    type: EventType.RoomMessage,
+                                },
+                            ],
+                        },
+                    },
+                    eventMapper,
+                ),
+                SearchResult.fromJson(
+                    {
+                        rank: 1,
+                        result: {
+                            room_id: room.roomId,
+                            event_id: "$2",
+                            sender: client.getUserId() ?? "",
+                            origin_server_ts: 1,
+                            content: { body: "Foo", msgtype: "m.text" },
+                            type: EventType.RoomMessage,
+                        },
+                        context: {
+                            profile_info: {},
+                            events_before: [
+                                {
+                                    room_id: room.roomId,
+                                    event_id: "$1",
+                                    sender: client.getUserId() ?? "",
+                                    origin_server_ts: 1,
+                                    content: { body: "Before", msgtype: "m.text" },
+                                    type: EventType.RoomMessage,
+                                },
+                            ],
+                            events_after: [
+                                {
+                                    room_id: room.roomId,
+                                    event_id: "$3",
+                                    sender: client.getUserId() ?? "",
+                                    origin_server_ts: 1,
+                                    content: { body: "Between", msgtype: "m.text" },
+                                    type: EventType.RoomMessage,
+                                },
+                            ],
+                        },
+                    },
+                    eventMapper,
+                ),
+            ],
+            highlights: [],
+            next_batch: "",
+            count: 1,
+        };
+
+        render(
+            <MatrixClientContext.Provider value={client}>
+                <RoomSearchView
+                    term="search term"
+                    scope={SearchScope.All}
+                    promise={Promise.resolve(searchResults)}
+                    resizeNotifier={resizeNotifier}
+                    className="someClass"
+                    onUpdate={jest.fn()}
+                />
+            </MatrixClientContext.Provider>,
+        );
+
+        const beforeNode = await screen.findByText("Before");
+        const fooNode = await screen.findByText("Foo");
+        const betweenNode = await screen.findByText("Between");
+        const foo2Node = await screen.findByText("Foo2");
+        const afterNode = await screen.findByText("After");
+
+        expect((await screen.findAllByText("Between")).length).toBe(1);
+
+        expect(beforeNode.compareDocumentPosition(fooNode) == Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+        expect(fooNode.compareDocumentPosition(betweenNode) == Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+        expect(betweenNode.compareDocumentPosition(foo2Node) == Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+        expect(foo2Node.compareDocumentPosition(afterNode) == Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    });
+
+    it("should pass appropriate permalink creator for all rooms search", async () => {
+        const room2 = new Room("!room2:server", client, client.getSafeUserId());
+        const room3 = new Room("!room3:server", client, client.getSafeUserId());
+        mocked(client.getRoom).mockImplementation(
+            (roomId) => [room, room2, room3].find((r) => r.roomId === roomId) ?? null,
+        );
+
+        render(
+            <MatrixClientContext.Provider value={client}>
+                <RoomSearchView
+                    term="search term"
+                    scope={SearchScope.All}
+                    promise={Promise.resolve<ISearchResults>({
+                        results: [
+                            SearchResult.fromJson(
+                                {
+                                    rank: 1,
+                                    result: {
+                                        room_id: room.roomId,
+                                        event_id: "$2",
+                                        sender: client.getSafeUserId(),
+                                        origin_server_ts: 1,
+                                        content: { body: "Room 1", msgtype: "m.text" },
+                                        type: EventType.RoomMessage,
+                                    },
+                                    context: {
+                                        profile_info: {},
+                                        events_before: [],
+                                        events_after: [],
+                                    },
+                                },
+                                eventMapper,
+                            ),
+                            SearchResult.fromJson(
+                                {
+                                    rank: 2,
+                                    result: {
+                                        room_id: room2.roomId,
+                                        event_id: "$22",
+                                        sender: client.getSafeUserId(),
+                                        origin_server_ts: 1,
+                                        content: { body: "Room 2", msgtype: "m.text" },
+                                        type: EventType.RoomMessage,
+                                    },
+                                    context: {
+                                        profile_info: {},
+                                        events_before: [],
+                                        events_after: [],
+                                    },
+                                },
+                                eventMapper,
+                            ),
+                            SearchResult.fromJson(
+                                {
+                                    rank: 2,
+                                    result: {
+                                        room_id: room2.roomId,
+                                        event_id: "$23",
+                                        sender: client.getSafeUserId(),
+                                        origin_server_ts: 2,
+                                        content: { body: "Room 2 message 2", msgtype: "m.text" },
+                                        type: EventType.RoomMessage,
+                                    },
+                                    context: {
+                                        profile_info: {},
+                                        events_before: [],
+                                        events_after: [],
+                                    },
+                                },
+                                eventMapper,
+                            ),
+                            SearchResult.fromJson(
+                                {
+                                    rank: 3,
+                                    result: {
+                                        room_id: room3.roomId,
+                                        event_id: "$32",
+                                        sender: client.getSafeUserId(),
+                                        origin_server_ts: 1,
+                                        content: { body: "Room 3", msgtype: "m.text" },
+                                        type: EventType.RoomMessage,
+                                    },
+                                    context: {
+                                        profile_info: {},
+                                        events_before: [],
+                                        events_after: [],
+                                    },
+                                },
+                                eventMapper,
+                            ),
+                        ],
+                        highlights: [],
+                        count: 1,
+                    })}
+                    resizeNotifier={resizeNotifier}
+                    className="someClass"
+                    onUpdate={jest.fn()}
+                />
+            </MatrixClientContext.Provider>,
+        );
+
+        const event1 = await screen.findByText("Room 1");
+        expect(event1.closest(".mx_EventTile_line")!.querySelector("a")).toHaveAttribute(
+            "href",
+            `https://matrix.to/#/${room.roomId}/$2`,
+        );
+
+        const event2 = await screen.findByText("Room 2");
+        expect(event2.closest(".mx_EventTile_line")!.querySelector("a")).toHaveAttribute(
+            "href",
+            `https://matrix.to/#/${room2.roomId}/$22`,
+        );
+
+        const event2Message2 = await screen.findByText("Room 2 message 2");
+        expect(event2Message2.closest(".mx_EventTile_line")!.querySelector("a")).toHaveAttribute(
+            "href",
+            `https://matrix.to/#/${room2.roomId}/$23`,
+        );
+
+        const event3 = await screen.findByText("Room 3");
+        expect(event3.closest(".mx_EventTile_line")!.querySelector("a")).toHaveAttribute(
+            "href",
+            `https://matrix.to/#/${room3.roomId}/$32`,
+        );
     });
 });

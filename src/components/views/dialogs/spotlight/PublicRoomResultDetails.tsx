@@ -32,14 +32,15 @@ interface Props {
 }
 
 export function PublicRoomResultDetails({ room, labelId, descriptionId, detailsId }: Props): JSX.Element {
-    let name = room.name
-        || getDisplayAliasForAliasSet(room.canonical_alias ?? "", room.aliases ?? [])
-        || _t('Unnamed room');
+    let name =
+        room.name ||
+        getDisplayAliasForAliasSet(room.canonical_alias ?? "", room.aliases ?? []) ||
+        _t("common|unnamed_room");
     if (name.length > MAX_NAME_LENGTH) {
         name = `${name.substring(0, MAX_NAME_LENGTH)}...`;
     }
 
-    let topic = room.topic || '';
+    let topic = room.topic || "";
     // Additional truncation based on line numbers is done via CSS,
     // but to ensure that the DOM is not polluted with a huge string
     // we give it a hard limit before rendering.
@@ -50,18 +51,20 @@ export function PublicRoomResultDetails({ room, labelId, descriptionId, detailsI
     return (
         <div className="mx_SpotlightDialog_result_publicRoomDetails">
             <div className="mx_SpotlightDialog_result_publicRoomHeader">
-                <span id={labelId} className="mx_SpotlightDialog_result_publicRoomName">{ name }</span>
+                <span id={labelId} className="mx_SpotlightDialog_result_publicRoomName">
+                    {name}
+                </span>
                 <span id={descriptionId} className="mx_SpotlightDialog_result_publicRoomAlias">
-                    { room.canonical_alias ?? room.room_id }
+                    {room.canonical_alias ?? room.room_id}
                 </span>
             </div>
             <div id={detailsId} className="mx_SpotlightDialog_result_publicRoomDescription">
                 <span className="mx_SpotlightDialog_result_publicRoomMemberCount">
-                    { _t("%(count)s Members", {
+                    {_t("spotlight_dialog|count_of_members", {
                         count: room.num_joined_members,
-                    }) }
+                    })}
                 </span>
-                { topic && (
+                {topic && (
                     <>
                         &nbsp;·&nbsp;
                         <span
@@ -69,7 +72,7 @@ export function PublicRoomResultDetails({ room, labelId, descriptionId, detailsI
                             dangerouslySetInnerHTML={{ __html: linkifyAndSanitizeHtml(topic) }}
                         />
                     </>
-                ) }
+                )}
             </div>
         </div>
     );

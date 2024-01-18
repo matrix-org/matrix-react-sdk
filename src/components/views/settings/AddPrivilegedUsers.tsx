@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FormEvent, useCallback, useContext, useRef, useState } from 'react';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import React, { FormEvent, useCallback, useContext, useRef, useState } from "react";
+import { Room, EventType } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
-import { ICompletion } from '../../../autocomplete/Autocompleter';
+import { ICompletion } from "../../../autocomplete/Autocompleter";
 import UserProvider from "../../../autocomplete/UserProvider";
 import { AutocompleteInput } from "../../structures/AutocompleteInput";
 import PowerSelector from "../elements/PowerSelector";
@@ -45,7 +44,7 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
         [room, defaultUserLevel],
     );
 
-    const onSubmit = async (event: FormEvent) => {
+    const onSubmit = async (event: FormEvent): Promise<void> => {
         event.preventDefault();
         setIsLoading(true);
 
@@ -55,8 +54,8 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
         // `RoomPowerLevels` event should exist, but technically it is not guaranteed.
         if (powerLevelEvent === null) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error"),
-                description: _t("Failed to change power level"),
+                title: _t("common|error"),
+                description: _t("error|update_power_level"),
             });
 
             return;
@@ -68,8 +67,8 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
             setPowerLevel(defaultUserLevel);
         } catch (error) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error"),
-                description: _t("Failed to change power level"),
+                title: _t("common|error"),
+                description: _t("error|update_power_level"),
             });
         } finally {
             setIsLoading(false);
@@ -77,29 +76,29 @@ export const AddPrivilegedUsers: React.FC<AddPrivilegedUsersProps> = ({ room, de
     };
 
     return (
-        <form style={{ display: 'flex' }} onSubmit={onSubmit}>
+        <form style={{ display: "flex" }} onSubmit={onSubmit}>
             <SettingsFieldset
-                legend={_t('Add privileged users')}
-                description={_t('Give one or multiple users in this room more privileges')}
+                legend={_t("room_settings|permissions|add_privileged_user_heading")}
+                description={_t("room_settings|permissions|add_privileged_user_description")}
                 style={{ flexGrow: 1 }}
             >
                 <AutocompleteInput
                     provider={userProvider.current}
-                    placeholder={_t("Search users in this room…")}
+                    placeholder={_t("room_settings|permissions|add_privileged_user_filter_placeholder")}
                     onSelectionChange={setSelectedUsers}
                     selection={selectedUsers}
                     additionalFilter={hasLowerOrEqualLevelThanDefaultLevelFilter}
                 />
                 <PowerSelector value={powerLevel} onChange={setPowerLevel} />
                 <AccessibleButton
-                    type='submit'
-                    element='button'
-                    kind='primary'
+                    type="submit"
+                    element="button"
+                    kind="primary"
                     disabled={!selectedUsers.length || isLoading}
                     onClick={null}
-                    data-testid='add-privileged-users-submit-button'
+                    data-testid="add-privileged-users-submit-button"
                 >
-                    { _t('Apply') }
+                    {_t("action|apply")}
                 </AccessibleButton>
             </SettingsFieldset>
         </form>
@@ -110,7 +109,7 @@ export const hasLowerOrEqualLevelThanDefaultLevel = (
     room: Room,
     user: ICompletion,
     defaultUserLevel: number,
-) => {
+): boolean => {
     if (user.completionId === undefined) {
         return false;
     }
@@ -124,9 +123,9 @@ export const hasLowerOrEqualLevelThanDefaultLevel = (
     return member.powerLevel <= defaultUserLevel;
 };
 
-export const getUserIdsFromCompletions = (completions: ICompletion[]) => {
-    const completionsWithId = completions.filter(completion => completion.completionId !== undefined);
+export const getUserIdsFromCompletions = (completions: ICompletion[]): string[] => {
+    const completionsWithId = completions.filter((completion) => completion.completionId !== undefined);
 
     // undefined completionId's are filtered out above but TypeScript does not seem to understand.
-    return completionsWithId.map(completion => completion.completionId!);
+    return completionsWithId.map((completion) => completion.completionId!);
 };

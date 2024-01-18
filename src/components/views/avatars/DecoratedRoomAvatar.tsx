@@ -16,33 +16,30 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { User, UserEvent } from "matrix-js-sdk/src/models/user";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { EventType, JoinRule, MatrixEvent, Room, RoomEvent, User, UserEvent } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+import { Tooltip } from "@vector-im/compound-web";
 
 import RoomAvatar from "./RoomAvatar";
-import NotificationBadge from '../rooms/NotificationBadge';
+import NotificationBadge from "../rooms/NotificationBadge";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
 import { isPresenceEnabled } from "../../../utils/presence";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
-import TextWithTooltip from "../elements/TextWithTooltip";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
-import TooltipTarget from "../elements/TooltipTarget";
 
 interface IProps {
     room: Room;
-    avatarSize: number;
+    size: string;
     displayBadge?: boolean;
     forceCount?: boolean;
     oobData?: IOOBData;
     viewAvatarOnClick?: boolean;
-    tooltipProps?: Omit<React.ComponentProps<typeof TooltipTarget>, "label" | "tooltipClassName" | "className">;
+    tooltipProps?: {
+        tabIndex?: number;
+    };
 }
 
 interface IState {
@@ -62,27 +59,27 @@ enum Icon {
     PresenceBusy = "BUSY",
 }
 
-function tooltipText(variant: Icon) {
+function tooltipText(variant: Icon): string | undefined {
     switch (variant) {
         case Icon.Globe:
-            return _t("This room is public");
+            return _t("room|header|room_is_public");
         case Icon.PresenceOnline:
-            return _t("Online");
+            return _t("presence|online");
         case Icon.PresenceAway:
-            return _t("Away");
+            return _t("presence|away");
         case Icon.PresenceOffline:
-            return _t("Offline");
+            return _t("presence|offline");
         case Icon.PresenceBusy:
-            return _t("Busy");
+            return _t("presence|busy");
     }
 }
 
 export default class DecoratedRoomAvatar extends React.PureComponent<IProps, IState> {
-    private _dmUser: User;
+    private _dmUser: User | null = null;
     private isUnmounted = false;
     private isWatchingTimeline = false;
 
-    constructor(props: IProps) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -91,23 +88,21 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         };
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.isUnmounted = true;
         if (this.isWatchingTimeline) this.props.room.off(RoomEvent.Timeline, this.onRoomTimeline);
         this.dmUser = null; // clear listeners, if any
     }
 
     private get isPublicRoom(): boolean {
-        const joinRules = this.props.room.currentState.getStateEvents(EventType.RoomJoinRules, "");
-        const joinRule = joinRules && joinRules.getContent().join_rule;
-        return joinRule === JoinRule.Public;
+        return this.props.room.getJoinRule() === JoinRule.Public;
     }
 
-    private get dmUser(): User {
+    private get dmUser(): User | null {
         return this._dmUser;
     }
 
-    private set dmUser(val: User) {
+    private set dmUser(val: User | null) {
         const oldUser = this._dmUser;
         this._dmUser = val;
         if (oldUser && oldUser !== this._dmUser) {
@@ -120,7 +115,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         }
     }
 
-    private onRoomTimeline = (ev: MatrixEvent, room: Room | null) => {
+    private onRoomTimeline = (ev: MatrixEvent, room?: Room): void => {
         if (this.isUnmounted) return;
         if (this.props.room.roomId !== room?.roomId) return;
 
@@ -132,7 +127,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         }
     };
 
-    private onPresenceUpdate = () => {
+    private onPresenceUpdate = (): void => {
         if (this.isUnmounted) return;
 
         const newIcon = this.getPresenceIcon();
@@ -144,14 +139,14 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
         let icon = Icon.None;
 
-        const isOnline = this.dmUser.currentlyActive || this.dmUser.presence === 'online';
+        const isOnline = this.dmUser.currentlyActive || this.dmUser.presence === "online";
         if (BUSY_PRESENCE_NAME.matches(this.dmUser.presence)) {
             icon = Icon.PresenceBusy;
         } else if (isOnline) {
             icon = Icon.PresenceOnline;
-        } else if (this.dmUser.presence === 'offline') {
+        } else if (this.dmUser.presence === "offline") {
             icon = Icon.PresenceOffline;
-        } else if (this.dmUser.presence === 'unavailable') {
+        } else if (this.dmUser.presence === "unavailable") {
             icon = Icon.PresenceAway;
         }
 
@@ -165,8 +160,8 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         const otherUserId = DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
         if (otherUserId && this.props.room.getJoinedMemberCount() === 2) {
             // Track presence, if available
-            if (isPresenceEnabled()) {
-                this.dmUser = MatrixClientPeg.get().getUser(otherUserId);
+            if (isPresenceEnabled(this.props.room.client)) {
+                this.dmUser = MatrixClientPeg.safeGet().getUser(otherUserId);
                 icon = this.getPresenceIcon();
             }
         } else {
@@ -182,37 +177,45 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
     public render(): React.ReactNode {
         let badge: React.ReactNode;
-        if (this.props.displayBadge) {
-            badge = <NotificationBadge
-                notification={this.state.notificationState}
-                forceCount={this.props.forceCount}
-                roomId={this.props.room.roomId}
-            />;
+        if (this.props.displayBadge && this.state.notificationState) {
+            badge = (
+                <NotificationBadge
+                    notification={this.state.notificationState}
+                    forceCount={this.props.forceCount}
+                    roomId={this.props.room.roomId}
+                />
+            );
         }
 
-        let icon;
+        let icon: JSX.Element | undefined;
         if (this.state.icon !== Icon.None) {
-            icon = <TextWithTooltip
-                tooltip={tooltipText(this.state.icon)}
-                tooltipProps={this.props.tooltipProps}
-                class={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${this.state.icon.toLowerCase()}`}
-            />;
+            icon = (
+                <div
+                    tabIndex={this.props.tooltipProps?.tabIndex ?? 0}
+                    className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${this.state.icon.toLowerCase()}`}
+                />
+            );
         }
 
         const classes = classNames("mx_DecoratedRoomAvatar", {
             mx_DecoratedRoomAvatar_cutout: icon,
         });
 
-        return <div className={classes}>
-            <RoomAvatar
-                room={this.props.room}
-                width={this.props.avatarSize}
-                height={this.props.avatarSize}
-                oobData={this.props.oobData}
-                viewAvatarOnClick={this.props.viewAvatarOnClick}
-            />
-            { icon }
-            { badge }
-        </div>;
+        return (
+            <div className={classes}>
+                <RoomAvatar
+                    room={this.props.room}
+                    size={this.props.size}
+                    oobData={this.props.oobData}
+                    viewAvatarOnClick={this.props.viewAvatarOnClick}
+                />
+                {icon && (
+                    <Tooltip label={tooltipText(this.state.icon)!} side="bottom">
+                        {icon}
+                    </Tooltip>
+                )}
+                {badge}
+            </div>
+        );
     }
 }

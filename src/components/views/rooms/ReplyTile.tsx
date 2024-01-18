@@ -14,26 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
-import classNames from 'classnames';
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
+import React, { createRef } from "react";
+import classNames from "classnames";
+import { MatrixEvent, MatrixEventEvent, EventType, MsgType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from '../../../languageHandler';
-import dis from '../../../dispatcher/dispatcher';
-import { Action } from '../../../dispatcher/actions';
-import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
+import { _t } from "../../../languageHandler";
+import dis from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
+import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import SenderProfile from "../messages/SenderProfile";
 import MImageReplyBody from "../messages/MImageReplyBody";
-import { isVoiceMessage } from '../../../utils/EventUtils';
+import { isVoiceMessage } from "../../../utils/EventUtils";
 import { getEventDisplayInfo } from "../../../utils/EventRenderingUtils";
 import MFileBody from "../messages/MFileBody";
-import MemberAvatar from '../avatars/MemberAvatar';
+import MemberAvatar from "../avatars/MemberAvatar";
 import MVoiceMessageBody from "../messages/MVoiceMessageBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { renderReplyTile } from "../../../events/EventTileFactory";
 import { GetRelationsForEvent } from "../rooms/EventTile";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -48,17 +48,17 @@ interface IProps {
 export default class ReplyTile extends React.PureComponent<IProps> {
     private anchorElement = createRef<HTMLAnchorElement>();
 
-    static defaultProps = {
+    public static defaultProps = {
         onHeightChanged: () => {},
     };
 
-    componentDidMount() {
+    public componentDidMount(): void {
         this.props.mxEvent.on(MatrixEventEvent.Decrypted, this.onDecrypted);
         this.props.mxEvent.on(MatrixEventEvent.BeforeRedaction, this.onEventRequiresUpdate);
         this.props.mxEvent.on(MatrixEventEvent.Replaced, this.onEventRequiresUpdate);
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
         this.props.mxEvent.removeListener(MatrixEventEvent.BeforeRedaction, this.onEventRequiresUpdate);
         this.props.mxEvent.removeListener(MatrixEventEvent.Replaced, this.onEventRequiresUpdate);
@@ -104,22 +104,24 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         }
     };
 
-    render() {
+    public render(): React.ReactNode {
         const mxEvent = this.props.mxEvent;
         const msgType = mxEvent.getContent().msgtype;
         const evType = mxEvent.getType();
 
-        const {
-            hasRenderer, isInfoMessage, isSeeingThroughMessageHiddenForModeration,
-        } = getEventDisplayInfo(mxEvent, false /* Replies are never hidden, so this should be fine */);
+        const { hasRenderer, isInfoMessage, isSeeingThroughMessageHiddenForModeration } = getEventDisplayInfo(
+            MatrixClientPeg.safeGet(),
+            mxEvent,
+            false /* Replies are never hidden, so this should be fine */,
+        );
         // This shouldn't happen: the caller should check we support this type
         // before trying to instantiate us
         if (!hasRenderer) {
             const { mxEvent } = this.props;
             logger.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
-            return <div className="mx_ReplyTile mx_ReplyTile_info mx_MNoticeBody">
-                { _t('This event could not be displayed') }
-            </div>;
+            return (
+                <div className="mx_ReplyTile mx_ReplyTile_info mx_MNoticeBody">{_t("timeline|error_no_renderer")}</div>
+            );
         }
 
         const classes = classNames("mx_ReplyTile", {
@@ -131,7 +133,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
 
         let permalink = "#";
         if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId());
+            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId()!);
         }
 
         let sender;
@@ -139,15 +141,8 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         if (!hasOwnSender) {
             sender = (
                 <div className="mx_ReplyTile_sender">
-                    <MemberAvatar
-                        member={mxEvent.sender}
-                        fallbackUserId={mxEvent.getSender()}
-                        width={16}
-                        height={16}
-                    />
-                    <SenderProfile
-                        mxEvent={mxEvent}
-                    />
+                    <MemberAvatar member={mxEvent.sender} fallbackUserId={mxEvent.getSender()} size="16px" />
+                    <SenderProfile mxEvent={mxEvent} />
                 </div>
             );
         }
@@ -166,24 +161,27 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         return (
             <div className={classes}>
                 <a href={permalink} onClick={this.onClick} ref={this.anchorElement}>
-                    { sender }
-                    { renderReplyTile({
-                        ...this.props,
+                    {sender}
+                    {renderReplyTile(
+                        {
+                            ...this.props,
 
-                        // overrides
-                        ref: null,
-                        showUrlPreview: false,
-                        overrideBodyTypes: msgtypeOverrides,
-                        overrideEventTypes: evOverrides,
-                        maxImageHeight: 96,
-                        isSeeingThroughMessageHiddenForModeration,
+                            // overrides
+                            ref: undefined,
+                            showUrlPreview: false,
+                            overrideBodyTypes: msgtypeOverrides,
+                            overrideEventTypes: evOverrides,
+                            maxImageHeight: 96,
+                            isSeeingThroughMessageHiddenForModeration,
 
-                        // appease TS
-                        highlights: this.props.highlights,
-                        highlightLink: this.props.highlightLink,
-                        onHeightChanged: this.props.onHeightChanged,
-                        permalinkCreator: this.props.permalinkCreator,
-                    }, false /* showHiddenEvents shouldn't be relevant */) }
+                            // appease TS
+                            highlights: this.props.highlights,
+                            highlightLink: this.props.highlightLink,
+                            onHeightChanged: this.props.onHeightChanged,
+                            permalinkCreator: this.props.permalinkCreator,
+                        },
+                        false /* showHiddenEvents shouldn't be relevant */,
+                    )}
                 </a>
             </div>
         );
