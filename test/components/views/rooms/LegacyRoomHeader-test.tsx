@@ -794,14 +794,8 @@ function createRoom(info: IRoomCreationInfo) {
         client.getAccountData = (eventType) => {
             if (eventType === "m.direct") {
                 return mkDirectEvent(roomId, userId, info.userIds);
-            } else if (eventType === "im.vector.web.settings") {
-                return mkEvent({
-                    event: true,
-                    type: "im.vector.web.settings",
-                    room: roomId,
-                    user: userId,
-                    content: {},
-                });
+            } else {
+                return undefined;
             }
         };
     }
