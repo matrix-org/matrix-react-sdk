@@ -1109,6 +1109,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "threadsActivityCentre": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         labsGroup: LabGroup.Threads,
+        controller: new ReloadOnChangeController(),
         displayName: _td("labs|threads_activity_centre"),
         default: false,
         isFeature: true,
