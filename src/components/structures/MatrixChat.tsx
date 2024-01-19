@@ -1675,7 +1675,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             let haveNewVersion: boolean | undefined;
             let newVersionInfo: IKeyBackupInfo | null = null;
             // if key backup is still enabled, there must be a new backup in place
-            if (cli.getKeyBackupEnabled()) {
+            const backupEnabled = (await cli.getCrypto()!.getActiveSessionBackupVersion()) !== null;
+            if (backupEnabled) {
                 haveNewVersion = true;
             } else {
                 // otherwise check the server to see if there's a new one

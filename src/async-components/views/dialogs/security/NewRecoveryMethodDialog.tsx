@@ -18,7 +18,6 @@ limitations under the License.
 import React from "react";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 
-import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import dis from "../../../../dispatcher/dispatcher";
 import { _t } from "../../../../languageHandler";
 import Modal from "../../../../Modal";
@@ -66,7 +65,7 @@ export default class NewRecoveryMethodDialog extends React.PureComponent<IProps>
         const hackWarning = <p className="warning">{_t("encryption|new_recovery_method_detected|warning")}</p>;
 
         let content: JSX.Element | undefined;
-        if (MatrixClientPeg.safeGet().getKeyBackupEnabled()) {
+        if (this.props.newVersionInfo) {
             content = (
                 <div>
                     {newMethodDetected}
