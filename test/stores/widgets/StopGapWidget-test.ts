@@ -18,6 +18,7 @@ import { mocked, MockedObject } from "jest-mock";
 import { last } from "lodash";
 import { MatrixEvent, MatrixClient, ClientEvent } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi, WidgetApiFromWidgetAction } from "matrix-widget-api";
+import { waitFor } from "@testing-library/react";
 
 import { stubClient, mkRoom, mkEvent } from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
@@ -170,13 +171,13 @@ describe("StopGapWidget with stickyPromise", () => {
                 }
             });
         };
-        emitSticky();
+        await emitSticky();
         expect(setPersistenceSpy).not.toHaveBeenCalled();
         // Advance the fake timer so that the sticky promise resolves
         jest.runAllTimers();
         // Use a real timer and wait for the next tick so the sticky promise can resolve
         jest.useRealTimers();
-        await new Promise(process.nextTick);
-        expect(setPersistenceSpy).toHaveBeenCalled();
+
+        waitFor(() => expect(setPersistenceSpy).toHaveBeenCalled(), { interval: 5 });
     });
 });
