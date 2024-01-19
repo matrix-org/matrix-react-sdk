@@ -342,6 +342,14 @@ describe("JitsiCall", () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
+        it("reconnects after disconnect in video rooms", async () => {
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+            await call.connect();
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+            await call.disconnect();
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+        });
+
         it("remains connected if we stay in the room", async () => {
             await call.connect();
             expect(call.connectionState).toBe(ConnectionState.Connected);
@@ -923,6 +931,7 @@ describe("ElementCall", () => {
     describe("instance in a video room", () => {
         let call: ElementCall;
         let widget: Widget;
+        let messaging: Mocked<ClientWidgetApi>;
         let audioMutedSpy: jest.SpyInstance<boolean, []>;
         let videoMutedSpy: jest.SpyInstance<boolean, []>;
 
@@ -937,7 +946,7 @@ describe("ElementCall", () => {
             if (maybeCall === null) throw new Error("Failed to create call");
             call = maybeCall;
 
-            ({ widget, audioMutedSpy, videoMutedSpy } = setUpWidget(call));
+            ({ widget, messaging, audioMutedSpy, videoMutedSpy } = setUpWidget(call));
         });
 
         afterEach(() => cleanUpCallAndWidget(call, widget, audioMutedSpy, videoMutedSpy));
@@ -949,6 +958,19 @@ describe("ElementCall", () => {
             await call.disconnect(true);
             expect(onDestroy).not.toHaveBeenCalled();
             call.off(CallEvent.Destroy, onDestroy);
+        });
+        it("handles remote disconnection and reconnect right after", async () => {
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+
+            await call.connect(true);
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+
+            messaging.emit(
+                `action:${ElementWidgetActions.HangupCall}`,
+                new CustomEvent("widgetapirequest", { detail: {} }),
+            );
+            // We want the call to be connecting after the hangup.
+            waitFor(() => expect(call.connectionState).toBe(ConnectionState.Connecting), { interval: 5 });
         });
     });
     describe("create call", () => {
