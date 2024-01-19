@@ -24,11 +24,12 @@ import { ThreadsActivityCentreButton } from "./ThreadsActivityCentreButton";
 import { _t } from "../../../../languageHandler";
 import RoomListStore from "../../../../stores/room-list/RoomListStore";
 import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
-import { showThreadPanel } from "../../../../dispatcher/dispatch-actions/threads";
 import { Action } from "../../../../dispatcher/actions";
 import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
 import { ThreadsActivityCentreBadge } from "./ThreadsActivityCentreBadge";
+import RightPanelStore from "../../../../stores/right-panel/RightPanelStore";
+import { RightPanelPhases } from "../../../../stores/right-panel/RightPanelStorePhases";
 
 interface ThreadsActivityCentreProps {
     /**
@@ -85,6 +86,10 @@ function ThreadsActivityRow({ room, onClick }: ThreadsActivityRow): JSX.Element 
             onSelect={(event: Event) => {
                 onClick();
 
+                // Set the right panel card for that room so the threads panel is open before we dispatch,
+                // so it will open once the room appears.
+                RightPanelStore.instance.setCard({ phase: RightPanelPhases.ThreadPanel }, true, room.roomId);
+
                 // Display the selected room in the timeline
                 defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
@@ -93,13 +98,6 @@ function ThreadsActivityRow({ room, onClick }: ThreadsActivityRow): JSX.Element 
                     metricsTrigger: "RoomList",
                     metricsViaKeyboard: event.type !== "click",
                 });
-
-                //RightPanelStore.instance.setCard({ phase: RightPanelPhases.ThreadPanel });
-                // TODO find a way to open the thread panel after the room is displayed
-                setTimeout(() => {
-                    showThreadPanel();
-                    //RightPanelStore.instance.togglePanel(room.roomId);
-                }, 1000);
             }}
             label={room.name}
             Icon={<DecoratedRoomAvatar room={room} size="32px" />}
