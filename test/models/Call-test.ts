@@ -718,6 +718,17 @@ describe("ElementCall", () => {
             const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
             expect(urlParams.get("analyticsID")).toBe("");
         });
+
+        it("passes feature_allow_screen_share_only_mode setting to allowVoipWithNoMedia url param", async () => {
+            enabledSettings.add("feature_allow_screen_share_only_mode");
+            await ElementCall.create(room);
+            enabledSettings.delete("feature_allow_screen_share_only_mode");
+            const call = Call.get(room);
+            if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
+
+            const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
+            expect(urlParams.get("allowVoipWithNoMedia")).toBe("true");
+        });
     });
 
     describe("instance in a non-video room", () => {
