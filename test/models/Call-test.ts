@@ -702,6 +702,28 @@ describe("ElementCall", () => {
 
             const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
             expect(urlParams.get("analyticsID")).toBe("");
+            call.destroy();
+        });
+
+        it("passes feature_allow_screen_share_only_mode setting to allowVoipWithNoMedia url param", async () => {
+            // Now test with the preference set to true
+            const originalGetValue = SettingsStore.getValue;
+            SettingsStore.getValue = <T>(name: string, roomId?: string, excludeDefault?: boolean) => {
+                switch (name) {
+                    case "feature_allow_screen_share_only_mode":
+                        return true as T;
+                    default:
+                        return originalGetValue<T>(name, roomId, excludeDefault);
+                }
+            };
+            await ElementCall.create(room);
+            const call = Call.get(room);
+            if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
+
+            const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
+            expect(urlParams.get("allowVoipWithNoMedia")).toBe("true");
+            SettingsStore.getValue = originalGetValue;
+            call.destroy();
         });
 
         it("passes empty analyticsID if the id is not in the account data", async () => {
@@ -717,17 +739,6 @@ describe("ElementCall", () => {
 
             const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
             expect(urlParams.get("analyticsID")).toBe("");
-        });
-
-        it("passes feature_allow_screen_share_only_mode setting to allowVoipWithNoMedia url param", async () => {
-            enabledSettings.add("feature_allow_screen_share_only_mode");
-            await ElementCall.create(room);
-            enabledSettings.delete("feature_allow_screen_share_only_mode");
-            const call = Call.get(room);
-            if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
-
-            const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
-            expect(urlParams.get("allowVoipWithNoMedia")).toBe("true");
         });
     });
 
@@ -753,6 +764,21 @@ describe("ElementCall", () => {
         afterEach(() => cleanUpCallAndWidget(call, widget, audioMutedSpy, videoMutedSpy));
         // TODO add tests for passing device configuration to the widget
         it("waits for messaging when connecting", async () => {
+            // Temporarily remove the messaging to simulate connecting while the
+            // widget is still initializing
+
+            WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+
+            const connect = call.connect(true);
+            expect(call.connectionState).toBe(ConnectionState.WidgetLoading);
+
+            WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
+            await connect;
+            expect(call.connectionState).toBe(ConnectionState.Connected);
+        });
+
+        it("doesn't stop messaging when connecting", async () => {
             // Temporarily remove the messaging to simulate connecting while the
             // widget is still initializing
 
