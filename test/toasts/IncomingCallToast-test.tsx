@@ -179,6 +179,29 @@ describe("IncomingCallEvent", () => {
 
         defaultDispatcher.unregister(dispatcherRef);
     });
+    it("skips lobby when using shift key click", async () => {
+        renderToast();
+
+        const dispatcherSpy = jest.fn();
+        const dispatcherRef = defaultDispatcher.register(dispatcherSpy);
+
+        fireEvent.click(screen.getByRole("button", { name: "Join" }), { shiftKey: true });
+        await waitFor(() =>
+            expect(dispatcherSpy).toHaveBeenCalledWith({
+                action: Action.ViewRoom,
+                room_id: room.roomId,
+                skipLobby: true,
+                view_call: true,
+            }),
+        );
+        await waitFor(() =>
+            expect(toastStore.dismissToast).toHaveBeenCalledWith(
+                getIncomingCallToastKey(notifyContent.call_id, room.roomId),
+            ),
+        );
+
+        defaultDispatcher.unregister(dispatcherRef);
+    });
 
     it("closes the toast", async () => {
         renderToast();

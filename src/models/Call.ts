@@ -869,7 +869,7 @@ export class ElementCall extends Call {
         skipSessionAwait = false,
     ): Promise<void> {
         // the JoinCall action is only send if the widget is waiting for it.
-        if ((this.widget.data ?? {}).preload) {
+        if (this.widget.data?.preload) {
             try {
                 await this.messaging!.transport.send(ElementWidgetActions.JoinCall, {
                     audioInput: audioInput?.label ?? null,
@@ -883,7 +883,7 @@ export class ElementCall extends Call {
         this.messaging!.on(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
         this.messaging!.on(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
 
-        if (!(this.widget.data ?? {}).skipLobby) {
+        if (!this.widget.data?.skipLobby) {
             // If we do not skip the lobby we need to wait until the widget has
             // connected to matrixRTC. This is either observed through the session state
             // or the MatrixRTCSessionManager session started event.
