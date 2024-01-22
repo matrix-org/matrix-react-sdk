@@ -127,6 +127,7 @@
         "sanitize-filename": "^1.6.3",
         "sanitize-html": "2.11.0",
         "tar-js": "^0.3.0",
+        "thumbhash": "^0.1.1",
         "ua-parser-js": "^1.0.2",
         "uuid": "^9.0.0",
         "what-input": "^5.2.10"

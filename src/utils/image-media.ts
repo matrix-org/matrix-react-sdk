@@ -16,10 +16,12 @@ limitations under the License.
 
 import { BlurhashEncoder } from "../BlurhashEncoder";
 import { EncryptedFile } from "../customisations/models/IMediaEventContent";
+import { ThumbhashEncoder } from "../ThumbhashEncoder";
 
 type ThumbnailableElement = HTMLImageElement | HTMLVideoElement;
 
-export const BLURHASH_FIELD = "xyz.amorgan.blurhash"; // MSC2448
+export const BLURHASH_FIELD = "xyz.amorgan.blurhash"; // MSC2448 legacy
+export const THUMBHASH_FIELD = "xyz.amorgan.thumbhash"; // MSC2448
 
 interface IThumbnail {
     info: {
@@ -32,6 +34,7 @@ interface IThumbnail {
         w: number;
         h: number;
         [BLURHASH_FIELD]?: string;
+        [THUMBHASH_FIELD]?: string;
         thumbnail_url?: string;
         thumbnail_file?: EncryptedFile;
     };
@@ -103,8 +106,17 @@ export async function createThumbnail(
     }
 
     const imageData = context.getImageData(0, 0, targetWidth, targetHeight);
-    // thumbnailPromise and blurhash promise are being awaited concurrently
-    const blurhash = calculateBlurhash ? await BlurhashEncoder.instance.getBlurhash(imageData) : undefined;
+
+    // thumbnailPromise and blurhash/thumbhash promises are being executed concurrently
+    let blurhash: string | undefined;
+    let thumbhash: string | undefined;
+    if (calculateBlurhash) {
+        [blurhash, thumbhash] = await Promise.all([
+            BlurhashEncoder.instance.getBlurhash(imageData),
+            ThumbhashEncoder.instance.getThumbhash(imageData),
+        ]);
+    }
+
     const thumbnail = await thumbnailPromise;
 
     return {
@@ -118,6 +130,7 @@ export async function createThumbnail(
             w: inputWidth,
             h: inputHeight,
             [BLURHASH_FIELD]: blurhash,
+            [THUMBHASH_FIELD]: thumbhash,
         },
         thumbnail,
     };
