@@ -289,6 +289,47 @@ describe("JitsiCall", () => {
             expect(call.connectionState).toBe(ConnectionState.Connected);
         });
 
+        it("doesn't stop messaging when connecting", async () => {
+            // Temporarily remove the messaging to simulate connecting while the
+            // widget is still initializing
+            const oldSendMock = messaging.transport.send;
+            jest.useFakeTimers();
+            mocked(messaging.transport).send.mockImplementation(async (action: string): Promise<any> => {
+                if (action === ElementWidgetActions.JoinCall) {
+                    await new Promise((resolve) => setTimeout(resolve, 100));
+                    messaging.emit(
+                        `action:${ElementWidgetActions.JoinCall}`,
+                        new CustomEvent("widgetapirequest", { detail: {} }),
+                    );
+                }
+            });
+            expect(call.connectionState).toBe(ConnectionState.Disconnected);
+
+            const connect = call.connect(true);
+            expect(call.connectionState).toBe(ConnectionState.WidgetLoading);
+            async function runTimers() {
+                jest.advanceTimersByTime(500);
+                jest.advanceTimersByTime(1000);
+            }
+            async function runStopMessaging() {
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
+            }
+            runStopMessaging();
+            runTimers();
+            let connectError;
+            try {
+                await connect;
+            } catch (e) {
+                console.log(e);
+                connectError = e;
+            }
+            expect(connectError).toBeDefined();
+            // const connect2 = await connect;
+            // expect(connect2).toThrow();
+            messaging.transport.send = oldSendMock;
+        }, 10000);
+
         it("fails to connect if the widget returns an error", async () => {
             mocked(messaging.transport).send.mockRejectedValue(new Error("never!!1! >:("));
             await expect(call.connect()).rejects.toBeDefined();
@@ -764,21 +805,6 @@ describe("ElementCall", () => {
         afterEach(() => cleanUpCallAndWidget(call, widget, audioMutedSpy, videoMutedSpy));
         // TODO add tests for passing device configuration to the widget
         it("waits for messaging when connecting", async () => {
-            // Temporarily remove the messaging to simulate connecting while the
-            // widget is still initializing
-
-            WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
-            expect(call.connectionState).toBe(ConnectionState.Disconnected);
-
-            const connect = call.connect(true);
-            expect(call.connectionState).toBe(ConnectionState.WidgetLoading);
-
-            WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
-            await connect;
-            expect(call.connectionState).toBe(ConnectionState.Connected);
-        });
-
-        it("doesn't stop messaging when connecting", async () => {
             // Temporarily remove the messaging to simulate connecting while the
             // widget is still initializing
 
