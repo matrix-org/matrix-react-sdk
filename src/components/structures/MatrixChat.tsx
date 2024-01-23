@@ -33,7 +33,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { TooltipProvider } from "@vector-im/compound-web";
 
 // what-input helps improve keyboard accessibility
@@ -1671,37 +1670,32 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     break;
             }
         });
-        cli.on(CryptoEvent.KeyBackupFailed, async (errcode): Promise<void> => {
-            let haveNewVersion: boolean | undefined;
-            let newVersionInfo: IKeyBackupInfo | null = null;
-            // if key backup is still enabled, there must be a new backup in place
-            const backupEnabled = (await cli.getCrypto()!.getActiveSessionBackupVersion()) !== null;
-            if (backupEnabled) {
-                haveNewVersion = true;
-            } else {
-                // otherwise check the server to see if there's a new one
-                try {
-                    newVersionInfo = await cli.getKeyBackupVersion();
-                    if (newVersionInfo !== null) haveNewVersion = true;
-                } catch (e) {
-                    logger.error("Saw key backup error but failed to check backup version!", e);
-                    return;
+        cli.on(CryptoEvent.KeyBackupFailed, async (): Promise<void> => {
+            // This event is emitted when uploading to the backup failed, whether because
+            // the current backup as been deleted (`M_NOT_FOUND`) or replaced (`M_WRONG_ROOM_KEYS_VERSION`) by a new one.
+            // We want to notify the user in both cases.
+            try {
+                const maybeNewVersionInfo = await cli.getKeyBackupVersion();
+                if (maybeNewVersionInfo !== null) {
+                    // If there is a backup in place (reset), we tell the user that a new backup is in place and that they should
+                    // check the settings. It doesn't matter if the new backup is trusted or not, we just want to notify the user.
+                    Modal.createDialogAsync(
+                        import(
+                            "../../async-components/views/dialogs/security/NewRecoveryMethodDialog"
+                        ) as unknown as Promise<typeof NewRecoveryMethodDialog>,
+                    );
+                } else {
+                    // There are no backups in place, so we tell the user that the backup has been removed and that they might
+                    // want to setup a new one.
+                    Modal.createDialogAsync(
+                        import(
+                            "../../async-components/views/dialogs/security/RecoveryMethodRemovedDialog"
+                        ) as unknown as Promise<typeof RecoveryMethodRemovedDialog>,
+                    );
                 }
-            }
-
-            if (haveNewVersion) {
-                Modal.createDialogAsync(
-                    import(
-                        "../../async-components/views/dialogs/security/NewRecoveryMethodDialog"
-                    ) as unknown as Promise<typeof NewRecoveryMethodDialog>,
-                    { newVersionInfo: newVersionInfo! },
-                );
-            } else {
-                Modal.createDialogAsync(
-                    import(
-                        "../../async-components/views/dialogs/security/RecoveryMethodRemovedDialog"
-                    ) as unknown as Promise<typeof RecoveryMethodRemovedDialog>,
-                );
+            } catch (e) {
+                logger.error("Saw key backup error but failed to check backup version!", e);
+                return;
             }
         });
 

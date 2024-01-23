@@ -17,6 +17,9 @@ limitations under the License.
 import { type Page } from "@playwright/test";
 
 import { test, expect } from "../../element-web-test";
+import { Bot } from "../../pages/bot";
+import { MatrixClient } from "../../../../matrix-js-sdk";
+import { Credentials, HomeserverInstance } from "../../plugins/homeserver";
 
 async function expectBackupVersionToBe(page: Page, version: string) {
     await expect(page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(5) td")).toHaveText(
@@ -116,5 +119,115 @@ test.describe("Backups", () => {
         // go back to the settings to check that no backup was created (the setup button should still be there)
         await app.settings.openUserSettings("Security & Privacy");
         await expect(securityTab.getByRole("button", { name: "Set up", exact: true })).toBeVisible();
+    });
+
+    test.describe("Backups change from other sessions", () => {
+        async function createRoom(page) {
+            await page.getByRole("button", { name: "Add room" }).click();
+
+            await page.locator(".mx_IconizedContextMenu").getByRole("menuitem", { name: "New room" }).click();
+
+            const dialog = page.locator(".mx_Dialog");
+
+            await dialog.getByLabel("Name").fill("Room A");
+            await dialog.getByRole("button", { name: "Create room" }).click();
+        }
+
+        /**
+         * Creates a new device for the current user and run the given action with it.
+         */
+        async function withNewDevice(page: Page, homeserver: HomeserverInstance, credentials: Credentials) {
+            // Create a new device for alice
+            const aliceBotClient = new Bot(page, homeserver, {
+                bootstrapCrossSigning: false,
+                bootstrapSecretStorage: false,
+            });
+
+            aliceBotClient.setCredentials(await homeserver.loginUser(credentials.userId, credentials.password));
+            return await aliceBotClient.prepareClient();
+        }
+
+        // setup recovery before each
+        test.beforeEach(async ({ page, user, app, cryptoBackend }, workerInfo) => {
+            test.skip(cryptoBackend === "legacy", "hard to reproduce the detection on legacy");
+
+            const securityTab = await app.settings.openUserSettings("Security & Privacy");
+
+            await expect(securityTab.getByRole("heading", { name: "Secure Backup" })).toBeVisible();
+            await securityTab.getByRole("button", { name: "Set up", exact: true }).click();
+
+            const currentDialogLocator = page.locator(".mx_Dialog");
+
+            // It's the first time and secure storage is not set up, so it will create one
+            await expect(currentDialogLocator.getByRole("heading", { name: "Set up Secure Backup" })).toBeVisible();
+            await currentDialogLocator.getByRole("button", { name: "Continue", exact: true }).click();
+            await expect(currentDialogLocator.getByRole("heading", { name: "Save your Security Key" })).toBeVisible();
+            await currentDialogLocator.getByRole("button", { name: "Copy", exact: true }).click();
+
+            await currentDialogLocator.getByRole("button", { name: "Continue", exact: true }).click();
+
+            await expect(currentDialogLocator.getByRole("heading", { name: "Secure Backup successful" })).toBeVisible();
+            await currentDialogLocator.getByRole("button", { name: "Done", exact: true }).click();
+        });
+
+        test("Should notify when backup deleted by other session", async ({
+            page,
+            user,
+            app,
+            homeserver,
+            credentials,
+            cryptoBackend,
+        }, workerInfo) => {
+            test.skip(cryptoBackend === "legacy", "hard to reproduce the detection on legacy");
+
+            await createRoom(page);
+
+            const newDevice = await withNewDevice(page, homeserver, credentials);
+            await newDevice.evaluate(async (cli: MatrixClient) => {
+                await cli.getCrypto()!.deleteKeyBackupVersion("1");
+            });
+
+            // send a message (will be the first one so will create a new megolm session)
+            await page.locator(".mx_MessageComposer").getByRole("textbox").fill("Hello World");
+            await page.getByTestId("sendmessagebtn").click();
+
+            const currentDialogLocator = page.locator(".mx_Dialog");
+            // The app will try to back up the keys, but it will fail because the backup was deleted.
+            // There is some random delay before the message is uploaded we want to increase a bit the timeout.
+            await expect(currentDialogLocator.getByRole("heading", { name: "Recovery Method Removed" })).toBeVisible({
+                timeout: 15000,
+            });
+        });
+
+        test("Should notify when backup updated by other session", async ({
+            page,
+            user,
+            app,
+            homeserver,
+            credentials,
+        }, workerInfo) => {
+            await createRoom(page);
+
+            const newDevice = await withNewDevice(page, homeserver, credentials);
+            await newDevice.evaluate(async (cli: MatrixClient) => {
+                try {
+                    await cli.getCrypto()!.resetKeyBackup();
+                } catch (e) {
+                    // it will fail to update 4S but not important for this test
+                    // as we just want the backup to be updated
+                }
+            });
+
+            // send a message (will be the first one so will create a new megolm session)
+            await page.locator(".mx_MessageComposer").getByRole("textbox").fill("Hello World");
+            await page.getByTestId("sendmessagebtn").click();
+
+            const currentDialogLocator = page.locator(".mx_Dialog");
+            // The app will try to back up the keys, but it will fail because there is a new backup version.
+            // There is some random delay before the message is uploaded we want to increase a bit the timeout.
+            await expect(currentDialogLocator.getByRole("heading", { name: "New Recovery Method" })).toBeVisible({
+                timeout: 15000,
+            });
+        });
     });
 });
