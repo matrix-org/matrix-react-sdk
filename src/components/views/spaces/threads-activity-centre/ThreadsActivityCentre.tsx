@@ -26,10 +26,11 @@ import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
 import { Action } from "../../../../dispatcher/actions";
 import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
-import { ThreadsActivityCentreBadge, ThreadsActivityNotificationState } from "./ThreadsActivityCentreBadge";
 import RightPanelStore from "../../../../stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../../../stores/right-panel/RightPanelStorePhases";
 import { useUnreadThreadRooms } from "./useUnreadThreadRooms";
+import { StatelessNotificationBadge } from "../../rooms/NotificationBadge/StatelessNotificationBadge";
+import { NotificationLevel } from "../../../../stores/notifications/NotificationLevel";
 
 interface ThreadsActivityCentreProps {
     /**
@@ -57,11 +58,11 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
         >
             {/* Make the content of the pop-up scrollable */}
             <div className="mx_ThreadsActivity_rows">
-                {roomsAndNotifications.map(({ room, notificationState }) => (
+                {roomsAndNotifications.map(({ room, notificationLevel }) => (
                     <ThreadsActivityRow
                         key={room.roomId}
                         room={room}
-                        notificationState={notificationState}
+                        notificationLevel={notificationLevel}
                         onClick={() => setOpen(false)}
                     />
                 ))}
@@ -78,7 +79,7 @@ interface ThreadsActivityRow {
     /**
      * The state of the badge.
      */
-    notificationState: ThreadsActivityNotificationState;
+    notificationLevel: NotificationLevel;
     /**
      * Callback when the user clicks on the row.
      */
@@ -88,7 +89,7 @@ interface ThreadsActivityRow {
 /**
  * Display a room with unread threads.
  */
-function ThreadsActivityRow({ room, onClick, notificationState }: ThreadsActivityRow): JSX.Element {
+function ThreadsActivityRow({ room, onClick, notificationLevel }: ThreadsActivityRow): JSX.Element {
     return (
         <MenuItem
             className="mx_ThreadsActivityRow"
@@ -111,7 +112,7 @@ function ThreadsActivityRow({ room, onClick, notificationState }: ThreadsActivit
             label={room.name}
             Icon={<DecoratedRoomAvatar room={room} size="32px" />}
         >
-            <ThreadsActivityCentreBadge state={notificationState} />
+            <StatelessNotificationBadge level={notificationLevel} count={0} symbol={null} type="dot" />
         </MenuItem>
     );
 }

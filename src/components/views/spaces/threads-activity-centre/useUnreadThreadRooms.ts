@@ -19,17 +19,15 @@
 import { useMemo } from "react";
 import { NotificationCountType, Room } from "matrix-js-sdk/src/matrix";
 
-import { ThreadsActivityNotificationState } from "./ThreadsActivityCentreBadge";
 import RoomListStore from "../../../../stores/room-list/RoomListStore";
 import { doesRoomHaveUnreadThreads } from "../../../../Unread";
+import { NotificationLevel } from "../../../../stores/notifications/NotificationLevel";
 
 /**
  * TODO doc
  * @param open
  */
-export function useUnreadThreadRooms(
-    open: boolean,
-): Array<{ room: Room; notificationState: ThreadsActivityNotificationState }> {
+export function useUnreadThreadRooms(open: boolean): Array<{ room: Room; notificationLevel: NotificationLevel }> {
     return useMemo(() => {
         if (!open) return [];
 
@@ -39,7 +37,7 @@ export function useUnreadThreadRooms(
                 return acc;
             }, [])
             .filter((room) => doesRoomHaveUnreadThreads(room))
-            .map((room) => ({ room, notificationState: getNotificationState(room) }));
+            .map((room) => ({ room, notificationLevel: getNotificationState(room) }));
     }, [open]);
 }
 
@@ -47,14 +45,14 @@ export function useUnreadThreadRooms(
  * TODO doc
  * @param room
  */
-function getNotificationState(room: Room): ThreadsActivityNotificationState {
+function getNotificationState(room: Room): NotificationLevel {
     const notificationCountType = room.threadsAggregateNotificationType;
     switch (notificationCountType) {
         case NotificationCountType.Highlight:
-            return "highlight";
+            return NotificationLevel.Highlight;
         case NotificationCountType.Total:
-            return "normal";
+            return NotificationLevel.Notification;
         default:
-            return "minor";
+            return NotificationLevel.Activity;
     }
 }
