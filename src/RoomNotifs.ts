@@ -81,9 +81,12 @@ export function setRoomNotifsState(client: MatrixClient, roomId: string, newStat
 }
 
 export function getUnreadNotificationCount(room: Room, type: NotificationCountType, threadId?: string): number {
-    let notificationCount = !!threadId
-        ? room.getThreadUnreadNotificationCount(threadId, type)
-        : room.getUnreadNotificationCount(type);
+    const countShownForRoom = (): number =>
+        SettingsStore.getValue("threadsActivityCentre")
+            ? room.getRoomUnreadNotificationCount(type)
+            : room.getUnreadNotificationCount(type);
+
+    let notificationCount = !!threadId ? room.getThreadUnreadNotificationCount(threadId, type) : countShownForRoom();
 
     // Check notification counts in the old room just in case there's some lost
     // there. We only go one level down to avoid performance issues, and theory

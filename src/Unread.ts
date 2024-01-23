@@ -57,7 +57,12 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
         return false;
     }
 
-    for (const withTimeline of [room, ...room.getThreads()]) {
+    const toCheck: Array<Room | Thread> = [room];
+    if (!SettingsStore.getValue("threadsActivityCentre")) {
+        toCheck.push(...room.getThreads());
+    }
+
+    for (const withTimeline of toCheck) {
         if (doesTimelineHaveUnreadMessages(room, withTimeline.timeline)) {
             // We found an unread, so the room is unread
             return true;

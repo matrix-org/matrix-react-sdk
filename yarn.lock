@@ -1847,10 +1847,10 @@
   resolved "https://registry.yarnpkg.com/@matrix-org/olm/-/olm-3.2.15.tgz#55f3c1b70a21bbee3f9195cecd6846b1083451ec"
   integrity sha512-S7lOrndAK9/8qOtaTq/WhttJC/o4GAzdfK0MUPpo8ApzsJEC0QjtwrkC3KBXdFP1cD1MXi/mlKR7aaoVMKgs6Q==
 
-"@matrix-org/react-sdk-module-api@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@matrix-org/react-sdk-module-api/-/react-sdk-module-api-2.2.1.tgz#308bcb42a780200d3e7994235376784b51819379"
-  integrity sha512-+MXTMEapzGmhArUt86GYDQirOvm19+wvQLDApmHpUQvSZvYm7wOo1EwR9FFvSKve53fu+v6gI1grnj7YLzGQ9Q==
+"@matrix-org/react-sdk-module-api@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@matrix-org/react-sdk-module-api/-/react-sdk-module-api-2.3.0.tgz#85be5cfc73be0494c13d4dc9050cb70c58d7a08b"
+  integrity sha512-x/ie44yaXNtE5AKcmQiW5yINVEIJ7IjjEc35vj6j52fM8tZ9XbJx9PANKSWsdd0NJp3OqyaeHftmN6ESfx4YoQ==
   dependencies:
     "@babel/runtime" "^7.17.9"
 
@@ -6933,8 +6933,8 @@ matrix-events-sdk@0.0.1:
   integrity sha512-1QEOsXO+bhyCroIe2/A5OwaxHvBm7EsSQ46DEDn8RBIfQwN5HWBpFvyWWR4QY0KHPPnnJdI99wgRiAl7Ad5qaA==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "31.0.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/76b9c3950bfdfca922bec7f70502ff2da93bd731"
+  version "31.1.0"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/2337d5a7af6265bbcabbd42c1594cd8b1829b00b"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@matrix-org/matrix-sdk-crypto-wasm" "^3.6.0"
