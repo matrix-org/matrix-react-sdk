@@ -292,8 +292,8 @@ describe("JitsiCall", () => {
         it("doesn't stop messaging when connecting", async () => {
             // Temporarily remove the messaging to simulate connecting while the
             // widget is still initializing
-            const oldSendMock = messaging.transport.send;
             jest.useFakeTimers();
+            const oldSendMock = messaging.transport.send;
             mocked(messaging.transport).send.mockImplementation(async (action: string): Promise<any> => {
                 if (action === ElementWidgetActions.JoinCall) {
                     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -328,6 +328,7 @@ describe("JitsiCall", () => {
             // const connect2 = await connect;
             // expect(connect2).toThrow();
             messaging.transport.send = oldSendMock;
+            jest.useRealTimers();
         }, 10000);
 
         it("fails to connect if the widget returns an error", async () => {
