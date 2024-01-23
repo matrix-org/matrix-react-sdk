@@ -835,20 +835,19 @@ export class ElementCall extends Call {
     }
 
     public static async create(room: Room, skipLobby = false): Promise<void> {
-        const isVidRoom = isVideoRoom(room);
-
-        ElementCall.createOrGetCallWidget(room.roomId, room.client, skipLobby, false, isVidRoom);
+        ElementCall.createOrGetCallWidget(room.roomId, room.client, skipLobby, false, isVideoRoom(room));
         WidgetStore.instance.emit(UPDATE_EVENT, null);
+    }
 
-        // Send Call notify
-
+    protected async sendCallNotify(): Promise<void> {
+        const room = this.room;
         const existingRoomCallMembers = MatrixRTCSession.callMembershipsForRoom(room).filter(
             // filter all memberships where the application is m.call and the call_id is ""
             (m) => m.application === "m.call" && m.callId === "",
         );
 
         const memberCount = getJoinedNonFunctionalMembers(room).length;
-        if (!isVidRoom && existingRoomCallMembers.length == 0) {
+        if (!isVideoRoom(room) && existingRoomCallMembers.length == 0) {
             // send ringing event
             const content: ICallNotifyContent = {
                 "application": "m.call",
@@ -886,7 +885,9 @@ export class ElementCall extends Call {
             // or the MatrixRTCSessionManager session started event.
             this.connectionState = ConnectionState.Lobby;
         }
-
+        // TODO: if the widget informs us when the join button is clicked (widget action), so we can
+        // - set state to connecting
+        // - send call notify
         const session = this.client.matrixRTC.getActiveRoomSession(this.room);
         if (session) {
             await waitForEvent(
@@ -903,6 +904,7 @@ export class ElementCall extends Call {
                     this.session.callId === session.callId && roomId === this.roomId,
             );
         }
+        this.sendCallNotify();
     }
 
     protected async performDisconnection(): Promise<void> {
