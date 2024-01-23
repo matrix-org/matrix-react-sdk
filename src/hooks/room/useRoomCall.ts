@@ -127,7 +127,8 @@ export const useRoomCall = (
     const [canPinWidget, setCanPinWidget] = useState(false);
     const [widgetPinned, setWidgetPinned] = useState(false);
     // We only want to prompt to pin the widget if it's not virtual (not element call based)
-    const promptPinWidget = widget ? !isVirtualWidget(widget) : true && canPinWidget && !widgetPinned;
+    const isECWidget = widget ? isVirtualWidget(widget) : false;
+    const promptPinWidget = !isECWidget && canPinWidget && !widgetPinned;
 
     const updateWidgetState = useCallback((): void => {
         setCanPinWidget(WidgetLayoutStore.instance.canAddToContainer(room, Container.Top));
