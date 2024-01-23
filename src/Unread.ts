@@ -103,8 +103,9 @@ function doesTimelineHaveUnreadMessages(room: Room, timeline: Array<MatrixEvent>
 }
 
 /**
- * TODO doc
- * @param room
+ * Returns true if this room has unread threads.
+ * @param room The room to check
+ * @returns {boolean} True if the given room has unread threads
  */
 export function doesRoomHaveUnreadThreads(room: Room): boolean {
     for (const withTimeline of room.getThreads()) {

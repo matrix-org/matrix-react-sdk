@@ -24,8 +24,10 @@ import RoomListStore from "../../../../stores/room-list/RoomListStore";
 import { doesRoomHaveUnreadThreads } from "../../../../Unread";
 
 /**
- * TODO doc
+ * Return the list of rooms with unread threads, and their notification state.
+ * The list is computed when open is true
  * @param open
+ * @returns {Array<{ room: Room; notificationState: ThreadsActivityNotificationState }>}
  */
 export function useUnreadThreadRooms(
     open: boolean,
@@ -44,8 +46,9 @@ export function useUnreadThreadRooms(
 }
 
 /**
- * TODO doc
+ * Return the notification state for a room
  * @param room
+ * @returns {ThreadsActivityNotificationState}
  */
 function getNotificationState(room: Room): ThreadsActivityNotificationState {
     const notificationCountType = room.threadsAggregateNotificationType;
