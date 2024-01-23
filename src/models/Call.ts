@@ -205,7 +205,6 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     protected abstract performConnection(
         audioInput: MediaDeviceInfo | null,
         videoInput: MediaDeviceInfo | null,
-        skipSessionAwait?: boolean,
     ): Promise<void>;
 
     /**
@@ -218,7 +217,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
      * MediaDeviceHandler. The widget associated with the call must be active
      * for this to succeed.
      */
-    public async connect(skipSessionAwait = false): Promise<void> {
+    public async connect(): Promise<void> {
         this.connectionState = ConnectionState.WidgetLoading;
 
         const { [MediaDeviceKindEnum.AudioInput]: audioInputs, [MediaDeviceKindEnum.VideoInput]: videoInputs } =
@@ -257,7 +256,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         }
         this.connectionState = ConnectionState.Connecting;
         try {
-            await this.performConnection(audioInput, videoInput, skipSessionAwait);
+            await this.performConnection(audioInput, videoInput);
         } catch (e) {
             this.connectionState = ConnectionState.Disconnected;
             throw e;
@@ -468,7 +467,6 @@ export class JitsiCall extends Call {
     protected async performConnection(
         audioInput: MediaDeviceInfo | null,
         videoInput: MediaDeviceInfo | null,
-        skipSessionAwait = false,
     ): Promise<void> {
         this.connectionState = ConnectionState.Lobby;
         // Ensure that the messaging doesn't get stopped while we're waiting for responses
@@ -866,7 +864,6 @@ export class ElementCall extends Call {
     protected async performConnection(
         audioInput: MediaDeviceInfo | null,
         videoInput: MediaDeviceInfo | null,
-        skipSessionAwait = false,
     ): Promise<void> {
         // the JoinCall action is only send if the widget is waiting for it.
         if (this.widget.data?.preload) {
@@ -891,14 +888,14 @@ export class ElementCall extends Call {
         }
 
         const session = this.client.matrixRTC.getActiveRoomSession(this.room);
-        if (session && !skipSessionAwait) {
+        if (session) {
             await waitForEvent(
                 session,
                 MatrixRTCSessionEvent.MembershipsChanged,
                 (_, newMemberships: CallMembership[]) =>
                     newMemberships.some((m) => m.sender === this.client.getUserId()),
             );
-        } else if (!skipSessionAwait) {
+        } else {
             await waitForEvent(
                 this.client.matrixRTC,
                 MatrixRTCSessionManagerEvents.SessionStarted,
