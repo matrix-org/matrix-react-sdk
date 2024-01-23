@@ -210,7 +210,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     /**
      * Contacts the widget to disconnect from the call.
      */
-    protected abstract performDisconnection(skipSessionAwait?: boolean): Promise<void>;
+    protected abstract performDisconnection(): Promise<void>;
 
     /**
      * Connects the user to the call using the media devices set in
@@ -271,11 +271,11 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     /**
      * Disconnects the user from the call.
      */
-    public async disconnect(skipSessionAwait = false): Promise<void> {
+    public async disconnect(): Promise<void> {
         if (!this.connected) throw new Error("Not connected");
 
         this.connectionState = ConnectionState.Disconnecting;
-        await this.performDisconnection(skipSessionAwait);
+        await this.performDisconnection();
         this.setDisconnected();
     }
 
@@ -529,7 +529,7 @@ export class JitsiCall extends Call {
         ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Undock, this.onUndock);
     }
 
-    protected async performDisconnection(skipSessionAwait = false): Promise<void> {
+    protected async performDisconnection(): Promise<void> {
         const response = waitForEvent(
             this.messaging!,
             `action:${ElementWidgetActions.HangupCall}`,
@@ -905,17 +905,15 @@ export class ElementCall extends Call {
         }
     }
 
-    protected async performDisconnection(skipSessionAwait = false): Promise<void> {
+    protected async performDisconnection(): Promise<void> {
         try {
             await this.messaging!.transport.send(ElementWidgetActions.HangupCall, {});
-            if (!skipSessionAwait) {
-                await waitForEvent(
-                    this.session,
-                    MatrixRTCSessionEvent.MembershipsChanged,
-                    (_, newMemberships: CallMembership[]) =>
-                        !newMemberships.some((m) => m.sender === this.client.getUserId()),
-                );
-            }
+            await waitForEvent(
+                this.session,
+                MatrixRTCSessionEvent.MembershipsChanged,
+                (_, newMemberships: CallMembership[]) =>
+                    !newMemberships.some((m) => m.sender === this.client.getUserId()),
+            );
         } catch (e) {
             throw new Error(`Failed to hangup call in room ${this.roomId}: ${e}`);
         }

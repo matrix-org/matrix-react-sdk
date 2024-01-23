@@ -641,12 +641,30 @@ describe("ElementCall", () => {
             );
         }
         async function runTimers() {
-            jest.advanceTimersByTime(300);
-            jest.advanceTimersByTime(300);
-            jest.advanceTimersByTime(1000);
+            jest.advanceTimersByTime(500);
+            jest.advanceTimersByTime(500);
         }
         sessionConnect();
         const promise = call.connect();
+        runTimers();
+        await promise;
+    };
+    const callDisconnectionProcedure: (call: ElementCall) => Promise<void> = async (call) => {
+        async function sessionDisconnect() {
+            await new Promise<void>((r) => {
+                setTimeout(() => r(), 400);
+            });
+            client.matrixRTC.emit(MatrixRTCSessionManagerEvents.SessionStarted, call.roomId, {
+                sessionId: undefined,
+            } as unknown as MatrixRTCSession);
+            call.session?.emit(MatrixRTCSessionEvent.MembershipsChanged, [], []);
+        }
+        async function runTimers() {
+            jest.advanceTimersByTime(500);
+            jest.advanceTimersByTime(500);
+        }
+        sessionDisconnect();
+        const promise = call.disconnect();
         runTimers();
         await promise;
     };
@@ -880,7 +898,7 @@ describe("ElementCall", () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
             await callConnectProcedure(call);
             expect(call.connectionState).toBe(ConnectionState.Connected);
-            await call.disconnect(true);
+            await callDisconnectionProcedure(call);
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
@@ -938,7 +956,7 @@ describe("ElementCall", () => {
             call.on(CallEvent.ConnectionState, onConnectionState);
 
             await callConnectProcedure(call);
-            await call.disconnect(true);
+            await callDisconnectionProcedure(call);
             expect(onConnectionState.mock.calls).toEqual([
                 [ConnectionState.WidgetLoading, ConnectionState.Disconnected],
                 [ConnectionState.Connecting, ConnectionState.WidgetLoading],
@@ -983,7 +1001,7 @@ describe("ElementCall", () => {
             await callConnectProcedure(call);
             const onDestroy = jest.fn();
             call.on(CallEvent.Destroy, onDestroy);
-            await call.disconnect(true);
+            await callDisconnectionProcedure(call);
             // this will be called automatically
             // disconnect -> widget sends state event -> session manager notices no-one left
             client.matrixRTC.emit(
@@ -1049,7 +1067,7 @@ describe("ElementCall", () => {
             await callConnectProcedure(call);
             const onDestroy = jest.fn();
             call.on(CallEvent.Destroy, onDestroy);
-            await call.disconnect(true);
+            await callDisconnectionProcedure(call);
             expect(onDestroy).not.toHaveBeenCalled();
             call.off(CallEvent.Destroy, onDestroy);
         });
