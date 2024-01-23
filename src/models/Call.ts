@@ -865,7 +865,7 @@ export class ElementCall extends Call {
         audioInput: MediaDeviceInfo | null,
         videoInput: MediaDeviceInfo | null,
     ): Promise<void> {
-        // the JoinCall action is only send if the widget is waiting for it.
+        // The JoinCall action is only send if the widget is waiting for it.
         if (this.widget.data?.preload) {
             try {
                 await this.messaging!.transport.send(ElementWidgetActions.JoinCall, {
@@ -944,7 +944,7 @@ export class ElementCall extends Call {
     }
 
     private onRTCSessionEnded = (roomId: string, session: MatrixRTCSession): void => {
-        // Don't destroy call on hangup for video call rooms.
+        // Don't destroy the call on hangup for video call rooms.
         if (roomId == this.roomId && !this.room.isCallRoom()) {
             this.destroy();
         }

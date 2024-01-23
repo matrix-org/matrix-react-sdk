@@ -851,7 +851,8 @@ describe("ElementCall", () => {
         });
 
         afterEach(() => cleanUpCallAndWidget(call, widget, audioMutedSpy, videoMutedSpy));
-        // TODO add tests for passing device configuration to the widget
+        // TODO refactor initial device configuration to use the EW settings.
+        // Add tests for passing EW device configuration to the widget.
         it("waits for messaging when connecting", async () => {
             // Temporarily remove the messaging to simulate connecting while the
             // widget is still initializing

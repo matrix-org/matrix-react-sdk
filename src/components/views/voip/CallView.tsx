@@ -104,5 +104,4 @@ export const CallView: FC<CallViewProps> = ({ room, resizing, waitForCall, skipL
     } else {
         return <JoinCallView room={room} resizing={resizing} call={call} skipLobby={skipLobby} role={role} />;
     }
-    // }
 };

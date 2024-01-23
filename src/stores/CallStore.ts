@@ -20,16 +20,15 @@ import { GroupCallEventHandlerEvent } from "matrix-js-sdk/src/webrtc/groupCallEv
 import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
-import { GroupCall, Room } from "matrix-js-sdk/src/matrix";
 
+import type { GroupCall, Room } from "matrix-js-sdk/src/matrix";
+import defaultDispatcher from "../dispatcher/dispatcher";
 import { UPDATE_EVENT } from "./AsyncStore";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import WidgetStore from "./WidgetStore";
 import SettingsStore from "../settings/SettingsStore";
 import { SettingLevel } from "../settings/SettingLevel";
 import { Call, CallEvent, ConnectionState } from "../models/Call";
-import defaultDispatcher from "../dispatcher/dispatcher";
-import { ActionPayload } from "../dispatcher/payloads";
 
 export enum CallStoreEvent {
     // Signals a change in the call associated with a given room
@@ -53,7 +52,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         this.setMaxListeners(100); // One for each RoomTile
     }
 
-    protected async onAction(payload: ActionPayload): Promise<void> {
+    protected async onAction(): Promise<void> {
         // nothing to do
     }
 
