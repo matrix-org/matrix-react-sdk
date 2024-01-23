@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import { type Page } from "@playwright/test";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { test, expect } from "../../element-web-test";
 import { Bot } from "../../pages/bot";
-import { MatrixClient } from "../../../../matrix-js-sdk";
 import { Credentials, HomeserverInstance } from "../../plugins/homeserver";
 
 async function expectBackupVersionToBe(page: Page, version: string) {
