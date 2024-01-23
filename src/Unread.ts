@@ -69,7 +69,7 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
 }
 
 function doesTimelineHaveUnreadMessages(room: Room, timeline: Array<MatrixEvent>): boolean {
-    // trigger
+    // trigger again
     const myUserId = room.client.getSafeUserId();
     const latestImportantEventId = findLatestImportantEvent(room.client, timeline)?.getId();
     if (latestImportantEventId) {
