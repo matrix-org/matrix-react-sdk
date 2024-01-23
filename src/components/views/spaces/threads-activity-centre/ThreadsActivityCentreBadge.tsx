@@ -19,11 +19,13 @@
 import React, { JSX } from "react";
 import classNames from "classnames";
 
+export type ThreadsActivityNotificationState = "minor" | "normal" | "highlight";
+
 interface ThreadsActivityCentreBadgeProps {
     /**
      * The state of the badge.
      */
-    state: "normal" | "highlight" | "alert";
+    state: ThreadsActivityNotificationState;
 }
 
 /**
@@ -32,7 +34,7 @@ interface ThreadsActivityCentreBadgeProps {
 export function ThreadsActivityCentreBadge({ state }: ThreadsActivityCentreBadgeProps): JSX.Element {
     const className = classNames("mx_ThreadsActivityCentreBadge", {
         mx_ThreadsActivityCentreBadge_highlight: state === "highlight",
-        mx_ThreadsActivityCentreBadge_alert: state === "alert",
+        mx_ThreadsActivityCentreBadge_normal: state === "normal",
     });
 
     return <div className={className} />;

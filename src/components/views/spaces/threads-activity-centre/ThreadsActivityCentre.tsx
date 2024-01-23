@@ -16,20 +16,20 @@
  * /
  */
 
-import React, { JSX, useMemo, useState } from "react";
+import React, { JSX, useState } from "react";
 import { Menu, MenuItem } from "@vector-im/compound-web";
 import { Room } from "matrix-js-sdk/src/matrix";
 
 import { ThreadsActivityCentreButton } from "./ThreadsActivityCentreButton";
 import { _t } from "../../../../languageHandler";
-import RoomListStore from "../../../../stores/room-list/RoomListStore";
 import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
 import { Action } from "../../../../dispatcher/actions";
 import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
-import { ThreadsActivityCentreBadge } from "./ThreadsActivityCentreBadge";
+import { ThreadsActivityCentreBadge, ThreadsActivityNotificationState } from "./ThreadsActivityCentreBadge";
 import RightPanelStore from "../../../../stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../../../stores/right-panel/RightPanelStorePhases";
+import { useUnreadThreadRooms } from "./useUnreadThreadRooms";
 
 interface ThreadsActivityCentreProps {
     /**
@@ -44,7 +44,7 @@ interface ThreadsActivityCentreProps {
  */
 export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCentreProps): JSX.Element {
     const [open, setOpen] = useState(false);
-    const rooms = useUnreadThreadRooms(open);
+    const roomsAndNotifications = useUnreadThreadRooms(open);
 
     return (
         <Menu
@@ -57,8 +57,13 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
         >
             {/* Make the content of the pop-up scrollable */}
             <div className="mx_ThreadsActivity_rows">
-                {rooms.map((room) => (
-                    <ThreadsActivityRow key={room.roomId} room={room} onClick={() => setOpen(false)} />
+                {roomsAndNotifications.map(({ room, notificationState }) => (
+                    <ThreadsActivityRow
+                        key={room.roomId}
+                        room={room}
+                        notificationState={notificationState}
+                        onClick={() => setOpen(false)}
+                    />
                 ))}
             </div>
         </Menu>
@@ -71,6 +76,10 @@ interface ThreadsActivityRow {
      */
     room: Room;
     /**
+     * The state of the badge.
+     */
+    notificationState: ThreadsActivityNotificationState;
+    /**
      * Callback when the user clicks on the row.
      */
     onClick: () => void;
@@ -79,7 +88,7 @@ interface ThreadsActivityRow {
 /**
  * Display a room with unread threads.
  */
-function ThreadsActivityRow({ room, onClick }: ThreadsActivityRow): JSX.Element {
+function ThreadsActivityRow({ room, onClick, notificationState }: ThreadsActivityRow): JSX.Element {
     return (
         <MenuItem
             className="mx_ThreadsActivityRow"
@@ -102,24 +111,7 @@ function ThreadsActivityRow({ room, onClick }: ThreadsActivityRow): JSX.Element 
             label={room.name}
             Icon={<DecoratedRoomAvatar room={room} size="32px" />}
         >
-            {/* TODO set the unread state of the room threads */}
-            <ThreadsActivityCentreBadge state="highlight" />
+            <ThreadsActivityCentreBadge state={notificationState} />
         </MenuItem>
     );
-}
-
-/**
- * TODO
- * Temporary returns all the rooms to get some data to play with
- * @param open
- */
-function useUnreadThreadRooms(open: boolean): Array<Room> {
-    return useMemo(() => {
-        if (!open) return [];
-
-        return Object.values(RoomListStore.instance.orderedLists).reduce((acc, rooms) => {
-            acc.push(...rooms);
-            return acc;
-        }, []);
-    }, [open]);
 }

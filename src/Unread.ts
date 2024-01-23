@@ -97,6 +97,22 @@ function doesTimelineHaveUnreadMessages(room: Room, timeline: Array<MatrixEvent>
     }
 }
 
+/**
+ * TODO doc
+ * @param room
+ */
+export function doesRoomHaveUnreadThreads(room: Room): boolean {
+    for (const withTimeline of room.getThreads()) {
+        if (doesTimelineHaveUnreadMessages(room, withTimeline.timeline)) {
+            // We found an unread, so the room is unread
+            return true;
+        }
+    }
+
+    // If we got here then no timelines were found with unread messages.
+    return false;
+}
+
 export function doesRoomOrThreadHaveUnreadMessages(roomOrThread: Room | Thread): boolean {
     const room = roomOrThread instanceof Thread ? roomOrThread.room : roomOrThread;
     const events = roomOrThread instanceof Thread ? roomOrThread.timeline : room.getLiveTimeline().getEvents();
