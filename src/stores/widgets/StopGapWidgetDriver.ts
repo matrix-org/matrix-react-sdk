@@ -68,6 +68,7 @@ import { navigateToPermalink } from "../../utils/permalinks/navigator";
 import { SdkContextClass } from "../../contexts/SDKContext";
 import { ModuleRunner } from "../../modules/ModuleRunner";
 import SettingsStore from "../../settings/SettingsStore";
+import { EC_URL_HACK } from "../../models/Call";
 
 // TODO: Purge this from the universe
 
@@ -120,7 +121,8 @@ export class StopGapWidgetDriver extends WidgetDriver {
             this.allowedCapabilities.add("visibility");
         } else if (
             virtual &&
-            new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url!).origin === this.forWidget.origin
+            new URL(EC_URL_HACK ?? SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url!).origin ===
+                this.forWidget.origin
         ) {
             // This is a trusted Element Call widget that we control
             this.allowedCapabilities.add(MatrixCapabilities.AlwaysOnScreen);

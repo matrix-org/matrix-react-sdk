@@ -56,7 +56,7 @@ import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { getJoinedNonFunctionalMembers } from "../utils/room/getJoinedNonFunctionalMembers";
 
 const TIMEOUT_MS = 16000;
-
+export const EC_URL_HACK = "https://pr2101--element-call.netlify.app";
 // Waits until an event is emitted satisfying the given predicate
 const waitForEvent = async (
     emitter: EventEmitter,
@@ -683,7 +683,7 @@ export class ElementCall extends Call {
                 .forEach((font) => params.append("font", font));
         }
 
-        const url = new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url!);
+        const url = new URL(EC_URL_HACK ?? SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url!);
         url.pathname = "/room";
         url.hash = `#?${params.toString()}`;
         return url;
