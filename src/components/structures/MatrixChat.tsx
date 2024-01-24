@@ -34,6 +34,7 @@ import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 // what-input helps improve keyboard accessibility
 import "what-input";
@@ -139,7 +140,7 @@ import GenericToast from "../views/toasts/GenericToast";
 import RovingSpotlightDialog from "../views/dialogs/spotlight/SpotlightDialog";
 import { findDMForUser } from "../../utils/dm/findDMForUser";
 import { Linkify } from "../../HtmlUtils";
-import { NotificationColor } from "../../stores/notifications/NotificationColor";
+import { NotificationLevel } from "../../stores/notifications/NotificationLevel";
 import { UserTab } from "../views/dialogs/UserTab";
 import { shouldSkipSetupEncryption } from "../../utils/crypto/shouldSkipSetupEncryption";
 import { Filter } from "../views/dialogs/spotlight/Filter";
@@ -2018,7 +2019,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
         if (numUnreadRooms > 0) {
             this.subTitleStatus += `[${numUnreadRooms}]`;
-        } else if (notificationState.color >= NotificationColor.Bold) {
+        } else if (notificationState.level >= NotificationLevel.Activity) {
             this.subTitleStatus += `*`;
         }
 
@@ -2122,6 +2123,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // Suppress `InvalidStoreError`s here, since they have their own error dialog.
                 view = (
                     <LoginSplashView
+                        matrixClient={MatrixClientPeg.safeGet()}
                         onLogoutClick={this.onLogoutClick}
                         syncError={isStoreError ? null : this.state.syncError}
                     />
@@ -2189,7 +2191,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         return (
             <ErrorBoundary>
-                <SDKContext.Provider value={this.stores}>{view}</SDKContext.Provider>
+                <SDKContext.Provider value={this.stores}>
+                    <TooltipProvider>{view}</TooltipProvider>
+                </SDKContext.Provider>
             </ErrorBoundary>
         );
     }
