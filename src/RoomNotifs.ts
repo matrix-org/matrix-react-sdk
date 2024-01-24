@@ -292,7 +292,7 @@ export function determineUnreadState(
         }
         // If the thread does not exist, assume it contains no unreads
     } else {
-        hasUnread = doesRoomHaveUnreadMessages(room);
+        hasUnread = doesRoomHaveUnreadMessages(room, includeThreads ?? false);
     }
 
     return {

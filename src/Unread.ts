@@ -50,7 +50,7 @@ export function eventTriggersUnreadCount(client: MatrixClient, ev: MatrixEvent):
     return haveRendererForEvent(ev, client, false /* hidden messages should never trigger unread counts anyways */);
 }
 
-export function doesRoomHaveUnreadMessages(room: Room): boolean {
+export function doesRoomHaveUnreadMessages(room: Room, includeThreads: boolean): boolean {
     if (SettingsStore.getValue("feature_sliding_sync")) {
         // TODO: https://github.com/vector-im/element-web/issues/23207
         // Sliding Sync doesn't support unread indicator dots (yet...)
@@ -58,7 +58,7 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
     }
 
     const toCheck: Array<Room | Thread> = [room];
-    if (!SettingsStore.getValue("threadsActivityCentre")) {
+    if (includeThreads) {
         toCheck.push(...room.getThreads());
     }
 
