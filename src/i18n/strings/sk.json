@@ -1444,7 +1444,6 @@
         "report_to_moderators": "Nahlásiť moderátorom",
         "report_to_moderators_description": "V miestnostiach, ktoré podporujú moderovanie, môžete pomocou tlačidla \"Nahlásiť\" nahlásiť porušovanie pravidiel moderátorom miestnosti.",
         "rust_crypto": "Implementácia kryptografie Rust",
-        "rust_crypto_disabled_notice": "V súčasnosti sa dá povoliť len prostredníctvom súboru config.json",
         "sliding_sync": "Režim kĺzavej synchronizácie",
         "sliding_sync_checking": "Kontrolovanie…",
         "sliding_sync_configuration": "Konfigurácia kĺzavej synchronizácie",
@@ -1600,12 +1599,6 @@
         "all_messages_description": "Dostávajte upozornenia na každú správu",
         "class_global": "Celosystémové",
         "class_other": "Ďalšie",
-        "colour_bold": "Tučné",
-        "colour_grey": "Sivá",
-        "colour_muted": "Stlmené",
-        "colour_none": "Žiadne",
-        "colour_red": "Červená",
-        "colour_unsent": "Neodoslané",
         "default": "Predvolené",
         "email_pusher_app_display_name": "Emailové oznámenia",
         "enable_prompt_toast_description": "Povoliť oznámenia na ploche",
@@ -3575,7 +3568,8 @@
             },
             "no_change": {
                 "one": "%(oneUser)snespravil žiadne zmeny",
-                "other": "%(oneUser)s nevykonal žiadne zmeny %(count)s krát"
+                "few": "%(oneUser)s nevykonal žiadne zmeny %(count)s-krát",
+                "other": "%(oneUser)s nevykonal žiadne zmeny %(count)s-krát"
             },
             "no_change_multiple": {
                 "one": "%(severalUsers)snespravili žiadne zmeny",
@@ -3583,20 +3577,23 @@
                 "other": "%(severalUsers)s nevykonali žiadne zmeny %(count)s-krát"
             },
             "pinned_events": {
-                "other": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti %(count)s krát",
-                "one": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti"
+                "one": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti",
+                "few": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti %(count)s-krát",
+                "other": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti %(count)s-krát"
             },
             "pinned_events_multiple": {
-                "other": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti %(count)s krát",
-                "one": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti"
+                "one": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti",
+                "few": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti %(count)s-krát",
+                "other": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti %(count)s-krát"
             },
             "redacted": {
                 "other": "%(oneUser)s odstránil/a %(count)s správ",
                 "one": "%(oneUser)sodstránil správu"
             },
             "redacted_multiple": {
-                "other": "%(severalUsers)sodstránili %(count)s správ",
-                "one": "%(severalUsers)s odstránili správu"
+                "one": "%(severalUsers)s odstránili správu",
+                "few": "%(severalUsers)sodstránili %(count)s správy",
+                "other": "%(severalUsers)sodstránili %(count)s správ"
             },
             "rejected_invite": {
                 "one": "%(oneUser)sodmietol pozvanie",
@@ -3619,12 +3616,14 @@
                 "other": "%(severalUsers)s%(count)s-krát odišli a znovu vstúpili"
             },
             "server_acls": {
-                "other": "%(oneUser)szmenil ACL servera %(count)s krát",
-                "one": "%(oneUser)s zmenil ACL servera"
+                "one": "%(oneUser)s zmenil ACL servera",
+                "few": "%(oneUser)szmenil ACL servera %(count)s-krát",
+                "other": "%(oneUser)szmenil ACL servera %(count)s-krát"
             },
             "server_acls_multiple": {
-                "other": "%(severalUsers)szmenilo ACL servera %(count)s krát",
-                "one": "%(severalUsers)s zmenilo ACL servera"
+                "one": "%(severalUsers)s zmenilo ACL servera",
+                "few": "%(severalUsers)szmenilo ACL servera %(count)s-krát",
+                "other": "%(severalUsers)szmenilo ACL servera %(count)s-krát"
             },
             "unbanned": {
                 "other": "mal %(count)s krát povolený vstup",
