@@ -24,10 +24,10 @@ import { doesRoomHaveUnreadThreads } from "../../../../Unread";
 import { NotificationLevel } from "../../../../stores/notifications/NotificationLevel";
 
 /**
- * Return the list of rooms with unread threads, and their notification state.
+ * Return the list of rooms with unread threads, and their notification level.
  * The list is computed when open is true
  * @param open
- * @returns {Array<{ room: Room; notificationState: ThreadsActivityNotificationState }>}
+ * @returns {Array<{ room: Room; notificationLevel: NotificationLevel }>}
  */
 export function useUnreadThreadRooms(open: boolean): Array<{ room: Room; notificationLevel: NotificationLevel }> {
     return useMemo(() => {
@@ -39,16 +39,17 @@ export function useUnreadThreadRooms(open: boolean): Array<{ room: Room; notific
                 return acc;
             }, [])
             .filter((room) => doesRoomHaveUnreadThreads(room))
-            .map((room) => ({ room, notificationLevel: getNotificationState(room) }));
+            .map((room) => ({ room, notificationLevel: getNotificationLevel(room) }))
+            .sort((a, b) => sortRoom(a.notificationLevel, b.notificationLevel));
     }, [open]);
 }
 
 /**
- * Return the notification state for a room
+ * Return the notification level for a room
  * @param room
- * @returns {ThreadsActivityNotificationState}
+ * @returns {NotificationLevel}
  */
-function getNotificationState(room: Room): NotificationLevel {
+function getNotificationLevel(room: Room): NotificationLevel {
     const notificationCountType = room.threadsAggregateNotificationType;
     switch (notificationCountType) {
         case NotificationCountType.Highlight:
@@ -58,4 +59,18 @@ function getNotificationState(room: Room): NotificationLevel {
         default:
             return NotificationLevel.Activity;
     }
+}
+
+/**
+ * Sort notification level by the most important notification level to the least important
+ * Highlight > Notification > Activity
+ * @param notificationLevelA - notification level of room A
+ * @param notificationLevelB - notification level of room B
+ * @returns {number}
+ */
+function sortRoom(notificationLevelA: NotificationLevel, notificationLevelB: NotificationLevel): number {
+    // NotificationLevel is a numeric enum, so we can compare them directly
+    if (notificationLevelA > notificationLevelB) return -1;
+    else if (notificationLevelB > notificationLevelA) return 1;
+    else return 0;
 }
