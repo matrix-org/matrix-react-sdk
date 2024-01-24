@@ -77,7 +77,7 @@ interface ThreadsActivityRow {
      */
     room: Room;
     /**
-     * The state of the badge.
+     * The notification level.
      */
     notificationLevel: NotificationLevel;
     /**
