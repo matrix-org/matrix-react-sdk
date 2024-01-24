@@ -81,7 +81,7 @@ describe("RoomNotificationState", () => {
     }
 
     it("Updates on event decryption", () => {
-        const roomNotifState = new RoomNotificationState(room, false);
+        const roomNotifState = new RoomNotificationState(room, true);
         const listener = jest.fn();
         roomNotifState.addListener(NotificationStateEvents.Update, listener);
         const testEvent = {
@@ -159,7 +159,7 @@ describe("RoomNotificationState", () => {
     });
 
     it("includes threads", async () => {
-        const roomNotifState = new RoomNotificationState(room, false);
+        const roomNotifState = new RoomNotificationState(room, true);
 
         room.timeline.push(
             new MatrixEvent({
