@@ -323,7 +323,7 @@ describe("RoomHeader", () => {
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
             jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(true);
 
-            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({ widget: {} } as Call);
+            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({ widget: {}, on: () => {} } as unknown as Call);
 
             const { container } = render(<RoomHeader room={room} />, getWrapper());
             expect(getByLabelText(container, "Ongoing call")).toHaveAttribute("aria-disabled", "true");
@@ -336,8 +336,14 @@ describe("RoomHeader", () => {
             jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(false);
             const spy = jest.spyOn(WidgetLayoutStore.instance, "moveToContainer");
 
-            const widget = {};
-            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({ widget } as Call);
+            const widget = {
+                // We add an event id to mark the widget as a non virtual widget.
+                eventId: "someId",
+            };
+            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({
+                widget,
+                on: () => {},
+            } as unknown as Call);
 
             const { container } = render(<RoomHeader room={room} />, getWrapper());
             expect(getByLabelText(container, "Video call")).not.toHaveAttribute("aria-disabled", "true");
