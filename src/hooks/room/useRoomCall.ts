@@ -100,7 +100,7 @@ export const useRoomCall = (
             if (hasGroupCall) {
                 return "jitsi_or_element_call";
             }
-            if (mayCreateElementCalls && (mayCreateWidgetCall || hasJitsiWidget)) {
+            if (mayCreateElementCalls && mayCreateWidgetCall && hasJitsiWidget) {
                 return "jitsi_or_element_call";
             }
             if (useElementCallExclusively) {

@@ -416,7 +416,7 @@ describe("RoomHeader", () => {
 
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
                 if (key === "im.vector.modular.widgets") return true;
-                if (key === ElementCall.CALL_EVENT_TYPE.name) return true;
+                if (key === ElementCall.MEMBER_EVENT_TYPE.name) return true;
                 return false;
             });
 
