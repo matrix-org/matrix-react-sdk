@@ -626,6 +626,10 @@ describe("ElementCall", () => {
     let room: Room;
     let alice: RoomMember;
 
+    function setRoomMembers(memberIds: string[]) {
+        jest.spyOn(room, "getJoinedMembers").mockReturnValue(memberIds.map((id) => ({ userId: id }) as RoomMember));
+    }
+
     const callConnectProcedure: (call: ElementCall) => Promise<void> = async (call) => {
         async function sessionConnect() {
             await new Promise<void>((r) => {
@@ -1039,6 +1043,31 @@ describe("ElementCall", () => {
             client.isRoomEncrypted.mockClear();
             addWidgetSpy.mockRestore();
         });
+
+        it("sends notify event on connect in a room with more than two members", async () => {
+            const sendEventSpy = jest.spyOn(room.client, "sendEvent");
+            await ElementCall.create(room);
+            await callConnectProcedure(Call.get(room) as ElementCall);
+            expect(sendEventSpy).toHaveBeenCalledWith("!1:example.org", "org.matrix.msc4075.call.notify", {
+                "application": "m.call",
+                "call_id": "",
+                "m.mentions": { room: true, user_ids: [] },
+                "notify_type": "notify",
+            });
+        });
+        it("sends ring on create in a DM (two participants) room", async () => {
+            setRoomMembers(["@user:example.com", "@user2:example.com"]);
+
+            const sendEventSpy = jest.spyOn(room.client, "sendEvent");
+            await ElementCall.create(room);
+            await callConnectProcedure(Call.get(room) as ElementCall);
+            expect(sendEventSpy).toHaveBeenCalledWith("!1:example.org", "org.matrix.msc4075.call.notify", {
+                "application": "m.call",
+                "call_id": "",
+                "m.mentions": { room: true, user_ids: [] },
+                "notify_type": "ring",
+            });
+        });
     });
 
     describe("instance in a video room", () => {
@@ -1121,33 +1150,8 @@ describe("ElementCall", () => {
         });
     });
     describe("create call", () => {
-        function setRoomMembers(memberIds: string[]) {
-            jest.spyOn(room, "getJoinedMembers").mockReturnValue(memberIds.map((id) => ({ userId: id }) as RoomMember));
-        }
         beforeEach(async () => {
             setRoomMembers(["@user:example.com", "@user2:example.com", "@user4:example.com"]);
-        });
-        it("sends notify event on create in a room with more than two members", async () => {
-            const sendEventSpy = jest.spyOn(room.client, "sendEvent");
-            await ElementCall.create(room);
-            expect(sendEventSpy).toHaveBeenCalledWith("!1:example.org", "org.matrix.msc4075.call.notify", {
-                "application": "m.call",
-                "call_id": "",
-                "m.mentions": { room: true, user_ids: [] },
-                "notify_type": "notify",
-            });
-        });
-        it("sends ring on create in a DM (two participants) room", async () => {
-            setRoomMembers(["@user:example.com", "@user2:example.com"]);
-
-            const sendEventSpy = jest.spyOn(room.client, "sendEvent");
-            await ElementCall.create(room);
-            expect(sendEventSpy).toHaveBeenCalledWith("!1:example.org", "org.matrix.msc4075.call.notify", {
-                "application": "m.call",
-                "call_id": "",
-                "m.mentions": { room: true, user_ids: [] },
-                "notify_type": "ring",
-            });
         });
         it("don't sent notify event if there are existing room call members", async () => {
             jest.spyOn(MatrixRTCSession, "callMembershipsForRoom").mockReturnValue([
