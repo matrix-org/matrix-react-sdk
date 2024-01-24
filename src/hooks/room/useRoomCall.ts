@@ -24,7 +24,7 @@ import { useEventEmitter, useEventEmitterState } from "../useEventEmitter";
 import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../LegacyCallHandler";
 import { useWidgets } from "../../components/views/right_panel/RoomSummaryCard";
 import { WidgetType } from "../../widgets/WidgetType";
-import { useCall } from "../useCall";
+import { useCall, useParticipantCount } from "../useCall";
 import { useRoomMemberCount } from "../useRoomMembers";
 import { ElementCall } from "../../models/Call";
 import { placeCall } from "../../utils/room/placeCall";
@@ -32,7 +32,7 @@ import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutS
 import { useRoomState } from "../useRoomState";
 import { _t } from "../../languageHandler";
 import { isManagedHybridWidget } from "../../widgets/ManagedHybrid";
-import { IApp } from "../../stores/WidgetStore";
+import { IApp, isVirtualWidget } from "../../stores/WidgetStore";
 import { SdkContextClass } from "../../contexts/SDKContext";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -85,11 +85,13 @@ export const useRoomCall = (
 
     const groupCall = useCall(room.roomId);
     const hasGroupCall = groupCall !== null;
+    const hasActiveCallSession = useParticipantCount(groupCall) > 0;
 
     const memberCount = useRoomMemberCount(room);
 
-    const [mayEditWidgets, mayCreateElementCalls] = useRoomState(room, () => [
+    const [mayEditWidgets, mayCreateElementCalls, mayCreateWidgetCall] = useRoomState(room, () => [
         room.currentState.mayClientSendStateEvent("im.vector.modular.widgets", room.client),
+        room.currentState.mayClientSendStateEvent(ElementCall.MEMBER_EVENT_TYPE.name, room.client),
         room.currentState.mayClientSendStateEvent(ElementCall.CALL_EVENT_TYPE.name, room.client),
     ]);
 
@@ -98,7 +100,7 @@ export const useRoomCall = (
             if (hasGroupCall) {
                 return "jitsi_or_element_call";
             }
-            if (mayCreateElementCalls && hasJitsiWidget) {
+            if (mayCreateElementCalls && (mayCreateWidgetCall || hasJitsiWidget)) {
                 return "jitsi_or_element_call";
             }
             if (useElementCallExclusively) {
@@ -116,6 +118,7 @@ export const useRoomCall = (
         groupCallsEnabled,
         hasGroupCall,
         mayCreateElementCalls,
+        mayCreateWidgetCall,
         hasJitsiWidget,
         useElementCallExclusively,
         memberCount,
@@ -132,7 +135,9 @@ export const useRoomCall = (
 
     const [canPinWidget, setCanPinWidget] = useState(false);
     const [widgetPinned, setWidgetPinned] = useState(false);
-    const promptPinWidget = canPinWidget && !widgetPinned;
+    // We only want to prompt to pin the widget if it's not virtual (not element call based)
+    const isECWidget = widget ? isVirtualWidget(widget) : false;
+    const promptPinWidget = !isECWidget && canPinWidget && !widgetPinned;
 
     const updateWidgetState = useCallback((): void => {
         setCanPinWidget(WidgetLayoutStore.instance.canAddToContainer(room, Container.Top));
@@ -241,6 +246,6 @@ export const useRoomCall = (
         toggleCallMaximized: toggleCallMaximized,
         isViewingCall: isViewingCall,
         isConnectedToCall: groupCall?.connected ?? false,
-        hasActiveCallSession: hasGroupCall,
+        hasActiveCallSession: hasActiveCallSession,
     };
 };
