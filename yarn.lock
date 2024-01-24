@@ -6940,7 +6940,7 @@ matrix-events-sdk@0.0.1:
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#toger5/matrix-rtc-expires_at":
   version "31.1.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/bebcba03a3373a337c74a90b5521d50e967c5ea7"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/7927e3607a51db41196dd69dd59303fc079e76af"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@matrix-org/matrix-sdk-crypto-wasm" "^4.0.0"
