@@ -138,8 +138,14 @@ export default function RoomHeader({
         </Tooltip>
     );
     const joinCallButton = (
-        <Button size="sm" onClick={(ev) => videoCallClick(ev, callOptions[0])}>
-            Join
+        <Button
+            size="sm"
+            onClick={(ev) => videoCallClick(ev, callOptions[0])}
+            Icon={VideoCallIcon}
+            className="mx_RoomHeader_join_button"
+            color="primary"
+        >
+            {_t("action|join")}
         </Button>
     );
     const [menuOpen, setMenuOpen] = useState(false);
@@ -148,7 +154,7 @@ export default function RoomHeader({
             <VideoCallIcon />
         </Tooltip>
     );
-    const startCallButton = (
+    const startVideoCallButton = (
         <>
             {/* Can be either a menu or just a button depending on the number of call options.*/}
             {callOptions.length > 1 ? (
@@ -188,6 +194,17 @@ export default function RoomHeader({
             )}
         </>
     );
+    const voiceCallButton = (
+        <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
+            <IconButton
+                disabled={!!voiceCallDisabledReason}
+                aria-label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}
+                onClick={(ev) => voiceCallClick(ev, callOptions[0])}
+            >
+                <VoiceCallIcon />
+            </IconButton>
+        </Tooltip>
+    );
     const closeLobbyButton = (
         <Tooltip label={_t("voip|close_lobby")}>
             <IconButton onClick={toggleCall}>
@@ -195,17 +212,13 @@ export default function RoomHeader({
             </IconButton>
         </Tooltip>
     );
-    let videoCallButton = startCallButton;
+    let videoCallButton = startVideoCallButton;
     if (isConnectedToCall) {
         videoCallButton = toggleCallButton;
-    } else {
-        if (hasActiveCallSession && !isViewingCall) {
-            videoCallButton = joinCallButton;
-        }
-        if (isViewingCall) {
-            videoCallButton = closeLobbyButton;
-        }
+    } else if (isViewingCall) {
+        videoCallButton = closeLobbyButton;
     }
+
     return (
         <>
             <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
@@ -295,19 +308,15 @@ export default function RoomHeader({
 
                     {((isConnectedToCall && isViewingCall) || isVideoRoom(room)) && <VideoRoomChatButton room={room} />}
 
-                    {!isVideoRoom(room) && videoCallButton}
-
-                    {!useElementCallExclusively && !isVideoRoom(room) && (
-                        <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
-                            <IconButton
-                                disabled={!!voiceCallDisabledReason}
-                                aria-label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}
-                                onClick={(ev) => voiceCallClick(ev, callOptions[0])}
-                            >
-                                <VoiceCallIcon />
-                            </IconButton>
-                        </Tooltip>
+                    {hasActiveCallSession && !isConnectedToCall ? (
+                        joinCallButton
+                    ) : (
+                        <>
+                            {!isVideoRoom(room) && videoCallButton}
+                            {!useElementCallExclusively && !isVideoRoom(room) && voiceCallButton}
+                        </>
                     )}
+
                     <Tooltip label={_t("common|threads")}>
                         <IconButton
                             indicator={notificationLevelToIndicator(threadNotifications)}

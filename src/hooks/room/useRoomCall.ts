@@ -126,16 +126,21 @@ export const useRoomCall = (
             if (useElementCallExclusively && !hasJitsiWidget) {
                 return [PlatformCallType.ElementCall];
             }
+            if (hasGroupCall && WidgetType.CALL.matches(groupCall.widget.type)) {
+                // only allow joining joining the ongoing Element call if there is one.
+                return [PlatformCallType.ElementCall];
+            }
         }
         return options;
     }, [
+        memberCount,
+        mayCreateWidgetCall,
+        hasJitsiWidget,
         groupCallsEnabled,
         hasGroupCall,
         mayCreateElementCalls,
-        mayCreateWidgetCall,
-        hasJitsiWidget,
         useElementCallExclusively,
-        memberCount,
+        groupCall?.widget.type,
     ]);
 
     let widget: IApp | undefined;

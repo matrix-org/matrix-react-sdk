@@ -21,6 +21,7 @@ import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/Matri
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 import { Button } from "@vector-im/compound-web";
+import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 
 import { _t } from "../languageHandler";
 import RoomAvatar from "../components/views/avatars/RoomAvatar";
@@ -179,7 +180,13 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
                 {call ? (
                     <JoinCallButtonWithCall onClick={onJoinClick} call={call} />
                 ) : (
-                    <Button className="mx_IncomingCallToast_joinButton" onClick={onJoinClick} kind="primary" size="sm">
+                    <Button
+                        className="mx_IncomingCallToast_joinButton"
+                        onClick={onJoinClick}
+                        kind="primary"
+                        size="sm"
+                        Icon={VideoCallIcon}
+                    >
                         {_t("action|join")}
                     </Button>
                 )}
