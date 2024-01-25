@@ -1,0 +1,48 @@
+version: 0.2
+
+phases:
+    install:
+        runtime-versions:
+            nodejs: 18
+        commands:
+            - echo Installing dependencies...
+            - npm install -g yarn
+
+    pre_build:
+        commands:
+            - pwd
+            - echo Cloning repositories...
+            - \rm -r *
+            - git clone https://github.com/matrix-org/matrix-js-sdk.git
+            - cd matrix-js-sdk
+            - yarn link
+            - yarn install
+            - cd ../
+            - git clone https://github.com/datasign-inc/matrix-react-sdk.git
+            - cd matrix-react-sdk
+            - yarn link
+            - yarn link matrix-js-sdk
+            - yarn install
+            - cd ../
+    build:
+        commands:
+            - git clone https://github.com/element-hq/element-web.git
+            - cd element-web
+            - yarn link matrix-js-sdk
+            - yarn link matrix-react-sdk
+            - yarn install
+            - yarn dist
+            - export DIST_VERSION=$(git describe --dirty --tags || echo unknown)
+            - echo "Built version:" $DIST_VERSION
+
+    post_build:
+        commands:
+            - echo Uploading to S3...
+            - tar -xzf dist/element-$DIST_VERSION.tar.gz -C dist/
+            - aws s3 sync dist/element-$DIST_VERSION s3://$MESSENGER_BUCKET/
+            - echo Invalidating CloudFront Distribution...
+            - aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
+
+artifacts:
+    files:
+        - dist/element-*.tar.gz
