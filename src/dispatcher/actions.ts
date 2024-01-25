@@ -41,6 +41,11 @@ export enum Action {
     ViewUserSettings = "view_user_settings",
 
     /**
+     * Open the user device settings. No additional payload information required.
+     */
+    ViewUserDeviceSettings = "view_user_device_settings",
+
+    /**
      * Opens the room directory. No additional payload information required.
      */
     ViewRoomDirectory = "view_room_directory",
@@ -71,6 +76,11 @@ export enum Action {
     FocusSendMessageComposer = "focus_send_message_composer",
 
     /**
+     * Clear the  to the send message composer. Should be used with a FocusComposerPayload.
+     */
+    ClearAndFocusSendMessageComposer = "clear_focus_send_message_composer",
+
+    /**
      * Focuses the user's cursor to the edit message composer. Should be used with a FocusComposerPayload.
      */
     FocusEditMessageComposer = "focus_edit_message_composer",
@@ -94,6 +104,11 @@ export enum Action {
     /**
      * Sets the apps root font size. Should be used with UpdateFontSizePayload
      */
+    MigrateBaseFontSize = "migrate_base_font_size",
+
+    /**
+     * Sets the apps root font size. Should be used with UpdateFontSizePayload
+     */
     UpdateFontSize = "update_font_size",
 
     /**
@@ -105,6 +120,11 @@ export enum Action {
      * Changes room based on payload parameters. Should be used with JoinRoomPayload.
      */
     ViewRoom = "view_room",
+
+    /**
+     * Changes thread based on payload parameters. Should be used with ThreadPayload.
+     */
+    ViewThread = "view_thread",
 
     /**
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
@@ -331,4 +351,29 @@ export enum Action {
      * Fired when we want to view a thread, either a new one or an existing one
      */
     ShowThread = "show_thread",
+
+    /**
+     * Fired when requesting to prompt for ask to join a room.
+     */
+    PromptAskToJoin = "prompt_ask_to_join",
+
+    /**
+     * Fired when requesting to submit an ask to join a room. Use with a SubmitAskToJoinPayload.
+     */
+    SubmitAskToJoin = "submit_ask_to_join",
+
+    /**
+     * Fired when requesting to cancel an ask to join a room. Use with a CancelAskToJoinPayload.
+     */
+    CancelAskToJoin = "cancel_ask_to_join",
+
+    /**
+     * Fired when we want to open spotlight search. Use with a OpenSpotlightPayload.
+     */
+    OpenSpotlight = "open_spotlight",
+
+    /**
+     * Opens right panel with 3pid invite information
+     */
+    View3pidInvite = "view_3pid_invite",
 }

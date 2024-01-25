@@ -16,7 +16,7 @@ limitations under the License.
 
 import EventEmitter from "events";
 import { base32 } from "rfc4648";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
+import { RoomType } from "matrix-js-sdk/src/matrix";
 
 // Dev note: the interface is split in two so we don't have to disable the
 // linter across the whole project.
@@ -56,7 +56,7 @@ export interface IOOBData {
     inviterName?: string; // The display name of the person who invited us to the room
     // eslint-disable-next-line camelcase
     room_name?: string; // The name of the room, to be used until we are told better by the server
-    roomType?: RoomType; // The type of the room, to be used until we are told better by the server
+    roomType?: RoomType | string; // The type of the room, to be used until we are told better by the server
 }
 
 const STORAGE_PREFIX = "mx_threepid_invite_";
@@ -82,14 +82,18 @@ export default class ThreepidInviteStore extends EventEmitter {
         const results: IPersistedThreepidInvite[] = [];
         for (let i = 0; i < localStorage.length; i++) {
             const keyName = localStorage.key(i);
-            if (!keyName.startsWith(STORAGE_PREFIX)) continue;
-            results.push(JSON.parse(localStorage.getItem(keyName)) as IPersistedThreepidInvite);
+            if (!keyName?.startsWith(STORAGE_PREFIX)) continue;
+            try {
+                results.push(JSON.parse(localStorage.getItem(keyName)!) as IPersistedThreepidInvite);
+            } catch (e) {
+                console.warn("Failed to parse 3pid invite", e);
+            }
         }
         return results;
     }
 
     public getInvites(): IThreepidInvite[] {
-        return this.getWireInvites().map(i => this.translateInvite(i));
+        return this.getWireInvites().map((i) => this.translateInvite(i));
     }
 
     // Currently Element can only handle one invite at a time, so handle that
@@ -97,7 +101,7 @@ export default class ThreepidInviteStore extends EventEmitter {
         return this.getInvites()[0];
     }
 
-    public resolveInvite(invite: IThreepidInvite) {
+    public resolveInvite(invite: IThreepidInvite): void {
         localStorage.removeItem(`${STORAGE_PREFIX}${invite.id}`);
     }
 

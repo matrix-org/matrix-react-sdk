@@ -15,13 +15,15 @@ limitations under the License.
 */
 
 import { BlurhashEncoder } from "../BlurhashEncoder";
+import { EncryptedFile } from "../customisations/models/IMediaEventContent";
 
 type ThumbnailableElement = HTMLImageElement | HTMLVideoElement;
 
+export const BLURHASH_FIELD = "xyz.amorgan.blurhash"; // MSC2448
+
 interface IThumbnail {
     info: {
-        // eslint-disable-next-line camelcase
-        thumbnail_info: {
+        thumbnail_info?: {
             w: number;
             h: number;
             mimetype: string;
@@ -29,12 +31,12 @@ interface IThumbnail {
         };
         w: number;
         h: number;
-        [BLURHASH_FIELD]: string;
+        [BLURHASH_FIELD]?: string;
+        thumbnail_url?: string;
+        thumbnail_file?: EncryptedFile;
     };
     thumbnail: Blob;
 }
-
-export const BLURHASH_FIELD = "xyz.amorgan.blurhash"; // MSC2448
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -77,26 +79,27 @@ export async function createThumbnail(
     }
 
     let canvas: HTMLCanvasElement | OffscreenCanvas;
-    let context: CanvasRenderingContext2D;
+    let context: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D;
     try {
         canvas = new window.OffscreenCanvas(targetWidth, targetHeight);
-        context = canvas.getContext("2d");
+        context = canvas.getContext("2d") as OffscreenCanvasRenderingContext2D;
     } catch (e) {
         // Fallback support for other browsers (Safari and Firefox for now)
         canvas = document.createElement("canvas");
         canvas.width = targetWidth;
         canvas.height = targetHeight;
-        context = canvas.getContext("2d");
+        context = canvas.getContext("2d")!;
     }
 
     context.drawImage(element, 0, 0, targetWidth, targetHeight);
 
     let thumbnailPromise: Promise<Blob>;
-
-    if (window.OffscreenCanvas) {
-        thumbnailPromise = (canvas as OffscreenCanvas).convertToBlob({ type: mimeType });
+    if (window.OffscreenCanvas && canvas instanceof OffscreenCanvas) {
+        thumbnailPromise = canvas.convertToBlob({ type: mimeType });
     } else {
-        thumbnailPromise = new Promise<Blob>(resolve => (canvas as HTMLCanvasElement).toBlob(resolve, mimeType));
+        thumbnailPromise = new Promise<Blob>((resolve) =>
+            (canvas as HTMLCanvasElement).toBlob(resolve as BlobCallback, mimeType),
+        );
     }
 
     const imageData = context.getImageData(0, 0, targetWidth, targetHeight);

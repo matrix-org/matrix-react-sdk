@@ -14,22 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import { Room } from "matrix-js-sdk/src/models/room";
-import filesize from "filesize";
-import { IAbortablePromise, IEventRelation } from 'matrix-js-sdk/src/matrix';
+import React from "react";
+import { Room, IEventRelation } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
 
-import ContentMessages from '../../ContentMessages';
+import ContentMessages from "../../ContentMessages";
 import dis from "../../dispatcher/dispatcher";
-import { _t } from '../../languageHandler';
+import { _t } from "../../languageHandler";
 import { Action } from "../../dispatcher/actions";
 import ProgressBar from "../views/elements/ProgressBar";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
-import { IUpload } from "../../models/IUpload";
-import MatrixClientContext from "../../contexts/MatrixClientContext";
-import { ActionPayload } from '../../dispatcher/payloads';
+import { RoomUpload } from "../../models/RoomUpload";
+import { ActionPayload } from "../../dispatcher/payloads";
 import { UploadPayload } from "../../dispatcher/payloads/UploadPayload";
+import { fileSize } from "../../utils/FileUtils";
 
 interface IProps {
     room: Room;
@@ -38,7 +36,7 @@ interface IProps {
 
 interface IState {
     currentFile?: string;
-    currentPromise?: IAbortablePromise<any>;
+    currentUpload?: RoomUpload;
     currentLoaded?: number;
     currentTotal?: number;
     countFiles: number;
@@ -55,12 +53,10 @@ function isUploadPayload(payload: ActionPayload): payload is UploadPayload {
 }
 
 export default class UploadBar extends React.PureComponent<IProps, IState> {
-    static contextType = MatrixClientContext;
-
     private dispatcherRef: Optional<string>;
     private mounted = false;
 
-    constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         // Set initial state to any available upload in this room - we might be mounting
@@ -68,62 +64,69 @@ export default class UploadBar extends React.PureComponent<IProps, IState> {
         this.state = this.calculateState();
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
         this.mounted = true;
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.mounted = false;
         dis.unregister(this.dispatcherRef!);
     }
 
-    private getUploadsInRoom(): IUpload[] {
+    private getUploadsInRoom(): RoomUpload[] {
         const uploads = ContentMessages.sharedInstance().getCurrentUploads(this.props.relation);
-        return uploads.filter(u => u.roomId === this.props.room.roomId);
+        return uploads.filter((u) => u.roomId === this.props.room.roomId);
     }
 
     private calculateState(): IState {
         const [currentUpload, ...otherUploads] = this.getUploadsInRoom();
         return {
+            currentUpload,
             currentFile: currentUpload?.fileName,
-            currentPromise: currentUpload?.promise,
             currentLoaded: currentUpload?.loaded,
             currentTotal: currentUpload?.total,
             countFiles: otherUploads.length + 1,
         };
     }
 
-    private onAction = (payload: ActionPayload) => {
+    private onAction = (payload: ActionPayload): void => {
         if (!this.mounted) return;
         if (isUploadPayload(payload)) {
             this.setState(this.calculateState());
         }
     };
 
-    private onCancelClick = (ev: ButtonEvent) => {
+    private onCancelClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
-        ContentMessages.sharedInstance().cancelUpload(this.state.currentPromise!, this.context);
+        ContentMessages.sharedInstance().cancelUpload(this.state.currentUpload!);
     };
 
-    render() {
+    public render(): React.ReactNode {
         if (!this.state.currentFile) {
             return null;
         }
 
-        // MUST use var name 'count' for pluralization to kick in
-        const uploadText = _t(
-            "Uploading %(filename)s and %(count)s others", {
+        let uploadText: string;
+        if (this.state.countFiles > 1) {
+            // MUST use var name 'count' for pluralization to kick in
+            uploadText = _t("room|upload|uploading_multiple_file", {
                 filename: this.state.currentFile,
                 count: this.state.countFiles - 1,
-            },
-        );
+            });
+        } else {
+            uploadText = _t("room|upload|uploading_single_file", {
+                filename: this.state.currentFile,
+            });
+        }
 
-        const uploadSize = filesize(this.state.currentTotal!);
+        const uploadSize = fileSize(this.state.currentTotal!);
         return (
             <div className="mx_UploadBar">
-                <div className="mx_UploadBar_filename">{ uploadText } ({ uploadSize })</div>
-                <AccessibleButton onClick={this.onCancelClick} className='mx_UploadBar_cancel' />
+                <div className="mx_UploadBar_filename">
+                    {uploadText} ({uploadSize})
+                </div>
+                <AccessibleButton onClick={this.onCancelClick} className="mx_UploadBar_cancel" />
                 <ProgressBar value={this.state.currentLoaded!} max={this.state.currentTotal!} />
             </div>
         );
