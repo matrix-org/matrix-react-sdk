@@ -31,6 +31,7 @@ import { RightPanelPhases } from "../../../../stores/right-panel/RightPanelStore
 import { useUnreadThreadRooms } from "./useUnreadThreadRooms";
 import { StatelessNotificationBadge } from "../../rooms/NotificationBadge/StatelessNotificationBadge";
 import { NotificationLevel } from "../../../../stores/notifications/NotificationLevel";
+import PosthogTrackers from "../../../../PosthogTrackers";
 
 interface ThreadsActivityCentreProps {
     /**
@@ -51,7 +52,12 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
         <Menu
             align="end"
             open={open}
-            onOpenChange={setOpen}
+            onOpenChange={(newOpen) => {
+                // Track only when the Threads Activity Centre is opened
+                if (newOpen) PosthogTrackers.trackInteraction("WebThreadsActivityCentreButton");
+
+                setOpen(newOpen);
+            }}
             side="right"
             title={_t("threads_activity_centre|header")}
             trigger={<ThreadsActivityCentreButton displayLabel={displayButtonLabel} />}
@@ -100,13 +106,15 @@ function ThreadsActivityRow({ room, onClick, notificationLevel }: ThreadsActivit
                 // so it will open once the room appears.
                 RightPanelStore.instance.setCard({ phase: RightPanelPhases.ThreadPanel }, true, room.roomId);
 
+                // Track the click on the room
+                PosthogTrackers.trackInteraction("WebThreadsActivityCentreRoomItem", event);
+
                 // Display the selected room in the timeline
                 defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     show_room_tile: true, // make sure the room is visible in the list
                     room_id: room.roomId,
-                    metricsTrigger: "RoomList",
-                    metricsViaKeyboard: event.type !== "click",
+                    metricsTrigger: "WebThreadsActivityCentre",
                 });
             }}
             label={room.name}
