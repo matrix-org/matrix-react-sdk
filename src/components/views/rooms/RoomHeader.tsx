@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Body as BodyText, Button, IconButton, Tooltip } from "@vector-im/compound-web";
+import { Body as BodyText, Button, IconButton, Menu, MenuItem, Tooltip } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
 import { Icon as CloseCallIcon } from "@vector-im/compound-design-tokens/icons/close.svg";
@@ -36,7 +36,7 @@ import { useRoomMemberCount, useRoomMembers } from "../../../hooks/useRoomMember
 import { _t } from "../../../languageHandler";
 import { Flex } from "../../utils/Flex";
 import { Box } from "../../utils/Box";
-import { useRoomCall } from "../../../hooks/room/useRoomCall";
+import { getPlatformCallTypeLabel, useRoomCall } from "../../../hooks/room/useRoomCall";
 import { useRoomThreadNotifications } from "../../../hooks/room/useRoomThreadNotifications";
 import { NotificationLevel } from "../../../stores/notifications/NotificationLevel";
 import { useGlobalNotificationState } from "../../../hooks/useGlobalNotificationState";
@@ -94,6 +94,7 @@ export default function RoomHeader({
         isViewingCall,
         isConnectedToCall,
         hasActiveCallSession,
+        callOptions,
     } = useRoomCall(room);
 
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
@@ -137,20 +138,55 @@ export default function RoomHeader({
         </Tooltip>
     );
     const joinCallButton = (
-        <Button size="sm" onClick={videoCallClick}>
+        <Button size="sm" onClick={(ev) => videoCallClick(ev, callOptions[0])}>
             Join
         </Button>
     );
-    const startCallButton = (
+    const [menuOpen, setMenuOpen] = useState(false);
+    const callIconWithTooltip = (
         <Tooltip label={videoCallDisabledReason ?? _t("voip|video_call")}>
-            <IconButton
-                disabled={!!videoCallDisabledReason}
-                aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
-                onClick={videoCallClick}
-            >
-                <VideoCallIcon />
-            </IconButton>
+            <VideoCallIcon />
         </Tooltip>
+    );
+    const startCallButton = (
+        <>
+            {/* Can be either a menu or just a button depending on the number of call options.*/}
+            {callOptions.length > 1 ? (
+                <Menu
+                    open={menuOpen}
+                    onOpenChange={setMenuOpen}
+                    title="Video call using:"
+                    trigger={
+                        <IconButton
+                            disabled={!!videoCallDisabledReason}
+                            aria-label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}
+                        >
+                            {callIconWithTooltip}
+                        </IconButton>
+                    }
+                    side="left"
+                    align="start"
+                >
+                    {callOptions.map((option) => (
+                        <MenuItem
+                            key={option}
+                            label={getPlatformCallTypeLabel(option)}
+                            onClick={(ev) => videoCallClick(ev, option)}
+                            Icon={VideoCallIcon}
+                            onSelect={() => {} /* Dummy handler since we want the click event.*/}
+                        />
+                    ))}
+                </Menu>
+            ) : (
+                <IconButton
+                    disabled={!!videoCallDisabledReason}
+                    aria-label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}
+                    onClick={(ev) => videoCallClick(ev, callOptions[0])}
+                >
+                    {callIconWithTooltip}
+                </IconButton>
+            )}
+        </>
     );
     const closeLobbyButton = (
         <Tooltip label={_t("voip|close_lobby")}>
@@ -266,7 +302,7 @@ export default function RoomHeader({
                             <IconButton
                                 disabled={!!voiceCallDisabledReason}
                                 aria-label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}
-                                onClick={voiceCallClick}
+                                onClick={(ev) => voiceCallClick(ev, callOptions[0])}
                             >
                                 <VoiceCallIcon />
                             </IconButton>

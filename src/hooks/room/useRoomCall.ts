@@ -39,8 +39,22 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../dispatcher/actions";
 
-export type PlatformCallType = "element_call" | "jitsi_or_element_call" | "legacy_or_jitsi";
-
+// export type PlatformCallType = "element_call" | "jitsi_or_element_call" | "legacy_or_jitsi";
+export enum PlatformCallType {
+    ElementCall,
+    JitsiCall,
+    LegacyCall,
+}
+export const getPlatformCallTypeLabel = (platformCallType: PlatformCallType): string => {
+    switch (platformCallType) {
+        case PlatformCallType.ElementCall:
+            return "Element Call";
+        case PlatformCallType.JitsiCall:
+            return "Jitsi Conference";
+        case PlatformCallType.LegacyCall:
+            return "Legacy Call";
+    }
+};
 const enum State {
     NoCall,
     NoOneHere,
@@ -58,13 +72,14 @@ export const useRoomCall = (
     room: Room,
 ): {
     voiceCallDisabledReason: string | null;
-    voiceCallClick(evt: React.MouseEvent): void;
+    voiceCallClick(evt: React.MouseEvent | undefined, selectedType: PlatformCallType): void;
     videoCallDisabledReason: string | null;
-    videoCallClick(evt: React.MouseEvent): void;
+    videoCallClick(evt: React.MouseEvent | undefined, selectedType: PlatformCallType): void;
     toggleCallMaximized: () => void;
     isViewingCall: boolean;
     isConnectedToCall: boolean;
     hasActiveCallSession: boolean;
+    callOptions: PlatformCallType[];
 } => {
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     const useElementCallExclusively = useMemo(() => {
@@ -95,25 +110,24 @@ export const useRoomCall = (
         room.currentState.mayClientSendStateEvent(ElementCall.CALL_EVENT_TYPE.name, room.client),
     ]);
 
-    const callType = useMemo((): PlatformCallType => {
+    // The options provided to the RoomHeader.
+    // If there are multiple options, the user will be prompted to choose.
+    const callOptions = useMemo((): PlatformCallType[] => {
+        const options = [];
+        if (memberCount <= 2) {
+            options.push(PlatformCallType.LegacyCall);
+        } else if (mayCreateWidgetCall || hasJitsiWidget) {
+            options.push(PlatformCallType.JitsiCall);
+        }
         if (groupCallsEnabled) {
-            if (hasGroupCall) {
-                return "jitsi_or_element_call";
+            if (hasGroupCall || mayCreateElementCalls) {
+                options.push(PlatformCallType.ElementCall);
             }
-            if (mayCreateElementCalls && mayCreateWidgetCall && hasJitsiWidget) {
-                return "jitsi_or_element_call";
-            }
-            if (useElementCallExclusively) {
-                return "element_call";
-            }
-            if (memberCount <= 2) {
-                return "legacy_or_jitsi";
-            }
-            if (mayCreateElementCalls) {
-                return "element_call";
+            if (useElementCallExclusively && !hasJitsiWidget) {
+                return [PlatformCallType.ElementCall];
             }
         }
-        return "legacy_or_jitsi";
+        return options;
     }, [
         groupCallsEnabled,
         hasGroupCall,
@@ -125,9 +139,10 @@ export const useRoomCall = (
     ]);
 
     let widget: IApp | undefined;
-    if (callType === "legacy_or_jitsi") {
+    if (callOptions.includes(PlatformCallType.JitsiCall) || callOptions.includes(PlatformCallType.LegacyCall)) {
         widget = jitsiWidget ?? managedHybridWidget;
-    } else if (callType === "element_call") {
+    }
+    if (callOptions.includes(PlatformCallType.ElementCall)) {
         widget = groupCall?.widget;
     } else {
         widget = groupCall?.widget ?? jitsiWidget;
@@ -184,26 +199,26 @@ export const useRoomCall = (
     ]);
 
     const voiceCallClick = useCallback(
-        (evt: React.MouseEvent): void => {
-            evt.stopPropagation();
+        (evt: React.MouseEvent | undefined, callPlatformType: PlatformCallType): void => {
+            evt?.stopPropagation();
             if (widget && promptPinWidget) {
                 WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
             } else {
-                placeCall(room, CallType.Voice, callType);
+                placeCall(room, CallType.Voice, callPlatformType);
             }
         },
-        [promptPinWidget, room, widget, callType],
+        [promptPinWidget, room, widget],
     );
     const videoCallClick = useCallback(
-        (evt: React.MouseEvent): void => {
-            evt.stopPropagation();
+        (evt: React.MouseEvent | undefined, callPlatformType: PlatformCallType): void => {
+            evt?.stopPropagation();
             if (widget && promptPinWidget) {
                 WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
             } else {
-                placeCall(room, CallType.Video, callType);
+                placeCall(room, CallType.Video, callPlatformType);
             }
         },
-        [widget, promptPinWidget, room, callType],
+        [widget, promptPinWidget, room],
     );
 
     let voiceCallDisabledReason: string | null;
@@ -247,5 +262,6 @@ export const useRoomCall = (
         isViewingCall: isViewingCall,
         isConnectedToCall: groupCall?.connected ?? false,
         hasActiveCallSession: hasActiveCallSession,
+        callOptions,
     };
 };
