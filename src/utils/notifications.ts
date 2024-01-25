@@ -125,6 +125,8 @@ export function notificationLevelToIndicator(
 ): React.ComponentPropsWithRef<typeof IndicatorIcon>["indicator"] {
     if (level <= NotificationLevel.None) {
         return undefined;
+    } else if (level <= NotificationLevel.Activity) {
+        return "default";
     } else if (level <= NotificationLevel.Notification) {
         return "success";
     } else {
