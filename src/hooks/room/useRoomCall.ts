@@ -32,7 +32,7 @@ import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutS
 import { useRoomState } from "../useRoomState";
 import { _t } from "../../languageHandler";
 import { isManagedHybridWidget } from "../../widgets/ManagedHybrid";
-import { IApp, isVirtualWidget } from "../../stores/WidgetStore";
+import { IApp } from "../../stores/WidgetStore";
 
 export type PlatformCallType = "element_call" | "jitsi_or_element_call" | "legacy_or_jitsi";
 
@@ -123,8 +123,8 @@ export const useRoomCall = (
 
     const [canPinWidget, setCanPinWidget] = useState(false);
     const [widgetPinned, setWidgetPinned] = useState(false);
-    // We only want to prompt to pin the widget if it's not virtual (not element call based)
-    const isECWidget = widget ? isVirtualWidget(widget) : false;
+    // We only want to prompt to pin the widget if it's not element call based.
+    const isECWidget = WidgetType.CALL.matches(widget?.type ?? "");
     const promptPinWidget = !isECWidget && canPinWidget && !widgetPinned;
 
     const updateWidgetState = useCallback((): void => {
