@@ -38,7 +38,6 @@ import { Flex } from "../../utils/Flex";
 import { Box } from "../../utils/Box";
 import { getPlatformCallTypeLabel, useRoomCall } from "../../../hooks/room/useRoomCall";
 import { useRoomThreadNotifications } from "../../../hooks/room/useRoomThreadNotifications";
-import { NotificationLevel } from "../../../stores/notifications/NotificationLevel";
 import { useGlobalNotificationState } from "../../../hooks/useGlobalNotificationState";
 import SdkConfig from "../../../SdkConfig";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
@@ -54,20 +53,7 @@ import PosthogTrackers from "../../../PosthogTrackers";
 import { VideoRoomChatButton } from "./RoomHeader/VideoRoomChatButton";
 import { RoomKnocksBar } from "./RoomKnocksBar";
 import { isVideoRoom } from "../../../utils/video-rooms";
-
-/**
- * A helper to transform a notification color to the what the Compound Icon Button
- * expects
- */
-function notificationLevelToIndicator(color: NotificationLevel): React.ComponentProps<typeof IconButton>["indicator"] {
-    if (color <= NotificationLevel.None) {
-        return undefined;
-    } else if (color <= NotificationLevel.Notification) {
-        return "default";
-    } else {
-        return "highlight";
-    }
-}
+import { notificationLevelToIndicator } from "../../../utils/notifications";
 
 export default function RoomHeader({
     room,
