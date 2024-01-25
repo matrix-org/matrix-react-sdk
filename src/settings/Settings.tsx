@@ -579,7 +579,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "feature_new_room_decoration_ui": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
-        configDisablesSetting: true,
         displayName: _td("labs|new_room_decoration_ui"),
         description: _td("labs|under_active_development"),
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
