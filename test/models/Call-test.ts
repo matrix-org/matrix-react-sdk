@@ -254,7 +254,7 @@ describe("JitsiCall", () => {
             audioMutedSpy.mockReturnValue(true);
             videoMutedSpy.mockReturnValue(true);
 
-            await call.connect();
+            await call.start();
             expect(call.connectionState).toBe(ConnectionState.Connected);
             expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
                 audioInput: null,
@@ -267,7 +267,7 @@ describe("JitsiCall", () => {
             audioMutedSpy.mockReturnValue(false);
             videoMutedSpy.mockReturnValue(false);
 
-            await call.connect();
+            await call.start();
             expect(call.connectionState).toBe(ConnectionState.Connected);
             expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.JoinCall, {
                 audioInput: "Headphones",
@@ -281,7 +281,7 @@ describe("JitsiCall", () => {
             WidgetMessagingStore.instance.stopMessaging(widget, room.roomId);
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
 
-            const connect = call.connect();
+            const connect = call.start();
             expect(call.connectionState).toBe(ConnectionState.WidgetLoading);
 
             WidgetMessagingStore.instance.storeMessaging(widget, room.roomId, messaging);
@@ -305,7 +305,7 @@ describe("JitsiCall", () => {
             });
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
 
-            const connect = call.connect();
+            const connect = call.start();
             expect(call.connectionState).toBe(ConnectionState.WidgetLoading);
             async function runTimers() {
                 jest.advanceTimersByTime(500);
@@ -333,11 +333,11 @@ describe("JitsiCall", () => {
 
         it("fails to connect if the widget returns an error", async () => {
             mocked(messaging.transport).send.mockRejectedValue(new Error("never!!1! >:("));
-            await expect(call.connect()).rejects.toBeDefined();
+            await expect(call.start()).rejects.toBeDefined();
         });
 
         it("fails to disconnect if the widget returns an error", async () => {
-            await call.connect();
+            await call.start();
             mocked(messaging.transport).send.mockRejectedValue(new Error("never!!1! >:("));
             await expect(call.disconnect()).rejects.toBeDefined();
         });
@@ -345,7 +345,7 @@ describe("JitsiCall", () => {
         it("handles remote disconnection", async () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
 
-            await call.connect();
+            await call.start();
             expect(call.connectionState).toBe(ConnectionState.Connected);
 
             const callback = jest.fn();
@@ -371,14 +371,14 @@ describe("JitsiCall", () => {
 
         it("disconnects", async () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
-            await call.connect();
+            await call.start();
             expect(call.connectionState).toBe(ConnectionState.Connected);
             await call.disconnect();
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
         it("disconnects when we leave the room", async () => {
-            await call.connect();
+            await call.start();
             expect(call.connectionState).toBe(ConnectionState.Connected);
             room.emit(RoomEvent.MyMembership, room, "leave");
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
@@ -386,14 +386,14 @@ describe("JitsiCall", () => {
 
         it("reconnects after disconnect in video rooms", async () => {
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
-            await call.connect();
+            await call.start();
             expect(call.connectionState).toBe(ConnectionState.Connected);
             await call.disconnect();
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
         it("remains connected if we stay in the room", async () => {
-            await call.connect();
+            await call.start();
             expect(call.connectionState).toBe(ConnectionState.Connected);
             room.emit(RoomEvent.MyMembership, room, "join");
             expect(call.connectionState).toBe(ConnectionState.Connected);
@@ -419,7 +419,7 @@ describe("JitsiCall", () => {
 
             // Now, stub out client.sendStateEvent so we can test our local echo
             client.sendStateEvent.mockReset();
-            await call.connect();
+            await call.start();
             expect(call.participants).toEqual(
                 new Map([
                     [alice, new Set(["alices_device"])],
@@ -433,7 +433,7 @@ describe("JitsiCall", () => {
 
         it("updates room state when connecting and disconnecting", async () => {
             const now1 = Date.now();
-            await call.connect();
+            await call.start();
             await waitFor(
                 () =>
                     expect(
@@ -460,7 +460,7 @@ describe("JitsiCall", () => {
         });
 
         it("repeatedly updates room state while connected", async () => {
-            await call.connect();
+            await call.start();
             await waitFor(
                 () =>
                     expect(client.sendStateEvent).toHaveBeenLastCalledWith(
@@ -490,7 +490,7 @@ describe("JitsiCall", () => {
             const onConnectionState = jest.fn();
             call.on(CallEvent.ConnectionState, onConnectionState);
 
-            await call.connect();
+            await call.start();
             await call.disconnect();
             expect(onConnectionState.mock.calls).toEqual([
                 [ConnectionState.WidgetLoading, ConnectionState.Disconnected],
@@ -508,7 +508,7 @@ describe("JitsiCall", () => {
             const onParticipants = jest.fn();
             call.on(CallEvent.Participants, onParticipants);
 
-            await call.connect();
+            await call.start();
             await call.disconnect();
             expect(onParticipants.mock.calls).toEqual([
                 [new Map([[alice, new Set(["alices_device"])]]), new Map()],
@@ -521,7 +521,7 @@ describe("JitsiCall", () => {
         });
 
         it("switches to spotlight layout when the widget becomes a PiP", async () => {
-            await call.connect();
+            await call.start();
             ActiveWidgetStore.instance.emit(ActiveWidgetStoreEvent.Undock);
             expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.SpotlightLayout, {});
             ActiveWidgetStore.instance.emit(ActiveWidgetStoreEvent.Dock);
@@ -565,7 +565,7 @@ describe("JitsiCall", () => {
             });
 
             it("doesn't clean up valid devices", async () => {
-                await call.connect();
+                await call.start();
                 await client.sendStateEvent(
                     room.roomId,
                     JitsiCall.MEMBER_EVENT_TYPE,
@@ -649,7 +649,7 @@ describe("ElementCall", () => {
             jest.advanceTimersByTime(500);
         }
         sessionConnect();
-        const promise = call.connect();
+        const promise = call.start();
         runTimers();
         await promise;
     };
@@ -877,7 +877,7 @@ describe("ElementCall", () => {
             // we only send a JoinCall action if the widget is preloading
             call.widget.data = { ...call.widget, preload: true };
             mocked(messaging.transport).send.mockRejectedValue(new Error("never!!1! >:("));
-            await expect(call.connect()).rejects.toBeDefined();
+            await expect(call.start()).rejects.toBeDefined();
         });
 
         it("fails to disconnect if the widget returns an error", async () => {

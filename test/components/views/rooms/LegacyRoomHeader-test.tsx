@@ -581,7 +581,7 @@ describe("LegacyRoomHeader", () => {
                     } as MatrixRTCSession),
                 100,
             );
-            await call.connect();
+            await call.start();
 
             const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(call.widget))!;
             renderHeader({ viewingCall: true, activeCall: call });

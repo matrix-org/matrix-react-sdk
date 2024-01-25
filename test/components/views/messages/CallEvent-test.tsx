@@ -155,7 +155,7 @@ describe("CallEvent", () => {
             }),
         );
         defaultDispatcher.unregister(dispatcherRef);
-        await act(() => call.connect());
+        await act(() => call.start());
 
         // Test that the leave button works
         fireEvent.click(screen.getByRole("button", { name: "Leave" }));

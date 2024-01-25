@@ -266,7 +266,7 @@ describe("RoomTile", () => {
                         completeConnection();
                         await screen.findByText("Joined");
                     })(),
-                    call.connect(),
+                    call.start(),
                 ]);
 
                 await Promise.all([screen.findByText("Video"), call.disconnect()]);

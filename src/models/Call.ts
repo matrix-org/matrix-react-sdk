@@ -196,7 +196,7 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     public abstract clean(): Promise<void>;
 
     /**
-     * Contacts the widget to connect to the call.
+     * Contacts the widget to connect to the call or prompt the user to connect to the call.
      * @param {MediaDeviceInfo | null} audioInput The audio input to use, or
      *   null to start muted.
      * @param {MediaDeviceInfo | null} audioInput The video input to use, or
@@ -213,11 +213,15 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     protected abstract performDisconnection(): Promise<void>;
 
     /**
-     * Connects the user to the call using the media devices set in
-     * MediaDeviceHandler. The widget associated with the call must be active
+     * Starts the communication between the widget and the call.
+     * The call then waits for the necessary requirements to actually perform the connection
+     * or connects right away depending on the call type. (Jitsi, Legacy, ElementCall...)
+     * It uses the media devices set in MediaDeviceHandler.
+     * The widget associated with the call must be active
      * for this to succeed.
+     * Only call this if the call state is: ConnectionState.Disconnected.
      */
-    public async connect(): Promise<void> {
+    public async start(): Promise<void> {
         this.connectionState = ConnectionState.WidgetLoading;
 
         const { [MediaDeviceKindEnum.AudioInput]: audioInputs, [MediaDeviceKindEnum.VideoInput]: videoInputs } =
@@ -625,10 +629,10 @@ export class JitsiCall extends Call {
 
         await this.messaging!.transport.reply(ev.detail, {}); // ack
         this.setDisconnected();
-        // In video rooms we immediately want to reconnect after hangup
-        // This starts the lobby again and connects to all signals from EC.
+        // In video rooms we immediately want to restart the call after hangup
+        // The lobby will be shown again and it connects to all signals from EC and Jitsi.
         if (isVideoRoom(this.room)) {
-            this.connect();
+            this.start();
         }
     };
 }
@@ -988,7 +992,7 @@ export class ElementCall extends Call {
         // In video rooms we immediately want to reconnect after hangup
         // This starts the lobby again and connects to all signals from EC.
         if (isVideoRoom(this.room)) {
-            this.connect();
+            this.start();
         }
     };
 

@@ -44,19 +44,20 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby, 
         // Always update the widget data so that we don't ignore "skipLobby" accidentally.
         call.widget.data ??= {};
         call.widget.data.skipLobby = skipLobby;
-    }, [call.widget.data, skipLobby]);
+    }, [call.widget, call.widget.data, skipLobby]);
 
     useEffect(() => {
         if (call.connectionState === ConnectionState.Disconnected) {
-            // immediately connect (this will start the lobby view in the widget)
-            call.connect();
+            // immediately start the call
+            // (this will start the lobby view in the widget and connect to all required widget events)
+            call.start();
         }
         return (): void => {
             // If we are connected the widget is sticky and we do not want to destroy the call.
             if (!call.connected) call.destroy();
         };
     }, [call]);
-    const allOtherCallsDisconnected: () => Promise<void> = useCallback(async () => {
+    const disconnectAllOtherCalls: () => Promise<void> = useCallback(async () => {
         // The stickyPromise has to resolve before the widget actually becomes sticky.
         // We only let the widget become sticky after disconnecting all other active calls.
         const calls = [...CallStore.instance.activeCalls].filter(
@@ -74,7 +75,7 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby, 
                 waitForIframeLoad={call.widget.waitForIframeLoad}
                 showMenubar={false}
                 pointerEvents={resizing ? "none" : undefined}
-                stickyPromise={allOtherCallsDisconnected}
+                stickyPromise={disconnectAllOtherCalls}
             />
         </div>
     );
