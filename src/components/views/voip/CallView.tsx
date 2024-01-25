@@ -42,7 +42,8 @@ const JoinCallView: FC<JoinCallViewProps> = ({ room, resizing, call, skipLobby, 
 
     useEffect(() => {
         // Always update the widget data so that we don't ignore "skipLobby" accidentally.
-        (call.widget.data ?? { skipLobby }).skipLobby = skipLobby;
+        call.widget.data ??= {};
+        call.widget.data.skipLobby = skipLobby;
     }, [call.widget.data, skipLobby]);
 
     useEffect(() => {
