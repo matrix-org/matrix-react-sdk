@@ -41,10 +41,6 @@ export function isAppWidget(widget: IWidget | IApp): widget is IApp {
     return "roomId" in widget && typeof widget.roomId === "string";
 }
 
-export function isVirtualWidget(widget: IApp): boolean {
-    return widget.eventId === undefined;
-}
-
 interface IRoomWidgets {
     widgets: IApp[];
 }
