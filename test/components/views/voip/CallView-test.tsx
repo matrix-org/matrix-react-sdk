@@ -153,7 +153,7 @@ describe("CallView", () => {
         });
 
         it("automatically connects to the call when skipLobby is true", async () => {
-            const connectSpy = jest.spyOn(call, "connect");
+            const connectSpy = jest.spyOn(call, "start");
             await renderView(true);
             await waitFor(() => expect(connectSpy).toHaveBeenCalled(), { interval: 1 });
         });
