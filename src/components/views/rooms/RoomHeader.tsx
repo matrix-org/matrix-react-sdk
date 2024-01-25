@@ -142,10 +142,10 @@ export default function RoomHeader({
         </Button>
     );
     const startCallButton = (
-        <Tooltip label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}>
+        <Tooltip label={videoCallDisabledReason ?? _t("voip|video_call")}>
             <IconButton
                 disabled={!!videoCallDisabledReason}
-                aria-label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}
+                aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
                 onClick={videoCallClick}
             >
                 <VideoCallIcon />
