@@ -24,9 +24,9 @@ import { useEventEmitter, useEventEmitterState } from "../useEventEmitter";
 import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../LegacyCallHandler";
 import { useWidgets } from "../../components/views/right_panel/RoomSummaryCard";
 import { WidgetType } from "../../widgets/WidgetType";
-import { useCall, useParticipantCount } from "../useCall";
+import { useCall, useConnectionState, useParticipantCount } from "../useCall";
 import { useRoomMemberCount } from "../useRoomMembers";
-import { ElementCall } from "../../models/Call";
+import { ConnectionState, ElementCall } from "../../models/Call";
 import { placeCall } from "../../utils/room/placeCall";
 import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutStore";
 import { useRoomState } from "../useRoomState";
@@ -99,8 +99,12 @@ export const useRoomCall = (
     const hasManagedHybridWidget = !!managedHybridWidget;
 
     const groupCall = useCall(room.roomId);
+    const isConnectedToCall = useConnectionState(groupCall) === ConnectionState.Connected;
     const hasGroupCall = groupCall !== null;
     const hasActiveCallSession = useParticipantCount(groupCall) > 0;
+    const isViewingCall = useEventEmitterState(SdkContextClass.instance.roomViewStore, UPDATE_EVENT, () =>
+        SdkContextClass.instance.roomViewStore.isViewingCall(),
+    );
 
     const memberCount = useRoomMemberCount(room);
 
@@ -152,6 +156,14 @@ export const useRoomCall = (
     } else {
         widget = groupCall?.widget ?? jitsiWidget;
     }
+    const updateWidgetState = useCallback((): void => {
+        setCanPinWidget(WidgetLayoutStore.instance.canAddToContainer(room, Container.Top));
+        setWidgetPinned(!!widget && WidgetLayoutStore.instance.isInContainer(room, widget, Container.Top));
+    }, [room, widget]);
+    useEventEmitter(WidgetLayoutStore.instance, WidgetLayoutStore.emissionForRoom(room), updateWidgetState);
+    useEffect(() => {
+        updateWidgetState();
+    }, [room, jitsiWidget, groupCall, updateWidgetState]);
 
     const [canPinWidget, setCanPinWidget] = useState(false);
     const [widgetPinned, setWidgetPinned] = useState(false);
@@ -159,22 +171,6 @@ export const useRoomCall = (
     const isECWidget = WidgetType.CALL.matches(widget?.type ?? "");
     const promptPinWidget = !isECWidget && canPinWidget && !widgetPinned;
 
-    const updateWidgetState = useCallback((): void => {
-        setCanPinWidget(WidgetLayoutStore.instance.canAddToContainer(room, Container.Top));
-        setWidgetPinned(!!widget && WidgetLayoutStore.instance.isInContainer(room, widget, Container.Top));
-    }, [room, widget]);
-
-    useEventEmitter(WidgetLayoutStore.instance, WidgetLayoutStore.emissionForRoom(room), updateWidgetState);
-    useEffect(() => {
-        updateWidgetState();
-    }, [room, jitsiWidget, groupCall, updateWidgetState]);
-
-    const [isViewingCall, setIsViewingCall] = useState(SdkContextClass.instance.roomViewStore.isViewingCall());
-    const onRoomViewStoreUpdate = useCallback(() => {
-        setIsViewingCall(SdkContextClass.instance.roomViewStore.isViewingCall());
-    }, []);
-
-    useEventEmitter(SdkContextClass.instance.roomViewStore, UPDATE_EVENT, onRoomViewStoreUpdate);
     const state = useMemo((): State => {
         if (hasGroupCall || hasJitsiWidget || hasManagedHybridWidget) {
             return promptPinWidget ? State.Unpinned : State.Ongoing;
@@ -265,7 +261,7 @@ export const useRoomCall = (
         videoCallClick,
         toggleCallMaximized: toggleCallMaximized,
         isViewingCall: isViewingCall,
-        isConnectedToCall: groupCall?.connected ?? false,
+        isConnectedToCall: isConnectedToCall,
         hasActiveCallSession: hasActiveCallSession,
         callOptions,
     };

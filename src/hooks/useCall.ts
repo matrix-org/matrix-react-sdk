@@ -36,11 +36,11 @@ export const useCallForWidget = (widgetId: string, roomId: string): Call | null 
     return call?.widget.id === widgetId ? call : null;
 };
 
-export const useConnectionState = (call: Call): ConnectionState =>
+export const useConnectionState = (call: Call | null): ConnectionState =>
     useTypedEventEmitterState(
-        call,
+        call ?? undefined,
         CallEvent.ConnectionState,
-        useCallback((state) => state ?? call.connectionState, [call]),
+        useCallback((state) => state ?? call?.connectionState ?? ConnectionState.Disconnected, [call]),
     );
 
 export const useParticipants = (call: Call | null): Map<RoomMember, Set<string>> => {
