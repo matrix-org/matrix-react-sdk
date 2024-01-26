@@ -151,7 +151,7 @@ export default function RoomHeader({
                     trigger={
                         <IconButton
                             disabled={!!videoCallDisabledReason}
-                            aria-label={videoCallDisabledReason ? videoCallDisabledReason : _t("voip|video_call")}
+                            aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
                         >
                             {callIconWithTooltip}
                         </IconButton>
@@ -172,7 +172,7 @@ export default function RoomHeader({
             ) : (
                 <IconButton
                     disabled={!!videoCallDisabledReason}
-                    aria-label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}
+                    aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
                     onClick={(ev) => videoCallClick(ev, callOptions[0])}
                 >
                     {callIconWithTooltip}
@@ -181,10 +181,10 @@ export default function RoomHeader({
         </>
     );
     const voiceCallButton = (
-        <Tooltip label={voiceCallDisabledReason ? voiceCallDisabledReason : _t("voip|voice_call")}>
+        <Tooltip label={voiceCallDisabledReason ?? _t("voip|voice_call")}>
             <IconButton
                 disabled={!!voiceCallDisabledReason}
-                aria-label={voiceCallDisabledReason ? voiceCallDisabledReason : _t("voip|voice_call")}
+                aria-label={voiceCallDisabledReason ?? _t("voip|voice_call")}
                 onClick={(ev) => voiceCallClick(ev, callOptions[0])}
             >
                 <VoiceCallIcon />

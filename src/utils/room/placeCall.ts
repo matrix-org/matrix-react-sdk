@@ -32,15 +32,12 @@ import { Action } from "../../dispatcher/actions";
 export const placeCall = async (room: Room, callType: CallType, platformCallType: PlatformCallType): Promise<void> => {
     if (platformCallType == PlatformCallType.LegacyCall || platformCallType == PlatformCallType.JitsiCall) {
         await LegacyCallHandler.instance.placeCall(room.roomId, callType);
-        return;
-    }
-    if (platformCallType == PlatformCallType.ElementCall) {
+    } else if (platformCallType == PlatformCallType.ElementCall) {
         defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
             view_call: true,
             metricsTrigger: undefined,
         });
-        return;
     }
 };

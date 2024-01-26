@@ -39,7 +39,6 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../dispatcher/actions";
 
-// export type PlatformCallType = "element_call" | "jitsi_or_element_call" | "legacy_or_jitsi";
 export enum PlatformCallType {
     ElementCall,
     JitsiCall,
