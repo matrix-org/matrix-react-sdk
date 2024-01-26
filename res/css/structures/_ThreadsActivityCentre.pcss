@@ -29,23 +29,28 @@
         /* align with settings icon */
         margin-left: 20px;
 
-        .mx_ThreadsActivityCentreButton_Icon {
+        & > .mx_ThreadsActivityCentreButton_IndicatorIcon {
             /* align with settings label */
             margin-right: 12px;
         }
     }
 
     &:not(.expanded) {
-        &:hover {
+        &:hover,
+        &:hover .mx_ThreadsActivityCentreButton_Icon {
             background-color: $quaternary-content;
             color: $primary-content;
         }
     }
 
-    .mx_ThreadsActivityCentreButton_Icon {
+    & > .mx_ThreadsActivityCentreButton_IndicatorIcon {
         height: 24px;
         width: 24px;
         padding: 4px;
+    }
+
+    & .mx_ThreadsActivityCentreButton_Icon {
+        color: $secondary-content;
     }
 }
 

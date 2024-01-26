@@ -19,6 +19,7 @@
 import React, { forwardRef, HTMLProps } from "react";
 import { Icon } from "@vector-im/compound-design-tokens/icons/threads-solid.svg";
 import classNames from "classnames";
+import { IndicatorIcon } from "@vector-im/compound-web";
 
 import { _t } from "../../../../languageHandler";
 import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
@@ -46,7 +47,9 @@ export const ThreadsActivityCentreButton = forwardRef<HTMLDivElement, ThreadsAct
                 aria-expanded={displayLabel}
                 {...props}
             >
-                <Icon className="mx_ThreadsActivityCentreButton_Icon" />
+                <IndicatorIcon className="mx_ThreadsActivityCentreButton_IndicatorIcon" indicator="critical">
+                    <Icon className="mx_ThreadsActivityCentreButton_Icon" />
+                </IndicatorIcon>
                 {displayLabel && _t("common|threads")}
             </AccessibleTooltipButton>
         );
