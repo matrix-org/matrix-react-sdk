@@ -373,6 +373,10 @@ describe("RoomHeader", () => {
 
         it("calls using legacy or jitsi", async () => {
             mockRoomMembers(room, 2);
+            jest.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
+                if (key === "im.vector.modular.widgets") return true;
+                return false;
+            });
             const { container } = render(<RoomHeader room={room} />, getWrapper());
 
             const voiceButton = getByLabelText(container, "Voice call");
@@ -415,7 +419,6 @@ describe("RoomHeader", () => {
             mockRoomMembers(room, 3);
 
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
-                if (key === "im.vector.modular.widgets") return true;
                 if (key === ElementCall.MEMBER_EVENT_TYPE.name) return true;
                 return false;
             });

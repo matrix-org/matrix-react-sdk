@@ -108,10 +108,9 @@ export const useRoomCall = (
 
     const memberCount = useRoomMemberCount(room);
 
-    const [mayEditWidgets, mayCreateElementCalls, mayCreateWidgetCall] = useRoomState(room, () => [
+    const [mayEditWidgets, mayCreateElementCalls] = useRoomState(room, () => [
         room.currentState.mayClientSendStateEvent("im.vector.modular.widgets", room.client),
         room.currentState.mayClientSendStateEvent(ElementCall.MEMBER_EVENT_TYPE.name, room.client),
-        room.currentState.mayClientSendStateEvent(ElementCall.CALL_EVENT_TYPE.name, room.client),
     ]);
 
     // The options provided to the RoomHeader.
@@ -120,7 +119,7 @@ export const useRoomCall = (
         const options = [];
         if (memberCount <= 2) {
             options.push(PlatformCallType.LegacyCall);
-        } else if (mayCreateWidgetCall || hasJitsiWidget) {
+        } else if (mayEditWidgets || hasJitsiWidget) {
             options.push(PlatformCallType.JitsiCall);
         }
         if (groupCallsEnabled) {
@@ -138,7 +137,7 @@ export const useRoomCall = (
         return options;
     }, [
         memberCount,
-        mayCreateWidgetCall,
+        mayEditWidgets,
         hasJitsiWidget,
         groupCallsEnabled,
         hasGroupCall,

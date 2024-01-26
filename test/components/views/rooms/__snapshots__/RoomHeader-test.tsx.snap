@@ -46,49 +46,35 @@ exports[`RoomHeader does not show the face pile for DMs 1`] = `
       <button
         aria-disabled="true"
         aria-label="There's no one here to call"
-        class="_icon-button_16nk7_17"
-        data-state="closed"
+        class="_icon-button_ur2sw_17"
         role="button"
         style="--cpd-icon-button-size: 32px;"
         tabindex="0"
       >
         <div
-          class="_indicator-icon_jtb4d_26"
-          style="--cpd-icon-button-size: 100%; --cpd-color-icon-tertiary: var(--cpd-color-icon-disabled);"
-        >
-          <div />
-        </div>
+          data-state="closed"
+        />
       </button>
       <button
         aria-disabled="true"
         aria-label="There's no one here to call"
-        class="_icon-button_16nk7_17"
+        class="_icon-button_ur2sw_17"
         data-state="closed"
         role="button"
         style="--cpd-icon-button-size: 32px;"
         tabindex="0"
       >
-        <div
-          class="_indicator-icon_jtb4d_26"
-          style="--cpd-icon-button-size: 100%; --cpd-color-icon-tertiary: var(--cpd-color-icon-disabled);"
-        >
-          <div />
-        </div>
+        <div />
       </button>
       <button
         aria-label="Threads"
-        class="_icon-button_16nk7_17"
+        class="_icon-button_ur2sw_17"
         data-state="closed"
         role="button"
         style="--cpd-icon-button-size: 32px;"
         tabindex="0"
       >
-        <div
-          class="_indicator-icon_jtb4d_26"
-          style="--cpd-icon-button-size: 100%;"
-        >
-          <div />
-        </div>
+        <div />
       </button>
     </div>
   </header>
