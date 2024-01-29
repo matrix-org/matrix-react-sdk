@@ -65,6 +65,7 @@ const waitForEvent = async (
     emitter: EventEmitter,
     event: string,
     pred: (...args: any[]) => boolean = () => true,
+    customTimeout?: number,
 ): Promise<void> => {
     let listener: (...args: any[]) => void;
     const wait = new Promise<void>((resolve) => {
@@ -74,7 +75,7 @@ const waitForEvent = async (
         emitter.on(event, listener);
     });
 
-    const timedOut = (await timeout(wait, false, TIMEOUT_MS)) === false;
+    const timedOut = (await timeout(wait, false, customTimeout ?? TIMEOUT_MS)) === false;
     emitter.off(event, listener!);
     if (timedOut) throw new Error("Timed out");
 };
@@ -899,6 +900,7 @@ export class ElementCall extends Call {
                 MatrixRTCSessionEvent.MembershipsChanged,
                 (_, newMemberships: CallMembership[]) =>
                     newMemberships.some((m) => m.sender === this.client.getUserId()),
+                60000, // allow user to wait in the lobby for 1 min
             );
         } else {
             await waitForEvent(
@@ -906,6 +908,7 @@ export class ElementCall extends Call {
                 MatrixRTCSessionManagerEvents.SessionStarted,
                 (roomId: string, session: MatrixRTCSession) =>
                     this.session.callId === session.callId && roomId === this.roomId,
+                60000, // allow user to wait in the lobby for 1 min
             );
         }
         this.sendCallNotify();
