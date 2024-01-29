@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import { _t } from "../../../../languageHandler";
@@ -34,21 +34,21 @@ const LegacyCallViewHeaderControls: React.FC<LegacyCallControlsProps> = ({ onExp
                 <AccessibleTooltipButton
                     className="mx_LegacyCallViewHeader_button mx_LegacyCallViewHeader_button_fullscreen"
                     onClick={onMaximize}
-                    title={_t("Fill screen")}
+                    title={_t("voip|maximise")}
                 />
             )}
             {onPin && (
                 <AccessibleTooltipButton
                     className="mx_LegacyCallViewHeader_button mx_LegacyCallViewHeader_button_pin"
                     onClick={onPin}
-                    title={_t("Pin")}
+                    title={_t("action|pin")}
                 />
             )}
             {onExpand && (
                 <AccessibleTooltipButton
                     className="mx_LegacyCallViewHeader_button mx_LegacyCallViewHeader_button_expand"
                     onClick={onExpand}
-                    title={_t("Return to call")}
+                    title={_t("voip|expand")}
                 />
             )}
         </div>
@@ -62,18 +62,18 @@ interface ISecondaryCallInfoProps {
 const SecondaryCallInfo: React.FC<ISecondaryCallInfoProps> = ({ callRoom }) => {
     return (
         <span className="mx_LegacyCallViewHeader_secondaryCallInfo">
-            <RoomAvatar room={callRoom} height={16} width={16} />
+            <RoomAvatar room={callRoom} size="16px" />
             <span className="mx_LegacyCallView_secondaryCall_roomName">
-                {_t("%(name)s on hold", { name: callRoom.name })}
+                {_t("voip|on_hold", { name: callRoom.name })}
             </span>
         </span>
     );
 };
 
 interface LegacyCallViewHeaderProps {
-    pipMode: boolean;
-    callRooms?: Room[];
-    onPipMouseDown: (event: React.MouseEvent<Element, MouseEvent>) => void;
+    pipMode?: boolean;
+    callRooms: [Room, Room | null];
+    onPipMouseDown?: (event: React.MouseEvent<Element, MouseEvent>) => void;
     onExpand?: () => void;
     onPin?: () => void;
     onMaximize?: () => void;
@@ -81,7 +81,7 @@ interface LegacyCallViewHeaderProps {
 
 const LegacyCallViewHeader: React.FC<LegacyCallViewHeaderProps> = ({
     pipMode = false,
-    callRooms = [],
+    callRooms,
     onPipMouseDown,
     onExpand,
     onPin,
@@ -94,14 +94,14 @@ const LegacyCallViewHeader: React.FC<LegacyCallViewHeaderProps> = ({
         return (
             <div className="mx_LegacyCallViewHeader">
                 <div className="mx_LegacyCallViewHeader_icon" />
-                <span className="mx_LegacyCallViewHeader_text">{_t("Call")}</span>
+                <span className="mx_LegacyCallViewHeader_text">{_t("action|call")}</span>
                 <LegacyCallViewHeaderControls onMaximize={onMaximize} />
             </div>
         );
     }
     return (
         <div className="mx_LegacyCallViewHeader mx_LegacyCallViewHeader_pip" onMouseDown={onPipMouseDown}>
-            <RoomAvatar room={callRoom} height={32} width={32} />
+            <RoomAvatar room={callRoom} size="32px" />
             <div className="mx_LegacyCallViewHeader_callInfo">
                 <div className="mx_LegacyCallViewHeader_roomName">{callRoomName}</div>
                 {onHoldCallRoom && <SecondaryCallInfo callRoom={onHoldCallRoom} />}

@@ -1,5 +1,5 @@
 /*
-Copyright 2015 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,13 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { Thread } from "matrix-js-sdk/src/models/thread";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
+import { M_BEACON, Room, Thread, MatrixEvent, EventType, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from "./MatrixClientPeg";
 import shouldHideEvent from "./shouldHideEvent";
 import { haveRendererForEvent } from "./events/EventTileFactory";
 import SettingsStore from "./settings/SettingsStore";
@@ -29,11 +25,12 @@ import SettingsStore from "./settings/SettingsStore";
  * Returns true if this event arriving in a room should affect the room's
  * count of unread messages
  *
+ * @param client The Matrix Client instance of the logged-in user
  * @param {Object} ev The event
  * @returns {boolean} True if the given event should affect the unread message count
  */
-export function eventTriggersUnreadCount(ev: MatrixEvent): boolean {
-    if (ev.getSender() === MatrixClientPeg.get().credentials.userId) {
+export function eventTriggersUnreadCount(client: MatrixClient, ev: MatrixEvent): boolean {
+    if (ev.getSender() === client.getSafeUserId()) {
         return false;
     }
 
@@ -50,7 +47,7 @@ export function eventTriggersUnreadCount(ev: MatrixEvent): boolean {
     }
 
     if (ev.isRedacted()) return false;
-    return haveRendererForEvent(ev, false /* hidden messages should never trigger unread counts anyways */);
+    return haveRendererForEvent(ev, client, false /* hidden messages should never trigger unread counts anyways */);
 }
 
 export function doesRoomHaveUnreadMessages(room: Room): boolean {
@@ -60,64 +57,72 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
         return false;
     }
 
-    for (const timeline of [room, ...room.getThreads()]) {
-        // If the current timeline has unread messages, we're done.
-        if (doesRoomOrThreadHaveUnreadMessages(timeline)) {
+    for (const withTimeline of [room, ...room.getThreads()]) {
+        if (doesTimelineHaveUnreadMessages(room, withTimeline.timeline)) {
+            // We found an unread, so the room is unread
             return true;
         }
     }
+
     // If we got here then no timelines were found with unread messages.
     return false;
 }
 
-export function doesRoomOrThreadHaveUnreadMessages(roomOrThread: Room | Thread): boolean {
-    // If there are no messages yet in the timeline then it isn't fully initialised
-    // and cannot be unread.
-    if (!roomOrThread || roomOrThread.timeline.length === 0) {
-        return false;
-    }
-
-    const myUserId = MatrixClientPeg.get().getUserId();
-
-    // as we don't send RRs for our own messages, make sure we special case that
-    // if *we* sent the last message into the room, we consider it not unread!
-    // Should fix: https://github.com/vector-im/element-web/issues/3263
-    //             https://github.com/vector-im/element-web/issues/2427
-    // ...and possibly some of the others at
-    //             https://github.com/vector-im/element-web/issues/3363
-    if (roomOrThread.timeline[roomOrThread.timeline.length - 1]?.getSender() === myUserId) {
-        return false;
-    }
-
-    // get the most recent read receipt sent by our account.
-    // N.B. this is NOT a read marker (RM, aka "read up to marker"),
-    // despite the name of the method :((
-    const readUpToId = roomOrThread.getEventReadUpTo(myUserId!);
-
-    // this just looks at whatever history we have, which if we've only just started
-    // up probably won't be very much, so if the last couple of events are ones that
-    // don't count, we don't know if there are any events that do count between where
-    // we have and the read receipt. We could fetch more history to try & find out,
-    // but currently we just guess.
-
-    // Loop through messages, starting with the most recent...
-    for (let i = roomOrThread.timeline.length - 1; i >= 0; --i) {
-        const ev = roomOrThread.timeline[i];
-
-        if (ev.getId() == readUpToId) {
-            // If we've read up to this event, there's nothing more recent
-            // that counts and we can stop looking because the user's read
-            // this and everything before.
+function doesTimelineHaveUnreadMessages(room: Room, timeline: Array<MatrixEvent>): boolean {
+    const myUserId = room.client.getSafeUserId();
+    const latestImportantEventId = findLatestImportantEvent(room.client, timeline)?.getId();
+    if (latestImportantEventId) {
+        return !room.hasUserReadEvent(myUserId, latestImportantEventId);
+    } else {
+        // We couldn't find an important event to check - check the unimportant ones.
+        const earliestUnimportantEventId = timeline.at(0)?.getId();
+        if (!earliestUnimportantEventId) {
+            // There are no events in this timeline - it is uninitialised, so we
+            // consider it read
             return false;
-        } else if (!shouldHideEvent(ev) && eventTriggersUnreadCount(ev)) {
-            // We've found a message that counts before we hit
-            // the user's read receipt, so this room is definitely unread.
+        } else if (room.hasUserReadEvent(myUserId, earliestUnimportantEventId)) {
+            // Some of the unimportant events are read, and there are no
+            // important ones after them, so we've read everything.
+            return false;
+        } else {
+            // We have events. and none of them are read.  We must guess that
+            // the timeline is unread, because there could be older unread
+            // important events that we don't have loaded.
+            logger.warn("Falling back to unread room because of no read receipt or counting message found", {
+                roomId: room.roomId,
+                earliestUnimportantEventId: earliestUnimportantEventId,
+            });
             return true;
         }
     }
-    // If we got here, we didn't find a message that counted but didn't find
-    // the user's read receipt either, so we guess and say that the room is
-    // unread on the theory that false positives are better than false
-    // negatives here.
-    return true;
+}
+
+export function doesRoomOrThreadHaveUnreadMessages(roomOrThread: Room | Thread): boolean {
+    const room = roomOrThread instanceof Thread ? roomOrThread.room : roomOrThread;
+    const events = roomOrThread instanceof Thread ? roomOrThread.timeline : room.getLiveTimeline().getEvents();
+    return doesTimelineHaveUnreadMessages(room, events);
+}
+
+/**
+ * Look backwards through the timeline and find the last event that is
+ * "important" in the sense of isImportantEvent.
+ *
+ * @returns the latest important event, or null if none were found
+ */
+function findLatestImportantEvent(client: MatrixClient, timeline: Array<MatrixEvent>): MatrixEvent | null {
+    for (let index = timeline.length - 1; index >= 0; index--) {
+        const event = timeline[index];
+        if (isImportantEvent(client, event)) {
+            return event;
+        }
+    }
+    return null;
+}
+
+/**
+ * Given this event does not have a receipt, is it important enough to make
+ * this room unread?
+ */
+function isImportantEvent(client: MatrixClient, event: MatrixEvent): boolean {
+    return !shouldHideEvent(event) && eventTriggersUnreadCount(client, event);
 }

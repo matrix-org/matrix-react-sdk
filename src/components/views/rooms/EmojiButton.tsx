@@ -25,7 +25,7 @@ import { OverflowMenuContext } from "./MessageComposerButtons";
 
 interface IEmojiButtonProps {
     addEmoji: (unicode: string) => boolean;
-    menuPosition: MenuProps;
+    menuPosition?: MenuProps;
     className?: string;
 }
 
@@ -36,17 +36,14 @@ export function EmojiButton({ addEmoji, menuPosition, className }: IEmojiButtonP
     let contextMenu: React.ReactElement | null = null;
     if (menuDisplayed && button.current) {
         const position = menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect());
+        const onFinished = (): void => {
+            closeMenu();
+            overflowMenuCloser?.();
+        };
 
         contextMenu = (
-            <ContextMenu
-                {...position}
-                onFinished={() => {
-                    closeMenu();
-                    overflowMenuCloser?.();
-                }}
-                managed={false}
-            >
-                <EmojiPicker onChoose={addEmoji} showQuickReactions={true} />
+            <ContextMenu {...position} onFinished={onFinished} managed={false}>
+                <EmojiPicker onChoose={addEmoji} onFinished={onFinished} />
             </ContextMenu>
         );
     }
@@ -63,7 +60,7 @@ export function EmojiButton({ addEmoji, menuPosition, className }: IEmojiButtonP
                 className={computedClassName}
                 iconClassName="mx_EmojiButton_icon"
                 onClick={openMenu}
-                title={_t("Emoji")}
+                title={_t("common|emoji")}
                 inputRef={button}
             />
 

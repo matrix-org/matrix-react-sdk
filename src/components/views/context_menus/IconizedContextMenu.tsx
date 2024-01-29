@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import classNames from "classnames";
 
 import ContextMenu, {
@@ -36,6 +36,7 @@ interface IOptionListProps {
     red?: boolean;
     label?: string;
     className?: string;
+    children: ReactNode;
 }
 
 interface IOptionProps extends React.ComponentProps<typeof MenuItem> {
@@ -86,7 +87,9 @@ export const IconizedContextMenuCheckbox: React.FC<ICheckboxProps> = ({
 }) => {
     let marker: JSX.Element;
     if (words) {
-        marker = <span className="mx_IconizedContextMenu_activeText">{active ? _t("On") : _t("Off")}</span>;
+        marker = (
+            <span className="mx_IconizedContextMenu_activeText">{active ? _t("common|on") : _t("common|off")}</span>
+        );
     } else {
         marker = (
             <span
@@ -125,6 +128,7 @@ export const IconizedContextMenuOption: React.FC<IOptionProps> = ({
 }) => {
     return (
         <MenuItem
+            element="li"
             {...props}
             className={classNames(className, {
                 mx_IconizedContextMenu_item: true,
@@ -163,14 +167,16 @@ export const IconizedContextMenuOptionList: React.FC<IOptionListProps> = ({
     );
 };
 
-const IconizedContextMenu: React.FC<IProps> = ({ className, children, compact, ...props }) => {
+const IconizedContextMenu: React.FC<React.PropsWithChildren<IProps>> = ({ className, children, compact, ...props }) => {
     const classes = classNames("mx_IconizedContextMenu", className, {
         mx_IconizedContextMenu_compact: compact,
     });
 
     return (
         <ContextMenu chevronFace={ChevronFace.None} {...props}>
-            <div className={classes}>{children}</div>
+            <ul role="none" className={classes}>
+                {children}
+            </ul>
         </ContextMenu>
     );
 };

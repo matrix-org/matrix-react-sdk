@@ -1,22 +1,28 @@
 name: Static Analysis
 on:
     pull_request: {}
+    merge_group:
+        types: [checks_requested]
     push:
         branches: [develop, master]
     repository_dispatch:
         types: [upstream-sdk-notify]
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
+    cancel-in-progress: true
+
 env:
-    # These must be set for fetchdep.sh to get the right branch
-    REPOSITORY: ${{ github.repository }}
+    # fetchdep.sh needs to know our PR number
     PR_NUMBER: ${{ github.event.pull_request.number }}
+
 jobs:
     ts_lint:
         name: "Typescript Syntax Check"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
-            - uses: actions/setup-node@v3
+            - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
 
@@ -37,59 +43,25 @@ jobs:
             - name: Typecheck (release mode)
               run: "yarn run lint:types"
 
-    tsc-strict:
-        name: Typescript Strict Error Checker
-        if: github.event_name == 'pull_request'
-        runs-on: ubuntu-latest
-        permissions:
-            pull-requests: read
-            checks: write
-        strategy:
-            fail-fast: false
-            matrix:
-                args:
-                    - "--strict --noImplicitAny"
-                    - "--noImplicitAny"
-        steps:
-            - uses: actions/checkout@v3
-
-            - name: Install Deps
-              run: "scripts/ci/layered.sh"
-
-            - name: Get diff lines
-              id: diff
-              uses: Equip-Collaboration/diff-line-numbers@v1.0.0
-              with:
-                  include: '["\\.tsx?$"]'
-
-            - name: Detecting files changed
-              id: files
-              uses: futuratrepadeira/changed-files@v4.0.0
-              with:
-                  repo-token: ${{ secrets.GITHUB_TOKEN }}
-                  pattern: '^.*\.tsx?$'
-
-            - uses: t3chguy/typescript-check-action@main
-              with:
-                  repo-token: ${{ secrets.GITHUB_TOKEN }}
-                  use-check: false
-                  check-fail-mode: added
-                  output-behaviour: annotate
-                  ts-extra-args: ${{ matrix.args }}
-                  files-changed: ${{ steps.files.outputs.files_updated }}
-                  files-added: ${{ steps.files.outputs.files_created }}
-                  files-deleted: ${{ steps.files.outputs.files_deleted }}
-                  line-numbers: ${{ steps.diff.outputs.lineNumbers }}
+            # Temporary while we directly import matrix-js-sdk/src/* which means we need
+            # certain @types/* packages to make sense of matrix-js-sdk types.
+            #- name: Typecheck (release mode; no yarn link)
+            #  if: github.event_name != 'pull_request' && github.ref_name != 'master'
+            #  run: |
+            #      yarn unlink matrix-js-sdk
+            #      yarn add github:matrix-org/matrix-js-sdk#develop
+            #      yarn install --force
+            #      yarn run lint:types
 
     i18n_lint:
         name: "i18n Check"
-        uses: matrix-org/matrix-react-sdk/.github/workflows/i18n_check.yml@develop
+        uses: matrix-org/matrix-web-i18n/.github/workflows/i18n_check.yml@main
 
     rethemendex_lint:
         name: "Rethemendex Check"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
             - run: ./res/css/rethemendex.sh
 
@@ -99,9 +71,9 @@ jobs:
         name: "ESLint"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
-            - uses: actions/setup-node@v3
+            - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
 
@@ -116,9 +88,9 @@ jobs:
         name: "Style Lint"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
-            - uses: actions/setup-node@v3
+            - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
 
@@ -129,13 +101,30 @@ jobs:
             - name: Run Linter
               run: "yarn run lint:style"
 
+    workflow_lint:
+        name: "Workflow Lint"
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  cache: "yarn"
+
+            # Does not need branch matching as only analyses this layer
+            - name: Install Deps
+              run: "yarn install --frozen-lockfile"
+
+            - name: Run Linter
+              run: "yarn lint:workflows"
+
     analyse_dead_code:
         name: "Analyse Dead Code"
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v4
 
-            - uses: actions/setup-node@v3
+            - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
 

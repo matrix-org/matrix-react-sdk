@@ -25,11 +25,11 @@ import MediaProcessingError from "./shared/MediaProcessingError";
 
 export default class MVoiceMessageBody extends MAudioBody {
     // A voice message is an audio file but rendered in a special way.
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.state.error) {
             return (
                 <MediaProcessingError className="mx_MVoiceMessageBody">
-                    {_t("Error processing voice message")}
+                    {_t("timeline|m.audio|error_processing_voice_message")}
                 </MediaProcessingError>
             );
         }

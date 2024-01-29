@@ -14,9 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, MatrixEvent, MatrixEventEvent, RelationType } from "matrix-js-sdk/src/matrix";
-import { Relations, RelationsEvent } from "matrix-js-sdk/src/models/relations";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import {
+    MatrixClient,
+    MatrixEvent,
+    MatrixEventEvent,
+    RelationType,
+    TypedEventEmitter,
+    Relations,
+    RelationsEvent,
+} from "matrix-js-sdk/src/matrix";
 
 import { IDestroyable } from "../utils/IDestroyable";
 
@@ -121,7 +127,7 @@ export class RelationsHelper extends TypedEventEmitter<RelationsHelperEvent, Eve
                     limit: 50,
                 },
             );
-            nextBatch = response?.nextBatch;
+            nextBatch = response?.nextBatch ?? undefined;
             response?.events.forEach((e) => this.emit(RelationsHelperEvent.Add, e));
         } while (nextBatch);
     }

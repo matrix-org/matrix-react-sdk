@@ -14,17 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from "url";
-import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IOpenIDToken } from "matrix-js-sdk/src/matrix";
+import { SERVICE_TYPES, Room, IOpenIDToken } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "./settings/SettingsStore";
 import { Service, startTermsFlow, TermsInteractionCallback, TermsNotSignedError } from "./Terms";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SdkConfig from "./SdkConfig";
 import { WidgetType } from "./widgets/WidgetType";
+import { parseUrl } from "./utils/UrlUtils";
 
 // The version of the integration manager API we're intending to work with
 const imApiVersion = "1.1";
@@ -32,11 +30,14 @@ const imApiVersion = "1.1";
 // TODO: Generify the name of this class and all components within - it's not just for Scalar.
 
 export default class ScalarAuthClient {
-    private scalarToken: string;
-    private termsInteractionCallback: TermsInteractionCallback;
+    private scalarToken: string | null;
+    private termsInteractionCallback?: TermsInteractionCallback;
     private isDefaultManager: boolean;
 
-    public constructor(private apiUrl: string, private uiUrl: string) {
+    public constructor(
+        private apiUrl: string,
+        private uiUrl: string,
+    ) {
         this.scalarToken = null;
         // `undefined` to allow `startTermsFlow` to fallback to a default
         // callback if this is unset.
@@ -50,7 +51,7 @@ export default class ScalarAuthClient {
     }
 
     private writeTokenToStore(): void {
-        window.localStorage.setItem("mx_scalar_token_at_" + this.apiUrl, this.scalarToken);
+        window.localStorage.setItem("mx_scalar_token_at_" + this.apiUrl, this.scalarToken ?? "");
         if (this.isDefaultManager) {
             // We remove the old token from storage to migrate upwards. This is safe
             // to do because even if the user switches to /app when this is on /develop
@@ -59,7 +60,7 @@ export default class ScalarAuthClient {
         }
     }
 
-    private readTokenFromStore(): string {
+    private readTokenFromStore(): string | null {
         let token = window.localStorage.getItem("mx_scalar_token_at_" + this.apiUrl);
         if (!token && this.isDefaultManager) {
             token = window.localStorage.getItem("mx_scalar_token");
@@ -67,7 +68,7 @@ export default class ScalarAuthClient {
         return token;
     }
 
-    private readToken(): string {
+    private readToken(): string | null {
         if (this.scalarToken) return this.scalarToken;
         return this.readTokenFromStore();
     }
@@ -131,7 +132,7 @@ export default class ScalarAuthClient {
     private checkToken(token: string): Promise<string> {
         return this.getAccountName(token)
             .then((userId) => {
-                const me = MatrixClientPeg.get().getUserId();
+                const me = MatrixClientPeg.safeGet().getUserId();
                 if (userId !== me) {
                     throw new Error("Scalar token is owned by someone else: " + me);
                 }
@@ -154,11 +155,11 @@ export default class ScalarAuthClient {
                     // Once we've fully transitioned to _matrix URLs, we can give people
                     // a grace period to update their configs, then use the rest url as
                     // a regular base url.
-                    const parsedImRestUrl = url.parse(this.apiUrl);
-                    parsedImRestUrl.path = "";
+                    const parsedImRestUrl = parseUrl(this.apiUrl);
                     parsedImRestUrl.pathname = "";
                     return startTermsFlow(
-                        [new Service(SERVICE_TYPES.IM, url.format(parsedImRestUrl), token)],
+                        MatrixClientPeg.safeGet(),
+                        [new Service(SERVICE_TYPES.IM, parsedImRestUrl.toString(), token)],
                         this.termsInteractionCallback,
                     ).then(() => {
                         return token;
@@ -171,7 +172,7 @@ export default class ScalarAuthClient {
 
     public registerForToken(): Promise<string> {
         // Get openid bearer token from the HS as the first part of our dance
-        return MatrixClientPeg.get()
+        return MatrixClientPeg.safeGet()
             .getOpenIdToken()
             .then((tokenObject) => {
                 // Now we can send that to scalar and exchange it for a scalar token
@@ -256,11 +257,11 @@ export default class ScalarAuthClient {
         }
     }
 
-    public getScalarInterfaceUrlForRoom(room: Room, screen: string, id: string): string {
+    public getScalarInterfaceUrlForRoom(room: Room, screen?: string, id?: string): string {
         const roomId = room.roomId;
         const roomName = room.name;
         let url = this.uiUrl;
-        url += "?scalar_token=" + encodeURIComponent(this.scalarToken);
+        if (this.scalarToken) url += "?scalar_token=" + encodeURIComponent(this.scalarToken);
         url += "&room_id=" + encodeURIComponent(roomId);
         url += "&room_name=" + encodeURIComponent(roomName);
         url += "&theme=" + encodeURIComponent(SettingsStore.getValue("theme"));
@@ -274,6 +275,7 @@ export default class ScalarAuthClient {
     }
 
     public getStarterLink(starterLinkUrl: string): string {
+        if (!this.scalarToken) return starterLinkUrl;
         return starterLinkUrl + "?scalar_token=" + encodeURIComponent(this.scalarToken);
     }
 }

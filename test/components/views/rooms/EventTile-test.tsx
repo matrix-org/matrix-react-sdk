@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,25 +15,40 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
-import { DeviceTrustLevel, UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
-import { IEncryptedEventInfo } from "matrix-js-sdk/src/crypto/api";
-import { render, waitFor, screen, act, fireEvent } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { mocked } from "jest-mock";
+import {
+    CryptoApi,
+    EventType,
+    IEventDecryptionResult,
+    MatrixClient,
+    MatrixEvent,
+    NotificationCountType,
+    PendingEventOrdering,
+    Room,
+    TweakName,
+} from "matrix-js-sdk/src/matrix";
+import { EventEncryptionInfo, EventShieldColour, EventShieldReason } from "matrix-js-sdk/src/crypto-api";
+import { CryptoBackend } from "matrix-js-sdk/src/common-crypto/CryptoBackend";
 
 import EventTile, { EventTileProps } from "../../../../src/components/views/rooms/EventTile";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-import SettingsStore from "../../../../src/settings/SettingsStore";
-import { getRoomContext, mkEncryptedEvent, mkEvent, mkMessage, stubClient } from "../../../test-utils";
+import {
+    filterConsole,
+    flushPromises,
+    getRoomContext,
+    mkEncryptedEvent,
+    mkEvent,
+    mkMessage,
+    stubClient,
+} from "../../../test-utils";
 import { mkThread } from "../../../test-utils/threads";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import dis from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
+import { IRoomState } from "../../../../src/components/structures/RoomView";
 
 describe("EventTile", () => {
     const ROOM_ID = "!roomId:example.org";
@@ -43,12 +58,22 @@ describe("EventTile", () => {
 
     // let changeEvent: (event: MatrixEvent) => void;
 
-    function TestEventTile(props: Partial<EventTileProps>) {
-        // const [event] = useState(mxEvent);
-        // Give a way for a test to update the event prop.
-        // changeEvent = setEvent;
-
-        return <EventTile mxEvent={mxEvent} {...props} />;
+    /** wrap the EventTile up in context providers, and with basic properties, as it would be by MessagePanel normally. */
+    function WrappedEventTile(props: {
+        roomContext: IRoomState;
+        eventTilePropertyOverrides?: Partial<EventTileProps>;
+    }) {
+        return (
+            <MatrixClientContext.Provider value={client}>
+                <RoomContext.Provider value={props.roomContext}>
+                    <EventTile
+                        mxEvent={mxEvent}
+                        replacingEventId={mxEvent.replacingEventId()}
+                        {...(props.eventTilePropertyOverrides ?? {})}
+                    />
+                </RoomContext.Provider>
+            </MatrixClientContext.Provider>
+        );
     }
 
     function getComponent(
@@ -58,29 +83,22 @@ describe("EventTile", () => {
         const context = getRoomContext(room, {
             timelineRenderingType: renderingType,
         });
-        return render(
-            <MatrixClientContext.Provider value={client}>
-                <RoomContext.Provider value={context}>
-                    <TestEventTile {...overrides} />
-                </RoomContext.Provider>
-                ,
-            </MatrixClientContext.Provider>,
-        );
+        return render(<WrappedEventTile roomContext={context} eventTilePropertyOverrides={overrides} />);
     }
 
     beforeEach(() => {
         jest.clearAllMocks();
 
         stubClient();
-        client = MatrixClientPeg.get();
+        client = MatrixClientPeg.safeGet();
 
-        room = new Room(ROOM_ID, client, client.getUserId()!, {
+        room = new Room(ROOM_ID, client, client.getSafeUserId(), {
             pendingEventOrdering: PendingEventOrdering.Detached,
+            timelineSupport: true,
         });
 
         jest.spyOn(client, "getRoom").mockReturnValue(room);
         jest.spyOn(client, "decryptEventIfNeeded").mockResolvedValue();
-        jest.spyOn(SettingsStore, "getValue").mockImplementation((name) => name === "feature_threadenabled");
 
         mxEvent = mkMessage({
             room: room.roomId,
@@ -92,7 +110,7 @@ describe("EventTile", () => {
 
     describe("EventTile thread summary", () => {
         beforeEach(() => {
-            jest.spyOn(client, "supportsExperimentalThreads").mockReturnValue(true);
+            jest.spyOn(client, "supportsThreads").mockReturnValue(true);
         });
 
         it("removes the thread summary when thread is deleted", async () => {
@@ -131,16 +149,6 @@ describe("EventTile", () => {
     });
 
     describe("EventTile renderingType: ThreadsList", () => {
-        beforeEach(() => {
-            const { rootEvent } = mkThread({
-                room,
-                client,
-                authorId: "@alice:example.org",
-                participantUserIds: ["@alice:example.org"],
-            });
-            mxEvent = rootEvent;
-        });
-
         it("shows an unread notification badge", () => {
             const { container } = getComponent({}, TimelineRenderingType.ThreadsList);
 
@@ -201,33 +209,17 @@ describe("EventTile", () => {
         });
     });
     describe("Event verification", () => {
-        // data for our stubbed getEventEncryptionInfo: a map from event id to result
-        const eventToEncryptionInfoMap = new Map<string, IEncryptedEventInfo>();
-
-        const TRUSTED_DEVICE = DeviceInfo.fromStorage({}, "TRUSTED_DEVICE");
-        const UNTRUSTED_DEVICE = DeviceInfo.fromStorage({}, "UNTRUSTED_DEVICE");
+        // data for our stubbed getEncryptionInfoForEvent: a map from event id to result
+        const eventToEncryptionInfoMap = new Map<string, EventEncryptionInfo>();
 
         beforeEach(() => {
             eventToEncryptionInfoMap.clear();
 
-            // a mocked version of getEventEncryptionInfo which will pick its result from `eventToEncryptionInfoMap`
-            client.getEventEncryptionInfo = (event) => eventToEncryptionInfoMap.get(event.getId()!)!;
-
-            // a mocked version of checkUserTrust which always says the user is trusted (we do our testing via
-            // unverified devices).
-            const trustedUserTrustLevel = new UserTrustLevel(true, true, true);
-            client.checkUserTrust = (_userId) => trustedUserTrustLevel;
-
-            // a version of checkDeviceTrust which says that TRUSTED_DEVICE is trusted, and others are not.
-            const trustedDeviceTrustLevel = DeviceTrustLevel.fromUserTrustLevel(trustedUserTrustLevel, true, false);
-            const untrustedDeviceTrustLevel = DeviceTrustLevel.fromUserTrustLevel(trustedUserTrustLevel, false, false);
-            client.checkDeviceTrust = (userId, deviceId) => {
-                if (deviceId === TRUSTED_DEVICE.deviceId) {
-                    return trustedDeviceTrustLevel;
-                } else {
-                    return untrustedDeviceTrustLevel;
-                }
-            };
+            const mockCrypto = {
+                // a mocked version of getEncryptionInfoForEvent which will pick its result from `eventToEncryptionInfoMap`
+                getEncryptionInfoForEvent: async (event: MatrixEvent) => eventToEncryptionInfoMap.get(event.getId()!)!,
+            } as unknown as CryptoApi;
+            client.getCrypto = () => mockCrypto;
         });
 
         it("shows a warning for an event from an unverified device", async () => {
@@ -238,17 +230,15 @@ describe("EventTile", () => {
                 room: room.roomId,
             });
             eventToEncryptionInfoMap.set(mxEvent.getId()!, {
-                authenticated: true,
-                sender: UNTRUSTED_DEVICE,
-            } as IEncryptedEventInfo);
+                shieldColour: EventShieldColour.RED,
+                shieldReason: EventShieldReason.UNSIGNED_DEVICE,
+            } as EventEncryptionInfo);
 
             const { container } = getComponent();
+            await act(flushPromises);
 
             const eventTiles = container.getElementsByClassName("mx_EventTile");
             expect(eventTiles).toHaveLength(1);
-            const eventTile = eventTiles[0];
-
-            expect(eventTile.classList).toContain("mx_EventTile_unverified");
 
             // there should be a warning shield
             expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(1);
@@ -265,20 +255,79 @@ describe("EventTile", () => {
                 room: room.roomId,
             });
             eventToEncryptionInfoMap.set(mxEvent.getId()!, {
-                authenticated: true,
-                sender: TRUSTED_DEVICE,
-            } as IEncryptedEventInfo);
+                shieldColour: EventShieldColour.NONE,
+                shieldReason: null,
+            } as EventEncryptionInfo);
 
             const { container } = getComponent();
+            await act(flushPromises);
 
             const eventTiles = container.getElementsByClassName("mx_EventTile");
             expect(eventTiles).toHaveLength(1);
-            const eventTile = eventTiles[0];
-
-            expect(eventTile.classList).toContain("mx_EventTile_verified");
 
             // there should be no warning
             expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(0);
+        });
+
+        it.each([
+            [EventShieldReason.UNKNOWN, "Unknown error"],
+            [EventShieldReason.UNVERIFIED_IDENTITY, "unverified user"],
+            [EventShieldReason.UNSIGNED_DEVICE, "device not verified by its owner"],
+            [EventShieldReason.UNKNOWN_DEVICE, "unknown or deleted device"],
+            [EventShieldReason.AUTHENTICITY_NOT_GUARANTEED, "can't be guaranteed"],
+            [EventShieldReason.MISMATCHED_SENDER_KEY, "Encrypted by an unverified session"],
+        ])("shows the correct reason code for %i (%s)", async (reasonCode: EventShieldReason, expectedText: string) => {
+            mxEvent = await mkEncryptedEvent({
+                plainContent: { msgtype: "m.text", body: "msg1" },
+                plainType: "m.room.message",
+                user: "@alice:example.org",
+                room: room.roomId,
+            });
+            eventToEncryptionInfoMap.set(mxEvent.getId()!, {
+                shieldColour: EventShieldColour.GREY,
+                shieldReason: reasonCode,
+            } as EventEncryptionInfo);
+
+            const { container } = getComponent();
+            await act(flushPromises);
+
+            const e2eIcons = container.getElementsByClassName("mx_EventTile_e2eIcon");
+            expect(e2eIcons).toHaveLength(1);
+            expect(e2eIcons[0].classList).toContain("mx_EventTile_e2eIcon_normal");
+            expect(e2eIcons[0].getAttribute("aria-label")).toContain(expectedText);
+        });
+
+        describe("undecryptable event", () => {
+            filterConsole("Error decrypting event");
+
+            it("shows an undecryptable warning", async () => {
+                mxEvent = mkEvent({
+                    type: "m.room.encrypted",
+                    room: room.roomId,
+                    user: "@alice:example.org",
+                    event: true,
+                    content: {},
+                });
+
+                const mockCrypto = {
+                    decryptEvent: async (_ev): Promise<IEventDecryptionResult> => {
+                        throw new Error("can't decrypt");
+                    },
+                } as CryptoBackend;
+
+                await mxEvent.attemptDecryption(mockCrypto);
+
+                const { container } = getComponent();
+                await act(flushPromises);
+
+                const eventTiles = container.getElementsByClassName("mx_EventTile");
+                expect(eventTiles).toHaveLength(1);
+
+                expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(1);
+                expect(container.getElementsByClassName("mx_EventTile_e2eIcon")[0].classList).toContain(
+                    "mx_EventTile_e2eIcon_decryption_failure",
+                );
+            });
         });
 
         it("should update the warning when the event is edited", async () => {
@@ -290,17 +339,17 @@ describe("EventTile", () => {
                 room: room.roomId,
             });
             eventToEncryptionInfoMap.set(mxEvent.getId()!, {
-                authenticated: true,
-                sender: TRUSTED_DEVICE,
-            } as IEncryptedEventInfo);
+                shieldColour: EventShieldColour.NONE,
+                shieldReason: null,
+            } as EventEncryptionInfo);
 
-            const { container } = getComponent();
+            const roomContext = getRoomContext(room, {});
+            const { container, rerender } = render(<WrappedEventTile roomContext={roomContext} />);
+
+            await act(flushPromises);
 
             const eventTiles = container.getElementsByClassName("mx_EventTile");
             expect(eventTiles).toHaveLength(1);
-            const eventTile = eventTiles[0];
-
-            expect(eventTile.classList).toContain("mx_EventTile_verified");
 
             // there should be no warning
             expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(0);
@@ -313,16 +362,17 @@ describe("EventTile", () => {
                 room: room.roomId,
             });
             eventToEncryptionInfoMap.set(replacementEvent.getId()!, {
-                authenticated: true,
-                sender: UNTRUSTED_DEVICE,
-            } as IEncryptedEventInfo);
+                shieldColour: EventShieldColour.RED,
+                shieldReason: EventShieldReason.UNSIGNED_DEVICE,
+            } as EventEncryptionInfo);
 
-            act(() => {
+            await act(async () => {
                 mxEvent.makeReplaced(replacementEvent);
+                rerender(<WrappedEventTile roomContext={roomContext} />);
+                await flushPromises;
             });
 
             // check it was updated
-            expect(eventTile.classList).toContain("mx_EventTile_unverified");
             expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(1);
             expect(container.getElementsByClassName("mx_EventTile_e2eIcon")[0].classList).toContain(
                 "mx_EventTile_e2eIcon_warning",
@@ -339,18 +389,18 @@ describe("EventTile", () => {
                 user: "@alice:example.org",
                 room: room.roomId,
             });
-            eventToEncryptionInfoMap.set(mxEvent.getId()!, {
-                authenticated: true,
-                sender: TRUSTED_DEVICE,
-            } as IEncryptedEventInfo);
 
-            const { container } = getComponent();
+            eventToEncryptionInfoMap.set(mxEvent.getId()!, {
+                shieldColour: EventShieldColour.NONE,
+                shieldReason: null,
+            } as EventEncryptionInfo);
+
+            const roomContext = getRoomContext(room, {});
+            const { container, rerender } = render(<WrappedEventTile roomContext={roomContext} />);
+            await act(flushPromises);
 
             const eventTiles = container.getElementsByClassName("mx_EventTile");
             expect(eventTiles).toHaveLength(1);
-            const eventTile = eventTiles[0];
-
-            expect(eventTile.classList).toContain("mx_EventTile_verified");
 
             // there should be no warning
             expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(0);
@@ -363,16 +413,115 @@ describe("EventTile", () => {
                 event: true,
             });
 
-            act(() => {
+            await act(async () => {
                 mxEvent.makeReplaced(replacementEvent);
+                rerender(<WrappedEventTile roomContext={roomContext} />);
+                await flushPromises;
             });
 
             // check it was updated
-            expect(eventTile.classList).not.toContain("mx_EventTile_verified");
             expect(container.getElementsByClassName("mx_EventTile_e2eIcon")).toHaveLength(1);
             expect(container.getElementsByClassName("mx_EventTile_e2eIcon")[0].classList).toContain(
                 "mx_EventTile_e2eIcon_warning",
             );
+        });
+    });
+
+    describe("event highlighting", () => {
+        const isHighlighted = (container: HTMLElement): boolean =>
+            !!container.getElementsByClassName("mx_EventTile_highlight").length;
+
+        beforeEach(() => {
+            mocked(client.getPushActionsForEvent).mockReturnValue(null);
+        });
+
+        it("does not highlight message where message matches no push actions", () => {
+            const { container } = getComponent();
+
+            expect(client.getPushActionsForEvent).toHaveBeenCalledWith(mxEvent);
+            expect(isHighlighted(container)).toBeFalsy();
+        });
+
+        it(`does not highlight when message's push actions does not have a highlight tweak`, () => {
+            mocked(client.getPushActionsForEvent).mockReturnValue({ notify: true, tweaks: {} });
+            const { container } = getComponent();
+
+            expect(isHighlighted(container)).toBeFalsy();
+        });
+
+        it(`highlights when message's push actions have a highlight tweak`, () => {
+            mocked(client.getPushActionsForEvent).mockReturnValue({
+                notify: true,
+                tweaks: { [TweakName.Highlight]: true },
+            });
+            const { container } = getComponent();
+
+            expect(isHighlighted(container)).toBeTruthy();
+        });
+
+        describe("when a message has been edited", () => {
+            let editingEvent: MatrixEvent;
+
+            beforeEach(() => {
+                editingEvent = new MatrixEvent({
+                    type: "m.room.message",
+                    room_id: ROOM_ID,
+                    sender: "@alice:example.org",
+                    content: {
+                        "msgtype": "m.text",
+                        "body": "* edited body",
+                        "m.new_content": {
+                            msgtype: "m.text",
+                            body: "edited body",
+                        },
+                        "m.relates_to": {
+                            rel_type: "m.replace",
+                            event_id: mxEvent.getId(),
+                        },
+                    },
+                });
+                mxEvent.makeReplaced(editingEvent);
+            });
+
+            it("does not highlight message where no version of message matches any push actions", () => {
+                const { container } = getComponent();
+
+                // get push actions for both events
+                expect(client.getPushActionsForEvent).toHaveBeenCalledWith(mxEvent);
+                expect(client.getPushActionsForEvent).toHaveBeenCalledWith(editingEvent);
+                expect(isHighlighted(container)).toBeFalsy();
+            });
+
+            it(`does not highlight when no version of message's push actions have a highlight tweak`, () => {
+                mocked(client.getPushActionsForEvent).mockReturnValue({ notify: true, tweaks: {} });
+                const { container } = getComponent();
+
+                expect(isHighlighted(container)).toBeFalsy();
+            });
+
+            it(`highlights when previous version of message's push actions have a highlight tweak`, () => {
+                mocked(client.getPushActionsForEvent).mockImplementation((event: MatrixEvent) => {
+                    if (event === mxEvent) {
+                        return { notify: true, tweaks: { [TweakName.Highlight]: true } };
+                    }
+                    return { notify: false, tweaks: {} };
+                });
+                const { container } = getComponent();
+
+                expect(isHighlighted(container)).toBeTruthy();
+            });
+
+            it(`highlights when new version of message's push actions have a highlight tweak`, () => {
+                mocked(client.getPushActionsForEvent).mockImplementation((event: MatrixEvent) => {
+                    if (event === editingEvent) {
+                        return { notify: true, tweaks: { [TweakName.Highlight]: true } };
+                    }
+                    return { notify: false, tweaks: {} };
+                });
+                const { container } = getComponent();
+
+                expect(isHighlighted(container)).toBeTruthy();
+            });
         });
     });
 });

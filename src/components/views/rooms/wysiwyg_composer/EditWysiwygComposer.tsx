@@ -52,14 +52,14 @@ export default function EditWysiwygComposer({
     className,
     ...props
 }: EditWysiwygComposerProps): JSX.Element {
-    const defaultContextValue = useRef(getDefaultContextValue());
+    const defaultContextValue = useRef(getDefaultContextValue({ editorStateTransfer }));
     const initialContent = useInitialContent(editorStateTransfer);
     const isReady = !editorStateTransfer || initialContent !== undefined;
 
     const { editMessage, endEditing, onChange, isSaveDisabled } = useEditing(editorStateTransfer, initialContent);
 
     if (!isReady) {
-        return null;
+        return <></>;
     }
 
     return (

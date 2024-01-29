@@ -18,8 +18,11 @@ import { richToPlain, plainToRich } from "@matrix-org/matrix-wysiwyg";
 import { IContent, IEventRelation, MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "../../../../../settings/SettingsStore";
-import { RoomPermalinkCreator } from "../../../../../utils/permalinks/Permalinks";
+import { parsePermalink, RoomPermalinkCreator } from "../../../../../utils/permalinks/Permalinks";
 import { addReplyToMessageContent } from "../../../../../utils/Reply";
+import { isNotNull } from "../../../../../Typeguards";
+
+export const EMOTE_PREFIX = "/me ";
 
 // Merges favouring the given relation
 function attachRelation(content: IContent, relation?: IEventRelation): void {
@@ -61,6 +64,8 @@ interface CreateMessageContentParams {
     editedEvent?: MatrixEvent;
 }
 
+const isMatrixEvent = (e: MatrixEvent | undefined): e is MatrixEvent => e instanceof MatrixEvent;
+
 export async function createMessageContent(
     message: string,
     isHTML: boolean,
@@ -72,39 +77,38 @@ export async function createMessageContent(
         editedEvent,
     }: CreateMessageContentParams,
 ): Promise<IContent> {
-    // TODO emote ?
-
-    const isEditing = Boolean(editedEvent);
-    const isReply = isEditing ? Boolean(editedEvent?.replyEventId) : Boolean(replyToEvent);
+    const isEditing = isMatrixEvent(editedEvent);
+    const isReply = isEditing ? Boolean(editedEvent.replyEventId) : isMatrixEvent(replyToEvent);
     const isReplyAndEditing = isEditing && isReply;
 
-    /*const isEmote = containsEmote(model);
+    const isEmote = message.startsWith(EMOTE_PREFIX);
     if (isEmote) {
-        model = stripEmoteCommand(model);
+        // if we are dealing with an emote we want to remove the prefix so that `/me` does not
+        // appear after the `* <userName>` text in the timeline
+        message = message.slice(EMOTE_PREFIX.length);
     }
-    if (startsWith(model, "//")) {
-        model = stripPrefix(model, "/");
+    if (message.startsWith("//")) {
+        // if user wants to enter a single slash at the start of a message, this
+        // is how they have to do it (due to it clashing with commands), so here we
+        // remove the first character to make sure //word displays as /word
+        message = message.slice(1);
     }
-    model = unescapeMessage(model);*/
-
-    // const body = textSerialize(model);
 
     // if we're editing rich text, the message content is pure html
-    // BUT if we're not, the message content will be plain text
-    const body = isHTML ? await richToPlain(message) : message;
+    // BUT if we're not, the message content will be plain text where we need to convert the mentions
+    const body = isHTML ? await richToPlain(message, false) : convertPlainTextToBody(message);
     const bodyPrefix = (isReplyAndEditing && getTextReplyFallback(editedEvent)) || "";
     const formattedBodyPrefix = (isReplyAndEditing && getHtmlReplyFallback(editedEvent)) || "";
 
     const content: IContent = {
-        // TODO emote
-        msgtype: MsgType.Text,
+        msgtype: isEmote ? MsgType.Emote : MsgType.Text,
         body: isEditing ? `${bodyPrefix} * ${body}` : body,
     };
 
     // TODO markdown support
 
     const isMarkdownEnabled = SettingsStore.getValue<boolean>("MessageComposerInput.useMarkdown");
-    const formattedBody = isHTML ? message : isMarkdownEnabled ? await plainToRich(message) : null;
+    const formattedBody = isHTML ? message : isMarkdownEnabled ? await plainToRich(message, true) : null;
 
     if (formattedBody) {
         content.format = "org.matrix.custom.html";
@@ -125,6 +129,8 @@ export async function createMessageContent(
 
     const newRelation = isEditing ? { ...relation, rel_type: "m.replace", event_id: editedEvent.getId() } : relation;
 
+    // TODO Do we need to attach mentions here?
+    // TODO Handle editing?
     attachRelation(content, newRelation);
 
     if (!isEditing && replyToEvent && permalinkCreator) {
@@ -135,4 +141,52 @@ export async function createMessageContent(
     }
 
     return content;
+}
+
+/**
+ * Without a model, we need to manually amend mentions in uncontrolled message content
+ * to make sure that mentions meet the matrix specification.
+ *
+ * @param content - the output from the `MessageComposer` state when in plain text mode
+ * @returns - a string formatted with the mentions replaced as required
+ */
+function convertPlainTextToBody(content: string): string {
+    const document = new DOMParser().parseFromString(content, "text/html");
+    const mentions = Array.from(document.querySelectorAll("a[data-mention-type]"));
+
+    mentions.forEach((mention) => {
+        const mentionType = mention.getAttribute("data-mention-type");
+        switch (mentionType) {
+            case "at-room": {
+                mention.replaceWith("@room");
+                break;
+            }
+            case "user": {
+                const innerText = mention.innerHTML;
+                mention.replaceWith(innerText);
+                break;
+            }
+            case "room": {
+                // for this case we use parsePermalink to try and get the mx id
+                const href = mention.getAttribute("href");
+
+                // if the mention has no href attribute, leave it alone
+                if (href === null) break;
+
+                // otherwise, attempt to parse the room alias or id from the href
+                const permalinkParts = parsePermalink(href);
+
+                // then if we have permalink parts with a valid roomIdOrAlias, replace the
+                // room mention with that text
+                if (isNotNull(permalinkParts) && isNotNull(permalinkParts.roomIdOrAlias)) {
+                    mention.replaceWith(permalinkParts.roomIdOrAlias);
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    });
+
+    return document.body.innerHTML;
 }

@@ -15,19 +15,18 @@ limitations under the License.
 */
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Room, RoomType } from "matrix-js-sdk/src/matrix";
-import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
+import { Room, RoomType, HierarchyRoom } from "matrix-js-sdk/src/matrix";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
 import { normalize } from "matrix-js-sdk/src/utils";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 
-export const useSpaceResults = (space?: Room, query?: string): [IHierarchyRoom[], boolean] => {
-    const [rooms, setRooms] = useState<IHierarchyRoom[]>([]);
+export const useSpaceResults = (space: Room | undefined, query: string): [HierarchyRoom[], boolean] => {
+    const [rooms, setRooms] = useState<HierarchyRoom[]>([]);
     const [hierarchy, setHierarchy] = useState<RoomHierarchy>();
 
     const resetHierarchy = useCallback(() => {
-        setHierarchy(space ? new RoomHierarchy(space, 50) : null);
+        setHierarchy(space ? new RoomHierarchy(space, 50) : undefined);
     }, [space]);
     useEffect(resetHierarchy, [resetHierarchy]);
 
@@ -40,7 +39,7 @@ export const useSpaceResults = (space?: Room, query?: string): [IHierarchyRoom[]
             while (hierarchy?.canLoadMore && !unmounted && space === hierarchy.root) {
                 await hierarchy.load();
                 if (hierarchy.canLoadMore) hierarchy.load(); // start next load so that the loading attribute is right
-                setRooms(hierarchy.rooms);
+                setRooms(hierarchy.rooms!);
             }
         })();
 
@@ -54,7 +53,7 @@ export const useSpaceResults = (space?: Room, query?: string): [IHierarchyRoom[]
         const lcQuery = trimmedQuery.toLowerCase();
         const normalizedQuery = normalize(trimmedQuery);
 
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         return rooms?.filter((r) => {
             return (
                 r.room_type !== RoomType.Space &&

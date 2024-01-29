@@ -21,7 +21,12 @@ import counterpart from "counterpart";
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
+import { MapWithDefault } from "matrix-js-sdk/src/utils";
+import { normalizeLanguageKey, TranslationKey as _TranslationKey, KEY_SEPARATOR } from "matrix-web-i18n";
+import { TranslationStringsObject } from "@matrix-org/react-sdk-module-api";
+import _ from "lodash";
 
+import type Translations from "./i18n/strings/en_EN.json";
 import SettingsStore from "./settings/SettingsStore";
 import PlatformPeg from "./PlatformPeg";
 import { SettingLevel } from "./settings/SettingLevel";
@@ -32,6 +37,8 @@ import { ModuleRunner } from "./modules/ModuleRunner";
 // @ts-ignore - $webapp is a webpack resolve alias pointing to the output directory, see webpack config
 import webpackLangJsonUrl from "$webapp/i18n/languages.json";
 
+export { normalizeLanguageKey, getNormalizedLanguageKeys } from "matrix-web-i18n";
+
 const i18nFolder = "i18n/";
 
 // Control whether to also return original, untranslated strings
@@ -39,42 +46,79 @@ const i18nFolder = "i18n/";
 const ANNOTATE_STRINGS = false;
 
 // We use english strings as keys, some of which contain full stops
-counterpart.setSeparator("|");
+counterpart.setSeparator(KEY_SEPARATOR);
 
 // see `translateWithFallback` for an explanation of fallback handling
 const FALLBACK_LOCALE = "en";
 counterpart.setFallbackLocale(FALLBACK_LOCALE);
 
-export interface ITranslatableError extends Error {
-    translatedMessage: string;
+export interface ErrorOptions {
+    // Because we're mixing the subsitution variables and `cause` into the same object
+    // below, we want them to always explicitly say whether there is an underlying error
+    // or not to avoid typos of "cause" slipping through unnoticed.
+    cause: unknown | undefined;
 }
 
 /**
- * Helper function to create an error which has an English message
- * with a translatedMessage property for use by the consumer.
- * @param {string} message Message to translate.
- * @param {object} variables Variable substitutions, e.g { foo: 'bar' }
- * @returns {Error} The constructed error.
+ * Used to rethrow an error with a user-friendly translatable message while maintaining
+ * access to that original underlying error. Downstream consumers can display the
+ * `translatedMessage` property in the UI and inspect the underlying error with the
+ * `cause` property.
+ *
+ * The error message will display as English in the console and logs so Element
+ * developers can easily understand the error and find the source in the code. It also
+ * helps tools like Sentry deduplicate the error, or just generally searching in
+ * rageshakes to find all instances regardless of the users locale.
+ *
+ * @param message - The untranslated error message text, e.g "Something went wrong with %(foo)s".
+ * @param substitutionVariablesAndCause - Variable substitutions for the translation and
+ * original cause of the error. If there is no cause, just pass `undefined`, e.g { foo:
+ * 'bar', cause: err || undefined }
  */
-export function newTranslatableError(message: string, variables?: IVariables): ITranslatableError {
-    const error = new Error(message) as ITranslatableError;
-    error.translatedMessage = _t(message, variables);
-    return error;
+export class UserFriendlyError extends Error {
+    public readonly translatedMessage: string;
+
+    public constructor(message: TranslationKey, substitutionVariablesAndCause?: IVariables & ErrorOptions) {
+        const errorOptions = {
+            cause: substitutionVariablesAndCause?.cause,
+        };
+        // Prevent "Could not find /%\(cause\)s/g in x" logs to the console by removing it from the list
+        const substitutionVariables = { ...substitutionVariablesAndCause };
+        delete substitutionVariables["cause"];
+
+        // Create the error with the English version of the message that we want to show
+        // up in the logs
+        const englishTranslatedMessage = _t(message, { ...substitutionVariables, locale: "en" });
+        super(englishTranslatedMessage, errorOptions);
+
+        // Also provide a translated version of the error in the users locale to display
+        this.translatedMessage = _t(message, substitutionVariables);
+    }
 }
 
 export function getUserLanguage(): string {
     const language = SettingsStore.getValue("language", null, /*excludeDefault:*/ true);
-    if (language) {
+    if (typeof language === "string" && language !== "") {
         return language;
     } else {
         return normalizeLanguageKey(getLanguageFromBrowser());
     }
 }
 
+/**
+ * A type representing the union of possible keys into the translation file using `|` delimiter to access nested fields.
+ * @example `common|error` to access `error` within the `common` sub-object.
+ * {
+ *     "common": {
+ *         "error": "Error"
+ *     }
+ * }
+ */
+export type TranslationKey = _TranslationKey<typeof Translations>;
+
 // Function which only purpose is to mark that a string is translatable
 // Does not actually do anything. It's helpful for automatic extraction of translatable strings
-export function _td(s: string): string {
-    // eslint-disable-line @typescript-eslint/naming-convention
+export function _td(s: TranslationKey): TranslationKey {
     return s;
 }
 
@@ -87,7 +131,7 @@ export function _td(s: string): string {
  * for this reason, force fallbackLocale === locale in the first call to translate
  * and fallback 'manually' so we can mark fallback strings appropriately
  * */
-const translateWithFallback = (text: string, options?: IVariables): { translated?: string; isFallback?: boolean } => {
+const translateWithFallback = (text: string, options?: IVariables): { translated: string; isFallback?: boolean } => {
     const translated = counterpart.translate(text, { ...options, fallbackLocale: counterpart.getLocale() });
     if (!translated || translated.startsWith("missing translation:")) {
         const fallbackTranslated = counterpart.translate(text, { ...options, locale: FALLBACK_LOCALE });
@@ -117,7 +161,7 @@ const translateWithFallback = (text: string, options?: IVariables): { translated
 
 // Wrapper for counterpart's translation function so that it handles nulls and undefineds properly
 // Takes the same arguments as counterpart.translate()
-function safeCounterpartTranslate(text: string, variables?: IVariables): { translated?: string; isFallback?: boolean } {
+function safeCounterpartTranslate(text: string, variables?: IVariables): { translated: string; isFallback?: boolean } {
     // Don't do substitutions in counterpart. We handle it ourselves so we can replace with React components
     // However, still pass the variables to counterpart so that it can choose the correct plural if count is given
     // It is enough to pass the count variable, but in the future counterpart might make use of other information too
@@ -147,6 +191,9 @@ function safeCounterpartTranslate(text: string, variables?: IVariables): { trans
     return translateWithFallback(text, options);
 }
 
+/**
+ * The value a variable or tag can take for a translation interpolation.
+ */
 type SubstitutionValue = number | string | React.ReactNode | ((sub: string) => React.ReactNode);
 
 export interface IVariables {
@@ -160,7 +207,7 @@ export type TranslatedString = string | React.ReactNode;
 
 // For development/testing purposes it is useful to also output the original string
 // Don't do that for release versions
-const annotateStrings = (result: TranslatedString, translationKey: string): TranslatedString => {
+const annotateStrings = (result: TranslatedString, translationKey: TranslationKey): TranslatedString => {
     if (!ANNOTATE_STRINGS) {
         return result;
     }
@@ -193,14 +240,22 @@ const annotateStrings = (result: TranslatedString, translationKey: string): Tran
  * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
 // eslint-next-line @typescript-eslint/naming-convention
-export function _t(text: string, variables?: IVariables): string;
-export function _t(text: string, variables: IVariables, tags: Tags): React.ReactNode;
-export function _t(text: string, variables?: IVariables, tags?: Tags): TranslatedString {
+export function _t(text: TranslationKey, variables?: IVariables): string;
+export function _t(text: TranslationKey, variables: IVariables | undefined, tags: Tags): React.ReactNode;
+export function _t(text: TranslationKey, variables?: IVariables, tags?: Tags): TranslatedString {
     // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
     const { translated } = safeCounterpartTranslate(text, variables);
     const substituted = substitute(translated, variables, tags);
 
     return annotateStrings(substituted, text);
+}
+
+/**
+ * Utility function to look up a string by its translation key without resolving variables & tags
+ * @param key - the translation key to return the value for
+ */
+export function lookupString(key: TranslationKey): string {
+    return safeCounterpartTranslate(key, {}).translated;
 }
 
 /*
@@ -214,9 +269,9 @@ export function _t(text: string, variables?: IVariables, tags?: Tags): Translate
  * or translation used a fallback locale, otherwise a string
  */
 // eslint-next-line @typescript-eslint/naming-convention
-export function _tDom(text: string, variables?: IVariables): TranslatedString;
-export function _tDom(text: string, variables: IVariables, tags: Tags): React.ReactNode;
-export function _tDom(text: string, variables?: IVariables, tags?: Tags): TranslatedString {
+export function _tDom(text: TranslationKey, variables?: IVariables): TranslatedString;
+export function _tDom(text: TranslationKey, variables: IVariables, tags: Tags): React.ReactNode;
+export function _tDom(text: TranslationKey, variables?: IVariables, tags?: Tags): TranslatedString {
     // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
     const { translated, isFallback } = safeCounterpartTranslate(text, variables);
     const substituted = substitute(translated, variables, tags);
@@ -251,7 +306,7 @@ export function sanitizeForTranslation(text: string): string {
  * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
 export function substitute(text: string, variables?: IVariables): string;
-export function substitute(text: string, variables: IVariables, tags: Tags): string;
+export function substitute(text: string, variables: IVariables | undefined, tags: Tags | undefined): string;
 export function substitute(text: string, variables?: IVariables, tags?: Tags): string | React.ReactNode {
     let result: React.ReactNode | string = text;
 
@@ -274,10 +329,10 @@ export function substitute(text: string, variables?: IVariables, tags?: Tags): s
     return result;
 }
 
-/*
+/**
  * Replace parts of a text using regular expressions
- * @param {string} text The text on which to perform substitutions
- * @param {object} mapping A mapping from regular expressions in string form to replacement string or a
+ * @param text - The text on which to perform substitutions
+ * @param mapping - A mapping from regular expressions in string form to replacement string or a
  * function which will receive as the argument the capture groups defined in the regexp. E.g.
  * { 'Hello (.?) World': (sub) => sub.toUpperCase() }
  *
@@ -288,7 +343,7 @@ export function replaceByRegexes(text: string, mapping: Tags): React.ReactNode;
 export function replaceByRegexes(text: string, mapping: IVariables | Tags): string | React.ReactNode {
     // We initially store our output as an array of strings and objects (e.g. React components).
     // This will then be converted to a string or a <span> at the end
-    const output = [text];
+    const output: SubstitutionValue[] = [text];
 
     // If we insert any components we need to wrap the output in a span. React doesn't like just an array of components.
     let shouldWrapInSpan = false;
@@ -319,7 +374,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
             // The textual part before the first match
             const head = inputText.slice(0, match.index);
 
-            const parts = [];
+            const parts: SubstitutionValue[] = [];
             // keep track of prevMatch
             let prevMatch;
             while (match) {
@@ -327,7 +382,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
                 prevMatch = match;
                 const capturedGroups = match.slice(2);
 
-                let replaced;
+                let replaced: SubstitutionValue;
                 // If substitution is a function, call it
                 if (mapping[regexpString] instanceof Function) {
                     replaced = ((mapping as Tags)[regexpString] as Function)(...capturedGroups);
@@ -372,12 +427,18 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
             }
         }
         if (!matchFoundSomewhere) {
-            // The current regexp did not match anything in the input
-            // Missing matches is entirely possible because you might choose to show some variables only in the case
-            // of e.g. plurals. It's still a bit suspicious, and could be due to an error, so log it.
-            // However, not showing count is so common that it's not worth logging. And other commonly unused variables
-            // here, if there are any.
-            if (regexpString !== "%\\(count\\)s") {
+            if (
+                // The current regexp did not match anything in the input. Missing
+                // matches is entirely possible because you might choose to show some
+                // variables only in the case of e.g. plurals. It's still a bit
+                // suspicious, and could be due to an error, so log it. However, not
+                // showing count is so common that it's not worth logging. And other
+                // commonly unused variables here, if there are any.
+                regexpString !== "%\\(count\\)s" &&
+                // Ignore the `locale` option which can be used to override the locale
+                // in counterpart
+                regexpString !== "%\\(locale\\)s"
+            ) {
                 logger.log(`Could not find ${regexp} in ${text}`);
             }
         }
@@ -398,10 +459,7 @@ export function setMissingEntryGenerator(f: (value: string) => void): void {
 }
 
 type Languages = {
-    [lang: string]: {
-        fileName: string;
-        label: string;
-    };
+    [lang: string]: string;
 };
 
 export function setLanguage(preferredLangs: string | string[]): Promise<void> {
@@ -432,9 +490,9 @@ export function setLanguage(preferredLangs: string | string[]): Promise<void> {
                 logger.error("Unable to find an appropriate language");
             }
 
-            return getLanguageRetry(i18nFolder + availLangs[langToUse].fileName);
+            return getLanguageRetry(i18nFolder + availLangs[langToUse]);
         })
-        .then(async (langData): Promise<ICounterpartTranslation> => {
+        .then(async (langData): Promise<ICounterpartTranslation | undefined> => {
             counterpart.registerTranslations(langToUse, langData);
             await registerCustomTranslations();
             counterpart.setLocale(langToUse);
@@ -446,7 +504,7 @@ export function setLanguage(preferredLangs: string | string[]): Promise<void> {
 
             // Set 'en' as fallback language:
             if (langToUse !== "en") {
-                return getLanguageRetry(i18nFolder + availLangs["en"].fileName);
+                return getLanguageRetry(i18nFolder + availLangs["en"]);
             }
         })
         .then(async (langData): Promise<void> => {
@@ -457,21 +515,23 @@ export function setLanguage(preferredLangs: string | string[]): Promise<void> {
 
 type Language = {
     value: string;
-    label: string;
+    label: string; // translated
+    labelInTargetLanguage: string; // translated
 };
 
-export function getAllLanguagesFromJson(): Promise<Language[]> {
-    return getLangsJson().then((langsObject) => {
-        const langs: Language[] = [];
-        for (const langKey in langsObject) {
-            if (langsObject.hasOwnProperty(langKey)) {
-                langs.push({
-                    value: langKey,
-                    label: langsObject[langKey].label,
-                });
-            }
-        }
-        return langs;
+export async function getAllLanguagesFromJson(): Promise<string[]> {
+    return Object.keys(await getLangsJson());
+}
+
+export async function getAllLanguagesWithLabels(): Promise<Language[]> {
+    const languageNames = new Intl.DisplayNames([getUserLanguage()], { type: "language", style: "short" });
+    const languages = await getAllLanguagesFromJson();
+    return languages.map<Language>((langKey) => {
+        return {
+            value: langKey,
+            label: languageNames.of(langKey)!,
+            labelInTargetLanguage: new Intl.DisplayNames([langKey], { type: "language", style: "short" }).of(langKey)!,
+        };
     });
 }
 
@@ -483,41 +543,6 @@ export function getLanguagesFromBrowser(): readonly string[] {
 
 export function getLanguageFromBrowser(): string {
     return getLanguagesFromBrowser()[0];
-}
-
-/**
- * Turns a language string, normalises it,
- * (see normalizeLanguageKey) into an array of language strings
- * with fallback to generic languages
- * (eg. 'pt-BR' => ['pt-br', 'pt'])
- *
- * @param {string} language The input language string
- * @return {string[]} List of normalised languages
- */
-export function getNormalizedLanguageKeys(language: string): string[] {
-    const languageKeys: string[] = [];
-    const normalizedLanguage = normalizeLanguageKey(language);
-    const languageParts = normalizedLanguage.split("-");
-    if (languageParts.length === 2 && languageParts[0] === languageParts[1]) {
-        languageKeys.push(languageParts[0]);
-    } else {
-        languageKeys.push(normalizedLanguage);
-        if (languageParts.length === 2) {
-            languageKeys.push(languageParts[0]);
-        }
-    }
-    return languageKeys;
-}
-
-/**
- * Returns a language string with underscores replaced with
- * hyphens, and lowercased.
- *
- * @param {string} language The language string to be normalized
- * @returns {string} The normalized language string
- */
-export function normalizeLanguageKey(language: string): string {
-    return language.toLowerCase().replace("_", "-");
 }
 
 export function getCurrentLanguage(): string {
@@ -606,44 +631,31 @@ async function getLanguage(langPath: string): Promise<ICounterpartTranslation> {
     return res.json();
 }
 
-export interface ICustomTranslations {
-    // Format is a map of english string to language to override
-    [str: string]: {
-        [lang: string]: string;
-    };
-}
-
-let cachedCustomTranslations: Optional<ICustomTranslations> = null;
+let cachedCustomTranslations: Optional<TranslationStringsObject> = null;
 let cachedCustomTranslationsExpire = 0; // zero to trigger expiration right away
 
 // This awkward class exists so the test runner can get at the function. It is
 // not intended for practical or realistic usage.
 export class CustomTranslationOptions {
-    public static lookupFn: (url: string) => ICustomTranslations;
+    public static lookupFn?: (url: string) => TranslationStringsObject;
 
     private constructor() {
         // static access for tests only
     }
 }
 
-function doRegisterTranslations(customTranslations: ICustomTranslations): void {
-    // We convert the operator-friendly version into something counterpart can
-    // consume.
-    const langs: {
-        // same structure, just flipped key order
-        [lang: string]: {
-            [str: string]: string;
-        };
-    } = {};
-    for (const [str, translations] of Object.entries(customTranslations)) {
-        for (const [lang, newStr] of Object.entries(translations)) {
-            if (!langs[lang]) langs[lang] = {};
-            langs[lang][str] = newStr;
+function doRegisterTranslations(customTranslations: TranslationStringsObject): void {
+    // We convert the operator-friendly version into something counterpart can consume.
+    // Map: lang → Record: string → translation
+    const langs: MapWithDefault<string, Record<string, string>> = new MapWithDefault(() => ({}));
+    for (const [translationKey, translations] of Object.entries(customTranslations)) {
+        for (const [lang, translation] of Object.entries(translations)) {
+            _.set(langs.getOrCreate(lang), translationKey.split(KEY_SEPARATOR), translation);
         }
     }
 
     // Finally, tell counterpart about our translations
-    for (const [lang, translations] of Object.entries(langs)) {
+    for (const [lang, translations] of langs) {
         counterpart.registerTranslations(lang, translations);
     }
 }
@@ -656,7 +668,11 @@ function doRegisterTranslations(customTranslations: ICustomTranslations): void {
  * This function should be called *after* registering other translations data to
  * ensure it overrides strings properly.
  */
-export async function registerCustomTranslations(): Promise<void> {
+export async function registerCustomTranslations({
+    testOnlyIgnoreCustomTranslationsCache = false,
+}: {
+    testOnlyIgnoreCustomTranslationsCache?: boolean;
+} = {}): Promise<void> {
     const moduleTranslations = ModuleRunner.instance.allTranslations;
     doRegisterTranslations(moduleTranslations);
 
@@ -664,11 +680,11 @@ export async function registerCustomTranslations(): Promise<void> {
     if (!lookupUrl) return; // easy - nothing to do
 
     try {
-        let json: ICustomTranslations;
-        if (Date.now() >= cachedCustomTranslationsExpire) {
+        let json: Optional<TranslationStringsObject>;
+        if (testOnlyIgnoreCustomTranslationsCache || Date.now() >= cachedCustomTranslationsExpire) {
             json = CustomTranslationOptions.lookupFn
                 ? CustomTranslationOptions.lookupFn(lookupUrl)
-                : ((await (await fetch(lookupUrl)).json()) as ICustomTranslations);
+                : ((await (await fetch(lookupUrl)).json()) as TranslationStringsObject);
             cachedCustomTranslations = json;
 
             // Set expiration to the future, but not too far. Just trying to avoid

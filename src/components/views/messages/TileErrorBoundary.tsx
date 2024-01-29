@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import classNames from "classnames";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
@@ -30,19 +30,18 @@ import { Layout } from "../../../settings/enums/Layout";
 interface IProps {
     mxEvent: MatrixEvent;
     layout: Layout;
+    children: ReactNode;
 }
 
 interface IState {
-    error: Error;
+    error?: Error;
 }
 
 export default class TileErrorBoundary extends React.Component<IProps, IState> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
-        this.state = {
-            error: null,
-        };
+        this.state = {};
     }
 
     public static getDerivedStateFromError(error: Error): Partial<IState> {
@@ -84,7 +83,7 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
                     <>
                         &nbsp;
                         <AccessibleButton kind="link" onClick={this.onBugReport}>
-                            {_t("Submit logs")}
+                            {_t("bug_reporting|submit_debug_logs")}
                         </AccessibleButton>
                     </>
                 );
@@ -96,7 +95,7 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
                     <>
                         &nbsp;
                         <AccessibleButton onClick={this.onViewSource} kind="link">
-                            {_t("View Source")}
+                            {_t("action|view_source")}
                         </AccessibleButton>
                     </>
                 );
@@ -106,7 +105,7 @@ export default class TileErrorBoundary extends React.Component<IProps, IState> {
                 <li className={classNames(classes)} data-layout={this.props.layout}>
                     <div className="mx_EventTile_line">
                         <span>
-                            {_t("Can't load this message")}
+                            {_t("timeline|error_rendering_message")}
                             {mxEvent && ` (${mxEvent.getType()})`}
                             {submitLogsButton}
                             {viewSourceButton}

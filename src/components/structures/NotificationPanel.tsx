@@ -43,7 +43,7 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
 
     private card = React.createRef<HTMLDivElement>();
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -55,16 +55,16 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
         this.setState({ narrow });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const emptyState = (
             <div className="mx_RightPanel_empty mx_NotificationPanel_empty">
-                <h2>{_t("You're all caught up")}</h2>
-                <p>{_t("You have no visible notifications.")}</p>
+                <h2>{_t("notif_panel|empty_heading")}</h2>
+                <p>{_t("notif_panel|empty_description")}</p>
             </div>
         );
 
-        let content;
-        const timelineSet = MatrixClientPeg.get().getNotifTimelineSet();
+        let content: JSX.Element;
+        const timelineSet = MatrixClientPeg.safeGet().getNotifTimelineSet();
         if (timelineSet) {
             // wrap a TimelinePanel with the jump-to-event bits turned off.
             content = (
@@ -93,9 +93,11 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
             >
                 <BaseCard
                     header={
-                        <Heading size="h4" className="mx_BaseCard_header_title_heading">
-                            {_t("Notifications")}
-                        </Heading>
+                        <div className="mx_BaseCard_header_title">
+                            <Heading size="4" className="mx_BaseCard_header_title_heading">
+                                {_t("notifications|enable_prompt_toast_title")}
+                            </Heading>
+                        </div>
                     }
                     /**
                      * Need to rename this CSS class to something more generic

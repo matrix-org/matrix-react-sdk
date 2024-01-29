@@ -47,7 +47,7 @@ describe("<DeviceDetailHeading />", () => {
         expect({ container }).toMatchSnapshot();
     });
 
-    it("renders device id as fallback when device has no display name ", () => {
+    it("renders device id as fallback when device has no display name", () => {
         const { getByText } = render(
             getComponent({
                 device: { ...device, display_name: undefined },
@@ -136,7 +136,7 @@ describe("<DeviceDetailHeading />", () => {
         await flushPromisesWithFakeTimers();
 
         // error message displayed
-        expect(queryByText("Failed to set display name")).toBeTruthy();
+        expect(queryByText("Failed to set session name")).toBeTruthy();
         // spinner removed
         expect(container.getElementsByClassName("mx_Spinner").length).toBeFalsy();
 

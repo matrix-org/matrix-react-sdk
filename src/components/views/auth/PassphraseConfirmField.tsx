@@ -18,27 +18,28 @@ import React, { PureComponent, RefCallback, RefObject } from "react";
 
 import Field, { IInputProps } from "../elements/Field";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
-import { _t, _td } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 
-interface IProps extends Omit<IInputProps, "onValidate"> {
+interface IProps extends Omit<IInputProps, "onValidate" | "label" | "element"> {
     id?: string;
     fieldRef?: RefCallback<Field> | RefObject<Field>;
     autoComplete?: string;
     value: string;
     password: string; // The password we're confirming
 
-    labelRequired?: string;
-    labelInvalid?: string;
+    label: TranslationKey;
+    labelRequired: TranslationKey;
+    labelInvalid: TranslationKey;
 
-    onChange(ev: React.FormEvent<HTMLElement>);
-    onValidate?(result: IValidationResult);
+    onChange(ev: React.FormEvent<HTMLElement>): void;
+    onValidate?(result: IValidationResult): void;
 }
 
 class PassphraseConfirmField extends PureComponent<IProps> {
     public static defaultProps = {
-        label: _td("Confirm password"),
-        labelRequired: _td("Confirm password"),
-        labelInvalid: _td("Passwords don't match"),
+        label: _td("auth|change_password_confirm_label"),
+        labelRequired: _td("auth|change_password_confirm_label"),
+        labelInvalid: _td("auth|change_password_confirm_invalid"),
     };
 
     private validate = withValidation({
@@ -65,7 +66,7 @@ class PassphraseConfirmField extends PureComponent<IProps> {
         return result;
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <Field
                 id={this.props.id}
@@ -76,6 +77,7 @@ class PassphraseConfirmField extends PureComponent<IProps> {
                 value={this.props.value}
                 onChange={this.props.onChange}
                 onValidate={this.onValidate}
+                autoFocus={this.props.autoFocus}
             />
         );
     }

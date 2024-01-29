@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IContent } from "matrix-js-sdk/src/matrix";
 
 import { Playback } from "../../../audio/Playback";
 import InlineSpinner from "../elements/InlineSpinner";
@@ -31,7 +32,7 @@ import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContex
 import MediaProcessingError from "./shared/MediaProcessingError";
 
 interface IState {
-    error?: Error;
+    error?: boolean;
     playback?: Playback;
 }
 
@@ -50,15 +51,15 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
 
         try {
             try {
-                const blob = await this.props.mediaEventHelper.sourceBlob.value;
+                const blob = await this.props.mediaEventHelper!.sourceBlob.value;
                 buffer = await blob.arrayBuffer();
             } catch (e) {
-                this.setState({ error: e });
+                this.setState({ error: true });
                 logger.warn("Unable to decrypt audio message", e);
                 return; // stop processing the audio file
             }
         } catch (e) {
-            this.setState({ error: e });
+            this.setState({ error: true });
             logger.warn("Unable to decrypt/download audio message", e);
             return; // stop processing the audio file
         }
@@ -66,8 +67,8 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         // We should have a buffer to work with now: let's set it up
 
         // Note: we don't actually need a waveform to render an audio event, but voice messages do.
-        const content = this.props.mxEvent.getContent<IMediaEventContent>();
-        const waveform = content?.["org.matrix.msc1767.audio"]?.waveform?.map((p) => p / 1024);
+        const content = this.props.mxEvent.getContent<IMediaEventContent & IContent>();
+        const waveform = content?.["org.matrix.msc1767.audio"]?.waveform?.map((p: number) => p / 1024);
 
         // We should have a buffer to work with now: let's set it up
         const playback = PlaybackManager.instance.createPlaybackInstance(buffer, waveform);
@@ -75,7 +76,7 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         this.setState({ playback });
 
         if (isVoiceMessage(this.props.mxEvent)) {
-            PlaybackQueue.forRoom(this.props.mxEvent.getRoomId()).unsortedEnqueue(this.props.mxEvent, playback);
+            PlaybackQueue.forRoom(this.props.mxEvent.getRoomId()!).unsortedEnqueue(this.props.mxEvent, playback);
         }
 
         // Note: the components later on will handle preparing the Playback class for us.
@@ -93,11 +94,11 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         );
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         if (this.state.error) {
             return (
                 <MediaProcessingError className="mx_MAudioBody">
-                    {_t("Error processing audio message")}
+                    {_t("timeline|m.audio|error_processing_audio")}
                 </MediaProcessingError>
             );
         }

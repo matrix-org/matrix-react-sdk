@@ -25,21 +25,23 @@ import SdkConfig from "../../../SdkConfig";
 import BugReportDialog from "../dialogs/BugReportDialog";
 import AccessibleButton from "./AccessibleButton";
 
+interface Props {
+    children: ReactNode;
+}
+
 interface IState {
-    error: Error;
+    error?: Error;
 }
 
 /**
  * This error boundary component can be used to wrap large content areas and
  * catch exceptions during rendering in the component tree below them.
  */
-export default class ErrorBoundary extends React.PureComponent<{}, IState> {
-    public constructor(props) {
+export default class ErrorBoundary extends React.PureComponent<Props, IState> {
+    public constructor(props: Props) {
         super(props);
 
-        this.state = {
-            error: null,
-        };
+        this.state = {};
     }
 
     public static getDerivedStateFromError(error: Error): Partial<IState> {
@@ -58,11 +60,11 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
     private onClearCacheAndReload = (): void => {
         if (!PlatformPeg.get()) return;
 
-        MatrixClientPeg.get().stopClient();
-        MatrixClientPeg.get()
+        MatrixClientPeg.safeGet().stopClient();
+        MatrixClientPeg.safeGet()
             .store.deleteAllData()
             .then(() => {
-                PlatformPeg.get().reload();
+                PlatformPeg.get()?.reload();
             });
     };
 
@@ -75,7 +77,7 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
 
     public render(): ReactNode {
         if (this.state.error) {
-            const newIssueUrl = "https://github.com/vector-im/element-web/issues/new/choose";
+            const newIssueUrl = SdkConfig.get().feedback.new_issue_url;
 
             let bugReportSection;
             if (SdkConfig.get().bug_report_endpoint_url) {
@@ -83,8 +85,7 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
                     <React.Fragment>
                         <p>
                             {_t(
-                                "Please <newIssueLink>create a new issue</newIssueLink> " +
-                                    "on GitHub so that we can investigate this bug.",
+                                "bug_reporting|create_new_issue",
                                 {},
                                 {
                                     newIssueLink: (sub) => {
@@ -98,31 +99,23 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
                             )}
                         </p>
                         <p>
-                            {_t(
-                                "If you've submitted a bug via GitHub, debug logs can help " +
-                                    "us track down the problem. ",
-                            )}
-                            {_t(
-                                "Debug logs contain application " +
-                                    "usage data including your username, the IDs or aliases of " +
-                                    "the rooms you have visited, which UI elements you " +
-                                    "last interacted with, and the usernames of other users. " +
-                                    "They do not contain messages.",
-                            )}
+                            {_t("bug_reporting|introduction")}
+                            &nbsp;
+                            {_t("bug_reporting|description")}
                         </p>
                         <AccessibleButton onClick={this.onBugReport} kind="primary">
-                            {_t("Submit debug logs")}
+                            {_t("bug_reporting|submit_debug_logs")}
                         </AccessibleButton>
                     </React.Fragment>
                 );
             }
 
-            let clearCacheButton: JSX.Element;
+            let clearCacheButton: JSX.Element | undefined;
             // we only show this button if there is an initialised MatrixClient otherwise we can't clear the cache
             if (MatrixClientPeg.get()) {
                 clearCacheButton = (
                     <AccessibleButton onClick={this.onClearCacheAndReload} kind="danger">
-                        {_t("Clear cache and reload")}
+                        {_t("setting|help_about|clear_cache_reload")}
                     </AccessibleButton>
                 );
             }
@@ -130,7 +123,7 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
             return (
                 <div className="mx_ErrorBoundary">
                     <div className="mx_ErrorBoundary_body">
-                        <h1>{_t("Something went wrong!")}</h1>
+                        <h1>{_t("error|something_went_wrong")}</h1>
                         {bugReportSection}
                         {clearCacheButton}
                     </div>

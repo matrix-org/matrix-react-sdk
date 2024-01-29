@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022, 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,15 +22,23 @@ import {
     MatrixEvent,
     Room,
     NotificationCountType,
+    PushRuleActionName,
+    TweakName,
+    ConditionKind,
+    IPushRuleCondition,
+    PushRuleKind,
+    IThreepid,
+    ThreepidMedium,
 } from "matrix-js-sdk/src/matrix";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
-import { act } from "react-dom/test-utils";
-import { fireEvent, getByTestId, render, screen, waitFor } from "@testing-library/react";
+import { randomString } from "matrix-js-sdk/src/randomstring";
+import { act, fireEvent, getByTestId, render, screen, waitFor, within } from "@testing-library/react";
+import { mocked } from "jest-mock";
+import userEvent from "@testing-library/user-event";
 
 import Notifications from "../../../../src/components/views/settings/Notifications";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { StandardActions } from "../../../../src/notifications/StandardActions";
-import { getMockClientWithEventEmitter, mkMessage, mockClientMethodsUser } from "../../../test-utils";
+import { clearAllModals, getMockClientWithEventEmitter, mkMessage, mockClientMethodsUser } from "../../../test-utils";
 
 // don't pollute test output with error logs from mock rejections
 jest.mock("matrix-js-sdk/src/logger");
@@ -38,88 +46,111 @@ jest.mock("matrix-js-sdk/src/logger");
 // Avoid indirectly importing any eagerly created stores that would require extra setup
 jest.mock("../../../../src/Notifier");
 
-const masterRule = {
-    actions: ["dont_notify"],
+const masterRule: IPushRule = {
+    actions: [PushRuleActionName.DontNotify],
     conditions: [],
     default: true,
     enabled: false,
     rule_id: RuleId.Master,
 };
-// eslint-disable-next-line max-len
-const oneToOneRule = {
+const oneToOneRule: IPushRule = {
     conditions: [
-        { kind: "room_member_count", is: "2" },
-        { kind: "event_match", key: "type", pattern: "m.room.message" },
+        { kind: ConditionKind.RoomMemberCount, is: "2" },
+        { kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.message" },
     ],
-    actions: ["notify", { set_tweak: "highlight", value: false }],
+    actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: false }],
     rule_id: ".m.rule.room_one_to_one",
     default: true,
     enabled: true,
 } as IPushRule;
-// eslint-disable-next-line max-len
-const encryptedOneToOneRule = {
+const encryptedOneToOneRule: IPushRule = {
     conditions: [
-        { kind: "room_member_count", is: "2" },
-        { kind: "event_match", key: "type", pattern: "m.room.encrypted" },
+        { kind: ConditionKind.RoomMemberCount, is: "2" },
+        { kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.encrypted" },
     ],
-    actions: ["notify", { set_tweak: "sound", value: "default" }, { set_tweak: "highlight", value: false }],
+    actions: [
+        PushRuleActionName.Notify,
+        { set_tweak: TweakName.Sound, value: "default" },
+        { set_tweak: TweakName.Highlight, value: false },
+    ],
     rule_id: ".m.rule.encrypted_room_one_to_one",
     default: true,
     enabled: true,
 } as IPushRule;
-// eslint-disable-next-line max-len
-const encryptedGroupRule = {
-    conditions: [{ kind: "event_match", key: "type", pattern: "m.room.encrypted" }],
-    actions: ["dont_notify"],
+const groupRule = {
+    conditions: [{ kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.message" }],
+    actions: [
+        PushRuleActionName.Notify,
+        { set_tweak: TweakName.Sound, value: "default" },
+        { set_tweak: TweakName.Highlight, value: false },
+    ],
+    rule_id: ".m.rule.message",
+    default: true,
+    enabled: true,
+};
+const encryptedGroupRule: IPushRule = {
+    conditions: [{ kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.encrypted" }],
+    actions: [PushRuleActionName.DontNotify],
     rule_id: ".m.rule.encrypted",
     default: true,
     enabled: true,
 } as IPushRule;
-// eslint-disable-next-line max-len
+
+const bananaRule = {
+    actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: false }],
+    pattern: "banana",
+    rule_id: "banana",
+    default: false,
+    enabled: true,
+} as IPushRule;
+
 const pushRules: IPushRules = {
     global: {
         underride: [
             {
-                conditions: [{ kind: "event_match", key: "type", pattern: "m.call.invite" }],
-                actions: ["notify", { set_tweak: "sound", value: "ring" }, { set_tweak: "highlight", value: false }],
+                conditions: [{ kind: ConditionKind.EventMatch, key: "type", pattern: "m.call.invite" }],
+                actions: [
+                    PushRuleActionName.Notify,
+                    { set_tweak: TweakName.Sound, value: "ring" },
+                    { set_tweak: TweakName.Highlight, value: false },
+                ],
                 rule_id: ".m.rule.call",
                 default: true,
                 enabled: true,
             },
             oneToOneRule,
             encryptedOneToOneRule,
-            {
-                conditions: [{ kind: "event_match", key: "type", pattern: "m.room.message" }],
-                actions: ["notify", { set_tweak: "sound", value: "default" }, { set_tweak: "highlight", value: false }],
-                rule_id: ".m.rule.message",
-                default: true,
-                enabled: true,
-            },
+            groupRule,
             encryptedGroupRule,
             {
                 conditions: [
-                    { kind: "event_match", key: "type", pattern: "im.vector.modular.widgets" },
-                    { kind: "event_match", key: "content.type", pattern: "jitsi" },
-                    { kind: "event_match", key: "state_key", pattern: "*" },
+                    { kind: ConditionKind.EventMatch, key: "type", pattern: "im.vector.modular.widgets" },
+                    { kind: ConditionKind.EventMatch, key: "content.type", pattern: "jitsi" },
+                    { kind: ConditionKind.EventMatch, key: "state_key", pattern: "*" },
                 ],
-                actions: ["notify", { set_tweak: "highlight", value: false }],
+                actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: false }],
                 rule_id: ".im.vector.jitsi",
                 default: true,
                 enabled: true,
             },
         ],
         sender: [],
-        room: [{ actions: ["dont_notify"], rule_id: "!zJPyWqpMorfCcWObge:matrix.org", default: false, enabled: true }],
-        content: [
+        room: [
             {
-                actions: ["notify", { set_tweak: "highlight", value: false }],
-                pattern: "banana",
-                rule_id: "banana",
+                actions: [PushRuleActionName.DontNotify],
+                rule_id: "!zJPyWqpMorfCcWObge:matrix.org",
                 default: false,
                 enabled: true,
             },
+        ],
+        content: [
+            bananaRule,
             {
-                actions: ["notify", { set_tweak: "sound", value: "default" }, { set_tweak: "highlight" }],
+                actions: [
+                    PushRuleActionName.Notify,
+                    { set_tweak: TweakName.Sound, value: "default" },
+                    { set_tweak: TweakName.Highlight },
+                ],
                 pattern: "kadev1",
                 rule_id: ".m.rule.contains_user_name",
                 default: true,
@@ -127,62 +158,76 @@ const pushRules: IPushRules = {
             },
         ],
         override: [
-            { conditions: [], actions: ["dont_notify"], rule_id: ".m.rule.master", default: true, enabled: false },
             {
-                conditions: [{ kind: "event_match", key: "content.msgtype", pattern: "m.notice" }],
-                actions: ["dont_notify"],
+                conditions: [],
+                actions: [PushRuleActionName.DontNotify],
+                rule_id: ".m.rule.master",
+                default: true,
+                enabled: false,
+            },
+            {
+                conditions: [{ kind: ConditionKind.EventMatch, key: "content.msgtype", pattern: "m.notice" }],
+                actions: [PushRuleActionName.DontNotify],
                 rule_id: ".m.rule.suppress_notices",
                 default: true,
                 enabled: true,
             },
             {
                 conditions: [
-                    { kind: "event_match", key: "type", pattern: "m.room.member" },
-                    { kind: "event_match", key: "content.membership", pattern: "invite" },
-                    { kind: "event_match", key: "state_key", pattern: "@kadev1:matrix.org" },
+                    { kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.member" },
+                    { kind: ConditionKind.EventMatch, key: "content.membership", pattern: "invite" },
+                    { kind: ConditionKind.EventMatch, key: "state_key", pattern: "@kadev1:matrix.org" },
                 ],
-                actions: ["notify", { set_tweak: "sound", value: "default" }, { set_tweak: "highlight", value: false }],
+                actions: [
+                    PushRuleActionName.Notify,
+                    { set_tweak: TweakName.Sound, value: "default" },
+                    { set_tweak: TweakName.Highlight, value: false },
+                ],
                 rule_id: ".m.rule.invite_for_me",
                 default: true,
                 enabled: true,
             },
             {
-                conditions: [{ kind: "event_match", key: "type", pattern: "m.room.member" }],
-                actions: ["dont_notify"],
+                conditions: [{ kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.member" }],
+                actions: [PushRuleActionName.DontNotify],
                 rule_id: ".m.rule.member_event",
                 default: true,
                 enabled: true,
             },
             {
                 conditions: [{ kind: "contains_display_name" }],
-                actions: ["notify", { set_tweak: "sound", value: "default" }, { set_tweak: "highlight" }],
+                actions: [
+                    PushRuleActionName.Notify,
+                    { set_tweak: TweakName.Sound, value: "default" },
+                    { set_tweak: TweakName.Highlight },
+                ],
                 rule_id: ".m.rule.contains_display_name",
                 default: true,
                 enabled: true,
             },
             {
                 conditions: [
-                    { kind: "event_match", key: "content.body", pattern: "@room" },
+                    { kind: ConditionKind.EventMatch, key: "content.body", pattern: "@room" },
                     { kind: "sender_notification_permission", key: "room" },
                 ],
-                actions: ["notify", { set_tweak: "highlight", value: true }],
+                actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: true }],
                 rule_id: ".m.rule.roomnotif",
                 default: true,
                 enabled: true,
             },
             {
                 conditions: [
-                    { kind: "event_match", key: "type", pattern: "m.room.tombstone" },
-                    { kind: "event_match", key: "state_key", pattern: "" },
+                    { kind: ConditionKind.EventMatch, key: "type", pattern: "m.room.tombstone" },
+                    { kind: ConditionKind.EventMatch, key: "state_key", pattern: "" },
                 ],
-                actions: ["notify", { set_tweak: "highlight", value: true }],
+                actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: true }],
                 rule_id: ".m.rule.tombstone",
                 default: true,
                 enabled: true,
             },
             {
-                conditions: [{ kind: "event_match", key: "type", pattern: "m.reaction" }],
-                actions: ["dont_notify"],
+                conditions: [{ kind: ConditionKind.EventMatch, key: "type", pattern: "m.reaction" }],
+                actions: [PushRuleActionName.DontNotify],
                 rule_id: ".m.rule.reaction",
                 default: true,
                 enabled: true,
@@ -210,6 +255,7 @@ describe("<Notifications />", () => {
         getPushers: jest.fn(),
         getThreePids: jest.fn(),
         setPusher: jest.fn(),
+        removePusher: jest.fn(),
         setPushRuleEnabled: jest.fn(),
         setPushRuleActions: jest.fn(),
         getRooms: jest.fn().mockReturnValue([]),
@@ -225,15 +271,33 @@ describe("<Notifications />", () => {
         }),
         setAccountData: jest.fn(),
         sendReadReceipt: jest.fn(),
-        supportsExperimentalThreads: jest.fn().mockReturnValue(true),
+        supportsThreads: jest.fn().mockReturnValue(true),
+        isInitialSyncComplete: jest.fn().mockReturnValue(false),
+        addPushRule: jest.fn().mockResolvedValue({}),
+        deletePushRule: jest.fn().mockResolvedValue({}),
     });
     mockClient.getPushRules.mockResolvedValue(pushRules);
 
-    beforeEach(() => {
+    beforeEach(async () => {
+        let i = 0;
+        mocked(randomString).mockImplementation(() => {
+            return "testid_" + i++;
+        });
+
         mockClient.getPushRules.mockClear().mockResolvedValue(pushRules);
         mockClient.getPushers.mockClear().mockResolvedValue({ pushers: [] });
         mockClient.getThreePids.mockClear().mockResolvedValue({ threepids: [] });
-        mockClient.setPusher.mockClear().mockResolvedValue({});
+        mockClient.setPusher.mockReset().mockResolvedValue({});
+        mockClient.removePusher.mockClear().mockResolvedValue({});
+        mockClient.setPushRuleActions.mockReset().mockResolvedValue({});
+        mockClient.pushRules = pushRules;
+        mockClient.getPushRules.mockClear().mockResolvedValue(pushRules);
+        mockClient.addPushRule.mockClear();
+        mockClient.deletePushRule.mockClear();
+
+        userEvent.setup();
+
+        await clearAllModals();
     });
 
     it("renders spinner while loading", async () => {
@@ -312,11 +376,8 @@ describe("<Notifications />", () => {
             it("enables email notification when toggling on", async () => {
                 await getComponentAndWait();
 
-                const emailToggle = screen.getByTestId("notif-email-switch").querySelector('div[role="switch"]');
-
-                await act(async () => {
-                    fireEvent.click(emailToggle);
-                });
+                const emailToggle = screen.getByTestId("notif-email-switch").querySelector('div[role="switch"]')!;
+                fireEvent.click(emailToggle);
 
                 expect(mockClient.setPusher).toHaveBeenCalledWith(
                     expect.objectContaining({
@@ -334,53 +395,66 @@ describe("<Notifications />", () => {
                 mockClient.setPusher.mockRejectedValue({});
                 await getComponentAndWait();
 
-                const emailToggle = screen.getByTestId("notif-email-switch").querySelector('div[role="switch"]');
-
-                await act(async () => {
-                    fireEvent.click(emailToggle);
-                });
+                const emailToggle = screen.getByTestId("notif-email-switch").querySelector('div[role="switch"]')!;
+                fireEvent.click(emailToggle);
 
                 // force render
                 await flushPromises();
 
+                const dialog = await screen.findByRole("dialog");
+
+                expect(
+                    within(dialog).getByText("An error occurred whilst saving your notification preferences."),
+                ).toBeInTheDocument();
+
+                // dismiss the dialog
+                fireEvent.click(within(dialog).getByText("OK"));
                 expect(screen.getByTestId("error-message")).toBeInTheDocument();
             });
 
             it("enables email notification when toggling off", async () => {
-                const testPusher = { kind: "email", pushkey: "tester@test.com" } as unknown as IPusher;
+                const testPusher = {
+                    kind: "email",
+                    pushkey: "tester@test.com",
+                    app_id: "testtest",
+                } as unknown as IPusher;
                 mockClient.getPushers.mockResolvedValue({ pushers: [testPusher] });
                 await getComponentAndWait();
 
-                const emailToggle = screen.getByTestId("notif-email-switch").querySelector('div[role="switch"]');
+                const emailToggle = screen.getByTestId("notif-email-switch").querySelector('div[role="switch"]')!;
+                fireEvent.click(emailToggle);
 
-                await act(async () => {
-                    fireEvent.click(emailToggle);
-                });
-
-                expect(mockClient.setPusher).toHaveBeenCalledWith({
-                    ...testPusher,
-                    kind: null,
-                });
+                expect(mockClient.removePusher).toHaveBeenCalledWith(testPusher.pushkey, testPusher.app_id);
             });
+        });
+
+        it("toggles master switch correctly", async () => {
+            await getComponentAndWait();
+
+            // master switch is on
+            expect(screen.getByLabelText("Enable notifications for this account")).toBeChecked();
+            fireEvent.click(screen.getByLabelText("Enable notifications for this account"));
+
+            await flushPromises();
+
+            expect(mockClient.setPushRuleEnabled).toHaveBeenCalledWith("global", "override", ".m.rule.master", true);
         });
 
         it("toggles and sets settings correctly", async () => {
             await getComponentAndWait();
-            let audioNotifsToggle;
+            let audioNotifsToggle!: HTMLDivElement;
 
             const update = () => {
                 audioNotifsToggle = screen
                     .getByTestId("notif-setting-audioNotificationsEnabled")
-                    .querySelector('div[role="switch"]');
+                    .querySelector('div[role="switch"]')!;
             };
             update();
 
             expect(audioNotifsToggle.getAttribute("aria-checked")).toEqual("true");
             expect(SettingsStore.getValue("audioNotificationsEnabled")).toEqual(true);
 
-            act(() => {
-                fireEvent.click(audioNotifsToggle);
-            });
+            fireEvent.click(audioNotifsToggle);
             update();
 
             expect(audioNotifsToggle.getAttribute("aria-checked")).toEqual("false");
@@ -424,7 +498,7 @@ describe("<Notifications />", () => {
             const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
 
             await act(async () => {
-                const offToggle = oneToOneRuleElement.querySelector('input[type="radio"]');
+                const offToggle = oneToOneRuleElement.querySelector('input[type="radio"]')!;
                 fireEvent.click(offToggle);
             });
 
@@ -442,6 +516,376 @@ describe("<Notifications />", () => {
                 oneToOneRule.rule_id,
                 StandardActions.ACTION_DONT_NOTIFY,
             );
+        });
+
+        it("adds an error message when updating notification level fails", async () => {
+            await getComponentAndWait();
+            const section = "vector_global";
+
+            const error = new Error("oups");
+            mockClient.setPushRuleEnabled.mockRejectedValue(error);
+
+            // oneToOneRule is set to 'on'
+            // and is kind: 'underride'
+            const offToggle = screen.getByTestId(section + oneToOneRule.rule_id).querySelector('input[type="radio"]')!;
+            fireEvent.click(offToggle);
+
+            await flushPromises();
+
+            // error message attached to oneToOne rule
+            const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
+            // old value still shown as selected
+            expect(within(oneToOneRuleElement).getByLabelText("On")).toBeChecked();
+            expect(
+                within(oneToOneRuleElement).getByText(
+                    "An error occurred when updating your notification preferences. Please try to toggle your option again.",
+                ),
+            ).toBeInTheDocument();
+        });
+
+        it("clears error message for notification rule on retry", async () => {
+            await getComponentAndWait();
+            const section = "vector_global";
+
+            const error = new Error("oups");
+            mockClient.setPushRuleEnabled.mockRejectedValueOnce(error).mockResolvedValue({});
+
+            // oneToOneRule is set to 'on'
+            // and is kind: 'underride'
+            const offToggle = screen.getByTestId(section + oneToOneRule.rule_id).querySelector('input[type="radio"]')!;
+            fireEvent.click(offToggle);
+
+            await flushPromises();
+
+            // error message attached to oneToOne rule
+            const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
+            expect(
+                within(oneToOneRuleElement).getByText(
+                    "An error occurred when updating your notification preferences. Please try to toggle your option again.",
+                ),
+            ).toBeInTheDocument();
+
+            // retry
+            fireEvent.click(offToggle);
+
+            // error removed as soon as we start request
+            expect(
+                within(oneToOneRuleElement).queryByText(
+                    "An error occurred when updating your notification preferences. Please try to toggle your option again.",
+                ),
+            ).not.toBeInTheDocument();
+
+            await flushPromises();
+
+            // no error after after successful change
+            expect(
+                within(oneToOneRuleElement).queryByText(
+                    "An error occurred when updating your notification preferences. Please try to toggle your option again.",
+                ),
+            ).not.toBeInTheDocument();
+        });
+
+        describe("synced rules", () => {
+            const pollStartOneToOne = {
+                conditions: [
+                    {
+                        kind: ConditionKind.RoomMemberCount,
+                        is: "2",
+                    } as IPushRuleCondition<ConditionKind.RoomMemberCount>,
+                    {
+                        kind: ConditionKind.EventMatch,
+                        key: "type",
+                        pattern: "org.matrix.msc3381.poll.start",
+                    } as IPushRuleCondition<ConditionKind.EventMatch>,
+                ],
+                actions: [PushRuleActionName.DontNotify],
+                rule_id: ".org.matrix.msc3930.rule.poll_start_one_to_one",
+                default: true,
+                enabled: true,
+            } as IPushRule;
+            const pollStartGroup = {
+                conditions: [
+                    {
+                        kind: ConditionKind.EventMatch,
+                        key: "type",
+                        pattern: "org.matrix.msc3381.poll.start",
+                    },
+                ],
+                actions: [PushRuleActionName.Notify],
+                rule_id: ".org.matrix.msc3930.rule.poll_start",
+                default: true,
+                enabled: true,
+            } as IPushRule;
+            const pollEndOneToOne = {
+                conditions: [
+                    {
+                        kind: ConditionKind.RoomMemberCount,
+                        is: "2",
+                    },
+                    {
+                        kind: ConditionKind.EventMatch,
+                        key: "type",
+                        pattern: "org.matrix.msc3381.poll.end",
+                    },
+                ],
+                actions: [
+                    PushRuleActionName.Notify,
+                    { set_tweak: TweakName.Highlight, value: false },
+                    { set_tweak: TweakName.Sound, value: "default" },
+                ],
+                rule_id: ".org.matrix.msc3930.rule.poll_end_one_to_one",
+                default: true,
+                enabled: true,
+            } as IPushRule;
+
+            const setPushRuleMock = (rules: IPushRule[] = []): void => {
+                const combinedRules = {
+                    ...pushRules,
+                    global: {
+                        ...pushRules.global,
+                        underride: [...pushRules.global.underride!, ...rules],
+                    },
+                };
+                mockClient.getPushRules.mockClear().mockResolvedValue(combinedRules);
+                mockClient.pushRules = combinedRules;
+            };
+
+            // ".m.rule.room_one_to_one" and ".m.rule.message" have synced rules
+            it("succeeds when no synced rules exist for user", async () => {
+                await getComponentAndWait();
+                const section = "vector_global";
+
+                const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
+
+                const offToggle = oneToOneRuleElement.querySelector('input[type="radio"]')!;
+                fireEvent.click(offToggle);
+
+                await flushPromises();
+
+                // didnt attempt to update any non-existant rules
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledTimes(1);
+
+                // no error
+                expect(
+                    within(oneToOneRuleElement).queryByText(
+                        "An error occurred when updating your notification preferences. Please try to toggle your option again.",
+                    ),
+                ).not.toBeInTheDocument();
+            });
+
+            it("updates synced rules when they exist for user", async () => {
+                setPushRuleMock([pollStartOneToOne, pollStartGroup]);
+                await getComponentAndWait();
+                const section = "vector_global";
+                const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
+
+                const offToggle = oneToOneRuleElement.querySelector('input[type="radio"]')!;
+                fireEvent.click(offToggle);
+
+                await flushPromises();
+
+                // updated synced rule
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    "underride",
+                    oneToOneRule.rule_id,
+                    [PushRuleActionName.DontNotify],
+                );
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    "underride",
+                    pollStartOneToOne.rule_id,
+                    [PushRuleActionName.DontNotify],
+                );
+                // only called for parent rule and one existing synced rule
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledTimes(2);
+
+                // no error
+                expect(
+                    within(oneToOneRuleElement).queryByText(
+                        "An error occurred when updating your notification preferences. Please try to toggle your option again.",
+                    ),
+                ).not.toBeInTheDocument();
+            });
+
+            it("does not update synced rules when main rule update fails", async () => {
+                setPushRuleMock([pollStartOneToOne]);
+                await getComponentAndWait();
+                const section = "vector_global";
+                const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
+                // have main rule update fail
+                mockClient.setPushRuleActions.mockRejectedValue("oups");
+
+                const offToggle = oneToOneRuleElement.querySelector('input[type="radio"]')!;
+                fireEvent.click(offToggle);
+
+                await flushPromises();
+
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    "underride",
+                    oneToOneRule.rule_id,
+                    [PushRuleActionName.DontNotify],
+                );
+                // only called for parent rule
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledTimes(1);
+
+                expect(
+                    within(oneToOneRuleElement).getByText(
+                        "An error occurred when updating your notification preferences. Please try to toggle your option again.",
+                    ),
+                ).toBeInTheDocument();
+            });
+
+            it("sets the UI toggle to rule value when no synced rule exist for the user", async () => {
+                setPushRuleMock([]);
+                await getComponentAndWait();
+                const section = "vector_global";
+                const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
+
+                // loudest state of synced rules should be the toggle value
+                expect(oneToOneRuleElement.querySelector('input[aria-label="On"]')).toBeChecked();
+            });
+
+            it("sets the UI toggle to the loudest synced rule value", async () => {
+                // oneToOneRule is set to 'On'
+                // pollEndOneToOne is set to 'Loud'
+                setPushRuleMock([pollStartOneToOne, pollEndOneToOne]);
+                await getComponentAndWait();
+                const section = "vector_global";
+                const oneToOneRuleElement = screen.getByTestId(section + oneToOneRule.rule_id);
+
+                // loudest state of synced rules should be the toggle value
+                expect(oneToOneRuleElement.querySelector('input[aria-label="Noisy"]')).toBeChecked();
+
+                const onToggle = oneToOneRuleElement.querySelector('input[aria-label="On"]')!;
+                fireEvent.click(onToggle);
+
+                await flushPromises();
+
+                // called for all 3 rules
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledTimes(3);
+                const expectedActions = [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: false }];
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    "underride",
+                    oneToOneRule.rule_id,
+                    expectedActions,
+                );
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    "underride",
+                    pollStartOneToOne.rule_id,
+                    expectedActions,
+                );
+                expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                    "global",
+                    "underride",
+                    pollEndOneToOne.rule_id,
+                    expectedActions,
+                );
+            });
+        });
+    });
+
+    describe("keywords", () => {
+        // keywords rule is not a real rule, but controls actions on keywords content rules
+        const keywordsRuleId = "_keywords";
+        it("updates individual keywords content rules when keywords rule is toggled", async () => {
+            await getComponentAndWait();
+            const section = "vector_mentions";
+
+            fireEvent.click(within(screen.getByTestId(section + keywordsRuleId)).getByLabelText("Off"));
+
+            expect(mockClient.setPushRuleEnabled).toHaveBeenCalledWith("global", "content", bananaRule.rule_id, false);
+
+            fireEvent.click(within(screen.getByTestId(section + keywordsRuleId)).getByLabelText("Noisy"));
+
+            expect(mockClient.setPushRuleActions).toHaveBeenCalledWith(
+                "global",
+                "content",
+                bananaRule.rule_id,
+                StandardActions.ACTION_HIGHLIGHT_DEFAULT_SOUND,
+            );
+        });
+
+        it("renders an error when updating keywords fails", async () => {
+            await getComponentAndWait();
+            const section = "vector_mentions";
+
+            mockClient.setPushRuleEnabled.mockRejectedValueOnce("oups");
+
+            fireEvent.click(within(screen.getByTestId(section + keywordsRuleId)).getByLabelText("Off"));
+
+            await flushPromises();
+
+            const rule = screen.getByTestId(section + keywordsRuleId);
+
+            expect(
+                within(rule).getByText(
+                    "An error occurred when updating your notification preferences. Please try to toggle your option again.",
+                ),
+            ).toBeInTheDocument();
+        });
+
+        it("adds a new keyword", async () => {
+            await getComponentAndWait();
+
+            await userEvent.type(screen.getByLabelText("Keyword"), "jest");
+            expect(screen.getByLabelText("Keyword")).toHaveValue("jest");
+
+            fireEvent.click(screen.getByText("Add"));
+
+            expect(mockClient.addPushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, "jest", {
+                actions: [PushRuleActionName.Notify, { set_tweak: "highlight", value: false }],
+                pattern: "jest",
+            });
+        });
+
+        it("adds a new keyword with same actions as existing rules when keywords rule is off", async () => {
+            const offContentRule = {
+                ...bananaRule,
+                enabled: false,
+                actions: [PushRuleActionName.Notify],
+            };
+            const pushRulesWithContentOff = {
+                global: {
+                    ...pushRules.global,
+                    content: [offContentRule],
+                },
+            };
+            mockClient.pushRules = pushRulesWithContentOff;
+            mockClient.getPushRules.mockClear().mockResolvedValue(pushRulesWithContentOff);
+
+            await getComponentAndWait();
+
+            const keywords = screen.getByTestId("vector_mentions_keywords");
+
+            expect(within(keywords).getByLabelText("Off")).toBeChecked();
+
+            await userEvent.type(screen.getByLabelText("Keyword"), "jest");
+            expect(screen.getByLabelText("Keyword")).toHaveValue("jest");
+
+            fireEvent.click(screen.getByText("Add"));
+
+            expect(mockClient.addPushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, "jest", {
+                actions: [PushRuleActionName.Notify, { set_tweak: TweakName.Highlight, value: false }],
+                pattern: "jest",
+            });
+        });
+
+        it("removes keyword", async () => {
+            await getComponentAndWait();
+
+            await userEvent.type(screen.getByLabelText("Keyword"), "jest");
+
+            const keyword = screen.getByText("banana");
+
+            fireEvent.click(within(keyword.parentElement!).getByLabelText("Remove"));
+
+            expect(mockClient.deletePushRule).toHaveBeenCalledWith("global", PushRuleKind.ContentSpecific, "banana");
+
+            await flushPromises();
         });
     });
 

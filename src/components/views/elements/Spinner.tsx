@@ -22,6 +22,7 @@ interface IProps {
     w?: number;
     h?: number;
     message?: string;
+    onFinished: any; // XXX: Spinner pretends to be a dialog so it must accept an onFinished, but it never calls it
 }
 
 export default class Spinner extends React.PureComponent<IProps> {
@@ -30,7 +31,7 @@ export default class Spinner extends React.PureComponent<IProps> {
         h: 32,
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { w, h, message } = this.props;
         return (
             <div className="mx_Spinner">
@@ -42,7 +43,7 @@ export default class Spinner extends React.PureComponent<IProps> {
                 <div
                     className="mx_Spinner_icon"
                     style={{ width: w, height: h }}
-                    aria-label={_t("Loading...")}
+                    aria-label={_t("common|loading")}
                     role="progressbar"
                     data-testid="spinner"
                 />

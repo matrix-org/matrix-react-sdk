@@ -1,5 +1,5 @@
 /*
-Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { forwardRef, RefObject, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { ISearchResults } from "matrix-js-sdk/src/@types/search";
-import { IThreadBundledRelationship } from "matrix-js-sdk/src/models/event";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import React, { forwardRef, useCallback, useContext, useEffect, useRef, useState } from "react";
+import {
+    ISearchResults,
+    IThreadBundledRelationship,
+    MatrixEvent,
+    THREAD_RELATION_TYPE,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import ScrollPanel from "./ScrollPanel";
 import { SearchScope } from "../views/rooms/SearchBar";
@@ -34,7 +36,6 @@ import ResizeNotifier from "../../utils/ResizeNotifier";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import RoomContext from "../../contexts/RoomContext";
-import SettingsStore from "../../settings/SettingsStore";
 
 const DEBUG = false;
 let debuglog = function (msg: string): void {};
@@ -51,7 +52,6 @@ interface Props {
     promise: Promise<ISearchResults>;
     abortController?: AbortController;
     resizeNotifier: ResizeNotifier;
-    permalinkCreator: RoomPermalinkCreator;
     className: string;
     onUpdate(inProgress: boolean, results: ISearchResults | null): void;
 }
@@ -59,16 +59,23 @@ interface Props {
 // XXX: todo: merge overlapping results somehow?
 // XXX: why doesn't searching on name work?
 export const RoomSearchView = forwardRef<ScrollPanel, Props>(
-    (
-        { term, scope, promise, abortController, resizeNotifier, permalinkCreator, className, onUpdate }: Props,
-        ref: RefObject<ScrollPanel>,
-    ) => {
+    ({ term, scope, promise, abortController, resizeNotifier, className, onUpdate }: Props, ref) => {
         const client = useContext(MatrixClientContext);
         const roomContext = useContext(RoomContext);
         const [inProgress, setInProgress] = useState(true);
         const [highlights, setHighlights] = useState<string[] | null>(null);
         const [results, setResults] = useState<ISearchResults | null>(null);
         const aborted = useRef(false);
+        // A map from room ID to permalink creator
+        const permalinkCreators = useRef(new Map<string, RoomPermalinkCreator>()).current;
+        const innerRef = useRef<ScrollPanel | null>();
+
+        useEffect(() => {
+            return () => {
+                permalinkCreators.forEach((pc) => pc.stop());
+                permalinkCreators.clear();
+            };
+        }, [permalinkCreators]);
 
         const handleSearchResult = useCallback(
             (searchPromise: Promise<ISearchResults>): Promise<boolean> => {
@@ -100,29 +107,26 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                                 return b.length - a.length;
                             });
 
-                            if (SettingsStore.getValue("feature_threadenabled")) {
-                                // Process all thread roots returned in this batch of search results
-                                // XXX: This won't work for results coming from Seshat which won't include the bundled relationship
-                                for (const result of results.results) {
-                                    for (const event of result.context.getTimeline()) {
-                                        const bundledRelationship =
-                                            event.getServerAggregatedRelation<IThreadBundledRelationship>(
-                                                THREAD_RELATION_TYPE.name,
-                                            );
-                                        if (!bundledRelationship || event.getThread()) continue;
-                                        const room = client.getRoom(event.getRoomId());
-                                        const thread = room.findThreadForEvent(event);
-                                        if (thread) {
-                                            event.setThread(thread);
-                                        } else {
-                                            room.createThread(event.getId(), event, [], true);
-                                        }
+                            for (const result of results.results) {
+                                for (const event of result.context.getTimeline()) {
+                                    const bundledRelationship =
+                                        event.getServerAggregatedRelation<IThreadBundledRelationship>(
+                                            THREAD_RELATION_TYPE.name,
+                                        );
+                                    if (!bundledRelationship || event.getThread()) continue;
+                                    const room = client.getRoom(event.getRoomId());
+                                    const thread = room?.findThreadForEvent(event);
+                                    if (thread) {
+                                        event.setThread(thread);
+                                    } else {
+                                        room?.createThread(event.getId()!, event, [], true);
                                     }
                                 }
                             }
 
                             setHighlights(highlights);
                             setResults({ ...results }); // copy to force a refresh
+                            return false;
                         },
                         (error) => {
                             if (aborted.current) {
@@ -131,10 +135,8 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                             }
                             logger.error("Search failed", error);
                             Modal.createDialog(ErrorDialog, {
-                                title: _t("Search failed"),
-                                description:
-                                    error?.message ??
-                                    _t("Server may be unavailable, overloaded, or search timed out :("),
+                                title: _t("error_dialog|search_failed|title"),
+                                description: error?.message ?? _t("error_dialog|search_failed|server_unavailable"),
                             });
                             return false;
                         },
@@ -177,7 +179,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
             }
 
             debuglog("requesting more search results");
-            const searchPromise = searchPagination(results);
+            const searchPromise = searchPagination(client, results);
             return handleSearchResult(searchPromise);
         };
 
@@ -195,13 +197,13 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
             if (!results?.results?.length) {
                 ret.push(
                     <li key="search-top-marker">
-                        <h2 className="mx_RoomView_topMarker">{_t("No results")}</h2>
+                        <h2 className="mx_RoomView_topMarker">{_t("common|no_results")}</h2>
                     </li>,
                 );
             } else {
                 ret.push(
                     <li key="search-top-marker">
-                        <h2 className="mx_RoomView_topMarker">{_t("No more results")}</h2>
+                        <h2 className="mx_RoomView_topMarker">{_t("no_more_results")}</h2>
                     </li>,
                 );
             }
@@ -210,11 +212,19 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
         // once dynamic content in the search results load, make the scrollPanel check
         // the scroll offsets.
         const onHeightChanged = (): void => {
-            const scrollPanel = ref.current;
-            scrollPanel?.checkScroll();
+            innerRef.current?.checkScroll();
         };
 
-        let lastRoomId: string;
+        const onRef = (e: ScrollPanel | null): void => {
+            if (typeof ref === "function") {
+                ref(e);
+            } else if (!!ref) {
+                ref.current = e;
+            }
+            innerRef.current = e;
+        };
+
+        let lastRoomId: string | undefined;
         let mergedTimeline: MatrixEvent[] = [];
         let ourEventsIndexes: number[] = [];
 
@@ -222,7 +232,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
             const result = results.results[i];
 
             const mxEv = result.context.getEvent();
-            const roomId = mxEv.getRoomId();
+            const roomId = mxEv.getRoomId()!;
             const room = client.getRoom(roomId);
             if (!room) {
                 // if we do not have the room in js-sdk stores then hide it as we cannot easily show it
@@ -233,7 +243,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                 continue;
             }
 
-            if (!haveRendererForEvent(mxEv, roomContext.showHiddenEvents)) {
+            if (!haveRendererForEvent(mxEv, client, roomContext.showHiddenEvents)) {
                 // XXX: can this ever happen? It will make the result count
                 // not match the displayed count.
                 continue;
@@ -244,7 +254,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                     ret.push(
                         <li key={mxEv.getId() + "-room"}>
                             <h2>
-                                {_t("Room")}: {room.name}
+                                {_t("common|room")}: {room.name}
                             </h2>
                         </li>,
                     );
@@ -288,6 +298,13 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                 ourEventsIndexes.push(result.context.getOurEventIndex());
             }
 
+            let permalinkCreator = permalinkCreators.get(roomId);
+            if (!permalinkCreator) {
+                permalinkCreator = new RoomPermalinkCreator(room);
+                permalinkCreator.start();
+                permalinkCreators.set(roomId, permalinkCreator);
+            }
+
             ret.push(
                 <SearchResultTile
                     key={mxEv.getId()}
@@ -306,7 +323,7 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
 
         return (
             <ScrollPanel
-                ref={ref}
+                ref={onRef}
                 className={"mx_RoomView_searchResultsPanel " + className}
                 onFillRequest={onSearchResultsFillRequest}
                 resizeNotifier={resizeNotifier}

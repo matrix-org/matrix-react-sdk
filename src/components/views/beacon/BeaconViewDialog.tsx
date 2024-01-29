@@ -15,15 +15,13 @@ limitations under the License.
 */
 
 import React, { useState, useEffect } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Beacon, Room } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Beacon, Room } from "matrix-js-sdk/src/matrix";
 import * as maplibregl from "maplibre-gl";
 
 import { Icon as LiveLocationIcon } from "../../../../res/img/location/live-location.svg";
 import { useLiveBeacons } from "../../../utils/beacon/useLiveBeacons";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import BaseDialog from "../dialogs/BaseDialog";
-import { IDialogProps } from "../dialogs/IDialogProps";
 import Map from "../location/Map";
 import ZoomButtons from "../location/ZoomButtons";
 import BeaconMarker from "./BeaconMarker";
@@ -38,11 +36,12 @@ import MapFallback from "../location/MapFallback";
 import { MapError } from "../location/MapError";
 import { LocationShareError } from "../../../utils/location";
 
-interface IProps extends IDialogProps {
+interface IProps {
     roomId: Room["roomId"];
     matrixClient: MatrixClient;
     // open the map centered on this beacon's location
     initialFocusedBeacon?: Beacon;
+    onFinished(): void;
 }
 
 // track the 'focused time' as ts
@@ -54,7 +53,7 @@ interface FocusedBeaconState {
     beacon?: Beacon;
 }
 
-const getBoundsCenter = (bounds: Bounds): string | undefined => {
+const getBoundsCenter = (bounds?: Bounds): string | undefined => {
     if (!bounds) {
         return;
     }
@@ -70,10 +69,10 @@ const useMapPosition = (
     { beacon, ts }: FocusedBeaconState,
 ): {
     bounds?: Bounds;
-    centerGeoUri: string;
+    centerGeoUri?: string;
 } => {
     const [bounds, setBounds] = useState<Bounds | undefined>(getBeaconBounds(liveBeacons));
-    const [centerGeoUri, setCenterGeoUri] = useState<string>(
+    const [centerGeoUri, setCenterGeoUri] = useState<string | undefined>(
         beacon?.latestLocationState?.uri || getBoundsCenter(bounds),
     );
 
@@ -112,7 +111,7 @@ const BeaconViewDialog: React.FC<IProps> = ({ initialFocusedBeacon, roomId, matr
 
     const { bounds, centerGeoUri } = useMapPosition(liveBeacons, focusedBeaconState);
 
-    const [mapDisplayError, setMapDisplayError] = useState<Error>();
+    const [mapDisplayError, setMapDisplayError] = useState<unknown>();
 
     // automatically open the sidebar if there is no map to see
     useEffect(() => {
@@ -125,6 +124,9 @@ const BeaconViewDialog: React.FC<IProps> = ({ initialFocusedBeacon, roomId, matr
         setFocusedBeaconState({ beacon, ts: Date.now() });
     };
 
+    const hasOwnBeacon =
+        liveBeacons.filter((beacon) => beacon?.beaconInfoOwner === matrixClient.getUserId()).length > 0;
+
     return (
         <BaseDialog className="mx_BeaconViewDialog" onFinished={onFinished} fixedWidth={false}>
             <MatrixClientContext.Provider value={matrixClient}>
@@ -136,6 +138,7 @@ const BeaconViewDialog: React.FC<IProps> = ({ initialFocusedBeacon, roomId, matr
                         interactive
                         onError={setMapDisplayError}
                         className="mx_BeaconViewDialog_map"
+                        allowGeolocate={!hasOwnBeacon}
                     >
                         {({ map }: { map: maplibregl.Map }) => (
                             <>
@@ -152,16 +155,20 @@ const BeaconViewDialog: React.FC<IProps> = ({ initialFocusedBeacon, roomId, matr
                         )}
                     </Map>
                 )}
-                {mapDisplayError && <MapError error={mapDisplayError.message as LocationShareError} isMinimised />}
+                {mapDisplayError instanceof Error && (
+                    <MapError error={mapDisplayError.message as LocationShareError} isMinimised />
+                )}
                 {!centerGeoUri && !mapDisplayError && (
-                    <MapFallback data-test-id="beacon-view-dialog-map-fallback" className="mx_BeaconViewDialog_map">
-                        <span className="mx_BeaconViewDialog_mapFallbackMessage">{_t("No live locations")}</span>
+                    <MapFallback data-testid="beacon-view-dialog-map-fallback" className="mx_BeaconViewDialog_map">
+                        <span className="mx_BeaconViewDialog_mapFallbackMessage">
+                            {_t("location_sharing|live_locations_empty")}
+                        </span>
                         <AccessibleButton
                             kind="primary"
                             onClick={onFinished}
-                            data-test-id="beacon-view-dialog-fallback-close"
+                            data-testid="beacon-view-dialog-fallback-close"
                         >
-                            {_t("Close")}
+                            {_t("action|close")}
                         </AccessibleButton>
                     </MapFallback>
                 )}
@@ -175,12 +182,12 @@ const BeaconViewDialog: React.FC<IProps> = ({ initialFocusedBeacon, roomId, matr
                     <AccessibleButton
                         kind="primary"
                         onClick={() => setSidebarOpen(true)}
-                        data-test-id="beacon-view-dialog-open-sidebar"
+                        data-testid="beacon-view-dialog-open-sidebar"
                         className="mx_BeaconViewDialog_viewListButton"
                     >
                         <LiveLocationIcon height={12} />
                         &nbsp;
-                        {_t("View list")}
+                        {_t("action|view_list")}
                     </AccessibleButton>
                 )}
                 <DialogOwnBeaconStatus roomId={roomId} />

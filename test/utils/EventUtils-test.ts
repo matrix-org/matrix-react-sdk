@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import {
+    M_LOCATION,
     EventStatus,
     EventType,
     IEvent,
@@ -25,8 +25,8 @@ import {
     PendingEventOrdering,
     RelationType,
     Room,
+    Thread,
 } from "matrix-js-sdk/src/matrix";
-import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import {
@@ -253,20 +253,20 @@ describe("EventUtils", () => {
 
         describe("canEditContent()", () => {
             it.each<TestCase>(uneditableCases)("returns false for %s", (_description, event) => {
-                expect(canEditContent(event)).toBe(false);
+                expect(canEditContent(mockClient, event)).toBe(false);
             });
 
             it.each<TestCase>(editableCases)("returns true for %s", (_description, event) => {
-                expect(canEditContent(event)).toBe(true);
+                expect(canEditContent(mockClient, event)).toBe(true);
             });
         });
         describe("canEditOwnContent()", () => {
             it.each<TestCase>(uneditableCases)("returns false for %s", (_description, event) => {
-                expect(canEditOwnEvent(event)).toBe(false);
+                expect(canEditOwnEvent(mockClient, event)).toBe(false);
             });
 
             it.each<TestCase>(editableCases)("returns true for %s", (_description, event) => {
-                expect(canEditOwnEvent(event)).toBe(true);
+                expect(canEditOwnEvent(mockClient, event)).toBe(true);
             });
         });
     });
@@ -430,13 +430,13 @@ describe("EventUtils", () => {
             jest.clearAllMocks();
 
             stubClient();
-            client = MatrixClientPeg.get();
+            client = MatrixClientPeg.safeGet();
 
-            room = new Room(ROOM_ID, client, client.getUserId(), {
+            room = new Room(ROOM_ID, client, client.getUserId()!, {
                 pendingEventOrdering: PendingEventOrdering.Detached,
             });
 
-            jest.spyOn(client, "supportsExperimentalThreads").mockReturnValue(true);
+            jest.spyOn(client, "supportsThreads").mockReturnValue(true);
             jest.spyOn(client, "getRoom").mockReturnValue(room);
             jest.spyOn(client, "fetchRoomEvent").mockImplementation(async (roomId, eventId) => {
                 return events[eventId] ?? Promise.reject();
@@ -460,6 +460,7 @@ describe("EventUtils", () => {
                 findEditableEvent({
                     events: [],
                     isForward: true,
+                    matrixClient: mockClient,
                 }),
             ).toBeUndefined();
         });

@@ -33,18 +33,21 @@ function getFormattedContent(editorStateTransfer: EditorStateTransfer): string {
     );
 }
 
-function parseEditorStateTransfer(
+export function parseEditorStateTransfer(
     editorStateTransfer: EditorStateTransfer,
     room: Room,
     mxClient: MatrixClient,
 ): string {
     const partCreator = new CommandPartCreator(room, mxClient);
 
-    let parts: Part[];
+    let parts: (Part | undefined)[] = [];
     if (editorStateTransfer.hasEditorState()) {
         // if restoring state from a previous editor,
         // restore serialized parts from the state
-        parts = editorStateTransfer.getSerializedParts().map((p) => partCreator.deserializePart(p));
+        const serializedParts = editorStateTransfer.getSerializedParts();
+        if (serializedParts !== null) {
+            parts = serializedParts.map((p) => partCreator.deserializePart(p));
+        }
     } else {
         // otherwise, either restore serialized parts from localStorage or parse the body of the event
         // TODO local storage
@@ -59,17 +62,17 @@ function parseEditorStateTransfer(
         });
     }
 
-    return parts.reduce((content, part) => content + part.text, "");
+    return parts.reduce((content, part) => content + part?.text, "");
     // Todo local storage
     // this.saveStoredEditorState();
 }
 
-export function useInitialContent(editorStateTransfer: EditorStateTransfer): string {
+export function useInitialContent(editorStateTransfer: EditorStateTransfer): string | undefined {
     const roomContext = useRoomContext();
     const mxClient = useMatrixClientContext();
 
     return useMemo<string | undefined>(() => {
-        if (editorStateTransfer && roomContext.room) {
+        if (editorStateTransfer && roomContext.room && mxClient) {
             return parseEditorStateTransfer(editorStateTransfer, roomContext.room, mxClient);
         }
     }, [editorStateTransfer, roomContext, mxClient]);

@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, ClientEvent, MatrixClient, EventType } from "matrix-js-sdk/src/matrix";
 
 import { GenericEchoChamber, implicitlyReverted, PROPERTY_UPDATED } from "./GenericEchoChamber";
 import { getRoomNotifsState, RoomNotifState, setRoomNotifsState } from "../../RoomNotifs";
@@ -26,21 +25,19 @@ export enum CachedRoomKey {
     NotificationVolume,
 }
 
-export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedRoomKey, RoomNotifState> {
+export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedRoomKey, RoomNotifState | undefined> {
     private properties = new Map<CachedRoomKey, RoomNotifState>();
 
     public constructor(context: RoomEchoContext) {
         super(context, (k) => this.properties.get(k));
     }
 
-    protected onClientChanged(oldClient, newClient): void {
+    protected onClientChanged(oldClient: MatrixClient | null, newClient: MatrixClient | null): void {
         this.properties.clear();
-        if (oldClient) {
-            oldClient.removeListener("accountData", this.onAccountData);
-        }
+        oldClient?.removeListener(ClientEvent.AccountData, this.onAccountData);
         if (newClient) {
             // Register the listeners first
-            newClient.on("accountData", this.onAccountData);
+            newClient.on(ClientEvent.AccountData, this.onAccountData);
 
             // Then populate the properties map
             this.updateNotificationVolume();
@@ -48,6 +45,7 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
     }
 
     private onAccountData = (event: MatrixEvent): void => {
+        if (!this.matrixClient) return;
         if (event.getType() === EventType.PushRules) {
             const currentVolume = this.properties.get(CachedRoomKey.NotificationVolume);
             const newVolume = getRoomNotifsState(this.matrixClient, this.context.room.roomId);
@@ -58,27 +56,27 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
     };
 
     private updateNotificationVolume(): void {
-        this.properties.set(
-            CachedRoomKey.NotificationVolume,
-            getRoomNotifsState(this.matrixClient, this.context.room.roomId),
-        );
+        const state = this.matrixClient ? getRoomNotifsState(this.matrixClient, this.context.room.roomId) : null;
+        if (state) this.properties.set(CachedRoomKey.NotificationVolume, state);
+        else this.properties.delete(CachedRoomKey.NotificationVolume);
         this.markEchoReceived(CachedRoomKey.NotificationVolume);
         this.emit(PROPERTY_UPDATED, CachedRoomKey.NotificationVolume);
     }
 
     // ---- helpers below here ----
 
-    public get notificationVolume(): RoomNotifState {
+    public get notificationVolume(): RoomNotifState | undefined {
         return this.getValue(CachedRoomKey.NotificationVolume);
     }
 
-    public set notificationVolume(v: RoomNotifState) {
+    public set notificationVolume(v: RoomNotifState | undefined) {
+        if (v === undefined) return;
         this.setValue(
-            _t("Change notification settings"),
+            _t("notifications|error_change_title"),
             CachedRoomKey.NotificationVolume,
             v,
             async (): Promise<void> => {
-                return setRoomNotifsState(this.context.room.roomId, v);
+                return setRoomNotifsState(this.context.room.client, this.context.room.roomId, v);
             },
             implicitlyReverted,
         );

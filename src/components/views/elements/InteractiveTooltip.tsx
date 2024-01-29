@@ -293,7 +293,7 @@ interface IProps {
 }
 
 interface IState {
-    contentRect: DOMRect;
+    contentRect?: DOMRect;
     visible: boolean;
 }
 
@@ -302,17 +302,16 @@ interface IState {
  * tooltip along one edge of the target.
  */
 export default class InteractiveTooltip extends React.Component<IProps, IState> {
-    private target: HTMLElement;
+    private target?: HTMLElement;
 
     public static defaultProps = {
         side: Direction.Top,
     };
 
-    public constructor(props, context) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
-            contentRect: null,
             visible: false,
         };
     }
@@ -331,7 +330,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         document.removeEventListener("mousemove", this.onMouseMove);
     }
 
-    private collectContentRect = (element: HTMLElement): void => {
+    private collectContentRect = (element: HTMLElement | null): void => {
         // We don't need to clean up when unmounting, so ignore
         if (!element) return;
 
@@ -346,6 +345,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
 
     private onLeftOfTarget(): boolean {
         const { contentRect } = this.state;
+        if (!this.target) return false;
         const targetRect = this.target.getBoundingClientRect();
 
         if (this.props.direction === Direction.Left) {
@@ -354,12 +354,13 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         } else {
             const targetRight = targetRect.right + window.scrollX;
             const spaceOnRight = UIStore.instance.windowWidth - targetRight;
-            return contentRect && spaceOnRight - contentRect.width < MIN_SAFE_DISTANCE_TO_WINDOW_EDGE;
+            return !!contentRect && spaceOnRight - contentRect.width < MIN_SAFE_DISTANCE_TO_WINDOW_EDGE;
         }
     }
 
     private aboveTarget(): boolean {
         const { contentRect } = this.state;
+        if (!this.target) return false;
         const targetRect = this.target.getBoundingClientRect();
 
         if (this.props.direction === Direction.Top) {
@@ -368,7 +369,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         } else {
             const targetBottom = targetRect.bottom + window.scrollY;
             const spaceBelow = UIStore.instance.windowHeight - targetBottom;
-            return contentRect && spaceBelow - contentRect.height < MIN_SAFE_DISTANCE_TO_WINDOW_EDGE;
+            return !!contentRect && spaceBelow - contentRect.height < MIN_SAFE_DISTANCE_TO_WINDOW_EDGE;
         }
     }
 
@@ -379,6 +380,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
     private onMouseMove = (ev: MouseEvent): void => {
         const { clientX: x, clientY: y } = ev;
         const { contentRect } = this.state;
+        if (!contentRect || !this.target) return;
         const targetRect = this.target.getBoundingClientRect();
 
         let direction: Direction;
@@ -416,12 +418,14 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         document.removeEventListener("mousemove", this.onMouseMove);
     }
 
-    private renderTooltip(): JSX.Element {
+    private renderTooltip(): ReactNode {
         const { contentRect, visible } = this.state;
         if (!visible) {
             ReactDOM.unmountComponentAtNode(getOrCreateContainer());
             return null;
         }
+
+        if (!this.target) return null;
 
         const targetRect = this.target.getBoundingClientRect();
 
@@ -435,7 +439,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
         // tooltip content would extend past the safe area towards the window
         // edge, flip around to below the target.
         const position: Partial<IRect> = {};
-        let chevronFace: ChevronFace = null;
+        let chevronFace: ChevronFace | null = null;
         if (this.isOnTheSide) {
             if (this.onLeftOfTarget()) {
                 position.left = targetLeft;
@@ -461,8 +465,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
 
         const chevron = <div className={"mx_InteractiveTooltip_chevron_" + chevronFace} />;
 
-        const menuClasses = classNames({
-            mx_InteractiveTooltip: true,
+        const menuClasses = classNames("mx_InteractiveTooltip", {
             mx_InteractiveTooltip_withChevron_top: chevronFace === ChevronFace.Top,
             mx_InteractiveTooltip_withChevron_left: chevronFace === ChevronFace.Left,
             mx_InteractiveTooltip_withChevron_right: chevronFace === ChevronFace.Right,

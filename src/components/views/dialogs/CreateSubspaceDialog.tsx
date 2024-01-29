@@ -15,13 +15,12 @@ limitations under the License.
 */
 
 import React, { useRef, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { Room, JoinRule } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { BetaPill } from "../beta/BetaCard";
 import Field from "../elements/Field";
@@ -41,10 +40,10 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
 
     const [busy, setBusy] = useState<boolean>(false);
     const [name, setName] = useState("");
-    const spaceNameField = useRef<Field>();
+    const spaceNameField = useRef<Field>(null);
     const [alias, setAlias] = useState("");
-    const spaceAliasField = useRef<RoomAliasField>();
-    const [avatar, setAvatar] = useState<File>(null);
+    const spaceAliasField = useRef<RoomAliasField>(null);
+    const [avatar, setAvatar] = useState<File | undefined>();
     const [topic, setTopic] = useState<string>("");
 
     const spaceJoinRule = space.getJoinRule();
@@ -54,20 +53,24 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
     }
     const [joinRule, setJoinRule] = useState<JoinRule>(defaultJoinRule);
 
-    const onCreateSubspaceClick = async (e): Promise<void> => {
+    const onCreateSubspaceClick = async (e: ButtonEvent): Promise<void> => {
         e.preventDefault();
         if (busy) return;
 
         setBusy(true);
         // require & validate the space name field
-        if (!(await spaceNameField.current.validate({ allowEmpty: false }))) {
+        if (spaceNameField.current && !(await spaceNameField.current.validate({ allowEmpty: false }))) {
             spaceNameField.current.focus();
             spaceNameField.current.validate({ allowEmpty: false, focused: true });
             setBusy(false);
             return;
         }
         // validate the space name alias field but do not require it
-        if (joinRule === JoinRule.Public && !(await spaceAliasField.current.validate({ allowEmpty: true }))) {
+        if (
+            spaceAliasField.current &&
+            joinRule === JoinRule.Public &&
+            !(await spaceAliasField.current.validate({ allowEmpty: true }))
+        ) {
             spaceAliasField.current.focus();
             spaceAliasField.current.validate({ allowEmpty: true, focused: true });
             setBusy(false);
@@ -75,7 +78,16 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
         }
 
         try {
-            await createSpace(name, joinRule === JoinRule.Public, alias, topic, avatar, {}, { parentSpace, joinRule });
+            await createSpace(
+                space.client,
+                name,
+                joinRule === JoinRule.Public,
+                alias,
+                topic,
+                avatar,
+                {},
+                { parentSpace, joinRule },
+            );
 
             onFinished(true);
         } catch (e) {
@@ -83,12 +95,12 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
         }
     };
 
-    let joinRuleMicrocopy: JSX.Element;
+    let joinRuleMicrocopy: JSX.Element | undefined;
     if (joinRule === JoinRule.Restricted) {
         joinRuleMicrocopy = (
             <p>
                 {_t(
-                    "Anyone in <SpaceName/> will be able to find and join.",
+                    "create_space|subspace_join_rule_restricted_description",
                     {},
                     {
                         SpaceName: () => <b>{parentSpace.name}</b>,
@@ -100,7 +112,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
         joinRuleMicrocopy = (
             <p>
                 {_t(
-                    "Anyone will be able to find and join this space, not just members of <SpaceName/>.",
+                    "create_space|subspace_join_rule_public_description",
                     {},
                     {
                         SpaceName: () => <b>{parentSpace.name}</b>,
@@ -109,14 +121,14 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
             </p>
         );
     } else if (joinRule === JoinRule.Invite) {
-        joinRuleMicrocopy = <p>{_t("Only people invited will be able to find and join this space.")}</p>;
+        joinRuleMicrocopy = <p>{_t("create_space|subspace_join_rule_invite_description")}</p>;
     }
 
     return (
         <BaseDialog
             title={
                 <SubspaceSelector
-                    title={_t("Create a space")}
+                    title={_t("create_space|subspace_dropdown_title")}
                     space={space}
                     value={parentSpace}
                     onChange={setParentSpace}
@@ -131,7 +143,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
                 <div className="mx_CreateSubspaceDialog_content">
                     <div className="mx_CreateSubspaceDialog_betaNotice">
                         <BetaPill />
-                        {_t("Add a space to a space you manage.")}
+                        {_t("create_space|subspace_beta_notice")}
                     </div>
 
                     <SpaceCreateForm
@@ -149,10 +161,10 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
                         aliasFieldRef={spaceAliasField}
                     >
                         <JoinRuleDropdown
-                            label={_t("Space visibility")}
-                            labelInvite={_t("Private space (invite only)")}
-                            labelPublic={_t("Public space")}
-                            labelRestricted={_t("Visible to space members")}
+                            label={_t("create_space|subspace_join_rule_label")}
+                            labelInvite={_t("create_space|subspace_join_rule_invite_only")}
+                            labelPublic={_t("common|public_space")}
+                            labelRestricted={_t("create_room|join_rule_restricted")}
                             width={478}
                             value={joinRule}
                             onChange={setJoinRule}
@@ -163,7 +175,7 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
 
                 <div className="mx_CreateSubspaceDialog_footer">
                     <div className="mx_CreateSubspaceDialog_footer_prompt">
-                        <div>{_t("Want to add an existing space instead?")}</div>
+                        <div>{_t("create_space|subspace_existing_space_prompt")}</div>
                         <AccessibleButton
                             kind="link"
                             onClick={() => {
@@ -171,15 +183,15 @@ const CreateSubspaceDialog: React.FC<IProps> = ({ space, onAddExistingSpaceClick
                                 onFinished();
                             }}
                         >
-                            {_t("Add existing space")}
+                            {_t("space|add_existing_subspace|space_dropdown_title")}
                         </AccessibleButton>
                     </div>
 
                     <AccessibleButton kind="primary_outline" disabled={busy} onClick={() => onFinished(false)}>
-                        {_t("Cancel")}
+                        {_t("action|cancel")}
                     </AccessibleButton>
                     <AccessibleButton kind="primary" disabled={busy} onClick={onCreateSubspaceClick}>
-                        {busy ? _t("Adding...") : _t("Add")}
+                        {busy ? _t("create_space|subspace_adding") : _t("action|add")}
                     </AccessibleButton>
                 </div>
             </MatrixClientContext.Provider>

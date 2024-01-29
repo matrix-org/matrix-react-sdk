@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from "url";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
+import { ClientEvent, IClientWellKnown, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { compare } from "matrix-js-sdk/src/utils";
 
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import type { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import SdkConfig from "../SdkConfig";
 import Modal from "../Modal";
 import { IntegrationManagerInstance, Kind } from "./IntegrationManagerInstance";
@@ -36,11 +35,11 @@ const KIND_PREFERENCE = [
 ];
 
 export class IntegrationManagers {
-    private static instance;
+    private static instance?: IntegrationManagers;
 
     private managers: IntegrationManagerInstance[] = [];
-    private client: MatrixClient;
-    private primaryManager: IntegrationManagerInstance;
+    private client?: MatrixClient;
+    private primaryManager: IntegrationManagerInstance | null = null;
 
     public static sharedInstance(): IntegrationManagers {
         if (!IntegrationManagers.instance) {
@@ -55,7 +54,7 @@ export class IntegrationManagers {
 
     public startWatching(): void {
         this.stopWatching();
-        this.client = MatrixClientPeg.get();
+        this.client = MatrixClientPeg.safeGet();
         this.client.on(ClientEvent.AccountData, this.onAccountData);
         this.client.on(ClientEvent.ClientWellKnown, this.setupHomeserverManagers);
         this.compileManagers();
@@ -74,8 +73,8 @@ export class IntegrationManagers {
     }
 
     private setupConfiguredManager(): void {
-        const apiUrl: string = SdkConfig.get("integrations_rest_url");
-        const uiUrl: string = SdkConfig.get("integrations_ui_url");
+        const apiUrl = SdkConfig.get("integrations_rest_url");
+        const uiUrl = SdkConfig.get("integrations_ui_url");
 
         if (apiUrl && uiUrl) {
             this.managers.push(new IntegrationManagerInstance(Kind.Config, apiUrl, uiUrl));
@@ -83,7 +82,7 @@ export class IntegrationManagers {
         }
     }
 
-    private setupHomeserverManagers = async (discoveryResponse): Promise<void> => {
+    private setupHomeserverManagers = async (discoveryResponse: IClientWellKnown): Promise<void> => {
         logger.log("Updating homeserver-configured integration managers...");
         if (discoveryResponse && discoveryResponse["m.integrations"]) {
             let managers = discoveryResponse["m.integrations"]["managers"];
@@ -115,7 +114,7 @@ export class IntegrationManagers {
 
     private setupAccountManagers(): void {
         if (!this.client || !this.client.getUserId()) return; // not logged in
-        const widgets = WidgetUtils.getIntegrationManagerWidgets();
+        const widgets = WidgetUtils.getIntegrationManagerWidgets(this.client);
         widgets.forEach((w) => {
             const data = w.content["data"];
             if (!data) return;
@@ -146,14 +145,14 @@ export class IntegrationManagers {
     }
 
     public getOrderedManagers(): IntegrationManagerInstance[] {
-        const ordered = [];
+        const ordered: IntegrationManagerInstance[] = [];
         for (const kind of KIND_PREFERENCE) {
             const managers = this.managers.filter((m) => m.kind === kind);
             if (!managers || !managers.length) continue;
 
             if (kind === Kind.Account) {
                 // Order by state_keys (IDs)
-                managers.sort((a, b) => compare(a.id, b.id));
+                managers.sort((a, b) => compare(a.id ?? "", b.id ?? ""));
             }
 
             ordered.push(...managers);
@@ -161,7 +160,7 @@ export class IntegrationManagers {
         return ordered;
     }
 
-    public getPrimaryManager(): IntegrationManagerInstance {
+    public getPrimaryManager(): IntegrationManagerInstance | null {
         if (this.hasManager()) {
             if (this.primaryManager) return this.primaryManager;
 
@@ -178,60 +177,6 @@ export class IntegrationManagers {
 
     public showDisabledDialog(): void {
         Modal.createDialog(IntegrationsDisabledDialog);
-    }
-
-    public async overwriteManagerOnAccount(manager: IntegrationManagerInstance): Promise<void> {
-        // TODO: TravisR - We should be logging out of scalar clients.
-        await WidgetUtils.removeIntegrationManagerWidgets();
-
-        // TODO: TravisR - We should actually be carrying over the discovery response verbatim.
-        await WidgetUtils.addIntegrationManagerWidget(manager.name, manager.uiUrl, manager.apiUrl);
-    }
-
-    /**
-     * Attempts to discover an integration manager using only its name. This will not validate that
-     * the integration manager is functional - that is the caller's responsibility.
-     * @param {string} domainName The domain name to look up.
-     * @returns {Promise<IntegrationManagerInstance>} Resolves to an integration manager instance,
-     * or null if none was found.
-     */
-    public async tryDiscoverManager(domainName: string): Promise<IntegrationManagerInstance> {
-        logger.log("Looking up integration manager via .well-known");
-        if (domainName.startsWith("http:") || domainName.startsWith("https:")) {
-            // trim off the scheme and just use the domain
-            domainName = url.parse(domainName).host;
-        }
-
-        let wkConfig: object;
-        try {
-            const result = await fetch(`https://${domainName}/.well-known/matrix/integrations`);
-            wkConfig = await result.json();
-        } catch (e) {
-            logger.error(e);
-            logger.warn("Failed to locate integration manager");
-            return null;
-        }
-
-        if (!wkConfig || !wkConfig["m.integrations_widget"]) {
-            logger.warn("Missing integrations widget on .well-known response");
-            return null;
-        }
-
-        const widget = wkConfig["m.integrations_widget"];
-        if (!widget["url"] || !widget["data"] || !widget["data"]["api_url"]) {
-            logger.warn("Malformed .well-known response for integrations widget");
-            return null;
-        }
-
-        // All discovered managers are per-user managers
-        const manager = new IntegrationManagerInstance(Kind.Account, widget["data"]["api_url"], widget["url"]);
-        logger.log("Got an integration manager (untested)");
-
-        // We don't test the manager because the caller may need to do extra
-        // checks or similar with it. For instance, they may need to deal with
-        // terms of service or want to call something particular.
-
-        return manager;
     }
 }
 

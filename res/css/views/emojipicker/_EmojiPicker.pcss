@@ -179,6 +179,14 @@ limitations under the License.
     list-style: none;
     width: 38px;
     cursor: pointer;
+
+    &:focus-within {
+        background-color: $focus-bg-color;
+    }
+}
+
+.mx_EmojiPicker_body .mx_EmojiPicker_item_wrapper[tabindex="0"] .mx_EmojiPicker_item {
+    background-color: $focus-bg-color;
 }
 
 .mx_EmojiPicker_item {
@@ -205,7 +213,7 @@ limitations under the License.
 .mx_EmojiPicker_category_label,
 .mx_EmojiPicker_preview_name {
     font-size: $font-16px;
-    font-weight: 600;
+    font-weight: var(--cpd-font-weight-semibold);
     margin: 0;
 }
 
@@ -224,6 +232,10 @@ limitations under the License.
 
 .mx_EmojiPicker_preview_text {
     display: flex;
+    flex: 1;
+    overflow: hidden;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     flex-direction: column;
 }
 
@@ -233,7 +245,8 @@ limitations under the License.
 
 .mx_EmojiPicker_shortcode {
     color: $light-fg-color;
-    font-size: $font-14px;
+    overflow-wrap: break-word;
+    font: var(--cpd-font-body-md-regular);
 
     &::before,
     &::after {

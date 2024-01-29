@@ -30,6 +30,7 @@ import EmbeddedPage from "../../structures/EmbeddedPage";
 import HomePage from "../../structures/HomePage";
 import { UserOnboardingHeader } from "./UserOnboardingHeader";
 import { UserOnboardingList } from "./UserOnboardingList";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 
 interface Props {
     justRegistered?: boolean;
@@ -38,14 +39,15 @@ interface Props {
 // We decided to only show the new user onboarding page to new users
 // For now, that means we set the cutoff at 2022-07-01 00:00 UTC
 const USER_ONBOARDING_CUTOFF_DATE = new Date(1_656_633_600);
-export function showUserOnboardingPage(useCase: UseCase): boolean {
+export function showUserOnboardingPage(useCase: UseCase | null): boolean {
     return useCase !== null || MatrixClientPeg.userRegisteredAfter(USER_ONBOARDING_CUTOFF_DATE);
 }
 
 const ANIMATION_DURATION = 2800;
 export function UserOnboardingPage({ justRegistered = false }: Props): JSX.Element {
+    const cli = useMatrixClientContext();
     const config = SdkConfig.get();
-    const pageUrl = getHomePageUrl(config);
+    const pageUrl = getHomePageUrl(config, cli);
 
     const useCase = useSettingValue<UseCase | null>("FTUE.useCaseSelection");
     const context = useUserOnboardingContext();
@@ -55,13 +57,11 @@ export function UserOnboardingPage({ justRegistered = false }: Props): JSX.Eleme
     const [showList, setShowList] = useState<boolean>(false);
     useEffect(() => {
         if (initialSyncComplete) {
-            let handler: number | null = window.setTimeout(() => {
-                handler = null;
+            const handler = window.setTimeout(() => {
                 setShowList(true);
             }, ANIMATION_DURATION);
             return () => {
                 clearTimeout(handler);
-                handler = null;
             };
         } else {
             setShowList(false);

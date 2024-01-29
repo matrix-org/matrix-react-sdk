@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { act } from "react-dom/test-utils";
 import { Room, Beacon, BeaconEvent, getBeaconInfoIdentifier, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { fireEvent, getByTestId, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, getByTestId, render, screen, waitFor } from "@testing-library/react";
 
 import RoomLiveShareWarning from "../../../../src/components/views/beacon/RoomLiveShareWarning";
 import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../../../src/stores/OwnBeaconStore";
@@ -43,8 +42,10 @@ describe("<RoomLiveShareWarning />", () => {
     const mockClient = getMockClientWithEventEmitter({
         getVisibleRooms: jest.fn().mockReturnValue([]),
         getUserId: jest.fn().mockReturnValue(aliceId),
+        getSafeUserId: jest.fn().mockReturnValue(aliceId),
         unstable_setLiveBeacon: jest.fn().mockResolvedValue({ event_id: "1" }),
         sendEvent: jest.fn(),
+        isGuest: jest.fn().mockReturnValue(false),
     });
 
     // 14.03.2022 16:15

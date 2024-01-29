@@ -27,22 +27,22 @@ import AccessibleButton from "../../../components/views/elements/AccessibleButto
 import { CheckUpdatesPayload } from "../../../dispatcher/payloads/CheckUpdatesPayload";
 
 function installUpdate(): void {
-    PlatformPeg.get().installUpdate();
+    PlatformPeg.get()?.installUpdate();
 }
 
 function getStatusText(status: UpdateCheckStatus, errorDetail?: string): ReactNode {
     switch (status) {
         case UpdateCheckStatus.Error:
-            return _t("Error encountered (%(errorDetail)s).", { errorDetail });
+            return _t("update|error_encountered", { errorDetail });
         case UpdateCheckStatus.Checking:
-            return _t("Checking for an update...");
+            return _t("update|checking");
         case UpdateCheckStatus.NotAvailable:
-            return _t("No update available.");
+            return _t("update|no_update");
         case UpdateCheckStatus.Downloading:
-            return _t("Downloading update...");
+            return _t("update|downloading");
         case UpdateCheckStatus.Ready:
             return _t(
-                "New version available. <a>Update now.</a>",
+                "update|new_version_available",
                 {},
                 {
                     a: (sub) => (
@@ -58,11 +58,11 @@ function getStatusText(status: UpdateCheckStatus, errorDetail?: string): ReactNo
 const doneStatuses = [UpdateCheckStatus.Ready, UpdateCheckStatus.Error, UpdateCheckStatus.NotAvailable];
 
 const UpdateCheckButton: React.FC = () => {
-    const [state, setState] = useState<CheckUpdatesPayload>(null);
+    const [state, setState] = useState<CheckUpdatesPayload | null>(null);
 
     const onCheckForUpdateClick = (): void => {
         setState(null);
-        PlatformPeg.get().startUpdateCheck();
+        PlatformPeg.get()?.startUpdateCheck();
     };
 
     useDispatcher(dis, ({ action, ...params }) => {
@@ -71,9 +71,9 @@ const UpdateCheckButton: React.FC = () => {
         }
     });
 
-    const busy = state && !doneStatuses.includes(state.status);
+    const busy = !!state && !doneStatuses.includes(state.status);
 
-    let suffix;
+    let suffix: JSX.Element | undefined;
     if (state) {
         suffix = (
             <span className="mx_UpdateCheckButton_summary">
@@ -86,7 +86,7 @@ const UpdateCheckButton: React.FC = () => {
     return (
         <React.Fragment>
             <AccessibleButton onClick={onCheckForUpdateClick} kind="primary" disabled={busy}>
-                {_t("Check for update")}
+                {_t("update|check_action")}
             </AccessibleButton>
             {suffix}
         </React.Fragment>

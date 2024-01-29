@@ -1,5 +1,5 @@
 /*
-Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import AudioPlayerBase from "./AudioPlayerBase";
 import { PlaybackState } from "../../../audio/Playback";
 
 export default class AudioPlayer extends AudioPlayerBase {
-    protected renderFileSize(): string {
+    protected renderFileSize(): string | null {
         const bytes = this.props.playback.sizeBytes;
         if (!bytes) return null;
 
@@ -48,7 +48,9 @@ export default class AudioPlayer extends AudioPlayerBase {
                         ref={this.playPauseRef}
                     />
                     <div className="mx_AudioPlayer_mediaInfo">
-                        <span className="mx_AudioPlayer_mediaName">{this.props.mediaName || _t("Unnamed audio")}</span>
+                        <span className="mx_AudioPlayer_mediaName">
+                            {this.props.mediaName || _t("timeline|m.audio|unnamed_audio")}
+                        </span>
                         <div className="mx_AudioPlayer_byline">
                             <DurationClock playback={this.props.playback} />
                             &nbsp; {/* easiest way to introduce a gap between the components */}

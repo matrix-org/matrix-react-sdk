@@ -90,7 +90,7 @@ export function objectHasDiff<O extends {}>(a: O, b: O): boolean {
     const aKeys = Object.keys(a);
     const bKeys = Object.keys(b);
     if (aKeys.length !== bKeys.length) return true;
-    const possibleChanges = arrayIntersection(aKeys, bKeys);
+    const possibleChanges = arrayIntersection(aKeys, bKeys) as Array<keyof O>;
     // if the amalgamation of both sets of keys has the a different length to the inputs then there must be a change
     if (possibleChanges.length !== aKeys.length) return true;
 
@@ -140,4 +140,13 @@ export function objectKeyChanges<O extends {}>(a: O, b: O): (keyof O)[] {
  */
 export function objectClone<O extends {}>(obj: O): O {
     return JSON.parse(JSON.stringify(obj));
+}
+
+/**
+ * Simple object check.
+ * @param item
+ * @returns {boolean}
+ */
+export function isObject(item: any): item is object {
+    return item && typeof item === "object" && !Array.isArray(item);
 }

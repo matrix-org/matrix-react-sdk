@@ -15,10 +15,11 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import RoomContext from "../../../contexts/RoomContext";
 import * as TextForEvent from "../../../TextForEvent";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -27,8 +28,13 @@ interface IProps {
 export default class TextualEvent extends React.Component<IProps> {
     public static contextType = RoomContext;
 
-    public render(): JSX.Element {
-        const text = TextForEvent.textForEvent(this.props.mxEvent, true, this.context?.showHiddenEvents);
+    public render(): React.ReactNode {
+        const text = TextForEvent.textForEvent(
+            this.props.mxEvent,
+            MatrixClientPeg.safeGet(),
+            true,
+            this.context?.showHiddenEvents,
+        );
         if (!text) return null;
         return <div className="mx_TextualEvent">{text}</div>;
     }

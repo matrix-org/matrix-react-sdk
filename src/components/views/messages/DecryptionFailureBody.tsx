@@ -14,14 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from "react";
+import React, { forwardRef, ForwardRefExoticComponent } from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { IBodyProps } from "./IBodyProps";
 
-// A placeholder element for messages that could not be decrypted
-export default class DecryptionFailureBody extends React.Component<Partial<IBodyProps>> {
-    public render(): ReactNode {
-        return <div className="mx_DecryptionFailureBody mx_EventTile_content">{_t("Unable to decrypt message")}</div>;
-    }
+function getErrorMessage(mxEvent?: MatrixEvent): string {
+    return mxEvent?.isEncryptedDisabledForUnverifiedDevices
+        ? _t("timeline|decryption_failure_blocked")
+        : _t("threads|unable_to_decrypt");
 }
+
+// A placeholder element for messages that could not be decrypted
+export const DecryptionFailureBody = forwardRef<HTMLDivElement, IBodyProps>(({ mxEvent }, ref): JSX.Element => {
+    return (
+        <div className="mx_DecryptionFailureBody mx_EventTile_content" ref={ref}>
+            {getErrorMessage(mxEvent)}
+        </div>
+    );
+}) as ForwardRefExoticComponent<IBodyProps>;

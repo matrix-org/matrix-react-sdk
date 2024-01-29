@@ -30,15 +30,15 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const effectsRef = useRef<Map<string, ICanvasEffect>>(new Map<string, ICanvasEffect>());
 
-    const lazyLoadEffectModule = async (name: string): Promise<ICanvasEffect> => {
+    const lazyLoadEffectModule = async (name: string): Promise<ICanvasEffect | null> => {
         if (!name) return null;
-        let effect: ICanvasEffect | null = effectsRef.current[name] || null;
+        let effect: ICanvasEffect | null = effectsRef.current.get(name) || null;
         if (effect === null) {
             const options = CHAT_EFFECTS.find((e) => e.command === name)?.options;
             try {
                 const { default: Effect } = await import(`../../../effects/${name}`);
                 effect = new Effect(options);
-                effectsRef.current[name] = effect;
+                effectsRef.current.set(name, effect!);
             } catch (err) {
                 logger.warn(`Unable to load effect module at '../../../effects/${name}.`, err);
             }
@@ -54,14 +54,14 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
         };
         const onAction = (payload: { action: string }): void => {
             const actionPrefix = "effects.";
-            if (payload.action.indexOf(actionPrefix) === 0) {
+            if (canvasRef.current && payload.action.startsWith(actionPrefix)) {
                 const effect = payload.action.slice(actionPrefix.length);
-                lazyLoadEffectModule(effect).then((module) => module?.start(canvasRef.current));
+                lazyLoadEffectModule(effect).then((module) => module?.start(canvasRef.current!));
             }
         };
         const dispatcherRef = dis.register(onAction);
         const canvas = canvasRef.current;
-        canvas.height = UIStore.instance.windowHeight;
+        if (canvas) canvas.height = UIStore.instance.windowHeight;
         UIStore.instance.on(UI_EVENTS.Resize, resize);
 
         return () => {
@@ -70,7 +70,7 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
             // eslint-disable-next-line react-hooks/exhaustive-deps
             const currentEffects = effectsRef.current; // this is not a react node ref, warning can be safely ignored
             for (const effect in currentEffects) {
-                const effectModule: ICanvasEffect = currentEffects[effect];
+                const effectModule: ICanvasEffect = currentEffects.get(effect)!;
                 if (effectModule && effectModule.isRunning) {
                     effectModule.stop();
                 }
@@ -90,6 +90,7 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
                 top: 0,
                 right: 0,
             }}
+            aria-hidden={true}
         />
     );
 };

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import dis from "../../../dispatcher/dispatcher";
 import { _t } from "../../../languageHandler";
@@ -33,7 +33,7 @@ function cancelQuoting(context: TimelineRenderingType): void {
 }
 
 interface IProps {
-    permalinkCreator: RoomPermalinkCreator;
+    permalinkCreator?: RoomPermalinkCreator;
     replyToEvent?: MatrixEvent;
 }
 
@@ -47,7 +47,7 @@ export default class ReplyPreview extends React.Component<IProps> {
             <div className="mx_ReplyPreview">
                 <div className="mx_ReplyPreview_section">
                     <div className="mx_ReplyPreview_header">
-                        <span>{_t("Replying")}</span>
+                        <span>{_t("composer|replying_title")}</span>
                         <AccessibleButton
                             className="mx_ReplyPreview_header_cancel"
                             onClick={() => cancelQuoting(this.context.timelineRenderingType)}

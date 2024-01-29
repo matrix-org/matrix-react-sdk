@@ -35,14 +35,15 @@ describe("LinkModal", () => {
         anchorNode: null,
         focusOffset: 3,
         anchorOffset: 4,
+        isForward: true,
     };
 
-    const customRender = (isTextEnabled: boolean, onClose: () => void, isEditing = false) => {
+    const customRender = (isTextEnabled: boolean, onFinished: () => void, isEditing = false) => {
         return render(
             <LinkModal
                 composer={formattingFunctions}
                 isTextEnabled={isTextEnabled}
-                onClose={onClose}
+                onFinished={onFinished}
                 composerContext={{ selection: defaultValue }}
                 isEditing={isEditing}
             />,
@@ -59,8 +60,8 @@ describe("LinkModal", () => {
 
     it("Should create a link", async () => {
         // When
-        const onClose = jest.fn();
-        customRender(false, onClose);
+        const onFinished = jest.fn();
+        customRender(false, onFinished);
 
         // Then
         expect(screen.getByLabelText("Link")).toBeTruthy();
@@ -83,7 +84,7 @@ describe("LinkModal", () => {
         // Then
         await waitFor(() => {
             expect(selectionSpy).toHaveBeenCalledWith(defaultValue);
-            expect(onClose).toBeCalledTimes(1);
+            expect(onFinished).toHaveBeenCalledTimes(1);
         });
 
         // Then
@@ -92,8 +93,8 @@ describe("LinkModal", () => {
 
     it("Should create a link with text", async () => {
         // When
-        const onClose = jest.fn();
-        customRender(true, onClose);
+        const onFinished = jest.fn();
+        customRender(true, onFinished);
 
         // Then
         expect(screen.getByLabelText("Text")).toBeTruthy();
@@ -126,7 +127,7 @@ describe("LinkModal", () => {
         // Then
         await waitFor(() => {
             expect(selectionSpy).toHaveBeenCalledWith(defaultValue);
-            expect(onClose).toBeCalledTimes(1);
+            expect(onFinished).toHaveBeenCalledTimes(1);
         });
 
         // Then
@@ -135,13 +136,13 @@ describe("LinkModal", () => {
 
     it("Should remove the link", async () => {
         // When
-        const onClose = jest.fn();
-        customRender(true, onClose, true);
+        const onFinished = jest.fn();
+        customRender(true, onFinished, true);
         await userEvent.click(screen.getByText("Remove"));
 
         // Then
         expect(formattingFunctions.removeLinks).toHaveBeenCalledTimes(1);
-        expect(onClose).toBeCalledTimes(1);
+        expect(onFinished).toHaveBeenCalledTimes(1);
     });
 
     it("Should display the link in editing", async () => {

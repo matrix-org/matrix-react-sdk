@@ -25,7 +25,7 @@ import AccessibleTooltipButton from "./AccessibleTooltipButton";
 
 interface IProps {
     children?: React.ReactNode;
-    getTextToCopy: () => string;
+    getTextToCopy: () => string | null;
     border?: boolean;
     className?: string;
 }
@@ -35,8 +35,9 @@ const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border = true
 
     const onCopyClickInternal = async (e: ButtonEvent): Promise<void> => {
         e.preventDefault();
-        const successful = await copyPlaintext(getTextToCopy());
-        setTooltip(successful ? _t("Copied!") : _t("Failed to copy"));
+        const text = getTextToCopy();
+        const successful = !!text && (await copyPlaintext(text));
+        setTooltip(successful ? _t("common|copied") : _t("error|failed_copy"));
     };
 
     const onHideTooltip = (): void => {
@@ -53,7 +54,7 @@ const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border = true
         <div className={combinedClassName}>
             {children}
             <AccessibleTooltipButton
-                title={tooltip ?? _t("Copy")}
+                title={tooltip ?? _t("action|copy")}
                 onClick={onCopyClickInternal}
                 className="mx_CopyableText_copyButton"
                 onHideTooltip={onHideTooltip}

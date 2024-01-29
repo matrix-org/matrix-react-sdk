@@ -15,22 +15,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType, RoomCreateTypeField, RoomType } from "matrix-js-sdk/src/@types/event";
-import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
 import {
+    MatrixClient,
+    ClientEvent,
+    Room,
+    EventType,
+    RoomCreateTypeField,
+    RoomType,
+    ICreateRoomOpts,
     HistoryVisibility,
     JoinRule,
     Preset,
     RestrictedAllowType,
     Visibility,
-} from "matrix-js-sdk/src/@types/partials";
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from "./MatrixClientPeg";
-import Modal from "./Modal";
-import { _t } from "./languageHandler";
+import Modal, { IHandle } from "./Modal";
+import { _t, UserFriendlyError } from "./languageHandler";
 import dis from "./dispatcher/dispatcher";
 import * as Rooms from "./Rooms";
 import { getAddressType } from "./UserAddress";
@@ -44,6 +46,7 @@ import Spinner from "./components/views/elements/Spinner";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { findDMForUser } from "./utils/dm/findDMForUser";
 import { privateShouldBeEncrypted } from "./utils/rooms";
+import { shouldForceDisableEncryption } from "./utils/crypto/shouldForceDisableEncryption";
 import { waitForMember } from "./utils/membership";
 import { PreferredRoomVersions } from "./utils/PreferredRoomVersions";
 import SettingsStore from "./settings/SettingsStore";
@@ -82,6 +85,7 @@ const DEFAULT_EVENT_POWER_LEVELS = {
 /**
  * Create a new room, and switch to it.
  *
+ * @param client The Matrix Client instance to create the room with
  * @param {object=} opts parameters for creating the room
  * @param {string=} opts.dmUserId If specified, make this a DM room for this user and invite them
  * @param {object=} opts.createOpts set of options to pass to createRoom call.
@@ -98,13 +102,12 @@ const DEFAULT_EVENT_POWER_LEVELS = {
  * @returns {Promise} which resolves to the room id, or null if the
  * action was aborted or failed.
  */
-export default async function createRoom(opts: IOpts): Promise<string | null> {
+export default async function createRoom(client: MatrixClient, opts: IOpts): Promise<string | null> {
     opts = opts || {};
     if (opts.spinner === undefined) opts.spinner = true;
     if (opts.guestAccess === undefined) opts.guestAccess = true;
     if (opts.encryption === undefined) opts.encryption = false;
 
-    const client = MatrixClientPeg.get();
     if (client.isGuest()) {
         dis.dispatch({ action: "require_registration" });
         return null;
@@ -116,19 +119,28 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     const createOpts: ICreateRoomOpts = opts.createOpts || {};
     createOpts.preset = createOpts.preset || defaultPreset;
     createOpts.visibility = createOpts.visibility || Visibility.Private;
-    if (opts.dmUserId && createOpts.invite === undefined) {
+
+    // We allow UX of DMing ourselves as a form of creating a personal room but the server throws
+    // an error when a user tries to invite themselves so we filter it out
+    if (opts.dmUserId && opts.dmUserId !== client.getUserId() && createOpts.invite === undefined) {
         switch (getAddressType(opts.dmUserId)) {
             case "mx-user-id":
                 createOpts.invite = [opts.dmUserId];
                 break;
-            case "email":
+            case "email": {
+                const isUrl = client.getIdentityServerUrl(true);
+                if (!isUrl) {
+                    throw new UserFriendlyError("cannot_invite_without_identity_server");
+                }
                 createOpts.invite_3pid = [
                     {
-                        id_server: MatrixClientPeg.get().getIdentityServerUrl(true),
+                        id_server: isUrl,
                         medium: "email",
                         address: opts.dmUserId,
                     },
                 ];
+                break;
+            }
         }
     }
     if (opts.dmUserId && createOpts.is_direct === undefined) {
@@ -153,7 +165,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 },
                 users: {
                     // Temporarily give ourselves the power to set up a widget
-                    [client.getUserId()!]: 200,
+                    [client.getSafeUserId()]: 200,
                 },
             };
         } else if (opts.roomType === RoomType.UnstableCall) {
@@ -167,7 +179,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 },
                 users: {
                     // Temporarily give ourselves the power to set up a call
-                    [client.getUserId()!]: 200,
+                    [client.getSafeUserId()]: 200,
                 },
             };
         }
@@ -175,9 +187,9 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
         createOpts.power_level_content_override = {
             events: {
                 ...DEFAULT_EVENT_POWER_LEVELS,
-                // Element Call should be disabled by default
-                [ElementCall.MEMBER_EVENT_TYPE.name]: 100,
-                // Make sure only admins can enable it
+                // It should always (including non video rooms) be possible to join a group call.
+                [ElementCall.MEMBER_EVENT_TYPE.name]: 0,
+                // Make sure only admins can enable it (DEPRECATED)
                 [ElementCall.CALL_EVENT_TYPE.name]: 100,
             },
         };
@@ -211,6 +223,10 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 algorithm: "m.megolm.v1.aes-sha2",
             },
         });
+    }
+
+    if (opts.joinRule === JoinRule.Knock) {
+        createOpts.room_version = PreferredRoomVersions.KnockRooms;
     }
 
     if (opts.parentSpace) {
@@ -267,8 +283,8 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
         });
     }
 
-    let modal;
-    if (opts.spinner) modal = Modal.createDialog(Spinner, null, "mx_Dialog_spinner");
+    let modal: IHandle<any> | undefined;
+    if (opts.spinner) modal = Modal.createDialog(Spinner, undefined, "mx_Dialog_spinner");
 
     let roomId: string;
     let room: Promise<Room>;
@@ -313,14 +329,14 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 }
             });
 
-            if (opts.dmUserId) await Rooms.setDMRoom(roomId, opts.dmUserId);
+            if (opts.dmUserId) await Rooms.setDMRoom(client, roomId, opts.dmUserId);
         })
         .then(() => {
             if (opts.parentSpace) {
                 return SpaceStore.instance.addRoomToSpace(
                     opts.parentSpace,
                     roomId,
-                    [client.getDomain()],
+                    [client.getDomain()!],
                     opts.suggested,
                 );
             }
@@ -375,15 +391,15 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                     roomId,
                 });
                 logger.error("Failed to create room " + roomId + " " + err);
-                let description = _t("Server may be unavailable, overloaded, or you hit a bug.");
+                let description = _t("create_room|generic_error");
                 if (err.errcode === "M_UNSUPPORTED_ROOM_VERSION") {
                     // Technically not possible with the UI as of April 2019 because there's no
                     // options for the user to change this. However, it's not a bad thing to report
                     // the error to the user for if/when the UI is available.
-                    description = _t("The server does not support the room version specified.");
+                    description = _t("create_room|unsupported_version");
                 }
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Failure to create room"),
+                    title: _t("create_room|error_title"),
                     description,
                 });
                 return null;
@@ -397,17 +413,23 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
  */
 export async function canEncryptToAllUsers(client: MatrixClient, userIds: string[]): Promise<boolean> {
     try {
-        const usersDeviceMap = await client.downloadKeys(userIds);
-        // { "@user:host": { "DEVICE": {...}, ... }, ... }
-        return Object.values(usersDeviceMap).every(
-            (userDevices) =>
-                // { "DEVICE": {...}, ... }
-                Object.keys(userDevices).length > 0,
-        );
+        const usersDeviceMap = await client.getCrypto()?.getUserDeviceInfo(userIds, true);
+        if (!usersDeviceMap) {
+            return false;
+        }
+
+        for (const devices of usersDeviceMap.values()) {
+            if (devices.size === 0) {
+                // This user does not have any encryption-capable devices.
+                return false;
+            }
+        }
     } catch (e) {
         logger.error("Error determining if it's possible to encrypt to all users: ", e);
         return false; // assume not
     }
+
+    return true;
 }
 
 // Similar to ensureDMExists but also adds creation content
@@ -417,13 +439,13 @@ export async function ensureVirtualRoomExists(
     client: MatrixClient,
     userId: string,
     nativeRoomId: string,
-): Promise<string> {
+): Promise<string | null> {
     const existingDMRoom = findDMForUser(client, userId);
-    let roomId;
+    let roomId: string | null;
     if (existingDMRoom) {
         roomId = existingDMRoom.roomId;
     } else {
-        roomId = await createRoom({
+        roomId = await createRoom(client, {
             dmUserId: userId,
             spinner: false,
             andView: false,
@@ -440,19 +462,66 @@ export async function ensureVirtualRoomExists(
     return roomId;
 }
 
-export async function ensureDMExists(client: MatrixClient, userId: string): Promise<string> {
+export async function ensureDMExists(client: MatrixClient, userId: string): Promise<string | null> {
     const existingDMRoom = findDMForUser(client, userId);
-    let roomId;
+    let roomId: string | null;
     if (existingDMRoom) {
         roomId = existingDMRoom.roomId;
     } else {
-        let encryption: boolean = undefined;
-        if (privateShouldBeEncrypted()) {
+        let encryption: boolean | undefined;
+        if (privateShouldBeEncrypted(client)) {
             encryption = await canEncryptToAllUsers(client, [userId]);
         }
 
-        roomId = await createRoom({ encryption, dmUserId: userId, spinner: false, andView: false });
+        roomId = await createRoom(client, { encryption, dmUserId: userId, spinner: false, andView: false });
+        if (!roomId) return null;
         await waitForMember(client, roomId, userId);
     }
     return roomId;
+}
+
+interface AllowedEncryptionSetting {
+    /**
+     * True when the user is allowed to choose whether encryption is enabled
+     */
+    allowChange: boolean;
+    /**
+     * Set when user is not allowed to choose encryption setting
+     * True when encryption is forced to enabled
+     */
+    forcedValue?: boolean;
+}
+/**
+ * Check if server configuration supports the user changing encryption for a room
+ * First check if server features force enable encryption for the given room type
+ * If not, check if server .well-known forces encryption to disabled
+ * If either are forced, then do not allow the user to change room's encryption
+ * @param client
+ * @param chatPreset chat type
+ * @returns Promise<boolean>
+ */
+export async function checkUserIsAllowedToChangeEncryption(
+    client: MatrixClient,
+    chatPreset: Preset,
+): Promise<AllowedEncryptionSetting> {
+    const doesServerForceEncryptionForPreset = await client.doesServerForceEncryptionForPreset(chatPreset);
+    const doesWellKnownForceDisableEncryption = shouldForceDisableEncryption(client);
+
+    // server is forcing encryption to ENABLED
+    // while .well-known config is forcing it to DISABLED
+    // server version config overrides wk config
+    if (doesServerForceEncryptionForPreset && doesWellKnownForceDisableEncryption) {
+        console.warn(
+            `Conflicting e2ee settings: server config and .well-known configuration disagree. Using server forced encryption setting for chat type ${chatPreset}`,
+        );
+    }
+
+    if (doesServerForceEncryptionForPreset) {
+        return { allowChange: false, forcedValue: true };
+    }
+    if (doesWellKnownForceDisableEncryption) {
+        return { allowChange: false, forcedValue: false };
+    }
+
+    return { allowChange: true };
 }

@@ -51,7 +51,7 @@ describe("isRoomReady", () => {
             mocked(client.getRoom).mockReturnValue(null);
         });
 
-        it("it should return false", () => {
+        it("should return false", () => {
             expect(isRoomReady(client, localRoom)).toBe(false);
         });
 
@@ -59,10 +59,11 @@ describe("isRoomReady", () => {
             beforeEach(() => {
                 mocked(client.getRoom).mockImplementation((roomId: string) => {
                     if (roomId === room1.roomId) return room1;
+                    return null;
                 });
             });
 
-            it("it should return false", () => {
+            it("should return false", () => {
                 expect(isRoomReady(client, localRoom)).toBe(false);
             });
 
@@ -74,7 +75,7 @@ describe("isRoomReady", () => {
                     ]);
                 });
 
-                it("it should return false", () => {
+                it("should return false", () => {
                     expect(isRoomReady(client, localRoom)).toBe(false);
                 });
 
@@ -91,7 +92,7 @@ describe("isRoomReady", () => {
                         ]);
                     });
 
-                    it("it should return true", () => {
+                    it("should return true", () => {
                         expect(isRoomReady(client, localRoom)).toBe(true);
                     });
 
@@ -100,7 +101,7 @@ describe("isRoomReady", () => {
                             localRoom.encrypted = true;
                         });
 
-                        it("it should return false", () => {
+                        it("should return false", () => {
                             expect(isRoomReady(client, localRoom)).toBe(false);
                         });
 
@@ -117,7 +118,7 @@ describe("isRoomReady", () => {
                                 ]);
                             });
 
-                            it("it should return true", () => {
+                            it("should return true", () => {
                                 expect(isRoomReady(client, localRoom)).toBe(true);
                             });
                         });

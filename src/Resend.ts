@@ -14,11 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent, EventStatus } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent, EventStatus, Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { MatrixClientPeg } from "./MatrixClientPeg";
 import dis from "./dispatcher/dispatcher";
 
 export default class Resend {
@@ -30,7 +28,7 @@ export default class Resend {
                     return ev.status === EventStatus.NOT_SENT;
                 })
                 .map(function (event: MatrixEvent) {
-                    return Resend.resend(event);
+                    return Resend.resend(room.client, event);
                 }),
         );
     }
@@ -41,30 +39,28 @@ export default class Resend {
                 return ev.status === EventStatus.NOT_SENT;
             })
             .forEach(function (event: MatrixEvent) {
-                Resend.removeFromQueue(event);
+                Resend.removeFromQueue(room.client, event);
             });
     }
 
-    public static resend(event: MatrixEvent): Promise<void> {
-        const room = MatrixClientPeg.get().getRoom(event.getRoomId());
-        return MatrixClientPeg.get()
-            .resendEvent(event, room)
-            .then(
-                function (res) {
-                    dis.dispatch({
-                        action: "message_sent",
-                        event: event,
-                    });
-                },
-                function (err: Error) {
-                    // XXX: temporary logging to try to diagnose
-                    // https://github.com/vector-im/element-web/issues/3148
-                    logger.log("Resend got send failure: " + err.name + "(" + err + ")");
-                },
-            );
+    public static resend(client: MatrixClient, event: MatrixEvent): Promise<void> {
+        const room = client.getRoom(event.getRoomId())!;
+        return client.resendEvent(event, room).then(
+            function (res) {
+                dis.dispatch({
+                    action: "message_sent",
+                    event: event,
+                });
+            },
+            function (err: Error) {
+                // XXX: temporary logging to try to diagnose
+                // https://github.com/vector-im/element-web/issues/3148
+                logger.log("Resend got send failure: " + err.name + "(" + err + ")");
+            },
+        );
     }
 
-    public static removeFromQueue(event: MatrixEvent): void {
-        MatrixClientPeg.get().cancelPendingEvent(event);
+    public static removeFromQueue(client: MatrixClient, event: MatrixEvent): void {
+        client.cancelPendingEvent(event);
     }
 }

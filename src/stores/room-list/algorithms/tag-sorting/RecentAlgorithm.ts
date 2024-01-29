@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 
 import { TagID } from "../../models";
 import { IAlgorithm } from "./IAlgorithm";
@@ -56,7 +54,7 @@ export const sortRooms = (rooms: Room[]): Room[] => {
     // See https://github.com/vector-im/element-web/issues/14458
     let myUserId = "";
     if (MatrixClientPeg.get()) {
-        myUserId = MatrixClientPeg.get().getUserId();
+        myUserId = MatrixClientPeg.get()!.getSafeUserId();
     }
 
     const tsCache: { [roomId: string]: number } = {};
@@ -95,7 +93,10 @@ const getLastTs = (r: Room, userId: string): number => {
             const ev = r.timeline[i];
             if (!ev.getTs()) continue; // skip events that don't have timestamps (tests only?)
 
-            if ((ev.getSender() === userId && shouldCauseReorder(ev)) || Unread.eventTriggersUnreadCount(ev)) {
+            if (
+                (ev.getSender() === userId && shouldCauseReorder(ev)) ||
+                Unread.eventTriggersUnreadCount(r.client, ev)
+            ) {
                 return ev.getTs();
             }
         }

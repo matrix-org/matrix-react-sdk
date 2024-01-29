@@ -15,16 +15,13 @@
  */
 
 import React, { HTMLAttributes } from "react";
-import classNames from "classnames";
-
-import TooltipTarget from "./TooltipTarget";
+import { Tooltip } from "@vector-im/compound-web";
 
 interface IProps extends HTMLAttributes<HTMLSpanElement> {
-    class?: string;
-    tooltipClass?: string;
-    tooltip: React.ReactNode;
-    tooltipProps?: Omit<React.ComponentProps<typeof TooltipTarget>, "label" | "tooltipClassName" | "className">;
-    onClick?: (ev?: React.MouseEvent) => void;
+    tooltip: string;
+    tooltipProps?: {
+        tabIndex?: number;
+    };
 }
 
 export default class TextWithTooltip extends React.Component<IProps> {
@@ -32,21 +29,15 @@ export default class TextWithTooltip extends React.Component<IProps> {
         super(props);
     }
 
-    public render(): JSX.Element {
-        const { class: className, children, tooltip, tooltipClass, tooltipProps, ...props } = this.props;
+    public render(): React.ReactNode {
+        const { className, children, tooltip, tooltipProps } = this.props;
 
         return (
-            <TooltipTarget
-                onClick={this.props.onClick}
-                tooltipTargetClassName={classNames("mx_TextWithTooltip_target", className)}
-                {...tooltipProps}
-                label={tooltip}
-                tooltipClassName={tooltipClass}
-                className="mx_TextWithTooltip_tooltip"
-                {...props}
-            >
-                {children}
-            </TooltipTarget>
+            <Tooltip label={tooltip} side="right">
+                <span className={className} tabIndex={tooltipProps?.tabIndex ?? 0}>
+                    {children}
+                </span>
+            </Tooltip>
         );
     }
 }

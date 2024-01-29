@@ -62,7 +62,7 @@ export default class AudioFeed extends React.Component<IProps, IState> {
                 // it fails.
                 // It seems reliable if you set the sink ID after setting the srcObject and then set the sink ID
                 // back to the default after the call is over - Dave
-                element.setSinkId(audioOutput);
+                element!.setSinkId(audioOutput);
             } catch (e) {
                 logger.error("Couldn't set requested audio output device: using default", e);
                 logger.warn("Couldn't set requested audio output device: using default", e);
@@ -103,7 +103,7 @@ export default class AudioFeed extends React.Component<IProps, IState> {
         if (!element) return;
 
         element.pause();
-        element.src = null;
+        element.removeAttribute("src");
 
         // As per comment in componentDidMount, setting the sink ID back to the
         // default once the call is over makes setSinkId work reliably. - Dave
@@ -118,7 +118,7 @@ export default class AudioFeed extends React.Component<IProps, IState> {
         this.playMedia();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         // Do not render the audio element if there is no audio track
         if (this.state.audioMuted) return null;
 

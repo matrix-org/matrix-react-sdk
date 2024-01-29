@@ -18,12 +18,12 @@ import React from "react";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
     numUnreadMessages?: number;
     highlight: boolean;
-    onScrollToBottomClick: (e: React.MouseEvent) => void;
+    onScrollToBottomClick: (e: ButtonEvent) => void;
 }
 
 const JumpToBottomButton: React.FC<IProps> = (props) => {
@@ -39,7 +39,7 @@ const JumpToBottomButton: React.FC<IProps> = (props) => {
         <div className={className}>
             <AccessibleButton
                 className="mx_JumpToBottomButton_scrollDown"
-                title={_t("Scroll to most recent messages")}
+                title={_t("room|jump_to_bottom_button")}
                 onClick={props.onScrollToBottomClick}
             />
             {badge}

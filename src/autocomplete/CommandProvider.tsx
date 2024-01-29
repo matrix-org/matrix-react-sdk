@@ -18,7 +18,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../languageHandler";
 import AutocompleteProvider from "./AutocompleteProvider";
@@ -27,6 +27,7 @@ import { TextualCompletion } from "./Components";
 import { ICompletion, ISelectionRange } from "./Autocompleter";
 import { Command, Commands, CommandMap } from "../SlashCommands";
 import { TimelineRenderingType } from "../contexts/RoomContext";
+import { MatrixClientPeg } from "../MatrixClientPeg";
 
 const COMMAND_RE = /(^\/\w*)(?: .*)?/g;
 
@@ -51,15 +52,17 @@ export default class CommandProvider extends AutocompleteProvider {
         const { command, range } = this.getCurrentCommand(query, selection);
         if (!command) return [];
 
+        const cli = MatrixClientPeg.get();
+
         let matches: Command[] = [];
         // check if the full match differs from the first word (i.e. returns false if the command has args)
         if (command[0] !== command[1]) {
             // The input looks like a command with arguments, perform exact match
             const name = command[1].slice(1); // strip leading `/`
-            if (CommandMap.has(name) && CommandMap.get(name).isEnabled()) {
+            if (CommandMap.has(name) && CommandMap.get(name)!.isEnabled(cli)) {
                 // some commands, namely `me` don't suit having the usage shown whilst typing their arguments
-                if (CommandMap.get(name).hideCompletionAfterSpace) return [];
-                matches = [CommandMap.get(name)];
+                if (CommandMap.get(name)!.hideCompletionAfterSpace) return [];
+                matches = [CommandMap.get(name)!];
             }
         } else {
             if (query === "/") {
@@ -75,7 +78,7 @@ export default class CommandProvider extends AutocompleteProvider {
         return matches
             .filter((cmd) => {
                 const display = !cmd.renderingTypes || cmd.renderingTypes.includes(this.renderingType);
-                return cmd.isEnabled() && display;
+                return cmd.isEnabled(cli) && display;
             })
             .map((result) => {
                 let completion = result.getCommand() + " ";
@@ -95,13 +98,13 @@ export default class CommandProvider extends AutocompleteProvider {
                             description={_t(result.description)}
                         />
                     ),
-                    range,
+                    range: range!,
                 };
             });
     }
 
     public getName(): string {
-        return "*️⃣ " + _t("Commands");
+        return "*️⃣ " + _t("composer|autocomplete|command_description");
     }
 
     public renderCompletions(completions: React.ReactNode[]): React.ReactNode {
@@ -109,7 +112,7 @@ export default class CommandProvider extends AutocompleteProvider {
             <div
                 className="mx_Autocomplete_Completion_container_pill"
                 role="presentation"
-                aria-label={_t("Command Autocomplete")}
+                aria-label={_t("composer|autocomplete|command_a11y")}
             >
                 {completions}
             </div>

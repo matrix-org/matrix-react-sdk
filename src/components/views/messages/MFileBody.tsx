@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
-import { filesize } from "filesize";
+import React, { AllHTMLAttributes, createRef } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -23,14 +22,14 @@ import Modal from "../../../Modal";
 import AccessibleButton from "../elements/AccessibleButton";
 import { mediaFromContent } from "../../../customisations/Media";
 import ErrorDialog from "../dialogs/ErrorDialog";
-import { presentableTextForFile } from "../../../utils/FileUtils";
+import { fileSize, presentableTextForFile } from "../../../utils/FileUtils";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 import { IBodyProps } from "./IBodyProps";
 import { FileDownloader } from "../../../utils/FileDownloader";
 import TextWithTooltip from "../elements/TextWithTooltip";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 
-export let DOWNLOAD_ICON_URL; // cached copy of the download.svg asset for the sandboxed iframe later on
+export let DOWNLOAD_ICON_URL: string; // cached copy of the download.svg asset for the sandboxed iframe later on
 
 async function cacheDownloadIcon(): Promise<void> {
     if (DOWNLOAD_ICON_URL) return; // cached already
@@ -78,7 +77,7 @@ cacheDownloadIcon();
  * @param {HTMLElement} element The element to get the current style of.
  * @return {string} The CSS style encoded as a string.
  */
-export function computedStyle(element: HTMLElement): string {
+export function computedStyle(element: HTMLElement | null): string {
     if (!element) {
         return "";
     }
@@ -134,7 +133,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
     }
 
     private get fileName(): string {
-        return this.content.body && this.content.body.length > 0 ? this.content.body : _t("Attachment");
+        return this.content.body && this.content.body.length > 0 ? this.content.body : _t("common|attachment");
     }
 
     private get linkText(): string {
@@ -142,6 +141,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
     }
 
     private downloadFile(fileName: string, text: string): void {
+        if (!this.state.decryptedBlob) return;
         this.fileDownloader.download({
             blob: this.state.decryptedBlob,
             name: fileName,
@@ -150,12 +150,12 @@ export default class MFileBody extends React.Component<IProps, IState> {
                 imgSrc: DOWNLOAD_ICON_URL,
                 imgStyle: null,
                 style: computedStyle(this.dummyLink.current),
-                textContent: _t("Download %(text)s", { text }),
+                textContent: _t("timeline|m.file|download_label", { text }),
             },
         });
     }
 
-    public componentDidUpdate(prevProps, prevState): void {
+    public componentDidUpdate(prevProps: IProps, prevState: IState): void {
         if (this.props.onHeightChanged && !prevState.decryptedBlob && this.state.decryptedBlob) {
             this.props.onHeightChanged();
         }
@@ -168,13 +168,13 @@ export default class MFileBody extends React.Component<IProps, IState> {
         try {
             this.userDidClick = true;
             this.setState({
-                decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
+                decryptedBlob: await this.props.mediaEventHelper!.sourceBlob.value,
             });
         } catch (err) {
             logger.warn("Unable to decrypt attachment: ", err);
             Modal.createDialog(ErrorDialog, {
-                title: _t("Error"),
-                description: _t("Error decrypting attachment"),
+                title: _t("common|error"),
+                description: _t("timeline|m.file|error_decrypting"),
             });
         }
     };
@@ -188,26 +188,26 @@ export default class MFileBody extends React.Component<IProps, IState> {
             // As a button we're missing the `download` attribute for styling reasons, so
             // download with the file downloader.
             this.fileDownloader.download({
-                blob: await mediaHelper.sourceBlob.value,
+                blob: await mediaHelper!.sourceBlob.value,
                 name: this.fileName,
             });
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const isEncrypted = this.props.mediaEventHelper?.media.isEncrypted;
         const contentUrl = this.getContentUrl();
-        const fileSize = this.content.info ? this.content.info.size : null;
-        const fileType = this.content.info ? this.content.info.mimetype : "application/octet-stream";
+        const contentFileSize = this.content.info ? this.content.info.size : null;
+        const fileType = this.content.info?.mimetype ?? "application/octet-stream";
 
         let placeholder: React.ReactNode = null;
         if (this.props.showGenericPlaceholder) {
             placeholder = (
                 <AccessibleButton className="mx_MediaBody mx_MFileBody_info" onClick={this.onPlaceholderClick}>
                     <span className="mx_MFileBody_info_icon" />
-                    <TextWithTooltip tooltip={presentableTextForFile(this.content, _t("Attachment"), true)}>
+                    <TextWithTooltip tooltip={presentableTextForFile(this.content, _t("common|attachment"), true)}>
                         <span className="mx_MFileBody_info_filename">
-                            {presentableTextForFile(this.content, _t("Attachment"), true, true)}
+                            {presentableTextForFile(this.content, _t("common|attachment"), true, true)}
                         </span>
                     </TextWithTooltip>
                 </AccessibleButton>
@@ -248,7 +248,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                         {showDownloadLink && (
                             <div className="mx_MFileBody_download">
                                 <AccessibleButton onClick={this.decryptFile}>
-                                    {_t("Decrypt %(text)s", { text: this.linkText })}
+                                    {_t("timeline|m.file|decrypt_label", { text: this.linkText })}
                                 </AccessibleButton>
                             </div>
                         )}
@@ -284,7 +284,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                          */}
                             <iframe
                                 aria-hidden
-                                title={presentableTextForFile(this.content, _t("Attachment"), true, true)}
+                                title={presentableTextForFile(this.content, _t("common|attachment"), true, true)}
                                 src={url}
                                 onLoad={() => this.downloadFile(this.fileName, this.linkText)}
                                 ref={this.iframe}
@@ -295,7 +295,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                 </span>
             );
         } else if (contentUrl) {
-            const downloadProps = {
+            const downloadProps: AllHTMLAttributes<HTMLAnchorElement> = {
                 target: "_blank",
                 rel: "noreferrer noopener",
 
@@ -309,7 +309,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
             // we won't try and convert it. Likewise, if the file size is unknown then we'll assume
             // it is too big. There is the risk of the reported file size and the actual file size
             // being different, however the user shouldn't normally run into this problem.
-            const fileTooBig = typeof fileSize === "number" ? fileSize > 524288000 : true;
+            const fileTooBig = typeof contentFileSize === "number" ? contentFileSize > 524288000 : true;
 
             if (["application/pdf"].includes(fileType) && !fileTooBig) {
                 // We want to force a download on this type, so use an onClick handler.
@@ -322,7 +322,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
 
                     // Start a fetch for the download
                     // Based upon https://stackoverflow.com/a/49500465
-                    this.props.mediaEventHelper.sourceBlob.value.then((blob) => {
+                    this.props.mediaEventHelper?.sourceBlob.value.then((blob) => {
                         const blobUrl = URL.createObjectURL(blob);
 
                         // We have to create an anchor to download the file
@@ -346,11 +346,11 @@ export default class MFileBody extends React.Component<IProps, IState> {
                         <div className="mx_MFileBody_download">
                             <a {...downloadProps}>
                                 <span className="mx_MFileBody_download_icon" />
-                                {_t("Download %(text)s", { text: this.linkText })}
+                                {_t("timeline|m.file|download_label", { text: this.linkText })}
                             </a>
                             {this.context.timelineRenderingType === TimelineRenderingType.File && (
                                 <div className="mx_MImageBody_size">
-                                    {this.content.info?.size ? filesize(this.content.info.size) : ""}
+                                    {this.content.info?.size ? fileSize(this.content.info.size) : ""}
                                 </div>
                             )}
                         </div>
@@ -362,7 +362,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
             return (
                 <span className="mx_MFileBody">
                     {placeholder}
-                    {_t("Invalid file%(extra)s", { extra: extra })}
+                    {_t("timeline|m.file|error_invalid", { extra: extra })}
                 </span>
             );
         }

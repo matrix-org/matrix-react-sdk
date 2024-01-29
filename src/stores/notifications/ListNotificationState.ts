@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { NotificationColor } from "./NotificationColor";
 import { arrayDiff } from "../../utils/arrays";
@@ -27,7 +27,10 @@ export class ListNotificationState extends NotificationState {
     private rooms: Room[] = [];
     private states: { [roomId: string]: RoomNotificationState } = {};
 
-    public constructor(private byTileCount = false, private getRoomFn: FetchRoomFn) {
+    public constructor(
+        private byTileCount = false,
+        private getRoomFn: FetchRoomFn,
+    ) {
         super();
     }
 

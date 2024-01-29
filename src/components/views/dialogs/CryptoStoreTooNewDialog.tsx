@@ -24,23 +24,19 @@ import Modal from "../../../Modal";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import QuestionDialog from "./QuestionDialog";
-import { IDialogProps } from "./IDialogProps";
 
-interface IProps extends IDialogProps {}
+interface IProps {
+    onFinished(logout?: boolean): void;
+}
 
 const CryptoStoreTooNewDialog: React.FC<IProps> = (props: IProps) => {
     const brand = SdkConfig.get().brand;
 
     const _onLogoutClicked = (): void => {
         Modal.createDialog(QuestionDialog, {
-            title: _t("Sign out"),
-            description: _t(
-                "To avoid losing your chat history, you must export your room keys " +
-                    "before logging out. You will need to go back to the newer version of " +
-                    "%(brand)s to do this",
-                { brand },
-            ),
-            button: _t("Sign out"),
+            title: _t("action|sign_out"),
+            description: _t("encryption|incompatible_database_sign_out_description", { brand }),
+            button: _t("action|sign_out"),
             focus: false,
             onFinished: (doLogout) => {
                 if (doLogout) {
@@ -51,18 +47,13 @@ const CryptoStoreTooNewDialog: React.FC<IProps> = (props: IProps) => {
         });
     };
 
-    const description = _t(
-        "You've previously used a newer version of %(brand)s with this session. " +
-            "To use this version again with end to end encryption, you will " +
-            "need to sign out and back in again.",
-        { brand },
-    );
+    const description = _t("encryption|incompatible_database_description", { brand });
 
     return (
         <BaseDialog
             className="mx_CryptoStoreTooNewDialog"
             contentId="mx_Dialog_content"
-            title={_t("Incompatible Database")}
+            title={_t("encryption|incompatible_database_title")}
             hasCancel={false}
             onFinished={props.onFinished}
         >
@@ -70,11 +61,11 @@ const CryptoStoreTooNewDialog: React.FC<IProps> = (props: IProps) => {
                 {description}
             </div>
             <DialogButtons
-                primaryButton={_t("Continue With Encryption Disabled")}
+                primaryButton={_t("encryption|incompatible_database_disable")}
                 hasCancel={false}
-                onPrimaryButtonClick={props.onFinished}
+                onPrimaryButtonClick={() => props.onFinished(false)}
             >
-                <button onClick={_onLogoutClicked}>{_t("Sign out")}</button>
+                <button onClick={_onLogoutClicked}>{_t("action|sign_out")}</button>
             </DialogButtons>
         </BaseDialog>
     );

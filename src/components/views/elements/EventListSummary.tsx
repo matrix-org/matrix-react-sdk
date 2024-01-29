@@ -16,13 +16,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import React, { ComponentProps, ReactNode } from "react";
+import { MatrixEvent, RoomMember, EventType } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
-import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
+import { formatList } from "../../../utils/FormattingUtils";
 import { isValid3pidInvite } from "../../../RoomInvite";
 import GenericEventListSummary from "./GenericEventListSummary";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
@@ -78,7 +76,9 @@ enum TransitionType {
 
 const SEP = ",";
 
-export default class EventListSummary extends React.Component<IProps> {
+export default class EventListSummary extends React.Component<
+    IProps & Required<Pick<IProps, "summaryLength" | "threshold" | "avatarsMaxLength" | "layout">>
+> {
     public static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
 
@@ -113,7 +113,7 @@ export default class EventListSummary extends React.Component<IProps> {
     private generateSummary(
         eventAggregates: Record<string, string[]>,
         orderedTransitionSequences: string[],
-    ): string | JSX.Element {
+    ): ReactNode {
         const summaries = orderedTransitionSequences.map((transitions) => {
             const userNames = eventAggregates[transitions];
             const nameList = this.renderNameList(userNames);
@@ -131,9 +131,9 @@ export default class EventListSummary extends React.Component<IProps> {
                 return EventListSummary.getDescriptionForTransition(t.transitionType, userNames.length, t.repeats);
             });
 
-            const desc = formatCommaSeparatedList(descs);
+            const desc = formatList(descs);
 
-            return _t("%(nameList)s %(transitionList)s", { nameList, transitionList: desc });
+            return _t("timeline|summary|format", { nameList, transitionList: desc });
         });
 
         if (!summaries) {
@@ -150,7 +150,7 @@ export default class EventListSummary extends React.Component<IProps> {
      * included before "and [n] others".
      */
     private renderNameList(users: string[]): string {
-        return formatCommaSeparatedList(users, this.props.summaryLength);
+        return formatList(users, this.props.summaryLength);
     }
 
     /**
@@ -161,7 +161,15 @@ export default class EventListSummary extends React.Component<IProps> {
      * @returns {string[]} an array of transitions.
      */
     private static getCanonicalTransitions(transitions: TransitionType[]): TransitionType[] {
-        const modMap = {
+        const modMap: Partial<
+            Record<
+                TransitionType,
+                {
+                    after: TransitionType;
+                    newTransition: TransitionType;
+                }
+            >
+        > = {
             [TransitionType.Joined]: {
                 after: TransitionType.Left,
                 newTransition: TransitionType.JoinedAndLeft,
@@ -170,10 +178,6 @@ export default class EventListSummary extends React.Component<IProps> {
                 after: TransitionType.Joined,
                 newTransition: TransitionType.LeftAndJoined,
             },
-            // $currentTransition : {
-            //     'after' : $nextTransition,
-            //     'newTransition' : 'new_transition_type',
-            // },
         };
         const res: TransitionType[] = [];
 
@@ -183,8 +187,8 @@ export default class EventListSummary extends React.Component<IProps> {
 
             let transition = t;
 
-            if (i < transitions.length - 1 && modMap[t] && modMap[t].after === t2) {
-                transition = modMap[t].newTransition;
+            if (i < transitions.length - 1 && modMap[t] && modMap[t]!.after === t2) {
+                transition = modMap[t]!.newTransition;
                 i++;
             }
 
@@ -237,111 +241,110 @@ export default class EventListSummary extends React.Component<IProps> {
      * @param {number} repeats the number of times the transition was repeated in a row.
      * @returns {string} the written Human Readable equivalent of the transition.
      */
-    private static getDescriptionForTransition(
-        t: TransitionType,
-        userCount: number,
-        count: number,
-    ): string | JSX.Element {
+    private static getDescriptionForTransition(t: TransitionType, userCount: number, count: number): ReactNode | null {
         // The empty interpolations 'severalUsers' and 'oneUser'
         // are there only to show translators to non-English languages
         // that the verb is conjugated to plural or singular Subject.
-        let res = null;
+        let res: ReactNode | undefined;
         switch (t) {
             case TransitionType.Joined:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)sjoined %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)sjoined %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|joined_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|joined", { oneUser: "", count });
                 break;
             case TransitionType.Left:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)sleft %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)sleft %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|left_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|left", { oneUser: "", count });
                 break;
             case TransitionType.JoinedAndLeft:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)sjoined and left %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)sjoined and left %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|joined_and_left_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|joined_and_left", { oneUser: "", count });
                 break;
             case TransitionType.LeftAndJoined:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)sleft and rejoined %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)sleft and rejoined %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|rejoined_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|rejoined", { oneUser: "", count });
                 break;
             case TransitionType.InviteReject:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)srejected their invitations %(count)s times", {
+                        ? _t("timeline|summary|rejected_invite_multiple", {
                               severalUsers: "",
                               count,
                           })
-                        : _t("%(oneUser)srejected their invitation %(count)s times", { oneUser: "", count });
+                        : _t("timeline|summary|rejected_invite", { oneUser: "", count });
                 break;
             case TransitionType.InviteWithdrawal:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)shad their invitations withdrawn %(count)s times", {
+                        ? _t("timeline|summary|invite_withdrawn_multiple", {
                               severalUsers: "",
                               count,
                           })
-                        : _t("%(oneUser)shad their invitation withdrawn %(count)s times", { oneUser: "", count });
+                        : _t("timeline|summary|invite_withdrawn", { oneUser: "", count });
                 break;
             case TransitionType.Invited:
                 res =
                     userCount > 1
-                        ? _t("were invited %(count)s times", { count })
-                        : _t("was invited %(count)s times", { count });
+                        ? _t("timeline|summary|invited_multiple", { count })
+                        : _t("timeline|summary|invited", { count });
                 break;
             case TransitionType.Banned:
                 res =
                     userCount > 1
-                        ? _t("were banned %(count)s times", { count })
-                        : _t("was banned %(count)s times", { count });
+                        ? _t("timeline|summary|banned_multiple", { count })
+                        : _t("timeline|summary|banned", { count });
                 break;
             case TransitionType.Unbanned:
                 res =
                     userCount > 1
-                        ? _t("were unbanned %(count)s times", { count })
-                        : _t("was unbanned %(count)s times", { count });
+                        ? _t("timeline|summary|unbanned_multiple", { count })
+                        : _t("timeline|summary|unbanned", { count });
                 break;
             case TransitionType.Kicked:
                 res =
                     userCount > 1
-                        ? _t("were removed %(count)s times", { count })
-                        : _t("was removed %(count)s times", { count });
+                        ? _t("timeline|summary|kicked_multiple", { count })
+                        : _t("timeline|summary|kicked", { count });
                 break;
             case TransitionType.ChangedName:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)schanged their name %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)schanged their name %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|changed_name_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|changed_name", { oneUser: "", count });
                 break;
             case TransitionType.ChangedAvatar:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)schanged their avatar %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)schanged their avatar %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|changed_avatar_multiple", {
+                              severalUsers: "",
+                              count,
+                          })
+                        : _t("timeline|summary|changed_avatar", { oneUser: "", count });
                 break;
             case TransitionType.NoChange:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)smade no changes %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)smade no changes %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|no_change_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|no_change", { oneUser: "", count });
                 break;
             case TransitionType.ServerAcl:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)schanged the server ACLs %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)schanged the server ACLs %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|server_acls_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|server_acls", { oneUser: "", count });
                 break;
             case TransitionType.ChangedPins:
                 res =
                     userCount > 1
                         ? _t(
-                              "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times",
+                              "timeline|summary|pinned_events_multiple",
                               { severalUsers: "", count },
                               {
                                   a: (sub) => (
@@ -352,7 +355,7 @@ export default class EventListSummary extends React.Component<IProps> {
                               },
                           )
                         : _t(
-                              "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times",
+                              "timeline|summary|pinned_events",
                               { oneUser: "", count },
                               {
                                   a: (sub) => (
@@ -366,21 +369,21 @@ export default class EventListSummary extends React.Component<IProps> {
             case TransitionType.MessageRemoved:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)sremoved a message %(count)s times", { severalUsers: "", count })
-                        : _t("%(oneUser)sremoved a message %(count)s times", { oneUser: "", count });
+                        ? _t("timeline|summary|redacted_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|redacted", { oneUser: "", count });
                 break;
             case TransitionType.HiddenEvent:
                 res =
                     userCount > 1
-                        ? _t("%(severalUsers)ssent %(count)s hidden messages", { severalUsers: "", count })
-                        : _t("%(oneUser)ssent %(count)s hidden messages", { oneUser: "", count });
+                        ? _t("timeline|summary|hidden_event_multiple", { severalUsers: "", count })
+                        : _t("timeline|summary|hidden_event", { oneUser: "", count });
                 break;
         }
 
-        return res;
+        return res ?? null;
     }
 
-    private static getTransitionSequence(events: IUserEvents[]): TransitionType[] {
+    private static getTransitionSequence(events: IUserEvents[]): Array<TransitionType | null> {
         return events.map(EventListSummary.getTransition);
     }
 
@@ -392,7 +395,7 @@ export default class EventListSummary extends React.Component<IProps> {
      * @returns {string?} the transition type given to this event. This defaults to `null`
      * if a transition is not recognised.
      */
-    private static getTransition(e: IUserEvents): TransitionType {
+    private static getTransition(e: IUserEvents): TransitionType | null {
         if (e.mxEvent.isRedacted()) {
             return TransitionType.MessageRemoved;
         }
@@ -495,7 +498,7 @@ export default class EventListSummary extends React.Component<IProps> {
         };
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const eventsToRender = this.props.events;
 
         // Map user IDs to latest Avatar Member. ES6 Maps are ordered by when the key was created,
@@ -507,39 +510,36 @@ export default class EventListSummary extends React.Component<IProps> {
         eventsToRender.forEach((e, index) => {
             const type = e.getType();
 
-            let userId = e.getSender();
-            if (type === EventType.RoomMember) {
-                userId = e.getStateKey();
-            } else if (e.isRedacted()) {
-                userId = e.getUnsigned()?.redacted_because?.sender;
+            let userKey = e.getSender()!;
+            if (e.isState() && type === EventType.RoomThirdPartyInvite) {
+                userKey = e.getContent().display_name;
+            } else if (e.isState() && type === EventType.RoomMember) {
+                userKey = e.getStateKey()!;
+            } else if (e.isRedacted() && e.getUnsigned()?.redacted_because) {
+                userKey = e.getUnsigned().redacted_because!.sender;
             }
 
             // Initialise a user's events
-            if (!userEvents[userId]) {
-                userEvents[userId] = [];
+            if (!userEvents[userKey]) {
+                userEvents[userKey] = [];
             }
 
-            let displayName = userId;
-            if (type === EventType.RoomThirdPartyInvite) {
-                displayName = e.getContent().display_name;
-                if (e.sender) {
-                    latestUserAvatarMember.set(userId, e.sender);
-                }
-            } else if (e.isRedacted()) {
-                const sender = this.context?.room.getMember(userId);
+            let displayName = userKey;
+            if (e.isRedacted()) {
+                const sender = this.context?.room?.getMember(userKey);
                 if (sender) {
                     displayName = sender.name;
-                    latestUserAvatarMember.set(userId, sender);
+                    latestUserAvatarMember.set(userKey, sender);
                 }
             } else if (e.target && TARGET_AS_DISPLAY_NAME_EVENTS.includes(type as EventType)) {
                 displayName = e.target.name;
-                latestUserAvatarMember.set(userId, e.target);
-            } else if (e.sender) {
+                latestUserAvatarMember.set(userKey, e.target);
+            } else if (e.sender && type !== EventType.RoomThirdPartyInvite) {
                 displayName = e.sender.name;
-                latestUserAvatarMember.set(userId, e.sender);
+                latestUserAvatarMember.set(userKey, e.sender);
             }
 
-            userEvents[userId].push({
+            userEvents[userKey].push({
                 mxEvent: e,
                 displayName,
                 index: index,

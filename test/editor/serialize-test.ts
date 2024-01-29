@@ -17,6 +17,7 @@ limitations under the License.
 import EditorModel from "../../src/editor/model";
 import { htmlSerializeIfNeeded } from "../../src/editor/serialize";
 import { createPartCreator } from "./mock";
+import SettingsStore from "../../src/settings/SettingsStore";
 
 describe("editor/serialize", function () {
     describe("with markdown", function () {
@@ -62,6 +63,12 @@ describe("editor/serialize", function () {
             const html = htmlSerializeIfNeeded(model, {});
             expect(html).toBe('<a href="https://matrix.to/#/@user:server">Displayname]</a>');
         });
+        it("displaynames containing a newline work", function () {
+            const pc = createPartCreator();
+            const model = new EditorModel([pc.userPill("Display\nname", "@user:server")], pc);
+            const html = htmlSerializeIfNeeded(model, {});
+            expect(html).toBe('<a href="https://matrix.to/#/@user:server">Display<br>name</a>');
+        });
         it("escaped markdown should not retain backslashes", function () {
             const pc = createPartCreator();
             const model = new EditorModel([pc.plain("\\*hello\\* world")], pc);
@@ -74,7 +81,31 @@ describe("editor/serialize", function () {
             const html = htmlSerializeIfNeeded(model, {});
             expect(html).toBe("*hello* world &lt; hey world!");
         });
+
+        it("lists with a single empty item are not considered markdown", function () {
+            const pc = createPartCreator();
+
+            const model1 = new EditorModel([pc.plain("-")], pc);
+            const html1 = htmlSerializeIfNeeded(model1, {});
+            expect(html1).toBe(undefined);
+
+            const model2 = new EditorModel([pc.plain("* ")], pc);
+            const html2 = htmlSerializeIfNeeded(model2, {});
+            expect(html2).toBe(undefined);
+
+            const model3 = new EditorModel([pc.plain("2021.")], pc);
+            const html3 = htmlSerializeIfNeeded(model3, {});
+            expect(html3).toBe(undefined);
+        });
+
+        it("lists with a single non-empty item are still markdown", function () {
+            const pc = createPartCreator();
+            const model = new EditorModel([pc.plain("2021. foo")], pc);
+            const html = htmlSerializeIfNeeded(model, {});
+            expect(html).toBe('<ol start="2021">\n<li>foo</li>\n</ol>\n');
+        });
     });
+
     describe("with plaintext", function () {
         it("markdown remains plaintext", function () {
             const pc = createPartCreator();
@@ -94,12 +125,49 @@ describe("editor/serialize", function () {
             const html = htmlSerializeIfNeeded(model, { useMarkdown: false });
             expect(html).toBe("\\*hello\\* world &lt; hey world!");
         });
-
         it("plaintext remains plaintext even when forcing html", function () {
             const pc = createPartCreator();
             const model = new EditorModel([pc.plain("hello world")], pc);
             const html = htmlSerializeIfNeeded(model, { forceHTML: true, useMarkdown: false });
             expect(html).toBe("hello world");
+        });
+    });
+
+    describe("feature_latex_maths", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => feature === "feature_latex_maths");
+        });
+
+        it("should support inline katex", () => {
+            const pc = createPartCreator();
+            const model = new EditorModel([pc.plain("hello $\\xi$ world")], pc);
+            const html = htmlSerializeIfNeeded(model, {});
+            expect(html).toMatchInlineSnapshot(`"hello <span data-mx-maths="\\xi"><code>\\xi</code></span> world"`);
+        });
+
+        it("should support block katex", () => {
+            const pc = createPartCreator();
+            const model = new EditorModel([pc.plain("hello \n$$\\xi$$\n world")], pc);
+            const html = htmlSerializeIfNeeded(model, {});
+            expect(html).toMatchInlineSnapshot(`
+                "<p>hello</p>
+                <div data-mx-maths="\\xi"><code>\\xi</code></div>
+                <p>world</p>
+                "
+            `);
+        });
+
+        it("should not mangle code blocks", () => {
+            const pc = createPartCreator();
+            const model = new EditorModel([pc.plain("hello\n```\n$\\xi$\n```\nworld")], pc);
+            const html = htmlSerializeIfNeeded(model, {});
+            expect(html).toMatchInlineSnapshot(`
+                "<p>hello</p>
+                <pre><code>$\\xi$
+                </code></pre>
+                <p>world</p>
+                "
+            `);
         });
     });
 });

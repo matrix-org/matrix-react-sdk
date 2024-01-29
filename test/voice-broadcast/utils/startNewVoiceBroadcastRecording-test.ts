@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { EventType, ISendEventResponse, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
-import { SyncState } from "matrix-js-sdk/src/sync";
+import { EventType, ISendEventResponse, MatrixClient, MatrixEvent, Room, SyncState } from "matrix-js-sdk/src/matrix";
 
 import Modal from "../../../src/Modal";
 import {
@@ -161,7 +160,7 @@ describe("startNewVoiceBroadcastRecording", () => {
                         device_id: client.getDeviceId(),
                         state: VoiceBroadcastInfoState.Started,
                     },
-                    client.getUserId(),
+                    client.getUserId()!,
                 );
                 expect(recording!.infoEvent).toBe(infoEvent);
                 expect(recording!.start).toHaveBeenCalled();

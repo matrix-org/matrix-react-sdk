@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import classNames from "classnames";
+import { IEventRelation } from "matrix-js-sdk/src/matrix";
 import React, { MutableRefObject, ReactNode } from "react";
 
 import { useComposerFunctions } from "../hooks/useComposerFunctions";
@@ -24,6 +25,7 @@ import { usePlainTextListeners } from "../hooks/usePlainTextListeners";
 import { useSetCursorPosition } from "../hooks/useSetCursorPosition";
 import { ComposerFunctions } from "../types";
 import { Editor } from "./Editor";
+import { WysiwygAutocomplete } from "./WysiwygAutocomplete";
 
 interface PlainTextComposerProps {
     disabled?: boolean;
@@ -35,6 +37,7 @@ interface PlainTextComposerProps {
     leftComponent?: ReactNode;
     rightComponent?: ReactNode;
     children?: (ref: MutableRefObject<HTMLDivElement | null>, composerFunctions: ComposerFunctions) => ReactNode;
+    eventRelation?: IEventRelation;
 }
 
 export function PlainTextComposer({
@@ -47,15 +50,27 @@ export function PlainTextComposer({
     initialContent,
     leftComponent,
     rightComponent,
+    eventRelation,
 }: PlainTextComposerProps): JSX.Element {
-    const { ref, onInput, onPaste, onKeyDown, content, setContent } = usePlainTextListeners(
-        initialContent,
-        onChange,
-        onSend,
-    );
-    const composerFunctions = useComposerFunctions(ref, setContent);
-    usePlainTextInitialization(initialContent, ref);
-    useSetCursorPosition(disabled, ref);
+    const {
+        ref: editorRef,
+        autocompleteRef,
+        onBeforeInput,
+        onInput,
+        onPaste,
+        onKeyDown,
+        content,
+        setContent,
+        suggestion,
+        onSelect,
+        handleCommand,
+        handleMention,
+        handleAtRoomMention,
+    } = usePlainTextListeners(initialContent, onChange, onSend, eventRelation);
+
+    const composerFunctions = useComposerFunctions(editorRef, setContent);
+    usePlainTextInitialization(initialContent, editorRef);
+    useSetCursorPosition(disabled, editorRef);
     const { isFocused, onFocus } = useIsFocused();
     const computedPlaceholder = (!content && placeholder) || undefined;
 
@@ -65,18 +80,27 @@ export function PlainTextComposer({
             className={classNames(className, { [`${className}-focused`]: isFocused })}
             onFocus={onFocus}
             onBlur={onFocus}
+            onBeforeInput={onBeforeInput}
             onInput={onInput}
             onPaste={onPaste}
             onKeyDown={onKeyDown}
+            onSelect={onSelect}
         >
+            <WysiwygAutocomplete
+                ref={autocompleteRef}
+                suggestion={suggestion}
+                handleMention={handleMention}
+                handleCommand={handleCommand}
+                handleAtRoomMention={handleAtRoomMention}
+            />
             <Editor
-                ref={ref}
+                ref={editorRef}
                 disabled={disabled}
                 leftComponent={leftComponent}
                 rightComponent={rightComponent}
                 placeholder={computedPlaceholder}
             />
-            {children?.(ref, composerFunctions)}
+            {children?.(editorRef, composerFunctions)}
         </div>
     );
 }

@@ -14,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from "url";
 import React from "react";
-import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
+import { SERVICE_TYPES } from "matrix-js-sdk/src/matrix";
 
 import { _t, pickBestLanguage } from "../../../languageHandler";
 import DialogButtons from "../elements/DialogButtons";
 import BaseDialog from "./BaseDialog";
+import { ServicePolicyPair } from "../../../Terms";
+import ExternalLink from "../elements/ExternalLink";
+import { parseUrl } from "../../../utils/UrlUtils";
 
 interface ITermsCheckboxProps {
     onChange: (url: string, checked: boolean) => void;
@@ -33,7 +35,7 @@ class TermsCheckbox extends React.PureComponent<ITermsCheckboxProps> {
         this.props.onChange(this.props.url, ev.currentTarget.checked);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return <input type="checkbox" onChange={this.onChange} checked={this.props.checked} />;
     }
 }
@@ -43,12 +45,12 @@ interface ITermsDialogProps {
      * Array of [Service, policies] pairs, where policies is the response from the
      * /terms endpoint for that service
      */
-    policiesAndServicePairs: any[];
+    policiesAndServicePairs: ServicePolicyPair[];
 
     /**
      * urls that the user has already agreed to
      */
-    agreedUrls?: string[];
+    agreedUrls: string[];
 
     /**
      * Called with:
@@ -63,7 +65,7 @@ interface IState {
 }
 
 export default class TermsDialog extends React.PureComponent<ITermsDialogProps, IState> {
-    public constructor(props) {
+    public constructor(props: ITermsDialogProps) {
         super(props);
         this.state = {
             // url -> boolean
@@ -90,14 +92,14 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
             case SERVICE_TYPES.IS:
                 return (
                     <div>
-                        {_t("Identity server")}
+                        {_t("common|identity_server")}
                         <br />({host})
                     </div>
                 );
             case SERVICE_TYPES.IM:
                 return (
                     <div>
-                        {_t("Integration manager")}
+                        {_t("common|integration_manager")}
                         <br />({host})
                     </div>
                 );
@@ -109,13 +111,13 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
             case SERVICE_TYPES.IS:
                 return (
                     <div>
-                        {_t("Find others by phone or email")}
+                        {_t("terms|summary_identity_server_1")}
                         <br />
-                        {_t("Be found by phone or email")}
+                        {_t("terms|summary_identity_server_2")}
                     </div>
                 );
             case SERVICE_TYPES.IM:
-                return <div>{_t("Use bots, bridges, widgets and sticker packs")}</div>;
+                return <div>{_t("terms|integration_manager")}</div>;
         }
     }
 
@@ -125,17 +127,17 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
         });
     };
 
-    public render(): JSX.Element {
-        const rows = [];
+    public render(): React.ReactNode {
+        const rows: JSX.Element[] = [];
         for (const policiesAndService of this.props.policiesAndServicePairs) {
-            const parsedBaseUrl = url.parse(policiesAndService.service.baseUrl);
+            const parsedBaseUrl = parseUrl(policiesAndService.service.baseUrl);
 
             const policyValues = Object.values(policiesAndService.policies);
             for (let i = 0; i < policyValues.length; ++i) {
                 const termDoc = policyValues[i];
                 const termsLang = pickBestLanguage(Object.keys(termDoc).filter((k) => k !== "version"));
-                let serviceName;
-                let summary;
+                let serviceName: JSX.Element | undefined;
+                let summary: JSX.Element | undefined;
                 if (i === 0) {
                     serviceName = this.nameForServiceType(policiesAndService.service.serviceType, parsedBaseUrl.host);
                     summary = this.summaryForServiceType(policiesAndService.service.serviceType);
@@ -146,10 +148,9 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
                         <td className="mx_TermsDialog_service">{serviceName}</td>
                         <td className="mx_TermsDialog_summary">{summary}</td>
                         <td>
-                            {termDoc[termsLang].name}
-                            <a rel="noreferrer noopener" target="_blank" href={termDoc[termsLang].url}>
-                                <span className="mx_TermsDialog_link" />
-                            </a>
+                            <ExternalLink rel="noreferrer noopener" target="_blank" href={termDoc[termsLang].url}>
+                                {termDoc[termsLang].name}
+                            </ExternalLink>
                         </td>
                         <td>
                             <TermsCheckbox
@@ -191,20 +192,20 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
             <BaseDialog
                 fixedWidth={false}
                 onFinished={this.onCancelClick}
-                title={_t("Terms of Service")}
+                title={_t("terms|tos")}
                 contentId="mx_Dialog_content"
                 hasCancel={false}
             >
                 <div id="mx_Dialog_content">
-                    <p>{_t("To continue you need to accept the terms of this service.")}</p>
+                    <p>{_t("terms|intro")}</p>
 
                     <table className="mx_TermsDialog_termsTable">
                         <tbody>
                             <tr className="mx_TermsDialog_termsTableHeader">
-                                <th>{_t("Service")}</th>
-                                <th>{_t("Summary")}</th>
-                                <th>{_t("Document")}</th>
-                                <th>{_t("Accept")}</th>
+                                <th>{_t("terms|column_service")}</th>
+                                <th>{_t("terms|column_summary")}</th>
+                                <th>{_t("terms|column_document")}</th>
+                                <th>{_t("action|accept")}</th>
                             </tr>
                             {rows}
                         </tbody>
@@ -212,7 +213,7 @@ export default class TermsDialog extends React.PureComponent<ITermsDialogProps, 
                 </div>
 
                 <DialogButtons
-                    primaryButton={_t("Next")}
+                    primaryButton={_t("action|next")}
                     hasCancel={true}
                     onCancel={this.onCancelClick}
                     onPrimaryButtonClick={this.onNextClick}

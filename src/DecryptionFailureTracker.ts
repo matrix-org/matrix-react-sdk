@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Error as ErrorEvent } from "@matrix-org/analytics-events/types/typescript/Error";
 
 import { PosthogAnalytics } from "./PosthogAnalytics";
@@ -23,7 +23,10 @@ import { PosthogAnalytics } from "./PosthogAnalytics";
 export class DecryptionFailure {
     public readonly ts: number;
 
-    public constructor(public readonly failedEventId: string, public readonly errorCode: string) {
+    public constructor(
+        public readonly failedEventId: string,
+        public readonly errorCode: string,
+    ) {
         this.ts = Date.now();
     }
 }
@@ -83,8 +86,8 @@ export class DecryptionFailureTracker {
     public trackedEvents: Set<string> = new Set();
 
     // Set to an interval ID when `start` is called
-    public checkInterval: number = null;
-    public trackInterval: number = null;
+    public checkInterval: number | null = null;
+    public trackInterval: number | null = null;
 
     // Spread the load on `Analytics` by tracking at a low frequency, `TRACK_INTERVAL_MS`.
     public static TRACK_INTERVAL_MS = 60000;
@@ -110,7 +113,10 @@ export class DecryptionFailureTracker {
      * @param {function?} errorCodeMapFn The function used to map error codes to the
      * trackedErrorCode. If not provided, the `.code` of errors will be used.
      */
-    private constructor(private readonly fn: TrackingFn, private readonly errorCodeMapFn: ErrCodeMapFn) {
+    private constructor(
+        private readonly fn: TrackingFn,
+        private readonly errorCodeMapFn: ErrCodeMapFn,
+    ) {
         if (!fn || typeof fn !== "function") {
             throw new Error("DecryptionFailureTracker requires tracking function");
         }
@@ -138,7 +144,7 @@ export class DecryptionFailureTracker {
             return;
         }
         if (err) {
-            this.addDecryptionFailure(new DecryptionFailure(e.getId(), err.code));
+            this.addDecryptionFailure(new DecryptionFailure(e.getId()!, err.code));
         } else {
             // Could be an event in the failures, remove it
             this.removeDecryptionFailuresForEvent(e);
@@ -146,7 +152,7 @@ export class DecryptionFailureTracker {
     }
 
     public addVisibleEvent(e: MatrixEvent): void {
-        const eventId = e.getId();
+        const eventId = e.getId()!;
 
         if (this.trackedEvents.has(eventId)) {
             return;
@@ -154,7 +160,7 @@ export class DecryptionFailureTracker {
 
         this.visibleEvents.add(eventId);
         if (this.failures.has(eventId) && !this.visibleFailures.has(eventId)) {
-            this.visibleFailures.set(eventId, this.failures.get(eventId));
+            this.visibleFailures.set(eventId, this.failures.get(eventId)!);
         }
     }
 
@@ -172,7 +178,7 @@ export class DecryptionFailureTracker {
     }
 
     public removeDecryptionFailuresForEvent(e: MatrixEvent): void {
-        const eventId = e.getId();
+        const eventId = e.getId()!;
         this.failures.delete(eventId);
         this.visibleFailures.delete(eventId);
     }
@@ -193,8 +199,8 @@ export class DecryptionFailureTracker {
      * Clear state and stop checking for and tracking failures.
      */
     public stop(): void {
-        clearInterval(this.checkInterval);
-        clearInterval(this.trackInterval);
+        if (this.checkInterval) clearInterval(this.checkInterval);
+        if (this.trackInterval) clearInterval(this.trackInterval);
 
         this.failures = new Map();
         this.visibleEvents = new Set();

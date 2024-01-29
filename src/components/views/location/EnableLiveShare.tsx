@@ -29,34 +29,27 @@ interface Props {
 export const EnableLiveShare: React.FC<Props> = ({ onSubmit }) => {
     const [isEnabled, setEnabled] = useState(false);
     return (
-        <div data-test-id="location-picker-enable-live-share" className="mx_EnableLiveShare">
+        <div data-testid="location-picker-enable-live-share" className="mx_EnableLiveShare">
             <StyledLiveBeaconIcon className="mx_EnableLiveShare_icon" />
-            <Heading className="mx_EnableLiveShare_heading" size="h3">
-                {_t("Live location sharing")}
+            <Heading className="mx_EnableLiveShare_heading" size="3">
+                {_t("location_sharing|live_enable_heading")}
             </Heading>
-            <p className="mx_EnableLiveShare_description">
-                {_t(
-                    "Please note: this is a labs feature using a temporary implementation. " +
-                        "This means you will not be able to delete your location history, " +
-                        "and advanced users will be able to see your location history " +
-                        "even after you stop sharing your live location with this room.",
-                )}
-            </p>
+            <p className="mx_EnableLiveShare_description">{_t("location_sharing|live_enable_description")}</p>
             <LabelledToggleSwitch
-                data-test-id="enable-live-share-toggle"
+                data-testid="enable-live-share-toggle"
                 value={isEnabled}
                 onChange={setEnabled}
-                label={_t("Enable live location sharing")}
+                label={_t("location_sharing|live_toggle_label")}
             />
             <AccessibleButton
-                data-test-id="enable-live-share-submit"
+                data-testid="enable-live-share-submit"
                 className="mx_EnableLiveShare_button"
                 element="button"
                 kind="primary"
                 onClick={onSubmit}
                 disabled={!isEnabled}
             >
-                {_t("OK")}
+                {_t("action|ok")}
             </AccessibleButton>
         </div>
     );

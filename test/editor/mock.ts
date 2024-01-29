@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { Room, MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
 
 import AutocompleteWrapperModel, { UpdateCallback } from "../../src/editor/autocomplete";
 import { Caret } from "../../src/editor/caret";
 import { PillPart, Part, PartCreator } from "../../src/editor/parts";
 import DocumentPosition from "../../src/editor/position";
 
-class MockAutoComplete {
+export class MockAutoComplete {
     public _updateCallback;
     public _partCreator;
     public _completions;
@@ -44,7 +44,7 @@ class MockAutoComplete {
         });
         if (matches.length === 1 && this._part && this._part.text.length > 1) {
             const match = matches[0];
-            let pill;
+            let pill: PillPart;
             if (match.resourceId[0] === "@") {
                 pill = this._partCreator.userPill(match.text, match.resourceId);
             } else {
@@ -63,7 +63,7 @@ class MockAutoComplete {
 // MockClient & MockRoom are only used for avatars in room and user pills,
 // which is not tested
 class MockRoom {
-    getMember() {
+    getMember(): RoomMember | null {
         return null;
     }
 }
@@ -82,12 +82,12 @@ export function createPartCreator(completions: PillPart[] = []) {
 }
 
 export function createRenderer() {
-    const render = (c: Caret) => {
+    const render = (c?: Caret) => {
         render.caret = c;
         render.count += 1;
     };
     render.count = 0;
-    render.caret = null as unknown as Caret;
+    render.caret = null as unknown as Caret | undefined;
     return render;
 }
 

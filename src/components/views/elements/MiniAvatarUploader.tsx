@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import React, { useContext, useRef, useState, MouseEvent } from "react";
+import { EventType } from "matrix-js-sdk/src/matrix";
+import React, { useContext, useRef, useState, MouseEvent, ReactNode } from "react";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
@@ -26,7 +26,7 @@ import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import AccessibleButton from "./AccessibleButton";
 import Spinner from "./Spinner";
 
-export const AVATAR_SIZE = 52;
+export const AVATAR_SIZE = "52px";
 
 interface IProps {
     hasAvatar: boolean;
@@ -35,6 +35,7 @@ interface IProps {
     setAvatarUrl(url: string): Promise<unknown>;
     isUserAvatar?: boolean;
     onClick?(ev: MouseEvent<HTMLInputElement>): void;
+    children?: ReactNode;
 }
 
 const MiniAvatarUploader: React.FC<IProps> = ({
@@ -58,12 +59,13 @@ const MiniAvatarUploader: React.FC<IProps> = ({
         setShow(false);
     }, 13000); // hide after being shown for 10 seconds
 
-    const uploadRef = useRef<HTMLInputElement>();
+    const uploadRef = useRef<HTMLInputElement>(null);
 
     const label = hasAvatar || busy ? hasAvatarLabel : noAvatarLabel;
 
     const { room } = useContext(RoomContext);
-    const canSetAvatar = isUserAvatar || room?.currentState?.maySendStateEvent(EventType.RoomAvatar, cli.getUserId());
+    const canSetAvatar =
+        isUserAvatar || room?.currentState?.maySendStateEvent(EventType.RoomAvatar, cli.getSafeUserId());
     if (!canSetAvatar) return <React.Fragment>{children}</React.Fragment>;
 
     const visible = !!label && (hover || show);
@@ -95,7 +97,7 @@ const MiniAvatarUploader: React.FC<IProps> = ({
                 })}
                 disabled={busy}
                 onClick={() => {
-                    uploadRef.current.click();
+                    uploadRef.current?.click();
                 }}
                 onMouseOver={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}

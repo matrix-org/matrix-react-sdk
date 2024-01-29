@@ -28,16 +28,16 @@ interface Props {
 }
 
 export function UseCaseSelectionButton({ useCase, onClick, selected }: Props): JSX.Element {
-    let label: string;
+    let label: string | undefined;
     switch (useCase) {
         case UseCase.PersonalMessaging:
-            label = _t("Friends and family");
+            label = _t("onboarding|use_case_personal_messaging");
             break;
         case UseCase.WorkMessaging:
-            label = _t("Coworkers and teams");
+            label = _t("onboarding|use_case_work_messaging");
             break;
         case UseCase.CommunityMessaging:
-            label = _t("Online community members");
+            label = _t("onboarding|use_case_community_messaging");
             break;
     }
 

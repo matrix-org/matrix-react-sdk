@@ -33,7 +33,7 @@ function mutateCssText(css: string): string {
 }
 
 function isLightTheme(sheet: CSSStyleSheet): boolean {
-    return (<HTMLStyleElement>sheet.ownerNode).dataset.mxTheme?.toLowerCase() === "light";
+    return (<HTMLStyleElement>sheet.ownerNode)?.dataset.mxTheme?.toLowerCase() === "light";
 }
 
 async function getRulesFromCssFile(path: string): Promise<CSSStyleSheet> {
@@ -45,7 +45,7 @@ async function getRulesFromCssFile(path: string): Promise<CSSStyleSheet> {
     // the style will only be parsed once it is added to a document
     doc.body.appendChild(styleElement);
 
-    return styleElement.sheet;
+    return styleElement.sheet!;
 }
 
 // naively culls unused css rules based on which classes are present in the html,
@@ -58,8 +58,8 @@ const getExportCSS = async (usedClasses: Set<string>): Promise<string> => {
 
     // If the light theme isn't loaded we will have to fetch & parse it manually
     if (!stylesheets.some(isLightTheme)) {
-        const href = document.querySelector<HTMLLinkElement>('link[rel="stylesheet"][href$="theme-light.css"]').href;
-        stylesheets.push(await getRulesFromCssFile(href));
+        const href = document.querySelector<HTMLLinkElement>('link[rel="stylesheet"][href$="theme-light.css"]')?.href;
+        if (href) stylesheets.push(await getRulesFromCssFile(href));
     }
 
     let css = "";

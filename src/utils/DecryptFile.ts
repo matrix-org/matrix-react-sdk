@@ -16,14 +16,14 @@ limitations under the License.
 
 // Pull in the encryption lib so that we can decrypt attachments.
 import encrypt from "matrix-encrypt-attachment";
-import { parseErrorResponse } from "matrix-js-sdk/src/http-api";
+import { parseErrorResponse } from "matrix-js-sdk/src/matrix";
 
 import { mediaFromContent } from "../customisations/Media";
-import { IEncryptedFile, IMediaEventInfo } from "../customisations/models/IMediaEventContent";
+import { EncryptedFile, IMediaEventInfo } from "../customisations/models/IMediaEventContent";
 import { getBlobSafeMimeType } from "./blobs";
 
 export class DownloadError extends Error {
-    public constructor(e) {
+    public constructor(e: Error) {
         super(e.message);
         this.name = "DownloadError";
         this.stack = e.stack;
@@ -31,7 +31,7 @@ export class DownloadError extends Error {
 }
 
 export class DecryptError extends Error {
-    public constructor(e) {
+    public constructor(e: Error) {
         super(e.message);
         this.name = "DecryptError";
         this.stack = e.stack;
@@ -40,14 +40,15 @@ export class DecryptError extends Error {
 
 /**
  * Decrypt a file attached to a matrix event.
- * @param {IEncryptedFile} file The encrypted file information taken from the matrix event.
+ * @param {EncryptedFile} file The encrypted file information taken from the matrix event.
  *   This passed to [link]{@link https://github.com/matrix-org/matrix-encrypt-attachment}
  *   as the encryption info object, so will also have the those keys in addition to
  *   the keys below.
  * @param {IMediaEventInfo} info The info parameter taken from the matrix event.
  * @returns {Promise<Blob>} Resolves to a Blob of the file.
  */
-export async function decryptFile(file: IEncryptedFile, info?: IMediaEventInfo): Promise<Blob> {
+export async function decryptFile(file?: EncryptedFile, info?: IMediaEventInfo): Promise<Blob> {
+    // throws if file is falsy
     const media = mediaFromContent({ file });
 
     let responseData: ArrayBuffer;
@@ -59,12 +60,12 @@ export async function decryptFile(file: IEncryptedFile, info?: IMediaEventInfo):
         }
         responseData = await response.arrayBuffer();
     } catch (e) {
-        throw new DownloadError(e);
+        throw new DownloadError(e as Error);
     }
 
     try {
         // Decrypt the array buffer using the information taken from the event content.
-        const dataArray = await encrypt.decryptAttachment(responseData, file);
+        const dataArray = await encrypt.decryptAttachment(responseData, file!);
         // Turn the array into a Blob and give it the correct MIME-type.
 
         // IMPORTANT: we must not allow scriptable mime-types into Blobs otherwise
@@ -76,6 +77,6 @@ export async function decryptFile(file: IEncryptedFile, info?: IMediaEventInfo):
 
         return new Blob([dataArray], { type: mimetype });
     } catch (e) {
-        throw new DecryptError(e);
+        throw new DecryptError(e as Error);
     }
 }

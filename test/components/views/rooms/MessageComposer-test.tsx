@@ -15,19 +15,19 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { EventType, MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import { EventType, MatrixEvent, Room, RoomMember, THREAD_RELATION_TYPE } from "matrix-js-sdk/src/matrix";
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import {
+    clearAllModals,
     createTestClient,
-    filterConsole,
     flushPromises,
     mkEvent,
     mkStubRoom,
     mockPlatformPeg,
     stubClient,
+    waitEnoughCyclesForModal,
 } from "../../../test-utils";
 import MessageComposer from "../../../../src/components/views/rooms/MessageComposer";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
@@ -48,7 +48,6 @@ import { Action } from "../../../../src/dispatcher/actions";
 import { VoiceBroadcastInfoState, VoiceBroadcastRecording } from "../../../../src/voice-broadcast";
 import { mkVoiceBroadcastInfoStateEvent } from "../../../voice-broadcast/utils/test-utils";
 import { SdkContextClass } from "../../../../src/contexts/SDKContext";
-import Modal from "../../../../src/Modal";
 
 jest.mock("../../../../src/components/views/rooms/wysiwyg_composer", () => ({
     SendWysiwygComposer: jest.fn().mockImplementation(() => <div data-testid="wysiwyg-composer" />),
@@ -71,21 +70,15 @@ const startVoiceMessage = async (): Promise<void> => {
 const setCurrentBroadcastRecording = (room: Room, state: VoiceBroadcastInfoState): void => {
     const recording = new VoiceBroadcastRecording(
         mkVoiceBroadcastInfoStateEvent(room.roomId, state, "@user:example.com", "ABC123"),
-        MatrixClientPeg.get(),
+        MatrixClientPeg.safeGet(),
         state,
     );
     SdkContextClass.instance.voiceBroadcastRecordingsStore.setCurrent(recording);
 };
 
-const waitForModal = async (): Promise<void> => {
-    await flushPromises();
-    await flushPromises();
-};
-
 const shouldClearModal = async (): Promise<void> => {
     afterEach(async () => {
-        Modal.closeCurrentModal("force");
-        await waitForModal();
+        await clearAllModals();
     });
 };
 
@@ -98,8 +91,6 @@ const expectVoiceMessageRecordingTriggered = (): void => {
 describe("MessageComposer", () => {
     stubClient();
     const cli = createTestClient();
-
-    filterConsole("Starting load of AsyncWrapper for modal");
 
     beforeEach(() => {
         mockPlatformPeg();
@@ -220,8 +211,10 @@ describe("MessageComposer", () => {
 
                     it(`should${value || "not"} display the button`, () => {
                         if (value) {
+                            // eslint-disable-next-line jest/no-conditional-expect
                             expect(screen.getByLabelText(buttonLabel)).toBeInTheDocument();
                         } else {
+                            // eslint-disable-next-line jest/no-conditional-expect
                             expect(screen.queryByLabelText(buttonLabel)).not.toBeInTheDocument();
                         }
                     });
@@ -242,8 +235,10 @@ describe("MessageComposer", () => {
 
                         it(`should${!value || "not"} display the button`, () => {
                             if (!value) {
+                                // eslint-disable-next-line jest/no-conditional-expect
                                 expect(screen.getByLabelText(buttonLabel)).toBeInTheDocument();
                             } else {
+                                // eslint-disable-next-line jest/no-conditional-expect
                                 expect(screen.queryByLabelText(buttonLabel)).not.toBeInTheDocument();
                             }
                         });
@@ -272,9 +267,11 @@ describe("MessageComposer", () => {
             let resizeCallback: Function;
 
             beforeEach(() => {
-                jest.spyOn(UIStore.instance, "on").mockImplementation((_event: string, listener: Function): any => {
-                    resizeCallback = listener;
-                });
+                jest.spyOn(UIStore.instance, "on").mockImplementation(
+                    (_event: string | symbol, listener: Function): any => {
+                        resizeCallback = listener;
+                    },
+                );
             });
 
             describe("when a non-resize event occurred in UIStore", () => {
@@ -370,7 +367,7 @@ describe("MessageComposer", () => {
                 replyToEvent = mkEvent({
                     event: true,
                     type: EventType.RoomMessage,
-                    user: cli.getUserId(),
+                    user: cli.getUserId()!,
                     content: {},
                 });
 
@@ -430,7 +427,7 @@ describe("MessageComposer", () => {
                 setCurrentBroadcastRecording(room, VoiceBroadcastInfoState.Started);
                 wrapAndRender({ room });
                 await startVoiceMessage();
-                await waitForModal();
+                await waitEnoughCyclesForModal();
             });
 
             shouldClearModal();
@@ -446,7 +443,7 @@ describe("MessageComposer", () => {
                 setCurrentBroadcastRecording(room, VoiceBroadcastInfoState.Stopped);
                 wrapAndRender({ room });
                 await startVoiceMessage();
-                await waitForModal();
+                await waitEnoughCyclesForModal();
             });
 
             shouldClearModal();
@@ -485,7 +482,7 @@ function wrapAndRender(
     narrow = false,
     tombstone?: MatrixEvent,
 ) {
-    const mockClient = MatrixClientPeg.get();
+    const mockClient = MatrixClientPeg.safeGet();
     const roomId = "myroomid";
     const room: any = props.room || {
         currentState: undefined,

@@ -16,21 +16,23 @@ limitations under the License.
 
 import React, { ReactElement } from "react";
 import { render } from "@testing-library/react";
-import { mocked } from "jest-mock";
+import { mocked, MockedObject } from "jest-mock";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore, { CallbackFn } from "../../../../src/settings/SettingsStore";
 import SdkConfig from "../../../../src/SdkConfig";
 import { UserTab } from "../../../../src/components/views/dialogs/UserTab";
 import UserSettingsDialog from "../../../../src/components/views/dialogs/UserSettingsDialog";
-import { IDialogProps } from "../../../../src/components/views/dialogs/IDialogProps";
 import {
     getMockClientWithEventEmitter,
     mockClientMethodsUser,
     mockClientMethodsServer,
     mockPlatformPeg,
+    mockClientMethodsCrypto,
 } from "../../../test-utils";
 import { UIFeature } from "../../../../src/settings/UIFeature";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
+import { SdkContextClass } from "../../../../src/contexts/SDKContext";
 
 mockPlatformPeg({
     supportsSpellCheckSettings: jest.fn().mockReturnValue(false),
@@ -56,25 +58,32 @@ describe("<UserSettingsDialog />", () => {
     const userId = "@alice:server.org";
     const mockSettingsStore = mocked(SettingsStore);
     const mockSdkConfig = mocked(SdkConfig);
-    getMockClientWithEventEmitter({
-        ...mockClientMethodsUser(userId),
-        ...mockClientMethodsServer(),
-    });
+    let mockClient!: MockedObject<MatrixClient>;
 
+    let sdkContext: SdkContextClass;
     const defaultProps = { onFinished: jest.fn() };
-    const getComponent = (props: Partial<IDialogProps & { initialTabId?: UserTab }> = {}): ReactElement => (
-        <UserSettingsDialog {...defaultProps} {...props} />
+    const getComponent = (props: Partial<typeof defaultProps & { initialTabId?: UserTab }> = {}): ReactElement => (
+        <UserSettingsDialog sdkContext={sdkContext} {...defaultProps} {...props} />
     );
 
     beforeEach(() => {
         jest.clearAllMocks();
+        mockClient = getMockClientWithEventEmitter({
+            ...mockClientMethodsUser(userId),
+            ...mockClientMethodsServer(),
+            ...mockClientMethodsCrypto(),
+        });
+        sdkContext = new SdkContextClass();
+        sdkContext.client = mockClient;
         mockSettingsStore.getValue.mockReturnValue(false);
         mockSettingsStore.getFeatureSettingNames.mockReturnValue([]);
         mockSdkConfig.get.mockReturnValue({ brand: "Test" });
     });
 
-    const getActiveTabLabel = (container) => container.querySelector(".mx_TabbedView_tabLabel_active").textContent;
-    const getActiveTabHeading = (container) => container.querySelector(".mx_SettingsTab_heading").textContent;
+    const getActiveTabLabel = (container: Element) =>
+        container.querySelector(".mx_TabbedView_tabLabel_active")?.textContent;
+    const getActiveTabHeading = (container: Element) =>
+        container.querySelector(".mx_SettingsSection .mx_Heading_h3")?.textContent;
 
     it("should render general settings tab when no initialTabId", () => {
         const { container } = render(getComponent());
@@ -115,10 +124,7 @@ describe("<UserSettingsDialog />", () => {
         expect(getByTestId(`settings-tab-${UserTab.Voice}`)).toBeTruthy();
     });
 
-    it("renders session manager tab when enabled", () => {
-        mockSettingsStore.getValue.mockImplementation((settingName): any => {
-            return settingName === "feature_new_device_manager";
-        });
+    it("renders session manager tab", () => {
         const { getByTestId } = render(getComponent());
         expect(getByTestId(`settings-tab-${UserTab.SessionManager}`)).toBeTruthy();
     });
@@ -151,28 +157,15 @@ describe("<UserSettingsDialog />", () => {
         expect(queryByTestId(`settings-tab-${UserTab.Mjolnir}`)).toBeFalsy();
 
         expect(mockSettingsStore.watchSetting.mock.calls[0][0]).toEqual("feature_mjolnir");
-        expect(mockSettingsStore.watchSetting.mock.calls[1][0]).toEqual("feature_new_device_manager");
 
         // call the watch setting callback
         watchSettingCallbacks["feature_mjolnir"]("feature_mjolnir", "", SettingLevel.ACCOUNT, true, true);
         // tab is rendered now
         expect(queryByTestId(`settings-tab-${UserTab.Mjolnir}`)).toBeTruthy();
 
-        // call the watch setting callback
-        watchSettingCallbacks["feature_new_device_manager"](
-            "feature_new_device_manager",
-            "",
-            SettingLevel.ACCOUNT,
-            true,
-            true,
-        );
-        // tab is rendered now
-        expect(queryByTestId(`settings-tab-${UserTab.SessionManager}`)).toBeTruthy();
-
         unmount();
 
         // unwatches settings on unmount
         expect(mockSettingsStore.unwatchSetting).toHaveBeenCalledWith("mock-watcher-id-feature_mjolnir");
-        expect(mockSettingsStore.unwatchSetting).toHaveBeenCalledWith("mock-watcher-id-feature_new_device_manager");
     });
 });

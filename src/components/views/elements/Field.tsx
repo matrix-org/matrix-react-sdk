@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes, RefObject } from "react";
+import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes, RefObject, createRef } from "react";
 import classNames from "classnames";
 import { debounce } from "lodash";
 
@@ -38,8 +38,6 @@ export interface IValidateOpts {
 interface IProps {
     // The field's ID, which binds the input and label together. Immutable.
     id?: string;
-    // id of a <datalist> element for suggestions
-    list?: string;
     // The field's label string.
     label?: string;
     // The field's placeholder string. Defaults to the label.
@@ -79,7 +77,7 @@ export interface IInputProps extends IProps, InputHTMLAttributes<HTMLInputElemen
     // The ref pass through to the input
     inputRef?: RefObject<HTMLInputElement>;
     // The element to create. Defaults to "input".
-    element?: "input";
+    element: "input";
     // The input's value. This is a controlled component, so the value is required.
     value: string;
 }
@@ -112,15 +110,15 @@ export interface INativeOnChangeInputProps extends IProps, InputHTMLAttributes<H
 type PropShapes = IInputProps | ISelectProps | ITextareaProps | INativeOnChangeInputProps;
 
 interface IState {
-    valid: boolean;
-    feedback: React.ReactNode;
+    valid?: boolean;
+    feedback?: React.ReactNode;
     feedbackVisible: boolean;
     focused: boolean;
 }
 
 export default class Field extends React.PureComponent<PropShapes, IState> {
-    private id: string;
-    private inputRef: RefObject<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
+    private readonly id: string;
+    private readonly _inputRef = createRef<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>();
 
     public static readonly defaultProps = {
         element: "input",
@@ -145,11 +143,9 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         });
     }, VALIDATION_THROTTLE_MS);
 
-    public constructor(props) {
+    public constructor(props: PropShapes) {
         super(props);
         this.state = {
-            valid: undefined,
-            feedback: undefined,
             feedbackVisible: false,
             focused: false,
         };
@@ -165,7 +161,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         });
     }
 
-    private onFocus = (ev): void => {
+    private onFocus = (ev: React.FocusEvent<any>): void => {
         this.setState({
             focused: true,
         });
@@ -175,22 +171,18 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
             });
         }
         // Parent component may have supplied its own `onFocus` as well
-        if (this.props.onFocus) {
-            this.props.onFocus(ev);
-        }
+        this.props.onFocus?.(ev);
     };
 
-    private onChange = (ev): void => {
+    private onChange = (ev: React.ChangeEvent<any>): void => {
         if (this.props.validateOnChange) {
             this.validateOnChange();
         }
         // Parent component may have supplied its own `onChange` as well
-        if (this.props.onChange) {
-            this.props.onChange(ev);
-        }
+        this.props.onChange?.(ev);
     };
 
-    private onBlur = (ev): void => {
+    private onBlur = (ev: React.FocusEvent<any>): void => {
         this.setState({
             focused: false,
         });
@@ -200,19 +192,17 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
             });
         }
         // Parent component may have supplied its own `onBlur` as well
-        if (this.props.onBlur) {
-            this.props.onBlur(ev);
-        }
+        this.props.onBlur?.(ev);
     };
 
-    public async validate({ focused, allowEmpty = true }: IValidateOpts): Promise<boolean> {
+    public async validate({ focused, allowEmpty = true }: IValidateOpts): Promise<boolean | undefined> {
         if (!this.props.onValidate) {
             return;
         }
         const value = this.inputRef.current?.value ?? null;
         const { valid, feedback } = await this.props.onValidate({
             value,
-            focused,
+            focused: !!focused,
             allowEmpty,
         });
 
@@ -238,7 +228,11 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         return valid;
     }
 
-    public render(): JSX.Element {
+    private get inputRef(): RefObject<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement> {
+        return this.props.inputRef ?? this._inputRef;
+    }
+
+    public render(): React.ReactNode {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
         const {
             element,
@@ -251,7 +245,6 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
             tooltipContent,
             forceValidity,
             tooltipClassName,
-            list,
             validateOnBlur,
             validateOnChange,
             validateOnFocus,
@@ -260,7 +253,33 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
             ...inputProps
         } = this.props;
 
-        this.inputRef = inputRef || React.createRef();
+        // Handle displaying feedback on validity
+        let fieldTooltip: JSX.Element | undefined;
+        if (tooltipContent || this.state.feedback) {
+            const tooltipId = `${this.id}_tooltip`;
+            const visible = (this.state.focused && forceTooltipVisible) || this.state.feedbackVisible;
+            if (visible) {
+                inputProps["aria-describedby"] = tooltipId;
+            }
+
+            let role: React.AriaRole;
+            if (tooltipContent) {
+                role = "tooltip";
+            } else {
+                role = this.state.valid ? "status" : "alert";
+            }
+
+            fieldTooltip = (
+                <Tooltip
+                    id={tooltipId}
+                    tooltipClassName={classNames("mx_Field_tooltip", "mx_Tooltip_noMargin", tooltipClassName)}
+                    visible={visible}
+                    label={tooltipContent || this.state.feedback}
+                    alignment={Tooltip.Alignment.Right}
+                    role={role}
+                />
+            );
+        }
 
         inputProps.placeholder = inputProps.placeholder ?? inputProps.label;
         inputProps.id = this.id; // this overwrites the id from props
@@ -270,15 +289,19 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         inputProps.onBlur = this.onBlur;
 
         // Appease typescript's inference
-        const inputProps_ = { ...inputProps, ref: this.inputRef, list };
+        const inputProps_: React.HTMLAttributes<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement> &
+            React.ClassAttributes<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement> = {
+            ...inputProps,
+            ref: this.inputRef,
+        };
 
         const fieldInput = React.createElement(this.props.element, inputProps_, children);
 
-        let prefixContainer = null;
+        let prefixContainer: JSX.Element | undefined;
         if (prefixComponent) {
             prefixContainer = <span className="mx_Field_prefix">{prefixComponent}</span>;
         }
-        let postfixContainer = null;
+        let postfixContainer: JSX.Element | undefined;
         if (postfixComponent) {
             postfixContainer = <span className="mx_Field_postfix">{postfixComponent}</span>;
         }
@@ -293,19 +316,6 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
             mx_Field_valid: hasValidationFlag ? forceValidity : onValidate && this.state.valid === true,
             mx_Field_invalid: hasValidationFlag ? !forceValidity : onValidate && this.state.valid === false,
         });
-
-        // Handle displaying feedback on validity
-        let fieldTooltip;
-        if (tooltipContent || this.state.feedback) {
-            fieldTooltip = (
-                <Tooltip
-                    tooltipClassName={classNames("mx_Field_tooltip", "mx_Tooltip_noMargin", tooltipClassName)}
-                    visible={(this.state.focused && forceTooltipVisible) || this.state.feedbackVisible}
-                    label={tooltipContent || this.state.feedback}
-                    alignment={Tooltip.Alignment.Right}
-                />
-            );
-        }
 
         return (
             <div className={fieldClasses}>

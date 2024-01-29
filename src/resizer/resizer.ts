@@ -34,26 +34,21 @@ interface IClassNames {
 export interface IConfig {
     onResizeStart?(): void;
     onResizeStop?(): void;
-    onResized?(size: number, id: string, element: HTMLElement): void;
+    onResized?(size: number | null, id: string | null, element: HTMLElement): void;
     handler?: HTMLDivElement;
 }
 
-export default class Resizer<C extends IConfig = IConfig> {
+export default class Resizer<C extends IConfig, I extends ResizeItem<C> = ResizeItem<C>> {
     private classNames: IClassNames;
 
     // TODO move vertical/horizontal to config option/container class
     // as it doesn't make sense to mix them within one container/Resizer
     public constructor(
-        public container: HTMLElement,
+        public container: HTMLElement | null,
         private readonly distributorCtor: {
-            new (item: ResizeItem): FixedDistributor<C, any>;
-            createItem(
-                resizeHandle: HTMLDivElement,
-                resizer: Resizer,
-                sizer: Sizer,
-                container: HTMLElement,
-            ): ResizeItem;
-            createSizer(containerElement: HTMLElement, vertical: boolean, reverse: boolean): Sizer;
+            new (item: I): FixedDistributor<C, I>;
+            createItem(resizeHandle: HTMLDivElement, resizer: Resizer<C, I>, sizer: Sizer, container?: HTMLElement): I;
+            createSizer(containerElement: HTMLElement | null, vertical: boolean, reverse: boolean): Sizer;
         },
         public readonly config?: C,
     ) {
@@ -71,13 +66,13 @@ export default class Resizer<C extends IConfig = IConfig> {
 
     public attach(): void {
         const attachment = this?.config?.handler?.parentElement ?? this.container;
-        attachment.addEventListener("mousedown", this.onMouseDown, false);
+        attachment?.addEventListener("mousedown", this.onMouseDown, false);
         window.addEventListener("resize", this.onResize);
     }
 
     public detach(): void {
         const attachment = this?.config?.handler?.parentElement ?? this.container;
-        attachment.removeEventListener("mousedown", this.onMouseDown, false);
+        attachment?.removeEventListener("mousedown", this.onMouseDown, false);
         window.removeEventListener("resize", this.onResize);
     }
 
@@ -87,7 +82,7 @@ export default class Resizer<C extends IConfig = IConfig> {
     @param {number} handleIndex the index of the resize handle in the container
     @return {FixedDistributor} a new distributor for the given handle
     */
-    public forHandleAt(handleIndex: number): FixedDistributor<C> {
+    public forHandleAt(handleIndex: number): FixedDistributor<C, I> | undefined {
         const handles = this.getResizeHandles();
         const handle = handles[handleIndex];
         if (handle) {
@@ -96,7 +91,7 @@ export default class Resizer<C extends IConfig = IConfig> {
         }
     }
 
-    public forHandleWithId(id: string): FixedDistributor<C> {
+    public forHandleWithId(id: string): FixedDistributor<C, I> | undefined {
         const handles = this.getResizeHandles();
         const handle = handles.find((h) => h.getAttribute("data-id") === id);
         if (handle) {
@@ -106,14 +101,18 @@ export default class Resizer<C extends IConfig = IConfig> {
     }
 
     public isReverseResizeHandle(el: HTMLElement): boolean {
-        return el && el.classList.contains(this.classNames.reverse);
+        return el.classList.contains(this.classNames.reverse!);
     }
 
     public isResizeHandle(el: HTMLElement): boolean {
-        return el && el.classList.contains(this.classNames.handle);
+        return el.classList.contains(this.classNames.handle!);
     }
 
     private onMouseDown = (event: MouseEvent): void => {
+        const LEFT_MOUSE_BUTTON = 0;
+        if (event.button !== LEFT_MOUSE_BUTTON) {
+            return;
+        }
         // use closest in case the resize handle contains
         // child dom nodes that can be the target
         const resizeHandle = event.target && (<HTMLDivElement>event.target).closest(`.${this.classNames.handle}`);
@@ -136,9 +135,7 @@ export default class Resizer<C extends IConfig = IConfig> {
         if (this.classNames.resizing) {
             this.container?.classList?.add(this.classNames.resizing);
         }
-        if (this.config.onResizeStart) {
-            this.config.onResizeStart();
-        }
+        this.config?.onResizeStart?.();
 
         const { sizer, distributor } = this.createSizerAndDistributor(<HTMLDivElement>resizeHandle);
         distributor.start();
@@ -154,9 +151,7 @@ export default class Resizer<C extends IConfig = IConfig> {
                 this.container?.classList?.remove(this.classNames.resizing);
             }
             distributor.finish();
-            if (this.config.onResizeStop) {
-                this.config.onResizeStop();
-            }
+            this.config?.onResizeStop?.();
             body.removeEventListener("mouseup", finishResize, false);
             document.removeEventListener("mouseleave", finishResize, false);
             body.removeEventListener("mousemove", onMouseMove, false);
@@ -178,7 +173,7 @@ export default class Resizer<C extends IConfig = IConfig> {
         { trailing: true, leading: true },
     );
 
-    public getDistributors = (): FixedDistributor<any, ResizeItem<any>>[] => {
+    public getDistributors = (): FixedDistributor<C, I>[] => {
         return this.getResizeHandles().map((handle) => {
             const { distributor } = this.createSizerAndDistributor(<HTMLDivElement>handle);
             return distributor;
@@ -187,14 +182,14 @@ export default class Resizer<C extends IConfig = IConfig> {
 
     private createSizerAndDistributor(resizeHandle: HTMLDivElement): {
         sizer: Sizer;
-        distributor: FixedDistributor<any>;
+        distributor: FixedDistributor<C, I>;
     } {
-        const vertical = resizeHandle.classList.contains(this.classNames.vertical);
+        const vertical = resizeHandle.classList.contains(this.classNames.vertical!);
         const reverse = this.isReverseResizeHandle(resizeHandle);
         const Distributor = this.distributorCtor;
-        const useItemContainer = this.config && this.config.handler ? this.container : undefined;
+        const useItemContainer = this.config?.handler ? this.container : undefined;
         const sizer = Distributor.createSizer(this.container, vertical, reverse);
-        const item = Distributor.createItem(resizeHandle, this, sizer, useItemContainer);
+        const item = Distributor.createItem(resizeHandle, this, sizer, useItemContainer ?? undefined);
         const distributor = new Distributor(item);
         return { sizer, distributor };
     }

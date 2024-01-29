@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { render, RenderResult, screen } from "@testing-library/react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
 
 import NotificationSettingsTab from "../../../../../../src/components/views/settings/tabs/room/NotificationSettingsTab";
@@ -38,11 +38,11 @@ describe("NotificatinSettingsTab", () => {
 
     beforeEach(() => {
         stubClient();
-        cli = MatrixClientPeg.get();
+        cli = MatrixClientPeg.safeGet();
         const room = mkStubRoom(roomId, "test room", cli);
         roomProps = EchoChamber.forRoom(room);
 
-        NotificationSettingsTab.contextType = React.createContext(cli);
+        NotificationSettingsTab.contextType = React.createContext<MatrixClient>(cli);
     });
 
     it("should prevent »Settings« link click from bubbling up to radio buttons", async () => {

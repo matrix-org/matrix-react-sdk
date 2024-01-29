@@ -1,5 +1,5 @@
 /*
-Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,9 +16,7 @@ limitations under the License.
 
 import { Optional } from "matrix-events-sdk";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
-import { Thread } from "matrix-js-sdk/src/models/thread";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { EventTimelineSet, Room, Thread } from "matrix-js-sdk/src/matrix";
 
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from "../../utils/ResizeNotifier";
@@ -32,16 +30,9 @@ import { Layout } from "../../settings/enums/Layout";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import Measured from "../views/elements/Measured";
 import PosthogTrackers from "../../PosthogTrackers";
-import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
-import { BetaPill } from "../views/beta/BetaCard";
-import Modal from "../../Modal";
-import BetaFeedbackDialog from "../views/dialogs/BetaFeedbackDialog";
-import { Action } from "../../dispatcher/actions";
-import { UserTab } from "../views/dialogs/UserTab";
-import dis from "../../dispatcher/dispatcher";
+import { ButtonEvent } from "../views/elements/AccessibleButton";
 import Spinner from "../views/elements/Spinner";
 import Heading from "../views/typography/Heading";
-import { shouldShowFeedback } from "../../utils/Feedback";
 
 interface IProps {
     roomId: string;
@@ -83,13 +74,13 @@ export const ThreadPanelHeader: React.FC<{
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu<HTMLElement>();
     const options: readonly ThreadPanelHeaderOption[] = [
         {
-            label: _t("All threads"),
-            description: _t("Shows all threads from current room"),
+            label: _t("threads|all_threads"),
+            description: _t("threads|all_threads_description"),
             key: ThreadFilterType.All,
         },
         {
-            label: _t("My threads"),
-            description: _t("Shows all threads you've participated in"),
+            label: _t("threads|my_threads"),
+            description: _t("threads|my_threads_description"),
             key: ThreadFilterType.My,
         },
     ];
@@ -120,21 +111,21 @@ export const ThreadPanelHeader: React.FC<{
     ) : null;
     return (
         <div className="mx_BaseCard_header_title">
-            <Heading size="h4" className="mx_BaseCard_header_title_heading">
-                {_t("Threads")}
+            <Heading size="4" className="mx_BaseCard_header_title_heading">
+                {_t("common|threads")}
             </Heading>
             {!empty && (
                 <>
                     <ContextMenuButton
                         className="mx_ThreadPanel_dropdown"
-                        inputRef={button}
+                        ref={button}
                         isExpanded={menuDisplayed}
                         onClick={(ev: ButtonEvent) => {
                             openMenu();
                             PosthogTrackers.trackInteraction("WebRightPanelThreadPanelFilterDropdown", ev);
                         }}
                     >
-                        {`${_t("Show:")} ${value.label}`}
+                        {`${_t("threads|show_thread_filter")} ${value?.label}`}
                     </ContextMenuButton>
                     {contextMenu}
                 </>
@@ -155,18 +146,14 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
         body = (
             <>
                 <p>
-                    {_t(
-                        "Reply to an ongoing thread or use “%(replyInThread)s” " +
-                            "when hovering over a message to start a new one.",
-                        {
-                            replyInThread: _t("Reply in thread"),
-                        },
-                    )}
+                    {_t("threads|empty_has_threads_tip", {
+                        replyInThread: _t("action|reply_in_thread"),
+                    })}
                 </p>
                 <p>
                     {/* Always display that paragraph to prevent layout shift when hiding the button */}
                     {filterOption === ThreadFilterType.My ? (
-                        <button onClick={showAllThreadsCallback}>{_t("Show all threads")}</button>
+                        <button onClick={showAllThreadsCallback}>{_t("threads|show_all_threads")}</button>
                     ) : (
                         <>&nbsp;</>
                     )}
@@ -176,12 +163,12 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
     } else {
         body = (
             <>
-                <p>{_t("Threads help keep your conversations on-topic and easy to track.")}</p>
+                <p>{_t("threads|empty_explainer")}</p>
                 <p className="mx_ThreadPanel_empty_tip">
                     {_t(
-                        "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.",
+                        "threads|empty_tip",
                         {
-                            replyInThread: _t("Reply in thread"),
+                            replyInThread: _t("action|reply_in_thread"),
                         },
                         {
                             b: (sub) => <b>{sub}</b>,
@@ -193,19 +180,19 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
     }
 
     return (
-        <aside className="mx_ThreadPanel_empty">
+        <div className="mx_ThreadPanel_empty">
             <div className="mx_ThreadPanel_largeIcon" />
-            <h2>{_t("Keep discussions organised with threads")}</h2>
+            <h2>{_t("threads|empty_heading")}</h2>
             {body}
-        </aside>
+        </div>
     );
 };
 
 const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) => {
     const mxClient = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const timelinePanel = useRef<TimelinePanel>();
-    const card = useRef<HTMLDivElement>();
+    const timelinePanel = useRef<TimelinePanel | null>(null);
+    const card = useRef<HTMLDivElement | null>(null);
 
     const [filterOption, setFilterOption] = useState<ThreadFilterType>(ThreadFilterType.All);
     const [room, setRoom] = useState<Room | null>(null);
@@ -217,7 +204,8 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
 
     useEffect(() => {
         const room = mxClient.getRoom(roomId);
-        room?.createThreadsTimelineSets()
+        room
+            ?.createThreadsTimelineSets()
             .then(() => room.fetchRoomThreads())
             .then(() => {
                 setFilterOption(ThreadFilterType.All);
@@ -227,17 +215,9 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
 
     useEffect(() => {
         if (timelineSet && !Thread.hasServerSideSupport) {
-            timelinePanel.current.refreshTimeline();
+            timelinePanel.current?.refreshTimeline();
         }
     }, [timelineSet, timelinePanel]);
-
-    const openFeedback = shouldShowFeedback()
-        ? () => {
-              Modal.createDialog(BetaFeedbackDialog, {
-                  featureId: "feature_threadenabled",
-              });
-          }
-        : null;
 
     return (
         <RoomContext.Provider
@@ -256,38 +236,12 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                         empty={!hasThreads}
                     />
                 }
-                footer={
-                    <>
-                        <BetaPill
-                            tooltipTitle={_t("Threads are a beta feature")}
-                            tooltipCaption={_t("Click for more info")}
-                            onClick={() => {
-                                dis.dispatch({
-                                    action: Action.ViewUserSettings,
-                                    initialTabId: UserTab.Labs,
-                                });
-                            }}
-                        />
-                        {openFeedback &&
-                            _t(
-                                "<a>Give feedback</a>",
-                                {},
-                                {
-                                    a: (sub) => (
-                                        <AccessibleButton kind="link_inline" onClick={openFeedback}>
-                                            {sub}
-                                        </AccessibleButton>
-                                    ),
-                                },
-                            )}
-                    </>
-                }
                 className="mx_ThreadPanel"
                 onClose={onClose}
                 withoutScrollContainer={true}
                 ref={card}
             >
-                <Measured sensor={card.current} onMeasurement={setNarrow} />
+                {card.current && <Measured sensor={card.current} onMeasurement={setNarrow} />}
                 {timelineSet ? (
                     <TimelinePanel
                         key={filterOption + ":" + (timelineSet.getFilter()?.filterId ?? roomId)}

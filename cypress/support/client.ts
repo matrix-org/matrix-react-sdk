@@ -16,13 +16,17 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import type { FileType, Upload, UploadOpts } from "matrix-js-sdk/src/http-api";
-import type { ICreateRoomOpts, ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
-import type { MatrixClient } from "matrix-js-sdk/src/client";
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { IContent } from "matrix-js-sdk/src/models/event";
+import type {
+    MatrixClient,
+    Room,
+    IContent,
+    FileType,
+    Upload,
+    UploadOpts,
+    ICreateRoomOpts,
+    ISendEventResponse,
+} from "matrix-js-sdk/src/matrix";
 import Chainable = Cypress.Chainable;
-import { UserCredentials } from "./login";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -118,10 +122,6 @@ declare global {
              */
             getDmRooms(userId: string): Chainable<string[]>;
             /**
-             * Boostraps cross-signing.
-             */
-            bootstrapCrossSigning(credendtials: UserCredentials): Chainable<void>;
-            /**
              * Joins the given room by alias or ID
              * @param roomIdOrAlias the id or alias of the room to join
              */
@@ -174,7 +174,9 @@ Cypress.Commands.add("createSpace", (options: ICreateRoomOpts): Chainable<string
 
 Cypress.Commands.add("inviteUser", (roomId: string, userId: string): Chainable<{}> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
-        return cli.invite(roomId, userId);
+        const res = await cli.invite(roomId, userId);
+        Cypress.log({ name: "inviteUser", message: `sent invite in ${roomId} for ${userId}` });
+        return res;
     });
 });
 
@@ -208,23 +210,6 @@ Cypress.Commands.add("uploadContent", (file: FileType, opts?: UploadOpts): Chain
 Cypress.Commands.add("setAvatarUrl", (url: string): Chainable<{}> => {
     return cy.getClient().then(async (cli: MatrixClient) => {
         return cli.setAvatarUrl(url);
-    });
-});
-
-Cypress.Commands.add("bootstrapCrossSigning", (credentials: UserCredentials) => {
-    cy.window({ log: false }).then((win) => {
-        win.mxMatrixClientPeg.matrixClient.bootstrapCrossSigning({
-            authUploadDeviceSigningKeys: async (func) => {
-                await func({
-                    type: "m.login.password",
-                    identifier: {
-                        type: "m.id.user",
-                        user: credentials.userId,
-                    },
-                    password: credentials.password,
-                });
-            },
-        });
     });
 });
 

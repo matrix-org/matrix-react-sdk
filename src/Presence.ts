@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { SetPresence } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import dis from "./dispatcher/dispatcher";
@@ -26,16 +27,10 @@ import { ActionPayload } from "./dispatcher/payloads";
 // Time in ms after that a user is considered as unavailable/away
 const UNAVAILABLE_TIME_MS = 3 * 60 * 1000; // 3 mins
 
-enum State {
-    Online = "online",
-    Offline = "offline",
-    Unavailable = "unavailable",
-}
-
 class Presence {
-    private unavailableTimer: Timer = null;
-    private dispatcherRef: string = null;
-    private state: State = null;
+    private unavailableTimer: Timer | null = null;
+    private dispatcherRef: string | null = null;
+    private state: SetPresence | null = null;
 
     /**
      * Start listening the user activity to evaluate his presence state.
@@ -48,7 +43,7 @@ class Presence {
         while (this.unavailableTimer) {
             try {
                 await this.unavailableTimer.finished();
-                this.setState(State.Unavailable);
+                this.setState(SetPresence.Unavailable);
             } catch (e) {
                 /* aborted, stop got called */
             }
@@ -73,14 +68,14 @@ class Presence {
      * Get the current presence state.
      * @returns {string} the presence state (see PRESENCE enum)
      */
-    public getState(): State {
+    public getState(): SetPresence | null {
         return this.state;
     }
 
     private onAction = (payload: ActionPayload): void => {
         if (payload.action === "user_activity") {
-            this.setState(State.Online);
-            this.unavailableTimer.restart();
+            this.setState(SetPresence.Online);
+            this.unavailableTimer?.restart();
         }
     };
 
@@ -89,7 +84,7 @@ class Presence {
      * If the state has changed, the homeserver will be notified.
      * @param {string} newState the new presence state (see PRESENCE enum)
      */
-    private async setState(newState: State): Promise<void> {
+    private async setState(newState: SetPresence): Promise<void> {
         if (newState === this.state) {
             return;
         }
@@ -97,13 +92,13 @@ class Presence {
         const oldState = this.state;
         this.state = newState;
 
-        if (MatrixClientPeg.get().isGuest()) {
+        if (MatrixClientPeg.safeGet().isGuest()) {
             return; // don't try to set presence when a guest; it won't work.
         }
 
         try {
-            await MatrixClientPeg.get().setPresence({ presence: this.state });
-            logger.info("Presence:", newState);
+            await MatrixClientPeg.safeGet().setSyncPresence(this.state);
+            logger.debug("Presence:", newState);
         } catch (err) {
             logger.error("Failed to set presence:", err);
             this.state = oldState;

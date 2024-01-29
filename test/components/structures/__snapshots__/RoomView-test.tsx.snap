@@ -6,48 +6,35 @@ exports[`RoomView for a local room in state CREATING should match the snapshot 1
     class="mx_RoomView mx_RoomView--local"
   >
     <header
-      class="mx_RoomHeader light-panel"
+      class="mx_LegacyRoomHeader light-panel"
     >
       <div
-        class="mx_RoomHeader_wrapper"
+        class="mx_LegacyRoomHeader_wrapper"
       >
         <div
-          class="mx_RoomHeader_avatar"
+          class="mx_LegacyRoomHeader_avatar"
         >
           <div
             class="mx_DecoratedRoomAvatar"
           >
             <span
-              class="mx_BaseAvatar"
+              class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+              data-color="3"
+              data-testid="avatar-img"
+              data-type="round"
               role="presentation"
+              style="--cpd-avatar-size: 24px;"
             >
-              <span
-                aria-hidden="true"
-                class="mx_BaseAvatar_initial"
-                style="font-size: 15.600000000000001px; width: 24px; line-height: 24px;"
-              >
-                U
-              </span>
-              <img
-                alt=""
-                aria-hidden="true"
-                class="mx_BaseAvatar_image"
-                data-testid="avatar-img"
-                src="data:image/png;base64,00"
-                style="width: 24px; height: 24px;"
-              />
+              u
             </span>
           </div>
         </div>
         <div
-          class="mx_E2EIcon mx_E2EIcon_normal mx_RoomHeader_icon"
-        />
-        <div
-          class="mx_RoomHeader_name mx_RoomHeader_name--textonly"
+          class="mx_LegacyRoomHeader_name mx_LegacyRoomHeader_name--textonly"
         >
           <div
             aria-level="1"
-            class="mx_RoomHeader_nametext"
+            class="mx_LegacyRoomHeader_nametext"
             dir="auto"
             role="heading"
             title="@user:example.com"
@@ -56,18 +43,14 @@ exports[`RoomView for a local room in state CREATING should match the snapshot 1
           </div>
         </div>
         <div
-          class="mx_RoomHeader_topic mx_RoomTopic"
+          aria-describedby="mx_TooltipTarget_vY7Q4uEh"
+          class="mx_LegacyRoomHeader_topic mx_RoomTopic"
           dir="auto"
+          tabindex="0"
         >
-          <div
-            tabindex="0"
-          >
-            <div>
-              <span
-                dir="auto"
-              />
-            </div>
-          </div>
+          <span
+            dir="auto"
+          />
         </div>
       </div>
     </header>
@@ -81,7 +64,7 @@ exports[`RoomView for a local room in state CREATING should match the snapshot 1
           class="mx_Spinner"
         >
           <div
-            aria-label="Loading..."
+            aria-label="Loading…"
             class="mx_Spinner_icon"
             data-testid="spinner"
             role="progressbar"
@@ -105,48 +88,35 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
     class="mx_RoomView mx_RoomView--local"
   >
     <header
-      class="mx_RoomHeader light-panel"
+      class="mx_LegacyRoomHeader light-panel"
     >
       <div
-        class="mx_RoomHeader_wrapper"
+        class="mx_LegacyRoomHeader_wrapper"
       >
         <div
-          class="mx_RoomHeader_avatar"
+          class="mx_LegacyRoomHeader_avatar"
         >
           <div
             class="mx_DecoratedRoomAvatar"
           >
             <span
-              class="mx_BaseAvatar"
+              class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+              data-color="3"
+              data-testid="avatar-img"
+              data-type="round"
               role="presentation"
+              style="--cpd-avatar-size: 24px;"
             >
-              <span
-                aria-hidden="true"
-                class="mx_BaseAvatar_initial"
-                style="font-size: 15.600000000000001px; width: 24px; line-height: 24px;"
-              >
-                U
-              </span>
-              <img
-                alt=""
-                aria-hidden="true"
-                class="mx_BaseAvatar_image"
-                data-testid="avatar-img"
-                src="data:image/png;base64,00"
-                style="width: 24px; height: 24px;"
-              />
+              u
             </span>
           </div>
         </div>
         <div
-          class="mx_E2EIcon mx_E2EIcon_normal mx_RoomHeader_icon"
-        />
-        <div
-          class="mx_RoomHeader_name mx_RoomHeader_name--textonly"
+          class="mx_LegacyRoomHeader_name mx_LegacyRoomHeader_name--textonly"
         >
           <div
             aria-level="1"
-            class="mx_RoomHeader_nametext"
+            class="mx_LegacyRoomHeader_nametext"
             dir="auto"
             role="heading"
             title="@user:example.com"
@@ -155,18 +125,14 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
           </div>
         </div>
         <div
-          class="mx_RoomHeader_topic mx_RoomTopic"
+          aria-describedby="mx_TooltipTarget_vY7Q4uEh"
+          class="mx_LegacyRoomHeader_topic mx_RoomTopic"
           dir="auto"
+          tabindex="0"
         >
-          <div
-            tabindex="0"
-          >
-            <div>
-              <span
-                dir="auto"
-              />
-            </div>
-          </div>
+          <span
+            dir="auto"
+          />
         </div>
       </div>
     </header>
@@ -210,29 +176,18 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
                     </span>
                   </div>
                 </div>
-                <span
+                <button
                   aria-label="Avatar"
                   aria-live="off"
-                  class="mx_AccessibleButton mx_BaseAvatar"
+                  class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+                  data-color="3"
+                  data-testid="avatar-img"
+                  data-type="round"
                   role="button"
-                  tabindex="0"
+                  style="--cpd-avatar-size: 52px;"
                 >
-                  <span
-                    aria-hidden="true"
-                    class="mx_BaseAvatar_initial"
-                    style="font-size: 33.800000000000004px; width: 52px; line-height: 52px;"
-                  >
-                    U
-                  </span>
-                  <img
-                    alt=""
-                    aria-hidden="true"
-                    class="mx_BaseAvatar_image"
-                    data-testid="avatar-img"
-                    src="data:image/png;base64,00"
-                    style="width: 52px; height: 52px;"
-                  />
-                </span>
+                  u
+                </button>
                 <h2>
                   @user:example.com
                 </h2>
@@ -300,48 +255,35 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
     class="mx_RoomView mx_RoomView--local"
   >
     <header
-      class="mx_RoomHeader light-panel"
+      class="mx_LegacyRoomHeader light-panel"
     >
       <div
-        class="mx_RoomHeader_wrapper"
+        class="mx_LegacyRoomHeader_wrapper"
       >
         <div
-          class="mx_RoomHeader_avatar"
+          class="mx_LegacyRoomHeader_avatar"
         >
           <div
             class="mx_DecoratedRoomAvatar"
           >
             <span
-              class="mx_BaseAvatar"
+              class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+              data-color="3"
+              data-testid="avatar-img"
+              data-type="round"
               role="presentation"
+              style="--cpd-avatar-size: 24px;"
             >
-              <span
-                aria-hidden="true"
-                class="mx_BaseAvatar_initial"
-                style="font-size: 15.600000000000001px; width: 24px; line-height: 24px;"
-              >
-                U
-              </span>
-              <img
-                alt=""
-                aria-hidden="true"
-                class="mx_BaseAvatar_image"
-                data-testid="avatar-img"
-                src="data:image/png;base64,00"
-                style="width: 24px; height: 24px;"
-              />
+              u
             </span>
           </div>
         </div>
         <div
-          class="mx_E2EIcon mx_E2EIcon_normal mx_RoomHeader_icon"
-        />
-        <div
-          class="mx_RoomHeader_name mx_RoomHeader_name--textonly"
+          class="mx_LegacyRoomHeader_name mx_LegacyRoomHeader_name--textonly"
         >
           <div
             aria-level="1"
-            class="mx_RoomHeader_nametext"
+            class="mx_LegacyRoomHeader_nametext"
             dir="auto"
             role="heading"
             title="@user:example.com"
@@ -350,18 +292,14 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
           </div>
         </div>
         <div
-          class="mx_RoomHeader_topic mx_RoomTopic"
+          aria-describedby="mx_TooltipTarget_vY7Q4uEh"
+          class="mx_LegacyRoomHeader_topic mx_RoomTopic"
           dir="auto"
+          tabindex="0"
         >
-          <div
-            tabindex="0"
-          >
-            <div>
-              <span
-                dir="auto"
-              />
-            </div>
-          </div>
+          <span
+            dir="auto"
+          />
         </div>
       </div>
     </header>
@@ -405,29 +343,18 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                     </span>
                   </div>
                 </div>
-                <span
+                <button
                   aria-label="Avatar"
                   aria-live="off"
-                  class="mx_AccessibleButton mx_BaseAvatar"
+                  class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+                  data-color="3"
+                  data-testid="avatar-img"
+                  data-type="round"
                   role="button"
-                  tabindex="0"
+                  style="--cpd-avatar-size: 52px;"
                 >
-                  <span
-                    aria-hidden="true"
-                    class="mx_BaseAvatar_initial"
-                    style="font-size: 33.800000000000004px; width: 52px; line-height: 52px;"
-                  >
-                    U
-                  </span>
-                  <img
-                    alt=""
-                    aria-hidden="true"
-                    class="mx_BaseAvatar_image"
-                    data-testid="avatar-img"
-                    src="data:image/png;base64,00"
-                    style="width: 52px; height: 52px;"
-                  />
-                </span>
+                  u
+                </button>
                 <h2>
                   @user:example.com
                 </h2>
@@ -446,7 +373,9 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
         </div>
       </div>
       <div
+        aria-label="Message composer"
         class="mx_MessageComposer"
+        role="region"
       >
         <div
           class="mx_MessageComposer_wrapper"
@@ -461,7 +390,9 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                 class="mx_BasicMessageComposer"
               >
                 <div
+                  aria-label="Formatting"
                   class="mx_MessageComposerFormatBar"
+                  role="toolbar"
                 >
                   <button
                     aria-label="Bold"
@@ -474,35 +405,35 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                     aria-label="Italics"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconItalic"
                     role="button"
-                    tabindex="0"
+                    tabindex="-1"
                     type="button"
                   />
                   <button
                     aria-label="Strikethrough"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconStrikethrough"
                     role="button"
-                    tabindex="0"
+                    tabindex="-1"
                     type="button"
                   />
                   <button
                     aria-label="Code block"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconCode"
                     role="button"
-                    tabindex="0"
+                    tabindex="-1"
                     type="button"
                   />
                   <button
                     aria-label="Quote"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconQuote"
                     role="button"
-                    tabindex="0"
+                    tabindex="-1"
                     type="button"
                   />
                   <button
                     aria-label="Insert link"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconInsertLink"
                     role="button"
-                    tabindex="0"
+                    tabindex="-1"
                     type="button"
                   />
                 </div>
@@ -517,8 +448,9 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                   data-testid="basicmessagecomposer"
                   dir="auto"
                   role="textbox"
-                  style="--placeholder: 'Send a message…';"
+                  style="--placeholder: 'Send\\ a\\ message…';"
                   tabindex="0"
+                  translate="no"
                 >
                   <div>
                     <br />
@@ -567,48 +499,43 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
     class="mx_RoomView mx_RoomView--local"
   >
     <header
-      class="mx_RoomHeader light-panel"
+      class="mx_LegacyRoomHeader light-panel"
     >
       <div
-        class="mx_RoomHeader_wrapper"
+        class="mx_LegacyRoomHeader_wrapper"
       >
         <div
-          class="mx_RoomHeader_avatar"
+          class="mx_LegacyRoomHeader_avatar"
         >
           <div
             class="mx_DecoratedRoomAvatar"
           >
             <span
-              class="mx_BaseAvatar"
+              class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+              data-color="3"
+              data-testid="avatar-img"
+              data-type="round"
               role="presentation"
+              style="--cpd-avatar-size: 24px;"
             >
-              <span
-                aria-hidden="true"
-                class="mx_BaseAvatar_initial"
-                style="font-size: 15.600000000000001px; width: 24px; line-height: 24px;"
-              >
-                U
-              </span>
-              <img
-                alt=""
-                aria-hidden="true"
-                class="mx_BaseAvatar_image"
-                data-testid="avatar-img"
-                src="data:image/png;base64,00"
-                style="width: 24px; height: 24px;"
-              />
+              u
             </span>
           </div>
         </div>
+        <span
+          data-state="closed"
+          tabindex="0"
+        >
+          <div
+            class="mx_E2EIcon mx_E2EIcon_normal mx_LegacyRoomHeader_icon"
+          />
+        </span>
         <div
-          class="mx_E2EIcon mx_E2EIcon_normal mx_RoomHeader_icon"
-        />
-        <div
-          class="mx_RoomHeader_name mx_RoomHeader_name--textonly"
+          class="mx_LegacyRoomHeader_name mx_LegacyRoomHeader_name--textonly"
         >
           <div
             aria-level="1"
-            class="mx_RoomHeader_nametext"
+            class="mx_LegacyRoomHeader_nametext"
             dir="auto"
             role="heading"
             title="@user:example.com"
@@ -617,18 +544,14 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
           </div>
         </div>
         <div
-          class="mx_RoomHeader_topic mx_RoomTopic"
+          aria-describedby="mx_TooltipTarget_vY7Q4uEh"
+          class="mx_LegacyRoomHeader_topic mx_RoomTopic"
           dir="auto"
+          tabindex="0"
         >
-          <div
-            tabindex="0"
-          >
-            <div>
-              <span
-                dir="auto"
-              />
-            </div>
-          </div>
+          <span
+            dir="auto"
+          />
         </div>
       </div>
     </header>
@@ -667,29 +590,18 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
               <li
                 class="mx_NewRoomIntro"
               >
-                <span
+                <button
                   aria-label="Avatar"
                   aria-live="off"
-                  class="mx_AccessibleButton mx_BaseAvatar"
+                  class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+                  data-color="3"
+                  data-testid="avatar-img"
+                  data-type="round"
                   role="button"
-                  tabindex="0"
+                  style="--cpd-avatar-size: 52px;"
                 >
-                  <span
-                    aria-hidden="true"
-                    class="mx_BaseAvatar_initial"
-                    style="font-size: 33.800000000000004px; width: 52px; line-height: 52px;"
-                  >
-                    U
-                  </span>
-                  <img
-                    alt=""
-                    aria-hidden="true"
-                    class="mx_BaseAvatar_image"
-                    data-testid="avatar-img"
-                    src="data:image/png;base64,00"
-                    style="width: 52px; height: 52px;"
-                  />
-                </span>
+                  u
+                </button>
                 <h2>
                   @user:example.com
                 </h2>
@@ -708,7 +620,9 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
         </div>
       </div>
       <div
+        aria-label="Message composer"
         class="mx_MessageComposer"
+        role="region"
       >
         <div
           class="mx_MessageComposer_wrapper"
@@ -723,7 +637,9 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                 class="mx_BasicMessageComposer"
               >
                 <div
+                  aria-label="Formatting"
                   class="mx_MessageComposerFormatBar"
+                  role="toolbar"
                 >
                   <button
                     aria-label="Bold"
@@ -736,35 +652,35 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                     aria-label="Italics"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconItalic"
                     role="button"
-                    tabindex="0"
+                    tabindex="-1"
                     type="button"
                   />
                   <button
                     aria-label="Strikethrough"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconStrikethrough"
                     role="button"
-                    tabindex="0"
+                    tabindex="-1"
                     type="button"
                   />
                   <button
                     aria-label="Code block"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconCode"
                     role="button"
-                    tabindex="0"
+                    tabindex="-1"
                     type="button"
                   />
                   <button
                     aria-label="Quote"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconQuote"
                     role="button"
-                    tabindex="0"
+                    tabindex="-1"
                     type="button"
                   />
                   <button
                     aria-label="Insert link"
                     class="mx_AccessibleButton mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIconInsertLink"
                     role="button"
-                    tabindex="0"
+                    tabindex="-1"
                     type="button"
                   />
                 </div>
@@ -779,8 +695,9 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                   data-testid="basicmessagecomposer"
                   dir="auto"
                   role="textbox"
-                  style="--placeholder: 'Send a message…';"
+                  style="--placeholder: 'Send\\ a\\ message…';"
                   tabindex="0"
+                  translate="no"
                 >
                   <div>
                     <br />
@@ -821,4 +738,35 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
     </main>
   </div>
 </div>
+`;
+
+exports[`RoomView should show error view if failed to look up room alias 1`] = `
+<DocumentFragment>
+  <div
+    class="mx_RoomView"
+    data-room-header="legacy"
+  >
+    <div
+      class="mx_RoomPreviewBar mx_RoomPreviewBar_RoomNotFound mx_RoomPreviewBar_dialog"
+      role="complementary"
+    >
+      <div
+        class="mx_RoomPreviewBar_message"
+      >
+        <h3>
+          #addy:server does not exist.
+        </h3>
+        <p>
+          Are you sure you're at the right place?
+        </p>
+      </div>
+      <div
+        class="mx_RoomPreviewBar_actions"
+      />
+      <div
+        class="mx_RoomPreviewBar_footer"
+      />
+    </div>
+  </div>
+</DocumentFragment>
 `;

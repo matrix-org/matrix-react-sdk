@@ -15,12 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-// eslint-disable-next-line deprecate/import
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { jest } from "@jest/globals";
 import { mocked, MockedObject } from "jest-mock";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import _RightPanel from "../../../src/components/structures/RightPanel";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
@@ -35,6 +33,7 @@ import RightPanelStore from "../../../src/stores/right-panel/RightPanelStore";
 import { UPDATE_EVENT } from "../../../src/stores/AsyncStore";
 import { WidgetLayoutStore } from "../../../src/stores/widgets/WidgetLayoutStore";
 import { SdkContextClass } from "../../../src/contexts/SDKContext";
+import { RoomPermalinkCreator } from "../../../src/utils/permalinks/Permalinks";
 
 const RightPanelBase = wrapInMatrixClientContext(_RightPanel);
 
@@ -46,8 +45,8 @@ describe("RightPanel", () => {
     let RightPanel: React.ComponentType<React.ComponentProps<typeof RightPanelBase>>;
     beforeEach(() => {
         stubClient();
-        cli = mocked(MatrixClientPeg.get());
-        DMRoomMap.makeShared();
+        cli = mocked(MatrixClientPeg.safeGet());
+        DMRoomMap.makeShared(cli);
         context = new SdkContextClass();
         context.client = cli;
         RightPanel = wrapInSdkContext(RightPanelBase, context);
@@ -85,41 +84,6 @@ describe("RightPanel", () => {
 
     const waitForRpsUpdate = () => new Promise<void>((resolve) => RightPanelStore.instance.once(UPDATE_EVENT, resolve));
 
-    it("navigates from room summary to member list", async () => {
-        const r1 = mkRoom(cli, "r1");
-        cli.getRoom.mockImplementation((roomId) => (roomId === "r1" ? r1 : null));
-
-        // Set up right panel state
-        const realGetValue = SettingsStore.getValue;
-        jest.spyOn(SettingsStore, "getValue").mockImplementation((name, roomId) => {
-            if (name !== "RightPanel.phases") return realGetValue(name, roomId);
-            if (roomId === "r1") {
-                return {
-                    history: [{ phase: RightPanelPhases.RoomSummary }],
-                    isOpen: true,
-                };
-            }
-            return null;
-        });
-
-        await spinUpStores();
-        const viewedRoom = waitForRpsUpdate();
-        dis.dispatch({
-            action: Action.ViewRoom,
-            room_id: "r1",
-        });
-        await viewedRoom;
-
-        const { container } = render(<RightPanel room={r1} resizeNotifier={resizeNotifier} />);
-        expect(container.getElementsByClassName("mx_RoomSummaryCard")).toHaveLength(1);
-
-        const switchedPhases = waitForRpsUpdate();
-        userEvent.click(screen.getByText(/people/i));
-        await switchedPhases;
-
-        expect(container.getElementsByClassName("mx_MemberList")).toHaveLength(1);
-    });
-
     it("renders info from only one room during room changes", async () => {
         const r1 = mkRoom(cli, "r1");
         const r2 = mkRoom(cli, "r2");
@@ -152,7 +116,13 @@ describe("RightPanel", () => {
         await spinUpStores();
 
         // Run initial render with room 1, and also running lifecycle methods
-        const { container, rerender } = render(<RightPanel room={r1} resizeNotifier={resizeNotifier} />);
+        const { container, rerender } = render(
+            <RightPanel
+                room={r1}
+                resizeNotifier={resizeNotifier}
+                permalinkCreator={new RoomPermalinkCreator(r1, r1.roomId)}
+            />,
+        );
         // Wait for RPS room 1 updates to fire
         const rpsUpdated = waitForRpsUpdate();
         dis.dispatch({
@@ -172,7 +142,13 @@ describe("RightPanel", () => {
             room_id: "r2",
         });
         await _rpsUpdated;
-        rerender(<RightPanel room={r2} resizeNotifier={resizeNotifier} />);
+        rerender(
+            <RightPanel
+                room={r2}
+                resizeNotifier={resizeNotifier}
+                permalinkCreator={new RoomPermalinkCreator(r2, r2.roomId)}
+            />,
+        );
 
         // After all that setup, now to the interesting part...
         // We want to verify that as we change to room 2, we should always have

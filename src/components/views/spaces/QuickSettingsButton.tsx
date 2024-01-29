@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,7 +33,6 @@ import { Icon as PinUprightIcon } from "../../../../res/img/element-icons/room/p
 import { Icon as EllipsisIcon } from "../../../../res/img/element-icons/room/ellipsis.svg";
 import { Icon as MembersIcon } from "../../../../res/img/element-icons/room/members.svg";
 import { Icon as FavoriteIcon } from "../../../../res/img/element-icons/roomlist/favorite.svg";
-import SettingsStore from "../../../settings/SettingsStore";
 import Modal from "../../../Modal";
 import DevtoolsDialog from "../dialogs/DevtoolsDialog";
 import { SdkContextClass } from "../../../contexts/SDKContext";
@@ -46,8 +45,11 @@ const QuickSettingsButton: React.FC<{
     const { [MetaSpace.Favourites]: favouritesEnabled, [MetaSpace.People]: peopleEnabled } =
         useSettingValue<Record<MetaSpace, boolean>>("Spaces.enabledMetaSpaces");
 
-    let contextMenu: JSX.Element;
-    if (menuDisplayed) {
+    const currentRoomId = SdkContextClass.instance.roomViewStore.getRoomId();
+    const developerModeEnabled = useSettingValue("developerMode");
+
+    let contextMenu: JSX.Element | undefined;
+    if (menuDisplayed && handle.current) {
         contextMenu = (
             <ContextMenu
                 {...alwaysAboveRightOf(handle.current.getBoundingClientRect(), ChevronFace.None, 16)}
@@ -56,7 +58,7 @@ const QuickSettingsButton: React.FC<{
                 managed={false}
                 focusLock={true}
             >
-                <h2>{_t("Quick settings")}</h2>
+                <h2>{_t("quick_settings|title")}</h2>
 
                 <AccessibleButton
                     onClick={() => {
@@ -65,30 +67,30 @@ const QuickSettingsButton: React.FC<{
                     }}
                     kind="primary_outline"
                 >
-                    {_t("All settings")}
+                    {_t("quick_settings|all_settings")}
                 </AccessibleButton>
 
-                {SettingsStore.getValue("developerMode") && (
+                {currentRoomId && developerModeEnabled && (
                     <AccessibleButton
                         onClick={() => {
                             closeMenu();
                             Modal.createDialog(
                                 DevtoolsDialog,
                                 {
-                                    roomId: SdkContextClass.instance.roomViewStore.getRoomId(),
+                                    roomId: currentRoomId,
                                 },
                                 "mx_DevtoolsDialog_wrapper",
                             );
                         }}
                         kind="danger_outline"
                     >
-                        {_t("Developer tools")}
+                        {_t("devtools|title")}
                     </AccessibleButton>
                 )}
 
                 <h4 className="mx_QuickSettingsButton_pinToSidebarHeading">
                     <PinUprightIcon className="mx_QuickSettingsButton_icon" />
-                    {_t("Pin to sidebar")}
+                    {_t("quick_settings|metaspace_section")}
                 </h4>
 
                 <StyledCheckbox
@@ -97,7 +99,7 @@ const QuickSettingsButton: React.FC<{
                     onChange={onMetaSpaceChangeFactory(MetaSpace.Favourites, "WebQuickSettingsPinToSidebarCheckbox")}
                 >
                     <FavoriteIcon className="mx_QuickSettingsButton_icon" />
-                    {_t("Favourites")}
+                    {_t("common|favourites")}
                 </StyledCheckbox>
                 <StyledCheckbox
                     className="mx_QuickSettingsButton_peopleCheckbox"
@@ -105,7 +107,7 @@ const QuickSettingsButton: React.FC<{
                     onChange={onMetaSpaceChangeFactory(MetaSpace.People, "WebQuickSettingsPinToSidebarCheckbox")}
                 >
                     <MembersIcon className="mx_QuickSettingsButton_icon" />
-                    {_t("People")}
+                    {_t("common|people")}
                 </StyledCheckbox>
                 <AccessibleButton
                     className="mx_QuickSettingsButton_moreOptionsButton"
@@ -118,7 +120,7 @@ const QuickSettingsButton: React.FC<{
                     }}
                 >
                     <EllipsisIcon className="mx_QuickSettingsButton_icon" />
-                    {_t("More options")}
+                    {_t("quick_settings|sidebar_settings")}
                 </AccessibleButton>
 
                 <QuickThemeSwitcher requestClose={closeMenu} />
@@ -131,11 +133,12 @@ const QuickSettingsButton: React.FC<{
             <AccessibleTooltipButton
                 className={classNames("mx_QuickSettingsButton", { expanded: !isPanelCollapsed })}
                 onClick={openMenu}
-                title={_t("Quick settings")}
-                inputRef={handle}
+                title={_t("quick_settings|title")}
+                ref={handle}
                 forceHide={!isPanelCollapsed}
+                aria-expanded={!isPanelCollapsed}
             >
-                {!isPanelCollapsed ? _t("Settings") : null}
+                {!isPanelCollapsed ? _t("common|settings") : null}
             </AccessibleTooltipButton>
 
             {contextMenu}

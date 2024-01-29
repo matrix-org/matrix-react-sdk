@@ -19,18 +19,18 @@ import { _t } from "../../languageHandler";
 export enum LocationShareError {
     MapStyleUrlNotConfigured = "MapStyleUrlNotConfigured",
     MapStyleUrlNotReachable = "MapStyleUrlNotReachable",
+    WebGLNotEnabled = "WebGLNotEnabled",
     Default = "Default",
 }
 
 export const getLocationShareErrorMessage = (errorType?: LocationShareError): string => {
     switch (errorType) {
         case LocationShareError.MapStyleUrlNotConfigured:
-            return _t("This homeserver is not configured to display maps.");
+            return _t("location_sharing|MapStyleUrlNotConfigured");
+        case LocationShareError.WebGLNotEnabled:
+            return _t("location_sharing|WebGLNotEnabled");
         case LocationShareError.MapStyleUrlNotReachable:
         default:
-            return _t(
-                `This homeserver is not configured correctly to display maps, ` +
-                    `or the configured map server may be unreachable.`,
-            );
+            return _t("location_sharing|MapStyleUrlNotReachable");
     }
 };

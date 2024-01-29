@@ -40,7 +40,7 @@ export function UseCaseSelection({ onFinished }: Props): JSX.Element {
                 onFinished(selection);
             }, TIMEOUT);
             return () => {
-                clearTimeout(handler);
+                if (handler !== null) clearTimeout(handler);
                 handler = null;
             };
         }
@@ -53,11 +53,11 @@ export function UseCaseSelection({ onFinished }: Props): JSX.Element {
             })}
         >
             <div className="mx_UseCaseSelection_title mx_UseCaseSelection_slideIn">
-                <h1>{_t("You're in")}</h1>
+                <h1>{_t("onboarding|use_case_heading1")}</h1>
             </div>
             <div className="mx_UseCaseSelection_info mx_UseCaseSelection_slideInDelayed">
-                <h2>{_t("Who will you chat to the most?")}</h2>
-                <h3>{_t("We'll help you get connected.")}</h3>
+                <h2>{_t("onboarding|use_case_heading2")}</h2>
+                <h3>{_t("onboarding|use_case_heading3")}</h3>
             </div>
             <div className="mx_UseCaseSelection_options mx_UseCaseSelection_slideInDelayed">
                 <UseCaseSelectionButton
@@ -78,7 +78,7 @@ export function UseCaseSelection({ onFinished }: Props): JSX.Element {
             </div>
             <div className="mx_UseCaseSelection_skip mx_UseCaseSelection_slideInDelayed">
                 <AccessibleButton kind="link" onClick={async () => setSelected(UseCase.Skip)}>
-                    {_t("Skip")}
+                    {_t("action|skip")}
                 </AccessibleButton>
             </div>
         </SplashPage>

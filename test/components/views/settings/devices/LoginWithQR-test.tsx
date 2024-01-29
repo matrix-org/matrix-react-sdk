@@ -18,6 +18,7 @@ import { cleanup, render, waitFor } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import React from "react";
 import { MSC3906Rendezvous, RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
+import { LoginTokenPostResponse } from "matrix-js-sdk/src/matrix";
 
 import LoginWithQR, { Click, Mode, Phase } from "../../../../../src/components/views/auth/LoginWithQR";
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
@@ -28,7 +29,7 @@ jest.mock("matrix-js-sdk/src/rendezvous/channels");
 
 const mockedFlow = jest.fn();
 
-jest.mock("../../../../../src/components/views/auth/LoginWithQRFlow", () => (props) => {
+jest.mock("../../../../../src/components/views/auth/LoginWithQRFlow", () => (props: Record<string, any>) => {
     mockedFlow(props);
     return <div />;
 });
@@ -50,6 +51,7 @@ function makeClient() {
         currentState: {
             on: jest.fn(),
         },
+        getClientWellKnown: jest.fn().mockReturnValue({}),
     } as unknown as MatrixClient);
 }
 
@@ -87,8 +89,8 @@ describe("<LoginWithQR />", () => {
         jest.spyOn(MSC3906Rendezvous.prototype, "verifyNewDeviceOnExistingDevice").mockResolvedValue(undefined);
         client.requestLoginToken.mockResolvedValue({
             login_token: "token",
-            expires_in: 1000,
-        });
+            expires_in_ms: 1000 * 1000,
+        } as LoginTokenPostResponse); // we force the type here so that it works with versions of js-sdk that don't have r1 support yet
     });
 
     afterEach(() => {

@@ -16,9 +16,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { IPusher } from "matrix-js-sdk/src/@types/PushRules";
-import { PUSHER_ENABLED } from "matrix-js-sdk/src/@types/event";
-import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
+import { IPusher, PUSHER_ENABLED, LocalNotificationSettings } from "matrix-js-sdk/src/matrix";
 
 import { formatDate } from "../../../../DateUtils";
 import { _t } from "../../../../languageHandler";
@@ -31,14 +29,14 @@ import { ExtendedDevice } from "./types";
 
 interface Props {
     device: ExtendedDevice;
-    pusher?: IPusher | undefined;
-    localNotificationSettings?: LocalNotificationSettings | undefined;
+    pusher?: IPusher;
+    localNotificationSettings?: LocalNotificationSettings;
     isSigningOut: boolean;
     onVerifyDevice?: () => void;
     onSignOutDevice: () => void;
     saveDeviceName: (deviceName: string) => Promise<void>;
-    setPushNotifications?: (deviceId: string, enabled: boolean) => Promise<void> | undefined;
-    supportsMSC3881?: boolean | undefined;
+    setPushNotifications?: (deviceId: string, enabled: boolean) => Promise<void>;
+    supportsMSC3881?: boolean;
     className?: string;
     isCurrentDevice?: boolean;
 }
@@ -66,30 +64,30 @@ const DeviceDetails: React.FC<Props> = ({
         {
             id: "session",
             values: [
-                { label: _t("Session ID"), value: device.device_id },
+                { label: _t("settings|sessions|session_id"), value: device.device_id },
                 {
-                    label: _t("Last activity"),
+                    label: _t("settings|sessions|last_activity"),
                     value: device.last_seen_ts && formatDate(new Date(device.last_seen_ts)),
                 },
             ],
         },
         {
             id: "application",
-            heading: _t("Application"),
+            heading: _t("common|application"),
             values: [
-                { label: _t("Name"), value: device.appName },
-                { label: _t("Version"), value: device.appVersion },
-                { label: _t("URL"), value: device.url },
+                { label: _t("common|name"), value: device.appName },
+                { label: _t("common|version"), value: device.appVersion },
+                { label: _t("settings|sessions|url"), value: device.url },
             ],
         },
         {
             id: "device",
-            heading: _t("Device"),
+            heading: _t("common|device"),
             values: [
-                { label: _t("Model"), value: device.deviceModel },
-                { label: _t("Operating system"), value: device.deviceOperatingSystem },
-                { label: _t("Browser"), value: device.client },
-                { label: _t("IP address"), value: device.last_seen_ip },
+                { label: _t("common|model"), value: device.deviceModel },
+                { label: _t("settings|sessions|os"), value: device.deviceOperatingSystem },
+                { label: _t("settings|sessions|browser"), value: device.client },
+                { label: _t("settings|sessions|ip"), value: device.last_seen_ip },
             ],
         },
     ]
@@ -105,13 +103,13 @@ const DeviceDetails: React.FC<Props> = ({
 
     const showPushNotificationSection = !!pusher || !!localNotificationSettings;
 
-    function isPushNotificationsEnabled(pusher: IPusher, notificationSettings: LocalNotificationSettings): boolean {
-        if (pusher) return pusher[PUSHER_ENABLED.name];
+    function isPushNotificationsEnabled(pusher?: IPusher, notificationSettings?: LocalNotificationSettings): boolean {
+        if (pusher) return !!pusher[PUSHER_ENABLED.name];
         if (localNotificationSettings) return !localNotificationSettings.is_silenced;
         return true;
     }
 
-    function isCheckboxDisabled(pusher: IPusher, notificationSettings: LocalNotificationSettings): boolean {
+    function isCheckboxDisabled(pusher?: IPusher, notificationSettings?: LocalNotificationSettings): boolean {
         if (localNotificationSettings) return false;
         if (pusher && !supportsMSC3881) return true;
         return false;
@@ -124,7 +122,7 @@ const DeviceDetails: React.FC<Props> = ({
                 <DeviceVerificationStatusCard device={device} onVerifyDevice={onVerifyDevice} isCurrentDevice />
             </section>
             <section className="mx_DeviceDetails_section">
-                <p className="mx_DeviceDetails_sectionHeading">{_t("Session details")}</p>
+                <p className="mx_DeviceDetails_sectionHeading">{_t("settings|sessions|details_heading")}</p>
                 {metadata.map(({ heading, values, id }, index) => (
                     <table
                         className="mx_DeviceDetails_metadataTable"
@@ -160,13 +158,13 @@ const DeviceDetails: React.FC<Props> = ({
                         checked={isPushNotificationsEnabled(pusher, localNotificationSettings)}
                         disabled={isCheckboxDisabled(pusher, localNotificationSettings)}
                         onChange={(checked) => setPushNotifications?.(device.device_id, checked)}
-                        title={_t("Toggle push notifications on this session.")}
+                        title={_t("settings|sessions|push_toggle")}
                         data-testid="device-detail-push-notification-checkbox"
                     />
                     <p className="mx_DeviceDetails_sectionHeading">
-                        {_t("Push notifications")}
+                        {_t("settings|sessions|push_heading")}
                         <small className="mx_DeviceDetails_sectionSubheading">
-                            {_t("Receive push notifications on this session.")}
+                            {_t("settings|sessions|push_subheading")}
                         </small>
                     </p>
                 </section>
@@ -179,7 +177,7 @@ const DeviceDetails: React.FC<Props> = ({
                     data-testid="device-detail-sign-out-cta"
                 >
                     <span className="mx_DeviceDetails_signOutButtonContent">
-                        {_t("Sign out of this session")}
+                        {_t("settings|sessions|sign_out")}
                         {isSigningOut && <Spinner w={16} h={16} />}
                     </span>
                 </AccessibleButton>

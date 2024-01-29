@@ -22,7 +22,7 @@ limitations under the License.
         color: $primary-content;
         font-size: $font-15px;
         line-height: $font-18px;
-        font-weight: $font-semi-bold;
+        font-weight: var(--cpd-font-weight-semibold);
         margin-top: 16px;
         position: relative;
         padding-left: 8px;
@@ -68,4 +68,8 @@ limitations under the License.
     .mx_NotificationSettingsTab_noneEntry::before {
         mask-image: url("$(res)/img/element-icons/roomlist/notifications-off.svg");
     }
+}
+
+input[type="file"].mx_NotificationSound_soundUpload {
+    display: none;
 }

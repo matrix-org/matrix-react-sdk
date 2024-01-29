@@ -26,9 +26,9 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import { SettingLevel } from "../SettingLevel";
 
 export default class ThemeWatcher {
-    private themeWatchRef: string;
-    private systemThemeWatchRef: string;
-    private dispatcherRef: string;
+    private themeWatchRef: string | null;
+    private systemThemeWatchRef: string | null;
+    private dispatcherRef: string | null;
 
     private preferDark: MediaQueryList;
     private preferLight: MediaQueryList;
@@ -53,23 +53,19 @@ export default class ThemeWatcher {
     public start(): void {
         this.themeWatchRef = SettingsStore.watchSetting("theme", null, this.onChange);
         this.systemThemeWatchRef = SettingsStore.watchSetting("use_system_theme", null, this.onChange);
-        if (this.preferDark.addEventListener) {
-            this.preferDark.addEventListener("change", this.onChange);
-            this.preferLight.addEventListener("change", this.onChange);
-            this.preferHighContrast.addEventListener("change", this.onChange);
-        }
+        this.preferDark.addEventListener("change", this.onChange);
+        this.preferLight.addEventListener("change", this.onChange);
+        this.preferHighContrast.addEventListener("change", this.onChange);
         this.dispatcherRef = dis.register(this.onAction);
     }
 
     public stop(): void {
-        if (this.preferDark.addEventListener) {
-            this.preferDark.removeEventListener("change", this.onChange);
-            this.preferLight.removeEventListener("change", this.onChange);
-            this.preferHighContrast.removeEventListener("change", this.onChange);
-        }
-        SettingsStore.unwatchSetting(this.systemThemeWatchRef);
-        SettingsStore.unwatchSetting(this.themeWatchRef);
-        dis.unregister(this.dispatcherRef);
+        this.preferDark.removeEventListener("change", this.onChange);
+        this.preferLight.removeEventListener("change", this.onChange);
+        this.preferHighContrast.removeEventListener("change", this.onChange);
+        if (this.systemThemeWatchRef) SettingsStore.unwatchSetting(this.systemThemeWatchRef);
+        if (this.themeWatchRef) SettingsStore.unwatchSetting(this.themeWatchRef);
+        if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
     }
 
     private onChange = (): void => {
@@ -144,14 +140,14 @@ export default class ThemeWatcher {
         return SettingsStore.getValue("theme");
     }
 
-    private themeBasedOnSystem(): string {
-        let newTheme: string;
+    private themeBasedOnSystem(): string | undefined {
+        let newTheme: string | undefined;
         if (this.preferDark.matches) {
             newTheme = "dark";
         } else if (this.preferLight.matches) {
             newTheme = "light";
         }
-        if (this.preferHighContrast.matches) {
+        if (newTheme && this.preferHighContrast.matches) {
             const hcTheme = findHighContrastTheme(newTheme);
             if (hcTheme) {
                 newTheme = hcTheme;

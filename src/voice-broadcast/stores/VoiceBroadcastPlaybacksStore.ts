@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import { MatrixClient, MatrixEvent, TypedEventEmitter } from "matrix-js-sdk/src/matrix";
 
 import {
     VoiceBroadcastPlayback,
@@ -71,17 +70,17 @@ export class VoiceBroadcastPlaybacksStore
     }
 
     public getByInfoEvent(infoEvent: MatrixEvent, client: MatrixClient): VoiceBroadcastPlayback {
-        const infoEventId = infoEvent.getId();
+        const infoEventId = infoEvent.getId()!;
 
         if (!this.playbacks.has(infoEventId)) {
             this.addPlayback(new VoiceBroadcastPlayback(infoEvent, client, this.recordings));
         }
 
-        return this.playbacks.get(infoEventId);
+        return this.playbacks.get(infoEventId)!;
     }
 
     private addPlayback(playback: VoiceBroadcastPlayback): void {
-        const infoEventId = playback.infoEvent.getId();
+        const infoEventId = playback.infoEvent.getId()!;
 
         if (this.playbacks.has(infoEventId)) return;
 

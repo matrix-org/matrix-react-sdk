@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Visibility } from "matrix-js-sdk/src/@types/partials";
+import { JoinRule, Visibility } from "matrix-js-sdk/src/matrix";
 
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { _t } from "../../../languageHandler";
@@ -33,19 +33,19 @@ interface IState {
 }
 
 export default class RoomPublishSetting extends React.PureComponent<IProps, IState> {
-    public constructor(props, context) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
             isRoomPublished: false,
         };
     }
 
-    private onRoomPublishChange = (e): void => {
+    private onRoomPublishChange = (): void => {
         const valueBefore = this.state.isRoomPublished;
         const newValue = !valueBefore;
         this.setState({ isRoomPublished: newValue });
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
 
         client
             .setRoomDirectoryVisibility(this.props.roomId, newValue ? Visibility.Public : Visibility.Private)
@@ -56,17 +56,17 @@ export default class RoomPublishSetting extends React.PureComponent<IProps, ISta
     };
 
     public componentDidMount(): void {
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         client.getRoomDirectoryVisibility(this.props.roomId).then((result) => {
             this.setState({ isRoomPublished: result.visibility === "public" });
         });
     }
 
-    public render(): JSX.Element {
-        const client = MatrixClientPeg.get();
+    public render(): React.ReactNode {
+        const client = MatrixClientPeg.safeGet();
 
         const room = client.getRoom(this.props.roomId);
-        const isRoomPublishable = room.getJoinRule() !== "invite";
+        const isRoomPublishable = room && room.getJoinRule() !== JoinRule.Invite;
 
         const enabled =
             (DirectoryCustomisations.requireCanonicalAliasAccessToPublish?.() === false ||
@@ -78,7 +78,7 @@ export default class RoomPublishSetting extends React.PureComponent<IProps, ISta
                 value={this.state.isRoomPublished}
                 onChange={this.onRoomPublishChange}
                 disabled={!enabled}
-                label={_t("Publish this room to the public in %(domain)s's room directory?", {
+                label={_t("room_settings|general|publish_toggle", {
                     domain: client.getDomain(),
                 })}
             />

@@ -36,8 +36,8 @@ export interface IAutocompleteOptions {
 }
 
 export default abstract class AutocompleteProvider {
-    public commandRegex: RegExp;
-    public forcedCommandRegex: RegExp;
+    public commandRegex?: RegExp;
+    public forcedCommandRegex?: RegExp;
 
     protected renderingType: TimelineRenderingType = TimelineRenderingType.Room;
 
@@ -70,7 +70,7 @@ export default abstract class AutocompleteProvider {
      * @param {boolean} force True if the user is forcing completion
      * @return {object} { command, range } where both objects fields are null if no match
      */
-    public getCurrentCommand(query: string, selection: ISelectionRange, force = false): ICommand {
+    public getCurrentCommand(query: string, selection: ISelectionRange, force = false): Partial<ICommand> {
         let commandRegex = this.commandRegex;
 
         if (force && this.shouldForceComplete()) {
@@ -78,12 +78,12 @@ export default abstract class AutocompleteProvider {
         }
 
         if (!commandRegex) {
-            return null;
+            return {};
         }
 
         commandRegex.lastIndex = 0;
 
-        let match: RegExpExecArray;
+        let match: RegExpExecArray | null;
         while ((match = commandRegex.exec(query)) !== null) {
             const start = match.index;
             const end = start + match[0].length;

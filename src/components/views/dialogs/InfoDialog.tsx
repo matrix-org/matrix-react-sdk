@@ -15,26 +15,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode, KeyboardEvent } from "react";
+import React, { ReactNode } from "react";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 
-interface IProps extends IDialogProps {
+interface IProps {
+    top?: ReactNode;
     title?: string;
     description?: ReactNode;
     className?: string;
     button?: boolean | string;
     hasCloseButton?: boolean;
     fixedWidth?: boolean;
-    onKeyDown?(event: KeyboardEvent): void;
+    onKeyDown?(event: KeyboardEvent | React.KeyboardEvent): void;
+    onFinished(): void;
 }
 
 export default class InfoDialog extends React.Component<IProps> {
-    public static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         title: "",
         description: "",
         hasCloseButton: false,
@@ -44,11 +45,12 @@ export default class InfoDialog extends React.Component<IProps> {
         this.props.onFinished();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 className="mx_InfoDialog"
                 onFinished={this.props.onFinished}
+                top={this.props.top}
                 title={this.props.title}
                 contentId="mx_Dialog_content"
                 hasCancel={this.props.hasCloseButton}
@@ -60,7 +62,7 @@ export default class InfoDialog extends React.Component<IProps> {
                 </div>
                 {this.props.button !== false && (
                     <DialogButtons
-                        primaryButton={this.props.button || _t("OK")}
+                        primaryButton={this.props.button || _t("action|ok")}
                         onPrimaryButtonClick={this.onFinished}
                         hasCancel={false}
                     />

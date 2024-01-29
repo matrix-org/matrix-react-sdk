@@ -20,9 +20,8 @@ import SetupEncryptionBody from "../../../structures/auth/SetupEncryptionBody";
 import BaseDialog from "../BaseDialog";
 import { _t } from "../../../../languageHandler";
 import { SetupEncryptionStore, Phase } from "../../../../stores/SetupEncryptionStore";
-import { IDialogProps } from "../IDialogProps";
 
-function iconFromPhase(phase: Phase): string {
+function iconFromPhase(phase?: Phase): string {
     if (phase === Phase.Done) {
         return require("../../../../../res/img/e2e/verified-deprecated.svg").default;
     } else {
@@ -30,7 +29,9 @@ function iconFromPhase(phase: Phase): string {
     }
 }
 
-interface IProps extends IDialogProps {}
+interface IProps {
+    onFinished(): void;
+}
 interface IState {
     icon: string;
 }
@@ -57,12 +58,12 @@ export default class SetupEncryptionDialog extends React.Component<IProps, IStat
         this.setState({ icon: iconFromPhase(this.store.phase) });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 headerImage={this.state.icon}
                 onFinished={this.props.onFinished}
-                title={_t("Verify this session")}
+                title={_t("encryption|verify_toast_title")}
             >
                 <SetupEncryptionBody onFinished={this.props.onFinished} />
             </BaseDialog>

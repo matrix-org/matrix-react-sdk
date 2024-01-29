@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 import React, { FC } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Room, JoinRule, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
@@ -37,7 +35,7 @@ const RoomInfoLine: FC<IProps> = ({ room }) => {
     const summary = useAsyncMemo(async (): Promise<Awaited<ReturnType<MatrixClient["getRoomSummary"]>> | null> => {
         if (room.getMyMembership() !== "invite") return null;
         try {
-            return room.client.getRoomSummary(room.roomId);
+            return await room.client.getRoomSummary(room.roomId);
         } catch (e) {
             return null;
         }
@@ -53,21 +51,21 @@ const RoomInfoLine: FC<IProps> = ({ room }) => {
     let roomType: string;
     if (isVideoRoom) {
         iconClass = "mx_RoomInfoLine_video";
-        roomType = _t("Video room");
+        roomType = _t("common|video_room");
     } else if (joinRule === JoinRule.Public) {
         iconClass = "mx_RoomInfoLine_public";
-        roomType = room.isSpaceRoom() ? _t("Public space") : _t("Public room");
+        roomType = room.isSpaceRoom() ? _t("common|public_space") : _t("common|public_room");
     } else {
         iconClass = "mx_RoomInfoLine_private";
-        roomType = room.isSpaceRoom() ? _t("Private space") : _t("Private room");
+        roomType = room.isSpaceRoom() ? _t("common|private_space") : _t("common|private_room");
     }
 
-    let members: JSX.Element;
+    let members: JSX.Element | undefined;
     if (membership === "invite" && summary) {
         // Don't trust local state and instead use the summary API
         members = (
             <span className="mx_RoomInfoLine_members">
-                {_t("%(count)s members", { count: summary.num_joined_members })}
+                {_t("common|n_members", { count: summary.num_joined_members })}
             </span>
         );
     } else if (memberCount && summary !== undefined) {
@@ -79,7 +77,7 @@ const RoomInfoLine: FC<IProps> = ({ room }) => {
 
         members = (
             <AccessibleButton kind="link" className="mx_RoomInfoLine_members" onClick={viewMembers}>
-                {_t("%(count)s members", { count: memberCount })}
+                {_t("common|n_members", { count: memberCount })}
             </AccessibleButton>
         );
     }

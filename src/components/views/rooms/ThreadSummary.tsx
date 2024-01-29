@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { useContext, useState } from "react";
-import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
-import { IContent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { Thread, ThreadEvent, IContent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { CardContext } from "../right_panel/context";
@@ -45,7 +44,7 @@ const ThreadSummary: React.FC<IProps> = ({ mxEvent, thread, ...props }) => {
 
     let countSection: string | number = count;
     if (!roomContext.narrow) {
-        countSection = _t("%(count)s reply", { count });
+        countSection = _t("threads|count_of_reply", { count });
     }
 
     return (
@@ -60,7 +59,7 @@ const ThreadSummary: React.FC<IProps> = ({ mxEvent, thread, ...props }) => {
                 });
                 PosthogTrackers.trackInteraction("WebRoomTimelineThreadSummaryButton", ev);
             }}
-            aria-label={_t("Open thread")}
+            aria-label={_t("threads|open_thread")}
         >
             <span className="mx_ThreadSummary_replies_amount">{countSection}</span>
             <ThreadMessagePreview thread={thread} showDisplayname={!roomContext.narrow} />
@@ -77,18 +76,18 @@ interface IPreviewProps {
 export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisplayname = false }) => {
     const cli = useContext(MatrixClientContext);
 
-    const lastReply = useTypedEventEmitterState(thread, ThreadEvent.Update, () => thread.replyToEvent);
+    const lastReply = useTypedEventEmitterState(thread, ThreadEvent.Update, () => thread.replyToEvent) ?? undefined;
     // track the content as a means to regenerate the thread message preview upon edits & decryption
-    const [content, setContent] = useState<IContent>(lastReply?.getContent());
+    const [content, setContent] = useState<IContent | undefined>(lastReply?.getContent());
     useTypedEventEmitter(lastReply, MatrixEventEvent.Replaced, () => {
-        setContent(lastReply.getContent());
+        setContent(lastReply!.getContent());
     });
     const awaitDecryption = lastReply?.shouldAttemptDecryption() || lastReply?.isBeingDecrypted();
-    useTypedEventEmitter(awaitDecryption ? lastReply : null, MatrixEventEvent.Decrypted, () => {
-        setContent(lastReply.getContent());
+    useTypedEventEmitter(awaitDecryption ? lastReply : undefined, MatrixEventEvent.Decrypted, () => {
+        setContent(lastReply!.getContent());
     });
 
-    const preview = useAsyncMemo(async (): Promise<string> => {
+    const preview = useAsyncMemo(async (): Promise<string | undefined> => {
         if (!lastReply) return;
         await cli.decryptEventIfNeeded(lastReply);
         return MessagePreviewStore.instance.generatePreviewForEvent(lastReply);
@@ -102,8 +101,7 @@ export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisp
             <MemberAvatar
                 member={lastReply.sender}
                 fallbackUserId={lastReply.getSender()}
-                width={24}
-                height={24}
+                size="24px"
                 className="mx_ThreadSummary_avatar"
             />
             {showDisplayname && (
@@ -113,9 +111,9 @@ export const ThreadMessagePreview: React.FC<IPreviewProps> = ({ thread, showDisp
             {lastReply.isDecryptionFailure() ? (
                 <div
                     className="mx_ThreadSummary_content mx_DecryptionFailureBody"
-                    title={_t("Unable to decrypt message")}
+                    title={_t("threads|unable_to_decrypt")}
                 >
-                    <span className="mx_ThreadSummary_message-preview">{_t("Unable to decrypt message")}</span>
+                    <span className="mx_ThreadSummary_message-preview">{_t("threads|unable_to_decrypt")}</span>
                 </div>
             ) : (
                 <div className="mx_ThreadSummary_content" title={preview}>

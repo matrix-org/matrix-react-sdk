@@ -16,14 +16,14 @@ limitations under the License.
 
 import React from "react";
 
-import { Icon as LiveIcon } from "../../../../res/img/element-icons/live.svg";
+import { Icon as LiveIcon } from "../../../../res/img/compound/live-16px.svg";
 import { _t } from "../../../languageHandler";
 
 export const VoiceBroadcastRoomSubtitle: React.FC = () => {
     return (
         <div className="mx_RoomTile_subtitle mx_RoomTile_subtitle--voice-broadcast">
             <LiveIcon className="mx_Icon mx_Icon_16" />
-            {_t("Live")}
+            {_t("voice_broadcast|live")}
         </div>
     );
 };

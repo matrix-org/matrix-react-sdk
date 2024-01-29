@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { HTMLProps, useContext } from "react";
-import { Beacon, BeaconEvent } from "matrix-js-sdk/src/matrix";
-import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
+import { Beacon, BeaconEvent, LocationAssetType } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
@@ -42,19 +41,19 @@ const BeaconListItem: React.FC<Props & HTMLProps<HTMLLIElement>> = ({ beacon, ..
     const matrixClient = useContext(MatrixClientContext);
     const room = matrixClient.getRoom(beacon.roomId);
 
-    if (!latestLocationState || !beacon.isLive) {
+    if (!latestLocationState || !beacon.isLive || !room) {
         return null;
     }
 
-    const isSelfLocation = beacon.beaconInfo.assetType === LocationAssetType.Self;
-    const beaconMember = isSelfLocation ? room.getMember(beacon.beaconInfoOwner) : undefined;
+    const isSelfLocation = beacon.beaconInfo?.assetType === LocationAssetType.Self;
+    const beaconMember = isSelfLocation ? room.getMember(beacon.beaconInfoOwner) : null;
 
-    const humanizedUpdateTime = humanizeTime(latestLocationState.timestamp);
+    const humanizedUpdateTime = (latestLocationState.timestamp && humanizeTime(latestLocationState.timestamp)) || "";
 
     return (
         <li className="mx_BeaconListItem" {...rest}>
             {isSelfLocation ? (
-                <MemberAvatar className="mx_BeaconListItem_avatar" member={beaconMember} height={32} width={32} />
+                <MemberAvatar className="mx_BeaconListItem_avatar" member={beaconMember} size="32px" />
             ) : (
                 <StyledLiveBeaconIcon className="mx_BeaconListItem_avatarIcon" />
             )}
@@ -62,7 +61,7 @@ const BeaconListItem: React.FC<Props & HTMLProps<HTMLLIElement>> = ({ beacon, ..
                 <BeaconStatus
                     className="mx_BeaconListItem_status"
                     beacon={beacon}
-                    label={beaconMember?.name || beacon.beaconInfo.description || beacon.beaconInfoOwner}
+                    label={beaconMember?.name || beacon.beaconInfo?.description || beacon.beaconInfoOwner}
                     displayStatus={BeaconDisplayStatus.Active}
                 >
                     {/* eat events from interactive share buttons
@@ -72,7 +71,7 @@ const BeaconListItem: React.FC<Props & HTMLProps<HTMLLIElement>> = ({ beacon, ..
                     </div>
                 </BeaconStatus>
                 <span className="mx_BeaconListItem_lastUpdated">
-                    {_t("Updated %(humanizedUpdateTime)s", { humanizedUpdateTime })}
+                    {_t("location_sharing|live_update_time", { humanizedUpdateTime })}
                 </span>
             </div>
         </li>

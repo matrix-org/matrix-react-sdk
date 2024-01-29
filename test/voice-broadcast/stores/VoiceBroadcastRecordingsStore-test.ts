@@ -35,7 +35,7 @@ describe("VoiceBroadcastRecordingsStore", () => {
     let recording: VoiceBroadcastRecording;
     let otherRecording: VoiceBroadcastRecording;
     let recordings: VoiceBroadcastRecordingsStore;
-    let onCurrentChanged: (recording: VoiceBroadcastRecording) => void;
+    let onCurrentChanged: (recording: VoiceBroadcastRecording | null) => void;
 
     beforeEach(() => {
         client = stubClient();
@@ -44,18 +44,19 @@ describe("VoiceBroadcastRecordingsStore", () => {
             if (roomId === room.roomId) {
                 return room;
             }
+            return null;
         });
         infoEvent = mkVoiceBroadcastInfoStateEvent(
             roomId,
             VoiceBroadcastInfoState.Started,
-            client.getUserId(),
-            client.getDeviceId(),
+            client.getUserId()!,
+            client.getDeviceId()!,
         );
         otherInfoEvent = mkVoiceBroadcastInfoStateEvent(
             roomId,
             VoiceBroadcastInfoState.Started,
-            client.getUserId(),
-            client.getDeviceId(),
+            client.getUserId()!,
+            client.getDeviceId()!,
         );
         recording = new VoiceBroadcastRecording(infoEvent, client);
         otherRecording = new VoiceBroadcastRecording(otherInfoEvent, client);
@@ -73,7 +74,7 @@ describe("VoiceBroadcastRecordingsStore", () => {
         infoEvent.event.event_id = undefined;
         expect(() => {
             recordings.setCurrent(recording);
-        }).toThrowError("Got broadcast info event without Id");
+        }).toThrow("Got broadcast info event without Id");
     });
 
     describe("when setting a current Voice Broadcast recording", () => {

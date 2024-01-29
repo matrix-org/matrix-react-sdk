@@ -16,8 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { fireEvent, render } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act, fireEvent, render } from "@testing-library/react";
 import { Beacon, BeaconIdentifier } from "matrix-js-sdk/src/matrix";
 
 import LeftPanelLiveShareWarning from "../../../../src/components/views/beacon/LeftPanelLiveShareWarning";
@@ -111,7 +110,7 @@ describe("<LeftPanelLiveShareWarning />", () => {
             const { container } = getComponent();
             const dispatchSpy = jest.spyOn(dispatcher, "dispatch");
 
-            fireEvent.click(container.querySelector("[role=button]"));
+            fireEvent.click(container.querySelector("[role=button]")!);
 
             expect(dispatchSpy).toHaveBeenCalledWith({
                 action: Action.ViewRoom,
@@ -144,7 +143,7 @@ describe("<LeftPanelLiveShareWarning />", () => {
             const { container } = getComponent();
             const dispatchSpy = jest.spyOn(dispatcher, "dispatch");
 
-            fireEvent.click(container.querySelector("[role=button]"));
+            fireEvent.click(container.querySelector("[role=button]")!);
 
             expect(dispatchSpy).toHaveBeenCalledWith({
                 action: Action.ViewRoom,
@@ -163,7 +162,7 @@ describe("<LeftPanelLiveShareWarning />", () => {
             ]);
             const { container, rerender } = getComponent();
             // error mode
-            expect(container.querySelector(".mx_LeftPanelLiveShareWarning").textContent).toEqual(
+            expect(container.querySelector(".mx_LeftPanelLiveShareWarning")?.textContent).toEqual(
                 "An error occurred whilst sharing your live location",
             );
 
@@ -175,7 +174,7 @@ describe("<LeftPanelLiveShareWarning />", () => {
             rerender(<LeftPanelLiveShareWarning />);
 
             // default mode
-            expect(container.querySelector(".mx_LeftPanelLiveShareWarning").textContent).toEqual(
+            expect(container.querySelector(".mx_LeftPanelLiveShareWarning")?.textContent).toEqual(
                 "You are sharing your live location",
             );
         });
@@ -252,7 +251,7 @@ describe("<LeftPanelLiveShareWarning />", () => {
                 const { container } = getComponent();
                 const dispatchSpy = jest.spyOn(dispatcher, "dispatch");
 
-                fireEvent.click(container.querySelector("[role=button]"));
+                fireEvent.click(container.querySelector("[role=button]")!);
 
                 expect(dispatchSpy).toHaveBeenCalledWith({
                     action: Action.ViewRoom,

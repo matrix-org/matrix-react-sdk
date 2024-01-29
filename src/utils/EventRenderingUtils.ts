@@ -14,15 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
-import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
-import { IContent } from "matrix-js-sdk/src/matrix";
+import {
+    MatrixEvent,
+    IContent,
+    MatrixClient,
+    EventType,
+    MsgType,
+    M_POLL_END,
+    M_POLL_START,
+    M_BEACON_INFO,
+} from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "../settings/SettingsStore";
 import { haveRendererForEvent, JitsiEventFactory, JSONEventFactory, pickFactory } from "../events/EventTileFactory";
-import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getMessageModerationState, isLocationEvent, MessageModerationState } from "./EventUtils";
 import { ElementCall } from "../models/Call";
 import { VoiceBroadcastInfoEventType, VoiceBroadcastInfoState } from "../voice-broadcast";
@@ -41,12 +45,14 @@ const calcIsInfoMessage = (
         eventType !== EventType.Sticker &&
         eventType !== EventType.RoomCreate &&
         !M_POLL_START.matches(eventType) &&
+        !M_POLL_END.matches(eventType) &&
         !M_BEACON_INFO.matches(eventType) &&
         !(eventType === VoiceBroadcastInfoEventType && content?.state === VoiceBroadcastInfoState.Started)
     );
 };
 
 export function getEventDisplayInfo(
+    matrixClient: MatrixClient,
     mxEvent: MatrixEvent,
     showHiddenEvents: boolean,
     hideEvent?: boolean,
@@ -64,7 +70,7 @@ export function getEventDisplayInfo(
 
     let isSeeingThroughMessageHiddenForModeration = false;
     if (SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation")) {
-        switch (getMessageModerationState(mxEvent)) {
+        switch (getMessageModerationState(mxEvent, matrixClient)) {
             case MessageModerationState.VISIBLE_FOR_ALL:
             case MessageModerationState.HIDDEN_TO_CURRENT_USER:
                 // Nothing specific to do here
@@ -76,8 +82,7 @@ export function getEventDisplayInfo(
         }
     }
 
-    // TODO: Thread a MatrixClient through to here
-    let factory = pickFactory(mxEvent, MatrixClientPeg.get(), showHiddenEvents);
+    let factory = pickFactory(mxEvent, matrixClient, showHiddenEvents);
 
     // Info messages are basically information about commands processed on a room
     let isBubbleMessage =
@@ -101,11 +106,9 @@ export function getEventDisplayInfo(
     // source tile when there's no regular tile for an event and also for
     // replace relations (which otherwise would display as a confusing
     // duplicate of the thing they are replacing).
-    if (hideEvent || !haveRendererForEvent(mxEvent, showHiddenEvents)) {
-        // forcefully ask for a factory for a hidden event (hidden event
-        // setting is checked internally)
-        // TODO: Thread a MatrixClient through to here
-        factory = pickFactory(mxEvent, MatrixClientPeg.get(), showHiddenEvents, true);
+    if (hideEvent || !haveRendererForEvent(mxEvent, matrixClient, showHiddenEvents)) {
+        // forcefully ask for a factory for a hidden event (hidden event setting is checked internally)
+        factory = pickFactory(mxEvent, matrixClient, showHiddenEvents, true);
         if (factory === JSONEventFactory) {
             isBubbleMessage = false;
             // Reuse info message avatar and sender profile styling

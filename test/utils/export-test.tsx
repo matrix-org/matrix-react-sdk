@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { renderToString } from "react-dom/server";
+import { render } from "@testing-library/react";
 import {
     IContent,
     MatrixClient,
@@ -45,13 +45,15 @@ interface ITestContent extends IContent {
 }
 
 describe("export", function () {
+    const setProgressText = jest.fn();
+
     let mockExportOptions: IExportOptions;
     let mockRoom: Room;
     let ts0: number;
     let events: MatrixEvent[];
     beforeEach(() => {
         stubClient();
-        client = MatrixClientPeg.get();
+        client = MatrixClientPeg.safeGet();
         client.getUserId = () => {
             return MY_USER_ID;
         };
@@ -63,7 +65,7 @@ describe("export", function () {
         };
 
         function createRoom() {
-            const room = new Room(generateRoomId(), null, client.getUserId());
+            const room = new Room(generateRoomId(), client, client.getUserId()!);
             return room;
         }
         mockRoom = createRoom();
@@ -146,7 +148,7 @@ describe("export", function () {
     }
 
     function mkEvents() {
-        const matrixEvents = [];
+        const matrixEvents: MatrixEvent[] = [];
         let i: number;
         // plain text
         for (i = 0; i < 10; i++) {
@@ -225,6 +227,10 @@ describe("export", function () {
         return matrixEvents;
     }
 
+    function renderToString(elem: JSX.Element): string {
+        return render(elem).container.outerHTML;
+    }
+
     it("checks if the export format is valid", function () {
         function isValidFormat(format: string): boolean {
             const options: string[] = Object.values(ExportFormat);
@@ -237,7 +243,7 @@ describe("export", function () {
     });
 
     it("checks if the icons' html corresponds to export regex", function () {
-        const exporter = new HTMLExporter(mockRoom, ExportType.Beginning, mockExportOptions, null);
+        const exporter = new HTMLExporter(mockRoom, ExportType.Beginning, mockExportOptions, setProgressText);
         const fileRegex = /<span class="mx_MFileBody_info_icon">.*?<\/span>/;
         expect(fileRegex.test(renderToString(exporter.getEventTile(mkFileEvent(), true)))).toBeTruthy();
     });
@@ -251,9 +257,9 @@ describe("export", function () {
                 maxSize: 100 * 1024 * 1024,
                 attachmentsIncluded: true,
             },
-            null,
+            setProgressText,
         );
-        const imageRegex = /<img.+ src="mxc:\/\/test.org" alt="image.png"\/>/;
+        const imageRegex = /<img.+ src="mxc:\/\/test.org" alt="image\.png"\/?>/;
         expect(imageRegex.test(renderToString(exporter.getEventTile(mkImageEvent(), true)))).toBeTruthy();
     });
 
@@ -284,14 +290,14 @@ describe("export", function () {
         ],
     ];
     it.each(invalidExportOptions)("%s", (_d, options) => {
-        expect(() => new PlainTextExporter(mockRoom, ExportType.Beginning, options, null)).toThrowError(
+        expect(() => new PlainTextExporter(mockRoom, ExportType.Beginning, options, setProgressText)).toThrow(
             "Invalid export options",
         );
     });
 
     it("tests the file extension splitter", function () {
-        const exporter = new PlainTextExporter(mockRoom, ExportType.Beginning, mockExportOptions, null);
-        const fileNameWithExtensions = {
+        const exporter = new PlainTextExporter(mockRoom, ExportType.Beginning, mockExportOptions, setProgressText);
+        const fileNameWithExtensions: Record<string, [string, string]> = {
             "": ["", ""],
             "name": ["name", ""],
             "name.txt": ["name", ".txt"],
@@ -327,14 +333,14 @@ describe("export", function () {
                 expectedText: '<@me:here "This"> Reply',
             },
         ];
-        const exporter = new PlainTextExporter(mockRoom, ExportType.Beginning, mockExportOptions, null);
+        const exporter = new PlainTextExporter(mockRoom, ExportType.Beginning, mockExportOptions, setProgressText);
         for (const content of eventContents) {
             expect(exporter.textForReplyEvent(content)).toBe(content.expectedText);
         }
     });
 
     it("checks if the render to string doesn't throw any error for different types of events", function () {
-        const exporter = new HTMLExporter(mockRoom, ExportType.Beginning, mockExportOptions, null);
+        const exporter = new HTMLExporter(mockRoom, ExportType.Beginning, mockExportOptions, setProgressText);
         for (const event of events) {
             expect(renderToString(exporter.getEventTile(event, false))).toBeTruthy();
         }

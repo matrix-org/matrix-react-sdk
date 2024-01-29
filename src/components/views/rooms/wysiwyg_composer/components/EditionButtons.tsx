@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { MouseEventHandler } from "react";
+import React from "react";
 
 import { _t } from "../../../../../languageHandler";
-import AccessibleButton from "../../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 
 interface EditionButtonsProps {
-    onCancelClick: MouseEventHandler<HTMLButtonElement>;
-    onSaveClick: MouseEventHandler<HTMLButtonElement>;
+    onCancelClick: (e: ButtonEvent) => void;
+    onSaveClick: (e: ButtonEvent) => void;
     isSaveDisabled?: boolean;
 }
 
@@ -33,10 +33,10 @@ export function EditionButtons({
     return (
         <div className="mx_EditWysiwygComposer_buttons">
             <AccessibleButton kind="secondary" onClick={onCancelClick}>
-                {_t("Cancel")}
+                {_t("action|cancel")}
             </AccessibleButton>
             <AccessibleButton kind="primary" onClick={onSaveClick} disabled={isSaveDisabled}>
-                {_t("Save")}
+                {_t("action|save")}
             </AccessibleButton>
         </div>
     );

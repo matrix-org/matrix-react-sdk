@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,8 +16,16 @@ limitations under the License.
 
 import React from "react";
 import { act, render, fireEvent } from "@testing-library/react";
-import { EventType, EventStatus, MatrixEvent, MatrixEventEvent, MsgType, Room } from "matrix-js-sdk/src/matrix";
-import { FeatureSupport, Thread } from "matrix-js-sdk/src/models/thread";
+import {
+    EventType,
+    EventStatus,
+    MatrixEvent,
+    MatrixEventEvent,
+    MsgType,
+    Room,
+    FeatureSupport,
+    Thread,
+} from "matrix-js-sdk/src/matrix";
 
 import MessageActionBar from "../../../../src/components/views/messages/MessageActionBar";
 import {
@@ -32,9 +40,6 @@ import { IRoomState } from "../../../../src/components/structures/RoomView";
 import dispatcher from "../../../../src/dispatcher/dispatcher";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { Action } from "../../../../src/dispatcher/actions";
-import { UserTab } from "../../../../src/components/views/dialogs/UserTab";
-import { mkVoiceBroadcastInfoStateEvent } from "../../../voice-broadcast/utils/test-utils";
-import { VoiceBroadcastInfoState } from "../../../../src/voice-broadcast";
 
 jest.mock("../../../../src/dispatcher/dispatcher");
 
@@ -76,7 +81,7 @@ describe("<MessageActionBar />", () => {
     });
 
     const localStorageMock = (() => {
-        let store = {};
+        let store: Record<string, any> = {};
         return {
             getItem: jest.fn().mockImplementation((key) => store[key] ?? null),
             setItem: jest.fn().mockImplementation((key, value) => {
@@ -198,7 +203,7 @@ describe("<MessageActionBar />", () => {
         // because beforeRedaction event is fired... before redaction
         // event is unchanged at point when this component updates
         // TODO file bug
-        xit("updates component on before redaction event", () => {
+        it.skip("updates component on before redaction event", () => {
             const event = new MatrixEvent({
                 type: EventType.RoomMessage,
                 sender: userId,
@@ -236,9 +241,7 @@ describe("<MessageActionBar />", () => {
 
         it("opens message context menu on click", () => {
             const { getByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-            act(() => {
-                fireEvent.click(queryByLabelText("Options"));
-            });
+            fireEvent.click(queryByLabelText("Options")!);
             expect(getByTestId("mx_MessageContextMenu")).toBeTruthy();
         });
     });
@@ -269,9 +272,7 @@ describe("<MessageActionBar />", () => {
         it("dispatches reply event on click", () => {
             const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
 
-            act(() => {
-                fireEvent.click(queryByLabelText("Reply"));
-            });
+            fireEvent.click(queryByLabelText("Reply")!);
 
             expect(dispatcher.dispatch).toHaveBeenCalledWith({
                 action: "reply_to_event",
@@ -306,9 +307,7 @@ describe("<MessageActionBar />", () => {
 
         it("opens reaction picker on click", () => {
             const { queryByLabelText, getByTestId } = getComponent({ mxEvent: alicesMessageEvent });
-            act(() => {
-                fireEvent.click(queryByLabelText("React"));
-            });
+            fireEvent.click(queryByLabelText("React")!);
             expect(getByTestId("mx_EmojiPicker")).toBeTruthy();
         });
     });
@@ -386,59 +385,7 @@ describe("<MessageActionBar />", () => {
             Thread.setServerSideSupport(FeatureSupport.Stable);
         });
 
-        describe("when threads feature is not enabled", () => {
-            beforeEach(() => {
-                jest.spyOn(SettingsStore, "getValue").mockImplementation(
-                    (setting) => setting !== "feature_threadenabled",
-                );
-            });
-
-            it("does not render thread button when threads does not have server support", () => {
-                jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
-                Thread.setServerSideSupport(FeatureSupport.None);
-                const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-                expect(queryByLabelText("Reply in thread")).toBeFalsy();
-            });
-
-            it("renders thread button when threads has server support", () => {
-                jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
-                const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-                expect(queryByLabelText("Reply in thread")).toBeTruthy();
-            });
-
-            it("does not render thread button for a voice broadcast", () => {
-                const broadcastEvent = mkVoiceBroadcastInfoStateEvent(
-                    roomId,
-                    VoiceBroadcastInfoState.Started,
-                    userId,
-                    "ABC123",
-                );
-                const { queryByLabelText } = getComponent({ mxEvent: broadcastEvent });
-                expect(queryByLabelText("Reply in thread")).not.toBeInTheDocument();
-            });
-
-            it("opens user settings on click", () => {
-                jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
-                const { getByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-
-                act(() => {
-                    fireEvent.click(getByLabelText("Reply in thread"));
-                });
-
-                expect(dispatcher.dispatch).toHaveBeenCalledWith({
-                    action: Action.ViewUserSettings,
-                    initialTabId: UserTab.Labs,
-                });
-            });
-        });
-
         describe("when threads feature is enabled", () => {
-            beforeEach(() => {
-                jest.spyOn(SettingsStore, "getValue").mockImplementation(
-                    (setting) => setting === "feature_threadenabled",
-                );
-            });
-
             it("renders thread button on own actionable event", () => {
                 const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
                 expect(queryByLabelText("Reply in thread")).toBeTruthy();
@@ -453,9 +400,7 @@ describe("<MessageActionBar />", () => {
             it("opens thread on click", () => {
                 const { getByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
 
-                act(() => {
-                    fireEvent.click(getByLabelText("Reply in thread"));
-                });
+                fireEvent.click(getByLabelText("Reply in thread"));
 
                 expect(dispatcher.dispatch).toHaveBeenCalledWith({
                     action: Action.ShowThread,
@@ -482,9 +427,7 @@ describe("<MessageActionBar />", () => {
                 } as unknown as Thread);
                 const { getByLabelText } = getComponent({ mxEvent: threadReplyEvent });
 
-                act(() => {
-                    fireEvent.click(getByLabelText("Reply in thread"));
-                });
+                fireEvent.click(getByLabelText("Reply in thread"));
 
                 expect(dispatcher.dispatch).toHaveBeenCalledWith({
                     action: Action.ShowThread,
@@ -498,94 +441,7 @@ describe("<MessageActionBar />", () => {
         });
     });
 
-    describe("favourite button", () => {
-        //for multiple event usecase
-        const favButton = (evt: MatrixEvent) => {
-            return getComponent({ mxEvent: evt }).getByTestId(evt.getId());
-        };
-
-        describe("when favourite_messages feature is enabled", () => {
-            beforeEach(() => {
-                jest.spyOn(SettingsStore, "getValue").mockImplementation(
-                    (setting) => setting === "feature_favourite_messages",
-                );
-                localStorageMock.clear();
-            });
-
-            it("renders favourite button on own actionable event", () => {
-                const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-                expect(queryByLabelText("Favourite")).toBeTruthy();
-            });
-
-            it("renders favourite button on other actionable events", () => {
-                const { queryByLabelText } = getComponent({ mxEvent: bobsMessageEvent });
-                expect(queryByLabelText("Favourite")).toBeTruthy();
-            });
-
-            it("does not render Favourite button on non-actionable event", () => {
-                //redacted event is not actionable
-                const { queryByLabelText } = getComponent({ mxEvent: redactedEvent });
-                expect(queryByLabelText("Favourite")).toBeFalsy();
-            });
-
-            it("remembers favourited state of multiple events, and handles the localStorage of the events accordingly", () => {
-                const alicesAction = favButton(alicesMessageEvent);
-                const bobsAction = favButton(bobsMessageEvent);
-
-                //default state before being clicked
-                expect(alicesAction.classList).not.toContain("mx_MessageActionBar_favouriteButton_fillstar");
-                expect(bobsAction.classList).not.toContain("mx_MessageActionBar_favouriteButton_fillstar");
-                expect(localStorageMock.getItem("io_element_favouriteMessages")).toBeNull();
-
-                //if only alice's event is fired
-                act(() => {
-                    fireEvent.click(alicesAction);
-                });
-
-                expect(alicesAction.classList).toContain("mx_MessageActionBar_favouriteButton_fillstar");
-                expect(bobsAction.classList).not.toContain("mx_MessageActionBar_favouriteButton_fillstar");
-                expect(localStorageMock.setItem).toHaveBeenCalledWith(
-                    "io_element_favouriteMessages",
-                    '["$alices_message"]',
-                );
-
-                //when bob's event is fired,both should be styled and stored in localStorage
-                act(() => {
-                    fireEvent.click(bobsAction);
-                });
-
-                expect(alicesAction.classList).toContain("mx_MessageActionBar_favouriteButton_fillstar");
-                expect(bobsAction.classList).toContain("mx_MessageActionBar_favouriteButton_fillstar");
-                expect(localStorageMock.setItem).toHaveBeenCalledWith(
-                    "io_element_favouriteMessages",
-                    '["$alices_message","$bobs_message"]',
-                );
-
-                //finally, at this point the localStorage should contain the two eventids
-                expect(localStorageMock.getItem("io_element_favouriteMessages")).toEqual(
-                    '["$alices_message","$bobs_message"]',
-                );
-
-                //if decided to unfavourite bob's event by clicking again
-                act(() => {
-                    fireEvent.click(bobsAction);
-                });
-                expect(bobsAction.classList).not.toContain("mx_MessageActionBar_favouriteButton_fillstar");
-                expect(alicesAction.classList).toContain("mx_MessageActionBar_favouriteButton_fillstar");
-                expect(localStorageMock.getItem("io_element_favouriteMessages")).toEqual('["$alices_message"]');
-            });
-        });
-
-        describe("when favourite_messages feature is disabled", () => {
-            it("does not render", () => {
-                jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
-                const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-                expect(queryByLabelText("Favourite")).toBeFalsy();
-            });
-        });
-    });
-
-    it.each([["React"], ["Reply"], ["Reply in thread"], ["Favourite"], ["Edit"]])(
+    it.each([["React"], ["Reply"], ["Reply in thread"], ["Edit"]])(
         "does not show context menu when right-clicking",
         (buttonLabel: string) => {
             // For favourite button
@@ -599,9 +455,7 @@ describe("<MessageActionBar />", () => {
             event.preventDefault = jest.fn();
 
             const { queryByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-            act(() => {
-                fireEvent(queryByLabelText(buttonLabel), event);
-            });
+            fireEvent(queryByLabelText(buttonLabel)!, event);
             expect(event.stopPropagation).toHaveBeenCalled();
             expect(event.preventDefault).toHaveBeenCalled();
             expect(queryByTestId("mx_MessageContextMenu")).toBeFalsy();
@@ -610,9 +464,7 @@ describe("<MessageActionBar />", () => {
 
     it("does shows context menu when right-clicking options", () => {
         const { queryByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
-        act(() => {
-            fireEvent.contextMenu(queryByLabelText("Options"));
-        });
+        fireEvent.contextMenu(queryByLabelText("Options")!);
         expect(queryByTestId("mx_MessageContextMenu")).toBeTruthy();
     });
 });

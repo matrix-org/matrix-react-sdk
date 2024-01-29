@@ -15,11 +15,10 @@ limitations under the License.
 */
 
 import React, { FormEvent } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import FocusLock from "react-focus-lock";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { IDialogProps } from "./IDialogProps";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -30,13 +29,14 @@ export interface IScrollableBaseState {
     canSubmit: boolean;
     title: string;
     actionLabel: string;
+    cancelLabel?: string;
 }
 
 /**
  * Scrollable dialog base from Compound (Web Components).
  */
 export default abstract class ScrollableBaseModal<
-    TProps extends IDialogProps,
+    TProps extends { onFinished?: (...args: any[]) => void },
     TState extends IScrollableBaseState,
 > extends React.PureComponent<TProps, TState> {
     protected constructor(props: TProps) {
@@ -44,7 +44,11 @@ export default abstract class ScrollableBaseModal<
     }
 
     protected get matrixClient(): MatrixClient {
-        return MatrixClientPeg.get();
+        // XXX: The contract on MatrixClientContext says it is only available within a LoggedInView subtree,
+        // given that modals function outside the MatrixChat React tree this simulates that. We don't want to
+        // use safeGet as it throwing would mean we cannot use modals whilst the user isn't logged in.
+        // The longer term solution is to move our ModalManager into the React tree to inherit contexts properly.
+        return MatrixClientPeg.get()!;
     }
 
     private onKeyDown = (e: KeyboardEvent | React.KeyboardEvent): void => {
@@ -73,7 +77,7 @@ export default abstract class ScrollableBaseModal<
     protected abstract submit(): void;
     protected abstract renderContent(): React.ReactNode;
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <MatrixClientContext.Provider value={this.matrixClient}>
                 <FocusLock
@@ -93,14 +97,14 @@ export default abstract class ScrollableBaseModal<
                         <AccessibleButton
                             onClick={this.onCancel}
                             className="mx_CompoundDialog_cancelButton"
-                            aria-label={_t("Close dialog")}
+                            aria-label={_t("dialog_close_label")}
                         />
                     </div>
                     <form onSubmit={this.onSubmit} className="mx_CompoundDialog_form">
                         <div className="mx_CompoundDialog_content">{this.renderContent()}</div>
                         <div className="mx_CompoundDialog_footer">
                             <AccessibleButton onClick={this.onCancel} kind="primary_outline">
-                                {_t("Cancel")}
+                                {this.state.cancelLabel ?? _t("action|cancel")}
                             </AccessibleButton>
                             <AccessibleButton
                                 onClick={this.onSubmit}

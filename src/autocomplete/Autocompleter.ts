@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import { ReactElement } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import CommandProvider from "./CommandProvider";
 import RoomProvider from "./RoomProvider";
@@ -27,6 +27,7 @@ import { timeout } from "../utils/promise";
 import AutocompleteProvider, { ICommand } from "./AutocompleteProvider";
 import SpaceProvider from "./SpaceProvider";
 import { TimelineRenderingType } from "../contexts/RoomContext";
+import { filterBoolean } from "../utils/arrays";
 
 export interface ISelectionRange {
     beginning?: boolean; // whether the selection is in the first block of the editor or not
@@ -38,7 +39,7 @@ export interface ICompletion {
     type?: "at-room" | "command" | "community" | "room" | "user";
     completion: string;
     completionId?: string;
-    component?: ReactElement;
+    component: ReactElement;
     range: ISelectionRange;
     command?: string;
     suffix?: string;
@@ -55,7 +56,7 @@ const PROVIDER_COMPLETION_TIMEOUT = 3000;
 export interface IProviderCompletions {
     completions: ICompletion[];
     provider: AutocompleteProvider;
-    command: ICommand;
+    command: Partial<ICommand>;
 }
 
 export default class Autocompleter {
@@ -87,7 +88,7 @@ export default class Autocompleter {
          to predict whether an action will actually do what is intended
         */
         // list of results from each provider, each being a list of completions or null if it times out
-        const completionsList: ICompletion[][] = await Promise.all(
+        const completionsList: Array<ICompletion[] | null> = await Promise.all(
             this.providers.map(async (provider): Promise<ICompletion[] | null> => {
                 return timeout(
                     provider.getCompletions(query, selection, force, limit),
@@ -98,8 +99,8 @@ export default class Autocompleter {
         );
 
         // map then filter to maintain the index for the map-operation, for this.providers to line up
-        return completionsList
-            .map((completions, i) => {
+        return filterBoolean(
+            completionsList.map((completions, i) => {
                 if (!completions || !completions.length) return;
 
                 return {
@@ -112,7 +113,7 @@ export default class Autocompleter {
                      */
                     command: this.providers[i].getCurrentCommand(query, selection, force),
                 };
-            })
-            .filter(Boolean);
+            }),
+        );
     }
 }

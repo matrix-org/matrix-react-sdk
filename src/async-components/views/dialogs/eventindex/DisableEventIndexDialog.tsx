@@ -27,7 +27,7 @@ import { Action } from "../../../../dispatcher/actions";
 import { SettingLevel } from "../../../../settings/SettingLevel";
 
 interface IProps {
-    onFinished: (success: boolean) => void;
+    onFinished: (success?: boolean) => void;
 }
 
 interface IState {
@@ -58,11 +58,11 @@ export default class DisableEventIndexDialog extends React.Component<IProps, ISt
 
     public render(): React.ReactNode {
         return (
-            <BaseDialog onFinished={this.props.onFinished} title={_t("Are you sure?")}>
-                {_t("If disabled, messages from encrypted rooms won't appear in search results.")}
+            <BaseDialog onFinished={this.props.onFinished} title={_t("common|are_you_sure")}>
+                {_t("settings|security|message_search_disable_warning")}
                 {this.state.disabling ? <Spinner /> : <div />}
                 <DialogButtons
-                    primaryButton={_t("Disable")}
+                    primaryButton={_t("action|disable")}
                     onPrimaryButtonClick={this.onDisable}
                     primaryButtonClass="danger"
                     cancelButtonClass="warning"

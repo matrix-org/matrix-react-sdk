@@ -14,10 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Preset } from "matrix-js-sdk/src/@types/partials";
+import { MatrixEvent, RoomStateEvent, Preset } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { ALL_RULE_TYPES, BanList } from "./BanList";
@@ -32,12 +30,12 @@ import { Action } from "../dispatcher/actions";
 // TODO: Move this and related files to the js-sdk or something once finalized.
 
 export class Mjolnir {
-    private static instance: Mjolnir = null;
+    private static instance: Mjolnir | null = null;
 
     private _lists: BanList[] = []; // eslint-disable-line @typescript-eslint/naming-convention
     private _roomIds: string[] = []; // eslint-disable-line @typescript-eslint/naming-convention
-    private mjolnirWatchRef: string = null;
-    private dispatcherRef: string = null;
+    private mjolnirWatchRef: string | null = null;
+    private dispatcherRef: string | null = null;
 
     public get roomIds(): string[] {
         return this._roomIds;
@@ -67,7 +65,7 @@ export class Mjolnir {
     public setup(): void {
         if (!MatrixClientPeg.get()) return;
         this.updateLists(SettingsStore.getValue("mjolnirRooms"));
-        MatrixClientPeg.get().on(RoomStateEvent.Events, this.onEvent);
+        MatrixClientPeg.get()!.on(RoomStateEvent.Events, this.onEvent);
     }
 
     public stop(): void {
@@ -81,16 +79,15 @@ export class Mjolnir {
             this.dispatcherRef = null;
         }
 
-        if (!MatrixClientPeg.get()) return;
-        MatrixClientPeg.get().removeListener(RoomStateEvent.Events, this.onEvent);
+        MatrixClientPeg.get()?.removeListener(RoomStateEvent.Events, this.onEvent);
     }
 
     public async getOrCreatePersonalList(): Promise<BanList> {
         let personalRoomId = SettingsStore.getValue("mjolnirPersonalRoom");
         if (!personalRoomId) {
-            const resp = await MatrixClientPeg.get().createRoom({
-                name: _t("My Ban List"),
-                topic: _t("This is your list of users/servers you have blocked - don't leave the room!"),
+            const resp = await MatrixClientPeg.safeGet().createRoom({
+                name: _t("labs_mjolnir|room_name"),
+                topic: _t("labs_mjolnir|room_topic"),
                 preset: Preset.PrivateChat,
             });
             personalRoomId = resp["room_id"];
@@ -113,7 +110,7 @@ export class Mjolnir {
     }
 
     // get without creating the list
-    public getPersonalList(): BanList {
+    public getPersonalList(): BanList | null {
         const personalRoomId = SettingsStore.getValue("mjolnirPersonalRoom");
         if (!personalRoomId) return null;
 
@@ -139,13 +136,18 @@ export class Mjolnir {
 
     private onEvent = (event: MatrixEvent): void => {
         if (!MatrixClientPeg.get()) return;
-        if (!this._roomIds.includes(event.getRoomId())) return;
+        if (!this._roomIds.includes(event.getRoomId()!)) return;
         if (!ALL_RULE_TYPES.includes(event.getType())) return;
 
         this.updateLists(this._roomIds);
     };
 
-    private onListsChanged(settingName: string, roomId: string, atLevel: SettingLevel, newValue: string[]): void {
+    private onListsChanged(
+        settingName: string,
+        roomId: string | null,
+        atLevel: SettingLevel,
+        newValue: string[],
+    ): void {
         // We know that ban lists are only recorded at one level so we don't need to re-eval them
         this.updateLists(newValue);
     }

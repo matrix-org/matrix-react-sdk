@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ComponentProps, useMemo, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import ConfirmUserActionDialog from "./ConfirmUserActionDialog";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
@@ -28,7 +28,7 @@ interface IProps extends Omit<BaseProps, "matrixClient" | "children" | "onFinish
     specificLabel: string;
     noneLabel?: string;
     warningMessage?: string;
-    onFinished(success: boolean, reason?: string, rooms?: Room[]): void;
+    onFinished(success?: boolean, reason?: string, rooms?: Room[]): void;
     spaceChildFilter?(child: Room): boolean;
 }
 
@@ -53,7 +53,7 @@ const ConfirmSpaceUserActionDialog: React.FC<IProps> = ({
     const [roomsToLeave, setRoomsToLeave] = useState<Room[]>([]);
     const selectedRooms = useMemo(() => new Set(roomsToLeave), [roomsToLeave]);
 
-    let warning: JSX.Element;
+    let warning: JSX.Element | undefined;
     if (warningMessage) {
         warning = <div className="mx_ConfirmSpaceUserActionDialog_warning">{warningMessage}</div>;
     }
@@ -61,7 +61,7 @@ const ConfirmSpaceUserActionDialog: React.FC<IProps> = ({
     return (
         <ConfirmUserActionDialog
             {...props}
-            onFinished={(success: boolean, reason?: string) => {
+            onFinished={(success?: boolean, reason?: string) => {
                 onFinished(success, reason, roomsToLeave);
             }}
             className="mx_ConfirmSpaceUserActionDialog"

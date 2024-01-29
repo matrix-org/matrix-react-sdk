@@ -17,25 +17,25 @@ limitations under the License.
 import React from "react";
 
 import { _t } from "../../../languageHandler";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
-    onScrollUpClick?: (e: React.MouseEvent) => void;
-    onCloseClick?: (e: React.MouseEvent) => void;
+    onScrollUpClick: (e: ButtonEvent) => void;
+    onCloseClick: (e: ButtonEvent) => void;
 }
 
 export default class TopUnreadMessagesBar extends React.PureComponent<IProps> {
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <div className="mx_TopUnreadMessagesBar">
                 <AccessibleButton
                     className="mx_TopUnreadMessagesBar_scrollUp"
-                    title={_t("Jump to first unread message.")}
+                    title={_t("room|jump_read_marker")}
                     onClick={this.props.onScrollUpClick}
                 />
                 <AccessibleButton
                     className="mx_TopUnreadMessagesBar_markAsRead"
-                    title={_t("Mark all as read")}
+                    title={_t("notifications|mark_all_read")}
                     onClick={this.props.onCloseClick}
                 />
             </div>

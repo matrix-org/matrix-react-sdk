@@ -24,8 +24,8 @@ import {
     MatrixEventEvent,
     MsgType,
     RelationType,
+    TypedEventEmitter,
 } from "matrix-js-sdk/src/matrix";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
 
 import {
     ChunkRecordedPayload,
@@ -38,7 +38,7 @@ import {
     VoiceBroadcastRecorderEvent,
 } from "..";
 import { uploadFile } from "../../ContentMessages";
-import { IEncryptedFile } from "../../customisations/models/IMediaEventContent";
+import { EncryptedFile } from "../../customisations/models/IMediaEventContent";
 import { createVoiceMessageContent } from "../../utils/createVoiceMessageContent";
 import { IDestroyable } from "../../utils/IDestroyable";
 import dis from "../../dispatcher/dispatcher";
@@ -46,6 +46,7 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import { VoiceBroadcastChunkEvents } from "../utils/VoiceBroadcastChunkEvents";
 import { RelationsHelper, RelationsHelperEvent } from "../../events/RelationsHelper";
 import { createReconnectedListener } from "../../utils/connection";
+import { localNotificationsAreSilenced } from "../../utils/notifications";
 
 export enum VoiceBroadcastRecordingEvent {
     StateChanged = "liveness_changed",
@@ -333,8 +334,27 @@ export class VoiceBroadcastRecording
      * It sets the connection error state and stops the recorder.
      */
     private async onConnectionError(): Promise<void> {
+        this.playConnectionErrorAudioNotification().catch(() => {
+            // Error logged in playConnectionErrorAudioNotification().
+        });
         await this.stopRecorder(false);
         this.setState("connection_error");
+    }
+
+    private async playConnectionErrorAudioNotification(): Promise<void> {
+        if (localNotificationsAreSilenced(this.client)) {
+            return;
+        }
+
+        // Audio files are added to the document in Element Web.
+        // See <audio> elements in https://github.com/vector-im/element-web/blob/develop/src/vector/index.html
+        const audioElement = document.querySelector<HTMLAudioElement>("audio#errorAudio");
+
+        try {
+            await audioElement?.play();
+        } catch (e) {
+            logger.warn("error playing 'errorAudio'", e);
+        }
     }
 
     private async uploadFile(chunk: ChunkRecordedPayload): ReturnType<typeof uploadFile> {
@@ -347,7 +367,7 @@ export class VoiceBroadcastRecording
         );
     }
 
-    private async sendVoiceMessage(chunk: ChunkRecordedPayload, url?: string, file?: IEncryptedFile): Promise<void> {
+    private async sendVoiceMessage(chunk: ChunkRecordedPayload, url?: string, file?: EncryptedFile): Promise<void> {
         /**
          * Increment the last sequence number and use it for this message.
          * Done outside of the sendMessageFn to get a scoped value.

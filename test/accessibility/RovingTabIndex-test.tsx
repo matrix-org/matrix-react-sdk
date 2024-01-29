@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as React from "react";
+import React, { HTMLAttributes } from "react";
 import { render } from "@testing-library/react";
 
 import {
@@ -26,8 +26,8 @@ import {
     useRovingTabIndex,
 } from "../../src/accessibility/RovingTabIndex";
 
-const Button = (props) => {
-    const [onFocus, isActive, ref] = useRovingTabIndex();
+const Button = (props: HTMLAttributes<HTMLButtonElement>) => {
+    const [onFocus, isActive, ref] = useRovingTabIndex<HTMLButtonElement>();
     return <button {...props} onFocus={onFocus} tabIndex={isActive ? 0 : -1} ref={ref} />;
 };
 
@@ -185,7 +185,6 @@ describe("RovingTabIndex", () => {
             const ref4 = React.createRef<HTMLElement>();
 
             let state: IState = {
-                activeRef: null,
                 refs: [ref1, ref2, ref3, ref4],
             };
 
@@ -196,7 +195,6 @@ describe("RovingTabIndex", () => {
                 },
             });
             expect(state).toStrictEqual({
-                activeRef: null,
                 refs: [ref1, ref3, ref4],
             });
 
@@ -207,7 +205,6 @@ describe("RovingTabIndex", () => {
                 },
             });
             expect(state).toStrictEqual({
-                activeRef: null,
                 refs: [ref1, ref4],
             });
 
@@ -218,7 +215,6 @@ describe("RovingTabIndex", () => {
                 },
             });
             expect(state).toStrictEqual({
-                activeRef: null,
                 refs: [ref1],
             });
 
@@ -229,7 +225,6 @@ describe("RovingTabIndex", () => {
                 },
             });
             expect(state).toStrictEqual({
-                activeRef: null,
                 refs: [],
             });
         });
@@ -250,7 +245,6 @@ describe("RovingTabIndex", () => {
             );
 
             let state: IState = {
-                activeRef: null,
                 refs: [],
             };
 

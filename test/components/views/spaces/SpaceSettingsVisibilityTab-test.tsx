@@ -16,14 +16,18 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { renderIntoDocument, Simulate } from "react-dom/test-utils";
-import { act } from "react-dom/test-utils";
-import { EventType, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { randomString } from "matrix-js-sdk/src/randomstring";
+import { act, fireEvent, render, RenderResult } from "@testing-library/react";
+import { EventType, MatrixClient, Room, GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/matrix";
 
 import _SpaceSettingsVisibilityTab from "../../../../src/components/views/spaces/SpaceSettingsVisibilityTab";
-import { createTestClient, mkEvent, wrapInMatrixClientContext } from "../../../test-utils";
-import { mkSpace, mockStateEventImplementation } from "../../../test-utils";
+import {
+    createTestClient,
+    mkEvent,
+    wrapInMatrixClientContext,
+    mkSpace,
+    mockStateEventImplementation,
+} from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 
 const SpaceSettingsVisibilityTab = wrapInMatrixClientContext(_SpaceSettingsVisibilityTab);
@@ -83,29 +87,26 @@ describe("<SpaceSettingsVisibilityTab />", () => {
     };
 
     const getComponent = (props = {}) => {
-        const wrapper = renderIntoDocument<HTMLSpanElement>(
-            // wrap in element so renderIntoDocument can render functional component
-            <span>
-                <SpaceSettingsVisibilityTab {...defaultProps} {...props} />
-            </span>,
-        ) as HTMLSpanElement;
-        return wrapper.children[0];
+        return render(<SpaceSettingsVisibilityTab {...defaultProps} {...props} />);
     };
 
-    const getByTestId = (container: Element, id: string) => container.querySelector(`[data-test-id=${id}]`);
-    const toggleGuestAccessSection = async (component) => {
-        const toggleButton = getByTestId(component, "toggle-guest-access-btn");
-        await act(async () => {
-            Simulate.click(toggleButton);
-        });
+    const toggleGuestAccessSection = async ({ getByTestId }: RenderResult) => {
+        const toggleButton = getByTestId("toggle-guest-access-btn")!;
+        fireEvent.click(toggleButton);
     };
-    const getGuestAccessToggle = (component) => component.querySelector('[aria-label="Enable guest access"');
-    const getHistoryVisibilityToggle = (component) => component.querySelector('[aria-label="Preview Space"');
-    const getErrorMessage = (component) => getByTestId(component, "space-settings-error")?.textContent;
+    const getGuestAccessToggle = ({ getByLabelText }: RenderResult) => getByLabelText("Enable guest access");
+    const getHistoryVisibilityToggle = ({ getByLabelText }: RenderResult) => getByLabelText("Preview Space");
+    const getErrorMessage = ({ getByTestId }: RenderResult) => getByTestId("space-settings-error")?.textContent;
 
     beforeEach(() => {
+        let i = 0;
+        mocked(randomString).mockImplementation(() => {
+            return "testid_" + i++;
+        });
+
         (mockMatrixClient.sendStateEvent as jest.Mock).mockClear().mockResolvedValue({});
         MatrixClientPeg.get = jest.fn().mockReturnValue(mockMatrixClient);
+        MatrixClientPeg.safeGet = jest.fn().mockReturnValue(mockMatrixClient);
     });
 
     afterEach(() => {
@@ -113,18 +114,18 @@ describe("<SpaceSettingsVisibilityTab />", () => {
     });
 
     it("renders container", () => {
-        const component = getComponent();
-        expect(component).toMatchSnapshot();
+        const { asFragment } = getComponent();
+        expect(asFragment()).toMatchSnapshot();
     });
 
     describe("for a private space", () => {
         const joinRule = JoinRule.Invite;
         it("does not render addresses section", () => {
             const space = makeMockSpace(mockMatrixClient, joinRule);
-            const component = getComponent({ space });
+            const { queryByTestId } = getComponent({ space });
 
-            expect(getByTestId(component, "published-address-fieldset")).toBeFalsy();
-            expect(getByTestId(component, "local-address-fieldset")).toBeFalsy();
+            expect(queryByTestId("published-address-fieldset")).toBeFalsy();
+            expect(queryByTestId("local-address-fieldset")).toBeFalsy();
         });
     });
 
@@ -150,12 +151,9 @@ describe("<SpaceSettingsVisibilityTab />", () => {
                 await toggleGuestAccessSection(component);
                 const guestAccessInput = getGuestAccessToggle(component);
 
-                expect(guestAccessInput.getAttribute("aria-checked")).toEqual("true");
+                expect(guestAccessInput?.getAttribute("aria-checked")).toEqual("true");
 
-                await act(async () => {
-                    Simulate.click(guestAccessInput);
-                });
-
+                fireEvent.click(guestAccessInput!);
                 expect(mockMatrixClient.sendStateEvent).toHaveBeenCalledWith(
                     mockSpaceId,
                     EventType.RoomGuestAccess,
@@ -165,7 +163,7 @@ describe("<SpaceSettingsVisibilityTab />", () => {
                 );
 
                 // toggled off
-                expect(guestAccessInput.getAttribute("aria-checked")).toEqual("false");
+                expect(guestAccessInput?.getAttribute("aria-checked")).toEqual("false");
             });
 
             it("renders error message when update fails", async () => {
@@ -173,8 +171,8 @@ describe("<SpaceSettingsVisibilityTab />", () => {
                 (mockMatrixClient.sendStateEvent as jest.Mock).mockRejectedValue({});
                 const component = getComponent({ space });
                 await toggleGuestAccessSection(component);
-                await act(async () => {
-                    Simulate.click(getGuestAccessToggle(component));
+                await act(() => {
+                    fireEvent.click(getGuestAccessToggle(component)!);
                 });
 
                 expect(getErrorMessage(component)).toEqual("Failed to update the guest access of this space");
@@ -187,7 +185,7 @@ describe("<SpaceSettingsVisibilityTab />", () => {
 
                 await toggleGuestAccessSection(component);
 
-                expect(getGuestAccessToggle(component).getAttribute("aria-disabled")).toEqual("true");
+                expect(getGuestAccessToggle(component)?.getAttribute("aria-disabled")).toEqual("true");
             });
         });
 
@@ -197,20 +195,17 @@ describe("<SpaceSettingsVisibilityTab />", () => {
                 const component = getComponent({ space });
 
                 // toggle off because space settings is != WorldReadable
-                expect(getHistoryVisibilityToggle(component).getAttribute("aria-checked")).toEqual("false");
+                expect(getHistoryVisibilityToggle(component)?.getAttribute("aria-checked")).toEqual("false");
             });
 
-            it("updates history visibility on toggle", async () => {
+            it("updates history visibility on toggle", () => {
                 const space = makeMockSpace(mockMatrixClient, joinRule, guestRule, historyRule);
                 const component = getComponent({ space });
 
                 // toggle off because space settings is != WorldReadable
-                expect(getHistoryVisibilityToggle(component).getAttribute("aria-checked")).toEqual("false");
+                expect(getHistoryVisibilityToggle(component)?.getAttribute("aria-checked")).toEqual("false");
 
-                await act(async () => {
-                    Simulate.click(getHistoryVisibilityToggle(component));
-                });
-
+                fireEvent.click(getHistoryVisibilityToggle(component)!);
                 expect(mockMatrixClient.sendStateEvent).toHaveBeenCalledWith(
                     mockSpaceId,
                     EventType.RoomHistoryVisibility,
@@ -218,7 +213,7 @@ describe("<SpaceSettingsVisibilityTab />", () => {
                     "",
                 );
 
-                expect(getHistoryVisibilityToggle(component).getAttribute("aria-checked")).toEqual("true");
+                expect(getHistoryVisibilityToggle(component)?.getAttribute("aria-checked")).toEqual("true");
             });
 
             it("renders error message when history update fails", async () => {
@@ -226,27 +221,27 @@ describe("<SpaceSettingsVisibilityTab />", () => {
                 (mockMatrixClient.sendStateEvent as jest.Mock).mockRejectedValue({});
                 const component = getComponent({ space });
 
-                await act(async () => {
-                    Simulate.click(getHistoryVisibilityToggle(component));
+                await act(() => {
+                    fireEvent.click(getHistoryVisibilityToggle(component)!);
                 });
 
                 expect(getErrorMessage(component)).toEqual("Failed to update the history visibility of this space");
             });
 
-            it("disables room preview toggle when history visability changes are not allowed", () => {
+            it("disables room preview toggle when history visibility changes are not allowed", () => {
                 const space = makeMockSpace(mockMatrixClient, joinRule, guestRule, historyRule);
                 (space.currentState.maySendStateEvent as jest.Mock).mockReturnValue(false);
                 const component = getComponent({ space });
-                expect(getHistoryVisibilityToggle(component).getAttribute("aria-disabled")).toEqual("true");
+                expect(getHistoryVisibilityToggle(component)?.getAttribute("aria-disabled")).toEqual("true");
             });
         });
 
         it("renders addresses section", () => {
             const space = makeMockSpace(mockMatrixClient, joinRule, guestRule);
-            const component = getComponent({ space });
+            const { getByTestId } = getComponent({ space });
 
-            expect(getByTestId(component, "published-address-fieldset")).toBeTruthy();
-            expect(getByTestId(component, "local-address-fieldset")).toBeTruthy();
+            expect(getByTestId("published-address-fieldset")).toBeTruthy();
+            expect(getByTestId("local-address-fieldset")).toBeTruthy();
         });
     });
 });

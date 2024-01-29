@@ -18,7 +18,7 @@ limitations under the License.
 import React, { createRef, KeyboardEvent } from "react";
 import classNames from "classnames";
 import { flatMap } from "lodash";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import Autocompleter, { ICompletion, ISelectionRange, IProviderCompletions } from "../../../autocomplete/Autocompleter";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -50,14 +50,14 @@ interface IState {
 }
 
 export default class Autocomplete extends React.PureComponent<IProps, IState> {
-    public autocompleter: Autocompleter;
-    public queryRequested: string;
-    public debounceCompletionsRequest: number;
+    public autocompleter?: Autocompleter;
+    public queryRequested?: string;
+    public debounceCompletionsRequest?: number;
     private containerRef = createRef<HTMLDivElement>();
 
     public static contextType = RoomContext;
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -86,7 +86,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
 
     private applyNewProps(oldQuery?: string, oldRoom?: Room): void {
         if (oldRoom && this.props.room.roomId !== oldRoom.roomId) {
-            this.autocompleter.destroy();
+            this.autocompleter?.destroy();
             this.autocompleter = new Autocompleter(this.props.room);
         }
 
@@ -99,7 +99,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
-        this.autocompleter.destroy();
+        this.autocompleter?.destroy();
     }
 
     private complete(query: string, selection: ISelectionRange): Promise<void> {
@@ -117,7 +117,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
                 // Hide the autocomplete box
                 hide: true,
             });
-            return Promise.resolve(null);
+            return Promise.resolve();
         }
         let autocompleteDelay = SettingsStore.getValue("autocompleteDelay");
 
@@ -133,9 +133,9 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
         });
     }
 
-    private processQuery(query: string, selection: ISelectionRange): Promise<void> {
+    private async processQuery(query: string, selection: ISelectionRange): Promise<void> {
         return this.autocompleter
-            .getCompletions(query, selection, this.state.forceComplete, MAX_PROVIDER_MATCHES)
+            ?.getCompletions(query, selection, this.state.forceComplete, MAX_PROVIDER_MATCHES)
             .then((completions) => {
                 // Only ever process the completions for the most recent query being processed
                 if (query !== this.queryRequested) {
@@ -204,7 +204,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
         this.setSelection(1 + index);
     }
 
-    public onEscape(e: KeyboardEvent): boolean {
+    public onEscape(e: KeyboardEvent): boolean | undefined {
         const completionCount = this.countCompletions();
         if (completionCount === 0) {
             // autocomplete is already empty, so don't preventDefault
@@ -280,7 +280,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
         }
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let position = 1;
         const renderedCompletions = this.state.completions
             .map((completionResult, i) => {

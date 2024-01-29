@@ -19,6 +19,7 @@ import React, { ChangeEvent, CSSProperties, ReactNode } from "react";
 import { PlaybackInterface } from "../../../audio/Playback";
 import { MarkedExecution } from "../../../utils/MarkedExecution";
 import { percentageOf } from "../../../utils/numbers";
+import { _t } from "../../../languageHandler";
 
 interface IProps {
     // Playback instance to render. Cannot change during component lifecycle: create
@@ -46,7 +47,7 @@ export default class SeekBar extends React.PureComponent<IProps, IState> {
     // We use an animation frame request to avoid overly spamming prop updates, even if we aren't
     // really using anything demanding on the CSS front.
 
-    private animationFrameFn = new MarkedExecution(
+    private animationFrameFn: MarkedExecution = new MarkedExecution(
         () => this.doUpdate(),
         () => requestAnimationFrame(() => this.animationFrameFn.trigger()),
     );
@@ -112,6 +113,7 @@ export default class SeekBar extends React.PureComponent<IProps, IState> {
                 step={0.001}
                 style={{ "--fillTo": this.state.percentage } as ISeekCSS}
                 disabled={this.props.disabled}
+                aria-label={_t("a11y|seek_bar_label")}
             />
         );
     }

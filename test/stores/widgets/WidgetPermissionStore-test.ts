@@ -16,7 +16,7 @@ limitations under the License.
 
 import { mocked } from "jest-mock";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { Widget, WidgetKind } from "matrix-widget-api";
+import { MatrixWidgetType, Widget, WidgetKind } from "matrix-widget-api";
 
 import { OIDCState, WidgetPermissionStore } from "../../../src/stores/widgets/WidgetPermissionStore";
 import SettingsStore from "../../../src/settings/SettingsStore";
@@ -24,6 +24,7 @@ import { TestSdkContext } from "../../TestSdkContext";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { SdkContextClass } from "../../../src/contexts/SDKContext";
 import { stubClient } from "../../test-utils";
+import { StopGapWidgetDriver } from "../../../src/stores/widgets/StopGapWidgetDriver";
 
 jest.mock("../../../src/settings/SettingsStore");
 
@@ -38,7 +39,13 @@ describe("WidgetPermissionStore", () => {
         type: "m.custom",
         url: "https://invalid.address.here",
     });
-    let settings = {}; // key value store
+    const elementCallWidget = new Widget({
+        id: "group_call",
+        creatorUserId: "@alice:example.org",
+        type: MatrixWidgetType.Custom,
+        url: "https://call.element.io",
+    });
+    let settings: Record<string, any> = {}; // key value store
 
     beforeEach(() => {
         settings = {}; // clear settings
@@ -59,22 +66,22 @@ describe("WidgetPermissionStore", () => {
     });
 
     it("should persist OIDCState.Allowed for a widget", () => {
-        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, null, OIDCState.Allowed);
+        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, roomId, OIDCState.Allowed);
         // check it remembered the value
-        expect(widgetPermissionStore.getOIDCState(w, WidgetKind.Account, null)).toEqual(OIDCState.Allowed);
+        expect(widgetPermissionStore.getOIDCState(w, WidgetKind.Account, roomId)).toEqual(OIDCState.Allowed);
     });
 
     it("should persist OIDCState.Denied for a widget", () => {
-        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, null, OIDCState.Denied);
+        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, roomId, OIDCState.Denied);
         // check it remembered the value
-        expect(widgetPermissionStore.getOIDCState(w, WidgetKind.Account, null)).toEqual(OIDCState.Denied);
+        expect(widgetPermissionStore.getOIDCState(w, WidgetKind.Account, roomId)).toEqual(OIDCState.Denied);
     });
 
     it("should update OIDCState for a widget", () => {
-        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, null, OIDCState.Allowed);
-        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, null, OIDCState.Denied);
+        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, roomId, OIDCState.Allowed);
+        widgetPermissionStore.setOIDCState(w, WidgetKind.Account, roomId, OIDCState.Denied);
         // check it remembered the latest value
-        expect(widgetPermissionStore.getOIDCState(w, WidgetKind.Account, null)).toEqual(OIDCState.Denied);
+        expect(widgetPermissionStore.getOIDCState(w, WidgetKind.Account, roomId)).toEqual(OIDCState.Denied);
     });
 
     it("should scope the location for a widget when setting OIDC state", () => {
@@ -91,5 +98,11 @@ describe("WidgetPermissionStore", () => {
         expect(store).toBeDefined();
         const store2 = context.widgetPermissionStore;
         expect(store2).toStrictEqual(store);
+    });
+    it("auto-approves OIDC requests for element-call", async () => {
+        new StopGapWidgetDriver([], elementCallWidget, WidgetKind.Room, true, roomId);
+        expect(widgetPermissionStore.getOIDCState(elementCallWidget, WidgetKind.Room, roomId)).toEqual(
+            OIDCState.Allowed,
+        );
     });
 });

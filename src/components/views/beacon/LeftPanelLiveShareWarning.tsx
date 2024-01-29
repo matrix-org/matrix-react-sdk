@@ -25,7 +25,7 @@ import { Icon as LiveLocationIcon } from "../../../../res/img/location/live-loca
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../../dispatcher/actions";
 import dispatcher from "../../../dispatcher/dispatcher";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface Props {
     isMinimized?: boolean;
@@ -52,12 +52,12 @@ const chooseBestBeacon = (
 
 const getLabel = (hasStoppingErrors: boolean, hasLocationErrors: boolean): string => {
     if (hasStoppingErrors) {
-        return _t("An error occurred while stopping your live location");
+        return _t("location_sharing|error_stopping_live_location");
     }
     if (hasLocationErrors) {
-        return _t("An error occurred whilst sharing your live location");
+        return _t("location_sharing|error_sharing_live_location");
     }
-    return _t("You are sharing your live location");
+    return _t("location_sharing|live_location_active");
 };
 
 const useLivenessMonitor = (liveBeaconIds: BeaconIdentifier[], beacons: Map<BeaconIdentifier, Beacon>): void => {
@@ -121,7 +121,7 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
     );
 
     const onWarningClick = relevantBeacon
-        ? () => {
+        ? (_e: ButtonEvent) => {
               dispatcher.dispatch<ViewRoomPayload>({
                   action: Action.ViewRoom,
                   room_id: relevantBeacon.roomId,
@@ -131,7 +131,7 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
                   highlighted: true,
               });
           }
-        : undefined;
+        : null;
 
     const label = getLabel(hasStoppingErrors, hasLocationPublishErrors);
 

@@ -13,10 +13,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-import { linkify, Type } from "../src/linkify-matrix";
+
+import { EventListeners } from "linkifyjs";
+
+import { linkify, Type, options } from "../src/linkify-matrix";
+import dispatcher from "../src/dispatcher/dispatcher";
+import { Action } from "../src/dispatcher/actions";
 
 describe("linkify-matrix", () => {
-    const linkTypesByInitialCharacter = {
+    const linkTypesByInitialCharacter: Record<string, string> = {
         "#": "roomalias",
         "@": "userid",
     };
@@ -138,6 +143,20 @@ describe("linkify-matrix", () => {
                 },
             ]);
         });
+        it("properly parses " + char + "localhost:foo.com", () => {
+            const test = char + "localhost:foo.com";
+            const found = linkify.find(test);
+            expect(found).toEqual([
+                {
+                    href: char + "localhost:foo.com",
+                    type,
+                    value: char + "localhost:foo.com",
+                    start: 0,
+                    end: test.length,
+                    isLink: true,
+                },
+            ]);
+        });
         it("properly parses " + char + "foo:localhost", () => {
             const test = char + "foo:localhost";
             const found = linkify.find(test);
@@ -162,7 +181,6 @@ describe("linkify-matrix", () => {
                     value: char + "foo:bar.com",
                     start: 0,
                     end: test.length,
-
                     isLink: true,
                 },
             ]);
@@ -219,7 +237,6 @@ describe("linkify-matrix", () => {
                     href: char + "foo:bar.com",
                     start: 0,
                     end: test.length - ":".length,
-
                     isLink: true,
                 },
             ]);
@@ -234,6 +251,20 @@ describe("linkify-matrix", () => {
                     value: char + "foo:bar.com:2225",
                     start: 0,
                     end: test.length,
+                    isLink: true,
+                },
+            ]);
+        });
+        it("ignores duplicate :NUM (double port specifier)", () => {
+            const test = "" + char + "foo:bar.com:2225:1234";
+            const found = linkify.find(test);
+            expect(found).toEqual([
+                {
+                    href: char + "foo:bar.com:2225",
+                    type,
+                    value: char + "foo:bar.com:2225",
+                    start: 0,
+                    end: 17,
                     isLink: true,
                 },
             ]);
@@ -262,7 +293,6 @@ describe("linkify-matrix", () => {
                     value: char + "foo.asdf:bar.com",
                     start: 0,
                     end: test.length - ":".repeat(4).length,
-
                     isLink: true,
                 },
             ]);
@@ -281,7 +311,7 @@ describe("linkify-matrix", () => {
                 },
             ]);
         });
-        it("does not parse multiple room aliases in one string", () => {
+        it("properly parses room alias with hyphen in domain part", () => {
             const test = "" + char + "foo:bar.com-baz.com";
             const found = linkify.find(test);
             expect(found).toEqual([
@@ -299,10 +329,68 @@ describe("linkify-matrix", () => {
 
     describe("roomalias plugin", () => {
         genTests("#");
+
+        it("should intercept clicks with a ViewRoom dispatch", () => {
+            const dispatchSpy = jest.spyOn(dispatcher, "dispatch");
+
+            const handlers = (options.events as (href: string, type: string) => EventListeners)(
+                "#room:server.com",
+                "roomalias",
+            );
+
+            const event = new MouseEvent("mousedown");
+            event.preventDefault = jest.fn();
+            handlers.click(event);
+            expect(event.preventDefault).toHaveBeenCalled();
+            expect(dispatchSpy).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    action: Action.ViewRoom,
+                    room_alias: "#room:server.com",
+                }),
+            );
+        });
     });
 
     describe("userid plugin", () => {
         genTests("@");
+
+        it("allows dots in localparts", () => {
+            const test = "@test.:matrix.org";
+            const found = linkify.find(test);
+            expect(found).toEqual([
+                {
+                    href: test,
+                    type: "userid",
+                    value: test,
+                    start: 0,
+                    end: test.length,
+
+                    isLink: true,
+                },
+            ]);
+        });
+
+        it("should intercept clicks with a ViewUser dispatch", () => {
+            const dispatchSpy = jest.spyOn(dispatcher, "dispatch");
+
+            const handlers = (options.events as (href: string, type: string) => EventListeners)(
+                "@localpart:server.com",
+                "userid",
+            );
+
+            const event = new MouseEvent("mousedown");
+            event.preventDefault = jest.fn();
+            handlers.click(event);
+            expect(event.preventDefault).toHaveBeenCalled();
+            expect(dispatchSpy).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    action: Action.ViewUser,
+                    member: expect.objectContaining({
+                        userId: "@localpart:server.com",
+                    }),
+                }),
+            );
+        });
     });
 
     describe("matrix uri", () => {

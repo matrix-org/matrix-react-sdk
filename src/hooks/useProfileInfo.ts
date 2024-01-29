@@ -39,7 +39,7 @@ export const useProfileInfo = (): {
 
     const [loading, setLoading] = useState(false);
 
-    const [updateQuery, updateResult] = useLatestResult<string, IProfileInfo | null>(setProfile);
+    const [updateQuery, updateResult] = useLatestResult<string | undefined, IProfileInfo | null>(setProfile);
 
     const search = useCallback(
         async ({ query: term }: IProfileInfoOpts): Promise<boolean> => {
@@ -51,7 +51,7 @@ export const useProfileInfo = (): {
 
             setLoading(true);
             try {
-                const result = await MatrixClientPeg.get().getProfileInfo(term);
+                const result = await MatrixClientPeg.safeGet().getProfileInfo(term);
                 updateResult(term, {
                     user_id: term,
                     avatar_url: result.avatar_url,

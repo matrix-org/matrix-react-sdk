@@ -14,14 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { User } from "matrix-js-sdk/src/models/user";
+import React, { ComponentProps } from "react";
+import { Room, MatrixEvent, MatrixClient, User, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { MatrixClientPeg } from "./MatrixClientPeg";
 import MultiInviter, { CompletionStates } from "./utils/MultiInviter";
 import Modal from "./Modal";
 import { _t } from "./languageHandler";
@@ -29,7 +25,7 @@ import InviteDialog from "./components/views/dialogs/InviteDialog";
 import BaseAvatar from "./components/views/avatars/BaseAvatar";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
-import { KIND_DM, KIND_INVITE } from "./components/views/dialogs/InviteDialogTypes";
+import { InviteKind } from "./components/views/dialogs/InviteDialogTypes";
 import { Member } from "./utils/direct-messages";
 
 export interface IInviteResult {
@@ -49,12 +45,13 @@ export interface IInviteResult {
  * @returns {Promise} Promise
  */
 export function inviteMultipleToRoom(
+    client: MatrixClient,
     roomId: string,
     addresses: string[],
     sendSharedHistoryKeys = false,
     progressCallback?: () => void,
 ): Promise<IInviteResult> {
-    const inviter = new MultiInviter(roomId, progressCallback);
+    const inviter = new MultiInviter(client, roomId, progressCallback);
     return inviter
         .invite(addresses, undefined, sendSharedHistoryKeys)
         .then((states) => Promise.resolve({ states, inviter }));
@@ -64,7 +61,7 @@ export function showStartChatInviteDialog(initialText = ""): void {
     // This dialog handles the room creation internally - we don't need to worry about it.
     Modal.createDialog(
         InviteDialog,
-        { kind: KIND_DM, initialText },
+        { kind: InviteKind.Dm, initialText },
         /*className=*/ "mx_InviteDialog_flexWrapper",
         /*isPriority=*/ false,
         /*isStatic=*/ true,
@@ -76,10 +73,10 @@ export function showRoomInviteDialog(roomId: string, initialText = ""): void {
     Modal.createDialog(
         InviteDialog,
         {
-            kind: KIND_INVITE,
+            kind: InviteKind.Invite,
             initialText,
             roomId,
-        },
+        } as Omit<ComponentProps<typeof InviteDialog>, "onFinished">,
         /*className=*/ "mx_InviteDialog_flexWrapper",
         /*isPriority=*/ false,
         /*isStatic=*/ true,
@@ -105,21 +102,22 @@ export function isValid3pidInvite(event: MatrixEvent): boolean {
 }
 
 export function inviteUsersToRoom(
+    client: MatrixClient,
     roomId: string,
     userIds: string[],
     sendSharedHistoryKeys = false,
     progressCallback?: () => void,
 ): Promise<void> {
-    return inviteMultipleToRoom(roomId, userIds, sendSharedHistoryKeys, progressCallback)
+    return inviteMultipleToRoom(client, roomId, userIds, sendSharedHistoryKeys, progressCallback)
         .then((result) => {
-            const room = MatrixClientPeg.get().getRoom(roomId);
+            const room = client.getRoom(roomId)!;
             showAnyInviteErrors(result.states, room, result.inviter);
         })
         .catch((err) => {
             logger.error(err.stack);
             Modal.createDialog(ErrorDialog, {
-                title: _t("Failed to invite"),
-                description: err && err.message ? err.message : _t("Operation failed"),
+                title: _t("invite|failed_title"),
+                description: err && err.message ? err.message : _t("invite|failed_generic"),
             });
         });
 }
@@ -137,12 +135,12 @@ export function showAnyInviteErrors(
         // user. This usually means that no other users were attempted, making it
         // pointless for us to list who failed exactly.
         Modal.createDialog(ErrorDialog, {
-            title: _t("Failed to invite users to %(roomName)s", { roomName: room.name }),
+            title: _t("invite|room_failed_title", { roomName: room.name }),
             description: inviter.getErrorText(failedUsers[0]),
         });
         return false;
     } else {
-        const errorList = [];
+        const errorList: string[] = [];
         for (const addr of failedUsers) {
             if (states[addr] === "error") {
                 const reason = inviter.getErrorText(addr);
@@ -150,14 +148,14 @@ export function showAnyInviteErrors(
             }
         }
 
-        const cli = MatrixClientPeg.get();
+        const cli = room.client;
         if (errorList.length > 0) {
             // React 16 doesn't let us use `errorList.join(<br />)` anymore, so this is our solution
             const description = (
                 <div className="mx_InviteDialog_multiInviterError">
                     <h4>
                         {_t(
-                            "We sent the others, but the below people couldn't be invited to <RoomName/>",
+                            "invite|room_failed_partial",
                             {},
                             {
                                 RoomName: () => <b>{room.name}</b>,
@@ -173,16 +171,18 @@ export function showAnyInviteErrors(
                                 <div key={addr} className="mx_InviteDialog_tile mx_InviteDialog_tile--inviterError">
                                     <div className="mx_InviteDialog_tile_avatarStack">
                                         <BaseAvatar
-                                            url={avatarUrl ? mediaFromMxc(avatarUrl).getSquareThumbnailHttp(24) : null}
-                                            name={name}
-                                            idName={user.userId}
-                                            width={36}
-                                            height={36}
+                                            url={
+                                                (avatarUrl && mediaFromMxc(avatarUrl).getSquareThumbnailHttp(24)) ??
+                                                undefined
+                                            }
+                                            name={name!}
+                                            idName={user?.userId}
+                                            size="36px"
                                         />
                                     </div>
                                     <div className="mx_InviteDialog_tile_nameStack">
                                         <span className="mx_InviteDialog_tile_nameStack_name">{name}</span>
-                                        <span className="mx_InviteDialog_tile_nameStack_userId">{user.userId}</span>
+                                        <span className="mx_InviteDialog_tile_nameStack_userId">{user?.userId}</span>
                                     </div>
                                     <div className="mx_InviteDialog_tile--inviterError_errorText">
                                         {inviter.getErrorText(addr)}
@@ -195,7 +195,7 @@ export function showAnyInviteErrors(
             );
 
             Modal.createDialog(ErrorDialog, {
-                title: _t("Some invites couldn't be sent"),
+                title: _t("invite|room_failed_partial_title"),
                 description,
             });
             return false;

@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
     avatarUrl?: string;
     avatarName: string; // name of user/room the avatar belongs to
-    uploadAvatar?: (e: React.MouseEvent) => void;
-    removeAvatar?: (e: React.MouseEvent) => void;
+    uploadAvatar?: (e: ButtonEvent) => void;
+    removeAvatar?: (e: ButtonEvent) => void;
     avatarAltText: string;
 }
 
@@ -34,12 +34,18 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
         onMouseEnter: () => setIsHovering(true),
         onMouseLeave: () => setIsHovering(false),
     };
+    // TODO: Use useId() as soon as we're using React 18.
+    // Prevents ID collisions when this component is used more than once on the same page.
+    const a11yId = useRef(`hover-text-${Math.random()}`);
 
     let avatarElement = (
         <AccessibleButton
             element="div"
-            onClick={uploadAvatar}
+            onClick={uploadAvatar ?? null}
             className="mx_AvatarSetting_avatarPlaceholder"
+            aria-labelledby={uploadAvatar ? a11yId.current : undefined}
+            // Inhibit tab stop as we have explicit upload/remove buttons
+            tabIndex={-1}
             {...hoveringProps}
         />
     );
@@ -49,26 +55,32 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
                 element="img"
                 src={avatarUrl}
                 alt={avatarAltText}
-                aria-label={avatarAltText}
-                onClick={uploadAvatar}
+                onClick={uploadAvatar ?? null}
+                // Inhibit tab stop as we have explicit upload/remove buttons
+                tabIndex={-1}
                 {...hoveringProps}
             />
         );
     }
 
-    let uploadAvatarBtn;
+    let uploadAvatarBtn: JSX.Element | undefined;
     if (uploadAvatar) {
         // insert an empty div to be the host for a css mask containing the upload.svg
         uploadAvatarBtn = (
-            <AccessibleButton onClick={uploadAvatar} className="mx_AvatarSetting_uploadButton" {...hoveringProps} />
+            <AccessibleButton
+                onClick={uploadAvatar}
+                className="mx_AvatarSetting_uploadButton"
+                aria-labelledby={a11yId.current}
+                {...hoveringProps}
+            />
         );
     }
 
-    let removeAvatarBtn;
+    let removeAvatarBtn: JSX.Element | undefined;
     if (avatarUrl && removeAvatar) {
         removeAvatarBtn = (
             <AccessibleButton onClick={removeAvatar} kind="link_sm">
-                {_t("Remove")}
+                {_t("action|remove")}
             </AccessibleButton>
         );
     }
@@ -78,11 +90,11 @@ const AvatarSetting: React.FC<IProps> = ({ avatarUrl, avatarAltText, avatarName,
         mx_AvatarSetting_avatar_hovering: isHovering && uploadAvatar,
     });
     return (
-        <div className={avatarClasses}>
+        <div className={avatarClasses} role="group" aria-label={avatarAltText}>
             {avatarElement}
-            <div className="mx_AvatarSetting_hover">
+            <div className="mx_AvatarSetting_hover" aria-hidden="true">
                 <div className="mx_AvatarSetting_hoverBg" />
-                <span>{_t("Upload")}</span>
+                {uploadAvatar && <span id={a11yId.current}>{_t("action|upload")}</span>}
             </div>
             {uploadAvatarBtn}
             {removeAvatarBtn}

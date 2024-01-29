@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import StyledRadioGroup from "../elements/StyledRadioGroup";
@@ -23,6 +23,7 @@ import QueryMatcher from "../../../autocomplete/QueryMatcher";
 import SearchBox from "../../structures/SearchBox";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { Entry } from "../dialogs/AddExistingToSpaceDialog";
+import { filterBoolean } from "../../../utils/arrays";
 
 enum Target {
     All = "All",
@@ -53,7 +54,7 @@ const SpecificChildrenPicker: React.FC<ISpecificChildrenPickerProps> = ({
 
         const matcher = new QueryMatcher<Room>(rooms, {
             keys: ["name"],
-            funcs: [(r) => [r.getCanonicalAlias(), ...r.getAltAliases()].filter(Boolean)],
+            funcs: [(r) => filterBoolean([r.getCanonicalAlias(), ...r.getAltAliases()])],
             shouldMatchWordsOnly: false,
         });
 
@@ -82,7 +83,7 @@ const SpecificChildrenPicker: React.FC<ISpecificChildrenPickerProps> = ({
                     );
                 })}
                 {filteredRooms.length < 1 ? (
-                    <span className="mx_SpaceChildrenPicker_noResults">{_t("No results")}</span>
+                    <span className="mx_SpaceChildrenPicker_noResults">{_t("common|no_results")}</span>
                 ) : undefined}
             </AutoHideScrollbar>
         </div>
@@ -144,7 +145,7 @@ const SpaceChildrenPicker: React.FC<IProps> = ({
 
             {state === Target.Specific && (
                 <SpecificChildrenPicker
-                    filterPlaceholder={_t("Search %(spaceName)s", { spaceName: space.name })}
+                    filterPlaceholder={_t("space|search_children", { spaceName: space.name })}
                     rooms={spaceChildren}
                     selected={selected}
                     onChange={(isSelected: boolean, room: Room) => {

@@ -16,9 +16,12 @@ limitations under the License.
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { GroupCallEventHandlerEvent } from "matrix-js-sdk/src/webrtc/groupCallEventHandler";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 
-import type { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
-import type { Room } from "matrix-js-sdk/src/models/room";
+import type { GroupCall, Room } from "matrix-js-sdk/src/matrix";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { UPDATE_EVENT } from "./AsyncStore";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
@@ -46,6 +49,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
 
     private constructor() {
         super(defaultDispatcher);
+        this.setMaxListeners(100); // One for each RoomTile
     }
 
     protected async onAction(): Promise<void> {
@@ -53,6 +57,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
     }
 
     protected async onReady(): Promise<any> {
+        if (!this.matrixClient) return;
         // We assume that the calls present in a room are a function of room
         // widgets and group calls, so we initialize the room map here and then
         // update it whenever those change
@@ -61,6 +66,8 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         }
         this.matrixClient.on(GroupCallEventHandlerEvent.Incoming, this.onGroupCall);
         this.matrixClient.on(GroupCallEventHandlerEvent.Outgoing, this.onGroupCall);
+        this.matrixClient.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionStarted, this.onRTCSession);
+        this.matrixClient.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSession);
         WidgetStore.instance.on(UPDATE_EVENT, this.onWidgets);
 
         // If the room ID of a previously connected call is still in settings at
@@ -90,9 +97,13 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         this.calls.clear();
         this._activeCalls.clear();
 
-        this.matrixClient.off(GroupCallEventHandlerEvent.Incoming, this.onGroupCall);
-        this.matrixClient.off(GroupCallEventHandlerEvent.Outgoing, this.onGroupCall);
-        this.matrixClient.off(GroupCallEventHandlerEvent.Ended, this.onGroupCall);
+        if (this.matrixClient) {
+            this.matrixClient.off(GroupCallEventHandlerEvent.Incoming, this.onGroupCall);
+            this.matrixClient.off(GroupCallEventHandlerEvent.Outgoing, this.onGroupCall);
+            this.matrixClient.off(GroupCallEventHandlerEvent.Ended, this.onGroupCall);
+            this.matrixClient.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionStarted, this.onRTCSession);
+            this.matrixClient.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSession);
+        }
         WidgetStore.instance.off(UPDATE_EVENT, this.onWidgets);
     }
 
@@ -143,7 +154,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
                 this.calls.set(room.roomId, call);
                 this.callListeners.set(
                     call,
-                    new Map<CallEvent, (...args: unknown[]) => unknown>([
+                    new Map<CallEvent, (...args: any[]) => unknown>([
                         [CallEvent.ConnectionState, onConnectionState],
                         [CallEvent.Destroy, onDestroy],
                     ]),
@@ -174,6 +185,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
     }
 
     private onWidgets = (roomId: string | null): void => {
+        if (!this.matrixClient) return;
         if (roomId === null) {
             // This store happened to start before the widget store was done
             // loading all rooms, so we need to initialize each room again
@@ -188,4 +200,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
     };
 
     private onGroupCall = (groupCall: GroupCall): void => this.updateRoom(groupCall.room);
+    private onRTCSession = (roomId: string, session: MatrixRTCSession): void => {
+        this.updateRoom(session.room);
+    };
 }

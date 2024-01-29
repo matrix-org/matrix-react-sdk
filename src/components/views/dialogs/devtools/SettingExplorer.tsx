@@ -1,6 +1,6 @@
 /*
 Copyright 2022 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2018-2021 The Matrix.org Foundation C.I.C.
+Copyright 2018-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useMemo, useState } from "react";
+import React, { ChangeEvent, useContext, useMemo, useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from "../../../../languageHandler";
+import { _t, _td } from "../../../../languageHandler";
 import BaseTool, { DevtoolsContext, IDevtoolsProps } from "./BaseTool";
 import AccessibleButton from "../../elements/AccessibleButton";
 import SettingsStore, { LEVEL_ORDER } from "../../../../settings/SettingsStore";
@@ -27,7 +27,7 @@ import { SETTINGS } from "../../../../settings/Settings";
 import Field from "../../elements/Field";
 
 const SettingExplorer: React.FC<IDevtoolsProps> = ({ onBack }) => {
-    const [setting, setSetting] = useState<string>(null);
+    const [setting, setSetting] = useState<string | null>(null);
     const [editing, setEditing] = useState(false);
 
     if (setting && editing) {
@@ -64,7 +64,7 @@ interface ICanEditLevelFieldProps {
 }
 
 const CanEditLevelField: React.FC<ICanEditLevelFieldProps> = ({ setting, roomId, level }) => {
-    const canEdit = SettingsStore.canSetValue(setting, roomId, level);
+    const canEdit = SettingsStore.canSetValue(setting, roomId ?? null, level);
     const className = canEdit ? "mx_DevTools_SettingsExplorer_mutable" : "mx_DevTools_SettingsExplorer_immutable";
     return (
         <td className={className}>
@@ -73,8 +73,8 @@ const CanEditLevelField: React.FC<ICanEditLevelFieldProps> = ({ setting, roomId,
     );
 };
 
-function renderExplicitSettingValues(setting: string, roomId: string): string {
-    const vals = {};
+function renderExplicitSettingValues(setting: string, roomId?: string): string {
+    const vals: Record<string, number | null> = {};
     for (const level of LEVEL_ORDER) {
         try {
             vals[level] = SettingsStore.getValueAt(level, setting, roomId, true, true);
@@ -94,12 +94,12 @@ interface IEditSettingProps extends Pick<IDevtoolsProps, "onBack"> {
 
 const EditSetting: React.FC<IEditSettingProps> = ({ setting, onBack }) => {
     const context = useContext(DevtoolsContext);
-    const [explicitValue, setExplicitValue] = useState(renderExplicitSettingValues(setting, null));
+    const [explicitValue, setExplicitValue] = useState(renderExplicitSettingValues(setting));
     const [explicitRoomValue, setExplicitRoomValue] = useState(
         renderExplicitSettingValues(setting, context.room.roomId),
     );
 
-    const onSave = async (): Promise<string> => {
+    const onSave = async (): Promise<string | undefined> => {
         try {
             const parsedExplicit = JSON.parse(explicitValue);
             const parsedExplicitRoom = JSON.parse(explicitRoomValue);
@@ -125,22 +125,22 @@ const EditSetting: React.FC<IEditSettingProps> = ({ setting, onBack }) => {
             }
             onBack();
         } catch (e) {
-            return _t("Failed to save settings.") + ` (${e.message})`;
+            return _t("devtools|failed_to_save") + (e instanceof Error ? ` (${e.message})` : "");
         }
     };
 
     return (
-        <BaseTool onBack={onBack} actionLabel={_t("Save setting values")} onAction={onSave}>
+        <BaseTool onBack={onBack} actionLabel={_td("devtools|save_setting_values")} onAction={onSave}>
             <h3>
-                {_t("Setting:")} <code>{setting}</code>
+                {_t("devtools|setting_colon")} <code>{setting}</code>
             </h3>
 
             <div className="mx_DevTools_SettingsExplorer_warning">
-                <b>{_t("Caution:")}</b> {_t("This UI does NOT check the types of the values. Use at your own risk.")}
+                <b>{_t("devtools|caution_colon")}</b> {_t("devtools|use_at_own_risk")}
             </div>
 
             <div>
-                {_t("Setting definition:")}
+                {_t("devtools|setting_definition")}
                 <pre>
                     <code>{JSON.stringify(SETTINGS[setting], null, 4)}</code>
                 </pre>
@@ -150,9 +150,9 @@ const EditSetting: React.FC<IEditSettingProps> = ({ setting, onBack }) => {
                 <table>
                     <thead>
                         <tr>
-                            <th>{_t("Level")}</th>
-                            <th>{_t("Settable at global")}</th>
-                            <th>{_t("Settable at room")}</th>
+                            <th>{_t("devtools|level")}</th>
+                            <th>{_t("devtools|settable_global")}</th>
+                            <th>{_t("devtools|settable_room")}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -172,7 +172,7 @@ const EditSetting: React.FC<IEditSettingProps> = ({ setting, onBack }) => {
             <div>
                 <Field
                     id="valExpl"
-                    label={_t("Values at explicit levels")}
+                    label={_t("devtools|values_explicit")}
                     type="text"
                     className="mx_DevTools_textarea"
                     element="textarea"
@@ -185,7 +185,7 @@ const EditSetting: React.FC<IEditSettingProps> = ({ setting, onBack }) => {
             <div>
                 <Field
                     id="valExpl"
-                    label={_t("Values at explicit levels in this room")}
+                    label={_t("devtools|values_explicit_room")}
                     type="text"
                     className="mx_DevTools_textarea"
                     element="textarea"
@@ -207,37 +207,37 @@ const ViewSetting: React.FC<IViewSettingProps> = ({ setting, onEdit, onBack }) =
     const context = useContext(DevtoolsContext);
 
     return (
-        <BaseTool onBack={onBack} actionLabel={_t("Edit values")} onAction={onEdit}>
+        <BaseTool onBack={onBack} actionLabel={_td("devtools|edit_values")} onAction={onEdit}>
             <h3>
-                {_t("Setting:")} <code>{setting}</code>
+                {_t("devtools|setting_colon")} <code>{setting}</code>
             </h3>
 
             <div>
-                {_t("Setting definition:")}
+                {_t("devtools|setting_definition")}
                 <pre>
                     <code>{JSON.stringify(SETTINGS[setting], null, 4)}</code>
                 </pre>
             </div>
 
             <div>
-                {_t("Value:")}&nbsp;
+                {_t("devtools|value_colon")}&nbsp;
                 <code>{renderSettingValue(SettingsStore.getValue(setting))}</code>
             </div>
 
             <div>
-                {_t("Value in this room:")}&nbsp;
+                {_t("devtools|value_this_room_colon")}&nbsp;
                 <code>{renderSettingValue(SettingsStore.getValue(setting, context.room.roomId))}</code>
             </div>
 
             <div>
-                {_t("Values at explicit levels:")}
+                {_t("devtools|values_explicit_colon")}
                 <pre>
-                    <code>{renderExplicitSettingValues(setting, null)}</code>
+                    <code>{renderExplicitSettingValues(setting)}</code>
                 </pre>
             </div>
 
             <div>
-                {_t("Values at explicit levels in this room:")}
+                {_t("devtools|values_explicit_this_room_colon")}
                 <pre>
                     <code>{renderExplicitSettingValues(setting, context.room.roomId)}</code>
                 </pre>
@@ -277,21 +277,21 @@ const SettingsList: React.FC<ISettingsListProps> = ({ onBack, onView, onEdit }) 
     return (
         <BaseTool onBack={onBack} className="mx_DevTools_SettingsExplorer">
             <Field
-                label={_t("Filter results")}
+                label={_t("common|filter_results")}
                 autoFocus={true}
                 size={64}
                 type="text"
                 autoComplete="off"
                 value={query}
-                onChange={(ev) => setQuery(ev.target.value)}
+                onChange={(ev: ChangeEvent<HTMLInputElement>) => setQuery(ev.target.value)}
                 className="mx_TextInputDialog_input mx_DevTools_RoomStateExplorer_query"
             />
             <table>
                 <thead>
                     <tr>
-                        <th>{_t("Setting ID")}</th>
-                        <th>{_t("Value")}</th>
-                        <th>{_t("Value in this room")}</th>
+                        <th>{_t("devtools|setting_id")}</th>
+                        <th>{_t("devtools|value")}</th>
+                        <th>{_t("devtools|value_in_this_room")}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -306,7 +306,7 @@ const SettingsList: React.FC<ISettingsListProps> = ({ onBack, onView, onEdit }) 
                                     <code>{i}</code>
                                 </AccessibleButton>
                                 <AccessibleButton
-                                    alt={_t("Edit setting")}
+                                    alt={_t("devtools|edit_setting")}
                                     onClick={() => onEdit(i)}
                                     className="mx_DevTools_SettingsExplorer_edit"
                                 >

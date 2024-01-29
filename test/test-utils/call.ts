@@ -16,10 +16,7 @@ limitations under the License.
 
 import { MatrixWidgetType } from "matrix-widget-api";
 
-import type { GroupCall } from "matrix-js-sdk/src/webrtc/groupCall";
-import type { Room } from "matrix-js-sdk/src/models/room";
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import type { GroupCall, Room, RoomMember, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { mkEvent } from "./test-utils";
 import { Call, ConnectionState, ElementCall, JitsiCall } from "../../src/models/Call";
 import { CallStore } from "../../src/stores/CallStore";
@@ -28,7 +25,10 @@ export class MockedCall extends Call {
     public static readonly EVENT_TYPE = "org.example.mocked_call";
     public readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
-    private constructor(room: Room, public readonly event: MatrixEvent) {
+    private constructor(
+        room: Room,
+        public readonly event: MatrixEvent,
+    ) {
         super(
             {
                 id: event.getStateKey()!,
@@ -38,6 +38,9 @@ export class MockedCall extends Call {
                 url: "https://example.org",
                 name: "Group call",
                 creatorUserId: "@alice:example.org",
+                // waitForIframeLoad = false, makes the widget API wait for the 'contentLoaded' event instead.
+                // This is how the EC is designed, but for backwards compatibility (full mesh) we currently need to use waitForIframeLoad = true
+                // waitForIframeLoad: false
             },
             room.client,
         );

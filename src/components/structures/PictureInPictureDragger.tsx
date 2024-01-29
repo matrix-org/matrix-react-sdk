@@ -70,6 +70,8 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
         () => this.animationCallback(),
         () => requestAnimationFrame(() => this.scheduledUpdate.trigger()),
     );
+    private startingPositionX = 0;
+    private startingPositionY = 0;
 
     private _moving = false;
     public get moving(): boolean {
@@ -192,10 +194,21 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
         event.stopPropagation();
 
         this.mouseHeld = true;
+        this.startingPositionX = event.clientX;
+        this.startingPositionY = event.clientY;
     };
 
     private onMoving = (event: MouseEvent): void => {
         if (!this.mouseHeld) return;
+
+        if (
+            Math.abs(this.startingPositionX - event.clientX) < 5 &&
+            Math.abs(this.startingPositionY - event.clientY) < 5
+        ) {
+            // User needs to move the widget by at least five pixels.
+            // Improves click detection when using a touchpad or with nervous hands.
+            return;
+        }
 
         event.preventDefault();
         event.stopPropagation();
@@ -232,7 +245,7 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const style = {
             transform: `translateX(${this.translationX}px) translateY(${this.translationY}px)`,
         };

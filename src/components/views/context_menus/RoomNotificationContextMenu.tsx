@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
@@ -52,7 +52,7 @@ export const RoomNotificationContextMenu: React.FC<IProps> = ({ room, onFinished
 
     const defaultOption: JSX.Element = (
         <IconizedContextMenuRadio
-            label={_t("Use default")}
+            label={_t("room|context_menu|notifications_default")}
             active={notificationState === RoomNotifState.AllMessages}
             iconClassName="mx_RoomNotificationContextMenu_iconBell"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.AllMessages))}
@@ -61,7 +61,7 @@ export const RoomNotificationContextMenu: React.FC<IProps> = ({ room, onFinished
 
     const allMessagesOption: JSX.Element = (
         <IconizedContextMenuRadio
-            label={_t("All messages")}
+            label={_t("notifications|all_messages")}
             active={notificationState === RoomNotifState.AllMessagesLoud}
             iconClassName="mx_RoomNotificationContextMenu_iconBellDot"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.AllMessagesLoud))}
@@ -70,7 +70,7 @@ export const RoomNotificationContextMenu: React.FC<IProps> = ({ room, onFinished
 
     const mentionsOption: JSX.Element = (
         <IconizedContextMenuRadio
-            label={_t("Mentions & Keywords")}
+            label={_t("notifications|mentions_keywords")}
             active={notificationState === RoomNotifState.MentionsOnly}
             iconClassName="mx_RoomNotificationContextMenu_iconBellMentions"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.MentionsOnly))}
@@ -79,7 +79,7 @@ export const RoomNotificationContextMenu: React.FC<IProps> = ({ room, onFinished
 
     const muteOption: JSX.Element = (
         <IconizedContextMenuRadio
-            label={_t("Off")}
+            label={_t("room|context_menu|notifications_mute")}
             active={notificationState === RoomNotifState.Mute}
             iconClassName="mx_RoomNotificationContextMenu_iconBellCrossed"
             onClick={wrapHandler(() => setNotificationState(RoomNotifState.Mute))}

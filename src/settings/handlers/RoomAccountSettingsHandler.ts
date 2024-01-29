@@ -15,9 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { MatrixClient, MatrixEvent, Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 import { defer } from "matrix-js-sdk/src/utils";
 
 import MatrixClientBackedSettingsHandler from "./MatrixClientBackedSettingsHandler";
@@ -44,7 +42,7 @@ export default class RoomAccountSettingsHandler extends MatrixClientBackedSettin
         newClient.on(RoomEvent.AccountData, this.onAccountData);
     }
 
-    private onAccountData = (event: MatrixEvent, room: Room, prevEvent: MatrixEvent): void => {
+    private onAccountData = (event: MatrixEvent, room: Room, prevEvent?: MatrixEvent): void => {
         const roomId = room.roomId;
 
         if (event.getType() === "org.matrix.room.preview_urls") {
@@ -58,7 +56,7 @@ export default class RoomAccountSettingsHandler extends MatrixClientBackedSettin
             this.watchers.notifyUpdate("urlPreviewsEnabled", roomId, SettingLevel.ROOM_ACCOUNT, val);
         } else if (event.getType() === DEFAULT_SETTINGS_EVENT_TYPE) {
             // Figure out what changed and fire those updates
-            const prevContent = prevEvent ? prevEvent.getContent() : {};
+            const prevContent = prevEvent?.getContent() ?? {};
             const changedSettings = objectKeyChanges<Record<string, any>>(prevContent, event.getContent());
             for (const settingName of changedSettings) {
                 const val = event.getContent()[settingName];

@@ -15,12 +15,13 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ActionState, ActionTypes, AllActionStates, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
 
 import { FormattingButtons } from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/FormattingButtons";
 import * as LinkModal from "../../../../../../src/components/views/rooms/wysiwyg_composer/components/LinkModal";
+import { setLanguage } from "../../../../../../src/languageHandler";
 
 const mockWysiwyg = {
     bold: jest.fn(),
@@ -33,12 +34,14 @@ const mockWysiwyg = {
     orderedList: jest.fn(),
     unorderedList: jest.fn(),
     quote: jest.fn(),
+    indent: jest.fn(),
+    unIndent: jest.fn(),
 } as unknown as FormattingFunctions;
 
 const openLinkModalSpy = jest.spyOn(LinkModal, "openLinkModal");
 
 const testCases: Record<
-    Exclude<ActionTypes, "undo" | "redo" | "clear">,
+    Exclude<ActionTypes, "undo" | "redo" | "clear" | "indent" | "unindent">,
     { label: string; mockFormatFn: jest.Func | jest.SpyInstance }
 > = {
     bold: { label: "Bold", mockFormatFn: mockWysiwyg.bold },
@@ -70,8 +73,20 @@ const classes = {
 };
 
 describe("FormattingButtons", () => {
+    beforeEach(() => {
+        openLinkModalSpy.mockReturnValue(undefined);
+    });
+
     afterEach(() => {
         jest.resetAllMocks();
+    });
+
+    it("renders in german", async () => {
+        await setLanguage("de");
+        const { asFragment } = renderComponent();
+        expect(asFragment()).toMatchSnapshot();
+
+        await setLanguage("en");
     });
 
     it("Each button should not have active class when enabled", () => {
@@ -157,5 +172,29 @@ describe("FormattingButtons", () => {
             await userEvent.hover(screen.getByLabelText(label));
             expect(screen.getByLabelText(label)).not.toHaveClass("mx_FormattingButtons_Button_hover");
         }
+    });
+
+    it("Does not show indent or unindent button when outside a list", () => {
+        renderComponent();
+
+        expect(screen.queryByLabelText("Indent increase")).not.toBeInTheDocument();
+        expect(screen.queryByLabelText("Indent decrease")).not.toBeInTheDocument();
+    });
+
+    it("Shows indent and unindent buttons when either a single list type is 'reversed'", () => {
+        const orderedListActive = { ...defaultActionStates, orderedList: "reversed" };
+        renderComponent({ actionStates: orderedListActive });
+
+        expect(screen.getByLabelText("Indent increase")).toBeInTheDocument();
+        expect(screen.getByLabelText("Indent decrease")).toBeInTheDocument();
+
+        cleanup();
+
+        const unorderedListActive = { ...defaultActionStates, unorderedList: "reversed" };
+
+        renderComponent({ actionStates: unorderedListActive });
+
+        expect(screen.getByLabelText("Indent increase")).toBeInTheDocument();
+        expect(screen.getByLabelText("Indent decrease")).toBeInTheDocument();
     });
 });

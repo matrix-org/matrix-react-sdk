@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, IClientWellKnown } from "matrix-js-sdk/src/client";
+import { ClientEvent, IClientWellKnown } from "matrix-js-sdk/src/matrix";
 
 import SdkConfig from "../SdkConfig";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -31,7 +31,7 @@ export interface JitsiWidgetData {
 export class Jitsi {
     private static instance: Jitsi;
 
-    private domain: string;
+    private domain?: string;
 
     public get preferredDomain(): string {
         return this.domain || "meet.element.io";
@@ -62,13 +62,13 @@ export class Jitsi {
     }
 
     public start(): void {
-        const cli = MatrixClientPeg.get();
+        const cli = MatrixClientPeg.safeGet();
         cli.on(ClientEvent.ClientWellKnown, this.update);
         // call update initially in case we missed the first WellKnown.client event and for if no well-known present
         this.update(cli.getClientWellKnown());
     }
 
-    private update = async (discoveryResponse: IClientWellKnown): Promise<any> => {
+    private update = async (discoveryResponse?: IClientWellKnown): Promise<any> => {
         // Start with a default of the config's domain
         let domain = SdkConfig.getObject("jitsi")?.get("preferred_domain") || "meet.element.io";
 
@@ -87,7 +87,7 @@ export class Jitsi {
      * @param {string} url The URL to parse.
      * @returns {JitsiWidgetData} The widget data if eligible, otherwise null.
      */
-    public parsePreferredConferenceUrl(url: string): JitsiWidgetData {
+    public parsePreferredConferenceUrl(url: string): JitsiWidgetData | null {
         const parsed = new URL(url);
         if (parsed.hostname !== this.preferredDomain) return null; // invalid
         return {

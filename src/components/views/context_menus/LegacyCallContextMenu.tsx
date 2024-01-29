@@ -26,7 +26,7 @@ interface IProps extends IContextMenuProps {
 }
 
 export default class LegacyCallContextMenu extends React.Component<IProps> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
     }
 
@@ -46,15 +46,15 @@ export default class LegacyCallContextMenu extends React.Component<IProps> {
         this.props.onFinished();
     };
 
-    public render(): JSX.Element {
-        const holdUnholdCaption = this.props.call.isRemoteOnHold() ? _t("Resume") : _t("Hold");
+    public render(): React.ReactNode {
+        const holdUnholdCaption = this.props.call.isRemoteOnHold() ? _t("action|resume") : _t("action|hold");
         const handler = this.props.call.isRemoteOnHold() ? this.onUnholdClick : this.onHoldClick;
 
         let transferItem;
         if (this.props.call.opponentCanBeTransferred()) {
             transferItem = (
                 <MenuItem className="mx_LegacyCallContextMenu_item" onClick={this.onTransferClick}>
-                    {_t("Transfer")}
+                    {_t("action|transfer")}
                 </MenuItem>
             );
         }

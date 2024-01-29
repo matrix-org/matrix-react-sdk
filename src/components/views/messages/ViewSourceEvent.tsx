@@ -20,7 +20,7 @@ import classNames from "classnames";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -31,7 +31,7 @@ interface IState {
 }
 
 export default class ViewSourceEvent extends React.PureComponent<IProps, IState> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -42,7 +42,7 @@ export default class ViewSourceEvent extends React.PureComponent<IProps, IState>
     public componentDidMount(): void {
         const { mxEvent } = this.props;
 
-        const client = MatrixClientPeg.get();
+        const client = MatrixClientPeg.safeGet();
         client.decryptEventIfNeeded(mxEvent);
 
         if (mxEvent.isBeingDecrypted()) {
@@ -50,7 +50,7 @@ export default class ViewSourceEvent extends React.PureComponent<IProps, IState>
         }
     }
 
-    private onToggle = (ev: React.MouseEvent): void => {
+    private onToggle = (ev: ButtonEvent): void => {
         ev.preventDefault();
         const { expanded } = this.state;
         this.setState({
@@ -78,7 +78,7 @@ export default class ViewSourceEvent extends React.PureComponent<IProps, IState>
                 {content}
                 <AccessibleButton
                     kind="link"
-                    title={_t("toggle event")}
+                    title={_t("devtools|toggle_event")}
                     className="mx_ViewSourceEvent_toggle"
                     onClick={this.onToggle}
                 />

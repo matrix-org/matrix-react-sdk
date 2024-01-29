@@ -22,18 +22,22 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { linkify } from "./linkify-matrix";
 
-const ALLOWED_HTML_TAGS = ["sub", "sup", "del", "u"];
+const ALLOWED_HTML_TAGS = ["sub", "sup", "del", "u", "br", "br/"];
 
 // These types of node are definitely text
 const TEXT_NODES = ["text", "softbreak", "linebreak", "paragraph", "document"];
 
 function isAllowedHtmlTag(node: commonmark.Node): boolean {
-    if (node.literal != null && node.literal.match('^<((div|span) data-mx-maths="[^"]*"|/(div|span))>$') != null) {
+    if (!node.literal) {
+        return false;
+    }
+
+    if (node.literal.match('^<((div|span) data-mx-maths="[^"]*"|/(div|span))>$') != null) {
         return true;
     }
 
-    // Regex won't work for tags with attrs, but we only
-    // allow <del> anyway.
+    // Regex won't work for tags with attrs, but the tags we allow
+    // shouldn't really have any anyway.
     const matches = /^<\/?(.*)>$/.exec(node.literal);
     if (matches && matches.length == 2) {
         const tag = matches[1];
@@ -57,9 +61,9 @@ function isMultiLine(node: commonmark.Node): boolean {
 }
 
 function getTextUntilEndOrLinebreak(node: commonmark.Node): string {
-    let currentNode = node;
+    let currentNode: commonmark.Node | null = node;
     let text = "";
-    while (currentNode !== null && currentNode.type !== "softbreak" && currentNode.type !== "linebreak") {
+    while (currentNode && currentNode.type !== "softbreak" && currentNode.type !== "linebreak") {
         const { literal, type } = currentNode;
         if (type === "text" && literal) {
             let n = 0;
@@ -95,7 +99,7 @@ const innerNodeLiteral = (node: commonmark.Node): string => {
     let literal = "";
 
     const walker = node.walker();
-    let step: commonmark.NodeWalkingStep;
+    let step: commonmark.NodeWalkingStep | null;
 
     while ((step = walker.next())) {
         const currentNode = step.node;
@@ -106,6 +110,10 @@ const innerNodeLiteral = (node: commonmark.Node): string => {
     }
 
     return literal;
+};
+
+const emptyItemWithNoSiblings = (node: commonmark.Node): boolean => {
+    return !node.prev && !node.next && !node.firstChild;
 };
 
 /**
@@ -139,7 +147,7 @@ export default class Markdown {
      */
     private repairLinks(parsed: commonmark.Node): commonmark.Node {
         const walker = parsed.walker();
-        let event: commonmark.NodeWalkingStep = null;
+        let event: commonmark.NodeWalkingStep | null = null;
         let text = "";
         let isInPara = false;
         let previousNode: commonmark.Node | null = null;
@@ -166,7 +174,7 @@ export default class Markdown {
                 }
 
                 // Break up text nodes on spaces, so that we don't shoot past them without resetting
-                if (node.type === "text") {
+                if (node.type === "text" && node.literal) {
                     const [thisPart, ...nextParts] = node.literal.split(/( )/);
                     node.literal = thisPart;
                     text += thisPart;
@@ -184,11 +192,11 @@ export default class Markdown {
                 }
 
                 // We should not do this if previous node was not a textnode, as we can't combine it then.
-                if ((node.type === "emph" || node.type === "strong") && previousNode.type === "text") {
+                if ((node.type === "emph" || node.type === "strong") && previousNode?.type === "text") {
                     if (event.entering) {
                         const foundLinks = linkify.find(text);
                         for (const { value } of foundLinks) {
-                            if (node.firstChild.literal) {
+                            if (node?.firstChild?.literal) {
                                 /**
                                  * NOTE: This technically should unlink the emph node and create LINK nodes instead, adding all the next elements as siblings
                                  * but this solution seems to work well and is hopefully slightly easier to understand too
@@ -205,10 +213,12 @@ export default class Markdown {
                                     previousNode.insertAfter(emphasisTextNode);
                                     node.firstChild.literal = "";
                                     event = node.walker().next();
-                                    // Remove `em` opening and closing nodes
-                                    node.unlink();
-                                    previousNode.insertAfter(event.node);
-                                    shouldUnlinkFormattingNode = true;
+                                    if (event) {
+                                        // Remove `em` opening and closing nodes
+                                        node.unlink();
+                                        previousNode.insertAfter(event.node);
+                                        shouldUnlinkFormattingNode = true;
+                                    }
                                 } else {
                                     logger.error(
                                         "Markdown links escaping found too many links for following text: ",
@@ -236,13 +246,30 @@ export default class Markdown {
 
     public isPlainText(): boolean {
         const walker = this.parsed.walker();
+        let ev: commonmark.NodeWalkingStep | null;
 
-        let ev: commonmark.NodeWalkingStep;
         while ((ev = walker.next())) {
             const node = ev.node;
+
             if (TEXT_NODES.indexOf(node.type) > -1) {
                 // definitely text
                 continue;
+            } else if (node.type == "list" || node.type == "item") {
+                // Special handling for inputs like `+`, `*`, `-` and `2021.` which
+                // would otherwise be treated as a list of a single empty item.
+                // See https://github.com/vector-im/element-web/issues/7631
+                if (node.type == "list" && node.firstChild && emptyItemWithNoSiblings(node.firstChild)) {
+                    // A list with a single empty item is treated as plain text.
+                    continue;
+                }
+
+                if (node.type == "item" && emptyItemWithNoSiblings(node)) {
+                    // An empty list item with no sibling items is treated as plain text.
+                    continue;
+                }
+
+                // Everything else is actual lists and therefore not plaintext.
+                return false;
             } else if (node.type == "html_inline" || node.type == "html_block") {
                 // if it's an allowed html tag, we need to render it and therefore
                 // we will need to use HTML. If it's not allowed, it's not HTML since
@@ -287,14 +314,14 @@ export default class Markdown {
             // However, if it's a blockquote, adds a p tag anyway
             // in order to avoid deviation to commonmark and unexpected
             // results when parsing the formatted HTML.
-            if (node.parent.type === "block_quote" || isMultiLine(node)) {
+            if (node.parent?.type === "block_quote" || isMultiLine(node)) {
                 realParagraph.call(this, node, entering);
             }
         };
 
         renderer.link = function (node, entering) {
             const attrs = this.attrs(node);
-            if (entering) {
+            if (entering && node.destination) {
                 attrs.push(["href", this.esc(node.destination)]);
                 if (node.title) {
                     attrs.push(["title", this.esc(node.title)]);
@@ -312,10 +339,12 @@ export default class Markdown {
         };
 
         renderer.html_inline = function (node: commonmark.Node) {
-            if (isAllowedHtmlTag(node)) {
-                this.lit(node.literal);
-            } else {
-                this.lit(escape(node.literal));
+            if (node.literal) {
+                if (isAllowedHtmlTag(node)) {
+                    this.lit(node.literal);
+                } else {
+                    this.lit(escape(node.literal));
+                }
             }
         };
 
@@ -358,7 +387,7 @@ export default class Markdown {
         };
 
         renderer.html_block = function (node: commonmark.Node) {
-            this.lit(node.literal);
+            if (node.literal) this.lit(node.literal);
             if (isMultiLine(node) && node.next) this.lit("\n\n");
         };
 

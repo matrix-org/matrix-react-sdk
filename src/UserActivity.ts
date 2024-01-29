@@ -45,7 +45,10 @@ export default class UserActivity {
     private lastScreenX = 0;
     private lastScreenY = 0;
 
-    public constructor(private readonly window: Window, private readonly document: Document) {
+    public constructor(
+        private readonly window: Window,
+        private readonly document: Document,
+    ) {
         this.activeNowTimeout = new Timer(CURRENTLY_ACTIVE_THRESHOLD_MS);
         this.activeRecentlyTimeout = new Timer(RECENTLY_ACTIVE_THRESHOLD_MS);
     }
@@ -168,7 +171,7 @@ export default class UserActivity {
         return this.activeRecentlyTimeout.isRunning();
     }
 
-    private onPageVisibilityChanged = (e): void => {
+    private onPageVisibilityChanged = (e: Event): void => {
         if (this.document.visibilityState === "hidden") {
             this.activeNowTimeout.abort();
             this.activeRecentlyTimeout.abort();
@@ -182,11 +185,12 @@ export default class UserActivity {
         this.activeRecentlyTimeout.abort();
     };
 
-    private onUserActivity = (event: MouseEvent): void => {
+    // XXX: exported for tests
+    public onUserActivity = (event: Event): void => {
         // ignore anything if the window isn't focused
         if (!this.document.hasFocus()) return;
 
-        if (event.screenX && event.type === "mousemove") {
+        if (event.type === "mousemove" && this.isMouseEvent(event)) {
             if (event.screenX === this.lastScreenX && event.screenY === this.lastScreenY) {
                 // mouse hasn't actually moved
                 return;
@@ -222,5 +226,9 @@ export default class UserActivity {
             /* aborted */
         }
         attachedTimers.forEach((t) => t.abort());
+    }
+
+    private isMouseEvent(event: Event): event is MouseEvent {
+        return event.type.startsWith("mouse");
     }
 }

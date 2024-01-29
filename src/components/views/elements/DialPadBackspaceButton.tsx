@@ -25,13 +25,13 @@ interface IProps {
 }
 
 export default class DialPadBackspaceButton extends React.PureComponent<IProps> {
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <div className="mx_DialPadBackspaceButtonWrapper">
                 <AccessibleButton
                     className="mx_DialPadBackspaceButton"
                     onClick={this.props.onBackspacePress}
-                    aria-label={_t("Backspace")}
+                    aria-label={_t("keyboard|backspace")}
                 />
             </div>
         );

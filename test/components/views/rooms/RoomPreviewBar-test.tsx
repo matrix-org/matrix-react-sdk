@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ComponentProps } from "react";
 import { render, fireEvent, RenderResult, waitFor } from "@testing-library/react";
 import { Room, RoomMember, MatrixError, IContent } from "matrix-js-sdk/src/matrix";
 
-import { stubClient } from "../../../test-utils";
+import { withClientContextRenderOptions, stubClient } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import RoomPreviewBar from "../../../../src/components/views/rooms/RoomPreviewBar";
@@ -33,8 +33,9 @@ jest.mock("../../../../src/IdentityAuthClient", () => {
 jest.useRealTimers();
 
 const createRoom = (roomId: string, userId: string): Room => {
-    const newRoom = new Room(roomId, MatrixClientPeg.get(), userId, {});
-    DMRoomMap.makeShared().start();
+    const cli = MatrixClientPeg.safeGet();
+    const newRoom = new Room(roomId, cli, userId, {});
+    DMRoomMap.makeShared(cli).start();
     return newRoom;
 };
 
@@ -44,26 +45,30 @@ const makeMockRoomMember = ({
     membership,
     content,
     memberContent,
+    oldMembership,
 }: {
     userId?: string;
     isKicked?: boolean;
-    membership?: "invite" | "ban";
+    membership?: "invite" | "ban" | "leave";
     content?: Partial<IContent>;
     memberContent?: Partial<IContent>;
+    oldMembership?: "join" | "knock";
 }) =>
     ({
         userId,
         rawDisplayName: `${userId} name`,
         isKicked: jest.fn().mockReturnValue(!!isKicked),
         getContent: jest.fn().mockReturnValue(content || {}),
+        getPrevContent: jest.fn().mockReturnValue(content || {}),
         membership,
         events: {
             member: {
                 getSender: jest.fn().mockReturnValue("@kicker:test.com"),
                 getContent: jest.fn().mockReturnValue({ reason: "test reason", ...memberContent }),
+                getPrevContent: jest.fn().mockReturnValue({ membership: oldMembership, ...memberContent }),
             },
         },
-    } as unknown as RoomMember);
+    }) as unknown as RoomMember;
 
 describe("<RoomPreviewBar />", () => {
     const roomId = "RoomPreviewBar-test-room";
@@ -71,11 +76,15 @@ describe("<RoomPreviewBar />", () => {
     const inviterUserId = "@inviter:test.com";
     const otherUserId = "@othertester:test.com";
 
-    const getComponent = (props = {}) => {
+    const getComponent = (props: ComponentProps<typeof RoomPreviewBar> = {}) => {
         const defaultProps = {
+            roomId,
             room: createRoom(roomId, userId),
         };
-        return render(<RoomPreviewBar {...defaultProps} {...props} />);
+        return render(
+            <RoomPreviewBar {...defaultProps} {...props} />,
+            withClientContextRenderOptions(MatrixClientPeg.safeGet()),
+        );
     };
 
     const isSpinnerRendered = (wrapper: RenderResult) => !!wrapper.container.querySelector(".mx_Spinner");
@@ -84,13 +93,16 @@ describe("<RoomPreviewBar />", () => {
     const getActions = (wrapper: RenderResult) =>
         wrapper.container.querySelector<HTMLDivElement>(".mx_RoomPreviewBar_actions");
     const getPrimaryActionButton = (wrapper: RenderResult) =>
-        getActions(wrapper).querySelector(".mx_AccessibleButton_kind_primary");
+        getActions(wrapper)?.querySelector(".mx_AccessibleButton_kind_primary");
     const getSecondaryActionButton = (wrapper: RenderResult) =>
-        getActions(wrapper).querySelector(".mx_AccessibleButton_kind_secondary");
+        getActions(wrapper)?.querySelector(".mx_AccessibleButton_kind_secondary");
 
     beforeEach(() => {
         stubClient();
-        MatrixClientPeg.get().getUserId = jest.fn().mockReturnValue(userId);
+        MatrixClientPeg.get()!.getUserId = jest.fn().mockReturnValue(userId);
+        MatrixClientPeg.get()!.getSafeUserId = jest.fn().mockReturnValue(userId);
+        MatrixClientPeg.safeGet().getUserId = jest.fn().mockReturnValue(userId);
+        MatrixClientPeg.safeGet().getSafeUserId = jest.fn().mockReturnValue(userId);
     });
 
     afterEach(() => {
@@ -102,29 +114,29 @@ describe("<RoomPreviewBar />", () => {
         const component = getComponent({ joining: true });
 
         expect(isSpinnerRendered(component)).toBeTruthy();
-        expect(getMessage(component).textContent).toEqual("Joining …");
+        expect(getMessage(component)?.textContent).toEqual("Joining…");
     });
     it("renders rejecting message", () => {
         const component = getComponent({ rejecting: true });
         expect(isSpinnerRendered(component)).toBeTruthy();
-        expect(getMessage(component).textContent).toEqual("Rejecting invite …");
+        expect(getMessage(component)?.textContent).toEqual("Rejecting invite…");
     });
     it("renders loading message", () => {
         const component = getComponent({ loading: true });
         expect(isSpinnerRendered(component)).toBeTruthy();
-        expect(getMessage(component).textContent).toEqual("Loading …");
+        expect(getMessage(component)?.textContent).toEqual("Loading…");
     });
 
     it("renders not logged in message", () => {
-        MatrixClientPeg.get().isGuest = jest.fn().mockReturnValue(true);
+        MatrixClientPeg.safeGet().isGuest = jest.fn().mockReturnValue(true);
         const component = getComponent({ loading: true });
 
         expect(isSpinnerRendered(component)).toBeFalsy();
-        expect(getMessage(component).textContent).toEqual("Join the conversation with an account");
+        expect(getMessage(component)?.textContent).toEqual("Join the conversation with an account");
     });
 
     it("should send room oob data to start login", async () => {
-        MatrixClientPeg.get().isGuest = jest.fn().mockReturnValue(true);
+        MatrixClientPeg.safeGet().isGuest = jest.fn().mockReturnValue(true);
         const component = getComponent({
             oobData: {
                 name: "Room Name",
@@ -136,8 +148,8 @@ describe("<RoomPreviewBar />", () => {
         const dispatcherSpy = jest.fn();
         const dispatcherRef = defaultDispatcher.register(dispatcherSpy);
 
-        expect(getMessage(component).textContent).toEqual("Join the conversation with an account");
-        fireEvent.click(getPrimaryActionButton(component));
+        expect(getMessage(component)?.textContent).toEqual("Join the conversation with an account");
+        fireEvent.click(getPrimaryActionButton(component)!);
 
         await waitFor(() =>
             expect(dispatcherSpy).toHaveBeenCalledWith(
@@ -160,9 +172,31 @@ describe("<RoomPreviewBar />", () => {
     it("renders kicked message", () => {
         const room = createRoom(roomId, otherUserId);
         jest.spyOn(room, "getMember").mockReturnValue(makeMockRoomMember({ isKicked: true }));
-        const component = getComponent({ loading: true, room });
+        const component = getComponent({ room, canAskToJoinAndMembershipIsLeave: true, promptAskToJoin: false });
 
         expect(getMessage(component)).toMatchSnapshot();
+    });
+
+    it("renders denied request message", () => {
+        const room = createRoom(roomId, otherUserId);
+        jest.spyOn(room, "getMember").mockReturnValue(
+            makeMockRoomMember({ isKicked: true, membership: "leave", oldMembership: "knock" }),
+        );
+        const component = getComponent({ room, promptAskToJoin: true });
+
+        expect(getMessage(component)).toMatchSnapshot();
+    });
+
+    it("triggers the primary action callback for denied request", () => {
+        const onForgetClick = jest.fn();
+        const room = createRoom(roomId, otherUserId);
+        jest.spyOn(room, "getMember").mockReturnValue(
+            makeMockRoomMember({ isKicked: true, membership: "leave", oldMembership: "knock" }),
+        );
+        const component = getComponent({ room, promptAskToJoin: true, onForgetClick });
+
+        fireEvent.click(getPrimaryActionButton(component)!);
+        expect(onForgetClick).toHaveBeenCalled();
     });
 
     it("renders banned message", () => {
@@ -211,7 +245,7 @@ describe("<RoomPreviewBar />", () => {
         const userMemberWithDmInvite = makeMockRoomMember({
             userId,
             membership: "invite",
-            memberContent: { is_direct: true },
+            memberContent: { is_direct: true, membership: "invite" },
         });
         const inviterMember = makeMockRoomMember({
             userId: inviterUserId,
@@ -222,13 +256,13 @@ describe("<RoomPreviewBar />", () => {
         });
         describe("without an invited email", () => {
             describe("for a non-dm room", () => {
-                const mockGetMember = (id) => {
+                const mockGetMember = (id: string) => {
                     if (id === userId) return userMember;
                     return inviterMember;
                 };
                 const onJoinClick = jest.fn();
                 const onRejectClick = jest.fn();
-                let room;
+                let room: Room;
 
                 beforeEach(() => {
                     room = createRoom(roomId, userId);
@@ -268,27 +302,27 @@ describe("<RoomPreviewBar />", () => {
 
                 it("joins room on primary button click", () => {
                     const component = getComponent({ inviterName, room, onJoinClick, onRejectClick });
-                    fireEvent.click(getPrimaryActionButton(component));
+                    fireEvent.click(getPrimaryActionButton(component)!);
 
                     expect(onJoinClick).toHaveBeenCalled();
                 });
 
                 it("rejects invite on secondary button click", () => {
                     const component = getComponent({ inviterName, room, onJoinClick, onRejectClick });
-                    fireEvent.click(getSecondaryActionButton(component));
+                    fireEvent.click(getSecondaryActionButton(component)!);
 
                     expect(onRejectClick).toHaveBeenCalled();
                 });
             });
 
             describe("for a dm room", () => {
-                const mockGetMember = (id) => {
+                const mockGetMember = (id: string) => {
                     if (id === userId) return userMemberWithDmInvite;
                     return inviterMember;
                 };
                 const onJoinClick = jest.fn();
                 const onRejectClick = jest.fn();
-                let room;
+                let room: Room;
 
                 beforeEach(() => {
                     room = createRoom(roomId, userId);
@@ -298,7 +332,7 @@ describe("<RoomPreviewBar />", () => {
                     onRejectClick.mockClear();
                 });
 
-                it("renders invite message to a non-dm room", () => {
+                it("renders invite message", () => {
                     const component = getComponent({ inviterName, room });
                     expect(getMessage(component)).toMatchSnapshot();
                 });
@@ -324,20 +358,22 @@ describe("<RoomPreviewBar />", () => {
                 { medium: "not-email", address: "address 2" },
             ];
 
-            const testJoinButton = (props) => async () => {
-                const onJoinClick = jest.fn();
-                const onRejectClick = jest.fn();
-                const component = getComponent({ ...props, onJoinClick, onRejectClick });
-                await new Promise(setImmediate);
-                expect(getPrimaryActionButton(component)).toBeTruthy();
-                expect(getSecondaryActionButton(component)).toBeFalsy();
-                fireEvent.click(getPrimaryActionButton(component));
-                expect(onJoinClick).toHaveBeenCalled();
-            };
+            const testJoinButton =
+                (props: ComponentProps<typeof RoomPreviewBar>, expectSecondaryButton = false) =>
+                async () => {
+                    const onJoinClick = jest.fn();
+                    const onRejectClick = jest.fn();
+                    const component = getComponent({ ...props, onJoinClick, onRejectClick });
+                    await new Promise(setImmediate);
+                    expect(getPrimaryActionButton(component)).toBeTruthy();
+                    if (expectSecondaryButton) expect(getSecondaryActionButton(component)).toBeFalsy();
+                    fireEvent.click(getPrimaryActionButton(component)!);
+                    expect(onJoinClick).toHaveBeenCalled();
+                };
 
             describe("when client fails to get 3PIDs", () => {
                 beforeEach(() => {
-                    MatrixClientPeg.get().getThreePids = jest.fn().mockRejectedValue({ errCode: "TEST_ERROR" });
+                    MatrixClientPeg.safeGet().getThreePids = jest.fn().mockRejectedValue({ errCode: "TEST_ERROR" });
                 });
 
                 it("renders error message", async () => {
@@ -352,7 +388,7 @@ describe("<RoomPreviewBar />", () => {
 
             describe("when invitedEmail is not associated with current account", () => {
                 beforeEach(() => {
-                    MatrixClientPeg.get().getThreePids = jest
+                    MatrixClientPeg.safeGet().getThreePids = jest
                         .fn()
                         .mockResolvedValue({ threepids: mockThreePids.slice(1) });
                 });
@@ -369,8 +405,8 @@ describe("<RoomPreviewBar />", () => {
 
             describe("when client has no identity server connected", () => {
                 beforeEach(() => {
-                    MatrixClientPeg.get().getThreePids = jest.fn().mockResolvedValue({ threepids: mockThreePids });
-                    MatrixClientPeg.get().getIdentityServerUrl = jest.fn().mockReturnValue(false);
+                    MatrixClientPeg.safeGet().getThreePids = jest.fn().mockResolvedValue({ threepids: mockThreePids });
+                    MatrixClientPeg.safeGet().getIdentityServerUrl = jest.fn().mockReturnValue(false);
                 });
 
                 it("renders invite message with invited email", async () => {
@@ -385,18 +421,18 @@ describe("<RoomPreviewBar />", () => {
 
             describe("when client has an identity server connected", () => {
                 beforeEach(() => {
-                    MatrixClientPeg.get().getThreePids = jest.fn().mockResolvedValue({ threepids: mockThreePids });
-                    MatrixClientPeg.get().getIdentityServerUrl = jest.fn().mockReturnValue("identity.test");
-                    MatrixClientPeg.get().lookupThreePid = jest.fn().mockResolvedValue("identity.test");
+                    MatrixClientPeg.safeGet().getThreePids = jest.fn().mockResolvedValue({ threepids: mockThreePids });
+                    MatrixClientPeg.safeGet().getIdentityServerUrl = jest.fn().mockReturnValue("identity.test");
+                    MatrixClientPeg.safeGet().lookupThreePid = jest.fn().mockResolvedValue("identity.test");
                 });
 
                 it("renders email mismatch message when invite email mxid doesnt match", async () => {
-                    MatrixClientPeg.get().lookupThreePid = jest.fn().mockReturnValue("not userid");
+                    MatrixClientPeg.safeGet().lookupThreePid = jest.fn().mockReturnValue({ mxid: "not userid" });
                     const component = getComponent({ inviterName, invitedEmail });
                     await new Promise(setImmediate);
 
                     expect(getMessage(component)).toMatchSnapshot();
-                    expect(MatrixClientPeg.get().lookupThreePid).toHaveBeenCalledWith(
+                    expect(MatrixClientPeg.safeGet().lookupThreePid).toHaveBeenCalledWith(
                         "email",
                         invitedEmail,
                         "mock-token",
@@ -405,14 +441,78 @@ describe("<RoomPreviewBar />", () => {
                 });
 
                 it("renders invite message when invite email mxid match", async () => {
-                    MatrixClientPeg.get().lookupThreePid = jest.fn().mockReturnValue(userId);
+                    MatrixClientPeg.safeGet().lookupThreePid = jest.fn().mockReturnValue({ mxid: userId });
                     const component = getComponent({ inviterName, invitedEmail });
                     await new Promise(setImmediate);
 
                     expect(getMessage(component)).toMatchSnapshot();
-                    await testJoinButton({ inviterName, invitedEmail })();
+                    await testJoinButton({ inviterName, invitedEmail }, false)();
                 });
             });
+        });
+    });
+
+    describe("message case AskToJoin", () => {
+        it("renders the corresponding message", () => {
+            const component = getComponent({ promptAskToJoin: true });
+            expect(getMessage(component)).toMatchSnapshot();
+        });
+
+        it("renders the corresponding message when kicked", () => {
+            const room = createRoom(roomId, otherUserId);
+            jest.spyOn(room, "getMember").mockReturnValue(makeMockRoomMember({ isKicked: true }));
+            const component = getComponent({ room, promptAskToJoin: true });
+
+            expect(getMessage(component)).toMatchSnapshot();
+        });
+
+        it("renders the corresponding message with a generic title", () => {
+            const component = render(<RoomPreviewBar promptAskToJoin />);
+            expect(getMessage(component)).toMatchSnapshot();
+        });
+
+        it("renders the corresponding actions", () => {
+            const component = getComponent({ promptAskToJoin: true });
+            expect(getActions(component)).toMatchSnapshot();
+        });
+
+        it("triggers the primary action callback", () => {
+            const onSubmitAskToJoin = jest.fn();
+            const component = getComponent({ promptAskToJoin: true, onSubmitAskToJoin });
+
+            fireEvent.click(getPrimaryActionButton(component)!);
+            expect(onSubmitAskToJoin).toHaveBeenCalled();
+        });
+
+        it("triggers the primary action callback with a reason", () => {
+            const onSubmitAskToJoin = jest.fn();
+            const reason = "some reason";
+            const component = getComponent({ promptAskToJoin: true, onSubmitAskToJoin });
+
+            fireEvent.change(component.container.querySelector("textarea")!, { target: { value: reason } });
+            fireEvent.click(getPrimaryActionButton(component)!);
+
+            expect(onSubmitAskToJoin).toHaveBeenCalledWith(reason);
+        });
+    });
+
+    describe("message case Knocked", () => {
+        it("renders the corresponding message", () => {
+            const component = getComponent({ knocked: true });
+            expect(getMessage(component)).toMatchSnapshot();
+        });
+
+        it("renders the corresponding actions", () => {
+            const component = getComponent({ knocked: true, onCancelAskToJoin: () => {} });
+            expect(getActions(component)).toMatchSnapshot();
+        });
+
+        it("triggers the secondary action callback", () => {
+            const onCancelAskToJoin = jest.fn();
+            const component = getComponent({ knocked: true, onCancelAskToJoin });
+
+            fireEvent.click(getSecondaryActionButton(component)!);
+            expect(onCancelAskToJoin).toHaveBeenCalled();
         });
     });
 });

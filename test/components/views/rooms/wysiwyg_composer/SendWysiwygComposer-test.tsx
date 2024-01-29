@@ -22,12 +22,12 @@ import MatrixClientContext from "../../../../../src/contexts/MatrixClientContext
 import RoomContext from "../../../../../src/contexts/RoomContext";
 import defaultDispatcher from "../../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../../src/dispatcher/actions";
-import { IRoomState } from "../../../../../src/components/structures/RoomView";
-import { createTestClient, flushPromises, getRoomContext, mkEvent, mkStubRoom } from "../../../../test-utils";
+import { flushPromises } from "../../../../test-utils";
 import { SendWysiwygComposer } from "../../../../../src/components/views/rooms/wysiwyg_composer/";
 import { aboveLeftOf } from "../../../../../src/components/structures/ContextMenu";
 import { ComposerInsertPayload, ComposerType } from "../../../../../src/dispatcher/payloads/ComposerInsertPayload";
 import { setSelection } from "../../../../../src/components/views/rooms/wysiwyg_composer/utils/selection";
+import { createMocks } from "./utils";
 
 jest.mock("../../../../../src/components/views/rooms/EmojiButton", () => ({
     EmojiButton: ({ addEmoji }: { addEmoji: (emoji: string) => void }) => {
@@ -44,20 +44,7 @@ describe("SendWysiwygComposer", () => {
         jest.resetAllMocks();
     });
 
-    const mockClient = createTestClient();
-    const mockEvent = mkEvent({
-        type: "m.room.message",
-        room: "myfakeroom",
-        user: "myfakeuser",
-        content: { msgtype: "m.text", body: "Replying to this" },
-        event: true,
-    });
-    const mockRoom = mkStubRoom("myfakeroom", "myfakeroom", mockClient) as any;
-    mockRoom.findEventById = jest.fn((eventId) => {
-        return eventId === mockEvent.getId() ? mockEvent : null;
-    });
-
-    const defaultRoomContext: IRoomState = getRoomContext(mockRoom, {});
+    const { defaultRoomContext, mockClient } = createMocks();
 
     const registerId = defaultDispatcher.register((payload) => {
         switch (payload.action) {
@@ -106,15 +93,15 @@ describe("SendWysiwygComposer", () => {
         customRender(jest.fn(), jest.fn(), false, true);
 
         // Then
-        await waitFor(() => expect(screen.getByTestId("WysiwygComposer")).toBeTruthy());
+        expect(await screen.findByTestId("WysiwygComposer", undefined, { timeout: 5000 })).toBeInTheDocument();
     });
 
-    it("Should render PlainTextComposer when isRichTextEnabled is at false", () => {
+    it("Should render PlainTextComposer when isRichTextEnabled is at false", async () => {
         // When
         customRender(jest.fn(), jest.fn(), false, false);
 
         // Then
-        expect(screen.getByTestId("PlainTextComposer")).toBeTruthy();
+        expect(await screen.findByTestId("PlainTextComposer")).toBeInTheDocument();
     });
 
     describe.each([{ isRichTextEnabled: true }, { isRichTextEnabled: false }])(
@@ -299,6 +286,7 @@ describe("SendWysiwygComposer", () => {
                     anchorOffset: 2,
                     focusNode: textNode,
                     focusOffset: 2,
+                    isForward: true,
                 });
                 // the event is not automatically fired by jest
                 document.dispatchEvent(new CustomEvent("selectionchange"));
@@ -307,6 +295,32 @@ describe("SendWysiwygComposer", () => {
 
                 // Then
                 await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(/wo🦫rd/));
+            });
+
+            it("Should add an emoji when a word is selected", async () => {
+                // When
+                screen.getByRole("textbox").focus();
+                screen.getByRole("textbox").innerHTML = "word";
+                fireEvent.input(screen.getByRole("textbox"), {
+                    data: "word",
+                    inputType: "insertText",
+                });
+
+                const textNode = screen.getByRole("textbox").firstChild;
+                await setSelection({
+                    anchorNode: textNode,
+                    anchorOffset: 3,
+                    focusNode: textNode,
+                    focusOffset: 2,
+                    isForward: false,
+                });
+                // the event is not automatically fired by jest
+                document.dispatchEvent(new CustomEvent("selectionchange"));
+
+                emojiButton.click();
+
+                // Then
+                await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(/wo🦫d/));
             });
         },
     );

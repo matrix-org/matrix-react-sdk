@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { useContext } from "react";
-import { Beacon } from "matrix-js-sdk/src/matrix";
-import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
+import { Beacon, LocationAssetType } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import BeaconStatus from "./BeaconStatus";
@@ -27,11 +26,11 @@ interface Props {
     beacon: Beacon;
 }
 
-const useBeaconName = (beacon: Beacon): string => {
+const useBeaconName = (beacon: Beacon): string | undefined => {
     const matrixClient = useContext(MatrixClientContext);
 
-    if (beacon.beaconInfo.assetType !== LocationAssetType.Self) {
-        return beacon.beaconInfo.description;
+    if (beacon.beaconInfo?.assetType !== LocationAssetType.Self) {
+        return beacon.beaconInfo?.description;
     }
     const room = matrixClient.getRoom(beacon.roomId);
     const member = room?.getMember(beacon.beaconInfoOwner);

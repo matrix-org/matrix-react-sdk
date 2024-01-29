@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import { mocked, MockedObject } from "jest-mock";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
+import { last } from "lodash";
+import { MatrixEvent, MatrixClient, ClientEvent } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi } from "matrix-widget-api";
 
 import { stubClient, mkRoom, mkEvent } from "../../test-utils";
@@ -35,14 +35,14 @@ describe("StopGapWidget", () => {
 
     beforeEach(() => {
         stubClient();
-        client = mocked(MatrixClientPeg.get());
+        client = mocked(MatrixClientPeg.safeGet());
 
         widget = new StopGapWidget({
             app: {
                 id: "test",
                 creatorUserId: "@alice:example.org",
                 type: "example",
-                url: "https://example.org",
+                url: "https://example.org?user-id=$matrix_user_id&device-id=$org.matrix.msc3819.matrix_device_id&base-url=$org.matrix.msc4039.matrix_base_url",
                 roomId: "!1:example.org",
             },
             room: mkRoom(client, "!1:example.org"),
@@ -53,11 +53,17 @@ describe("StopGapWidget", () => {
         });
         // Start messaging without an iframe, since ClientWidgetApi is mocked
         widget.startMessaging(null as unknown as HTMLIFrameElement);
-        messaging = mocked(mocked(ClientWidgetApi).mock.instances[0]);
+        messaging = mocked(last(mocked(ClientWidgetApi).mock.instances)!);
     });
 
     afterEach(() => {
         widget.stopMessaging();
+    });
+
+    it("should replace parameters in widget url template", () => {
+        expect(widget.embedUrl).toBe(
+            "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
+        );
     });
 
     it("feeds incoming to-device messages to the widget", async () => {
@@ -80,8 +86,8 @@ describe("StopGapWidget", () => {
         beforeEach(() => {
             voiceBroadcastInfoEvent = mkEvent({
                 event: true,
-                room: client.getRoom("x").roomId,
-                user: client.getUserId(),
+                room: client.getRoom("x")?.roomId,
+                user: client.getUserId()!,
                 type: VoiceBroadcastInfoEventType,
                 content: {},
             });

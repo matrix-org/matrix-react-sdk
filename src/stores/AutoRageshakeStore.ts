@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ClientEvent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
+import { ClientEvent, MatrixEvent, MatrixEventEvent, SyncStateData, SyncState } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
 
 import SdkConfig from "../SdkConfig";
 import sendBugReport from "../rageshake/submit-rageshake";
@@ -119,7 +118,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 room_id: ev.getRoomId(),
                 session_id: sessionId,
                 device_id: wireContent.device_id,
-                user_id: ev.getSender(),
+                user_id: ev.getSender()!,
                 sender_key: wireContent.sender_key,
             };
 
@@ -135,15 +134,20 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 ...eventInfo,
                 recipient_rageshake: rageshakeURL,
             };
-            this.matrixClient.sendToDevice(AUTO_RS_REQUEST, {
-                [messageContent.user_id]: { [messageContent.device_id]: messageContent },
-            });
+            this.matrixClient?.sendToDevice(
+                AUTO_RS_REQUEST,
+                new Map([["messageContent.user_id", new Map([[messageContent.device_id, messageContent]])]]),
+            );
         }
     }
 
-    private async onSyncStateChange(_state: SyncState, _prevState: SyncState, data: ISyncStateData): Promise<void> {
+    private async onSyncStateChange(
+        _state: SyncState,
+        _prevState: SyncState | null,
+        data?: SyncStateData,
+    ): Promise<void> {
         if (!this.state.initialSyncCompleted) {
-            await this.updateState({ initialSyncCompleted: !!data.nextSyncToken });
+            await this.updateState({ initialSyncCompleted: !!data?.nextSyncToken });
         }
     }
 

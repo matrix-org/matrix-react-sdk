@@ -30,12 +30,11 @@ export function openLinkModal(
     composerContext: ComposerContextState,
     isEditing: boolean,
 ): void {
-    const modal = Modal.createDialog(
+    Modal.createDialog(
         LinkModal,
         {
             composerContext,
             composer,
-            onClose: () => modal.close(),
             isTextEnabled: isSelectionEmpty(),
             isEditing,
         },
@@ -52,18 +51,18 @@ function isEmpty(text: string): boolean {
 interface LinkModalProps {
     composer: FormattingFunctions;
     isTextEnabled: boolean;
-    onClose: () => void;
+    onFinished: () => void;
     composerContext: ComposerContextState;
     isEditing: boolean;
 }
 
-export function LinkModal({
+export const LinkModal: React.FC<LinkModalProps> = ({
     composer,
     isTextEnabled,
-    onClose,
+    onFinished,
     composerContext,
     isEditing,
-}: LinkModalProps): JSX.Element {
+}) => {
     const [hasLinkChanged, setHasLinkChanged] = useState(false);
     const [fields, setFields] = useState({ text: "", link: isEditing ? composer.getLink() : "" });
     const hasText = !isEditing && isTextEnabled;
@@ -72,9 +71,9 @@ export function LinkModal({
     return (
         <BaseDialog
             className="mx_LinkModal"
-            title={isEditing ? _t("Edit link") : _t("Create a link")}
+            title={isEditing ? _t("composer|link_modal|title_edit") : _t("composer|link_modal|title_create")}
             hasCancel={true}
-            onFinished={onClose}
+            onFinished={onFinished}
         >
             <form
                 className="mx_LinkModal_content"
@@ -82,7 +81,7 @@ export function LinkModal({
                     evt.preventDefault();
                     evt.stopPropagation();
 
-                    onClose();
+                    onFinished();
 
                     // When submitting is done when pressing enter when the link field has the focus,
                     // The link field is getting back the focus (due to react-focus-lock)
@@ -97,7 +96,7 @@ export function LinkModal({
                     <Field
                         required={true}
                         autoFocus={true}
-                        label={_t("Text")}
+                        label={_t("composer|link_modal|text_field_label")}
                         value={fields.text}
                         className="mx_LinkModal_Field"
                         placeholder=""
@@ -109,7 +108,7 @@ export function LinkModal({
                 <Field
                     required={true}
                     autoFocus={!hasText}
-                    label={_t("Link")}
+                    label={_t("composer|link_modal|link_field_label")}
                     value={fields.link}
                     className="mx_LinkModal_Field"
                     placeholder=""
@@ -126,20 +125,20 @@ export function LinkModal({
                             className="danger"
                             onClick={() => {
                                 composer.removeLinks();
-                                onClose();
+                                onFinished();
                             }}
                         >
-                            {_t("Remove")}
+                            {_t("action|remove")}
                         </button>
                     )}
                     <DialogButtons
-                        primaryButton={_t("Save")}
+                        primaryButton={_t("action|save")}
                         primaryDisabled={isSaveDisabled}
                         primaryIsSubmit={true}
-                        onCancel={onClose}
+                        onCancel={onFinished}
                     />
                 </div>
             </form>
         </BaseDialog>
     );
-}
+};

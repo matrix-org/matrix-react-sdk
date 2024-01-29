@@ -14,11 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { User } from "matrix-js-sdk/src/models/user";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { MatrixEvent, Room, RoomMember, User } from "matrix-js-sdk/src/matrix";
+import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 
 import { RightPanelPhases } from "./RightPanelStorePhases";
 
@@ -52,12 +49,12 @@ export interface IRightPanelCardStateStored {
 }
 
 export interface IRightPanelCard {
-    phase: RightPanelPhases;
+    phase: RightPanelPhases | null;
     state?: IRightPanelCardState;
 }
 
 export interface IRightPanelCardStored {
-    phase: RightPanelPhases;
+    phase: RightPanelPhases | null;
     state?: IRightPanelCardStateStored;
 }
 
@@ -71,8 +68,8 @@ interface IRightPanelForRoomStored {
     history: Array<IRightPanelCardStored>;
 }
 
-export function convertToStorePanel(cacheRoom: IRightPanelForRoom): IRightPanelForRoomStored {
-    if (!cacheRoom) return cacheRoom;
+export function convertToStorePanel(cacheRoom?: IRightPanelForRoom): IRightPanelForRoomStored | undefined {
+    if (!cacheRoom) return undefined;
     const storeHistory = [...cacheRoom.history].map((panelState) => convertCardToStore(panelState));
     return { isOpen: cacheRoom.isOpen, history: storeHistory };
 }
@@ -90,10 +87,10 @@ export function convertCardToStore(panelState: IRightPanelCard): IRightPanelCard
         spaceId: state.spaceId,
         isInitialEventHighlighted: state.isInitialEventHighlighted,
         initialEventScrollIntoView: state.initialEventScrollIntoView,
-        threadHeadEventId: !!state?.threadHeadEvent?.getId() ? panelState.state.threadHeadEvent.getId() : undefined,
-        memberInfoEventId: !!state?.memberInfoEvent?.getId() ? panelState.state.memberInfoEvent.getId() : undefined,
-        initialEventId: !!state?.initialEvent?.getId() ? panelState.state.initialEvent.getId() : undefined,
-        memberId: !!state?.member?.userId ? panelState.state.member.userId : undefined,
+        threadHeadEventId: !!state?.threadHeadEvent?.getId() ? state.threadHeadEvent.getId() : undefined,
+        memberInfoEventId: !!state?.memberInfoEvent?.getId() ? state.memberInfoEvent.getId() : undefined,
+        initialEventId: !!state?.initialEvent?.getId() ? state.initialEvent.getId() : undefined,
+        memberId: !!state?.member?.userId ? state.member.userId : undefined,
     };
 
     return { state: stateStored, phase: panelState.phase };
@@ -113,7 +110,7 @@ function convertStoreToCard(panelStateStore: IRightPanelCardStored, room: Room):
             ? room.findEventById(stateStored.memberInfoEventId)
             : undefined,
         initialEvent: !!stateStored?.initialEventId ? room.findEventById(stateStored.initialEventId) : undefined,
-        member: !!stateStored?.memberId ? room.getMember(stateStored.memberId) : undefined,
+        member: (!!stateStored?.memberId && room.getMember(stateStored.memberId)) || undefined,
     };
 
     return { state: state, phase: panelStateStore.phase };

@@ -14,16 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactElement } from "react";
 
 import Dropdown from "../../views/elements/Dropdown";
 import PlatformPeg from "../../../PlatformPeg";
 import SettingsStore from "../../../settings/SettingsStore";
-import { _t } from "../../../languageHandler";
+import { _t, getUserLanguage } from "../../../languageHandler";
 import Spinner from "./Spinner";
-import * as languageHandler from "../../../languageHandler";
+import { NonEmptyArray } from "../../../@types/common";
 
-type Languages = Awaited<ReturnType<typeof languageHandler.getAllLanguagesFromJson>>;
+type Languages = {
+    value: string;
+    label: string; // translated
+}[];
 function languageMatchesSearchQuery(query: string, language: Languages[0]): boolean {
     if (language.label.toUpperCase().includes(query.toUpperCase())) return true;
     if (language.value.toUpperCase() === query.toUpperCase()) return true;
@@ -33,33 +36,34 @@ function languageMatchesSearchQuery(query: string, language: Languages[0]): bool
 interface SpellCheckLanguagesDropdownIProps {
     className: string;
     value: string;
-    onOptionChange(language: string);
+    onOptionChange(language: string): void;
 }
 
 interface SpellCheckLanguagesDropdownIState {
     searchQuery: string;
-    languages: Languages;
+    languages?: Languages;
 }
 
 export default class SpellCheckLanguagesDropdown extends React.Component<
     SpellCheckLanguagesDropdownIProps,
     SpellCheckLanguagesDropdownIState
 > {
-    public constructor(props) {
+    public constructor(props: SpellCheckLanguagesDropdownIProps) {
         super(props);
         this.onSearchChange = this.onSearchChange.bind(this);
 
         this.state = {
             searchQuery: "",
-            languages: null,
         };
     }
 
     public componentDidMount(): void {
         const plaf = PlatformPeg.get();
         if (plaf) {
-            plaf.getAvailableSpellCheckLanguages()
-                .then((languages) => {
+            const languageNames = new Intl.DisplayNames([getUserLanguage()], { type: "language", style: "short" });
+            plaf
+                .getAvailableSpellCheckLanguages()
+                ?.then((languages) => {
                     languages.sort(function (a, b) {
                         if (a < b) return -1;
                         if (a > b) return 1;
@@ -68,7 +72,7 @@ export default class SpellCheckLanguagesDropdown extends React.Component<
                     const langs: Languages = [];
                     languages.forEach((language) => {
                         langs.push({
-                            label: language,
+                            label: languageNames.of(language)!,
                             value: language,
                         });
                     });
@@ -79,7 +83,7 @@ export default class SpellCheckLanguagesDropdown extends React.Component<
                         languages: [
                             {
                                 value: "en",
-                                label: "English",
+                                label: languageNames.of("en")!,
                             },
                         ],
                     });
@@ -91,12 +95,12 @@ export default class SpellCheckLanguagesDropdown extends React.Component<
         this.setState({ searchQuery });
     }
 
-    public render(): JSX.Element {
-        if (this.state.languages === null) {
+    public render(): React.ReactNode {
+        if (!this.state.languages) {
             return <Spinner />;
         }
 
-        let displayedLanguages;
+        let displayedLanguages: Languages;
         if (this.state.searchQuery) {
             displayedLanguages = this.state.languages.filter((lang) => {
                 return languageMatchesSearchQuery(this.state.searchQuery, lang);
@@ -107,12 +111,12 @@ export default class SpellCheckLanguagesDropdown extends React.Component<
 
         const options = displayedLanguages.map((language) => {
             return <div key={language.value}>{language.label}</div>;
-        });
+        }) as NonEmptyArray<ReactElement & { key: string }>;
 
         // default value here too, otherwise we need to handle null / undefined;
         // values between mounting and the initial value propagating
-        let language = SettingsStore.getValue("language", null, /*excludeDefault:*/ true);
-        let value = null;
+        let language = SettingsStore.getValue<string | undefined>("language", null, /*excludeDefault:*/ true);
+        let value: string | undefined;
         if (language) {
             value = this.props.value || language;
         } else {
@@ -128,8 +132,8 @@ export default class SpellCheckLanguagesDropdown extends React.Component<
                 onSearchChange={this.onSearchChange}
                 searchEnabled={true}
                 value={value}
-                label={_t("Language Dropdown")}
-                placeholder={_t("Choose a locale")}
+                label={_t("language_dropdown_label")}
+                placeholder={_t("settings|general|spell_check_locale_placeholder")}
             >
                 {options}
             </Dropdown>

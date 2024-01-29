@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ interface IState {
  * A clock for a playback of a recording.
  */
 export default class PlaybackClock extends React.PureComponent<IProps, IState> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -65,11 +65,11 @@ export default class PlaybackClock extends React.PureComponent<IProps, IState> {
         this.setState({ seconds: time[0], durationSeconds: time[1] });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let seconds = this.state.seconds;
         if (this.state.playbackPhase === PlaybackState.Stopped) {
             if (Number.isFinite(this.props.defaultDisplaySeconds)) {
-                seconds = this.props.defaultDisplaySeconds;
+                seconds = this.props.defaultDisplaySeconds ?? this.props.playback.durationSeconds;
             } else {
                 seconds = this.state.durationSeconds;
             }

@@ -22,15 +22,15 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t } from "../../../languageHandler";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { OIDCState } from "../../../stores/widgets/WidgetPermissionStore";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 
-interface IProps extends IDialogProps {
+interface IProps {
     widget: Widget;
     widgetKind: WidgetKind;
     inRoomId?: string;
+    onFinished(allowed?: boolean): void;
 }
 
 interface IState {
@@ -73,23 +73,23 @@ export default class WidgetOpenIDPermissionsDialog extends React.PureComponent<I
         this.setState({ rememberSelection: newVal });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <BaseDialog
                 className="mx_WidgetOpenIDPermissionsDialog"
                 hasCancel={true}
                 onFinished={this.props.onFinished}
-                title={_t("Allow this widget to verify your identity")}
+                title={_t("widget|open_id_permissions_dialog|title")}
             >
                 <div className="mx_WidgetOpenIDPermissionsDialog_content">
-                    <p>{_t("The widget will verify your user ID, but won't be able to perform actions for you:")}</p>
+                    <p>{_t("widget|open_id_permissions_dialog|starting_text")}</p>
                     <p className="text-muted">
                         {/* cheap trim to just get the path */}
                         {this.props.widget.templateUrl.split("?")[0].split("#")[0]}
                     </p>
                 </div>
                 <DialogButtons
-                    primaryButton={_t("Continue")}
+                    primaryButton={_t("action|continue")}
                     onPrimaryButtonClick={this.onAllow}
                     onCancel={this.onDeny}
                     additive={
@@ -97,7 +97,7 @@ export default class WidgetOpenIDPermissionsDialog extends React.PureComponent<I
                             value={this.state.rememberSelection}
                             toggleInFront={true}
                             onChange={this.onRememberSelectionChange}
-                            label={_t("Remember this")}
+                            label={_t("widget|open_id_permissions_dialog|remember_selection")}
                         />
                     }
                 />

@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { IDeferred, defer } from "matrix-js-sdk/src/utils";
+
 /**
 A countdown timer, exposing a promise api.
 A timer starts in a non-started state,
@@ -26,32 +28,28 @@ Once a timer is finished or aborted, it can't be started again
 a new one through `clone()` or `cloneIfRun()`.
 */
 export default class Timer {
-    private timerHandle: number;
-    private startTs: number;
-    private promise: Promise<void>;
-    private resolve: () => void;
-    private reject: (Error) => void;
+    private timerHandle?: number;
+    private startTs?: number;
+    private deferred!: IDeferred<void>;
 
     public constructor(private timeout: number) {
         this.setNotStarted();
     }
 
     private setNotStarted(): void {
-        this.timerHandle = null;
-        this.startTs = null;
-        this.promise = new Promise<void>((resolve, reject) => {
-            this.resolve = resolve;
-            this.reject = reject;
-        }).finally(() => {
-            this.timerHandle = null;
+        this.timerHandle = undefined;
+        this.startTs = undefined;
+        this.deferred = defer();
+        this.deferred.promise = this.deferred.promise.finally(() => {
+            this.timerHandle = undefined;
         });
     }
 
     private onTimeout = (): void => {
         const now = Date.now();
-        const elapsed = now - this.startTs;
+        const elapsed = now - this.startTs!;
         if (elapsed >= this.timeout) {
-            this.resolve();
+            this.deferred.resolve();
             this.setNotStarted();
         } else {
             const delta = this.timeout - elapsed;
@@ -108,7 +106,7 @@ export default class Timer {
     public abort(): Timer {
         if (this.isRunning()) {
             clearTimeout(this.timerHandle);
-            this.reject(new Error("Timer was aborted."));
+            this.deferred.reject(new Error("Timer was aborted."));
             this.setNotStarted();
         }
         return this;
@@ -120,10 +118,10 @@ export default class Timer {
      *@return {Promise}
      */
     public finished(): Promise<void> {
-        return this.promise;
+        return this.deferred.promise;
     }
 
     public isRunning(): boolean {
-        return this.timerHandle !== null;
+        return this.timerHandle !== undefined;
     }
 }

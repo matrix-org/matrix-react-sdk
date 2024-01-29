@@ -19,19 +19,18 @@ limitations under the License.
 import React from "react";
 import FocusLock from "react-focus-lock";
 import classNames from "classnames";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import AccessibleButton from "../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import Heading from "../typography/Heading";
-import { IDialogProps } from "./IDialogProps";
 import { PosthogScreenTracker, ScreenName } from "../../../PosthogTrackers";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
-interface IProps extends IDialogProps {
+interface IProps {
     // Whether the dialog should have a 'close' button that will
     // cause the dialog to be cancelled. This should only be set
     // to false if there is nothing the app can sensibly do if the
@@ -49,6 +48,9 @@ interface IProps extends IDialogProps {
     // the container will have no fixed size, allowing its contents to
     // determine its size. Default: true.
     "fixedWidth"?: boolean;
+
+    // To be displayed at the top of the dialog. Even above the title.
+    "top"?: React.ReactNode;
 
     // Title for the dialog.
     "title"?: JSX.Element | string;
@@ -72,6 +74,7 @@ interface IProps extends IDialogProps {
 
     // optional Posthog ScreenName to supply during the lifetime of this dialog
     "screenName"?: ScreenName;
+    onFinished(): void;
 }
 
 /*
@@ -83,21 +86,23 @@ interface IProps extends IDialogProps {
 export default class BaseDialog extends React.Component<IProps> {
     private matrixClient: MatrixClient;
 
-    public static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         hasCancel: true,
         fixedWidth: true,
     };
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
-        this.matrixClient = MatrixClientPeg.get();
+        // XXX: The contract on MatrixClientContext says it is only available within a LoggedInView subtree,
+        // given that modals function outside the MatrixChat React tree this simulates that. We don't want to
+        // use safeGet as it throwing would mean we cannot use modals whilst the user isn't logged in.
+        // The longer term solution is to move our ModalManager into the React tree to inherit contexts properly.
+        this.matrixClient = MatrixClientPeg.get()!;
     }
 
     private onKeyDown = (e: KeyboardEvent | React.KeyboardEvent): void => {
-        if (this.props.onKeyDown) {
-            this.props.onKeyDown(e);
-        }
+        this.props.onKeyDown?.(e);
 
         const action = getKeyBindingsManager().getAccessibilityAction(e);
         switch (action) {
@@ -106,23 +111,23 @@ export default class BaseDialog extends React.Component<IProps> {
 
                 e.stopPropagation();
                 e.preventDefault();
-                this.props.onFinished(false);
+                this.props.onFinished();
                 break;
         }
     };
 
-    private onCancelClick = (e: ButtonEvent): void => {
-        this.props.onFinished(false);
+    private onCancelClick = (): void => {
+        this.props.onFinished();
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let cancelButton;
         if (this.props.hasCancel) {
             cancelButton = (
                 <AccessibleButton
                     onClick={this.onCancelClick}
                     className="mx_Dialog_cancelButton"
-                    aria-label={_t("Close dialog")}
+                    aria-label={_t("dialog_close_label")}
                 />
             );
         }
@@ -132,7 +137,7 @@ export default class BaseDialog extends React.Component<IProps> {
             headerImage = <img className="mx_Dialog_titleImage" src={this.props.headerImage} alt="" />;
         }
 
-        const lockProps = {
+        const lockProps: Record<string, any> = {
             "onKeyDown": this.onKeyDown,
             "role": "dialog",
             // This should point to a node describing the dialog.
@@ -150,31 +155,38 @@ export default class BaseDialog extends React.Component<IProps> {
             lockProps["aria-labelledby"] = "mx_BaseDialog_title";
         }
 
+        const isHeaderWithCancelOnly =
+            !!cancelButton && !this.props.title && !this.props.headerButton && !this.props.headerImage;
+
         return (
             <MatrixClientContext.Provider value={this.matrixClient}>
-                <PosthogScreenTracker screenName={this.props.screenName} />
+                {this.props.screenName && <PosthogScreenTracker screenName={this.props.screenName} />}
                 <FocusLock
                     returnFocus={true}
                     lockProps={lockProps}
-                    className={classNames({
-                        [this.props.className]: true,
+                    className={classNames(this.props.className, {
                         mx_Dialog_fixedWidth: this.props.fixedWidth,
                     })}
                 >
+                    {this.props.top}
                     <div
                         className={classNames("mx_Dialog_header", {
                             mx_Dialog_headerWithButton: !!this.props.headerButton,
                             mx_Dialog_headerWithCancel: !!cancelButton,
+                            mx_Dialog_headerWithCancelOnly: isHeaderWithCancelOnly,
                         })}
                     >
-                        <Heading
-                            size="h2"
-                            className={classNames("mx_Dialog_title", this.props.titleClass)}
-                            id="mx_BaseDialog_title"
-                        >
-                            {headerImage}
-                            {this.props.title}
-                        </Heading>
+                        {!!(this.props.title || headerImage) && (
+                            <Heading
+                                size="3"
+                                as="h2"
+                                className={classNames("mx_Dialog_title", this.props.titleClass)}
+                                id="mx_BaseDialog_title"
+                            >
+                                {headerImage}
+                                {this.props.title}
+                            </Heading>
+                        )}
                         {this.props.headerButton}
                         {cancelButton}
                     </div>

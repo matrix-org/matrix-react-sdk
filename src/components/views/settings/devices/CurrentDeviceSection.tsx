@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useState } from "react";
-import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
+import { LocalNotificationSettings } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../languageHandler";
 import Spinner from "../../elements/Spinner";
@@ -33,11 +33,11 @@ interface Props {
     device?: ExtendedDevice;
     isLoading: boolean;
     isSigningOut: boolean;
-    localNotificationSettings?: LocalNotificationSettings | undefined;
+    localNotificationSettings?: LocalNotificationSettings;
     // number of other sessions the user has
     // excludes current session
     otherSessionsCount: number;
-    setPushNotifications?: (deviceId: string, enabled: boolean) => Promise<void> | undefined;
+    setPushNotifications: (deviceId: string, enabled: boolean) => Promise<void>;
     onVerifyCurrentDevice: () => void;
     onSignOutCurrentDevice: () => void;
     signOutAllOtherSessions?: () => void;
@@ -60,7 +60,7 @@ const CurrentDeviceSectionHeading: React.FC<CurrentDeviceSectionHeadingProps> = 
     const menuOptions = [
         <IconizedContextMenuOption
             key="sign-out"
-            label={_t("Sign out")}
+            label={_t("action|sign_out")}
             onClick={onSignOutCurrentDevice}
             isDestructive
         />,
@@ -68,7 +68,7 @@ const CurrentDeviceSectionHeading: React.FC<CurrentDeviceSectionHeadingProps> = 
             ? [
                   <IconizedContextMenuOption
                       key="sign-out-all-others"
-                      label={_t("Sign out of all other sessions (%(otherSessionsCount)s)", { otherSessionsCount })}
+                      label={_t("settings|sessions|sign_out_all_other_sessions", { otherSessionsCount })}
                       onClick={signOutAllOtherSessions}
                       isDestructive
                   />,
@@ -76,10 +76,10 @@ const CurrentDeviceSectionHeading: React.FC<CurrentDeviceSectionHeadingProps> = 
             : []),
     ];
     return (
-        <SettingsSubsectionHeading heading={_t("Current session")}>
+        <SettingsSubsectionHeading heading={_t("settings|sessions|current_session")}>
             <KebabContextMenu
                 disabled={disabled}
-                title={_t("Options")}
+                title={_t("common|options")}
                 options={menuOptions}
                 data-testid="current-session-menu"
             />

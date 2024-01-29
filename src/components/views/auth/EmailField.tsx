@@ -17,19 +17,19 @@ limitations under the License.
 import React, { PureComponent, RefCallback, RefObject } from "react";
 
 import Field, { IInputProps } from "../elements/Field";
-import { _t, _td } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import * as Email from "../../../email";
 
-interface IProps extends Omit<IInputProps, "onValidate"> {
+interface IProps extends Omit<IInputProps, "onValidate" | "element"> {
     id?: string;
     fieldRef?: RefCallback<Field> | RefObject<Field>;
     value: string;
     autoFocus?: boolean;
 
-    label?: string;
-    labelRequired?: string;
-    labelInvalid?: string;
+    label: TranslationKey;
+    labelRequired: TranslationKey;
+    labelInvalid: TranslationKey;
 
     // When present, completely overrides the default validation rules.
     validationRules?: (fieldState: IFieldState) => Promise<IValidationResult>;
@@ -40,9 +40,9 @@ interface IProps extends Omit<IInputProps, "onValidate"> {
 
 class EmailField extends PureComponent<IProps> {
     public static defaultProps = {
-        label: _td("Email"),
-        labelRequired: _td("Enter email address"),
-        labelInvalid: _td("Doesn't look like a valid email address"),
+        label: _td("auth|email_field_label"),
+        labelRequired: _td("auth|email_field_label_required"),
+        labelInvalid: _td("auth|email_field_label_invalid"),
     };
 
     public readonly validate = withValidation({
@@ -74,7 +74,7 @@ class EmailField extends PureComponent<IProps> {
         return result;
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <Field
                 id={this.props.id}

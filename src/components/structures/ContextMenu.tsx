@@ -99,19 +99,19 @@ export interface IProps extends MenuProps {
     closeOnInteraction?: boolean;
 
     // Function to be called on menu close
-    onFinished();
+    onFinished(): void;
     // on resize callback
-    windowResize?();
+    windowResize?(): void;
 }
 
 interface IState {
-    contextMenuElem: HTMLDivElement;
+    contextMenuElem?: HTMLDivElement;
 }
 
 // Generic ContextMenu Portal wrapper
 // all options inside the menu should be of role=menuitem/menuitemcheckbox/menuitemradiobutton and have tabIndex={-1}
 // this will allow the ContextMenu to manage its own focus using arrow keys as per the ARIA guidelines.
-export default class ContextMenu extends React.PureComponent<IProps, IState> {
+export default class ContextMenu extends React.PureComponent<React.PropsWithChildren<IProps>, IState> {
     private readonly initialFocus: HTMLElement;
 
     public static defaultProps = {
@@ -119,12 +119,10 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         managed: true,
     };
 
-    public constructor(props, context) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
-        this.state = {
-            contextMenuElem: null,
-        };
+        this.state = {};
 
         // persist what had focus when we got initialized so we can return it after
         this.initialFocus = document.activeElement as HTMLElement;
@@ -150,7 +148,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
 
         const first =
             element.querySelector<HTMLElement>('[role^="menuitem"]') ||
-            element.querySelector<HTMLElement>("[tab-index]");
+            element.querySelector<HTMLElement>("[tabindex]");
 
         if (first) {
             first.focus();
@@ -181,7 +179,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
                     button: 0, // Left
                     relatedTarget: null,
                 });
-                document.elementFromPoint(x, y).dispatchEvent(clickEvent);
+                document.elementFromPoint(x, y)?.dispatchEvent(clickEvent);
             });
         }
     };
@@ -239,7 +237,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
                 // MessageActionBar), we should close any ContextMenu that is open.
                 KeyBindingAction.ArrowLeft,
                 KeyBindingAction.ArrowRight,
-            ].includes(action)
+            ].includes(action!)
         ) {
             this.props.onFinished();
         }
@@ -312,12 +310,12 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
                 position.top = Math.min(position.top, maxTop);
                 // Adjust the chevron if necessary
                 if (chevronOffset.top !== undefined) {
-                    chevronOffset.top = propsChevronOffset + top - position.top;
+                    chevronOffset.top = propsChevronOffset! + top! - position.top;
                 }
             } else if (position.bottom !== undefined) {
                 position.bottom = Math.min(position.bottom, windowHeight - contextMenuRect.height - WINDOW_PADDING);
                 if (chevronOffset.top !== undefined) {
-                    chevronOffset.top = propsChevronOffset + position.bottom - bottom;
+                    chevronOffset.top = propsChevronOffset! + position.bottom - bottom!;
                 }
             }
             if (position.left !== undefined) {
@@ -327,12 +325,12 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
                 }
                 position.left = Math.min(position.left, maxLeft);
                 if (chevronOffset.left !== undefined) {
-                    chevronOffset.left = propsChevronOffset + left - position.left;
+                    chevronOffset.left = propsChevronOffset! + left! - position.left;
                 }
             } else if (position.right !== undefined) {
                 position.right = Math.min(position.right, windowWidth - contextMenuRect.width - WINDOW_PADDING);
                 if (chevronOffset.left !== undefined) {
-                    chevronOffset.left = propsChevronOffset + position.right - right;
+                    chevronOffset.left = propsChevronOffset! + position.right - right!;
                 }
             }
         }
@@ -387,13 +385,13 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             menuStyle["paddingRight"] = menuPaddingRight;
         }
 
-        const wrapperStyle = {};
+        const wrapperStyle: CSSProperties = {};
         if (!isNaN(Number(zIndex))) {
-            menuStyle["zIndex"] = zIndex + 1;
+            menuStyle["zIndex"] = zIndex! + 1;
             wrapperStyle["zIndex"] = zIndex;
         }
 
-        let background;
+        let background: JSX.Element;
         if (hasBackground) {
             background = (
                 <div
@@ -624,7 +622,7 @@ export function createMenu(
     ElementClass: typeof React.Component,
     props: Record<string, any>,
 ): { close: (...args: any[]) => void } {
-    const onFinished = function (...args): void {
+    const onFinished = function (...args: any[]): void {
         ReactDOM.unmountComponentAtNode(getOrCreateContainer());
         props?.onFinished?.apply(null, args);
     };

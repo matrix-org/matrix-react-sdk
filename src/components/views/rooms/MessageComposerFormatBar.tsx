@@ -18,7 +18,8 @@ import React, { createRef } from "react";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
+import Toolbar from "../../../accessibility/Toolbar";
 
 export enum Formatting {
     Bold = "bold",
@@ -46,59 +47,59 @@ export default class MessageComposerFormatBar extends React.PureComponent<IProps
         this.state = { visible: false };
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const classes = classNames("mx_MessageComposerFormatBar", {
             mx_MessageComposerFormatBar_shown: this.state.visible,
         });
         return (
-            <div className={classes} ref={this.formatBarRef}>
+            <Toolbar className={classes} ref={this.formatBarRef} aria-label={_t("composer|formatting_toolbar_label")}>
                 <FormatButton
-                    label={_t("Bold")}
+                    label={_t("composer|format_bold")}
                     onClick={() => this.props.onAction(Formatting.Bold)}
                     icon="Bold"
                     shortcut={this.props.shortcuts.bold}
                     visible={this.state.visible}
                 />
                 <FormatButton
-                    label={_t("Italics")}
+                    label={_t("composer|format_italics")}
                     onClick={() => this.props.onAction(Formatting.Italics)}
                     icon="Italic"
                     shortcut={this.props.shortcuts.italics}
                     visible={this.state.visible}
                 />
                 <FormatButton
-                    label={_t("Strikethrough")}
+                    label={_t("composer|format_strikethrough")}
                     onClick={() => this.props.onAction(Formatting.Strikethrough)}
                     icon="Strikethrough"
                     visible={this.state.visible}
                 />
                 <FormatButton
-                    label={_t("Code block")}
+                    label={_t("composer|format_code_block")}
                     onClick={() => this.props.onAction(Formatting.Code)}
                     icon="Code"
                     shortcut={this.props.shortcuts.code}
                     visible={this.state.visible}
                 />
                 <FormatButton
-                    label={_t("Quote")}
+                    label={_t("action|quote")}
                     onClick={() => this.props.onAction(Formatting.Quote)}
                     icon="Quote"
                     shortcut={this.props.shortcuts.quote}
                     visible={this.state.visible}
                 />
                 <FormatButton
-                    label={_t("Insert link")}
+                    label={_t("composer|format_insert_link")}
                     onClick={() => this.props.onAction(Formatting.InsertLink)}
                     icon="InsertLink"
                     shortcut={this.props.shortcuts.insert_link}
                     visible={this.state.visible}
                 />
-            </div>
+            </Toolbar>
         );
     }
 
     public showAt(selectionRect: DOMRect): void {
-        if (!this.formatBarRef.current) return;
+        if (!this.formatBarRef.current?.parentElement) return;
 
         this.setState({ visible: true });
         const parentRect = this.formatBarRef.current.parentElement.getBoundingClientRect();
@@ -124,7 +125,7 @@ interface IFormatButtonProps {
 }
 
 class FormatButton extends React.PureComponent<IFormatButtonProps> {
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const className = `mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIcon${this.props.icon}`;
         let shortcut;
         if (this.props.shortcut) {
@@ -140,7 +141,7 @@ class FormatButton extends React.PureComponent<IFormatButtonProps> {
         // element="button" and type="button" are necessary for the buttons to work on WebKit,
         // otherwise the text is deselected before onClick can ever be called
         return (
-            <AccessibleTooltipButton
+            <RovingAccessibleTooltipButton
                 element="button"
                 type="button"
                 onClick={this.props.onClick}

@@ -16,7 +16,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { SettingLevel } from "../SettingLevel";
 import { CallbackFn, WatchManager } from "../WatchManager";
 import AbstractLocalStorageSettingsHandler from "./AbstractLocalStorageSettingsHandler";
@@ -32,7 +31,10 @@ export default class DeviceSettingsHandler extends AbstractLocalStorageSettingsH
      * @param {string[]} featureNames The names of known features.
      * @param {WatchManager} watchers The watch manager to notify updates to
      */
-    public constructor(private featureNames: string[], public readonly watchers: WatchManager) {
+    public constructor(
+        private featureNames: string[],
+        public readonly watchers: WatchManager,
+    ) {
         super();
     }
 
@@ -117,10 +119,12 @@ export default class DeviceSettingsHandler extends AbstractLocalStorageSettingsH
 
     // public for access to migrations - not exposed from the SettingsHandler interface
     public readFeature(featureName: string): boolean | null {
-        if (MatrixClientPeg.get() && MatrixClientPeg.get().isGuest()) {
-            // Guests should not have any labs features enabled.
-            return false;
-        }
+        // Previously, we disabled all features for guests, but since different
+        // installations can have site-specific config files which might set up
+        // different behaviour that is relevant to guests, we removed that
+        // special behaviour. See
+        // https://github.com/vector-im/element-web/issues/24513 for the
+        // discussion.
 
         // XXX: This turns they key names into `mx_labs_feature_feature_x` (double feature).
         // This is because all feature names start with `feature_` as a matter of policy.

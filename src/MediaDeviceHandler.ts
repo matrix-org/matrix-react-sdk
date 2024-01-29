@@ -37,7 +37,7 @@ export enum MediaDeviceHandlerEvent {
 }
 
 export default class MediaDeviceHandler extends EventEmitter {
-    private static internalInstance;
+    private static internalInstance?: MediaDeviceHandler;
 
     public static get instance(): MediaDeviceHandler {
         if (!MediaDeviceHandler.internalInstance) {
@@ -64,10 +64,10 @@ export default class MediaDeviceHandler extends EventEmitter {
      *
      * @return Promise<IMediaDevices> The available media devices
      */
-    public static async getDevices(): Promise<IMediaDevices> {
+    public static async getDevices(): Promise<IMediaDevices | undefined> {
         try {
             const devices = await navigator.mediaDevices.enumerateDevices();
-            const output = {
+            const output: Record<MediaDeviceKindEnum, MediaDeviceInfo[]> = {
                 [MediaDeviceKindEnum.AudioOutput]: [],
                 [MediaDeviceKindEnum.AudioInput]: [],
                 [MediaDeviceKindEnum.VideoInput]: [],
@@ -85,7 +85,7 @@ export default class MediaDeviceHandler extends EventEmitter {
         // with deviceId == the empty string: this is because Chrome gives us a device
         // with deviceId 'default', so we're looking for this, not the one we are adding.
         if (!devices.some((i) => i.deviceId === "default")) {
-            devices.unshift({ deviceId: "", label: _t("Default Device") });
+            devices.unshift({ deviceId: "", label: _t("voip|default_device") });
             return "";
         } else {
             return "default";
@@ -99,14 +99,14 @@ export default class MediaDeviceHandler extends EventEmitter {
         const audioDeviceId = SettingsStore.getValue("webrtc_audioinput");
         const videoDeviceId = SettingsStore.getValue("webrtc_videoinput");
 
-        await MatrixClientPeg.get().getMediaHandler().setAudioInput(audioDeviceId);
-        await MatrixClientPeg.get().getMediaHandler().setVideoInput(videoDeviceId);
+        await MatrixClientPeg.safeGet().getMediaHandler().setAudioInput(audioDeviceId);
+        await MatrixClientPeg.safeGet().getMediaHandler().setVideoInput(videoDeviceId);
 
         await MediaDeviceHandler.updateAudioSettings();
     }
 
     private static async updateAudioSettings(): Promise<void> {
-        await MatrixClientPeg.get().getMediaHandler().setAudioSettings({
+        await MatrixClientPeg.safeGet().getMediaHandler().setAudioSettings({
             autoGainControl: MediaDeviceHandler.getAudioAutoGainControl(),
             echoCancellation: MediaDeviceHandler.getAudioEchoCancellation(),
             noiseSuppression: MediaDeviceHandler.getAudioNoiseSuppression(),
@@ -125,7 +125,7 @@ export default class MediaDeviceHandler extends EventEmitter {
      */
     public async setAudioInput(deviceId: string): Promise<void> {
         SettingsStore.setValue("webrtc_audioinput", null, SettingLevel.DEVICE, deviceId);
-        return MatrixClientPeg.get().getMediaHandler().setAudioInput(deviceId);
+        return MatrixClientPeg.safeGet().getMediaHandler().setAudioInput(deviceId);
     }
 
     /**
@@ -135,7 +135,7 @@ export default class MediaDeviceHandler extends EventEmitter {
      */
     public async setVideoInput(deviceId: string): Promise<void> {
         SettingsStore.setValue("webrtc_videoinput", null, SettingLevel.DEVICE, deviceId);
-        return MatrixClientPeg.get().getMediaHandler().setVideoInput(deviceId);
+        return MatrixClientPeg.safeGet().getMediaHandler().setVideoInput(deviceId);
     }
 
     public async setDevice(deviceId: string, kind: MediaDeviceKindEnum): Promise<void> {

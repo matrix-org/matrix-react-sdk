@@ -20,6 +20,7 @@ import React from "react";
 import { _t } from "../../../languageHandler";
 import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
+import Heading from "../typography/Heading";
 
 interface IProps {
     newVersion: string;
@@ -27,16 +28,26 @@ interface IProps {
     onFinished: (success: boolean) => void;
 }
 
-const REPOS = ["vector-im/element-web", "matrix-org/matrix-react-sdk", "matrix-org/matrix-js-sdk"];
+type State = Partial<Record<(typeof REPOS)[number], null | string | Commit[]>>;
 
-export default class ChangelogDialog extends React.Component<IProps> {
-    public constructor(props) {
+interface Commit {
+    sha: string;
+    html_url: string;
+    commit: {
+        message: string;
+    };
+}
+
+const REPOS = ["vector-im/element-web", "matrix-org/matrix-react-sdk", "matrix-org/matrix-js-sdk"] as const;
+
+export default class ChangelogDialog extends React.Component<IProps, State> {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {};
     }
 
-    private async fetchChanges(repo: string, oldVersion: string, newVersion: string): Promise<void> {
+    private async fetchChanges(repo: (typeof REPOS)[number], oldVersion: string, newVersion: string): Promise<void> {
         const url = `https://riot.im/github/repos/${repo}/compare/${oldVersion}...${newVersion}`;
 
         try {
@@ -50,7 +61,7 @@ export default class ChangelogDialog extends React.Component<IProps> {
             const body = await res.json();
             this.setState({ [repo]: body.commits });
         } catch (err) {
-            this.setState({ [repo]: err.message });
+            this.setState({ [repo]: err instanceof Error ? err.message : _t("error|unknown") });
         }
     }
 
@@ -66,7 +77,7 @@ export default class ChangelogDialog extends React.Component<IProps> {
         }
     }
 
-    private elementsForCommit(commit): JSX.Element {
+    private elementsForCommit(commit: Commit): JSX.Element {
         return (
             <li key={commit.sha} className="mx_ChangelogDialog_li">
                 <a href={commit.html_url} target="_blank" rel="noreferrer noopener">
@@ -76,21 +87,23 @@ export default class ChangelogDialog extends React.Component<IProps> {
         );
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const logs = REPOS.map((repo) => {
             let content;
             if (this.state[repo] == null) {
                 content = <Spinner key={repo} />;
             } else if (typeof this.state[repo] === "string") {
-                content = _t("Unable to load commit detail: %(msg)s", {
+                content = _t("update|error_unable_load_commit", {
                     msg: this.state[repo],
                 });
             } else {
-                content = this.state[repo].map(this.elementsForCommit);
+                content = (this.state[repo] as Commit[]).map(this.elementsForCommit);
             }
             return (
                 <div key={repo}>
-                    <h2>{repo}</h2>
+                    <Heading as="h2" size="4">
+                        {repo}
+                    </Heading>
                     <ul>{content}</ul>
                 </div>
             );
@@ -98,15 +111,19 @@ export default class ChangelogDialog extends React.Component<IProps> {
 
         const content = (
             <div className="mx_ChangelogDialog_content">
-                {this.props.version == null || this.props.newVersion == null ? <h2>{_t("Unavailable")}</h2> : logs}
+                {this.props.version == null || this.props.newVersion == null ? (
+                    <h2>{_t("update|unavailable")}</h2>
+                ) : (
+                    logs
+                )}
             </div>
         );
 
         return (
             <QuestionDialog
-                title={_t("Changelog")}
+                title={_t("update|changelog")}
                 description={content}
-                button={_t("Update")}
+                button={_t("action|update")}
                 onFinished={this.props.onFinished}
             />
         );

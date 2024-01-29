@@ -21,6 +21,7 @@ import StyledRadioButton from "../elements/StyledRadioButton";
 import { _t } from "../../../languageHandler";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { ImageSize } from "../../../settings/enums/ImageSize";
+import SettingsSubsection from "./shared/SettingsSubsection";
 
 interface IProps {
     // none
@@ -47,11 +48,9 @@ export default class ImageSizePanel extends React.Component<IProps, IState> {
         SettingsStore.setValue("Images.size", null, SettingLevel.ACCOUNT, newSize);
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
-            <div className="mx_SettingsTab_section mx_ImageSizePanel">
-                <span className="mx_SettingsTab_subheading">{_t("Image size in the timeline")}</span>
-
+            <SettingsSubsection heading={_t("settings|appearance|timeline_image_size")}>
                 <div className="mx_ImageSizePanel_radios">
                     <label>
                         <div className="mx_ImageSizePanel_size mx_ImageSizePanel_sizeDefault" />
@@ -61,7 +60,7 @@ export default class ImageSizePanel extends React.Component<IProps, IState> {
                             checked={this.state.size === ImageSize.Normal}
                             onChange={this.onSizeChange}
                         >
-                            {_t("Default")}
+                            {_t("settings|appearance|image_size_default")}
                         </StyledRadioButton>
                     </label>
                     <label>
@@ -72,11 +71,11 @@ export default class ImageSizePanel extends React.Component<IProps, IState> {
                             checked={this.state.size === ImageSize.Large}
                             onChange={this.onSizeChange}
                         >
-                            {_t("Large")}
+                            {_t("settings|appearance|image_size_large")}
                         </StyledRadioButton>
                     </label>
                 </div>
-            </div>
+            </SettingsSubsection>
         );
     }
 }

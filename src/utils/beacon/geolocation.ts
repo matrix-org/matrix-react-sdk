@@ -37,12 +37,12 @@ const GeolocationOptions = {
 };
 
 const isGeolocationPositionError = (error: unknown): error is GeolocationPositionError =>
-    typeof error === "object" && !!error["PERMISSION_DENIED"];
+    typeof error === "object" && !!(error as GeolocationPositionError)["PERMISSION_DENIED"];
 /**
  * Maps GeolocationPositionError to our GeolocationError enum
  */
-export const mapGeolocationError = (error: GeolocationPositionError | Error): GeolocationError => {
-    logger.error("Geolocation failed", error?.message ?? error);
+export const mapGeolocationError = (error: GeolocationPositionError | Error | unknown): GeolocationError => {
+    logger.error("Geolocation failed", error);
 
     if (isGeolocationPositionError(error)) {
         switch (error?.code) {
@@ -55,7 +55,7 @@ export const mapGeolocationError = (error: GeolocationPositionError | Error): Ge
             default:
                 return GeolocationError.Default;
         }
-    } else if (error.message === GeolocationError.Unavailable) {
+    } else if (error instanceof Error && error.message === GeolocationError.Unavailable) {
         return GeolocationError.Unavailable;
     } else {
         return GeolocationError.Default;
@@ -93,7 +93,7 @@ export const genericPositionFromGeolocation = (geoPosition: GeolocationPosition)
         timestamp: Date.now(),
         latitude,
         longitude,
-        altitude,
+        altitude: altitude ?? undefined,
         accuracy,
     };
 };
@@ -132,7 +132,7 @@ export const watchPosition = (
     onWatchPositionError: (error: GeolocationError) => void,
 ): ClearWatchCallback => {
     try {
-        const onError = (error): void => onWatchPositionError(mapGeolocationError(error));
+        const onError = (error: GeolocationPositionError): void => onWatchPositionError(mapGeolocationError(error));
         const watchId = getGeolocation().watchPosition(onWatchPosition, onError, GeolocationOptions);
         const clearWatch = (): void => {
             getGeolocation().clearWatch(watchId);

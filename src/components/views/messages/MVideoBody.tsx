@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { decode } from "blurhash";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -31,13 +31,13 @@ import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContex
 import MediaProcessingError from "./shared/MediaProcessingError";
 
 interface IState {
-    decryptedUrl?: string;
-    decryptedThumbnailUrl?: string;
-    decryptedBlob?: Blob;
+    decryptedUrl: string | null;
+    decryptedThumbnailUrl: string | null;
+    decryptedBlob: Blob | null;
     error?: any;
     fetchingData: boolean;
     posterLoading: boolean;
-    blurhashUrl: string;
+    blurhashUrl: string | null;
 }
 
 export default class MVideoBody extends React.PureComponent<IBodyProps, IState> {
@@ -45,9 +45,9 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
     public context!: React.ContextType<typeof RoomContext>;
 
     private videoRef = React.createRef<HTMLVideoElement>();
-    private sizeWatcher: string;
+    private sizeWatcher?: string;
 
-    public constructor(props) {
+    public constructor(props: IBodyProps) {
         super(props);
 
         this.state = {
@@ -61,21 +61,21 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         };
     }
 
-    private getContentUrl(): string | null {
+    private getContentUrl(): string | undefined {
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
         // During export, the content url will point to the MSC, which will later point to a local url
-        if (this.props.forExport) return content.file?.url || content.url;
+        if (this.props.forExport) return content.file?.url ?? content.url;
         const media = mediaFromContent(content);
         if (media.isEncrypted) {
-            return this.state.decryptedUrl;
+            return this.state.decryptedUrl ?? undefined;
         } else {
-            return media.srcHttp;
+            return media.srcHttp ?? undefined;
         }
     }
 
     private hasContentUrl(): boolean {
         const url = this.getContentUrl();
-        return url && !url.startsWith("data:");
+        return !!url && !url.startsWith("data:");
     }
 
     private getThumbUrl(): string | null {
@@ -111,7 +111,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         canvas.height = height;
 
         const pixels = decode(info[BLURHASH_FIELD], width, height);
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d")!;
         const imgData = ctx.createImageData(width, height);
         imgData.data.set(pixels);
         ctx.putImageData(imgData, 0, 0);
@@ -128,7 +128,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             image.onload = () => {
                 this.setState({ posterLoading: false });
             };
-            image.src = media.thumbnailHttp;
+            image.src = media.thumbnailHttp!;
         }
     }
 
@@ -143,7 +143,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             logger.error("Failed to load blurhash", e);
         }
 
-        if (this.props.mediaEventHelper.media.isEncrypted && this.state.decryptedUrl === null) {
+        if (this.props.mediaEventHelper?.media.isEncrypted && this.state.decryptedUrl === null) {
             try {
                 const autoplay = SettingsStore.getValue("autoplayVideo") as boolean;
                 const thumbnailUrl = await this.props.mediaEventHelper.thumbnailUrl.value;
@@ -154,7 +154,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                         decryptedThumbnailUrl: thumbnailUrl,
                         decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
                     });
-                    this.props.onHeightChanged();
+                    this.props.onHeightChanged?.();
                 } else {
                     logger.log("NOT preloading video");
                     const content = this.props.mxEvent.getContent<IMediaEventContent>();
@@ -187,7 +187,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
     }
 
     public componentWillUnmount(): void {
-        SettingsStore.unwatchSetting(this.sizeWatcher);
+        if (this.sizeWatcher) SettingsStore.unwatchSetting(this.sizeWatcher);
     }
 
     private videoOnPlay = async (): Promise<void> => {
@@ -199,7 +199,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             // To stop subsequent download attempts
             fetchingData: true,
         });
-        if (!this.props.mediaEventHelper.media.isEncrypted) {
+        if (!this.props.mediaEventHelper!.media.isEncrypted) {
             this.setState({
                 error: "No file given in content",
             });
@@ -207,8 +207,8 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         }
         this.setState(
             {
-                decryptedUrl: await this.props.mediaEventHelper.sourceUrl.value,
-                decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
+                decryptedUrl: await this.props.mediaEventHelper!.sourceUrl.value,
+                decryptedBlob: await this.props.mediaEventHelper!.sourceBlob.value,
                 fetchingData: false,
             },
             () => {
@@ -216,7 +216,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                 this.videoRef.current.play();
             },
         );
-        this.props.onHeightChanged();
+        this.props.onHeightChanged?.();
     };
 
     protected get showFileBody(): boolean {
@@ -227,14 +227,14 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         );
     }
 
-    private getFileBody = (): JSX.Element => {
+    private getFileBody = (): ReactNode => {
         if (this.props.forExport) return null;
         return this.showFileBody && <MFileBody {...this.props} showGenericPlaceholder={false} />;
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const content = this.props.mxEvent.getContent();
-        const autoplay = SettingsStore.getValue("autoplayVideo");
+        const autoplay = !this.props.inhibitInteraction && SettingsStore.getValue("autoplayVideo");
 
         let aspectRatio;
         if (content.info?.w && content.info?.h) {
@@ -250,7 +250,9 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
 
         if (this.state.error !== null) {
             return (
-                <MediaProcessingError className="mx_MVideoBody">{_t("Error decrypting video")}</MediaProcessingError>
+                <MediaProcessingError className="mx_MVideoBody">
+                    {_t("timeline|m.video|error_decrypting")}
+                </MediaProcessingError>
             );
         }
 
@@ -271,7 +273,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
 
         const contentUrl = this.getContentUrl();
         const thumbUrl = this.getThumbUrl();
-        let poster = null;
+        let poster: string | undefined;
         let preload = "metadata";
         if (content.info && thumbUrl) {
             poster = thumbUrl;
@@ -287,7 +289,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                         ref={this.videoRef}
                         src={contentUrl}
                         title={content.body}
-                        controls
+                        controls={!this.props.inhibitInteraction}
                         // Disable downloading as it doesn't work with e2ee video,
                         // users should use the dedicated Download button in the Message Action Bar
                         controlsList="nodownload"

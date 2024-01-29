@@ -14,16 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export class ValidatedServerConfig {
-    public hsUrl: string;
-    public hsName: string;
-    public hsNameIsDifferent: boolean;
+import { OidcClientConfig, IDelegatedAuthConfig } from "matrix-js-sdk/src/matrix";
+import { ValidatedIssuerConfig } from "matrix-js-sdk/src/oidc/validate";
 
-    public isUrl: string;
+export type ValidatedDelegatedAuthConfig = IDelegatedAuthConfig & ValidatedIssuerConfig;
 
-    public isDefault: boolean;
+export interface ValidatedServerConfig {
+    hsUrl: string;
+    hsName: string;
+    hsNameIsDifferent: boolean;
+
+    isUrl: string;
+
+    isDefault: boolean;
     // when the server config is based on static URLs the hsName is not resolvable and things may wish to use hsUrl
-    public isNameResolvable: boolean;
+    isNameResolvable: boolean;
 
-    public warning: string;
+    warning: string | Error;
+
+    /**
+     * Config related to delegated authentication
+     * Included when delegated auth is configured and valid, otherwise undefined
+     * From homeserver .well-known m.authentication, and issuer's .well-known/openid-configuration
+     * Used for OIDC native flow authentication
+     */
+    delegatedAuthentication?: OidcClientConfig;
 }

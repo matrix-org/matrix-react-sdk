@@ -14,11 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { LOCAL_NOTIFICATION_SETTINGS_PREFIX } from "matrix-js-sdk/src/@types/event";
-import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
-import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import {
+    MatrixClient,
+    LOCAL_NOTIFICATION_SETTINGS_PREFIX,
+    NotificationCountType,
+    Room,
+    LocalNotificationSettings,
+    ReceiptType,
+} from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "../settings/SettingsStore";
 
@@ -28,7 +31,7 @@ export const deviceNotificationSettingsKeys = [
     "audioNotificationsEnabled",
 ];
 
-export function getLocalNotificationAccountDataEventType(deviceId: string): string {
+export function getLocalNotificationAccountDataEventType(deviceId: string | null): string {
     return `${LOCAL_NOTIFICATION_SETTINGS_PREFIX.name}.${deviceId}`;
 }
 
@@ -36,7 +39,7 @@ export async function createLocalNotificationSettingsIfNeeded(cli: MatrixClient)
     if (cli.isGuest()) {
         return;
     }
-    const eventType = getLocalNotificationAccountDataEventType(cli.deviceId);
+    const eventType = getLocalNotificationAccountDataEventType(cli.deviceId!);
     const event = cli.getAccountData(eventType);
     // New sessions will create an account data event to signify they support
     // remote toggling of push notifications on this device. Default `is_silenced=true`
@@ -54,7 +57,7 @@ export async function createLocalNotificationSettingsIfNeeded(cli: MatrixClient)
 }
 
 export function localNotificationsAreSilenced(cli: MatrixClient): boolean {
-    const eventType = getLocalNotificationAccountDataEventType(cli.deviceId);
+    const eventType = getLocalNotificationAccountDataEventType(cli.deviceId!);
     const event = cli.getAccountData(eventType);
     return event?.getContent<LocalNotificationSettings>()?.is_silenced ?? false;
 }
@@ -66,14 +69,7 @@ export function localNotificationsAreSilenced(cli: MatrixClient): boolean {
  * @returns a promise that resolves when the room has been marked as read
  */
 export async function clearRoomNotification(room: Room, client: MatrixClient): Promise<{} | undefined> {
-    const roomEvents = room.getLiveTimeline().getEvents();
-    const lastThreadEvents = room.lastThread?.events;
-
-    const lastRoomEvent = roomEvents?.[roomEvents?.length - 1];
-    const lastThreadLastEvent = lastThreadEvents?.[lastThreadEvents?.length - 1];
-
-    const lastEvent =
-        (lastRoomEvent?.getTs() ?? 0) > (lastThreadLastEvent?.getTs() ?? 0) ? lastRoomEvent : lastThreadLastEvent;
+    const lastEvent = room.getLastLiveEvent();
 
     try {
         if (lastEvent) {

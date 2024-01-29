@@ -16,8 +16,7 @@
  */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
 
 import DisambiguatedProfile from "./DisambiguatedProfile";
 import { useRoomMemberProfile } from "../../../hooks/room/useRoomMemberProfile";
@@ -43,5 +42,7 @@ export default function SenderProfile({ mxEvent, onClick, withTooltip }: IProps)
             emphasizeDisplayName={true}
             withTooltip={withTooltip}
         />
-    ) : null;
+    ) : (
+        <></>
+    );
 }

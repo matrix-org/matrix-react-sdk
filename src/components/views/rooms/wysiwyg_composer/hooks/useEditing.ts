@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
+import { ISendEventResponse } from "matrix-js-sdk/src/matrix";
 import { useCallback, useState } from "react";
 
 import { useMatrixClientContext } from "../../../../../contexts/MatrixClientContext";
@@ -29,7 +29,7 @@ export function useEditing(
 ): {
     isSaveDisabled: boolean;
     onChange(content: string): void;
-    editMessage(): Promise<ISendEventResponse>;
+    editMessage(): Promise<ISendEventResponse | undefined>;
     endEditing(): void;
 } {
     const roomContext = useRoomContext();
@@ -45,10 +45,12 @@ export function useEditing(
         [initialContent],
     );
 
-    const editMessageMemoized = useCallback(
-        () => content !== undefined && editMessage(content, { roomContext, mxClient, editorStateTransfer }),
-        [content, roomContext, mxClient, editorStateTransfer],
-    );
+    const editMessageMemoized = useCallback(async () => {
+        if (mxClient === undefined || content === undefined) {
+            return;
+        }
+        return editMessage(content, { roomContext, mxClient, editorStateTransfer });
+    }, [content, roomContext, mxClient, editorStateTransfer]);
 
     const endEditingMemoized = useCallback(() => endEditing(roomContext), [roomContext]);
     return { onChange, editMessage: editMessageMemoized, endEditing: endEditingMemoized, isSaveDisabled };

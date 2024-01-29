@@ -17,9 +17,9 @@ limitations under the License.
 import React from "react";
 import { MSC3906Rendezvous, MSC3906RendezvousPayload, RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
 import { MSC3886SimpleHttpRendezvousTransport } from "matrix-js-sdk/src/rendezvous/transports";
-import { MSC3903ECDHPayload, MSC3903ECDHv1RendezvousChannel } from "matrix-js-sdk/src/rendezvous/channels";
+import { MSC3903ECDHPayload, MSC3903ECDHv2RendezvousChannel } from "matrix-js-sdk/src/rendezvous/channels";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { wrapRequestWithDialog } from "../../../utils/UserInteractiveAuth";
@@ -75,7 +75,7 @@ interface IState {
  * This uses the unstable feature of MSC3906: https://github.com/matrix-org/matrix-spec-proposals/pull/3906
  */
 export default class LoginWithQR extends React.Component<IProps, IState> {
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -126,7 +126,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
             const { login_token: loginToken } = await wrapRequestWithDialog(this.props.client.requestLoginToken, {
                 matrixClient: this.props.client,
-                title: _t("Sign in new device"),
+                title: _t("auth|qr_code_login|sign_in_new_device"),
             })();
 
             this.setState({ phase: Phase.WaitingForDevice });
@@ -153,12 +153,14 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     private generateCode = async (): Promise<void> => {
         let rendezvous: MSC3906Rendezvous;
         try {
+            const fallbackRzServer = this.props.client.getClientWellKnown()?.["io.element.rendezvous"]?.server;
             const transport = new MSC3886SimpleHttpRendezvousTransport<MSC3903ECDHPayload>({
                 onFailure: this.onFailure,
                 client: this.props.client,
+                fallbackRzServer,
             });
 
-            const channel = new MSC3903ECDHv1RendezvousChannel<MSC3906RendezvousPayload>(
+            const channel = new MSC3903ECDHv2RendezvousChannel<MSC3906RendezvousPayload>(
                 transport,
                 undefined,
                 this.onFailure,
@@ -229,7 +231,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <LoginWithQRFlow
                 onClick={this.onClick}

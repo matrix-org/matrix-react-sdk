@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { M_POLL_START } from "matrix-js-sdk/src/@types/polls";
-import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
-import { MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { M_POLL_END, M_POLL_START, M_BEACON_INFO, MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { getShareableLocationEventForBeacon } from "../../utils/beacon/getShareableLocation";
 import { VoiceBroadcastInfoEventType } from "../../voice-broadcast/types";
@@ -26,7 +24,7 @@ import { VoiceBroadcastInfoEventType } from "../../voice-broadcast/types";
  * If an event is not forwardable return null
  */
 export const getForwardableEvent = (event: MatrixEvent, cli: MatrixClient): MatrixEvent | null => {
-    if (M_POLL_START.matches(event.getType())) {
+    if (M_POLL_START.matches(event.getType()) || M_POLL_END.matches(event.getType())) {
         return null;
     }
 

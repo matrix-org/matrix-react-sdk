@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
 import { randomString } from "matrix-js-sdk/src/randomstring";
-import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
@@ -37,12 +36,14 @@ import { IBodyProps } from "./IBodyProps";
 import { createReconnectedListener } from "../../../utils/connection";
 
 interface IState {
-    error: Error;
+    error?: Error;
 }
 
 export default class MLocationBody extends React.Component<IBodyProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
+
+    private unmounted = false;
     private mapId: string;
     private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
 
@@ -56,9 +57,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
 
         this.reconnectedListener = createReconnectedListener(this.clearError);
 
-        this.state = {
-            error: undefined,
-        };
+        this.state = {};
     }
 
     private onClick = (): void => {
@@ -80,11 +79,15 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     };
 
     private onError = (error: Error): void => {
+        if (this.unmounted) return;
         this.setState({ error });
+        // Unregister first in case we already had it registered
+        this.context.off(ClientEvent.Sync, this.reconnectedListener);
         this.context.on(ClientEvent.Sync, this.reconnectedListener);
     };
 
     public componentWillUnmount(): void {
+        this.unmounted = true;
         this.context.off(ClientEvent.Sync, this.reconnectedListener);
     }
 
@@ -96,7 +99,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
                 mxEvent={this.props.mxEvent}
                 mapId={this.mapId}
                 onError={this.onError}
-                tooltip={_t("Expand map")}
+                tooltip={_t("location_sharing|expand_map")}
                 onClick={this.onClick}
             />
         );
@@ -105,11 +108,11 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
 
 export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent; error: Error }> = ({ error, event }) => {
     const errorType = error?.message as LocationShareError;
-    const message = `${_t("Unable to load map")}: ${getLocationShareErrorMessage(errorType)}`;
+    const message = `${_t("location_sharing|failed_load_map")}: ${getLocationShareErrorMessage(errorType)}`;
 
     const locationFallback = isSelfLocation(event.getContent())
-        ? _t("Shared their location: ") + event.getContent()?.body
-        : _t("Shared a location: ") + event.getContent()?.body;
+        ? _t("timeline|m.location|self_location") + event.getContent()?.body
+        : _t("timeline|m.location|location") + event.getContent()?.body;
 
     return (
         <div className="mx_EventTile_body mx_MLocationBody">
@@ -143,7 +146,12 @@ export const LocationBodyContent: React.FC<LocationBodyContentProps> = ({
     const mapElement = (
         <Map id={mapId} centerGeoUri={geoUri} onClick={onClick} onError={onError} className="mx_MLocationBody_map">
             {({ map }) => (
-                <SmartMarker map={map} id={`${mapId}-marker`} geoUri={geoUri} roomMember={markerRoomMember} />
+                <SmartMarker
+                    map={map}
+                    id={`${mapId}-marker`}
+                    geoUri={geoUri}
+                    roomMember={markerRoomMember ?? undefined}
+                />
             )}
         </Map>
     );

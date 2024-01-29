@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { PushRuleAction, PushRuleActionName, TweakHighlight, TweakSound } from "matrix-js-sdk/src/@types/PushRules";
+import { PushRuleAction, PushRuleActionName, TweakHighlight, TweakSound } from "matrix-js-sdk/src/matrix";
 
-interface IEncodedActions {
+export interface PushRuleActions {
     notify: boolean;
     sound?: string;
     highlight?: boolean;
@@ -29,7 +29,7 @@ export class NotificationUtils {
     //   "highlight: true/false,
     // }
     // to a list of push actions.
-    public static encodeActions(action: IEncodedActions): PushRuleAction[] {
+    public static encodeActions(action: PushRuleActions): PushRuleAction[] {
         const notify = action.notify;
         const sound = action.sound;
         const highlight = action.highlight;
@@ -55,13 +55,12 @@ export class NotificationUtils {
     //   "highlight: true/false,
     // }
     // If the actions couldn't be decoded then returns null.
-    public static decodeActions(actions: PushRuleAction[]): IEncodedActions {
+    public static decodeActions(actions: PushRuleAction[]): PushRuleActions | null {
         let notify = false;
-        let sound = null;
-        let highlight = false;
+        let sound: string | undefined;
+        let highlight: boolean | undefined = false;
 
-        for (let i = 0; i < actions.length; ++i) {
-            const action = actions[i];
+        for (const action of actions) {
             if (action === PushRuleActionName.Notify) {
                 notify = true;
             } else if (action === PushRuleActionName.DontNotify) {
@@ -86,8 +85,8 @@ export class NotificationUtils {
             highlight = true;
         }
 
-        const result: IEncodedActions = { notify, highlight };
-        if (sound !== null) {
+        const result: PushRuleActions = { notify, highlight };
+        if (sound !== undefined) {
             result.sound = sound;
         }
         return result;

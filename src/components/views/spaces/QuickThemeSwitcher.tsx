@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useMemo } from "react";
+import React, { ReactElement, useMemo } from "react";
 
 import { _t } from "../../../languageHandler";
 import { Action } from "../../../dispatcher/actions";
@@ -26,6 +26,7 @@ import { SettingLevel } from "../../../settings/SettingLevel";
 import dis from "../../../dispatcher/dispatcher";
 import { RecheckThemePayload } from "../../../dispatcher/payloads/RecheckThemePayload";
 import PosthogTrackers from "../../../PosthogTrackers";
+import { NonEmptyArray } from "../../../@types/common";
 
 type Props = {
     requestClose: () => void;
@@ -44,7 +45,7 @@ const QuickThemeSwitcher: React.FC<Props> = ({ requestClose }) => {
     const themeOptions = [
         {
             id: MATCH_SYSTEM_THEME_ID,
-            name: _t("Match system"),
+            name: _t("theme|match_system"),
         },
         ...orderedThemes,
     ];
@@ -79,16 +80,18 @@ const QuickThemeSwitcher: React.FC<Props> = ({ requestClose }) => {
 
     return (
         <div className="mx_QuickThemeSwitcher">
-            <h4 className="mx_QuickThemeSwitcher_heading">{_t("Theme")}</h4>
+            <h4 className="mx_QuickThemeSwitcher_heading">{_t("common|theme")}</h4>
             <Dropdown
                 id="mx_QuickSettingsButton_themePickerDropdown"
                 onOptionChange={onOptionChange}
                 value={selectedTheme}
-                label={_t("Space selection")}
+                label={_t("common|theme")}
             >
-                {themeOptions.map((theme) => (
-                    <div key={theme.id}>{theme.name}</div>
-                ))}
+                {
+                    themeOptions.map((theme) => <div key={theme.id}>{theme.name}</div>) as NonEmptyArray<
+                        ReactElement & { key: string }
+                    >
+                }
             </Dropdown>
         </div>
     );

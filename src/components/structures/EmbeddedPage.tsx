@@ -21,7 +21,7 @@ import sanitizeHtml from "sanitize-html";
 import classnames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { _t } from "../../languageHandler";
+import { _t, TranslationKey } from "../../languageHandler";
 import dis from "../../dispatcher/dispatcher";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
@@ -46,7 +46,7 @@ interface IState {
 export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
     public static contextType = MatrixClientContext;
     private unmounted = false;
-    private dispatcherRef: string = null;
+    private dispatcherRef: string | null = null;
 
     public constructor(props: IProps, context: typeof MatrixClientContext) {
         super(props, context);
@@ -56,7 +56,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         };
     }
 
-    private translate(s: string): string {
+    private translate(s: TranslationKey): string {
         return sanitizeHtml(_t(s));
     }
 
@@ -64,11 +64,11 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         let res: Response;
 
         try {
-            res = await fetch(this.props.url, { method: "GET" });
+            res = await fetch(this.props.url!, { method: "GET" });
         } catch (err) {
             if (this.unmounted) return;
             logger.warn(`Error loading page: ${err}`);
-            this.setState({ page: _t("Couldn't load page") });
+            this.setState({ page: _t("cant_load_page") });
             return;
         }
 
@@ -76,7 +76,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
 
         if (!res.ok) {
             logger.warn(`Error loading page: ${res.status}`);
-            this.setState({ page: _t("Couldn't load page") });
+            this.setState({ page: _t("cant_load_page") });
             return;
         }
 
@@ -84,7 +84,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
 
         if (this.props.replaceMap) {
             Object.keys(this.props.replaceMap).forEach((key) => {
-                body = body.split(key).join(this.props.replaceMap[key]);
+                body = body.split(key).join(this.props.replaceMap![key]);
             });
         }
 
@@ -118,13 +118,12 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         // HACK: Workaround for the context's MatrixClient not updating.
         const client = this.context || MatrixClientPeg.get();
         const isGuest = client ? client.isGuest() : true;
         const className = this.props.className;
-        const classes = classnames({
-            [className]: true,
+        const classes = classnames(className, {
             [`${className}_guest`]: isGuest,
             [`${className}_loggedIn`]: !!client,
         });

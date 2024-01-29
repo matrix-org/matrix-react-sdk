@@ -1,5 +1,6 @@
 /*
 Copyright 2022 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,7 +16,7 @@ limitations under the License.
 */
 
 import React, { useContext, useState } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { useEventEmitterState } from "../../../../hooks/useEventEmitter";
 import { _t } from "../../../../languageHandler";
@@ -28,7 +29,7 @@ import { StateEventEditor } from "./RoomState";
 const WidgetExplorer: React.FC<IDevtoolsProps> = ({ onBack }) => {
     const context = useContext(DevtoolsContext);
     const [query, setQuery] = useState("");
-    const [widget, setWidget] = useState<IApp>(null);
+    const [widget, setWidget] = useState<IApp | null>(null);
 
     const widgets = useEventEmitterState(WidgetStore.instance, UPDATE_EVENT, () => {
         return WidgetStore.instance.getApps(context.room.roomId);
@@ -46,11 +47,11 @@ const WidgetExplorer: React.FC<IDevtoolsProps> = ({ onBack }) => {
         ).reduce((p, c) => {
             p.push(...c);
             return p;
-        }, []);
+        }, [] as MatrixEvent[]);
         const event = allState.find((ev) => ev.getId() === widget.eventId);
         if (!event) {
             // "should never happen"
-            return <BaseTool onBack={onBack}>{_t("There was an error finding this widget.")}</BaseTool>;
+            return <BaseTool onBack={onBack}>{_t("devtools|failed_to_find_widget")}</BaseTool>;
         }
 
         return <StateEventEditor mxEvent={event} onBack={onBack} />;

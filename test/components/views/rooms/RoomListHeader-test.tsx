@@ -15,12 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/matrix";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { act } from "react-dom/test-utils";
+import { MatrixClient, Room, EventType } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
-import { render, screen, fireEvent, RenderResult } from "@testing-library/react";
+import { act, render, screen, fireEvent, RenderResult } from "@testing-library/react";
 
 import SpaceStore from "../../../../src/stores/spaces/SpaceStore";
 import { MetaSpace } from "../../../../src/stores/spaces";
@@ -61,7 +58,7 @@ const setupMainMenu = async (client: MatrixClient, testSpace: Room): Promise<Ren
 
     expect(wrapper.container.textContent).toBe("Test Space");
     act(() => {
-        wrapper.container.querySelector<HTMLElement>('[aria-label="Test Space menu"]').click();
+        wrapper.container.querySelector<HTMLElement>('[aria-label="Test Space menu"]')?.click();
     });
 
     return wrapper;
@@ -77,7 +74,7 @@ const setupPlusMenu = async (client: MatrixClient, testSpace: Room): Promise<Ren
 
     expect(wrapper.container.textContent).toBe("Test Space");
     act(() => {
-        wrapper.container.querySelector<HTMLElement>('[aria-label="Add"]').click();
+        wrapper.container.querySelector<HTMLElement>('[aria-label="Add"]')?.click();
     });
 
     return wrapper;
@@ -92,7 +89,7 @@ const checkMenuLabels = (items: NodeListOf<Element>, labelArray: Array<string>) 
     expect(items).toHaveLength(labelArray.length);
 
     const checkLabel = (item: Element, label: string) => {
-        expect(item.querySelector(".mx_IconizedContextMenu_label").textContent).toBe(label);
+        expect(item.querySelector(".mx_IconizedContextMenu_label")?.textContent).toBe(label);
     };
 
     labelArray.forEach((label, index) => {
@@ -113,7 +110,7 @@ describe("RoomListHeader", () => {
         } as unknown as DMRoomMap;
         DMRoomMap.setShared(dmRoomMap);
         stubClient();
-        client = MatrixClientPeg.get();
+        client = MatrixClientPeg.safeGet();
         mocked(shouldShowComponent).mockReturnValue(true); // show all UIComponents
     });
 

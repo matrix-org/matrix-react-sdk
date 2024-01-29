@@ -16,13 +16,13 @@ import { Room } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
 import { LiveBadge, VoiceBroadcastLiveness } from "../..";
-import { Icon as LiveIcon } from "../../../../res/img/element-icons/live.svg";
-import { Icon as MicrophoneIcon } from "../../../../res/img/element-icons/mic.svg";
-import { Icon as TimerIcon } from "../../../../res/img/element-icons/Timer.svg";
+import { Icon as LiveIcon } from "../../../../res/img/compound/live-16px.svg";
+import { Icon as MicrophoneIcon } from "../../../../res/img/compound/mic-16px.svg";
+import { Icon as TimerIcon } from "../../../../res/img/compound/timer-16px.svg";
+import { Icon as XIcon } from "../../../../res/img/compound/close-16px.svg";
 import { _t } from "../../../languageHandler";
 import RoomAvatar from "../../../components/views/avatars/RoomAvatar";
 import AccessibleButton, { ButtonEvent } from "../../../components/views/elements/AccessibleButton";
-import { Icon as XIcon } from "../../../../res/img/element-icons/cancel-rounded.svg";
 import Clock from "../../../components/views/audio_messages/Clock";
 import { formatTimeLeft } from "../../../DateUtils";
 import Spinner from "../../../components/views/elements/Spinner";
@@ -63,7 +63,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     const broadcast = showBroadcast && (
         <div className="mx_VoiceBroadcastHeader_line">
             <LiveIcon className="mx_Icon mx_Icon_16" />
-            {_t("Voice broadcast")}
+            {_t("voice_broadcast|action")}
         </div>
     );
 
@@ -85,7 +85,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     const bufferingLine = showBuffering && bufferingPosition === "line" && (
         <div className="mx_VoiceBroadcastHeader_line">
             <Spinner w={14} h={14} />
-            {_t("Buffering…")}
+            {_t("voice_broadcast|buffering")}
         </div>
     );
 
@@ -98,7 +98,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
         <AccessibleTooltipButton
             className={microphoneLineClasses}
             onClick={onMicrophoneLineClick}
-            title={_t("Change input device")}
+            title={_t("voip|change_input_device")}
         >
             <MicrophoneIcon className="mx_Icon mx_Icon_16" />
             <span>{microphoneLabel}</span>
@@ -113,7 +113,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
         });
     };
 
-    let roomAvatar = <RoomAvatar room={room} width={32} height={32} />;
+    let roomAvatar = <RoomAvatar room={room} size="32px" />;
     let roomName = (
         <div className="mx_VoiceBroadcastHeader_room_wrapper">
             <div className="mx_VoiceBroadcastHeader_room">{room.name}</div>

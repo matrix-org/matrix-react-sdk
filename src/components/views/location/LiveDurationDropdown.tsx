@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactElement } from "react";
 
 import { formatDuration } from "../../../DateUtils";
 import { _t } from "../../../languageHandler";
 import Dropdown from "../elements/Dropdown";
+import { NonEmptyArray } from "../../../@types/common";
 
 const DURATION_MS = {
     fifteenMins: 900000,
@@ -34,7 +35,7 @@ interface Props {
 }
 
 const getLabel = (durationMs: number): string => {
-    return _t("Share for %(duration)s", { duration: formatDuration(durationMs) });
+    return _t("location_sharing|live_share_button", { duration: formatDuration(durationMs) });
 };
 
 const LiveDurationDropdown: React.FC<Props> = ({ timeout, onChange }) => {
@@ -62,17 +63,19 @@ const LiveDurationDropdown: React.FC<Props> = ({ timeout, onChange }) => {
     return (
         <Dropdown
             id="live-duration"
-            data-test-id="live-duration-dropdown"
+            data-testid="live-duration-dropdown"
             label={getLabel(timeout)}
             value={timeout.toString()}
             onOptionChange={onOptionChange}
             className="mx_LiveDurationDropdown"
         >
-            {options.map(({ key, label }) => (
-                <div data-test-id={`live-duration-option-${key}`} key={key}>
-                    {label}
-                </div>
-            ))}
+            {
+                options.map(({ key, label }) => (
+                    <div data-testid={`live-duration-option-${key}`} key={key}>
+                        {label}
+                    </div>
+                )) as NonEmptyArray<ReactElement & { key: string }>
+            }
         </Dropdown>
     );
 };

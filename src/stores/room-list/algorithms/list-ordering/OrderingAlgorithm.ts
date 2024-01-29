@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { RoomUpdateCause, TagID } from "../../models";
@@ -25,10 +25,15 @@ import { SortAlgorithm } from "../models";
  * `cachedOrderedRooms` field.
  */
 export abstract class OrderingAlgorithm {
-    protected cachedOrderedRooms: Room[];
-    protected sortingAlgorithm: SortAlgorithm;
+    protected cachedOrderedRooms: Room[] = [];
 
-    protected constructor(protected tagId: TagID, initialSortingAlgorithm: SortAlgorithm) {
+    // set by setSortAlgorithm() in ctor
+    protected sortingAlgorithm!: SortAlgorithm;
+
+    protected constructor(
+        protected tagId: TagID,
+        initialSortingAlgorithm: SortAlgorithm,
+    ) {
         // noinspection JSIgnoredPromiseFromCall
         this.setSortAlgorithm(initialSortingAlgorithm); // we use the setter for validation
     }
@@ -37,7 +42,11 @@ export abstract class OrderingAlgorithm {
      * The rooms as ordered by the algorithm.
      */
     public get orderedRooms(): Room[] {
-        return this.cachedOrderedRooms || [];
+        return this.cachedOrderedRooms;
+    }
+
+    public get isMutedToBottom(): boolean {
+        return this.sortingAlgorithm === SortAlgorithm.Recent;
     }
 
     /**

@@ -15,9 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixClient, MatrixEvent, RoomState, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { defer } from "matrix-js-sdk/src/utils";
 
 import MatrixClientBackedSettingsHandler from "./MatrixClientBackedSettingsHandler";
@@ -43,8 +41,8 @@ export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandl
         newClient.on(RoomStateEvent.Events, this.onEvent);
     }
 
-    private onEvent = (event: MatrixEvent, state: RoomState, prevEvent: MatrixEvent): void => {
-        const roomId = event.getRoomId();
+    private onEvent = (event: MatrixEvent, state: RoomState, prevEvent: MatrixEvent | null): void => {
+        const roomId = event.getRoomId()!;
         const room = this.client.getRoom(roomId);
 
         // Note: in tests and during the encryption setup on initial load we might not have
@@ -67,7 +65,7 @@ export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandl
             this.watchers.notifyUpdate("urlPreviewsEnabled", roomId, SettingLevel.ROOM, val);
         } else if (event.getType() === DEFAULT_SETTINGS_EVENT_TYPE) {
             // Figure out what changed and fire those updates
-            const prevContent = prevEvent ? prevEvent.getContent() : {};
+            const prevContent = prevEvent?.getContent() ?? {};
             const changedSettings = objectKeyChanges<Record<string, any>>(prevContent, event.getContent());
             for (const settingName of changedSettings) {
                 this.watchers.notifyUpdate(settingName, roomId, SettingLevel.ROOM, event.getContent()[settingName]);
@@ -124,7 +122,7 @@ export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandl
         let eventType = DEFAULT_SETTINGS_EVENT_TYPE;
         if (settingName === "urlPreviewsEnabled") eventType = "org.matrix.room.preview_urls";
 
-        return room?.currentState.maySendStateEvent(eventType, this.client.getUserId()) ?? false;
+        return room?.currentState.maySendStateEvent(eventType, this.client.getUserId()!) ?? false;
     }
 
     public isSupported(): boolean {

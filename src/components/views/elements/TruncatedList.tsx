@@ -15,13 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { _t } from "../../../languageHandler";
 
 interface IProps {
     // The number of elements to show before truncating. If negative, no truncation is done.
-    truncateAt?: number;
+    truncateAt: number;
     // The className to apply to the wrapping div
     className?: string;
     // A function that returns the children to be rendered into the element.
@@ -34,14 +34,15 @@ interface IProps {
     getChildCount?: () => number;
     // A function which will be invoked when an overflow element is required.
     // This will be inserted after the children.
-    createOverflowElement?: (overflowCount: number, totalCount: number) => React.ReactNode;
+    createOverflowElement: (overflowCount: number, totalCount: number) => React.ReactNode;
+    children?: ReactNode;
 }
 
 export default class TruncatedList extends React.Component<IProps> {
     public static defaultProps = {
         truncateAt: 2,
-        createOverflowElement(overflowCount, totalCount) {
-            return <div>{_t("And %(count)s more...", { count: overflowCount })}</div>;
+        createOverflowElement(overflowCount: number, totalCount: number) {
+            return <div>{_t("truncated_list_n_more", { count: overflowCount })}</div>;
         },
     };
 
@@ -70,8 +71,8 @@ export default class TruncatedList extends React.Component<IProps> {
         }
     }
 
-    public render(): JSX.Element {
-        let overflowNode = null;
+    public render(): ReactNode {
+        let overflowNode: ReactNode | undefined;
 
         const totalChildren = this.getChildCount();
         let upperBound = totalChildren;

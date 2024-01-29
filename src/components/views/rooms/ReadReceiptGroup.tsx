@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { PropsWithChildren, useRef } from "react";
+import React, { PropsWithChildren } from "react";
 import { User } from "matrix-js-sdk/src/matrix";
 
 import ReadReceiptMarker, { IReadReceiptInfo } from "./ReadReceiptMarker";
@@ -30,6 +30,7 @@ import ContextMenu, { aboveLeftOf, MenuItem, useContextMenu } from "../../struct
 import { useTooltip } from "../../../utils/useTooltip";
 import { _t } from "../../../languageHandler";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
+import { formatList } from "../../../utils/FormattingUtils";
 
 // #20547 Design specified that we should show the three latest read receipts
 const MAX_READ_AVATARS_PLUS_N = 3;
@@ -42,9 +43,9 @@ export const READ_AVATAR_SIZE = 16;
 interface Props {
     readReceipts: IReadReceiptProps[];
     readReceiptMap: { [userId: string]: IReadReceiptInfo };
-    checkUnmounting: () => boolean;
+    checkUnmounting?: () => boolean;
     suppressAnimation: boolean;
-    isTwelveHour: boolean;
+    isTwelveHour?: boolean;
 }
 
 interface IAvatarPosition {
@@ -66,21 +67,8 @@ export function determineAvatarPosition(index: number, max: number): IAvatarPosi
     }
 }
 
-export function readReceiptTooltip(members: string[], hasMore: boolean): string | null {
-    if (hasMore) {
-        return _t("%(members)s and more", {
-            members: members.join(", "),
-        });
-    } else if (members.length > 1) {
-        return _t("%(members)s and %(last)s", {
-            last: members.pop(),
-            members: members.join(", "),
-        });
-    } else if (members.length) {
-        return members[0];
-    } else {
-        return null;
-    }
+export function readReceiptTooltip(members: string[], maxAvatars: number): string | undefined {
+    return formatList(members, maxAvatars);
 }
 
 export function ReadReceiptGroup({
@@ -96,13 +84,15 @@ export function ReadReceiptGroup({
     const hasMore = readReceipts.length > MAX_READ_AVATARS;
     const maxAvatars = hasMore ? MAX_READ_AVATARS_PLUS_N : MAX_READ_AVATARS;
 
-    const tooltipMembers: string[] = readReceipts.slice(0, maxAvatars).map((it) => it.roomMember?.name ?? it.userId);
-    const tooltipText = readReceiptTooltip(tooltipMembers, hasMore);
+    const tooltipMembers: string[] = readReceipts.map((it) => it.roomMember?.name ?? it.userId);
+    const tooltipText = readReceiptTooltip(tooltipMembers, maxAvatars);
 
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
         label: (
             <>
-                <div className="mx_Tooltip_title">{_t("Seen by %(count)s people", { count: readReceipts.length })}</div>
+                <div className="mx_Tooltip_title">
+                    {_t("timeline|read_receipt_title", { count: readReceipts.length })}
+                </div>
                 <div className="mx_Tooltip_sub">{tooltipText}</div>
             </>
         ),
@@ -134,7 +124,7 @@ export function ReadReceiptGroup({
             const { hidden, position } = determineAvatarPosition(index, maxAvatars);
 
             const userId = receipt.userId;
-            let readReceiptInfo: IReadReceiptInfo;
+            let readReceiptInfo: IReadReceiptInfo | undefined;
 
             if (readReceiptMap) {
                 readReceiptInfo = readReceiptMap[userId];
@@ -161,7 +151,7 @@ export function ReadReceiptGroup({
         })
         .reverse();
 
-    let remText: JSX.Element;
+    let remText: JSX.Element | undefined;
     const remainder = readReceipts.length - maxAvatars;
     if (remainder > 0) {
         remText = (
@@ -171,14 +161,14 @@ export function ReadReceiptGroup({
         );
     }
 
-    let contextMenu;
-    if (menuDisplayed) {
+    let contextMenu: JSX.Element | undefined;
+    if (menuDisplayed && button.current) {
         const buttonRect = button.current.getBoundingClientRect();
         contextMenu = (
             <ContextMenu menuClassName="mx_ReadReceiptGroup_popup" onFinished={closeMenu} {...aboveLeftOf(buttonRect)}>
                 <AutoHideScrollbar>
                     <SectionHeader className="mx_ReadReceiptGroup_title">
-                        {_t("Seen by %(count)s people", { count: readReceipts.length })}
+                        {_t("timeline|read_receipt_title", { count: readReceipts.length })}
                     </SectionHeader>
                     {readReceipts.map((receipt) => (
                         <ReadReceiptPerson
@@ -195,10 +185,10 @@ export function ReadReceiptGroup({
 
     return (
         <div className="mx_EventTile_msgOption">
-            <div className="mx_ReadReceiptGroup" role="group" aria-label={_t("Read receipts")}>
+            <div className="mx_ReadReceiptGroup" role="group" aria-label={_t("timeline|read_receipts_label")}>
                 <AccessibleButton
                     className="mx_ReadReceiptGroup_button"
-                    inputRef={button}
+                    ref={button}
                     aria-label={tooltipText}
                     aria-haspopup="true"
                     onClick={openMenu}
@@ -228,7 +218,7 @@ export function ReadReceiptGroup({
 }
 
 interface ReadReceiptPersonProps extends IReadReceiptProps {
-    isTwelveHour: boolean;
+    isTwelveHour?: boolean;
     onAfterClick?: () => void;
 }
 
@@ -274,8 +264,7 @@ function ReadReceiptPerson({
             <MemberAvatar
                 member={roomMember}
                 fallbackUserId={userId}
-                width={24}
-                height={24}
+                size="24px"
                 aria-hidden="true"
                 aria-live="off"
                 resizeMethod="crop"
@@ -295,8 +284,7 @@ interface ISectionHeaderProps {
 }
 
 function SectionHeader({ className, children }: PropsWithChildren<ISectionHeaderProps>): JSX.Element {
-    const ref = useRef<HTMLHeadingElement>();
-    const [onFocus] = useRovingTabIndex(ref);
+    const [onFocus, , ref] = useRovingTabIndex<HTMLHeadingElement>();
 
     return (
         <h3 className={className} role="menuitem" onFocus={onFocus} tabIndex={-1} ref={ref}>

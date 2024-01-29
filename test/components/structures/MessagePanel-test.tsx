@@ -16,12 +16,9 @@ limitations under the License.
 */
 
 import React from "react";
-import ReactDOM from "react-dom";
 import { EventEmitter } from "events";
-import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
-import FakeTimers from "@sinonjs/fake-timers";
+import { MatrixEvent, Room, RoomMember, Thread, ReceiptType } from "matrix-js-sdk/src/matrix";
 import { render } from "@testing-library/react";
-import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import MessagePanel, { shouldFormContinuation } from "../../../src/components/structures/MessagePanel";
 import SettingsStore from "../../../src/settings/SettingsStore";
@@ -30,6 +27,7 @@ import RoomContext, { TimelineRenderingType } from "../../../src/contexts/RoomCo
 import DMRoomMap from "../../../src/utils/DMRoomMap";
 import * as TestUtilsMatrix from "../../test-utils";
 import {
+    createTestClient,
     getMockClientWithEventEmitter,
     makeBeaconInfoEvent,
     mockClientMethodsEvents,
@@ -37,6 +35,7 @@ import {
 } from "../../test-utils";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
 import { IRoomState } from "../../../src/components/structures/RoomView";
+import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 
 jest.mock("../../../src/utils/beacon", () => ({
     useBeacon: jest.fn(),
@@ -45,8 +44,6 @@ jest.mock("../../../src/utils/beacon", () => ({
 const roomId = "!roomId:server_name";
 
 describe("MessagePanel", function () {
-    let clock = null;
-    const realSetTimeout = window.setTimeout;
     const events = mkEvents();
     const userId = "@me:here";
     const client = getMockClientWithEventEmitter({
@@ -57,7 +54,9 @@ describe("MessagePanel", function () {
         isRoomEncrypted: jest.fn().mockReturnValue(false),
         getRoom: jest.fn(),
         getClientWellKnown: jest.fn().mockReturnValue({}),
+        supportsThreads: jest.fn().mockReturnValue(true),
     });
+    jest.spyOn(MatrixClientPeg, "get").mockReturnValue(client);
 
     const room = new Room(roomId, client, userId);
 
@@ -77,7 +76,7 @@ describe("MessagePanel", function () {
         callEventGroupers: new Map(),
         room,
         className: "cls",
-        events: [],
+        events: [] as MatrixEvent[],
     };
 
     const defaultRoomContext = {
@@ -111,18 +110,11 @@ describe("MessagePanel", function () {
             return arg === "showDisplaynameChanges";
         });
 
-        DMRoomMap.makeShared();
-    });
-
-    afterEach(function () {
-        if (clock) {
-            clock.uninstall();
-            clock = null;
-        }
+        DMRoomMap.makeShared(client);
     });
 
     function mkEvents() {
-        const events = [];
+        const events: MatrixEvent[] = [];
         const ts0 = Date.now();
         for (let i = 0; i < 10; i++) {
             events.push(
@@ -139,7 +131,7 @@ describe("MessagePanel", function () {
 
     // Just to avoid breaking Dateseparator tests that might run at 00hrs
     function mkOneDayEvents() {
-        const events = [];
+        const events: MatrixEvent[] = [];
         const ts0 = Date.parse("09 May 2004 00:12:00 GMT");
         for (let i = 0; i < 10; i++) {
             events.push(
@@ -156,7 +148,7 @@ describe("MessagePanel", function () {
 
     // make a collection of events with some member events that should be collapsed with an EventListSummary
     function mkMelsEvents() {
-        const events = [];
+        const events: MatrixEvent[] = [];
         const ts0 = Date.now();
 
         let i = 0;
@@ -198,7 +190,7 @@ describe("MessagePanel", function () {
 
     // A list of membership events only with nothing else
     function mkMelsEventsOnly() {
-        const events = [];
+        const events: MatrixEvent[] = [];
         const ts0 = Date.now();
 
         let i = 0;
@@ -320,8 +312,8 @@ describe("MessagePanel", function () {
         ];
     }
 
-    function isReadMarkerVisible(rmContainer) {
-        return rmContainer && rmContainer.children.length > 0;
+    function isReadMarkerVisible(rmContainer?: Element) {
+        return !!rmContainer?.children.length;
     }
 
     it("should show the events", function () {
@@ -355,10 +347,10 @@ describe("MessagePanel", function () {
         const tiles = container.getElementsByClassName("mx_EventTile");
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         // it should follow the <li> which wraps the event tile for event 4
-        const eventContainer = ReactDOM.findDOMNode(tiles[4]);
+        const eventContainer = tiles[4];
         expect(rm.previousSibling).toEqual(eventContainer);
     });
 
@@ -375,7 +367,7 @@ describe("MessagePanel", function () {
         const [summary] = container.getElementsByClassName("mx_GenericEventListSummary");
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         expect(rm.previousSibling).toEqual(summary);
 
@@ -397,7 +389,7 @@ describe("MessagePanel", function () {
         const [summary] = container.getElementsByClassName("mx_GenericEventListSummary");
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         expect(rm.previousSibling).toEqual(summary);
 
@@ -405,9 +397,9 @@ describe("MessagePanel", function () {
         expect(isReadMarkerVisible(rm)).toBeFalsy();
     });
 
-    it("shows a ghost read-marker when the read-marker moves", function (done) {
+    it("shows a ghost read-marker when the read-marker moves", function () {
         // fake the clock so that we can test the velocity animation.
-        clock = FakeTimers.install();
+        jest.useFakeTimers();
 
         const { container, rerender } = render(
             <div>
@@ -422,7 +414,7 @@ describe("MessagePanel", function () {
         const tiles = container.getElementsByClassName("mx_EventTile");
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
         expect(rm.previousSibling).toEqual(tiles[4]);
 
         rerender(
@@ -436,7 +428,7 @@ describe("MessagePanel", function () {
         );
 
         // now there should be two RM containers
-        const readMarkers = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const readMarkers = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         expect(readMarkers.length).toEqual(2);
 
@@ -447,28 +439,19 @@ describe("MessagePanel", function () {
         // the second should be the real thing
         expect(readMarkers[1].previousSibling).toEqual(tiles[6]);
 
-        // advance the clock, and then let the browser run an animation frame,
-        // to let the animation start
-        clock.tick(1500);
-
-        realSetTimeout(() => {
-            // then advance it again to let it complete
-            clock.tick(1000);
-            realSetTimeout(() => {
-                // the ghost should now have finished
-                expect(hr.style.opacity).toEqual("0");
-                done();
-            }, 100);
-        }, 100);
+        // advance the clock, and then let the browser run an animation frame to let the animation start
+        jest.advanceTimersByTime(1500);
+        expect(hr.style.opacity).toEqual("0");
     });
 
     it("should collapse creation events", function () {
         const events = mkCreationEvents();
+        const createEvent = events.find((event) => event.getType() === "m.room.create")!;
+        const encryptionEvent = events.find((event) => event.getType() === "m.room.encryption")!;
+        client.getRoom.mockImplementation((id) => (id === createEvent!.getRoomId() ? room : null));
         TestUtilsMatrix.upsertRoomStateEvents(room, events);
-        const { container } = render(getComponent({ events }));
 
-        const createEvent = events.find((event) => event.getType() === "m.room.create");
-        const encryptionEvent = events.find((event) => event.getType() === "m.room.encryption");
+        const { container } = render(getComponent({ events }));
 
         // we expect that
         // - the room creation event, the room encryption event, and Alice inviting Bob,
@@ -490,8 +473,8 @@ describe("MessagePanel", function () {
 
     it("should not collapse beacons as part of creation events", function () {
         const events = mkCreationEvents();
-        const creationEvent = events.find((event) => event.getType() === "m.room.create");
-        const beaconInfoEvent = makeBeaconInfoEvent(creationEvent.getSender(), creationEvent.getRoomId(), {
+        const creationEvent = events.find((event) => event.getType() === "m.room.create")!;
+        const beaconInfoEvent = makeBeaconInfoEvent(creationEvent.getSender()!, creationEvent.getRoomId()!, {
             isLive: true,
         });
         const combinedEvents = [...events, beaconInfoEvent];
@@ -508,6 +491,8 @@ describe("MessagePanel", function () {
 
     it("should hide read-marker at the end of creation event summary", function () {
         const events = mkCreationEvents();
+        const createEvent = events.find((event) => event.getType() === "m.room.create");
+        client.getRoom.mockImplementation((id) => (id === createEvent!.getRoomId() ? room : null));
         TestUtilsMatrix.upsertRoomStateEvents(room, events);
 
         const { container } = render(
@@ -519,7 +504,7 @@ describe("MessagePanel", function () {
         );
 
         // find the <li> which wraps the read marker
-        const [rm] = container.getElementsByClassName("mx_RoomView_myReadMarker_container");
+        const [rm] = container.getElementsByClassName("mx_MessagePanel_myReadMarker");
 
         const [messageList] = container.getElementsByClassName("mx_RoomView_MessageList");
         const rows = messageList.children;
@@ -545,7 +530,7 @@ describe("MessagePanel", function () {
         let els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
         expect(els[0].getAttribute("data-testid")).toEqual("eventlistsummary-" + events[0].getId());
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(10);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(10);
 
         const updatedEvents = [
             ...events,
@@ -565,7 +550,7 @@ describe("MessagePanel", function () {
         els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
         expect(els[0].getAttribute("data-testid")).toEqual("eventlistsummary-" + events[0].getId());
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(11);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(11);
     });
 
     it("prepends events into summaries during backward pagination without changing key", () => {
@@ -575,7 +560,7 @@ describe("MessagePanel", function () {
         let els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
         expect(els[0].getAttribute("data-testid")).toEqual("eventlistsummary-" + events[0].getId());
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(10);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(10);
 
         const updatedEvents = [
             TestUtilsMatrix.mkMembership({
@@ -595,7 +580,7 @@ describe("MessagePanel", function () {
         els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
         expect(els[0].getAttribute("data-testid")).toEqual("eventlistsummary-" + events[0].getId());
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(11);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(11);
     });
 
     it("assigns different keys to summaries that get split up", () => {
@@ -605,7 +590,7 @@ describe("MessagePanel", function () {
         let els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
         expect(els[0].getAttribute("data-testid")).toEqual(`eventlistsummary-${events[0].getId()}`);
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(10);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(10);
 
         const updatedEvents = [
             ...events.slice(0, 5),
@@ -623,10 +608,10 @@ describe("MessagePanel", function () {
         els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(2);
         expect(els[0].getAttribute("data-testid")).toEqual(`eventlistsummary-${events[0].getId()}`);
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(5);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(5);
 
         expect(els[1].getAttribute("data-testid")).toEqual(`eventlistsummary-${events[5].getId()}`);
-        expect(els[1].getAttribute("data-scroll-tokens").split(",").length).toEqual(5);
+        expect(els[1].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(5);
     });
 
     // We test this because setting lookups can be *slow*, and we don't want
@@ -676,7 +661,138 @@ describe("MessagePanel", function () {
 
         const els = container.getElementsByClassName("mx_GenericEventListSummary");
         expect(els.length).toEqual(1);
-        expect(els[0].getAttribute("data-scroll-tokens").split(",").length).toEqual(3);
+        expect(els[0].getAttribute("data-scroll-tokens")?.split(",")).toHaveLength(3);
+    });
+
+    it("should handle large numbers of hidden events quickly", () => {
+        // Increase the length of the loop here to test performance issues with
+        // rendering
+
+        const events: MatrixEvent[] = [];
+        for (let i = 0; i < 100; i++) {
+            events.push(
+                TestUtilsMatrix.mkEvent({
+                    event: true,
+                    type: "unknown.event.type",
+                    content: { key: "value" },
+                    room: "!room:id",
+                    user: "@user:id",
+                    ts: 1000000 + i,
+                }),
+            );
+        }
+        const { asFragment } = render(getComponent({ events }, { showHiddenEvents: false }));
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("should handle lots of room creation events quickly", () => {
+        // Increase the length of the loop here to test performance issues with
+        // rendering
+
+        const events = [TestUtilsMatrix.mkRoomCreateEvent("@user:id", "!room:id")];
+        for (let i = 0; i < 100; i++) {
+            events.push(
+                TestUtilsMatrix.mkMembership({
+                    mship: "join",
+                    prevMship: "join",
+                    room: "!room:id",
+                    user: "@user:id",
+                    event: true,
+                    skey: "123",
+                }),
+            );
+        }
+        const { asFragment } = render(getComponent({ events }, { showHiddenEvents: false }));
+        expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("should handle lots of membership events quickly", () => {
+        // Increase the length of the loop here to test performance issues with
+        // rendering
+
+        const events: MatrixEvent[] = [];
+        for (let i = 0; i < 100; i++) {
+            events.push(
+                TestUtilsMatrix.mkMembership({
+                    mship: "join",
+                    prevMship: "join",
+                    room: "!room:id",
+                    user: "@user:id",
+                    event: true,
+                    skey: "123",
+                }),
+            );
+        }
+        const { asFragment } = render(getComponent({ events }, { showHiddenEvents: true }));
+        const cpt = asFragment();
+
+        // Ignore properties that change every time
+        cpt.querySelectorAll("li").forEach((li) => {
+            li.setAttribute("data-scroll-tokens", "__scroll_tokens__");
+            li.setAttribute("data-testid", "__testid__");
+        });
+
+        expect(cpt).toMatchSnapshot();
+    });
+
+    it("should set lastSuccessful=true on non-last event if last event is not eligible for special receipt", () => {
+        client.getRoom.mockImplementation((id) => (id === room.roomId ? room : null));
+        const events = [
+            TestUtilsMatrix.mkMessage({
+                event: true,
+                room: room.roomId,
+                user: client.getSafeUserId(),
+                ts: 1000,
+            }),
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                room: room.roomId,
+                user: client.getSafeUserId(),
+                ts: 1000,
+                type: "m.room.topic",
+                skey: "",
+                content: { topic: "TOPIC" },
+            }),
+        ];
+        const { container } = render(getComponent({ events, showReadReceipts: true }));
+
+        const tiles = container.getElementsByClassName("mx_EventTile");
+        expect(tiles.length).toEqual(2);
+        expect(tiles[0].querySelector(".mx_EventTile_receiptSent")).toBeTruthy();
+        expect(tiles[1].querySelector(".mx_EventTile_receiptSent")).toBeFalsy();
+    });
+
+    it("should set lastSuccessful=false on non-last event if last event has a receipt from someone else", () => {
+        client.getRoom.mockImplementation((id) => (id === room.roomId ? room : null));
+        const events = [
+            TestUtilsMatrix.mkMessage({
+                event: true,
+                room: room.roomId,
+                user: client.getSafeUserId(),
+                ts: 1000,
+            }),
+            TestUtilsMatrix.mkMessage({
+                event: true,
+                room: room.roomId,
+                user: "@other:user",
+                ts: 1001,
+            }),
+        ];
+        room.addReceiptToStructure(
+            events[1].getId()!,
+            ReceiptType.Read,
+            "@other:user",
+            {
+                ts: 1001,
+            },
+            true,
+        );
+        const { container } = render(getComponent({ events, showReadReceipts: true }));
+
+        const tiles = container.getElementsByClassName("mx_EventTile");
+        expect(tiles.length).toEqual(2);
+        expect(tiles[0].querySelector(".mx_EventTile_receiptSent")).toBeFalsy();
+        expect(tiles[1].querySelector(".mx_EventTile_receiptSent")).toBeFalsy();
     });
 });
 
@@ -711,16 +827,17 @@ describe("shouldFormContinuation", () => {
             msg: "And here's another message in the main timeline after the thread root",
         });
 
-        expect(shouldFormContinuation(message1, message2, false, true)).toEqual(true);
-        expect(shouldFormContinuation(message2, threadRoot, false, true)).toEqual(true);
-        expect(shouldFormContinuation(threadRoot, message3, false, true)).toEqual(true);
+        const client = createTestClient();
+        expect(shouldFormContinuation(message1, message2, client, false)).toEqual(true);
+        expect(shouldFormContinuation(message2, threadRoot, client, false)).toEqual(true);
+        expect(shouldFormContinuation(threadRoot, message3, client, false)).toEqual(true);
 
         const thread = {
             length: 1,
             replyToEvent: {},
         } as unknown as Thread;
         jest.spyOn(threadRoot, "getThread").mockReturnValue(thread);
-        expect(shouldFormContinuation(message2, threadRoot, false, true)).toEqual(false);
-        expect(shouldFormContinuation(threadRoot, message3, false, true)).toEqual(false);
+        expect(shouldFormContinuation(message2, threadRoot, client, false)).toEqual(false);
+        expect(shouldFormContinuation(threadRoot, message3, client, false)).toEqual(false);
     });
 });

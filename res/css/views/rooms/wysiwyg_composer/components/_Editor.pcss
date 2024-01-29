@@ -37,11 +37,30 @@ limitations under the License.
             user-select: all;
         }
 
+        // we always have a <br/> tag at the end of the html, we need it to be present at first then hide it as soon as
+        // we have any other elements
+        br:not(:only-child) {
+            display: none;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 0;
+            /* this may seem redundant, but we need to handle zero content formatting tags, which occur when we split a
+               formatting tag into paragraphs */
+            min-height: $font-22px;
+        }
+
         ul,
         ol {
             margin-top: 0;
             margin-bottom: 0;
             padding-inline-start: $spacing-28;
+        }
+
+        /* Make list type disc to match rich text editor */
+        ul {
+            list-style-type: disc;
         }
 
         blockquote {
@@ -54,12 +73,6 @@ limitations under the License.
             margin-block-end: 0;
             margin-inline-start: 0;
             margin-inline-end: 0;
-        }
-
-        // model output always includes a linebreak but we do not want the user
-        // to see it when writing input in lists
-        :is(ol, ul, pre, blockquote) + br:last-of-type {
-            display: none;
         }
 
         > pre {
@@ -75,12 +88,70 @@ limitations under the License.
             border-radius: 2px;
         }
 
-        code {
+        code:not(pre *) {
             font-family: $monospace-font-family !important;
             background-color: $inlinecode-background-color;
             border: 1px solid $inlinecode-border-color;
             border-radius: 4px;
             padding: $spacing-2;
+
+            &:empty {
+                border: unset;
+                padding: unset;
+            }
+        }
+
+        /* this selector represents what will become a pill
+        nb despite there being mx_UserPill and mx_RoomPill classes appended to these pills
+        in the current composer, there don't appear to be any styles associated with those classes
+        in this repo */
+        a[data-mention-type] {
+            /* combine mx_Pill from _Pill.pcss */
+            padding: $font-1px 0.4em;
+            line-height: $font-17px;
+            border-radius: $font-16px;
+            display: inline;
+            box-sizing: border-box;
+            max-width: 100%;
+            overflow: hidden;
+
+            color: $accent-fg-color;
+            background-color: $pill-bg-color;
+
+            /* ...with the overrides from _BasicMessageComposer.pcss */
+            user-select: all;
+            position: relative;
+            cursor: unset; /* We don't want indicate clickability */
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            /* avatar pseudo element */
+            &::before {
+                /* After consolidation, all of the styling from _Pill.scss was being overridden,
+                so take what is in _BasicMessageComposer.pcss as the starting point */
+                display: inline-block;
+                content: var(--avatar-letter);
+                background: var(--avatar-background), $background;
+
+                width: $font-16px;
+                min-width: $font-16px; /* ensure the avatar is not compressed */
+                height: $font-16px;
+                line-height: $font-16px;
+                text-align: center;
+
+                /* Get the positioning of the avatar just right for consistency with timeline */
+                margin-inline-start: -0.4rem;
+                margin-inline-end: 0.24rem;
+                vertical-align: 0.12rem;
+
+                background-repeat: no-repeat;
+                background-size: $font-16px;
+                border-radius: $font-16px;
+
+                color: var(--avatar-color, $avatar-initial-color);
+                font-weight: bold;
+                font-size: $font-10-4px;
+            }
         }
     }
 
@@ -93,5 +164,18 @@ limitations under the License.
         pointer-events: none;
         white-space: nowrap;
         color: $tertiary-content;
+    }
+}
+
+.mx_WysiwygComposer_AutoCompleteWrapper {
+    position: relative;
+
+    /* Due to the fact that editing a message now has a larger amount of grey
+    colour above it (due to the rich text buttons above the composer), we need
+    to give the autocomplete a bit more visual separation by using a border.
+    */
+    > .mx_Autocomplete {
+        border: 1px solid $quinary-content;
+        border-radius: 8px;
     }
 }

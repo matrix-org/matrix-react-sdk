@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
 
 import { NotificationColor } from "./NotificationColor";
 import { IDestroyable } from "../../utils/IDestroyable";
@@ -24,6 +24,8 @@ export interface INotificationStateSnapshotParams {
     symbol: string | null;
     count: number;
     color: NotificationColor;
+    muted: boolean;
+    knocked: boolean;
 }
 
 export enum NotificationStateEvents {
@@ -42,6 +44,8 @@ export abstract class NotificationState
     protected _symbol: string | null = null;
     protected _count = 0;
     protected _color: NotificationColor = NotificationColor.None;
+    protected _muted = false;
+    protected _knocked = false;
 
     private watcherReferences: string[] = [];
 
@@ -64,6 +68,14 @@ export abstract class NotificationState
 
     public get color(): NotificationColor {
         return this._color;
+    }
+
+    public get muted(): boolean {
+        return this._muted;
+    }
+
+    public get knocked(): boolean {
+        return this._knocked;
     }
 
     public get isIdle(): boolean {
@@ -110,16 +122,32 @@ export class NotificationStateSnapshot {
     private readonly symbol: string | null;
     private readonly count: number;
     private readonly color: NotificationColor;
+    private readonly muted: boolean;
+    private readonly knocked: boolean;
 
     public constructor(state: INotificationStateSnapshotParams) {
         this.symbol = state.symbol;
         this.count = state.count;
         this.color = state.color;
+        this.muted = state.muted;
+        this.knocked = state.knocked;
     }
 
     public isDifferentFrom(other: INotificationStateSnapshotParams): boolean {
-        const before = { count: this.count, symbol: this.symbol, color: this.color };
-        const after = { count: other.count, symbol: other.symbol, color: other.color };
+        const before = {
+            count: this.count,
+            symbol: this.symbol,
+            color: this.color,
+            muted: this.muted,
+            knocked: this.knocked,
+        };
+        const after = {
+            count: other.count,
+            symbol: other.symbol,
+            color: other.color,
+            muted: other.muted,
+            knocked: other.knocked,
+        };
         return JSON.stringify(before) !== JSON.stringify(after);
     }
 }

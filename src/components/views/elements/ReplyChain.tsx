@@ -1,5 +1,5 @@
 /*
-Copyright 2017 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2017 - 2023 The Matrix.org Foundation C.I.C.
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,9 +17,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixEvent, Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -30,8 +28,8 @@ import { getUserNameColorClass } from "../../../utils/FormattingUtils";
 import { Action } from "../../../dispatcher/actions";
 import Spinner from "./Spinner";
 import ReplyTile from "../rooms/ReplyTile";
-import Pill, { PillType } from "./Pill";
-import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
+import { Pill, PillType } from "./Pill";
+import AccessibleButton from "./AccessibleButton";
 import { getParentEventId, shouldDisplayReply } from "../../../utils/Reply";
 import RoomContext from "../../../contexts/RoomContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -45,10 +43,10 @@ const SHOW_EXPAND_QUOTE_PIXELS = 60;
 
 interface IProps {
     // the latest event in this chain of replies
-    parentEv?: MatrixEvent;
+    parentEv: MatrixEvent;
     // called when the ReplyChain contents has changed, including EventTiles thereof
-    onHeightChanged: () => void;
-    permalinkCreator: RoomPermalinkCreator;
+    onHeightChanged?: () => void;
+    permalinkCreator?: RoomPermalinkCreator;
     // Specifies which layout to use.
     layout?: Layout;
     // Whether to always show a timestamp
@@ -63,7 +61,7 @@ interface IState {
     // The loaded events to be rendered as linear-replies
     events: MatrixEvent[];
     // The latest loaded event which has not yet been shown
-    loadedEv: MatrixEvent;
+    loadedEv: MatrixEvent | null;
     // Whether the component is still loading more events
     loading: boolean;
     // Whether as error was encountered fetching a replied to event.
@@ -91,11 +89,11 @@ export default class ReplyChain extends React.Component<IProps, IState> {
             err: false,
         };
 
-        this.room = this.matrixClient.getRoom(this.props.parentEv.getRoomId());
+        this.room = this.matrixClient.getRoom(this.props.parentEv.getRoomId())!;
     }
 
     private get matrixClient(): MatrixClient {
-        return MatrixClientPeg.get();
+        return MatrixClientPeg.safeGet();
     }
 
     public componentDidMount(): void {
@@ -104,7 +102,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
     }
 
     public componentDidUpdate(): void {
-        this.props.onHeightChanged();
+        this.props.onHeightChanged?.();
         this.trySetExpandableQuotes();
     }
 
@@ -145,16 +143,17 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         }
     }
 
-    private async getNextEvent(ev: MatrixEvent): Promise<MatrixEvent> {
+    private async getNextEvent(ev: MatrixEvent): Promise<MatrixEvent | null> {
         try {
             const inReplyToEventId = getParentEventId(ev);
+            if (!inReplyToEventId) return null;
             return await this.getEvent(inReplyToEventId);
         } catch (e) {
             return null;
         }
     }
 
-    private async getEvent(eventId: string): Promise<MatrixEvent> {
+    private async getEvent(eventId?: string): Promise<MatrixEvent | null> {
         if (!eventId) return null;
         const event = this.room.findEventById(eventId);
         if (event) return event;
@@ -168,7 +167,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
             // Return null as it is falsy and thus should be treated as an error (as the event cannot be resolved).
             return null;
         }
-        return this.room.findEventById(eventId);
+        return this.room.findEventById(eventId) ?? null;
     }
 
     public canCollapse = (): boolean => {
@@ -179,10 +178,11 @@ export default class ReplyChain extends React.Component<IProps, IState> {
         this.initialize();
     };
 
-    private onQuoteClick = async (event: ButtonEvent): Promise<void> => {
+    private onQuoteClick = async (): Promise<void> => {
+        if (!this.state.loadedEv) return;
         const events = [this.state.loadedEv, ...this.state.events];
 
-        let loadedEv = null;
+        let loadedEv: MatrixEvent | null = null;
         if (events.length > 0) {
             loadedEv = await this.getNextEvent(events[0]);
         }
@@ -196,18 +196,15 @@ export default class ReplyChain extends React.Component<IProps, IState> {
     };
 
     private getReplyChainColorClass(ev: MatrixEvent): string {
-        return getUserNameColorClass(ev.getSender()).replace("Username", "ReplyChain");
+        return getUserNameColorClass(ev.getSender()!).replace("Username", "ReplyChain");
     }
 
-    public render(): JSX.Element {
-        let header = null;
+    public render(): React.ReactNode {
+        let header: JSX.Element | undefined;
         if (this.state.err) {
             header = (
                 <blockquote className="mx_ReplyChain mx_ReplyChain_error">
-                    {_t(
-                        "Unable to load event that was replied to, " +
-                            "it either does not exist or you do not have permission to view it.",
-                    )}
+                    {_t("timeline|reply|error_loading")}
                 </blockquote>
             );
         } else if (this.state.loadedEv && shouldDisplayReply(this.state.events[0])) {
@@ -216,7 +213,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
             header = (
                 <blockquote className={`mx_ReplyChain ${this.getReplyChainColorClass(ev)}`}>
                     {_t(
-                        "<a>In reply to</a> <pill>",
+                        "timeline|reply|in_reply_to",
                         {},
                         {
                             a: (sub) => (
@@ -231,8 +228,8 @@ export default class ReplyChain extends React.Component<IProps, IState> {
                             pill: (
                                 <Pill
                                     type={PillType.UserMention}
-                                    room={room}
-                                    url={makeUserPermalink(ev.getSender())}
+                                    room={room ?? undefined}
+                                    url={makeUserPermalink(ev.getSender()!)}
                                     shouldShowPillAvatar={SettingsStore.getValue("Pill.shouldShowPillAvatar")}
                                 />
                             ),
@@ -245,7 +242,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
             header = (
                 <p className="mx_ReplyChain_Export">
                     {_t(
-                        "In reply to <a>this message</a>",
+                        "timeline|reply|in_reply_to_for_export",
                         {},
                         {
                             a: (sub) => (

@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,13 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import React, { ReactNode } from "react";
+import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
-import Pill, { PillType } from "../elements/Pill";
+import { Pill, PillType } from "../elements/Pill";
 import { makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import BaseAvatar from "../avatars/BaseAvatar";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -65,7 +64,7 @@ interface IBridgeStateEvent {
 }
 
 export default class BridgeTile extends React.PureComponent<IProps> {
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const content: IBridgeStateEvent = this.props.ev.getContent();
         // Validate
         if (!content.channel?.id || !content.protocol?.id) {
@@ -79,25 +78,25 @@ export default class BridgeTile extends React.PureComponent<IProps> {
                 `Bridge info event ${this.props.ev.getId()} does not provide a 'bridgebot' key which` +
                     "is deprecated behaviour. Using sender for now.",
             );
-            content.bridgebot = this.props.ev.getSender();
+            content.bridgebot = this.props.ev.getSender()!;
         }
         const { channel, network, protocol } = content;
         const protocolName = protocol.displayname || protocol.id;
         const channelName = channel.displayname || channel.id;
 
-        let creator = null;
+        let creator: JSX.Element | undefined;
         if (content.creator) {
             creator = (
                 <li>
                     {_t(
-                        "This bridge was provisioned by <user />.",
+                        "labs|bridge_state_creator",
                         {},
                         {
                             user: () => (
                                 <Pill
                                     type={PillType.UserMention}
                                     room={this.props.room}
-                                    url={makeUserPermalink(content.creator)}
+                                    url={makeUserPermalink(content.creator!)}
                                     shouldShowPillAvatar={SettingsStore.getValue("Pill.shouldShowPillAvatar")}
                                 />
                             ),
@@ -110,7 +109,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
         const bot = (
             <li>
                 {_t(
-                    "This bridge is managed by <user />.",
+                    "labs|bridge_state_manager",
                     {},
                     {
                         user: () => (
@@ -129,14 +128,12 @@ export default class BridgeTile extends React.PureComponent<IProps> {
         let networkIcon;
 
         if (protocol.avatar_url) {
-            const avatarUrl = mediaFromMxc(protocol.avatar_url).getSquareThumbnailHttp(64);
+            const avatarUrl = mediaFromMxc(protocol.avatar_url).getSquareThumbnailHttp(64) ?? undefined;
 
             networkIcon = (
                 <BaseAvatar
                     className="mx_RoomSettingsDialog_protocolIcon"
-                    width={48}
-                    height={48}
-                    resizeMethod="crop"
+                    size="48px"
                     name={protocolName}
                     idName={protocolName}
                     url={avatarUrl}
@@ -145,7 +142,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
         } else {
             networkIcon = <div className="mx_RoomSettingsDialog_noProtocolIcon" />;
         }
-        let networkItem = null;
+        let networkItem: ReactNode | undefined;
         if (network) {
             const networkName = network.displayname || network.id;
             let networkLink = <span>{networkName}</span>;
@@ -157,7 +154,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
                 );
             }
             networkItem = _t(
-                "Workspace: <networkLink/>",
+                "labs|bridge_state_workspace",
                 {},
                 {
                     networkLink: () => networkLink,
@@ -184,7 +181,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
                         {networkItem}
                         <span className="mx_RoomSettingsDialog_channel">
                             {_t(
-                                "Channel: <channelLink/>",
+                                "labs|bridge_state_channel",
                                 {},
                                 {
                                     channelLink: () => channelLink,

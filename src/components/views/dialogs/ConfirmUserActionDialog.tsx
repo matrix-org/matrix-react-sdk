@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ChangeEvent, FormEvent, ReactNode } from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
@@ -39,7 +39,7 @@ interface IProps {
     children?: ReactNode;
     className?: string;
     roomId?: string;
-    onFinished: (success: boolean, reason?: string) => void;
+    onFinished: (success?: boolean, reason?: string) => void;
 }
 
 interface IState {
@@ -55,7 +55,7 @@ interface IState {
  * Also tweaks the style for 'dangerous' actions (albeit only with colour)
  */
 export default class ConfirmUserActionDialog extends React.Component<IProps, IState> {
-    public static defaultProps = {
+    public static defaultProps: Partial<IProps> = {
         danger: false,
         askReason: false,
     };
@@ -83,7 +83,7 @@ export default class ConfirmUserActionDialog extends React.Component<IProps, ISt
         });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const confirmButtonClass = this.props.danger ? "danger" : "";
 
         let reasonBox;
@@ -95,14 +95,14 @@ export default class ConfirmUserActionDialog extends React.Component<IProps, ISt
                         onChange={this.onReasonChange}
                         value={this.state.reason}
                         className="mx_ConfirmUserActionDialog_reasonField"
-                        label={_t("Reason")}
+                        label={_t("room_settings|permissions|ban_reason")}
                         autoFocus={true}
                     />
                 </form>
             );
         }
 
-        const avatar = <MemberAvatar member={this.props.member} width={48} height={48} />;
+        const avatar = <MemberAvatar member={this.props.member} size="48px" />;
         const name = this.props.member.name;
         const userId = this.props.member.userId;
 

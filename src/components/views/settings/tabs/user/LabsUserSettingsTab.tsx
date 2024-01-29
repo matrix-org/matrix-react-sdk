@@ -23,36 +23,23 @@ import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SdkConfig from "../../../../../SdkConfig";
 import BetaCard from "../../../beta/BetaCard";
 import SettingsFlag from "../../../elements/SettingsFlag";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import { LabGroup, labGroupNames } from "../../../../../settings/Settings";
 import { EnhancedMap } from "../../../../../utils/maps";
+import { SettingsSection } from "../../shared/SettingsSection";
+import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
+import SettingsTab from "../SettingsTab";
 
-interface IState {
-    showJumpToDate: boolean;
-    showExploringPublicSpaces: boolean;
-}
+export const showLabsFlags = (): boolean => {
+    return SdkConfig.get("show_labs_settings") || SettingsStore.getValue("developerMode");
+};
 
-export default class LabsUserSettingsTab extends React.Component<{}, IState> {
+export default class LabsUserSettingsTab extends React.Component<{}> {
+    private readonly labs: string[];
+    private readonly betas: string[];
+
     public constructor(props: {}) {
         super(props);
 
-        const cli = MatrixClientPeg.get();
-
-        cli.doesServerSupportUnstableFeature("org.matrix.msc3030").then((showJumpToDate) => {
-            this.setState({ showJumpToDate });
-        });
-
-        cli.doesServerSupportUnstableFeature("org.matrix.msc3827.stable").then((showExploringPublicSpaces) => {
-            this.setState({ showExploringPublicSpaces });
-        });
-
-        this.state = {
-            showJumpToDate: false,
-            showExploringPublicSpaces: false,
-        };
-    }
-
-    public render(): JSX.Element {
         const features = SettingsStore.getFeatureSettingNames();
         const [labs, betas] = features.reduce(
             (arr, f) => {
@@ -62,23 +49,32 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
             [[], []] as [string[], string[]],
         );
 
-        let betaSection;
-        if (betas.length) {
+        this.labs = labs;
+        this.betas = betas;
+
+        if (!showLabsFlags()) {
+            this.labs = [];
+        }
+    }
+
+    public render(): React.ReactNode {
+        let betaSection: JSX.Element | undefined;
+        if (this.betas.length) {
             betaSection = (
-                <div data-testid="labs-beta-section" className="mx_SettingsTab_section">
-                    {betas.map((f) => (
+                <>
+                    {this.betas.map((f) => (
                         <BetaCard key={f} featureId={f} />
                     ))}
-                </div>
+                </>
             );
         }
 
-        let labsSections;
-        if (SdkConfig.get("show_labs_settings")) {
+        let labsSections: JSX.Element | undefined;
+        if (this.labs.length) {
             const groups = new EnhancedMap<LabGroup, JSX.Element[]>();
-            labs.forEach((f) => {
+            this.labs.forEach((f) => {
                 groups
-                    .getOrCreate(SettingsStore.getLabGroup(f), [])
+                    .getOrCreate(SettingsStore.getLabGroup(f)!, [])
                     .push(<SettingsFlag level={SettingLevel.DEVICE} name={f} key={f} />);
             });
 
@@ -101,64 +97,35 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                     />,
                 );
 
-            if (this.state.showJumpToDate) {
-                groups
-                    .getOrCreate(LabGroup.Messaging, [])
-                    .push(
-                        <SettingsFlag
-                            key="feature_jump_to_date"
-                            name="feature_jump_to_date"
-                            level={SettingLevel.DEVICE}
-                        />,
-                    );
-            }
-
-            if (this.state.showExploringPublicSpaces) {
-                groups
-                    .getOrCreate(LabGroup.Spaces, [])
-                    .push(
-                        <SettingsFlag
-                            key="feature_exploring_public_spaces"
-                            name="feature_exploring_public_spaces"
-                            level={SettingLevel.DEVICE}
-                        />,
-                    );
-            }
-
             labsSections = (
                 <>
                     {sortBy(Array.from(groups.entries()), "0").map(([group, flags]) => (
-                        <div className="mx_SettingsTab_section" key={group} data-testid={`labs-group-${group}`}>
-                            <span className="mx_SettingsTab_subheading">{_t(labGroupNames[group])}</span>
+                        <SettingsSubsection
+                            key={group}
+                            data-testid={`labs-group-${group}`}
+                            heading={_t(labGroupNames[group])}
+                        >
                             {flags}
-                        </div>
+                        </SettingsSubsection>
                     ))}
                 </>
             );
         }
 
         return (
-            <div className="mx_SettingsTab mx_LabsUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Upcoming features")}</div>
-                <div className="mx_SettingsTab_subsectionText">
-                    {_t(
-                        "What's next for %(brand)s? " +
-                            "Labs are the best way to get things early, " +
-                            "test out new features and help shape them before they actually launch.",
-                        { brand: SdkConfig.get("brand") },
-                    )}
-                </div>
-                {betaSection}
+            <SettingsTab>
+                <SettingsSection heading={_t("labs|beta_section")}>
+                    <SettingsSubsectionText>
+                        {_t("labs|beta_description", { brand: SdkConfig.get("brand") })}
+                    </SettingsSubsectionText>
+                    {betaSection}
+                </SettingsSection>
+
                 {labsSections && (
-                    <>
-                        <div className="mx_SettingsTab_heading">{_t("Early previews")}</div>
-                        <div className="mx_SettingsTab_subsectionText">
+                    <SettingsSection heading={_t("labs|experimental_section")}>
+                        <SettingsSubsectionText>
                             {_t(
-                                "Feeling experimental? " +
-                                    "Try out our latest ideas in development. " +
-                                    "These features are not finalised; " +
-                                    "they may be unstable, may change, or may be dropped altogether. " +
-                                    "<a>Learn more</a>.",
+                                "labs|experimental_description",
                                 {},
                                 {
                                     a: (sub) => {
@@ -174,11 +141,11 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                                     },
                                 },
                             )}
-                        </div>
+                        </SettingsSubsectionText>
                         {labsSections}
-                    </>
+                    </SettingsSection>
                 )}
-            </div>
+            </SettingsTab>
         );
     }
 }

@@ -15,8 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
 
 import { checkBlockNode } from "../HtmlUtils";
 import { getPrimaryPermalinkEntity } from "../utils/permalinks/Permalinks";
@@ -51,7 +50,7 @@ export function longestBacktickSequence(text: string): number {
 }
 
 function isListChild(n: Node): boolean {
-    return LIST_TYPES.includes(n.parentNode?.nodeName);
+    return LIST_TYPES.includes(n.parentNode?.nodeName || "");
 }
 
 function parseAtRoomMentions(text: string, pc: PartCreator, opts: IParseOptions): Part[] {
@@ -78,7 +77,7 @@ function parseLink(n: Node, pc: PartCreator, opts: IParseOptions): Part[] {
 
     switch (resourceId?.[0]) {
         case "@":
-            return [pc.userPill(n.textContent, resourceId)];
+            return [pc.userPill(n.textContent || "", resourceId)];
         case "#":
             return [pc.roomPill(resourceId)];
     }
@@ -97,6 +96,8 @@ function parseImage(n: Node, pc: PartCreator, opts: IParseOptions): Part[] {
 }
 
 function parseCodeBlock(n: Node, pc: PartCreator, opts: IParseOptions): Part[] {
+    if (!n.textContent) return [];
+
     let language = "";
     if (n.firstChild?.nodeName === "CODE") {
         for (const className of (n.firstChild as HTMLElement).classList) {
@@ -149,7 +150,7 @@ function prefixLines(parts: Part[], prefix: string, pc: PartCreator): void {
 }
 
 function parseChildren(n: Node, pc: PartCreator, opts: IParseOptions, mkListItem?: (li: Node) => Part[]): Part[] {
-    let prev;
+    let prev: ChildNode | undefined;
     return Array.from(n.childNodes).flatMap((c) => {
         const parsed = parseNode(c, pc, opts, mkListItem);
         if (parsed.length && prev && (checkBlockNode(prev) || checkBlockNode(c))) {
@@ -170,7 +171,7 @@ function parseNode(n: Node, pc: PartCreator, opts: IParseOptions, mkListItem?: (
 
     switch (n.nodeType) {
         case Node.TEXT_NODE:
-            return parseAtRoomMentions(n.nodeValue, pc, opts);
+            return parseAtRoomMentions(n.nodeValue || "", pc, opts);
         case Node.ELEMENT_NODE:
             switch (n.nodeName) {
                 case "H1":
@@ -204,7 +205,7 @@ function parseNode(n: Node, pc: PartCreator, opts: IParseOptions, mkListItem?: (
                     return parseCodeBlock(n, pc, opts);
                 case "CODE": {
                     // Escape backticks by using multiple backticks for the fence if necessary
-                    const fence = "`".repeat(longestBacktickSequence(n.textContent) + 1);
+                    const fence = "`".repeat(longestBacktickSequence(n.textContent || "") + 1);
                     return pc.plainWithEmoji(`${fence}${n.textContent}${fence}`);
                 }
                 case "BLOCKQUOTE": {
@@ -245,6 +246,10 @@ function parseNode(n: Node, pc: PartCreator, opts: IParseOptions, mkListItem?: (
                         const tex = (n as Element).getAttribute("data-mx-maths");
 
                         return pc.plainWithEmoji(`${delimLeft}${tex}${delimRight}`);
+                    }
+                    // Spoilers are translated back into their slash command form
+                    else if ((n as Element).hasAttribute("data-mx-spoiler")) {
+                        return [pc.plain("/spoiler "), ...parseChildren(n, pc, opts)];
                     }
             }
     }

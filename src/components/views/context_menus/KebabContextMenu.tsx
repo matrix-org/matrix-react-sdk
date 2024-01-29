@@ -39,7 +39,7 @@ export const KebabContextMenu: React.FC<KebabContextMenuProps> = ({ options, tit
 
     return (
         <>
-            <ContextMenuButton {...props} onClick={openMenu} title={title} isExpanded={menuDisplayed} inputRef={button}>
+            <ContextMenuButton {...props} onClick={openMenu} title={title} isExpanded={menuDisplayed} ref={button}>
                 <ContextMenuIcon className="mx_KebabContextMenu_icon" />
             </ContextMenuButton>
             {menuDisplayed && (
@@ -48,7 +48,7 @@ export const KebabContextMenu: React.FC<KebabContextMenuProps> = ({ options, tit
                     compact
                     rightAligned
                     closeOnInteraction
-                    {...contextMenuBelow(button.current.getBoundingClientRect())}
+                    {...contextMenuBelow(button.current!.getBoundingClientRect())}
                 >
                     <IconizedContextMenuOptionList>{options}</IconizedContextMenuOptionList>
                 </IconizedContextMenu>

@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import React, { ReactNode } from "react";
+import { Room, MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../../languageHandler";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import BridgeTile from "../../BridgeTile";
+import SettingsTab from "../SettingsTab";
+import { SettingsSection } from "../../shared/SettingsSection";
+import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 
 const BRIDGE_EVENT_TYPES = [
     "uk.half-shot.bridge",
@@ -30,31 +31,31 @@ const BRIDGE_EVENT_TYPES = [
 const BRIDGES_LINK = "https://matrix.org/bridges/";
 
 interface IProps {
-    roomId: string;
+    room: Room;
 }
 
 export default class BridgeSettingsTab extends React.Component<IProps> {
-    private renderBridgeCard(event: MatrixEvent, room: Room): JSX.Element {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
+    private renderBridgeCard(event: MatrixEvent, room: Room | null): ReactNode {
         const content = event.getContent();
-        if (!content || !content.channel || !content.protocol) {
-            return null;
-        }
+        if (!room || !content?.channel || !content.protocol) return null;
         return <BridgeTile key={event.getId()} room={room} ev={event} />;
     }
 
-    public static getBridgeStateEvents(roomId: string): MatrixEvent[] {
-        const client = MatrixClientPeg.get();
-        const roomState = client.getRoom(roomId).currentState;
+    public static getBridgeStateEvents(client: MatrixClient, roomId: string): MatrixEvent[] {
+        const roomState = client.getRoom(roomId)?.currentState;
+        if (!roomState) return [];
 
         return BRIDGE_EVENT_TYPES.map((typeName) => roomState.getStateEvents(typeName)).flat(1);
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         // This settings tab will only be invoked if the following function returns more
         // than 0 events, so no validation is needed at this stage.
-        const bridgeEvents = BridgeSettingsTab.getBridgeStateEvents(this.props.roomId);
-        const client = MatrixClientPeg.get();
-        const room = client.getRoom(this.props.roomId);
+        const bridgeEvents = BridgeSettingsTab.getBridgeStateEvents(this.context, this.props.room.roomId);
+        const room = this.props.room;
 
         let content: JSX.Element;
         if (bridgeEvents.length > 0) {
@@ -62,7 +63,7 @@ export default class BridgeSettingsTab extends React.Component<IProps> {
                 <div>
                     <p>
                         {_t(
-                            "This room is bridging messages to the following platforms. " + "<a>Learn more.</a>",
+                            "room_settings|bridges|description",
                             {},
                             {
                                 // TODO: We don't have this link yet: this will prevent the translators
@@ -84,7 +85,7 @@ export default class BridgeSettingsTab extends React.Component<IProps> {
             content = (
                 <p>
                     {_t(
-                        "This room isn't bridging messages to any platforms. " + "<a>Learn more.</a>",
+                        "room_settings|bridges|empty",
                         {},
                         {
                             // TODO: We don't have this link yet: this will prevent the translators
@@ -101,10 +102,9 @@ export default class BridgeSettingsTab extends React.Component<IProps> {
         }
 
         return (
-            <div className="mx_SettingsTab">
-                <div className="mx_SettingsTab_heading">{_t("Bridges")}</div>
-                <div className="mx_SettingsTab_section mx_SettingsTab_subsectionText">{content}</div>
-            </div>
+            <SettingsTab>
+                <SettingsSection heading={_t("room_settings|bridges|title")}>{content}</SettingsSection>
+            </SettingsTab>
         );
     }
 }

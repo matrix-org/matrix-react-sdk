@@ -17,16 +17,18 @@ limitations under the License.
 import React from "react";
 
 import { _t } from "../../../languageHandler";
-import { CommandCategories, Commands } from "../../../SlashCommands";
-import { IDialogProps } from "./IDialogProps";
+import { Command, CommandCategories, Commands } from "../../../SlashCommands";
 import InfoDialog from "./InfoDialog";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
-interface IProps extends IDialogProps {}
+interface IProps {
+    onFinished(): void;
+}
 
 const SlashCommandHelpDialog: React.FC<IProps> = ({ onFinished }) => {
-    const categories = {};
+    const categories: Record<string, Command[]> = {};
     Commands.forEach((cmd) => {
-        if (!cmd.isEnabled()) return;
+        if (!cmd.isEnabled(MatrixClientPeg.get())) return;
         if (!categories[cmd.category]) {
             categories[cmd.category] = [];
         }
@@ -62,7 +64,7 @@ const SlashCommandHelpDialog: React.FC<IProps> = ({ onFinished }) => {
     return (
         <InfoDialog
             className="mx_SlashCommandHelpDialog"
-            title={_t("Command Help")}
+            title={_t("slash_command|help_dialog_title")}
             description={
                 <table>
                     <tbody>{body}</tbody>

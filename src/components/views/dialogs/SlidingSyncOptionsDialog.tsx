@@ -19,7 +19,6 @@ import { MatrixClient, Method } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
-import { IDialogProps } from "./IDialogProps";
 import SettingsStore from "../../../settings/SettingsStore";
 import TextInputDialog from "./TextInputDialog";
 import withValidation from "../elements/Validation";
@@ -63,8 +62,8 @@ async function proxyHealthCheck(endpoint: string, hsUrl?: string): Promise<void>
     logger.info("sliding sync proxy is OK");
 }
 
-export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished }) => {
-    const cli = MatrixClientPeg.get();
+export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): void }> = ({ onFinished }) => {
+    const cli = MatrixClientPeg.safeGet();
     const currentProxy = SettingsStore.getValue("feature_sliding_sync_proxy_url");
     const hasNativeSupport = useAsyncMemo(
         () =>
@@ -78,17 +77,18 @@ export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished })
 
     let nativeSupport: string;
     if (hasNativeSupport === null) {
-        nativeSupport = _t("Checking...");
+        nativeSupport = _t("labs|sliding_sync_checking");
     } else {
         nativeSupport = hasNativeSupport
-            ? _t("Your server has native support")
-            : _t("Your server lacks native support");
+            ? _t("labs|sliding_sync_server_support")
+            : _t("labs|sliding_sync_server_no_support");
     }
 
-    const validProxy = withValidation<undefined, { error?: Error }>({
-        async deriveData({ value }): Promise<{ error?: Error }> {
+    const validProxy = withValidation<undefined, { error?: unknown }>({
+        async deriveData({ value }): Promise<{ error?: unknown }> {
+            if (!value) return {};
             try {
-                await proxyHealthCheck(value, MatrixClientPeg.get().baseUrl);
+                await proxyHealthCheck(value, MatrixClientPeg.safeGet().baseUrl);
                 return {};
             } catch (error) {
                 return { error };
@@ -97,35 +97,39 @@ export const SlidingSyncOptionsDialog: React.FC<IDialogProps> = ({ onFinished })
         rules: [
             {
                 key: "required",
-                test: async ({ value }) => !!value || hasNativeSupport,
-                invalid: () => _t("Your server lacks native support, you must specify a proxy"),
+                test: async ({ value }) => !!value || !!hasNativeSupport,
+                invalid: () => _t("labs|sliding_sync_server_specify_proxy"),
             },
             {
                 key: "working",
                 final: true,
                 test: async (_, { error }) => !error,
-                valid: () => _t("Looks good"),
-                invalid: ({ error }) => error?.message,
+                valid: () => _t("spotlight|public_rooms|network_dropdown_available_valid"),
+                invalid: ({ error }) => (error instanceof Error ? error.message : null),
             },
         ],
     });
 
     return (
         <TextInputDialog
-            title={_t("Sliding Sync configuration")}
+            title={_t("labs|sliding_sync_configuration")}
             description={
                 <div>
                     <div>
-                        <b>{_t("To disable you will need to log out and back in, use with caution!")}</b>
+                        <b>{_t("labs|sliding_sync_disable_warning")}</b>
                     </div>
                     {nativeSupport}
                 </div>
             }
-            placeholder={hasNativeSupport ? _t("Proxy URL (optional)") : _t("Proxy URL")}
+            placeholder={
+                hasNativeSupport
+                    ? _t("labs|sliding_sync_proxy_url_optional_label")
+                    : _t("labs|sliding_sync_proxy_url_label")
+            }
             value={currentProxy}
-            button={_t("Enable")}
+            button={_t("action|enable")}
             validator={validProxy}
-            onFinished={(enable: boolean, proxyUrl: string) => {
+            onFinished={(enable, proxyUrl) => {
                 if (enable) {
                     SettingsStore.setValue("feature_sliding_sync_proxy_url", null, SettingLevel.DEVICE, proxyUrl);
                     onFinished(true);

@@ -14,13 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
-import { makeLocationContent, makeBeaconInfoContent } from "matrix-js-sdk/src/content-helpers";
+import {
+    MatrixClient,
+    IContent,
+    IEventRelation,
+    MatrixError,
+    THREAD_RELATION_TYPE,
+    ContentHelpers,
+    LocationAssetType,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation } from "matrix-js-sdk/src/models/event";
-import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
@@ -58,9 +61,9 @@ const getPermissionsErrorParams = (
             : "Insufficient permissions to send your location";
 
     const modalParams = {
-        title: _t("You don't have permission to share locations"),
-        description: _t("You need to have the right permissions in order to share locations in this room."),
-        button: _t("OK"),
+        title: _t("location_sharing|error_no_perms_title"),
+        description: _t("location_sharing|error_no_perms_description"),
+        button: _t("action|ok"),
         hasCancelButton: false,
         onFinished: () => {}, // NOOP
     };
@@ -79,12 +82,12 @@ const getDefaultErrorParams = (
             ? "We couldn't start sharing your live location"
             : "We couldn't send your location";
     const modalParams = {
-        title: _t("We couldn't send your location"),
-        description: _t("%(brand)s could not send your location. Please try again later.", {
+        title: _t("location_sharing|error_send_title"),
+        description: _t("location_sharing|error_send_description", {
             brand: SdkConfig.get().brand,
         }),
-        button: _t("Try again"),
-        cancelButton: _t("Cancel"),
+        button: _t("action|try_again"),
+        cancelButton: _t("action|cancel"),
         onFinished: (tryAgain: boolean) => {
             if (tryAgain) {
                 openMenu();
@@ -94,7 +97,7 @@ const getDefaultErrorParams = (
     return { modalParams, errorMessage };
 };
 
-const handleShareError = (error: Error, openMenu: () => void, shareType: LocationShareType): void => {
+const handleShareError = (error: unknown, openMenu: () => void, shareType: LocationShareType): void => {
     const { modalParams, errorMessage } =
         (error as MatrixError).errcode === "M_FORBIDDEN"
             ? getPermissionsErrorParams(shareType)
@@ -108,11 +111,11 @@ const handleShareError = (error: Error, openMenu: () => void, shareType: Locatio
 export const shareLiveLocation =
     (client: MatrixClient, roomId: string, displayName: string, openMenu: () => void): ShareLocationFn =>
     async ({ timeout }): Promise<void> => {
-        const description = _t(`%(displayName)s's live location`, { displayName });
+        const description = _t("location_sharing|live_description", { displayName });
         try {
             await OwnBeaconStore.instance.createLiveBeacon(
                 roomId,
-                makeBeaconInfoContent(
+                ContentHelpers.makeBeaconInfoContent(
                     timeout ?? DEFAULT_LIVE_DURATION,
                     true /* isLive */,
                     description,
@@ -135,9 +138,15 @@ export const shareLocation =
     async ({ uri, timestamp }): Promise<void> => {
         if (!uri) return;
         try {
-            const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
+            const threadId = (relation?.rel_type === THREAD_RELATION_TYPE.name && relation?.event_id) || null;
             const assetType = shareType === LocationShareType.Pin ? LocationAssetType.Pin : LocationAssetType.Self;
-            const content = makeLocationContent(undefined, uri, timestamp, undefined, assetType);
+            const content = ContentHelpers.makeLocationContent(
+                undefined,
+                uri,
+                timestamp,
+                undefined,
+                assetType,
+            ) as IContent;
             await doMaybeLocalRoomAction(
                 roomId,
                 (actualRoomId: string) => client.sendMessage(actualRoomId, threadId, content),

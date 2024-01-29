@@ -19,7 +19,7 @@ import React, { useRef, useState } from "react";
 import { VoiceBroadcastHeader } from "../..";
 import AccessibleButton from "../../../components/views/elements/AccessibleButton";
 import { VoiceBroadcastPreRecording } from "../../models/VoiceBroadcastPreRecording";
-import { Icon as LiveIcon } from "../../../../res/img/element-icons/live.svg";
+import { Icon as LiveIcon } from "../../../../res/img/compound/live-16px.svg";
 import { _t } from "../../../languageHandler";
 import { useAudioDeviceSelection } from "../../../hooks/useAudioDeviceSelection";
 import { DevicesContextMenu } from "../../../components/views/audio_messages/DevicesContextMenu";
@@ -75,7 +75,7 @@ export const VoiceBroadcastPreRecordingPip: React.FC<Props> = ({ voiceBroadcastP
                 disabled={state.disableStartButton}
             >
                 <LiveIcon className="mx_Icon mx_Icon_16" />
-                {_t("Go live")}
+                {_t("voice_broadcast|go_live")}
             </AccessibleButton>
             {state.showDeviceSelect && (
                 <DevicesContextMenu

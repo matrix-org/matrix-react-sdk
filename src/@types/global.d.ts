@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// eslint-disable-next-line no-restricted-imports
 import "matrix-js-sdk/src/@types/global"; // load matrix-js-sdk's type extensions first
-// Load types for the WG CSS Font Loading APIs https://github.com/Microsoft/TypeScript/issues/13569
-import "@types/css-font-loading-module";
 import "@types/modernizr";
 
 import ContentMessages from "../ContentMessages";
@@ -51,6 +50,7 @@ import ActiveWidgetStore from "../stores/ActiveWidgetStore";
 import AutoRageshakeStore from "../stores/AutoRageshakeStore";
 import { IConfigOptions } from "../IConfigOptions";
 import { MatrixDispatcher } from "../dispatcher/dispatcher";
+import { DeepReadonly } from "./common";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -58,10 +58,7 @@ declare global {
     interface Window {
         matrixChat: ReturnType<Renderer>;
         mxMatrixClientPeg: IMatrixClientPeg;
-        Olm: {
-            init: () => Promise<void>;
-        };
-        mxReactSdkConfig: IConfigOptions;
+        mxReactSdkConfig: DeepReadonly<IConfigOptions>;
 
         // Needed for Safari, unknown to TypeScript
         webkitAudioContext: typeof AudioContext;
@@ -187,6 +184,11 @@ declare global {
     }
 
     interface Error {
+        // Standard
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
+        cause?: unknown;
+
+        // Non-standard
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/fileName
         fileName?: string;
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/lineNumber
@@ -194,6 +196,22 @@ declare global {
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/columnNumber
         columnNumber?: number;
     }
+
+    // We can remove these pieces if we ever update to `target: "es2022"` in our
+    // TypeScript config which supports the new `cause` property, see
+    // https://github.com/vector-im/element-web/issues/24913
+    interface ErrorOptions {
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause
+        cause?: unknown;
+    }
+
+    interface ErrorConstructor {
+        new (message?: string, options?: ErrorOptions): Error;
+        (message?: string, options?: ErrorOptions): Error;
+    }
+
+    // eslint-disable-next-line no-var
+    var Error: ErrorConstructor;
 
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
     interface AudioWorkletProcessor {
@@ -218,7 +236,7 @@ declare global {
         processorCtor: (new (options?: AudioWorkletNodeOptions) => AudioWorkletProcessor) & {
             parameterDescriptors?: AudioParamDescriptor[];
         },
-    );
+    ): void;
 
     // eslint-disable-next-line no-var
     var grecaptcha:

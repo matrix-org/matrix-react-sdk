@@ -15,23 +15,22 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import BaseDialog from "../dialogs/BaseDialog";
-import { IDialogProps } from "../dialogs/IDialogProps";
 import { locationEventGeoUri, isSelfLocation } from "../../../utils/location";
 import Map from "./Map";
 import SmartMarker from "./SmartMarker";
 import ZoomButtons from "./ZoomButtons";
 
-interface IProps extends IDialogProps {
+interface IProps {
     matrixClient: MatrixClient;
     mxEvent: MatrixEvent;
+    onFinished(): void;
 }
 
 interface IState {
-    error: Error;
+    error?: Error;
 }
 
 /**
@@ -54,11 +53,11 @@ export default class LocationViewDialog extends React.Component<IProps, IState> 
         this.setState({ error });
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { mxEvent } = this.props;
 
         // only pass member to marker when should render avatar marker
-        const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
+        const markerRoomMember = (isSelfLocation(mxEvent.getContent()) && mxEvent.sender) || undefined;
         const geoUri = locationEventGeoUri(mxEvent);
         return (
             <BaseDialog className="mx_LocationViewDialog" onFinished={this.props.onFinished} fixedWidth={false}>
@@ -68,6 +67,7 @@ export default class LocationViewDialog extends React.Component<IProps, IState> 
                     onError={this.onError}
                     interactive
                     className="mx_LocationViewDialog_map"
+                    allowGeolocate
                 >
                     {({ map }) => (
                         <>

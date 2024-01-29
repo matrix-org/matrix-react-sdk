@@ -35,7 +35,7 @@ export class ModalWidgetStore extends AsyncStoreWithClient<IState> {
         instance.start();
         return instance;
     })();
-    private modalInstance: IHandle<void[]> | null = null;
+    private modalInstance: IHandle<typeof ModalWidgetDialog> | null = null;
     private openSourceWidgetId: string | null = null;
     private openSourceWidgetRoomId: string | null = null;
 
@@ -62,32 +62,32 @@ export class ModalWidgetStore extends AsyncStoreWithClient<IState> {
     ): void => {
         if (this.modalInstance) return;
         this.openSourceWidgetId = sourceWidget.id;
-        this.openSourceWidgetRoomId = widgetRoomId;
+        this.openSourceWidgetRoomId = widgetRoomId ?? null;
         this.modalInstance = Modal.createDialog(
             ModalWidgetDialog,
             {
                 widgetDefinition: { ...requestData },
                 widgetRoomId,
                 sourceWidgetId: sourceWidget.id,
-                onFinished: (success: boolean, data?: IModalWidgetReturnData) => {
-                    if (!success) {
-                        this.closeModalWidget(sourceWidget, widgetRoomId, { "m.exited": true });
-                    } else {
-                        this.closeModalWidget(sourceWidget, widgetRoomId, data);
-                    }
+                onFinished: (success, data) => {
+                    this.closeModalWidget(sourceWidget, widgetRoomId, success && data ? data : { "m.exited": true });
 
                     this.openSourceWidgetId = null;
                     this.openSourceWidgetRoomId = null;
                     this.modalInstance = null;
                 },
             },
-            null,
+            undefined,
             /* priority = */ false,
             /* static = */ true,
         );
     };
 
-    public closeModalWidget = (sourceWidget: Widget, widgetRoomId?: string, data?: IModalWidgetReturnData): void => {
+    public closeModalWidget = (
+        sourceWidget: Widget,
+        widgetRoomId: string | undefined,
+        data: IModalWidgetReturnData,
+    ): void => {
         if (!this.modalInstance) return;
         if (this.openSourceWidgetId === sourceWidget.id && this.openSourceWidgetRoomId === widgetRoomId) {
             this.openSourceWidgetId = null;

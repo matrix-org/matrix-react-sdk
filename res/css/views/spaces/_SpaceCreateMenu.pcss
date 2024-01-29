@@ -14,14 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-$spacePanelWidth: 68px;
-
 .mx_SpaceCreateMenu_wrapper {
     /* background blur everything except SpacePanel */
     .mx_ContextualMenu_background {
         background-color: $dialog-backdrop-color;
         opacity: 0.6;
-        left: $spacePanelWidth;
+        left: 68px;
     }
 
     .mx_ContextualMenu {
@@ -33,7 +31,7 @@ $spacePanelWidth: 68px;
 
         > div {
             > h2 {
-                font-weight: $font-semi-bold;
+                font-weight: var(--cpd-font-weight-semibold);
                 font-size: $font-18px;
                 margin-top: 4px;
             }
@@ -41,13 +39,6 @@ $spacePanelWidth: 68px;
             > p {
                 font-size: $font-15px;
                 color: $secondary-content;
-            }
-
-            /* XXX: Temporary for the Spaces release only */
-            .mx_SpaceFeedbackPrompt {
-                border-top: 1px solid $input-border-color;
-                padding-top: 12px;
-                margin-top: 16px;
             }
         }
 
@@ -98,23 +89,5 @@ $spacePanelWidth: 68px;
         .mx_AccessibleButton_disabled {
             cursor: not-allowed;
         }
-    }
-}
-
-.mx_SpaceFeedbackPrompt {
-    font-size: $font-15px;
-    line-height: $font-24px;
-
-    > span {
-        color: $secondary-content;
-        position: relative;
-        font-size: inherit;
-        line-height: inherit;
-        margin-right: 8px;
-    }
-
-    .mx_AccessibleButton_kind_link {
-        color: $accent;
-        position: relative;
     }
 }

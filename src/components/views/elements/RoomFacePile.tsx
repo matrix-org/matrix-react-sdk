@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { FC, HTMLAttributes, useContext } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { sortBy } from "lodash";
 
 import { _t } from "../../../languageHandler";
@@ -24,6 +23,7 @@ import DMRoomMap from "../../../utils/DMRoomMap";
 import FacePile from "./FacePile";
 import { useRoomMembers } from "../../../hooks/useRoomMembers";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { ButtonEvent } from "./AccessibleButton";
 
 const DEFAULT_NUM_FACES = 5;
 
@@ -33,6 +33,7 @@ interface IProps extends HTMLAttributes<HTMLSpanElement> {
     room: Room;
     onlyKnownUsers?: boolean;
     numShown?: number;
+    onClick?: (e: ButtonEvent) => void | Promise<void>;
 }
 
 const RoomFacePile: FC<IProps> = ({ room, onlyKnownUsers = true, numShown = DEFAULT_NUM_FACES, ...props }) => {
@@ -42,7 +43,7 @@ const RoomFacePile: FC<IProps> = ({ room, onlyKnownUsers = true, numShown = DEFA
     const count = members.length;
 
     // sort users with an explicit avatar first
-    const iteratees = [(member) => (member.getMxcAvatarUrl() ? 0 : 1)];
+    const iteratees = [(member: RoomMember) => (member.getMxcAvatarUrl() ? 0 : 1)];
     if (onlyKnownUsers) {
         members = members.filter(isKnownMember);
     } else {
@@ -64,31 +65,23 @@ const RoomFacePile: FC<IProps> = ({ room, onlyKnownUsers = true, numShown = DEFA
         .reverse()
         .join(", ");
 
-    const tooltip = (
-        <div>
-            <div className="mx_Tooltip_title">
-                {props.onClick ? _t("View all %(count)s members", { count }) : _t("%(count)s members", { count })}
-            </div>
-            <div className="mx_Tooltip_sub">
-                {isJoined
-                    ? _t("Including you, %(commaSeparatedMembers)s", { commaSeparatedMembers })
-                    : _t("Including %(commaSeparatedMembers)s", { commaSeparatedMembers })}
-            </div>
-        </div>
-    );
-
     return (
         <FacePile
             members={shownMembers}
-            faceSize={28}
+            size="28px"
             overflow={members.length > numShown}
-            tooltip={tooltip}
+            tooltipLabel={
+                props.onClick ? _t("room|face_pile_tooltip_label", { count }) : _t("common|n_members", { count })
+            }
+            tooltipShortcut={
+                isJoined
+                    ? _t("room|face_pile_tooltip_shortcut_joined", { commaSeparatedMembers })
+                    : _t("room|face_pile_tooltip_shortcut", { commaSeparatedMembers })
+            }
             {...props}
         >
             {onlyKnownUsers && (
-                <span className="mx_FacePile_summary">
-                    {_t("%(count)s people you know have already joined", { count: members.length })}
-                </span>
+                <span className="mx_FacePile_summary">{_t("room|face_pile_summary", { count: members.length })}</span>
             )}
         </FacePile>
     );

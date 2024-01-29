@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import AccessibleButton from "../../components/views/elements/AccessibleButton";
@@ -23,7 +23,7 @@ import { highlightEvent } from "../../utils/EventUtils";
 import { _t } from "../../languageHandler";
 import { getSenderName } from "../../utils/event/getSenderName";
 
-export const textForVoiceBroadcastStoppedEvent = (event: MatrixEvent): (() => ReactNode) => {
+export const textForVoiceBroadcastStoppedEvent = (event: MatrixEvent, client: MatrixClient): (() => ReactNode) => {
     return (): ReactNode => {
         const ownUserId = MatrixClientPeg.get()?.getUserId();
         const startEventId = event.getRelation()?.event_id;
@@ -41,9 +41,9 @@ export const textForVoiceBroadcastStoppedEvent = (event: MatrixEvent): (() => Re
         };
 
         if (ownUserId && ownUserId === event.getSender()) {
-            return _t("You ended a <a>voice broadcast</a>", {}, templateTags);
+            return _t("timeline|io.element.voice_broadcast_info|you", {}, templateTags);
         }
 
-        return _t("%(senderName)s ended a <a>voice broadcast</a>", { senderName: getSenderName(event) }, templateTags);
+        return _t("timeline|io.element.voice_broadcast_info|user", { senderName: getSenderName(event) }, templateTags);
     };
 };

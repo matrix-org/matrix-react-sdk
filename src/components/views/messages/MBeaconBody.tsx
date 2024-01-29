@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { ForwardRefExoticComponent, useCallback, useContext, useEffect, useState } from "react";
 import {
     Beacon,
     BeaconEvent,
@@ -22,10 +22,11 @@ import {
     MatrixEventEvent,
     MatrixClient,
     RelationType,
+    IRedactOpts,
+    ContentHelpers,
+    M_BEACON,
 } from "matrix-js-sdk/src/matrix";
-import { BeaconLocationState } from "matrix-js-sdk/src/content-helpers";
 import { randomString } from "matrix-js-sdk/src/randomstring";
-import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 import classNames from "classnames";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -50,7 +51,7 @@ const useBeaconState = (
 ): {
     beacon?: Beacon;
     description?: string;
-    latestLocationState?: BeaconLocationState;
+    latestLocationState?: ContentHelpers.BeaconLocationState;
     isLive?: boolean;
     waitingToStart?: boolean;
 } => {
@@ -107,15 +108,15 @@ const useHandleBeaconRedaction = (
     const onBeforeBeaconInfoRedaction = useCallback(
         (_event: MatrixEvent, redactionEvent: MatrixEvent) => {
             const relations = getRelationsForEvent
-                ? getRelationsForEvent(event.getId(), RelationType.Reference, M_BEACON.name)
+                ? getRelationsForEvent(event.getId()!, RelationType.Reference, M_BEACON.name)
                 : undefined;
 
             relations?.getRelations()?.forEach((locationEvent) => {
                 matrixClient.redactEvent(
-                    locationEvent.getRoomId(),
-                    locationEvent.getId(),
+                    locationEvent.getRoomId()!,
+                    locationEvent.getId()!,
                     undefined,
-                    redactionEvent.getContent(),
+                    redactionEvent.getContent<IRedactOpts>(),
                 );
             });
         },
@@ -130,9 +131,9 @@ const useHandleBeaconRedaction = (
     }, [event, onBeforeBeaconInfoRedaction]);
 };
 
-const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelationsForEvent }, ref) => {
+const MBeaconBody = React.forwardRef<HTMLDivElement, IBodyProps>(({ mxEvent, getRelationsForEvent }, ref) => {
     const { beacon, isLive, latestLocationState, waitingToStart } = useBeaconState(mxEvent);
-    const mapId = useUniqueId(mxEvent.getId());
+    const mapId = useUniqueId(mxEvent.getId()!);
 
     const matrixClient = useContext(MatrixClientContext);
     const [error, setError] = useState<Error>();
@@ -140,7 +141,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
         error?.message === LocationShareError.MapStyleUrlNotConfigured ||
         error?.message === LocationShareError.MapStyleUrlNotReachable;
     const displayStatus = getBeaconDisplayStatus(
-        isLive,
+        !!isLive,
         latestLocationState,
         // if we are unable to display maps because it is not configured for the server
         // don't display an error
@@ -159,10 +160,9 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
         Modal.createDialog(
             BeaconViewDialog,
             {
-                roomId: mxEvent.getRoomId(),
+                roomId: mxEvent.getRoomId()!,
                 matrixClient,
                 initialFocusedBeacon: beacon,
-                isMapDisplayError,
             },
             "mx_BeaconViewDialog_wrapper",
             false, // isPriority
@@ -171,7 +171,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
     };
 
     let map: JSX.Element;
-    if (displayStatus === BeaconDisplayStatus.Active && !isMapDisplayError) {
+    if (displayStatus === BeaconDisplayStatus.Active && !isMapDisplayError && latestLocationState?.uri) {
         map = (
             <Map
                 id={mapId}
@@ -184,8 +184,8 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
                     <SmartMarker
                         map={map}
                         id={`${mapId}-marker`}
-                        geoUri={latestLocationState.uri}
-                        roomMember={markerRoomMember}
+                        geoUri={latestLocationState.uri!}
+                        roomMember={markerRoomMember ?? undefined}
                         useMemberColor
                     />
                 )}
@@ -228,12 +228,12 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, getRelati
                     className="mx_MBeaconBody_chin"
                     beacon={beacon}
                     displayStatus={displayStatus}
-                    label={_t("View live location")}
+                    label={_t("timeline|m.beacon_info|view_live_location")}
                     withIcon
                 />
             )}
         </div>
     );
-});
+}) as ForwardRefExoticComponent<IBodyProps>;
 
 export default MBeaconBody;

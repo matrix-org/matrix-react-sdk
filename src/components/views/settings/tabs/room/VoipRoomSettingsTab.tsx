@@ -15,35 +15,36 @@ limitations under the License.
 */
 
 import React, { useCallback, useMemo, useState } from "react";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { JoinRule, EventType, RoomState, Room } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../../languageHandler";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import SettingsSubsection from "../../shared/SettingsSubsection";
 import SettingsTab from "../SettingsTab";
 import { ElementCall } from "../../../../../models/Call";
 import { useRoomState } from "../../../../../hooks/useRoomState";
 import SdkConfig, { DEFAULTS } from "../../../../../SdkConfig";
+import { SettingsSection } from "../../shared/SettingsSection";
 
 interface ElementCallSwitchProps {
-    roomId: string;
+    room: Room;
 }
 
-const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ roomId }) => {
-    const room = useMemo(() => MatrixClientPeg.get().getRoom(roomId), [roomId]);
+const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ room }) => {
     const isPublic = useMemo(() => room.getJoinRule() === JoinRule.Public, [room]);
     const [content, events, maySend] = useRoomState(
         room,
-        useCallback((state) => {
-            const content = state?.getStateEvents(EventType.RoomPowerLevels, "")?.getContent();
-            return [
-                content ?? {},
-                content?.["events"] ?? {},
-                state?.maySendStateEvent(EventType.RoomPowerLevels, MatrixClientPeg.get().getUserId()),
-            ];
-        }, []),
+        useCallback(
+            (state: RoomState) => {
+                const content = state?.getStateEvents(EventType.RoomPowerLevels, "")?.getContent();
+                return [
+                    content ?? {},
+                    content?.["events"] ?? {},
+                    state?.maySendStateEvent(EventType.RoomPowerLevels, room.client.getSafeUserId()),
+                ];
+            },
+            [room.client],
+        ),
     );
 
     const [elementCallEnabled, setElementCallEnabled] = useState<boolean>(() => {
@@ -67,12 +68,12 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ roomId }) => {
                 events[ElementCall.MEMBER_EVENT_TYPE.name] = adminLevel;
             }
 
-            MatrixClientPeg.get().sendStateEvent(roomId, EventType.RoomPowerLevels, {
+            room.client.sendStateEvent(room.roomId, EventType.RoomPowerLevels, {
                 events: events,
                 ...content,
             });
         },
-        [roomId, content, events, isPublic],
+        [room.client, room.roomId, content, events, isPublic],
     );
 
     const brand = SdkConfig.get("element_call").brand ?? DEFAULTS.element_call.brand;
@@ -80,29 +81,30 @@ const ElementCallSwitch: React.FC<ElementCallSwitchProps> = ({ roomId }) => {
     return (
         <LabelledToggleSwitch
             data-testid="element-call-switch"
-            label={_t("Enable %(brand)s as an additional calling option in this room", { brand })}
-            caption={_t(
-                "%(brand)s is end-to-end encrypted, " + "but is currently limited to smaller numbers of users.",
-                { brand },
-            )}
+            label={_t("room_settings|voip|enable_element_call_label", { brand })}
+            caption={_t("room_settings|voip|enable_element_call_caption", {
+                brand,
+            })}
             value={elementCallEnabled}
             onChange={onChange}
             disabled={!maySend}
-            tooltip={_t("You do not have sufficient permissions to change this.")}
+            tooltip={_t("room_settings|voip|enable_element_call_no_permissions_tooltip")}
         />
     );
 };
 
 interface Props {
-    roomId: string;
+    room: Room;
 }
 
-export const VoipRoomSettingsTab: React.FC<Props> = ({ roomId }) => {
+export const VoipRoomSettingsTab: React.FC<Props> = ({ room }) => {
     return (
-        <SettingsTab heading={_t("Voice & Video")}>
-            <SettingsSubsection heading={_t("Call type")}>
-                <ElementCallSwitch roomId={roomId} />
-            </SettingsSubsection>
+        <SettingsTab>
+            <SettingsSection heading={_t("settings|voip|title")}>
+                <SettingsSubsection heading={_t("room_settings|voip|call_type_section")}>
+                    <ElementCallSwitch room={room} />
+                </SettingsSubsection>
+            </SettingsSection>
         </SettingsTab>
     );
 };

@@ -14,16 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import React, { ReactElement } from "react";
+import { JoinRule } from "matrix-js-sdk/src/matrix";
 
 import Dropdown from "./Dropdown";
+import { NonEmptyArray } from "../../../@types/common";
+import { Icon as AskToJoinIcon } from "../../../../res/img/element-icons/ask-to-join.svg";
 
 interface IProps {
     value: JoinRule;
     label: string;
     width?: number;
     labelInvite: string;
+    labelKnock?: string;
     labelPublic: string;
     labelRestricted?: string; // if omitted then this option will be hidden, e.g if unsupported
     onChange(value: JoinRule): void;
@@ -32,6 +35,7 @@ interface IProps {
 const JoinRuleDropdown: React.FC<IProps> = ({
     label,
     labelInvite,
+    labelKnock,
     labelPublic,
     labelRestricted,
     value,
@@ -45,13 +49,26 @@ const JoinRuleDropdown: React.FC<IProps> = ({
         <div key={JoinRule.Public} className="mx_JoinRuleDropdown_public">
             {labelPublic}
         </div>,
-    ];
+    ] as NonEmptyArray<ReactElement & { key: string }>;
+
+    if (labelKnock) {
+        options.unshift(
+            (
+                <div key={JoinRule.Knock} className="mx_JoinRuleDropdown_knock">
+                    <AskToJoinIcon className="mx_Icon mx_Icon_16 mx_JoinRuleDropdown_icon" />
+                    {labelKnock}
+                </div>
+            ) as ReactElement & { key: string },
+        );
+    }
 
     if (labelRestricted) {
         options.unshift(
-            <div key={JoinRule.Restricted} className="mx_JoinRuleDropdown_restricted">
-                {labelRestricted}
-            </div>,
+            (
+                <div key={JoinRule.Restricted} className="mx_JoinRuleDropdown_restricted">
+                    {labelRestricted}
+                </div>
+            ) as ReactElement & { key: string },
         );
     }
 

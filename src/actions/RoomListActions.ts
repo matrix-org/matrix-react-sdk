@@ -15,8 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { asyncAction } from "./actionCreators";
@@ -26,7 +25,7 @@ import { _t } from "../languageHandler";
 import { AsyncActionPayload } from "../dispatcher/payloads";
 import RoomListStore from "../stores/room-list/RoomListStore";
 import { SortAlgorithm } from "../stores/room-list/algorithms/models";
-import { DefaultTagID } from "../stores/room-list/models";
+import { DefaultTagID, TagID } from "../stores/room-list/models";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 
 export default class RoomListActions {
@@ -49,12 +48,11 @@ export default class RoomListActions {
     public static tagRoom(
         matrixClient: MatrixClient,
         room: Room,
-        oldTag: string,
-        newTag: string,
-        oldIndex: number | null,
-        newIndex: number | null,
+        oldTag: TagID | null,
+        newTag: TagID | null,
+        newIndex: number,
     ): AsyncActionPayload {
-        let metaData = null;
+        let metaData: Parameters<MatrixClient["setRoomTag"]>[2] | undefined;
 
         // Is the tag ordered manually?
         const store = RoomListStore.instance;
@@ -63,12 +61,8 @@ export default class RoomListActions {
 
             newList.sort((a, b) => a.tags[newTag].order - b.tags[newTag].order);
 
-            // If the room was moved "down" (increasing index) in the same list we
-            // need to use the orders of the tiles with indices shifted by +1
-            const offset = newTag === oldTag && oldIndex < newIndex ? 1 : 0;
-
-            const indexBefore = offset + newIndex - 1;
-            const indexAfter = offset + newIndex;
+            const indexBefore = newIndex - 1;
+            const indexAfter = newIndex;
 
             const prevOrder = indexBefore <= 0 ? 0 : newList[indexBefore].tags[newTag].order;
             const nextOrder = indexAfter >= newList.length ? 1 : newList[indexAfter].tags[newTag].order;
@@ -81,7 +75,7 @@ export default class RoomListActions {
         return asyncAction(
             "RoomListActions.tagRoom",
             () => {
-                const promises = [];
+                const promises: Promise<any>[] = [];
                 const roomId = room.roomId;
 
                 // Evil hack to get DMs behaving
@@ -92,8 +86,8 @@ export default class RoomListActions {
                     return Rooms.guessAndSetDMRoom(room, newTag === DefaultTagID.DM).catch((err) => {
                         logger.error("Failed to set DM tag " + err);
                         Modal.createDialog(ErrorDialog, {
-                            title: _t("Failed to set direct message tag"),
-                            description: err && err.message ? err.message : _t("Operation failed"),
+                            title: _t("room_list|failed_set_dm_tag"),
+                            description: err && err.message ? err.message : _t("invite|failed_generic"),
                         });
                     });
                 }
@@ -108,8 +102,8 @@ export default class RoomListActions {
                     const promiseToDelete = matrixClient.deleteRoomTag(roomId, oldTag).catch(function (err) {
                         logger.error("Failed to remove tag " + oldTag + " from room: " + err);
                         Modal.createDialog(ErrorDialog, {
-                            title: _t("Failed to remove tag %(tagName)s from room", { tagName: oldTag }),
-                            description: err && err.message ? err.message : _t("Operation failed"),
+                            title: _t("room_list|failed_remove_tag", { tagName: oldTag }),
+                            description: err && err.message ? err.message : _t("invite|failed_generic"),
                         });
                     });
 
@@ -118,15 +112,11 @@ export default class RoomListActions {
 
                 // if we moved lists or the ordering changed, add the new tag
                 if (newTag && newTag !== DefaultTagID.DM && (hasChangedSubLists || metaData)) {
-                    // metaData is the body of the PUT to set the tag, so it must
-                    // at least be an empty object.
-                    metaData = metaData || {};
-
                     const promiseToAdd = matrixClient.setRoomTag(roomId, newTag, metaData).catch(function (err) {
                         logger.error("Failed to add tag " + newTag + " to room: " + err);
                         Modal.createDialog(ErrorDialog, {
-                            title: _t("Failed to add tag %(tagName)s to room", { tagName: newTag }),
-                            description: err && err.message ? err.message : _t("Operation failed"),
+                            title: _t("room_list|failed_add_tag", { tagName: newTag }),
+                            description: err && err.message ? err.message : _t("invite|failed_generic"),
                         });
 
                         throw err;

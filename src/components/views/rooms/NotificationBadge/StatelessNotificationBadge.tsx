@@ -14,69 +14,70 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { MouseEvent } from "react";
+import React, { forwardRef } from "react";
 import classNames from "classnames";
 
 import { formatCount } from "../../../../utils/FormattingUtils";
-import AccessibleButton from "../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 import { NotificationColor } from "../../../../stores/notifications/NotificationColor";
 import { useSettingValue } from "../../../../hooks/useSettings";
+import { XOR } from "../../../../@types/common";
 
 interface Props {
     symbol: string | null;
     count: number;
     color: NotificationColor;
-    onClick?: (ev: MouseEvent) => void;
-    onMouseOver?: (ev: MouseEvent) => void;
-    onMouseLeave?: (ev: MouseEvent) => void;
-    children?: React.ReactChildren | JSX.Element;
-    label?: string;
+    knocked?: boolean;
 }
 
-export function StatelessNotificationBadge({ symbol, count, color, ...props }: Props): JSX.Element {
-    const hideBold = useSettingValue("feature_hidebold");
+interface ClickableProps extends Props {
+    /**
+     * If specified will return an AccessibleButton instead of a div.
+     */
+    onClick(ev: ButtonEvent): void;
+    tabIndex?: number;
+}
 
-    // Don't show a badge if we don't need to
-    if (color === NotificationColor.None || (hideBold && color == NotificationColor.Bold)) {
-        return null;
-    }
+export const StatelessNotificationBadge = forwardRef<HTMLDivElement, XOR<Props, ClickableProps>>(
+    ({ symbol, count, color, knocked, ...props }, ref) => {
+        const hideBold = useSettingValue("feature_hidebold");
 
-    const hasUnreadCount = color >= NotificationColor.Grey && (!!count || !!symbol);
+        // Don't show a badge if we don't need to
+        if ((color === NotificationColor.None || (hideBold && color == NotificationColor.Bold)) && !knocked) {
+            return <></>;
+        }
 
-    const isEmptyBadge = symbol === null && count === 0;
+        const hasUnreadCount = color >= NotificationColor.Grey && (!!count || !!symbol);
 
-    if (symbol === null && count > 0) {
-        symbol = formatCount(count);
-    }
+        const isEmptyBadge = symbol === null && count === 0;
 
-    const classes = classNames({
-        mx_NotificationBadge: true,
-        mx_NotificationBadge_visible: isEmptyBadge ? true : hasUnreadCount,
-        mx_NotificationBadge_highlighted: color >= NotificationColor.Red,
-        mx_NotificationBadge_dot: isEmptyBadge,
-        mx_NotificationBadge_2char: symbol?.length > 0 && symbol?.length < 3,
-        mx_NotificationBadge_3char: symbol?.length > 2,
-    });
+        if (symbol === null && count > 0) {
+            symbol = formatCount(count);
+        }
 
-    if (props.onClick) {
+        const classes = classNames({
+            mx_NotificationBadge: true,
+            mx_NotificationBadge_visible: isEmptyBadge || knocked ? true : hasUnreadCount,
+            mx_NotificationBadge_highlighted: color >= NotificationColor.Red,
+            mx_NotificationBadge_dot: isEmptyBadge && !knocked,
+            mx_NotificationBadge_knocked: knocked,
+            mx_NotificationBadge_2char: symbol && symbol.length > 0 && symbol.length < 3,
+            mx_NotificationBadge_3char: symbol && symbol.length > 2,
+        });
+
+        if (props.onClick) {
+            return (
+                <AccessibleButton {...props} className={classes} onClick={props.onClick} ref={ref}>
+                    <span className="mx_NotificationBadge_count">{symbol}</span>
+                    {props.children}
+                </AccessibleButton>
+            );
+        }
+
         return (
-            <AccessibleButton
-                aria-label={props.label}
-                {...props}
-                className={classes}
-                onClick={props.onClick}
-                onMouseOver={props.onMouseOver}
-                onMouseLeave={props.onMouseLeave}
-            >
+            <div className={classes} ref={ref}>
                 <span className="mx_NotificationBadge_count">{symbol}</span>
-                {props.children}
-            </AccessibleButton>
+            </div>
         );
-    }
-
-    return (
-        <div className={classes}>
-            <span className="mx_NotificationBadge_count">{symbol}</span>
-        </div>
-    );
-}
+    },
+);

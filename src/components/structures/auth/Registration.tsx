@@ -14,20 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { AuthType, createClient, IAuthData, IInputs } from "matrix-js-sdk/src/matrix";
+import {
+    AuthType,
+    createClient,
+    IAuthData,
+    IAuthDict,
+    IInputs,
+    MatrixError,
+    IRegisterRequestParams,
+    IRequestTokenResponse,
+    MatrixClient,
+    SSOFlow,
+    SSOAction,
+    RegisterResponse,
+} from "matrix-js-sdk/src/matrix";
 import React, { Fragment, ReactNode } from "react";
-import { IRequestTokenResponse, MatrixClient } from "matrix-js-sdk/src/client";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ISSOFlow } from "matrix-js-sdk/src/@types/auth";
 
-import { _t, _td } from "../../../languageHandler";
-import { messageForResourceLimitError } from "../../../utils/ErrorUtils";
+import { _t } from "../../../languageHandler";
+import { adminContactStrings, messageForResourceLimitError, resourceLimitStrings } from "../../../utils/ErrorUtils";
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
 import * as Lifecycle from "../../../Lifecycle";
 import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
 import AuthPage from "../../views/auth/AuthPage";
-import Login from "../../../Login";
+import Login, { OidcNativeFlow } from "../../../Login";
 import dis from "../../../dispatcher/dispatcher";
 import SSOButtons from "../../views/elements/SSOButtons";
 import ServerPicker from "../../views/elements/ServerPicker";
@@ -41,6 +52,8 @@ import { AuthHeaderDisplay } from "./header/AuthHeaderDisplay";
 import { AuthHeaderProvider } from "./header/AuthHeaderProvider";
 import SettingsStore from "../../../settings/SettingsStore";
 import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
+import { Features } from "../../../settings/Settings";
+import { startOidcLogin } from "../../../utils/oidc/authorize";
 
 const debuglog = (...args: any[]): void => {
     if (SettingsStore.getValue("debug_registration")) {
@@ -50,7 +63,7 @@ const debuglog = (...args: any[]): void => {
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
-    defaultDeviceDisplayName: string;
+    defaultDeviceDisplayName?: string;
     email?: string;
     brand?: string;
     clientSecret?: string;
@@ -63,24 +76,16 @@ interface IProps {
     // - The user's password, if available and applicable (may be cached in memory
     //   for a short time so the user is not required to re-enter their password
     //   for operations like uploading cross-signing keys).
-    onLoggedIn(params: IMatrixClientCreds, password: string): void;
-    makeRegistrationUrl(params: {
-        /* eslint-disable camelcase */
-        client_secret: string;
-        hs_url: string;
-        is_url?: string;
-        session_id: string;
-        /* eslint-enable camelcase */
-    }): string;
+    onLoggedIn(params: IMatrixClientCreds, password: string): Promise<void>;
     // registration shouldn't know or care how login is done.
     onLoginClick(): void;
     onServerConfigChange(config: ValidatedServerConfig): void;
 }
 
 interface IState {
+    // true if we're waiting for the user to complete
     busy: boolean;
     errorText?: ReactNode;
-    // true if we're waiting for the user to complete
     // We remember the values entered by the user because
     // the registration form will be unmounted during the
     // course of registration, but if there's an error we
@@ -88,7 +93,7 @@ interface IState {
     // values the user entered still in it. We can keep
     // them in this component's state since this component
     // persist for the duration of the registration process.
-    formVals: Record<string, string>;
+    formVals: Record<string, string | undefined>;
     // user-interactive auth
     // If we've been given a session ID, we're resuming
     // straight back into UI auth
@@ -96,9 +101,11 @@ interface IState {
     // If set, we've registered but are not going to log
     // the user in to their new account automatically.
     completedNoSignin: boolean;
-    flows: {
-        stages: string[];
-    }[];
+    flows:
+        | {
+              stages: string[];
+          }[]
+        | null;
     // We perform liveliness checks later, but for now suppress the errors.
     // We also track the server dead errors independently of the regular errors so
     // that we can render it differently, and override any other error the user may
@@ -117,15 +124,20 @@ interface IState {
     differentLoggedInUserId?: string;
     // the SSO flow definition, this is fetched from /login as that's the only
     // place it is exposed.
-    ssoFlow?: ISSOFlow;
+    ssoFlow?: SSOFlow;
+    // the OIDC native login flow, when supported and enabled
+    // if present, must be used for registration
+    oidcNativeFlow?: OidcNativeFlow;
 }
 
 export default class Registration extends React.Component<IProps, IState> {
     private readonly loginLogic: Login;
     // `replaceClient` tracks latest serverConfig to spot when it changes under the async method which fetches flows
-    private latestServerConfig: ValidatedServerConfig;
+    private latestServerConfig?: ValidatedServerConfig;
+    // cache value from settings store
+    private oidcNativeFlowEnabled = false;
 
-    public constructor(props) {
+    public constructor(props: IProps) {
         super(props);
 
         this.state = {
@@ -142,9 +154,14 @@ export default class Registration extends React.Component<IProps, IState> {
             serverDeadError: "",
         };
 
-        const { hsUrl, isUrl } = this.props.serverConfig;
+        // only set on a config level, so we don't need to watch
+        this.oidcNativeFlowEnabled = SettingsStore.getValue(Features.OidcNativeFlow);
+
+        const { hsUrl, isUrl, delegatedAuthentication } = this.props.serverConfig;
         this.loginLogic = new Login(hsUrl, isUrl, null, {
             defaultDeviceDisplayName: "Element login check", // We shouldn't ever be used
+            // if native OIDC is enabled in the client pass the server's delegated auth settings
+            delegatedAuthentication: this.oidcNativeFlowEnabled ? delegatedAuthentication : undefined,
         });
     }
 
@@ -158,7 +175,7 @@ export default class Registration extends React.Component<IProps, IState> {
         window.removeEventListener("beforeunload", this.unloadCallback);
     }
 
-    private unloadCallback = (event: BeforeUnloadEvent): string => {
+    private unloadCallback = (event: BeforeUnloadEvent): string | undefined => {
         if (this.state.doingUIAuth) {
             event.preventDefault();
             event.returnValue = "";
@@ -166,7 +183,7 @@ export default class Registration extends React.Component<IProps, IState> {
         }
     };
 
-    public componentDidUpdate(prevProps): void {
+    public componentDidUpdate(prevProps: IProps): void {
         if (
             prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
             prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
@@ -214,22 +231,38 @@ export default class Registration extends React.Component<IProps, IState> {
 
         this.loginLogic.setHomeserverUrl(hsUrl);
         this.loginLogic.setIdentityServerUrl(isUrl);
+        // if native OIDC is enabled in the client pass the server's delegated auth settings
+        const delegatedAuthentication = this.oidcNativeFlowEnabled ? serverConfig.delegatedAuthentication : undefined;
 
-        let ssoFlow: ISSOFlow;
+        this.loginLogic.setDelegatedAuthentication(delegatedAuthentication);
+
+        let ssoFlow: SSOFlow | undefined;
+        let oidcNativeFlow: OidcNativeFlow | undefined;
         try {
-            const loginFlows = await this.loginLogic.getFlows();
+            const loginFlows = await this.loginLogic.getFlows(true);
             if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
-            ssoFlow = loginFlows.find((f) => f.type === "m.login.sso" || f.type === "m.login.cas") as ISSOFlow;
+            ssoFlow = loginFlows.find((f) => f.type === "m.login.sso" || f.type === "m.login.cas") as SSOFlow;
+            oidcNativeFlow = loginFlows.find((f) => f.type === "oidcNativeFlow") as OidcNativeFlow;
         } catch (e) {
             if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             logger.error("Failed to get login flows to check for SSO support", e);
         }
 
-        this.setState({
+        this.setState(({ flows }) => ({
             matrixClient: cli,
             ssoFlow,
+            oidcNativeFlow,
+            // if we are using oidc native we won't continue with flow discovery on HS
+            // so set an empty array to indicate flows are no longer loading
+            flows: oidcNativeFlow ? [] : flows,
             busy: false,
-        });
+        }));
+
+        // don't need to check with homeserver for login flows
+        // since we are going to use OIDC native flow
+        if (oidcNativeFlow) {
+            return;
+        }
 
         try {
             // We do the first registration request ourselves to discover whether we need to
@@ -243,11 +276,11 @@ export default class Registration extends React.Component<IProps, IState> {
             }
         } catch (e) {
             if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
-            if (e.httpStatus === 401) {
+            if (e instanceof MatrixError && e.httpStatus === 401) {
                 this.setState({
                     flows: e.data.flows,
                 });
-            } else if (e.httpStatus === 403 || e.errcode === "M_FORBIDDEN") {
+            } else if (e instanceof MatrixError && (e.httpStatus === 403 || e.errcode === "M_FORBIDDEN")) {
                 // Check for 403 or M_FORBIDDEN, Synapse used to send 403 M_UNKNOWN but now sends 403 M_FORBIDDEN.
                 // At this point registration is pretty much disabled, but before we do that let's
                 // quickly check to see if the server supports SSO instead. If it does, we'll send
@@ -258,7 +291,7 @@ export default class Registration extends React.Component<IProps, IState> {
                 } else {
                     this.setState({
                         serverErrorIsFatal: true, // fatal because user cannot continue on this server
-                        errorText: _t("Registration has been disabled on this homeserver."),
+                        errorText: _t("auth|registration_disabled"),
                         // add empty flows array to get rid of spinner
                         flows: [],
                     });
@@ -266,7 +299,7 @@ export default class Registration extends React.Component<IProps, IState> {
             } else {
                 logger.log("Unable to query for supported registration methods.", e);
                 this.setState({
-                    errorText: _t("Unable to query for supported registration methods."),
+                    errorText: _t("auth|failed_query_registration_methods"),
                     // add empty flows array to get rid of spinner
                     flows: [],
                 });
@@ -289,36 +322,27 @@ export default class Registration extends React.Component<IProps, IState> {
         sendAttempt: number,
         sessionId: string,
     ): Promise<IRequestTokenResponse> => {
-        return this.state.matrixClient.requestRegisterEmailToken(
-            emailAddress,
-            clientSecret,
-            sendAttempt,
-            this.props.makeRegistrationUrl({
-                client_secret: clientSecret,
-                hs_url: this.state.matrixClient.getHomeserverUrl(),
-                is_url: this.state.matrixClient.getIdentityServerUrl(),
-                session_id: sessionId,
-            }),
-        );
+        if (!this.state.matrixClient) throw new Error("Matrix client has not yet been loaded");
+        return this.state.matrixClient.requestRegisterEmailToken(emailAddress, clientSecret, sendAttempt);
     };
 
-    private onUIAuthFinished: InteractiveAuthCallback = async (success, response): Promise<void> => {
+    private onUIAuthFinished: InteractiveAuthCallback<RegisterResponse> = async (success, response): Promise<void> => {
+        if (!this.state.matrixClient) throw new Error("Matrix client has not yet been loaded");
+
         debuglog("Registration: ui authentication finished: ", { success, response });
         if (!success) {
             let errorText: ReactNode = (response as Error).message || (response as Error).toString();
             // can we give a better error message?
-            if (response.errcode === "M_RESOURCE_LIMIT_EXCEEDED") {
-                const errorTop = messageForResourceLimitError(response.data.limit_type, response.data.admin_contact, {
-                    "monthly_active_user": _td("This homeserver has hit its Monthly Active User limit."),
-                    "hs_blocked": _td("This homeserver has been blocked by its administrator."),
-                    "": _td("This homeserver has exceeded one of its resource limits."),
-                });
+            if (response instanceof MatrixError && response.errcode === "M_RESOURCE_LIMIT_EXCEEDED") {
+                const errorTop = messageForResourceLimitError(
+                    response.data.limit_type,
+                    response.data.admin_contact,
+                    resourceLimitStrings,
+                );
                 const errorDetail = messageForResourceLimitError(
                     response.data.limit_type,
                     response.data.admin_contact,
-                    {
-                        "": _td("Please <a>contact your service administrator</a> to continue using this service."),
-                    },
+                    adminContactStrings,
                 );
                 errorText = (
                     <div>
@@ -326,18 +350,16 @@ export default class Registration extends React.Component<IProps, IState> {
                         <p>{errorDetail}</p>
                     </div>
                 );
-            } else if (response.required_stages && response.required_stages.includes(AuthType.Msisdn)) {
-                let msisdnAvailable = false;
-                for (const flow of response.available_flows) {
-                    msisdnAvailable = msisdnAvailable || flow.stages.includes(AuthType.Msisdn);
-                }
+            } else if ((response as IAuthData).flows?.some((flow) => flow.stages.includes(AuthType.Msisdn))) {
+                const flows = (response as IAuthData).flows ?? [];
+                const msisdnAvailable = flows.some((flow) => flow.stages.includes(AuthType.Msisdn));
                 if (!msisdnAvailable) {
-                    errorText = _t("This server does not support authentication with a phone number.");
+                    errorText = _t("auth|unsupported_auth_msisdn");
                 }
-            } else if (response.errcode === "M_USER_IN_USE") {
-                errorText = _t("Someone already has that username, please try another.");
-            } else if (response.errcode === "M_THREEPID_IN_USE") {
-                errorText = _t("That e-mail address or phone number is already in use.");
+            } else if (response instanceof MatrixError && response.errcode === "M_USER_IN_USE") {
+                errorText = _t("auth|username_in_use");
+            } else if (response instanceof MatrixError && response.errcode === "M_THREEPID_IN_USE") {
+                errorText = _t("auth|3pid_in_use");
             }
 
             this.setState({
@@ -348,12 +370,16 @@ export default class Registration extends React.Component<IProps, IState> {
             return;
         }
 
-        MatrixClientPeg.setJustRegisteredUserId(response.user_id);
+        const userId = (response as RegisterResponse).user_id;
+        const accessToken = (response as RegisterResponse).access_token;
+        if (!userId || !accessToken) throw new Error("Registration failed");
 
-        const newState = {
+        MatrixClientPeg.setJustRegisteredUserId(userId);
+
+        const newState: Partial<IState> = {
             doingUIAuth: false,
-            registeredUsername: response.user_id,
-            differentLoggedInUserId: null,
+            registeredUsername: userId,
+            differentLoggedInUserId: undefined,
             completedNoSignin: false,
             // we're still busy until we get unmounted: don't show the registration form again
             busy: true,
@@ -365,8 +391,8 @@ export default class Registration extends React.Component<IProps, IState> {
         // starting the registration process. This isn't perfect since it's possible
         // the user had a separate guest session they didn't actually mean to replace.
         const [sessionOwner, sessionIsGuest] = await Lifecycle.getStoredSessionOwner();
-        if (sessionOwner && !sessionIsGuest && sessionOwner !== response.user_id) {
-            logger.log(`Found a session for ${sessionOwner} but ${response.user_id} has just registered.`);
+        if (sessionOwner && !sessionIsGuest && sessionOwner !== userId) {
+            logger.log(`Found a session for ${sessionOwner} but ${userId} has just registered.`);
             newState.differentLoggedInUserId = sessionOwner;
         }
 
@@ -383,21 +409,19 @@ export default class Registration extends React.Component<IProps, IState> {
         // as the client that started registration may be gone by the time we've verified the email, and only the client
         // that verified the email is guaranteed to exist, we'll always do the login in that client.
         const hasEmail = Boolean(this.state.formVals.email);
-        const hasAccessToken = Boolean(response.access_token);
+        const hasAccessToken = Boolean(accessToken);
         debuglog("Registration: ui auth finished:", { hasEmail, hasAccessToken });
         // don’t log in if we found a session for a different user
-        if (!hasEmail && hasAccessToken && !newState.differentLoggedInUserId) {
-            // we'll only try logging in if we either have no email to verify at all or we're the client that verified
-            // the email, not the client that started the registration flow
+        if (hasAccessToken && !newState.differentLoggedInUserId) {
             await this.props.onLoggedIn(
                 {
-                    userId: response.user_id,
-                    deviceId: response.device_id,
+                    userId,
+                    deviceId: (response as RegisterResponse).device_id!,
                     homeserverUrl: this.state.matrixClient.getHomeserverUrl(),
                     identityServerUrl: this.state.matrixClient.getIdentityServerUrl(),
-                    accessToken: response.access_token,
+                    accessToken,
                 },
-                this.state.formVals.password,
+                this.state.formVals.password!,
             );
 
             this.setupPushers();
@@ -406,14 +430,14 @@ export default class Registration extends React.Component<IProps, IState> {
             newState.completedNoSignin = true;
         }
 
-        this.setState(newState);
+        this.setState(newState as IState);
     };
 
     private setupPushers(): Promise<void> {
         if (!this.props.brand) {
             return Promise.resolve();
         }
-        const matrixClient = MatrixClientPeg.get();
+        const matrixClient = MatrixClientPeg.safeGet();
         return matrixClient.getPushers().then(
             (resp) => {
                 const pushers = resp.pushers;
@@ -454,8 +478,10 @@ export default class Registration extends React.Component<IProps, IState> {
         });
     };
 
-    private makeRegisterRequest = (auth: IAuthData | null): Promise<IAuthData> => {
-        const registerParams = {
+    private makeRegisterRequest = (auth: IAuthDict | null): Promise<RegisterResponse> => {
+        if (!this.state.matrixClient) throw new Error("Matrix client has not yet been loaded");
+
+        const registerParams: IRegisterRequestParams = {
             username: this.state.formVals.username,
             password: this.state.formVals.password,
             initial_device_display_name: this.props.defaultDeviceDisplayName,
@@ -492,7 +518,7 @@ export default class Registration extends React.Component<IProps, IState> {
         return sessionLoaded;
     };
 
-    private renderRegisterComponent(): JSX.Element {
+    private renderRegisterComponent(): ReactNode {
         if (this.state.matrixClient && this.state.doingUIAuth) {
             return (
                 <InteractiveAuth
@@ -515,8 +541,26 @@ export default class Registration extends React.Component<IProps, IState> {
                     <Spinner />
                 </div>
             );
-        } else if (this.state.flows.length) {
-            let ssoSection;
+        } else if (this.state.matrixClient && this.state.oidcNativeFlow) {
+            return (
+                <AccessibleButton
+                    className="mx_Login_fullWidthButton"
+                    kind="primary"
+                    onClick={async () => {
+                        await startOidcLogin(
+                            this.props.serverConfig.delegatedAuthentication!,
+                            this.state.oidcNativeFlow!.clientId,
+                            this.props.serverConfig.hsUrl,
+                            this.props.serverConfig.isUrl,
+                            true /* isRegistration */,
+                        );
+                    }}
+                >
+                    {_t("action|continue")}
+                </AccessibleButton>
+            );
+        } else if (this.state.matrixClient && this.state.flows.length) {
+            let ssoSection: JSX.Element | undefined;
             if (this.state.ssoFlow) {
                 let continueWithSection;
                 const providers = this.state.ssoFlow.identity_providers || [];
@@ -525,7 +569,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     // i18n: ssoButtons is a placeholder to help translators understand context
                     continueWithSection = (
                         <h2 className="mx_AuthBody_centered">
-                            {_t("Continue with %(ssoButtons)s", { ssoButtons: "" }).trim()}
+                            {_t("auth|continue_with_sso", { ssoButtons: "" }).trim()}
                         </h2>
                     );
                 }
@@ -539,9 +583,10 @@ export default class Registration extends React.Component<IProps, IState> {
                             flow={this.state.ssoFlow}
                             loginType={this.state.ssoFlow.type === "m.login.sso" ? "sso" : "cas"}
                             fragmentAfterLogin={this.props.fragmentAfterLogin}
+                            action={SSOAction.REGISTER}
                         />
                         <h2 className="mx_AuthBody_centered">
-                            {_t("%(ssoButtons)s Or %(usernamePassword)s", {
+                            {_t("auth|sso_or_username_password", {
                                 ssoButtons: "",
                                 usernamePassword: "",
                             }).trim()}
@@ -568,9 +613,11 @@ export default class Registration extends React.Component<IProps, IState> {
                 </React.Fragment>
             );
         }
+
+        return null;
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         let errorText;
         const err = this.state.errorText;
         if (err) {
@@ -590,7 +637,7 @@ export default class Registration extends React.Component<IProps, IState> {
         const signIn = (
             <span className="mx_AuthBody_changeFlow">
                 {_t(
-                    "Already have an account? <a>Sign in here</a>",
+                    "auth|sign_in_instead_prompt",
                     {},
                     {
                         a: (sub) => (
@@ -608,7 +655,7 @@ export default class Registration extends React.Component<IProps, IState> {
         if (this.state.doingUIAuth) {
             goBack = (
                 <AccessibleButton kind="link" className="mx_AuthBody_changeFlow" onClick={this.onGoToFormClicked}>
-                    {_t("Go back")}
+                    {_t("action|go_back")}
                 </AccessibleButton>
             );
         }
@@ -620,14 +667,10 @@ export default class Registration extends React.Component<IProps, IState> {
                 regDoneText = (
                     <div>
                         <p>
-                            {_t(
-                                "Your new account (%(newAccountId)s) is registered, but you're already " +
-                                    "logged into a different account (%(loggedInUserId)s).",
-                                {
-                                    newAccountId: this.state.registeredUsername,
-                                    loggedInUserId: this.state.differentLoggedInUserId,
-                                },
-                            )}
+                            {_t("auth|account_clash", {
+                                newAccountId: this.state.registeredUsername,
+                                loggedInUserId: this.state.differentLoggedInUserId,
+                            })}
                         </p>
                         <p>
                             <AccessibleButton
@@ -639,7 +682,7 @@ export default class Registration extends React.Component<IProps, IState> {
                                     }
                                 }}
                             >
-                                {_t("Continue with previous account")}
+                                {_t("auth|account_clash_previous_account")}
                             </AccessibleButton>
                         </p>
                     </div>
@@ -650,7 +693,7 @@ export default class Registration extends React.Component<IProps, IState> {
                 regDoneText = (
                     <h2>
                         {_t(
-                            "<a>Log in</a> to your new account.",
+                            "auth|log_in_new_account",
                             {},
                             {
                                 a: (sub) => (
@@ -673,7 +716,7 @@ export default class Registration extends React.Component<IProps, IState> {
             }
             body = (
                 <div>
-                    <h1>{_t("Registration Successful")}</h1>
+                    <h1>{_t("auth|registration_successful")}</h1>
                     {regDoneText}
                 </div>
             );
@@ -682,11 +725,11 @@ export default class Registration extends React.Component<IProps, IState> {
                 <Fragment>
                     <div className="mx_Register_mainContent">
                         <AuthHeaderDisplay
-                            title={_t("Create account")}
+                            title={_t("auth|create_account_title")}
                             serverPicker={
                                 <ServerPicker
-                                    title={_t("Host account on")}
-                                    dialogTitle={_t("Decide where your account is hosted")}
+                                    title={_t("auth|server_picker_title_registration")}
+                                    dialogTitle={_t("auth|server_picker_dialog_title")}
                                     serverConfig={this.props.serverConfig}
                                     onServerConfigChange={
                                         this.state.doingUIAuth ? undefined : this.props.onServerConfigChange

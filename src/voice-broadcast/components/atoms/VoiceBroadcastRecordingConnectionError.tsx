@@ -16,14 +16,14 @@ limitations under the License.
 
 import React from "react";
 
-import { Icon as WarningIcon } from "../../../../res/img/element-icons/warning.svg";
+import { Icon as WarningIcon } from "../../../../res/img/compound/error-16px.svg";
 import { _t } from "../../../languageHandler";
 
 export const VoiceBroadcastRecordingConnectionError: React.FC = () => {
     return (
         <div className="mx_VoiceBroadcastRecordingConnectionError">
             <WarningIcon className="mx_Icon mx_Icon_16" />
-            {_t("Connection error - Recording paused")}
+            {_t("voice_broadcast|connection_error")}
         </div>
     );
 };

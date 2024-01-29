@@ -23,11 +23,13 @@ import { IntegrationManagerInstance } from "../../../integrations/IntegrationMan
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import ToggleSwitch from "../elements/ToggleSwitch";
+import Heading from "../typography/Heading";
+import { SettingsSubsectionText } from "./shared/SettingsSubsection";
 
 interface IProps {}
 
 interface IState {
-    currentManager: IntegrationManagerInstance;
+    currentManager: IntegrationManagerInstance | null;
     provisioningEnabled: boolean;
 }
 
@@ -61,35 +63,35 @@ export default class SetIntegrationManager extends React.Component<IProps, IStat
         if (currentManager) {
             managerName = `(${currentManager.name})`;
             bodyText = _t(
-                "Use an integration manager <b>(%(serverName)s)</b> to manage bots, widgets, " + "and sticker packs.",
+                "integration_manager|use_im_default",
                 { serverName: currentManager.name },
                 { b: (sub) => <b>{sub}</b> },
             );
         } else {
-            bodyText = _t("Use an integration manager to manage bots, widgets, and sticker packs.");
+            bodyText = _t("integration_manager|use_im");
         }
 
         return (
-            <div className="mx_SetIntegrationManager">
+            <label
+                className="mx_SetIntegrationManager"
+                data-testid="mx_SetIntegrationManager"
+                htmlFor="toggle_integration"
+            >
                 <div className="mx_SettingsFlag">
                     <div className="mx_SetIntegrationManager_heading_manager">
-                        <span className="mx_SettingsTab_heading">{_t("Manage integrations")}</span>
-                        <span className="mx_SettingsTab_subheading">{managerName}</span>
+                        <Heading size="2">{_t("integration_manager|manage_title")}</Heading>
+                        <Heading size="3">{managerName}</Heading>
                     </div>
                     <ToggleSwitch
+                        id="toggle_integration"
                         checked={this.state.provisioningEnabled}
                         disabled={false}
                         onChange={this.onProvisioningToggled}
                     />
                 </div>
-                <div className="mx_SettingsTab_subsectionText">{bodyText}</div>
-                <div className="mx_SettingsTab_subsectionText">
-                    {_t(
-                        "Integration managers receive configuration data, and can modify widgets, " +
-                            "send room invites, and set power levels on your behalf.",
-                    )}
-                </div>
-            </div>
+                <SettingsSubsectionText>{bodyText}</SettingsSubsectionText>
+                <SettingsSubsectionText>{_t("integration_manager|explainer")}</SettingsSubsectionText>
+            </label>
         );
     }
 }

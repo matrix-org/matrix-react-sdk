@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MSC3575Filter, SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
+import { Optional } from "matrix-events-sdk";
 
 import { RoomUpdateCause, TagID, OrderedDefaultTagIDs, DefaultTagID } from "./models";
 import { ITagMap, ListAlgorithm, SortAlgorithm } from "./algorithms/models";
@@ -47,8 +48,6 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
     [DefaultTagID.Favourite]: {
         tags: ["m.favourite"],
     },
-    // TODO https://github.com/vector-im/element-web/issues/23207
-    // DefaultTagID.SavedItems,
     [DefaultTagID.DM]: {
         is_dm: true,
         is_invite: false,
@@ -79,12 +78,14 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     private tagIdToSortAlgo: Record<TagID, SortAlgorithm> = {};
     private tagMap: ITagMap = {};
     private counts: Record<TagID, number> = {};
-    private stickyRoomId: string | null;
+    private stickyRoomId: Optional<string>;
 
-    public constructor(dis: MatrixDispatcher, private readonly context: SdkContextClass) {
+    public constructor(
+        dis: MatrixDispatcher,
+        private readonly context: SdkContextClass,
+    ) {
         super(dis);
         this.setMaxListeners(20); // RoomList + LeftPanel + 8xRoomSubList + spares
-        this.stickyRoomId = null;
     }
 
     public async setTagSorting(tagId: TagID, sort: SortAlgorithm): Promise<void> {
@@ -164,7 +165,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         // check all lists for each tag we know about and see if the room is there
         const tags: TagID[] = [];
         for (const tagId in this.tagIdToSortAlgo) {
-            const listData = this.context.slidingSyncManager.slidingSync.getListData(tagId);
+            const listData = this.context.slidingSyncManager.slidingSync?.getListData(tagId);
             if (!listData) {
                 continue;
             }
@@ -252,7 +253,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         // now set the rooms
         const rooms: Room[] = [];
         orderedRoomIds.forEach((roomId) => {
-            const room = this.matrixClient.getRoom(roomId);
+            const room = this.matrixClient?.getRoom(roomId);
             if (!room) {
                 return;
             }
@@ -294,7 +295,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
             if (room) {
                 // resort it based on the slidingSync view of the list. This may cause this old sticky
                 // room to cease to exist.
-                const listData = this.context.slidingSyncManager.slidingSync.getListData(tagId);
+                const listData = this.context.slidingSyncManager.slidingSync?.getListData(tagId);
                 if (!listData) {
                     continue;
                 }
@@ -313,7 +314,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     protected async onReady(): Promise<any> {
         logger.info("SlidingRoomListStore.onReady");
         // permanent listeners: never get destroyed. Could be an issue if we want to test this in isolation.
-        this.context.slidingSyncManager.slidingSync.on(SlidingSyncEvent.List, this.onSlidingSyncListUpdate.bind(this));
+        this.context.slidingSyncManager.slidingSync!.on(SlidingSyncEvent.List, this.onSlidingSyncListUpdate.bind(this));
         this.context.roomViewStore.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdated.bind(this));
         this.context.spaceStore.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdated.bind(this));
         if (this.context.spaceStore.activeSpace) {
@@ -399,6 +400,4 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     }
 
     protected async onAction(payload: ActionPayload): Promise<void> {}
-
-    protected async onDispatchAsync(payload: ActionPayload): Promise<void> {}
 }

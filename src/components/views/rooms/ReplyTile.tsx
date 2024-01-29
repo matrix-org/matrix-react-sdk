@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { createRef } from "react";
 import classNames from "classnames";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, MatrixEventEvent, EventType, MsgType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -34,6 +33,7 @@ import MVoiceMessageBody from "../messages/MVoiceMessageBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { renderReplyTile } from "../../../events/EventTileFactory";
 import { GetRelationsForEvent } from "../rooms/EventTile";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -104,12 +104,13 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         }
     };
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const mxEvent = this.props.mxEvent;
         const msgType = mxEvent.getContent().msgtype;
         const evType = mxEvent.getType();
 
         const { hasRenderer, isInfoMessage, isSeeingThroughMessageHiddenForModeration } = getEventDisplayInfo(
+            MatrixClientPeg.safeGet(),
             mxEvent,
             false /* Replies are never hidden, so this should be fine */,
         );
@@ -119,9 +120,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
             const { mxEvent } = this.props;
             logger.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
             return (
-                <div className="mx_ReplyTile mx_ReplyTile_info mx_MNoticeBody">
-                    {_t("This event could not be displayed")}
-                </div>
+                <div className="mx_ReplyTile mx_ReplyTile_info mx_MNoticeBody">{_t("timeline|error_no_renderer")}</div>
             );
         }
 
@@ -134,7 +133,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
 
         let permalink = "#";
         if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId());
+            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId()!);
         }
 
         let sender;
@@ -142,7 +141,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         if (!hasOwnSender) {
             sender = (
                 <div className="mx_ReplyTile_sender">
-                    <MemberAvatar member={mxEvent.sender} fallbackUserId={mxEvent.getSender()} width={16} height={16} />
+                    <MemberAvatar member={mxEvent.sender} fallbackUserId={mxEvent.getSender()} size="16px" />
                     <SenderProfile mxEvent={mxEvent} />
                 </div>
             );
@@ -168,7 +167,7 @@ export default class ReplyTile extends React.PureComponent<IProps> {
                             ...this.props,
 
                             // overrides
-                            ref: null,
+                            ref: undefined,
                             showUrlPreview: false,
                             overrideBodyTypes: msgtypeOverrides,
                             overrideEventTypes: evOverrides,

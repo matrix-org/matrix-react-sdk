@@ -1,5 +1,5 @@
 /*
-Copyright 2019, 2021 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ export default class TypingStore {
             userTimer: Timer;
             serverTimer: Timer;
         };
-    };
+    } = {};
 
     public constructor(private readonly context: SdkContextClass) {
         this.reset();
@@ -65,10 +65,10 @@ export default class TypingStore {
         if (SettingsStore.getValue("lowBandwidth")) return;
         // Disable typing notification for threads for the initial launch
         // before we figure out a better user experience for them
-        if (SettingsStore.getValue("feature_threadenabled") && threadId) return;
+        if (threadId) return;
 
         let currentTyping = this.typingStates[roomId];
-        if ((!isTyping && !currentTyping) || (currentTyping && currentTyping.isTyping === isTyping)) {
+        if ((!isTyping && !currentTyping) || currentTyping?.isTyping === isTyping) {
             // No change in state, so don't do anything. We'll let the timer run its course.
             return;
         }

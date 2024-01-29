@@ -19,18 +19,19 @@ import {
     ClientEvent,
     EventTimelineSet,
     EventType,
+    LOCAL_NOTIFICATION_SETTINGS_PREFIX,
     MatrixClient,
     MatrixEvent,
     MatrixEventEvent,
     MsgType,
     RelationType,
     Room,
+    Relations,
+    SyncState,
 } from "matrix-js-sdk/src/matrix";
-import { Relations } from "matrix-js-sdk/src/models/relations";
-import { SyncState } from "matrix-js-sdk/src/sync";
 
 import { uploadFile } from "../../../src/ContentMessages";
-import { IEncryptedFile } from "../../../src/customisations/models/IMediaEventContent";
+import { EncryptedFile } from "../../../src/customisations/models/IMediaEventContent";
 import { createVoiceMessageContent } from "../../../src/utils/createVoiceMessageContent";
 import {
     createVoiceBroadcastRecorder,
@@ -81,7 +82,7 @@ jest.mock("../../../src/utils/createVoiceMessageContent", () => ({
 describe("VoiceBroadcastRecording", () => {
     const roomId = "!room:example.com";
     const uploadedUrl = "mxc://example.com/vb";
-    const uploadedFile = { file: true } as unknown as IEncryptedFile;
+    const uploadedFile = { file: true } as unknown as EncryptedFile;
     const maxLength = getMaxBroadcastLength();
     let room: Room;
     let client: MatrixClient;
@@ -89,6 +90,7 @@ describe("VoiceBroadcastRecording", () => {
     let voiceBroadcastRecording: VoiceBroadcastRecording;
     let onStateChanged: (state: VoiceBroadcastRecordingState) => void;
     let voiceBroadcastRecorder: VoiceBroadcastRecorder;
+    let audioElement: HTMLAudioElement;
 
     const mkVoiceBroadcastInfoEvent = (content: VoiceBroadcastInfoEventContent) => {
         return mkEvent({
@@ -135,7 +137,7 @@ describe("VoiceBroadcastRecording", () => {
                         event_id: infoEvent.getId(),
                     },
                 } as VoiceBroadcastInfoEventContent,
-                client.getUserId(),
+                client.getUserId()!,
             );
         });
     };
@@ -221,7 +223,7 @@ describe("VoiceBroadcastRecording", () => {
                 mimetype: string,
                 duration: number,
                 size: number,
-                file?: IEncryptedFile,
+                file?: EncryptedFile,
                 waveform?: number[],
             ) => {
                 return {
@@ -251,6 +253,18 @@ describe("VoiceBroadcastRecording", () => {
                 };
             },
         );
+
+        audioElement = {
+            play: jest.fn(),
+        } as any as HTMLAudioElement;
+
+        jest.spyOn(document, "querySelector").mockImplementation((selector: string) => {
+            if (selector === "audio#errorAudio") {
+                return audioElement;
+            }
+
+            return null;
+        });
     });
 
     afterEach(() => {
@@ -269,7 +283,7 @@ describe("VoiceBroadcastRecording", () => {
         it("should raise an error when creating a broadcast", () => {
             expect(() => {
                 setUpVoiceBroadcastRecording();
-            }).toThrowError("Cannot create broadcast for info event without Id.");
+            }).toThrow("Cannot create broadcast for info event without Id.");
         });
     });
 
@@ -285,7 +299,7 @@ describe("VoiceBroadcastRecording", () => {
         it("should raise an error when creating a broadcast", () => {
             expect(() => {
                 setUpVoiceBroadcastRecording();
-            }).toThrowError(`Cannot create broadcast for unknown room (info event ${infoEvent.getId()})`);
+            }).toThrow(`Cannot create broadcast for unknown room (info event ${infoEvent.getId()})`);
         });
     });
 
@@ -501,6 +515,33 @@ describe("VoiceBroadcastRecording", () => {
                 });
             });
 
+            describe("and audible notifications are disabled", () => {
+                beforeEach(() => {
+                    const notificationSettings = mkEvent({
+                        event: true,
+                        type: `${LOCAL_NOTIFICATION_SETTINGS_PREFIX.name}.${client.getDeviceId()}`,
+                        user: client.getSafeUserId(),
+                        content: {
+                            is_silenced: true,
+                        },
+                    });
+                    mocked(client.getAccountData).mockReturnValue(notificationSettings);
+                });
+
+                describe("and a chunk has been recorded and sending the voice message fails", () => {
+                    beforeEach(() => {
+                        mocked(client.sendMessage).mockRejectedValue("Error");
+                        emitFirsChunkRecorded();
+                    });
+
+                    itShouldBeInState("connection_error");
+
+                    it("should not play a notification", () => {
+                        expect(audioElement.play).not.toHaveBeenCalled();
+                    });
+                });
+            });
+
             describe("and a chunk has been recorded and sending the voice message fails", () => {
                 beforeEach(() => {
                     mocked(client.sendMessage).mockRejectedValue("Error");
@@ -508,6 +549,10 @@ describe("VoiceBroadcastRecording", () => {
                 });
 
                 itShouldBeInState("connection_error");
+
+                it("should play a notification", () => {
+                    expect(audioElement.play).toHaveBeenCalled();
+                });
 
                 describe("and the connection is back", () => {
                     beforeEach(() => {

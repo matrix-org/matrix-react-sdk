@@ -14,16 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import url from "url";
+import { ComponentProps } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import type { Room } from "matrix-js-sdk/src/models/room";
+import type { Room } from "matrix-js-sdk/src/matrix";
 import ScalarAuthClient from "../ScalarAuthClient";
 import { dialogTermsInteractionCallback, TermsNotSignedError } from "../Terms";
 import Modal from "../Modal";
 import SettingsStore from "../settings/SettingsStore";
 import IntegrationManager from "../components/views/settings/IntegrationManager";
 import { IntegrationManagers } from "./IntegrationManagers";
+import { parseUrl } from "../utils/UrlUtils";
 
 export enum Kind {
     Account = "account",
@@ -32,36 +33,30 @@ export enum Kind {
 }
 
 export class IntegrationManagerInstance {
-    public readonly apiUrl: string;
-    public readonly uiUrl: string;
-    public readonly kind: string;
-    public readonly id: string; // only applicable in some cases
-
     // Per the spec: UI URL is optional.
-    public constructor(kind: string, apiUrl: string, uiUrl: string = apiUrl, id?: string) {
-        this.kind = kind;
-        this.apiUrl = apiUrl;
-        this.uiUrl = uiUrl;
-        this.id = id;
-    }
+    public constructor(
+        public readonly kind: string,
+        public readonly apiUrl: string,
+        public readonly uiUrl: string = apiUrl,
+        public readonly id?: string, // only applicable in some cases
+    ) {}
 
     public get name(): string {
-        const parsed = url.parse(this.uiUrl);
-        return parsed.host;
+        const parsed = parseUrl(this.uiUrl);
+        return parsed.host ?? "";
     }
 
     public get trimmedApiUrl(): string {
-        const parsed = url.parse(this.apiUrl);
+        const parsed = parseUrl(this.apiUrl);
         parsed.pathname = "";
-        parsed.path = "";
-        return url.format(parsed);
+        return parsed.toString();
     }
 
     public getScalarClient(): ScalarAuthClient {
         return new ScalarAuthClient(this.apiUrl, this.uiUrl);
     }
 
-    public async open(room: Room = null, screen: string = null, integrationId: string = null): Promise<void> {
+    public async open(room: Room, screen?: string, integrationId?: string): Promise<void> {
         if (!SettingsStore.getValue("integrationProvisioning")) {
             return IntegrationManagers.sharedInstance().showDisabledDialog();
         }
@@ -76,7 +71,7 @@ export class IntegrationManagerInstance {
             return dialogTermsInteractionCallback(policyInfo, agreedUrls, "mx_TermsDialog_forIntegrationManager");
         });
 
-        const newProps = {};
+        const newProps: Partial<ComponentProps<typeof IntegrationManager>> = {};
         try {
             await client.connect();
             if (!client.hasCredentials()) {

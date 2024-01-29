@@ -35,10 +35,13 @@ interface IProps {
 
     // Called when the checked state changes. First argument will be the new state.
     onChange(checked: boolean): void;
+
+    // id to bind with other elements
+    id?: string;
 }
 
 // Controlled Toggle Switch element, written with Accessibility in mind
-export default ({ checked, disabled = false, title, tooltip, onChange, ...props }: IProps): JSX.Element => {
+export default ({ checked, disabled = false, onChange, ...props }: IProps): JSX.Element => {
     const _onClick = (): void => {
         if (disabled) return;
         onChange(!checked);
@@ -58,8 +61,6 @@ export default ({ checked, disabled = false, title, tooltip, onChange, ...props 
             role="switch"
             aria-checked={checked}
             aria-disabled={disabled}
-            title={title}
-            tooltip={tooltip}
         >
             <div className="mx_ToggleSwitch_ball" />
         </AccessibleTooltipButton>

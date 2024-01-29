@@ -16,20 +16,21 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React, { HTMLAttributes, ReactHTML, WheelEvent } from "react";
+import React, { HTMLAttributes, ReactHTML, ReactNode, WheelEvent } from "react";
 
 type DynamicHtmlElementProps<T extends keyof JSX.IntrinsicElements> =
     JSX.IntrinsicElements[T] extends HTMLAttributes<{}> ? DynamicElementProps<T> : DynamicElementProps<"div">;
 type DynamicElementProps<T extends keyof JSX.IntrinsicElements> = Partial<Omit<JSX.IntrinsicElements[T], "ref">>;
 
 export type IProps<T extends keyof JSX.IntrinsicElements> = Omit<DynamicHtmlElementProps<T>, "onScroll"> & {
-    element?: T;
+    element: T;
     className?: string;
     onScroll?: (event: Event) => void;
     onWheel?: (event: WheelEvent) => void;
     style?: React.CSSProperties;
     tabIndex?: number;
-    wrappedRef?: (ref: HTMLDivElement) => void;
+    wrappedRef?: (ref: HTMLDivElement | null) => void;
+    children: ReactNode;
 };
 
 export default class AutoHideScrollbar<T extends keyof JSX.IntrinsicElements> extends React.Component<IProps<T>> {
@@ -53,9 +54,11 @@ export default class AutoHideScrollbar<T extends keyof JSX.IntrinsicElements> ex
         if (this.containerRef.current && this.props.onScroll) {
             this.containerRef.current.removeEventListener("scroll", this.props.onScroll);
         }
+
+        this.props.wrappedRef?.(null);
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { element, className, onScroll, tabIndex, wrappedRef, children, ...otherProps } = this.props;
 

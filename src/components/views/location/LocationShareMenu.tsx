@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { SyntheticEvent, useContext, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { IEventRelation } from "matrix-js-sdk/src/models/event";
+import { Room, IEventRelation } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import ContextMenu, { MenuProps } from "../../structures/ContextMenu";
@@ -38,7 +37,7 @@ type Props = Omit<ILocationPickerProps, "onChoose" | "shareType"> & {
     relation?: IEventRelation;
 };
 
-const getEnabledShareTypes = (relation): LocationShareType[] => {
+const getEnabledShareTypes = (relation?: IEventRelation): LocationShareType[] => {
     const enabledShareTypes = [LocationShareType.Own];
 
     // live locations cannot have a relation
@@ -64,14 +63,15 @@ const LocationShareMenu: React.FC<Props> = ({ menuPosition, onFinished, sender, 
     );
 
     const displayName = OwnProfileStore.instance.displayName;
+    const userId = matrixClient.getSafeUserId();
 
     const onLocationSubmit =
         shareType === LocationShareType.Live
-            ? shareLiveLocation(matrixClient, roomId, displayName, openMenu)
-            : shareLocation(matrixClient, roomId, shareType, relation, openMenu);
+            ? shareLiveLocation(matrixClient, roomId, displayName || userId, openMenu)
+            : shareLocation(matrixClient, roomId, shareType ?? LocationShareType.Own, relation, openMenu);
 
     const onLiveShareEnableSubmit = (): void => {
-        SettingsStore.setValue("feature_location_share_live", undefined, SettingLevel.DEVICE, true);
+        SettingsStore.setValue("feature_location_share_live", null, SettingLevel.DEVICE, true);
     };
 
     const shouldAdvertiseLiveLabsFlag = shareType === LocationShareType.Live && !isLiveShareEnabled;

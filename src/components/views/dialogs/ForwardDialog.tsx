@@ -16,20 +16,24 @@ limitations under the License.
 
 import React, { useEffect, useMemo, useState } from "react";
 import classnames from "classnames";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { ILocationContent, LocationAssetType, M_TIMESTAMP } from "matrix-js-sdk/src/@types/location";
-import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
-import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
+import {
+    IContent,
+    MatrixEvent,
+    Room,
+    RoomMember,
+    EventType,
+    MatrixClient,
+    ContentHelpers,
+    ILocationContent,
+    LocationAssetType,
+    M_TIMESTAMP,
+    M_BEACON,
+} from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import { useSettingValue } from "../../../hooks/useSettings";
 import { Layout } from "../../../settings/enums/Layout";
-import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import { avatarUrlForUser } from "../../../Avatar";
 import EventTile from "../rooms/EventTile";
@@ -52,16 +56,18 @@ import { ButtonEvent } from "../elements/AccessibleButton";
 import { isLocationEvent } from "../../../utils/EventUtils";
 import { isSelfLocation, locationEventGeoUri } from "../../../utils/location";
 import { RoomContextDetails } from "../rooms/RoomContextDetails";
+import { filterBoolean } from "../../../utils/arrays";
 
 const AVATAR_SIZE = 30;
 
-interface IProps extends IDialogProps {
+interface IProps {
     matrixClient: MatrixClient;
     // The event to forward
     event: MatrixEvent;
     // We need a permalink creator for the source room to pass through to EventTile
     // in case the event is a reply (even though the user can't get at the link)
     permalinkCreator: RoomPermalinkCreator;
+    onFinished(): void;
 }
 
 interface IEntryProps {
@@ -109,22 +115,22 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
         className = "mx_ForwardList_canSend";
         if (!room.maySendMessage()) {
             disabled = true;
-            title = _t("You don't have permission to do this");
+            title = _t("forward|no_perms_title");
         }
     } else if (sendState === SendState.Sending) {
         className = "mx_ForwardList_sending";
         disabled = true;
-        title = _t("Sending");
+        title = _t("forward|sending");
         icon = <div className="mx_ForwardList_sendIcon" aria-label={title} />;
     } else if (sendState === SendState.Sent) {
         className = "mx_ForwardList_sent";
         disabled = true;
-        title = _t("Sent");
+        title = _t("forward|sent");
         icon = <div className="mx_ForwardList_sendIcon" aria-label={title} />;
     } else {
         className = "mx_ForwardList_sendFailed";
         disabled = true;
-        title = _t("Failed to send");
+        title = _t("timeline|send_state_failed");
         icon = <NotificationBadge notification={StaticNotificationState.RED_EXCLAMATION} />;
     }
 
@@ -133,10 +139,10 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
             <AccessibleTooltipButton
                 className="mx_ForwardList_roomButton"
                 onClick={jumpToRoom}
-                title={_t("Open room")}
+                title={_t("forward|open_room")}
                 alignment={Alignment.Top}
             >
-                <DecoratedRoomAvatar room={room} avatarSize={32} />
+                <DecoratedRoomAvatar room={room} size="32px" />
                 <span className="mx_ForwardList_entry_name">{room.name}</span>
                 <RoomContextDetails component="span" className="mx_ForwardList_entry_detail" room={room} />
             </AccessibleTooltipButton>
@@ -148,7 +154,7 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
                 title={title}
                 alignment={Alignment.Top}
             >
-                <div className="mx_ForwardList_sendLabel">{_t("Send")}</div>
+                <div className="mx_ForwardList_sendLabel">{_t("forward|send_label")}</div>
                 {icon}
             </AccessibleTooltipButton>
         </div>
@@ -179,7 +185,7 @@ const transformEvent = (event: MatrixEvent): { type: string; content: IContent }
             type,
             content: {
                 ...content,
-                ...makeLocationContent(
+                ...ContentHelpers.makeLocationContent(
                     undefined, // text
                     geoUri,
                     timestamp || Date.now(),
@@ -194,7 +200,7 @@ const transformEvent = (event: MatrixEvent): { type: string; content: IContent }
 };
 
 const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCreator, onFinished }) => {
-    const userId = cli.getUserId();
+    const userId = cli.getSafeUserId();
     const [profileInfo, setProfileInfo] = useState<any>({});
     useEffect(() => {
         cli.getProfileInfo(userId).then((info) => setProfileInfo(info));
@@ -212,6 +218,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
         },
         event_id: "$9999999999999999999999999999999999999999999",
         room_id: event.getRoomId(),
+        origin_server_ts: event.getTs(),
     });
     mockEvent.sender = {
         name: profileInfo.displayname || userId,
@@ -227,38 +234,37 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     const lcQuery = query.toLowerCase();
 
     const previewLayout = useSettingValue<Layout>("layout");
+    const msc3946DynamicRoomPredecessors = useSettingValue<boolean>("feature_dynamic_room_predecessors");
 
     let rooms = useMemo(
         () =>
-            sortRooms(cli.getVisibleRooms().filter((room) => room.getMyMembership() === "join" && !room.isSpaceRoom())),
-        [cli],
+            sortRooms(
+                cli
+                    .getVisibleRooms(msc3946DynamicRoomPredecessors)
+                    .filter((room) => room.getMyMembership() === "join" && !room.isSpaceRoom()),
+            ),
+        [cli, msc3946DynamicRoomPredecessors],
     );
 
     if (lcQuery) {
         rooms = new QueryMatcher<Room>(rooms, {
             keys: ["name"],
-            funcs: [(r) => [r.getCanonicalAlias(), ...r.getAltAliases()].filter(Boolean)],
+            funcs: [(r) => filterBoolean([r.getCanonicalAlias(), ...r.getAltAliases()])],
             shouldMatchWordsOnly: false,
         }).match(lcQuery);
     }
 
     const [truncateAt, setTruncateAt] = useState(20);
-    function overflowTile(overflowCount, totalCount): JSX.Element {
-        const text = _t("and %(count)s others...", { count: overflowCount });
+    function overflowTile(overflowCount: number, totalCount: number): JSX.Element {
+        const text = _t("common|and_n_others", { count: overflowCount });
         return (
             <EntityTile
                 className="mx_EntityTile_ellipsis"
                 avatarJsx={
-                    <BaseAvatar
-                        url={require("../../../../res/img/ellipsis.svg").default}
-                        name="..."
-                        width={36}
-                        height={36}
-                    />
+                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg").default} name="..." size="36px" />
                 }
                 name={text}
-                presenceState="online"
-                suppressOnHover={true}
+                showPresence={false}
                 onClick={() => setTruncateAt(totalCount)}
             />
         );
@@ -266,25 +272,31 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
 
     return (
         <BaseDialog
-            title={_t("Forward message")}
+            title={_t("common|forward_message")}
             className="mx_ForwardDialog"
             contentId="mx_ForwardList"
             onFinished={onFinished}
             fixedWidth={false}
         >
-            <h3>{_t("Message preview")}</h3>
+            <h3>{_t("forward|message_preview_heading")}</h3>
             <div
                 className={classnames("mx_ForwardDialog_preview", {
                     mx_IRCLayout: previewLayout == Layout.IRC,
                 })}
             >
-                <EventTile mxEvent={mockEvent} layout={previewLayout} permalinkCreator={permalinkCreator} as="div" />
+                <EventTile
+                    mxEvent={mockEvent}
+                    layout={previewLayout}
+                    permalinkCreator={permalinkCreator}
+                    as="div"
+                    inhibitInteraction
+                />
             </div>
             <hr />
             <div className="mx_ForwardList" id="mx_ForwardList">
                 <SearchBox
                     className="mx_textinput_icon mx_textinput_search"
-                    placeholder={_t("Search for rooms or people")}
+                    placeholder={_t("forward|filter_placeholder")}
                     onSearch={setQuery}
                     autoFocus={true}
                 />
@@ -313,7 +325,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                             />
                         </div>
                     ) : (
-                        <span className="mx_ForwardList_noResults">{_t("No results")}</span>
+                        <span className="mx_ForwardList_noResults">{_t("common|no_results")}</span>
                     )}
                 </AutoHideScrollbar>
             </div>

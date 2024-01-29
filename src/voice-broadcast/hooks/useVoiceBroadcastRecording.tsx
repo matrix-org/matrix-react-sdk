@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import {
@@ -32,19 +31,12 @@ import Modal from "../../Modal";
 
 const showStopBroadcastingDialog = async (): Promise<boolean> => {
     const { finished } = Modal.createDialog(QuestionDialog, {
-        title: _t("Stop live broadcasting?"),
-        description: (
-            <p>
-                {_t(
-                    "Are you sure you want to stop your live broadcast?" +
-                        "This will end the broadcast and the full recording will be available in the room.",
-                )}
-            </p>
-        ),
-        button: _t("Yes, stop broadcast"),
+        title: _t("voice_broadcast|confirm_stop_title"),
+        description: <p>{_t("voice_broadcast|confirm_stop_description")}</p>,
+        button: _t("voice_broadcast|confirm_stop_affirm"),
     });
     const [confirmed] = await finished;
-    return confirmed;
+    return !!confirmed;
 };
 
 export const useVoiceBroadcastRecording = (
@@ -54,16 +46,22 @@ export const useVoiceBroadcastRecording = (
     timeLeft: number;
     recordingState: VoiceBroadcastRecordingState;
     room: Room;
-    sender: RoomMember;
+    sender: RoomMember | null;
     stopRecording(): void;
     toggleRecording(): void;
 } => {
-    const client = MatrixClientPeg.get();
+    const client = MatrixClientPeg.safeGet();
     const roomId = recording.infoEvent.getRoomId();
     const room = client.getRoom(roomId);
 
     if (!room) {
         throw new Error("Unable to find voice broadcast room with Id: " + roomId);
+    }
+
+    const sender = recording.infoEvent.sender;
+
+    if (!sender) {
+        throw new Error(`Voice Broadcast sender not found (event ${recording.infoEvent.getId()})`);
     }
 
     const stopRecording = async (): Promise<void> => {
@@ -99,7 +97,7 @@ export const useVoiceBroadcastRecording = (
         timeLeft,
         recordingState,
         room,
-        sender: recording.infoEvent.sender,
+        sender,
         stopRecording,
         toggleRecording: recording.toggle,
     };

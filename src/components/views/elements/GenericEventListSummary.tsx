@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { ReactNode, useEffect } from "react";
 import { uniqBy } from "lodash";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import MemberAvatar from "../avatars/MemberAvatar";
@@ -36,9 +35,9 @@ interface IProps {
     // The list of room members for which to show avatars next to the summary
     "summaryMembers"?: RoomMember[];
     // The text to show as the summary of this event list
-    "summaryText"?: string | JSX.Element;
+    "summaryText"?: ReactNode;
     // An array of EventTiles to render when expanded
-    "children": ReactNode[];
+    "children": ReactNode[] | null;
     // Called when the event list expansion is toggled
     onToggle?(): void;
     // The layout currently used
@@ -86,7 +85,7 @@ const GenericEventListSummary: React.FC<IProps> = ({
     if (expanded) {
         body = (
             <React.Fragment>
-                <div className="mx_GenericEventListSummary_line">&nbsp;</div>
+                <div className="mx_GenericEventListSummary_spacer">&nbsp;</div>
                 <ol className="mx_GenericEventListSummary_unstyledList">{children}</ol>
             </React.Fragment>
         );
@@ -104,7 +103,7 @@ const GenericEventListSummary: React.FC<IProps> = ({
             }),
             (member) => member.getMxcAvatarUrl(),
         );
-        const avatars = uniqueMembers.map((m) => <MemberAvatar key={m.userId} member={m} width={14} height={14} />);
+        const avatars = uniqueMembers.map((m) => <MemberAvatar key={m.userId} member={m} size="14px" />);
         body = (
             <div className="mx_EventTile_line">
                 <div className="mx_EventTile_info">
@@ -131,7 +130,7 @@ const GenericEventListSummary: React.FC<IProps> = ({
                 onClick={toggleExpanded}
                 aria-expanded={expanded}
             >
-                {expanded ? _t("collapse") : _t("expand")}
+                {expanded ? _t("action|collapse") : _t("action|expand")}
             </AccessibleButton>
             {body}
         </li>

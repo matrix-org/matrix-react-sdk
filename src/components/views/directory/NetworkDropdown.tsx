@@ -38,13 +38,13 @@ export interface IPublicRoomDirectoryConfig {
     instanceId?: string;
 }
 
-const validServer = withValidation<undefined, { error?: MatrixError }>({
-    deriveData: async ({ value }): Promise<{ error?: MatrixError }> => {
+const validServer = withValidation<undefined, { error?: unknown }>({
+    deriveData: async ({ value }): Promise<{ error?: unknown }> => {
         try {
             // check if we can successfully load this server's room directory
-            await MatrixClientPeg.get().publicRooms({
+            await MatrixClientPeg.safeGet().publicRooms({
                 limit: 1,
-                server: value,
+                server: value ?? undefined,
             });
             return {};
         } catch (error) {
@@ -55,19 +55,20 @@ const validServer = withValidation<undefined, { error?: MatrixError }>({
         {
             key: "required",
             test: async ({ value }) => !!value,
-            invalid: () => _t("Enter a server name"),
+            invalid: () => _t("spotlight|public_rooms|network_dropdown_required_invalid"),
         },
         {
             key: "available",
             final: true,
             test: async (_, { error }) => !error,
-            valid: () => _t("Looks good"),
+            valid: () => _t("spotlight|public_rooms|network_dropdown_available_valid"),
             invalid: ({ error }) =>
-                error?.errcode === "M_FORBIDDEN"
-                    ? _t("You are not allowed to view this server's rooms list")
-                    : _t("Can't find this server or its room list"),
+                error instanceof MatrixError && error.errcode === "M_FORBIDDEN"
+                    ? _t("spotlight|public_rooms|network_dropdown_available_invalid_forbidden")
+                    : _t("spotlight|public_rooms|network_dropdown_available_invalid"),
         },
     ],
+    memoize: true,
 });
 
 function useSettingsValueWithSetter<T>(
@@ -149,13 +150,14 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
     const { allServers, homeServer, userDefinedServers, setUserDefinedServers } = useServers();
 
     const options: GenericDropdownMenuItem<IPublicRoomDirectoryConfig | null>[] = allServers.map((roomServer) => ({
-        key: { roomServer, instanceId: null },
+        key: { roomServer, instanceId: undefined },
         label: roomServer,
-        description: roomServer === homeServer ? _t("Your server") : null,
+        description:
+            roomServer === homeServer ? _t("spotlight|public_rooms|network_dropdown_your_server_description") : null,
         options: [
             {
                 key: { roomServer, instanceId: undefined },
-                label: _t("Matrix"),
+                label: _t("common|matrix"),
             },
             ...(roomServer === homeServer && protocols
                 ? Object.values(protocols)
@@ -171,7 +173,7 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
                   adornment: (
                       <AccessibleButton
                           className="mx_NetworkDropdown_removeServer"
-                          alt={_t("Remove server “%(roomServer)s”", { roomServer })}
+                          alt={_t("spotlight|public_rooms|network_dropdown_remove_server_adornment", { roomServer })}
                           onClick={() => setUserDefinedServers(without(userDefinedServers, roomServer))}
                       />
                   ),
@@ -191,11 +193,11 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
                         const { finished } = Modal.createDialog(
                             TextInputDialog,
                             {
-                                title: _t("Add a new server"),
-                                description: _t("Enter the name of a new server you want to explore."),
-                                button: _t("Add"),
+                                title: _t("spotlight|public_rooms|network_dropdown_add_dialog_title"),
+                                description: _t("spotlight|public_rooms|network_dropdown_add_dialog_description"),
+                                button: _t("action|add"),
                                 hasCancel: false,
-                                placeholder: _t("Server name"),
+                                placeholder: _t("spotlight|public_rooms|network_dropdown_add_dialog_placeholder"),
                                 validator: validServer,
                                 fixedWidth: false,
                             },
@@ -214,7 +216,9 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
                     }}
                 >
                     <div className="mx_GenericDropdownMenu_Option--label">
-                        <span className="mx_NetworkDropdown_addServer">{_t("Add new server…")}</span>
+                        <span className="mx_NetworkDropdown_addServer">
+                            {_t("spotlight|public_rooms|network_dropdown_add_server_option")}
+                        </span>
                     </div>
                 </MenuItemRadio>
             </>
@@ -233,11 +237,11 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
             onChange={(option) => setConfig(option)}
             selectedLabel={(option) =>
                 option?.key
-                    ? _t("Show: %(instance)s rooms (%(server)s)", {
+                    ? _t("spotlight|public_rooms|network_dropdown_selected_label_instance", {
                           server: option.key.roomServer,
                           instance: option.key.instanceId ? option.label : "Matrix",
                       })
-                    : _t("Show: Matrix rooms")
+                    : _t("spotlight|public_rooms|network_dropdown_selected_label")
             }
             AdditionalOptions={addNewServer}
         />

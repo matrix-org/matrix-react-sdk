@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import EventIndexPeg from "../../../indexing/EventIndexPeg";
@@ -23,7 +23,7 @@ import SdkConfig from "../../../SdkConfig";
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { UserTab } from "../dialogs/UserTab";
-import AccessibleButton from "./AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
 
 export enum WarningKind {
     Files,
@@ -31,25 +31,25 @@ export enum WarningKind {
 }
 
 interface IProps {
-    isRoomEncrypted: boolean;
+    isRoomEncrypted?: boolean;
     kind: WarningKind;
 }
 
 export default function SearchWarning({ isRoomEncrypted, kind }: IProps): JSX.Element {
-    if (!isRoomEncrypted) return null;
-    if (EventIndexPeg.get()) return null;
+    if (!isRoomEncrypted) return <></>;
+    if (EventIndexPeg.get()) return <></>;
 
     if (EventIndexPeg.error) {
         return (
             <div className="mx_SearchWarning">
                 {_t(
-                    "Message search initialisation failed, check <a>your settings</a> for more information",
+                    "seshat|error_initialising",
                     {},
                     {
                         a: (sub) => (
                             <AccessibleButton
                                 kind="link_inline"
-                                onClick={(evt) => {
+                                onClick={(evt: ButtonEvent) => {
                                     evt.preventDefault();
                                     dis.dispatch({
                                         action: Action.ViewUserSettings,
@@ -69,15 +69,15 @@ export default function SearchWarning({ isRoomEncrypted, kind }: IProps): JSX.El
     const brand = SdkConfig.get("brand");
     const desktopBuilds = SdkConfig.getObject("desktop_builds");
 
-    let text = null;
-    let logo = null;
-    if (desktopBuilds.get("available")) {
-        logo = <img src={desktopBuilds.get("logo")} />;
+    let text: ReactNode | undefined;
+    let logo: JSX.Element | undefined;
+    if (desktopBuilds?.get("available")) {
+        logo = <img alt="" src={desktopBuilds.get("logo")} width="32px" />;
         const buildUrl = desktopBuilds.get("url");
         switch (kind) {
             case WarningKind.Files:
                 text = _t(
-                    "Use the <a>Desktop app</a> to see all encrypted files",
+                    "seshat|warning_kind_files_app",
                     {},
                     {
                         a: (sub) => (
@@ -90,7 +90,7 @@ export default function SearchWarning({ isRoomEncrypted, kind }: IProps): JSX.El
                 break;
             case WarningKind.Search:
                 text = _t(
-                    "Use the <a>Desktop app</a> to search encrypted messages",
+                    "seshat|warning_kind_search_app",
                     {},
                     {
                         a: (sub) => (
@@ -105,10 +105,10 @@ export default function SearchWarning({ isRoomEncrypted, kind }: IProps): JSX.El
     } else {
         switch (kind) {
             case WarningKind.Files:
-                text = _t("This version of %(brand)s does not support viewing some encrypted files", { brand });
+                text = _t("seshat|warning_kind_files", { brand });
                 break;
             case WarningKind.Search:
-                text = _t("This version of %(brand)s does not support searching encrypted messages", { brand });
+                text = _t("seshat|warning_kind_search", { brand });
                 break;
         }
     }
@@ -116,7 +116,7 @@ export default function SearchWarning({ isRoomEncrypted, kind }: IProps): JSX.El
     // for safety
     if (!text) {
         logger.warn("Unknown desktop builds warning kind: ", kind);
-        return null;
+        return <></>;
     }
 
     return (

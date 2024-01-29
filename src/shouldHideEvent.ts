@@ -14,8 +14,7 @@
  limitations under the License.
  */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, EventType, RelationType } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "./settings/SettingsStore";
 import { IRoomState } from "./components/structures/RoomView";
@@ -58,7 +57,9 @@ function memberEventDiff(ev: MatrixEvent): IDiff {
 export default function shouldHideEvent(ev: MatrixEvent, ctx?: IRoomState): boolean {
     // Accessing the settings store directly can be expensive if done frequently,
     // so we should prefer using cached values if a RoomContext is available
-    const isEnabled = ctx ? (name) => ctx[name] : (name) => SettingsStore.getValue(name, ev.getRoomId());
+    const isEnabled = ctx
+        ? (name: keyof IRoomState) => ctx[name]
+        : (name: string) => SettingsStore.getValue(name, ev.getRoomId());
 
     // Hide redacted events
     // Deleted events with a thread are always shown regardless of user preference

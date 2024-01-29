@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,65 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import "focus-visible"; // to fix context menus
-import { mocked } from "jest-mock";
-import { MatrixClient, MatrixEvent, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
-import { FeatureSupport, Thread } from "matrix-js-sdk/src/models/thread";
 import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { mocked } from "jest-mock";
+import {
+    MatrixClient,
+    MatrixEvent,
+    PendingEventOrdering,
+    Room,
+    FeatureSupport,
+    Thread,
+} from "matrix-js-sdk/src/matrix";
 
 import ThreadPanel, { ThreadFilterType, ThreadPanelHeader } from "../../../src/components/structures/ThreadPanel";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../src/contexts/RoomContext";
 import { _t } from "../../../src/languageHandler";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
-import { shouldShowFeedback } from "../../../src/utils/Feedback";
 import { RoomPermalinkCreator } from "../../../src/utils/permalinks/Permalinks";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
-import { createTestClient, getRoomContext, mkStubRoom, mockPlatformPeg, stubClient } from "../../test-utils";
+import { getRoomContext, mockPlatformPeg, stubClient } from "../../test-utils";
 import { mkThread } from "../../test-utils/threads";
 
 jest.mock("../../../src/utils/Feedback");
 
 describe("ThreadPanel", () => {
-    describe("Feedback prompt", () => {
-        const cli = createTestClient();
-        const room = mkStubRoom("!room:server", "room", cli);
-        mocked(cli.getRoom).mockReturnValue(room);
-
-        it("should show feedback prompt if feedback is enabled", () => {
-            mocked(shouldShowFeedback).mockReturnValue(true);
-
-            render(
-                <MatrixClientContext.Provider value={cli}>
-                    <ThreadPanel
-                        roomId="!room:server"
-                        onClose={jest.fn()}
-                        resizeNotifier={new ResizeNotifier()}
-                        permalinkCreator={new RoomPermalinkCreator(room)}
-                    />
-                </MatrixClientContext.Provider>,
-            );
-            expect(screen.queryByText("Give feedback")).toBeTruthy();
-        });
-
-        it("should hide feedback prompt if feedback is disabled", () => {
-            mocked(shouldShowFeedback).mockReturnValue(false);
-
-            render(
-                <MatrixClientContext.Provider value={cli}>
-                    <ThreadPanel
-                        roomId="!room:server"
-                        onClose={jest.fn()}
-                        resizeNotifier={new ResizeNotifier()}
-                        permalinkCreator={new RoomPermalinkCreator(room)}
-                    />
-                </MatrixClientContext.Provider>,
-            );
-            expect(screen.queryByText("Give feedback")).toBeFalsy();
-        });
-    });
-
     describe("Header", () => {
         it("expect that All filter for ThreadPanelHeader properly renders Show: All threads", () => {
             const { asFragment } = render(
@@ -107,7 +73,7 @@ describe("ThreadPanel", () => {
             const found = container.querySelector(".mx_ThreadPanel_dropdown");
             expect(found).toBeTruthy();
             expect(screen.queryByRole("menu")).toBeFalsy();
-            fireEvent.click(found);
+            fireEvent.click(found!);
             expect(screen.queryByRole("menu")).toBeTruthy();
         });
 
@@ -119,11 +85,13 @@ describe("ThreadPanel", () => {
                     setFilterOption={() => undefined}
                 />,
             );
-            fireEvent.click(container.querySelector(".mx_ThreadPanel_dropdown"));
+            fireEvent.click(container.querySelector(".mx_ThreadPanel_dropdown")!);
             const found = screen.queryAllByRole("menuitemradio");
             expect(found).toHaveLength(2);
             const foundButton = screen.queryByRole("menuitemradio", { checked: true });
-            expect(foundButton.textContent).toEqual(`${_t("All threads")}${_t("Shows all threads from current room")}`);
+            expect(foundButton?.textContent).toEqual(
+                `${_t("threads|all_threads")}${_t("threads|all_threads_description")}`,
+            );
             expect(foundButton).toMatchSnapshot();
         });
     });
@@ -157,11 +125,11 @@ describe("ThreadPanel", () => {
 
             stubClient();
             mockPlatformPeg();
-            mockClient = mocked(MatrixClientPeg.get());
+            mockClient = mocked(MatrixClientPeg.safeGet());
             Thread.setServerSideSupport(FeatureSupport.Stable);
             Thread.setServerSideListSupport(FeatureSupport.Stable);
             Thread.setServerSideFwdPaginationSupport(FeatureSupport.Stable);
-            jest.spyOn(mockClient, "supportsExperimentalThreads").mockReturnValue(true);
+            jest.spyOn(mockClient, "supportsThreads").mockReturnValue(true);
 
             room = new Room(ROOM_ID, mockClient, mockClient.getUserId() ?? "", {
                 pendingEventOrdering: PendingEventOrdering.Detached,
@@ -170,7 +138,7 @@ describe("ThreadPanel", () => {
             jest.spyOn(mockClient, "getRoom").mockReturnValue(room);
             await room.createThreadsTimelineSets();
             const [allThreads, myThreads] = room.threadsTimelineSets;
-            jest.spyOn(room, "createThreadsTimelineSets").mockReturnValue(Promise.resolve([allThreads, myThreads]));
+            jest.spyOn(room, "createThreadsTimelineSets").mockReturnValue(Promise.resolve([allThreads!, myThreads!]));
         });
 
         function toggleThreadFilter(container: HTMLElement, newFilter: ThreadFilterType) {
@@ -178,8 +146,8 @@ describe("ThreadPanel", () => {
             const found = screen.queryAllByRole("menuitemradio");
             expect(found).toHaveLength(2);
 
-            const allThreadsContent = `${_t("All threads")}${_t("Shows all threads from current room")}`;
-            const myThreadsContent = `${_t("My threads")}${_t("Shows all threads you've participated in")}`;
+            const allThreadsContent = `${_t("threads|all_threads")}${_t("threads|all_threads_description")}`;
+            const myThreadsContent = `${_t("threads|my_threads")}${_t("threads|my_threads_description")}`;
 
             const allThreadsOption = found.find((it) => it.textContent === allThreadsContent);
             const myThreadsOption = found.find((it) => it.textContent === myThreadsContent);
@@ -232,11 +200,11 @@ describe("ThreadPanel", () => {
                 return event ? Promise.resolve(event) : Promise.reject();
             });
             const [allThreads, myThreads] = room.threadsTimelineSets;
-            allThreads.addLiveEvent(otherThread.rootEvent);
-            allThreads.addLiveEvent(mixedThread.rootEvent);
-            allThreads.addLiveEvent(ownThread.rootEvent);
-            myThreads.addLiveEvent(mixedThread.rootEvent);
-            myThreads.addLiveEvent(ownThread.rootEvent);
+            allThreads!.addLiveEvent(otherThread.rootEvent);
+            allThreads!.addLiveEvent(mixedThread.rootEvent);
+            allThreads!.addLiveEvent(ownThread.rootEvent);
+            myThreads!.addLiveEvent(mixedThread.rootEvent);
+            myThreads!.addLiveEvent(ownThread.rootEvent);
 
             let events: EventData[] = [];
             const renderResult = render(<TestThreadPanel />);
@@ -282,7 +250,7 @@ describe("ThreadPanel", () => {
                 return event ? Promise.resolve(event) : Promise.reject();
             });
             const [allThreads] = room.threadsTimelineSets;
-            allThreads.addLiveEvent(otherThread.rootEvent);
+            allThreads!.addLiveEvent(otherThread.rootEvent);
 
             let events: EventData[] = [];
             const renderResult = render(<TestThreadPanel />);

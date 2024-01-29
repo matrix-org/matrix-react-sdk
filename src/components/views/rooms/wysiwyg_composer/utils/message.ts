@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022 - 2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,9 +15,14 @@ limitations under the License.
 */
 
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { ISendEventResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import {
+    IContent,
+    IEventRelation,
+    MatrixEvent,
+    ISendEventResponse,
+    MatrixClient,
+    THREAD_RELATION_TYPE,
+} from "matrix-js-sdk/src/matrix";
 
 import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 import SettingsStore from "../../../../../settings/SettingsStore";
@@ -31,8 +36,13 @@ import dis from "../../../../../dispatcher/dispatcher";
 import { createRedactEventDialog } from "../../../dialogs/ConfirmRedactDialog";
 import { endEditing, cancelPreviousPendingEdit } from "./editing";
 import EditorStateTransfer from "../../../../../utils/EditorStateTransfer";
-import { createMessageContent } from "./createMessageContent";
+import { createMessageContent, EMOTE_PREFIX } from "./createMessageContent";
 import { isContentModified } from "./isContentModified";
+import { CommandCategories, getCommand } from "../../../../../SlashCommands";
+import { runSlashCommand, shouldSendAnyway } from "../../../../../editor/commands";
+import { Action } from "../../../../../dispatcher/actions";
+import { addReplyToMessageContent } from "../../../../../utils/Reply";
+import { attachRelation } from "../../SendMessageComposer";
 
 export interface SendMessageParams {
     mxClient: MatrixClient;
@@ -47,8 +57,8 @@ export async function sendMessage(
     message: string,
     isHTML: boolean,
     { roomContext, mxClient, ...params }: SendMessageParams,
-): Promise<ISendEventResponse> {
-    const { relation, replyToEvent } = params;
+): Promise<ISendEventResponse | undefined> {
+    const { relation, replyToEvent, permalinkCreator } = params;
     const { room } = roomContext;
     const roomId = room?.roomId;
 
@@ -59,6 +69,7 @@ export async function sendMessage(
     const posthogEvent: ComposerEvent = {
         eventName: "Composer",
         isEditing: false,
+        messageType: "Text",
         isReply: Boolean(replyToEvent),
         // TODO thread
         inThread: relation?.rel_type === THREAD_RELATION_TYPE.name,
@@ -71,9 +82,51 @@ export async function sendMessage(
     }*/
     PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
 
-    const content = await createMessageContent(message, isHTML, params);
+    let content: IContent | null = null;
 
-    // TODO slash comment
+    // Slash command handling here approximates what can be found in SendMessageComposer.sendMessage()
+    // but note that the /me and // special cases are handled by the call to createMessageContent
+    if (message.startsWith("/") && !message.startsWith("//") && !message.startsWith(EMOTE_PREFIX)) {
+        const { cmd, args } = getCommand(message);
+        if (cmd) {
+            const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation?.event_id : null;
+            let commandSuccessful: boolean;
+            [content, commandSuccessful] = await runSlashCommand(mxClient, cmd, args, roomId, threadId ?? null);
+
+            if (!commandSuccessful) {
+                return; // errored
+            }
+
+            if (
+                content &&
+                (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects)
+            ) {
+                attachRelation(content, relation);
+                if (replyToEvent) {
+                    addReplyToMessageContent(content, replyToEvent, {
+                        permalinkCreator,
+                        // Exclude the legacy fallback for custom event types such as those used by /fireworks
+                        includeLegacyFallback: content.msgtype?.startsWith("m.") ?? true,
+                    });
+                }
+            } else {
+                // instead of setting shouldSend to false as in SendMessageComposer, just return
+                return;
+            }
+        } else {
+            const sendAnyway = await shouldSendAnyway(message);
+            // re-focus the composer after QuestionDialog is closed
+            dis.dispatch({
+                action: Action.FocusAComposer,
+                context: roomContext.timelineRenderingType,
+            });
+            // if !sendAnyway bail to let the user edit the composer and try again
+            if (!sendAnyway) return;
+        }
+    }
+
+    // if content is null, we haven't done any slash command processing, so generate some content
+    content ??= await createMessageContent(message, isHTML, params);
 
     // TODO replace emotion end of message ?
 
@@ -92,7 +145,7 @@ export async function sendMessage(
 
     const prom = doMaybeLocalRoomAction(
         roomId,
-        (actualRoomId: string) => mxClient.sendMessage(actualRoomId, threadId, content),
+        (actualRoomId: string) => mxClient.sendMessage(actualRoomId, threadId, content as IContent),
         mxClient,
     );
 
@@ -108,11 +161,11 @@ export async function sendMessage(
 
     dis.dispatch({ action: "message_sent" });
     CHAT_EFFECTS.forEach((effect) => {
-        if (containsEmoji(content, effect.emojis)) {
+        if (content && containsEmoji(content, effect.emojis)) {
             // For initial threads launch, chat effects are disabled
             // see #19731
             const isNotThread = relation?.rel_type !== THREAD_RELATION_TYPE.name;
-            if (!SettingsStore.getValue("feature_threadenabled") || isNotThread) {
+            if (isNotThread) {
                 dis.dispatch({ action: `effects.${effect.command}` });
             }
         }
@@ -146,12 +199,13 @@ interface EditMessageParams {
 export async function editMessage(
     html: string,
     { roomContext, mxClient, editorStateTransfer }: EditMessageParams,
-): Promise<ISendEventResponse> {
+): Promise<ISendEventResponse | undefined> {
     const editedEvent = editorStateTransfer.getEvent();
 
     PosthogAnalytics.instance.trackEvent<ComposerEvent>({
         eventName: "Composer",
         isEditing: true,
+        messageType: "Text",
         inThread: Boolean(editedEvent?.getThread()),
         isReply: Boolean(editedEvent.replyEventId),
     });

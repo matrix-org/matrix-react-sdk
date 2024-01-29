@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-// eslint-disable-next-line deprecate/import
-import { mount, ReactWrapper } from "enzyme";
+import React, { ComponentProps } from "react";
+import { render, RenderResult } from "@testing-library/react";
 import { MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 
 import {
     getMockClientWithEventEmitter,
+    mkEvent,
     mkMembership,
     mockClientMethodsUser,
     unmockClientPeg,
@@ -28,6 +28,7 @@ import {
 import EventListSummary from "../../../../src/components/views/elements/EventListSummary";
 import { Layout } from "../../../../src/settings/enums/Layout";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
+import * as languageHandler from "../../../../src/languageHandler";
 
 describe("EventListSummary", function () {
     const roomId = "!room:server.org";
@@ -59,17 +60,17 @@ describe("EventListSummary", function () {
      */
     interface MembershipEventParams {
         senderId?: string;
-        userId: string;
+        userId?: string;
         membership: string;
         prevMembership?: string;
     }
     const generateMembershipEvent = (
         eventId: string,
-        { senderId, userId, membership, prevMembership }: MembershipEventParams,
+        { senderId, userId, membership, prevMembership }: MembershipEventParams & { userId: string },
     ): MatrixEvent => {
         const member = new RoomMember(roomId, userId);
         // Use localpart as display name;
-        member.name = userId.match(/@([^:]*):/)[1];
+        member.name = userId.match(/@([^:]*):/)![1];
         jest.spyOn(member, "getAvatarUrl").mockReturnValue("avatar.jpeg");
         jest.spyOn(member, "getMxcAvatarUrl").mockReturnValue("mxc://avatar.url/image.png");
         const e = mkMembership({
@@ -88,8 +89,8 @@ describe("EventListSummary", function () {
     };
 
     // Generate mock MatrixEvents from the array of parameters
-    const generateEvents = (parameters: MembershipEventParams[]) => {
-        const res = [];
+    const generateEvents = (parameters: Array<MembershipEventParams & { userId: string }>) => {
+        const res: MatrixEvent[] = [];
         for (let i = 0; i < parameters.length; i++) {
             res.push(generateMembershipEvent(`event${i}`, parameters[i]));
         }
@@ -99,15 +100,17 @@ describe("EventListSummary", function () {
     // Generate the same sequence of `events` for `n` users, where each user ID
     // is created by replacing the first "$" in userIdTemplate with `i` for
     // `i = 0 .. n`.
-    const generateEventsForUsers = (userIdTemplate, n, events) => {
-        let eventsForUsers = [];
+    const generateEventsForUsers = (userIdTemplate: string, n: number, events: MembershipEventParams[]) => {
+        let eventsForUsers: MatrixEvent[] = [];
         let userId = "";
         for (let i = 0; i < n; i++) {
-            userId = userIdTemplate.replace("$", i);
+            userId = userIdTemplate.replace("$", String(i));
             events.forEach((e) => {
                 e.userId = userId;
             });
-            eventsForUsers = eventsForUsers.concat(generateEvents(events));
+            eventsForUsers = eventsForUsers.concat(
+                generateEvents(events as Array<MembershipEventParams & { userId: string }>),
+            );
         }
         return eventsForUsers;
     };
@@ -116,13 +119,16 @@ describe("EventListSummary", function () {
         ...mockClientMethodsUser(),
     });
 
-    const defaultProps = {
+    const defaultProps: Omit<
+        ComponentProps<typeof EventListSummary>,
+        "summaryLength" | "threshold" | "avatarsMaxLength"
+    > = {
         layout: Layout.Bubble,
         events: [],
         children: [],
     };
-    const renderComponent = (props = {}): ReactWrapper => {
-        return mount(
+    const renderComponent = (props = {}): RenderResult => {
+        return render(
             <MatrixClientContext.Provider value={mockClient}>
                 <EventListSummary {...defaultProps} {...props} />
             </MatrixClientContext.Provider>,
@@ -131,6 +137,7 @@ describe("EventListSummary", function () {
 
     beforeEach(function () {
         jest.clearAllMocks();
+        jest.spyOn(languageHandler, "getUserLanguage").mockReturnValue("en-GB");
     });
 
     afterAll(() => {
@@ -147,16 +154,14 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props); // matrix cli context wrapper
+        const { container } = renderComponent(props); // matrix cli context wrapper
 
-        expect(wrapper.find("GenericEventListSummary").props().children).toEqual([
-            <div className="event_tile" key="event0">
-                Expanded membership
-            </div>,
-        ]);
+        const children = container.querySelector(".mx_GenericEventListSummary_unstyledList")!.children;
+        expect(children).toHaveLength(1);
+        expect(children[0]).toHaveTextContent("Expanded membership");
     });
 
-    it("renders expanded events if there are less than props.threshold", function () {
+    it("renders expanded events if there are less than props.threshold for join and leave", function () {
         const events = generateEvents([
             { userId: "@user_1:some.domain", prevMembership: "leave", membership: "join" },
             { userId: "@user_1:some.domain", prevMembership: "join", membership: "leave" },
@@ -169,16 +174,12 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props); // matrix cli context wrapper
+        const { container } = renderComponent(props); // matrix cli context wrapper
 
-        expect(wrapper.find("GenericEventListSummary").props().children).toEqual([
-            <div className="event_tile" key="event0">
-                Expanded membership
-            </div>,
-            <div className="event_tile" key="event1">
-                Expanded membership
-            </div>,
-        ]);
+        const children = container.querySelector(".mx_GenericEventListSummary_unstyledList")!.children;
+        expect(children).toHaveLength(2);
+        expect(children[0]).toHaveTextContent("Expanded membership");
+        expect(children[1]).toHaveTextContent("Expanded membership");
     });
 
     it("renders collapsed events if events.length = props.threshold", function () {
@@ -195,11 +196,9 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
-
-        expect(summaryText).toBe("user_1 joined and left and joined");
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent("user_1 joined and left and joined");
     });
 
     it("truncates long join,leave repetitions", function () {
@@ -227,11 +226,9 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
-
-        expect(summaryText).toBe("user_1 joined and left 7 times");
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent("user_1 joined and left 7 times");
     });
 
     it("truncates long join,leave repetitions between other events", function () {
@@ -271,11 +268,9 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
-
-        expect(summaryText).toBe("user_1 was unbanned, joined and left 7 times and was invited");
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent("user_1 was unbanned, joined and left 7 times and was invited");
     });
 
     it("truncates multiple sequences of repetitions with other events between", function () {
@@ -317,11 +312,9 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
-
-        expect(summaryText).toBe(
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent(
             "user_1 was unbanned, joined and left 2 times, was banned, " + "joined and left 3 times and was invited",
         );
     });
@@ -371,11 +364,11 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
-
-        expect(summaryText).toBe("user_1 and one other were unbanned, joined and left 2 times and were banned");
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent(
+            "user_1 and one other were unbanned, joined and left 2 times and were banned",
+        );
     });
 
     it("handles many users following the same sequence of memberships", function () {
@@ -403,11 +396,11 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
-
-        expect(summaryText).toBe("user_0 and 19 others were unbanned, joined and left 2 times and were banned");
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent(
+            "user_0 and 19 others were unbanned, joined and left 2 times and were banned",
+        );
     });
 
     it("correctly orders sequences of transitions by the order of their first event", function () {
@@ -447,11 +440,9 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
-
-        expect(summaryText).toBe(
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent(
             "user_2 was unbanned and joined and left 2 times, user_1 was unbanned, " +
                 "joined and left 2 times and was banned",
         );
@@ -517,11 +508,9 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
-
-        expect(summaryText).toBe(
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent(
             "user_1 was invited, was banned, joined, rejected their invitation, left, " +
                 "had their invitation withdrawn, was unbanned, was removed, left and was removed",
         );
@@ -560,12 +549,10 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
-
-        expect(summaryText).toBe(
-            "user_1 and one other rejected their invitations and " + "had their invitations withdrawn",
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent(
+            "user_1 and one other rejected their invitations and had their invitations withdrawn",
         );
     });
 
@@ -590,11 +577,9 @@ describe("EventListSummary", function () {
             threshold: 1, // threshold = 1 to force collapse
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
-
-        expect(summaryText).toBe("user_1 rejected their invitation 2 times");
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent("user_1 rejected their invitation 2 times");
     });
 
     it('handles a summary length = 2, with no "others"', function () {
@@ -612,11 +597,9 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
-
-        expect(summaryText).toBe("user_1 and user_2 joined 2 times");
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent("user_1 and user_2 joined 2 times");
     });
 
     it('handles a summary length = 2, with 1 "other"', function () {
@@ -633,11 +616,9 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
-
-        expect(summaryText).toBe("user_1, user_2 and one other joined");
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent("user_1, user_2 and one other joined");
     });
 
     it('handles a summary length = 2, with many "others"', function () {
@@ -650,10 +631,58 @@ describe("EventListSummary", function () {
             threshold: 3,
         };
 
-        const wrapper = renderComponent(props);
-        const summary = wrapper.find(".mx_GenericEventListSummary_summary");
-        const summaryText = summary.text();
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent("user_0, user_1 and 18 others joined");
+    });
 
-        expect(summaryText).toBe("user_0, user_1 and 18 others joined");
+    it("should not blindly group 3pid invites and treat them as distinct users instead", () => {
+        const events = [
+            mkEvent({
+                event: true,
+                skey: "randomstring1",
+                user: "@user1:server",
+                type: "m.room.third_party_invite",
+                content: {
+                    display_name: "n...@d...",
+                    key_validity_url: "https://blah",
+                    public_key: "public_key",
+                },
+            }),
+            mkEvent({
+                event: true,
+                skey: "randomstring2",
+                user: "@user1:server",
+                type: "m.room.third_party_invite",
+                content: {
+                    display_name: "n...@d...",
+                    key_validity_url: "https://blah",
+                    public_key: "public_key",
+                },
+            }),
+            mkEvent({
+                event: true,
+                skey: "randomstring3",
+                user: "@user1:server",
+                type: "m.room.third_party_invite",
+                content: {
+                    display_name: "d...@w...",
+                    key_validity_url: "https://blah",
+                    public_key: "public_key",
+                },
+            }),
+        ];
+
+        const props = {
+            events: events,
+            children: generateTiles(events),
+            summaryLength: 2,
+            avatarsMaxLength: 5,
+            threshold: 3,
+        };
+
+        const { container } = renderComponent(props);
+        const summary = container.querySelector(".mx_GenericEventListSummary_summary");
+        expect(summary).toHaveTextContent("n...@d... was invited 2 times, d...@w... was invited");
     });
 });

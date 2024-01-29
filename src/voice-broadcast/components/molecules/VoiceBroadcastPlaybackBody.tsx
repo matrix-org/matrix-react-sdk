@@ -25,8 +25,8 @@ import {
     VoiceBroadcastPlaybackState,
 } from "../..";
 import { useVoiceBroadcastPlayback } from "../../hooks/useVoiceBroadcastPlayback";
-import { Icon as Back30sIcon } from "../../../../res/img/element-icons/Back30s.svg";
-import { Icon as Forward30sIcon } from "../../../../res/img/element-icons/Forward30s.svg";
+import { Icon as Back30sIcon } from "../../../../res/img/compound/back-30s-24px.svg";
+import { Icon as Forward30sIcon } from "../../../../res/img/compound/forward-30s-24px.svg";
 import { _t } from "../../../languageHandler";
 import Clock from "../../../components/views/audio_messages/Clock";
 import SeekBar from "../../../components/views/audio_messages/SeekBar";
@@ -51,7 +51,11 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
         };
 
         seekBackwardButton = (
-            <SeekButton icon={Back30sIcon} label={_t("30s backward")} onClick={onSeekBackwardButtonClick} />
+            <SeekButton
+                icon={Back30sIcon}
+                label={_t("voice_broadcast|30s_backward")}
+                onClick={onSeekBackwardButtonClick}
+            />
         );
 
         const onSeekForwardButtonClick = (): void => {
@@ -59,7 +63,11 @@ export const VoiceBroadcastPlaybackBody: React.FC<VoiceBroadcastPlaybackBodyProp
         };
 
         seekForwardButton = (
-            <SeekButton icon={Forward30sIcon} label={_t("30s forward")} onClick={onSeekForwardButtonClick} />
+            <SeekButton
+                icon={Forward30sIcon}
+                label={_t("voice_broadcast|30s_forward")}
+                onClick={onSeekForwardButtonClick}
+            />
         );
     }
 
