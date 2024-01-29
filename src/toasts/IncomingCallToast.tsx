@@ -133,6 +133,7 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
                 action: Action.ViewRoom,
                 room_id: room?.roomId,
                 view_call: true,
+                skipLobby: "shiftKey" in e ? e.shiftKey : false,
                 metricsTrigger: undefined,
             });
         },

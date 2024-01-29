@@ -29,7 +29,12 @@ import { Action } from "../../dispatcher/actions";
  * @param callType the type of call
  * @param platformCallType the platform to pass the call on
  */
-export const placeCall = async (room: Room, callType: CallType, platformCallType: PlatformCallType): Promise<void> => {
+export const placeCall = async (
+    room: Room,
+    callType: CallType,
+    platformCallType: PlatformCallType,
+    skipLobby: boolean,
+): Promise<void> => {
     if (platformCallType == PlatformCallType.LegacyCall || platformCallType == PlatformCallType.JitsiCall) {
         await LegacyCallHandler.instance.placeCall(room.roomId, callType);
     } else if (platformCallType == PlatformCallType.ElementCall) {
@@ -37,6 +42,7 @@ export const placeCall = async (room: Room, callType: CallType, platformCallType
             action: Action.ViewRoom,
             room_id: room.roomId,
             view_call: true,
+            skipLobby,
             metricsTrigger: undefined,
         });
     }
