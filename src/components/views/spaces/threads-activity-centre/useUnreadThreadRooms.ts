@@ -17,11 +17,12 @@
  */
 
 import { useMemo } from "react";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/matrix";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import RoomListStore from "../../../../stores/room-list/RoomListStore";
 import { doesRoomHaveUnreadThreads } from "../../../../Unread";
 import { NotificationLevel } from "../../../../stores/notifications/NotificationLevel";
+import { getThreadNotificationLevel } from "../../../../utils/notifications";
 
 /**
  * Return the list of rooms with unread threads, and their notification level.
@@ -39,26 +40,9 @@ export function useUnreadThreadRooms(open: boolean): Array<{ room: Room; notific
                 return acc;
             }, [])
             .filter((room) => doesRoomHaveUnreadThreads(room))
-            .map((room) => ({ room, notificationLevel: getNotificationLevel(room) }))
+            .map((room) => ({ room, notificationLevel: getThreadNotificationLevel(room) }))
             .sort((a, b) => sortRoom(a.notificationLevel, b.notificationLevel));
     }, [open]);
-}
-
-/**
- * Return the notification level for a room
- * @param room
- * @returns {NotificationLevel}
- */
-function getNotificationLevel(room: Room): NotificationLevel {
-    const notificationCountType = room.threadsAggregateNotificationType;
-    switch (notificationCountType) {
-        case NotificationCountType.Highlight:
-            return NotificationLevel.Highlight;
-        case NotificationCountType.Total:
-            return NotificationLevel.Notification;
-        default:
-            return NotificationLevel.Activity;
-    }
 }
 
 /**
