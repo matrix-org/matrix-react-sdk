@@ -1596,15 +1596,19 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
 
             this.fosdemSpaceJoinPromise = (async () => {
+                // We've not created the space yet, so just hack around for now.
+                const spaceRoomIdLookup = await cli.getRoomIdForAlias('#fosdem2024:fosdem.org').catch((ex) => null);
                 // Auto-join to some FOSDEM spaces
                 const fosdemSpaces = {
-                    '!JtsIvQBImEUcxXdcEq:fosdem.org': '#fosdem2023:fosdem.org',
+                    // '!JtsIvQBImEUcxXdcEq:fosdem.org': '#fosdem2024:fosdem.org', doesn't exist yet.
                     '!RomMjGfUoEGEfiOeLa:fosdem.org': '#space-infodesk:fosdem.org',
                     '!BbyfkWqQeTAnPkLSdA:fosdem.org': '#space-main-tracks:fosdem.org',
                     '!EBhIunHWOcfczzoGfM:fosdem.org': '#space-devrooms:fosdem.org',
                     '!FrKXOQOxVcNCUAhJnu:fosdem.org': '#space-social:fosdem.org',
                 };
-                const cli = MatrixClientPeg.get();
+                if (spaceRoomIdLookup) {
+                    fosdemSpaces[spaceRoomIdLookup.room_id] = '#fosdem2024:fosdem.org';
+                }
                 for (const [spaceId, spaceAlias] of Object.entries(fosdemSpaces)) {
                     if (!cli.getRoom(spaceId)) {
                         // See first did we already do this
