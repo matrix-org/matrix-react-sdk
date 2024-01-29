@@ -60,11 +60,16 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
             }}
             side="right"
             title={_t("threads_activity_centre|header")}
-            trigger={<ThreadsActivityCentreButton displayLabel={displayButtonLabel} />}
+            trigger={
+                <ThreadsActivityCentreButton
+                    displayLabel={displayButtonLabel}
+                    notificationLevel={roomsAndNotifications.greatestNotificationLevel}
+                />
+            }
         >
             {/* Make the content of the pop-up scrollable */}
             <div className="mx_ThreadsActivity_rows">
-                {roomsAndNotifications.map(({ room, notificationLevel }) => (
+                {roomsAndNotifications.rooms.map(({ room, notificationLevel }) => (
                     <ThreadsActivityRow
                         key={room.roomId}
                         room={room}
