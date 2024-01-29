@@ -1,32 +1,17 @@
-name: Release Process
+name: Post Release Process
 on:
-    workflow_dispatch:
-        inputs:
-            mode:
-                description: What type of release
-                required: true
-                default: rc
-                type: choice
-                options:
-                    - rc
-                    - final
-            matrix-js-sdk:
-                description: JS SDK version to use (current|X.Y.Z)
-                required: false
-                default: current
-                type: string
-            npm:
-                description: Publish to npm
-                required: true
-                type: boolean
-                default: true
+    release:
+        types: [published]
 concurrency: ${{ github.workflow }}
 jobs:
     release:
-        uses: matrix-org/matrix-js-sdk/.github/workflows/release-make.yml@develop
-        secrets: inherit
-        with:
-            final: ${{ inputs.mode == 'final' }}
-            npm: ${{ inputs.npm }}
-            dependencies: |
-                matrix-js-sdk=${{ inputs.matrix-js-sdk }}
+        uses: matrix-org/matrix-js-sdk/.github/workflows/release-action.yml@develop
+        secrets:
+            ELEMENT_BOT_TOKEN: ${{ secrets.ELEMENT_BOT_TOKEN }}
+
+    npm:
+        name: Publish to npm
+        needs: release
+        uses: matrix-org/matrix-js-sdk/.github/workflows/release-npm.yml@develop
+        secrets:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
