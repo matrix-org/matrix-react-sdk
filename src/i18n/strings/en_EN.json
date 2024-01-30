@@ -479,6 +479,7 @@
         "legal": "Legal",
         "light": "Light",
         "loading": "Loading…",
+        "lobby": "Lobby",
         "location": "Location",
         "low_priority": "Low priority",
         "matrix": "Matrix",
@@ -491,10 +492,6 @@
         "n_members": {
             "one": "%(count)s member",
             "other": "%(count)s members"
-        },
-        "n_participants": {
-            "one": "1 participant",
-            "other": "%(count)s participants"
         },
         "n_rooms": {
             "one": "%(count)s room",
@@ -1463,7 +1460,7 @@
         "sliding_sync_server_no_support": "Your server lacks native support",
         "sliding_sync_server_specify_proxy": "Your server lacks native support, you must specify a proxy",
         "sliding_sync_server_support": "Your server has native support",
-        "threads_activity_centre": "Threads Activity Centre (in development). Currently this just removes thread notification counts from the count total in the room list",
+        "threads_activity_centre": "Threads Activity Centre (in development)",
         "under_active_development": "Under active development.",
         "unrealiable_e2e": "Unreliable in encrypted rooms",
         "video_rooms": "Video rooms",
@@ -3798,7 +3795,6 @@
         "already_in_call_person": "You're already in a call with this person.",
         "answered_elsewhere": "Answered Elsewhere",
         "answered_elsewhere_description": "The call was answered on another device.",
-        "audio_devices": "Audio devices",
         "call_failed": "Call Failed",
         "call_failed_description": "The call could not be established",
         "call_failed_media": "Call failed because webcam or microphone could not be accessed. Check that:",
@@ -3885,7 +3881,6 @@
         "user_is_presenting": "%(sharerName)s is presenting",
         "video_call": "Video call",
         "video_call_started": "Video call started",
-        "video_devices": "Video devices",
         "voice_call": "Voice call",
         "you_are_presenting": "You are presenting"
     },
