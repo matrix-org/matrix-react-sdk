@@ -280,7 +280,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
 
         // If any room is encrypted, we need to show the advanced logout flow
         const allRooms = cli!.getRooms();
-        for (const room in allRooms) {
+        for (const room of allRooms) {
             const isE2e = await crypto.isEncryptionEnabledInRoom(room.roomId);
             if (isE2e) return true;
         }
