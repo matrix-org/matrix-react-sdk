@@ -19,22 +19,29 @@
 import React, { forwardRef, HTMLProps } from "react";
 import { Icon } from "@vector-im/compound-design-tokens/icons/threads-solid.svg";
 import classNames from "classnames";
+import { IndicatorIcon } from "@vector-im/compound-web";
 
 import { _t } from "../../../../languageHandler";
 import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
+import { NotificationLevel } from "../../../../stores/notifications/NotificationLevel";
+import { notificationLevelToIndicator } from "../../../../utils/notifications";
 
 interface ThreadsActivityCentreButtonProps extends HTMLProps<HTMLDivElement> {
     /**
      * Display the `Treads` label next to the icon.
      */
     displayLabel?: boolean;
+    /**
+     * The notification level of the threads.
+     */
+    notificationLevel: NotificationLevel;
 }
 
 /**
  * A button to open the thread activity centre.
  */
 export const ThreadsActivityCentreButton = forwardRef<HTMLDivElement, ThreadsActivityCentreButtonProps>(
-    function ThreadsActivityCentreButton({ displayLabel, ...props }, ref): React.JSX.Element {
+    function ThreadsActivityCentreButton({ displayLabel, notificationLevel, ...props }, ref): React.JSX.Element {
         return (
             <AccessibleTooltipButton
                 className={classNames("mx_ThreadsActivityCentreButton", { expanded: displayLabel })}
@@ -46,7 +53,12 @@ export const ThreadsActivityCentreButton = forwardRef<HTMLDivElement, ThreadsAct
                 aria-expanded={displayLabel}
                 {...props}
             >
-                <Icon className="mx_ThreadsActivityCentreButton_Icon" />
+                <IndicatorIcon
+                    className="mx_ThreadsActivityCentreButton_IndicatorIcon"
+                    indicator={notificationLevelToIndicator(notificationLevel)}
+                >
+                    <Icon className="mx_ThreadsActivityCentreButton_Icon" />
+                </IndicatorIcon>
                 {displayLabel && _t("common|threads")}
             </AccessibleTooltipButton>
         );

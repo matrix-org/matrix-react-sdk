@@ -16,49 +16,77 @@
  * /
  */
 
-import { useMemo } from "react";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/matrix";
+import { useEffect, useState } from "react";
+import { ClientEvent, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
-import RoomListStore from "../../../../stores/room-list/RoomListStore";
 import { doesRoomHaveUnreadThreads } from "../../../../Unread";
 import { NotificationLevel } from "../../../../stores/notifications/NotificationLevel";
+import { getThreadNotificationLevel } from "../../../../utils/notifications";
+import { useSettingValue } from "../../../../hooks/useSettings";
+import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext";
+import { useEventEmitter } from "../../../../hooks/useEventEmitter";
+import { VisibilityProvider } from "../../../../stores/room-list/filters/VisibilityProvider";
+
+type Result = {
+    greatestNotificationLevel: NotificationLevel;
+    rooms: Array<{ room: Room; notificationLevel: NotificationLevel }>;
+};
 
 /**
- * Return the list of rooms with unread threads, and their notification level.
- * The list is computed when open is true
- * @param open
- * @returns {Array<{ room: Room; notificationLevel: NotificationLevel }>}
+ * Return the greatest notification level of all thread, the list of rooms with unread threads, and their notification level.
+ * The result is computed when the client syncs, or when forceComputation is true
+ * @param forceComputation
+ * @returns {Result}
  */
-export function useUnreadThreadRooms(open: boolean): Array<{ room: Room; notificationLevel: NotificationLevel }> {
-    return useMemo(() => {
-        if (!open) return [];
+export function useUnreadThreadRooms(forceComputation: boolean): Result {
+    const msc3946ProcessDynamicPredecessor = useSettingValue<boolean>("feature_dynamic_room_predecessors");
+    const mxClient = useMatrixClientContext();
 
-        return Object.values(RoomListStore.instance.orderedLists)
-            .reduce((acc, rooms) => {
-                acc.push(...rooms);
-                return acc;
-            }, [])
-            .filter((room) => doesRoomHaveUnreadThreads(room))
-            .map((room) => ({ room, notificationLevel: getNotificationLevel(room) }))
-            .sort((a, b) => sortRoom(a.notificationLevel, b.notificationLevel));
-    }, [open]);
+    const [result, setResult] = useState<Result>({ greatestNotificationLevel: NotificationLevel.None, rooms: [] });
+
+    // Listen to sync events to update the result
+    useEventEmitter(mxClient, ClientEvent.Sync, () => {
+        setResult(computeUnreadThreadRooms(mxClient, msc3946ProcessDynamicPredecessor));
+    });
+
+    // Force the list computation
+    useEffect(() => {
+        if (forceComputation) {
+            setResult(computeUnreadThreadRooms(mxClient, msc3946ProcessDynamicPredecessor));
+        }
+    }, [mxClient, msc3946ProcessDynamicPredecessor, forceComputation]);
+
+    return result;
 }
 
 /**
- * Return the notification level for a room
- * @param room
- * @returns {NotificationLevel}
+ * Compute the greatest notification level of all thread, the list of rooms with unread threads, and their notification level.
+ * @param mxClient - MatrixClient
+ * @param msc3946ProcessDynamicPredecessor
  */
-function getNotificationLevel(room: Room): NotificationLevel {
-    const notificationCountType = room.threadsAggregateNotificationType;
-    switch (notificationCountType) {
-        case NotificationCountType.Highlight:
-            return NotificationLevel.Highlight;
-        case NotificationCountType.Total:
-            return NotificationLevel.Notification;
-        default:
-            return NotificationLevel.Activity;
+function computeUnreadThreadRooms(mxClient: MatrixClient, msc3946ProcessDynamicPredecessor: boolean): Result {
+    // Only count visible rooms to not torment the user with notification counts in rooms they can't see.
+    // This will include highlights from the previous version of the room internally
+    const visibleRooms = mxClient.getVisibleRooms(msc3946ProcessDynamicPredecessor);
+
+    let greatestNotificationLevel = NotificationLevel.None;
+    const rooms = [];
+
+    for (const room of visibleRooms) {
+        // We only care about rooms with unread threads
+        if (VisibilityProvider.instance.isRoomVisible(room) && doesRoomHaveUnreadThreads(room)) {
+            // Get the greatest notification level of all rooms
+            const notificationLevel = getThreadNotificationLevel(room);
+            if (notificationLevel > greatestNotificationLevel) {
+                greatestNotificationLevel = notificationLevel;
+            }
+
+            rooms.push({ room, notificationLevel });
+        }
     }
+
+    const sortedRooms = rooms.sort((a, b) => sortRoom(a.notificationLevel, b.notificationLevel));
+    return { greatestNotificationLevel, rooms: sortedRooms };
 }
 
 /**
