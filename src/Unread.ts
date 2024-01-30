@@ -20,6 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import shouldHideEvent from "./shouldHideEvent";
 import { haveRendererForEvent } from "./events/EventTileFactory";
 import SettingsStore from "./settings/SettingsStore";
+import { RoomNotifState, getRoomNotifsState } from "./RoomNotifs";
 
 /**
  * Returns true if this event arriving in a room should affect the room's
@@ -108,6 +109,12 @@ function doesTimelineHaveUnreadMessages(room: Room, timeline: Array<MatrixEvent>
  * @returns {boolean} True if the given room has unread threads
  */
 export function doesRoomHaveUnreadThreads(room: Room): boolean {
+    if (getRoomNotifsState(room.client, room.roomId) === RoomNotifState.Mute) {
+        // No unread for muted rooms, nor their threads
+        // NB. This logic duplicated in RoomNotifs.determineUnreadState
+        return false;
+    }
+
     for (const withTimeline of room.getThreads()) {
         if (doesTimelineHaveUnreadMessages(room, withTimeline.timeline)) {
             // We found an unread, so the room is unread
