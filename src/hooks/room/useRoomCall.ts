@@ -26,7 +26,7 @@ import { useWidgets } from "../../components/views/right_panel/RoomSummaryCard";
 import { WidgetType } from "../../widgets/WidgetType";
 import { useCall, useConnectionState, useParticipantCount } from "../useCall";
 import { useRoomMemberCount } from "../useRoomMembers";
-import { ConnectionState, ElementCall } from "../../models/Call";
+import { Call, ConnectionState, ElementCall } from "../../models/Call";
 import { placeCall } from "../../utils/room/placeCall";
 import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutStore";
 import { useRoomState } from "../useRoomState";
@@ -38,6 +38,7 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../dispatcher/actions";
+import { CallStore, CallStoreEvent } from "../../stores/CallStore";
 
 export enum PlatformCallType {
     ElementCall,
@@ -162,14 +163,19 @@ export const useRoomCall = (
     useEffect(() => {
         updateWidgetState();
     }, [room, jitsiWidget, groupCall, updateWidgetState]);
-
+    const [activeCalls, setActiveCalls] = useState<Call[]>(Array.from(CallStore.instance.activeCalls));
+    useEventEmitter(CallStore.instance, CallStoreEvent.ActiveCalls, () => {
+        setActiveCalls(Array.from(CallStore.instance.activeCalls));
+    });
     const [canPinWidget, setCanPinWidget] = useState(false);
     const [widgetPinned, setWidgetPinned] = useState(false);
     // We only want to prompt to pin the widget if it's not element call based.
     const isECWidget = WidgetType.CALL.matches(widget?.type ?? "");
     const promptPinWidget = !isECWidget && canPinWidget && !widgetPinned;
-
     const state = useMemo((): State => {
+        if (activeCalls.find((call) => call.roomId != room.roomId)) {
+            return State.Ongoing;
+        }
         if (hasGroupCall || hasJitsiWidget || hasManagedHybridWidget) {
             return promptPinWidget ? State.Unpinned : State.Ongoing;
         }
@@ -184,9 +190,9 @@ export const useRoomCall = (
         if (!mayCreateElementCalls && !mayEditWidgets) {
             return State.NoPermission;
         }
-
         return State.NoCall;
     }, [
+        activeCalls,
         hasGroupCall,
         hasJitsiWidget,
         hasLegacyCall,
@@ -195,6 +201,7 @@ export const useRoomCall = (
         mayEditWidgets,
         memberCount,
         promptPinWidget,
+        room.roomId,
     ]);
 
     const voiceCallClick = useCallback(
