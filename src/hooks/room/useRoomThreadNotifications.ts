@@ -18,7 +18,7 @@ import { NotificationCountType, Room, RoomEvent, ThreadEvent } from "matrix-js-s
 import { useCallback, useEffect, useState } from "react";
 
 import { NotificationLevel } from "../../stores/notifications/NotificationLevel";
-import { doesRoomOrThreadHaveUnreadMessages } from "../../Unread";
+import { doesRoomHaveUnreadThreads } from "../../Unread";
 import { useEventEmitter } from "../useEventEmitter";
 
 /**
@@ -40,13 +40,7 @@ export const useRoomThreadNotifications = (room: Room): NotificationLevel => {
         }
         // We don't have any notified messages, but we might have unread messages. Let's
         // find out.
-        for (const thread of room!.getThreads()) {
-            // If the current thread has unread messages, we're done.
-            if (doesRoomOrThreadHaveUnreadMessages(thread)) {
-                setNotificationLevel(NotificationLevel.Activity);
-                break;
-            }
-        }
+        if (doesRoomHaveUnreadThreads(room)) setNotificationLevel(NotificationLevel.Activity);
     }, [room]);
 
     useEventEmitter(room, RoomEvent.UnreadNotifications, updateNotification);
