@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Body as BodyText, Button, IconButton, Menu, MenuItem, Tooltip } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
@@ -116,6 +116,8 @@ export default function RoomHeader({
 
     const askToJoinEnabled = useFeatureEnabled("feature_ask_to_join");
 
+    const videoClick = useCallback((ev) => videoCallClick(ev, callOptions[0]), [callOptions, videoCallClick]);
+
     const toggleCallButton = (
         <Tooltip label={isViewingCall ? _t("voip|minimise_call") : _t("voip|maximise_call")}>
             <IconButton onClick={toggleCall}>
@@ -126,7 +128,7 @@ export default function RoomHeader({
     const joinCallButton = (
         <Button
             size="sm"
-            onClick={(ev) => videoCallClick(ev, callOptions[0])}
+            onClick={videoClick}
             Icon={VideoCallIcon}
             className="mx_RoomHeader_join_button"
             color="primary"
@@ -147,7 +149,7 @@ export default function RoomHeader({
                 <Menu
                     open={menuOpen}
                     onOpenChange={setMenuOpen}
-                    title="Video call using:"
+                    title={_t("viop|video_call_using")}
                     trigger={
                         <IconButton
                             disabled={!!videoCallDisabledReason}
@@ -173,7 +175,7 @@ export default function RoomHeader({
                 <IconButton
                     disabled={!!videoCallDisabledReason}
                     aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
-                    onClick={(ev) => videoCallClick(ev, callOptions[0])}
+                    onClick={videoClick}
                 >
                     {callIconWithTooltip}
                 </IconButton>

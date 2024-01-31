@@ -48,11 +48,11 @@ export enum PlatformCallType {
 export const getPlatformCallTypeLabel = (platformCallType: PlatformCallType): string => {
     switch (platformCallType) {
         case PlatformCallType.ElementCall:
-            return "Element Call";
+            return _t("voip|element_call");
         case PlatformCallType.JitsiCall:
-            return "Jitsi Conference";
+            return _t("voip|jitsi_call");
         case PlatformCallType.LegacyCall:
-            return "Legacy Call";
+            return _t("voip|legacy_call");
     }
 };
 const enum State {

@@ -3755,6 +3755,9 @@
         "switch_theme_dark": "Switch to dark mode",
         "switch_theme_light": "Switch to light mode"
     },
+    "viop": {
+        "video_call_using": "Video call using"
+    },
     "voice_broadcast": {
         "30s_backward": "30s backward",
         "30s_forward": "30s forward",
@@ -3821,6 +3824,7 @@
         "disabled_no_perms_start_video_call": "You do not have permission to start video calls",
         "disabled_no_perms_start_voice_call": "You do not have permission to start voice calls",
         "disabled_ongoing_call": "Ongoing call",
+        "element_call": "Element Call",
         "enable_camera": "Turn on camera",
         "enable_microphone": "Unmute microphone",
         "expand": "Return to call",
@@ -3829,8 +3833,10 @@
         "hangup": "Hangup",
         "hide_sidebar_button": "Hide sidebar",
         "input_devices": "Input devices",
+        "jitsi_call": "Jitsi Conference",
         "join_button_tooltip_call_full": "Sorry — this call is currently full",
         "join_button_tooltip_connecting": "Connecting",
+        "legacy_call": "Legacy Call",
         "maximise": "Fill screen",
         "maximise_call": "Maximise call",
         "minimise_call": "Minimise call",
