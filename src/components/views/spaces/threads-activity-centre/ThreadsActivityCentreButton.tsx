@@ -56,6 +56,7 @@ export const ThreadsActivityCentreButton = forwardRef<HTMLDivElement, ThreadsAct
                 <IndicatorIcon
                     className="mx_ThreadsActivityCentreButton_IndicatorIcon"
                     indicator={notificationLevelToIndicator(notificationLevel)}
+                    size="24px"
                 >
                     <Icon className="mx_ThreadsActivityCentreButton_Icon" />
                 </IndicatorIcon>
