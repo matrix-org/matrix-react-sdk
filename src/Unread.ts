@@ -115,8 +115,8 @@ export function doesRoomHaveUnreadThreads(room: Room): boolean {
         return false;
     }
 
-    for (const withTimeline of room.getThreads()) {
-        if (doesTimelineHaveUnreadMessages(room, withTimeline.timeline)) {
+    for (const thread of room.getThreads()) {
+        if (doesTimelineHaveUnreadMessages(room, thread.timeline)) {
             // We found an unread, so the room is unread
             return true;
         }
