@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen } from "@testing-library/react";
 
+import { render, screen } from "../../..";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../../src/contexts/RoomContext";
 import { createTestClient, getRoomContext, mkStubRoom } from "../../../test-utils";

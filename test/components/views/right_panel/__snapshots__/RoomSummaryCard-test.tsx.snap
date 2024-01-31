@@ -26,10 +26,10 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
         </button>
         <div
           class="mx_AccessibleButton mx_BaseCard_close"
+          data-state="closed"
           data-testid="base-card-close-button"
           role="button"
           tabindex="0"
-          title="Close"
         />
       </header>
       <header

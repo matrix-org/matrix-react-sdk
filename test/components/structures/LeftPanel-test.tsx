@@ -16,9 +16,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, RenderResult, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
 
+import { render, RenderResult, screen } from "../..";
 import LeftPanel from "../../../src/components/structures/LeftPanel";
 import PageType from "../../../src/PageTypes";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";

@@ -16,9 +16,9 @@ limitations under the License.
 
 import React from "react";
 import { mocked } from "jest-mock";
-import { act, fireEvent, render } from "@testing-library/react";
 import { Beacon, BeaconIdentifier } from "matrix-js-sdk/src/matrix";
 
+import { act, fireEvent, render } from "../../..";
 import LeftPanelLiveShareWarning from "../../../../src/components/views/beacon/LeftPanelLiveShareWarning";
 import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../../../src/stores/OwnBeaconStore";
 import { flushPromises, makeBeaconInfoEvent } from "../../../test-utils";

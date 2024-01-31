@@ -39,8 +39,8 @@ exports[`VoiceBroadcastPreRecordingPip when rendered should match the snapshot 1
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line mx_VoiceBroadcastHeader_mic--clickable"
+          data-state="closed"
           role="button"
           tabindex="0"
         >

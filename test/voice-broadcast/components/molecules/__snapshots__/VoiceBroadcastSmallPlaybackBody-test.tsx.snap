@@ -39,8 +39,8 @@ exports[`<VoiceBroadcastSmallPlaybackBody /> when rendering a { state: 'pause', 
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -115,8 +115,8 @@ exports[`<VoiceBroadcastSmallPlaybackBody /> when rendering a { state: 'playing'
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -210,8 +210,8 @@ exports[`<VoiceBroadcastSmallPlaybackBody /> when rendering a buffering broadcas
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -294,8 +294,8 @@ exports[`<VoiceBroadcastSmallPlaybackBody /> when rendering a playing broadcast 
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -370,8 +370,8 @@ exports[`<VoiceBroadcastSmallPlaybackBody /> when rendering a stopped broadcast 
           </div>
         </div>
         <div
-          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
+          data-state="closed"
           role="button"
           tabindex="0"
         >

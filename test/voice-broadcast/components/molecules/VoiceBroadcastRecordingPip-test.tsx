@@ -16,12 +16,12 @@ limitations under the License.
 //
 
 import React from "react";
-import { act, render, RenderResult, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ClientEvent, MatrixClient, MatrixEvent, SyncState } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { mocked } from "jest-mock";
 
+import { act, render, RenderResult, screen } from "../../..";
 import {
     VoiceBroadcastInfoState,
     VoiceBroadcastRecording,

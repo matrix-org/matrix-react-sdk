@@ -24,10 +24,10 @@ exports[`<LocationViewDialog /> renders map correctly 1`] = `
   >
     <div
       class="mx_AccessibleButton mx_ZoomButtons_button"
+      data-state="closed"
       data-testid="map-zoom-in-button"
       role="button"
       tabindex="0"
-      title="Zoom in"
     >
       <div
         class="mx_ZoomButtons_icon"
@@ -35,10 +35,10 @@ exports[`<LocationViewDialog /> renders map correctly 1`] = `
     </div>
     <div
       class="mx_AccessibleButton mx_ZoomButtons_button"
+      data-state="closed"
       data-testid="map-zoom-out-button"
       role="button"
       tabindex="0"
-      title="Zoom out"
     >
       <div
         class="mx_ZoomButtons_icon"
