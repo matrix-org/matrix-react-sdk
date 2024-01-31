@@ -149,7 +149,7 @@ export default function RoomHeader({
                 <Menu
                     open={menuOpen}
                     onOpenChange={setMenuOpen}
-                    title={_t("viop|video_call_using")}
+                    title={_t("voip|video_call_using")}
                     trigger={
                         <IconButton
                             disabled={!!videoCallDisabledReason}

@@ -3755,9 +3755,6 @@
         "switch_theme_dark": "Switch to dark mode",
         "switch_theme_light": "Switch to light mode"
     },
-    "viop": {
-        "video_call_using": "Video call using"
-    },
     "voice_broadcast": {
         "30s_backward": "30s backward",
         "30s_forward": "30s forward",
@@ -3887,6 +3884,7 @@
         "user_is_presenting": "%(sharerName)s is presenting",
         "video_call": "Video call",
         "video_call_started": "Video call started",
+        "video_call_using": "Video call using:",
         "voice_call": "Voice call",
         "you_are_presenting": "You are presenting"
     },
