@@ -75,6 +75,9 @@ export function doesRoomHaveUnreadMessages(room: Room, includeThreads: boolean):
 }
 
 function doesTimelineHaveUnreadMessages(room: Room, timeline: Array<MatrixEvent>): boolean {
+    // The room is a space, let's ignore it
+    if (room.isSpaceRoom()) return false;
+
     const myUserId = room.client.getSafeUserId();
     const latestImportantEventId = findLatestImportantEvent(room.client, timeline)?.getId();
     if (latestImportantEventId) {
@@ -115,8 +118,8 @@ export function doesRoomHaveUnreadThreads(room: Room): boolean {
         return false;
     }
 
-    for (const withTimeline of room.getThreads()) {
-        if (doesTimelineHaveUnreadMessages(room, withTimeline.timeline)) {
+    for (const thread of room.getThreads()) {
+        if (doesTimelineHaveUnreadMessages(room, thread.timeline)) {
             // We found an unread, so the room is unread
             return true;
         }

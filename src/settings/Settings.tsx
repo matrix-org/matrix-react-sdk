@@ -96,6 +96,7 @@ export enum Features {
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
     NotificationSettings2 = "feature_notification_settings2",
     OidcNativeFlow = "feature_oidc_native_flow",
+    // If true, every new login will use the new rust crypto implementation
     RustCrypto = "feature_rust_crypto",
 }
 
@@ -500,8 +501,15 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             }
         },
         shouldWarn: true,
-        default: false,
+        default: true,
         controller: new RustCryptoSdkController(),
+    },
+    // Must be set under `setting_defaults` in config.json.
+    // If set to 100 in conjunction with `feature_rust_crypto`, all existing users will migrate to the new crypto.
+    // Default is 0, meaning no existing users on legacy crypto will migrate.
+    "RustCrypto.staged_rollout_percent": {
+        supportedLevels: [SettingLevel.CONFIG],
+        default: 0,
     },
     "baseFontSize": {
         displayName: _td("settings|appearance|font_size"),
@@ -1120,6 +1128,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         labsGroup: LabGroup.Threads,
         controller: new ReloadOnChangeController(),
         displayName: _td("labs|threads_activity_centre"),
+        description: _td("labs|threads_activity_centre_description"),
         default: false,
         isFeature: true,
     },
