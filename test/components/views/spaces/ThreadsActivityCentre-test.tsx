@@ -49,13 +49,55 @@ describe("ThreadsActivityCentre", () => {
     const cli = stubClient();
     cli.supportsThreads = () => true;
 
-    beforeAll(() => {
+    const roomWithActivity = new Room("!room:server", cli, cli.getSafeUserId(), {
+        pendingEventOrdering: PendingEventOrdering.Detached,
+    });
+    roomWithActivity.name = "Just activity";
+
+    const roomWithNotif = new Room("!room:server", cli, cli.getSafeUserId(), {
+        pendingEventOrdering: PendingEventOrdering.Detached,
+    });
+    roomWithNotif.name = "A notification";
+
+    const roomWithHighlight = new Room("!room:server", cli, cli.getSafeUserId(), {
+        pendingEventOrdering: PendingEventOrdering.Detached,
+    });
+    roomWithHighlight.name = "This is a real highlight";
+
+    beforeAll(async () => {
         jest.spyOn(MatrixClientPeg, "get").mockReturnValue(cli);
         jest.spyOn(MatrixClientPeg, "safeGet").mockReturnValue(cli);
 
         const dmRoomMap = new DMRoomMap(cli);
         jest.spyOn(dmRoomMap, "getUserIdForRoomId");
         jest.spyOn(DMRoomMap, "shared").mockReturnValue(dmRoomMap);
+
+        await populateThread({
+            room: roomWithActivity,
+            client: cli,
+            authorId: "@foo:bar",
+            participantUserIds: ["@fee:bar"],
+        });
+
+        const notifThreadInfo = await populateThread({
+            room: roomWithNotif,
+            client: cli,
+            authorId: "@foo:bar",
+            participantUserIds: ["@fee:bar"],
+        });
+        roomWithNotif.setThreadUnreadNotificationCount(notifThreadInfo.thread.id, NotificationCountType.Total, 1);
+
+        const highlightThreadInfo = await populateThread({
+            room: roomWithHighlight,
+            client: cli,
+            authorId: "@foo:bar",
+            participantUserIds: ["@fee:bar"],
+        });
+        roomWithHighlight.setThreadUnreadNotificationCount(
+            highlightThreadInfo.thread.id,
+            NotificationCountType.Highlight,
+            1,
+        );
     });
 
     it("should render the threads activity centre button", async () => {
@@ -70,18 +112,7 @@ describe("ThreadsActivityCentre", () => {
     });
 
     it("should render a room with a activity in the TAC", async () => {
-        const roomWithHighlight = new Room("!room:server", cli, cli.getSafeUserId(), {
-            pendingEventOrdering: PendingEventOrdering.Detached,
-        });
-        roomWithHighlight.name = "Just activity";
-        await populateThread({
-            room: roomWithHighlight,
-            client: cli,
-            authorId: "@foo:bar",
-            participantUserIds: ["@fee:bar"],
-        });
-
-        cli.getVisibleRooms = jest.fn().mockReturnValue([roomWithHighlight]);
+        cli.getVisibleRooms = jest.fn().mockReturnValue([roomWithActivity]);
         renderTAC();
         await userEvent.click(getTACButton());
 
@@ -94,19 +125,7 @@ describe("ThreadsActivityCentre", () => {
     });
 
     it("should render a room with a regular notification in the TAC", async () => {
-        const roomWithHighlight = new Room("!room:server", cli, cli.getSafeUserId(), {
-            pendingEventOrdering: PendingEventOrdering.Detached,
-        });
-        roomWithHighlight.name = "A notification";
-        const threadInfo = await populateThread({
-            room: roomWithHighlight,
-            client: cli,
-            authorId: "@foo:bar",
-            participantUserIds: ["@fee:bar"],
-        });
-        roomWithHighlight.setThreadUnreadNotificationCount(threadInfo.thread.id, NotificationCountType.Total, 1);
-
-        cli.getVisibleRooms = jest.fn().mockReturnValue([roomWithHighlight]);
+        cli.getVisibleRooms = jest.fn().mockReturnValue([roomWithNotif]);
         renderTAC();
         await userEvent.click(getTACButton());
 
@@ -118,18 +137,6 @@ describe("ThreadsActivityCentre", () => {
     });
 
     it("should render a room with a highlight notification in the TAC", async () => {
-        const roomWithHighlight = new Room("!room:server", cli, cli.getSafeUserId(), {
-            pendingEventOrdering: PendingEventOrdering.Detached,
-        });
-        roomWithHighlight.name = "This is a real highlight";
-        const threadInfo = await populateThread({
-            room: roomWithHighlight,
-            client: cli,
-            authorId: "@foo:bar",
-            participantUserIds: ["@fee:bar"],
-        });
-        roomWithHighlight.setThreadUnreadNotificationCount(threadInfo.thread.id, NotificationCountType.Highlight, 1);
-
         cli.getVisibleRooms = jest.fn().mockReturnValue([roomWithHighlight]);
         renderTAC();
         await userEvent.click(getTACButton());
@@ -139,5 +146,13 @@ describe("ThreadsActivityCentre", () => {
 
         getByText(tacRows[0], "This is a real highlight");
         expect(tacRows[0].getElementsByClassName("mx_NotificationBadge_level_highlight").length).toEqual(1);
+    });
+
+    it("renders notifications matching the snapshot", async () => {
+        cli.getVisibleRooms = jest.fn().mockReturnValue([roomWithHighlight, roomWithNotif, roomWithActivity]);
+        renderTAC();
+        await userEvent.click(getTACButton());
+
+        expect(screen.getByRole("menu")).toMatchSnapshot();
     });
 });
