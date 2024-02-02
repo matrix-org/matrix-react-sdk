@@ -323,7 +323,7 @@ describe("RoomHeader", () => {
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
             jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(true);
 
-            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({ widget: {} } as Call);
+            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({ widget: {}, on: () => {} } as unknown as Call);
 
             const { container } = render(<RoomHeader room={room} />, getWrapper());
             expect(getByLabelText(container, "Ongoing call")).toHaveAttribute("aria-disabled", "true");
@@ -331,13 +331,16 @@ describe("RoomHeader", () => {
 
         it("clicking on ongoing (unpinned) call re-pins it", () => {
             jest.spyOn(SdkConfig, "get").mockReturnValue({ use_exclusively: true });
-            // allow element calls
+            // allow calls
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
             jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(false);
             const spy = jest.spyOn(WidgetLayoutStore.instance, "moveToContainer");
 
             const widget = {};
-            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({ widget } as Call);
+            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({
+                widget,
+                on: () => {},
+            } as unknown as Call);
 
             const { container } = render(<RoomHeader room={room} />, getWrapper());
             expect(getByLabelText(container, "Video call")).not.toHaveAttribute("aria-disabled", "true");
@@ -367,6 +370,10 @@ describe("RoomHeader", () => {
 
         it("calls using legacy or jitsi", async () => {
             mockRoomMembers(room, 2);
+            jest.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
+                if (key === "im.vector.modular.widgets") return true;
+                return false;
+            });
             const { container } = render(<RoomHeader room={room} />, getWrapper());
 
             const voiceButton = getByLabelText(container, "Voice call");
@@ -405,12 +412,11 @@ describe("RoomHeader", () => {
             expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
         });
 
-        it("calls using element calls for large rooms", async () => {
+        it("calls using element call for large rooms", async () => {
             mockRoomMembers(room, 3);
 
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
-                if (key === "im.vector.modular.widgets") return true;
-                if (key === ElementCall.CALL_EVENT_TYPE.name) return true;
+                if (key === ElementCall.MEMBER_EVENT_TYPE.name) return true;
                 return false;
             });
 

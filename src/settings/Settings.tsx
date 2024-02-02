@@ -81,6 +81,7 @@ export enum LabGroup {
     Spaces,
     Widgets,
     Rooms,
+    Threads,
     VoiceAndVideo,
     Moderation,
     Analytics,
@@ -95,6 +96,7 @@ export enum Features {
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
     NotificationSettings2 = "feature_notification_settings2",
     OidcNativeFlow = "feature_oidc_native_flow",
+    // If true, every new login will use the new rust crypto implementation
     RustCrypto = "feature_rust_crypto",
 }
 
@@ -104,6 +106,7 @@ export const labGroupNames: Record<LabGroup, TranslationKey> = {
     [LabGroup.Spaces]: _td("labs|group_spaces"),
     [LabGroup.Widgets]: _td("labs|group_widgets"),
     [LabGroup.Rooms]: _td("labs|group_rooms"),
+    [LabGroup.Threads]: _td("labs|group_threads"),
     [LabGroup.VoiceAndVideo]: _td("labs|group_voip"),
     [LabGroup.Moderation]: _td("labs|group_moderation"),
     [LabGroup.Analytics]: _td("common|analytics"),
@@ -498,8 +501,15 @@ export const SETTINGS: { [setting: string]: ISetting } = {
             }
         },
         shouldWarn: true,
-        default: false,
+        default: true,
         controller: new RustCryptoSdkController(),
+    },
+    // Must be set under `setting_defaults` in config.json.
+    // If set to 100 in conjunction with `feature_rust_crypto`, all existing users will migrate to the new crypto.
+    // Default is 0, meaning no existing users on legacy crypto will migrate.
+    "RustCrypto.staged_rollout_percent": {
+        supportedLevels: [SettingLevel.CONFIG],
+        default: 0,
     },
     "baseFontSize": {
         displayName: _td("settings|appearance|font_size"),
@@ -1112,6 +1122,14 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "activeCallRoomIds": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: [],
+    },
+    "threadsActivityCentre": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        labsGroup: LabGroup.Threads,
+        controller: new ReloadOnChangeController(),
+        displayName: _td("labs|threads_activity_centre"),
+        default: false,
+        isFeature: true,
     },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,

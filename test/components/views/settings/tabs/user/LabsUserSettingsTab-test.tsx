@@ -60,7 +60,7 @@ describe("<LabsUserSettingsTab />", () => {
         // non-beta labs section
         expect(screen.getByText("Early previews")).toBeInTheDocument();
         const labsSections = container.getElementsByClassName("mx_SettingsSubsection");
-        expect(labsSections).toHaveLength(9);
+        expect(labsSections).toHaveLength(10);
     });
 
     describe("Rust crypto setting", () => {
@@ -71,6 +71,25 @@ describe("<LabsUserSettingsTab />", () => {
         });
 
         describe("Not enabled in config", () => {
+            // these tests only works if the feature is not enabled in the config by default?
+            const copyOfGetValueAt = SettingsStore.getValueAt;
+
+            beforeEach(() => {
+                SettingsStore.getValueAt = (
+                    level: SettingLevel,
+                    name: string,
+                    roomId?: string,
+                    isExplicit?: boolean,
+                ) => {
+                    if (level == SettingLevel.CONFIG && name === "feature_rust_crypto") return false;
+                    return copyOfGetValueAt(level, name, roomId, isExplicit);
+                };
+            });
+
+            afterEach(() => {
+                SettingsStore.getValueAt = copyOfGetValueAt;
+            });
+
             it("can be turned on if not already", async () => {
                 // By the time the settings panel is shown, `MatrixClientPeg.initClientCrypto` has saved the current
                 // value to the settings store.
