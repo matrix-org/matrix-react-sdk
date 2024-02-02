@@ -38,10 +38,6 @@ describe("<UserMenu>", () => {
     let sdkContext: TestSdkContext;
 
     beforeEach(() => {
-        client = stubClient();
-    });
-
-    beforeEach(() => {
         sdkContext = new TestSdkContext();
     });
 
@@ -51,6 +47,7 @@ describe("<UserMenu>", () => {
         let voiceBroadcastRecordingsStore: VoiceBroadcastRecordingsStore;
 
         beforeAll(() => {
+            client = stubClient();
             voiceBroadcastInfoEvent = mkVoiceBroadcastInfoStateEvent(
                 "!room:example.com",
                 VoiceBroadcastInfoState.Started,
@@ -103,6 +100,10 @@ describe("<UserMenu>", () => {
     });
 
     describe("<UserMenu> logout", () => {
+        beforeEach(() => {
+            client = stubClient();
+        });
+
         it("should logout directly if no crypto", async () => {
             const UserMenu = wrapInSdkContext(UnwrappedUserMenu, sdkContext);
             renderResult = render(<UserMenu isPanelCollapsed={true} />);
