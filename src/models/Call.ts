@@ -70,21 +70,18 @@ const waitForEvent = async (
     let listener: (...args: any[]) => void;
     const wait = new Promise<void>((resolve) => {
         listener = (...args) => {
-            if (pred(...args)) {
-                resolve();
-                if (customTimeout === false) {
-                    emitter.off(event, listener!);
-                }
-            }
+            if (pred(...args)) resolve();
         };
         emitter.on(event, listener);
     });
 
     if (customTimeout !== false) {
         const timedOut = (await timeout(wait, false, customTimeout ?? TIMEOUT_MS)) === false;
-        emitter.off(event, listener!);
         if (timedOut) throw new Error("Timed out");
+    } else {
+        await wait;
     }
+    emitter.off(event, listener!);
 };
 
 export enum ConnectionState {
@@ -853,13 +850,17 @@ export class ElementCall extends Call {
 
     protected async sendCallNotify(): Promise<void> {
         const room = this.room;
-        const existingRoomCallMembers = MatrixRTCSession.callMembershipsForRoom(room).filter(
+        const existingOtherRoomCallMembers = MatrixRTCSession.callMembershipsForRoom(room).filter(
             // filter all memberships where the application is m.call and the call_id is ""
-            (m) => m.application === "m.call" && m.callId === "",
+            (m) => {
+                const isRoomCallMember = m.application === "m.call" && m.callId === "";
+                const isThisDevice = m.deviceId === this.client.deviceId;
+                return isRoomCallMember && !isThisDevice;
+            },
         );
 
         const memberCount = getJoinedNonFunctionalMembers(room).length;
-        if (!isVideoRoom(room) && existingRoomCallMembers.length == 0) {
+        if (!isVideoRoom(room) && existingOtherRoomCallMembers.length === 0) {
             // send ringing event
             const content: ICallNotifyContent = {
                 "application": "m.call",
