@@ -1,6 +1,6 @@
 {
     "name": "matrix-react-sdk",
-    "version": "3.90.0",
+    "version": "3.91.0",
     "description": "SDK for matrix.org using React",
     "author": "matrix.org",
     "repository": {
@@ -31,7 +31,7 @@
         "UserFriendlyError"
     ],
     "scripts": {
-        "prepublishOnly": "yarn build",
+        "prepack": "yarn build",
         "i18n": "matrix-gen-i18n && yarn i18n:sort && yarn i18n:lint",
         "i18n:sort": "jq --sort-keys '.' src/i18n/strings/en_EN.json > src/i18n/strings/en_EN.json.tmp && mv src/i18n/strings/en_EN.json.tmp src/i18n/strings/en_EN.json",
         "i18n:lint": "matrix-i18n-lint && prettier --log-level=silent --write src/i18n/strings/ --ignore-path /dev/null",
@@ -74,7 +74,7 @@
         "@sentry/browser": "^7.0.0",
         "@testing-library/react-hooks": "^8.0.1",
         "@vector-im/compound-design-tokens": "^0.1.0",
-        "@vector-im/compound-web": "3.0.0",
+        "@vector-im/compound-web": "3.0.1",
         "@zxcvbn-ts/core": "^3.0.4",
         "@zxcvbn-ts/language-common": "^3.0.4",
         "@zxcvbn-ts/language-en": "^3.0.2",
@@ -95,6 +95,7 @@
         "highlight.js": "^11.3.1",
         "html-entities": "^2.0.0",
         "is-ip": "^3.1.0",
+        "js-xxhash": "^3.0.1",
         "jszip": "^3.7.0",
         "katex": "^0.16.0",
         "linkify-element": "4.1.3",
