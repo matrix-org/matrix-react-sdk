@@ -3120,6 +3120,9 @@
         "empty": "You don't currently have any stickerpacks enabled",
         "empty_add_prompt": "Add some now"
     },
+    "tac": {
+        "no_rooms_with_unreads_threads": "You don't have rooms with unread threads yet."
+    },
     "terms": {
         "column_document": "Document",
         "column_service": "Service",
