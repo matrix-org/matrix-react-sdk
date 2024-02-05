@@ -18,8 +18,6 @@ import "fake-indexeddb/auto";
 
 import { IDBFactory } from "fake-indexeddb";
 import { IndexedDBCryptoStore } from "matrix-js-sdk/src/matrix";
-// eslint-disable-next-line no-restricted-imports
-import { MigrationState } from "matrix-js-sdk/src/crypto/store/base";
 
 import * as StorageManager from "../../src/utils/StorageManager";
 import SettingsStore from "../../src/settings/SettingsStore";
@@ -49,15 +47,13 @@ describe("StorageManager", () => {
         });
     }
 
-    async function populateLegacyStore(migrationState: MigrationState | undefined) {
+    async function populateLegacyStore(migrationState: number | undefined) {
         const db = await createDB(LEGACY_CRYPTO_STORE_NAME, [IndexedDBCryptoStore.STORE_ACCOUNT]);
 
         if (migrationState) {
             const transaction = db.transaction([IndexedDBCryptoStore.STORE_ACCOUNT], "readwrite");
             const store = transaction.objectStore(IndexedDBCryptoStore.STORE_ACCOUNT);
-            if (migrationState) {
-                store.put(migrationState, "migrationState");
-            }
+            store.put(migrationState, "migrationState");
             await new Promise((resolve, reject) => {
                 transaction.oncomplete = resolve;
                 transaction.onerror = reject;
@@ -115,7 +111,7 @@ describe("StorageManager", () => {
                 });
 
                 it("should be ok if legacy store in MigrationState `NOT_STARTED`", async () => {
-                    await populateLegacyStore(MigrationState.NOT_STARTED);
+                    await populateLegacyStore(0 /* MigrationState.NOT_STARTED*/);
 
                     const result = await StorageManager.checkConsistency();
                     expect(result.healthy).toBe(true);
@@ -123,7 +119,7 @@ describe("StorageManager", () => {
                 });
 
                 it("should not be ok if MigrationState greater than `NOT_STARTED`", async () => {
-                    await populateLegacyStore(MigrationState.INITIAL_DATA_MIGRATED);
+                    await populateLegacyStore(1 /*INITIAL_DATA_MIGRATED*/);
 
                     const result = await StorageManager.checkConsistency();
                     expect(result.healthy).toBe(true);

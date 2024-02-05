@@ -19,7 +19,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from "../settings/SettingsStore";
 import { Features } from "../settings/Settings";
-import { MigrationState } from "../../../matrix-js-sdk/src/crypto/store/base";
 
 const localStorage = window.localStorage;
 
@@ -162,7 +161,10 @@ async function checkCryptoStore(): Promise<StoreCheck> {
             } else {
                 // No rust store, so let's check if there is a legacy store not yet migrated.
                 try {
-                    const legacyIdbExists = await legacyCryptoExistsAndIsNotMigrated(getIndexedDb()!);
+                    const legacyIdbExists = await IndexedDBCryptoStore.existsAndIsNotMigrated(
+                        getIndexedDb()!,
+                        LEGACY_CRYPTO_STORE_NAME,
+                    );
                     log(`Legacy Crypto store using IndexedDB contains non migrated data? ${legacyIdbExists}`);
                     return { exists: legacyIdbExists, healthy: true };
                 } catch (e) {
@@ -197,55 +199,6 @@ async function checkCryptoStore(): Promise<StoreCheck> {
         log("Crypto store using memory only");
         return { exists, healthy: false };
     }
-}
-
-/**
- * There are some cases where the StorageManager is doing the check after the rust crypto feature
- * has been enabled and before it has been migrated (via lab flag). In this case, we need to check if the legacy
- * store is present and not migrated to do proper consistency check. If it is, we should return true.
- *
- * @param indexedDB - The `IDBFactory` interface
- */
-function legacyCryptoExistsAndIsNotMigrated(indexedDB: IDBFactory): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
-        let exists = true;
-        const openDBRequest = indexedDB.open(LEGACY_CRYPTO_STORE_NAME);
-        openDBRequest.onupgradeneeded = (): void => {
-            // Since we did not provide an explicit version when opening, this event
-            // should only fire if the DB did not exist before at any version.
-            exists = false;
-        };
-        openDBRequest.onblocked = (): void => reject(openDBRequest.error);
-        openDBRequest.onsuccess = (): void => {
-            const db = openDBRequest.result;
-            if (!exists) {
-                db.close();
-                // The DB did not exist before, but has been created as part of this
-                // existence check. Delete it now to restore previous state. Delete can
-                // actually take a while to complete in some browsers, so don't wait for
-                // it. This won't block future open calls that a store might issue next to
-                // properly set up the DB.
-                indexedDB.deleteDatabase(LEGACY_CRYPTO_STORE_NAME);
-                resolve(false);
-            } else {
-                const tx = db.transaction([IndexedDBCryptoStore.STORE_ACCOUNT], "readonly");
-                const objectStore = tx.objectStore(IndexedDBCryptoStore.STORE_ACCOUNT);
-                const getReq = objectStore.get("migrationState");
-
-                getReq.onsuccess = (): void => {
-                    const migrationState = getReq.result ?? MigrationState.NOT_STARTED;
-                    resolve(migrationState === MigrationState.NOT_STARTED);
-                };
-
-                getReq.onerror = (): void => {
-                    reject(getReq.error);
-                };
-
-                db.close();
-            }
-        };
-        openDBRequest.onerror = (): void => reject(openDBRequest.error);
-    });
 }
 
 /**
