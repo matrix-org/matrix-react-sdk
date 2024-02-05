@@ -88,6 +88,7 @@ test.describe("Adoption of rust stack", () => {
             workerInfo.project.name === "Rust Crypto",
             "No need to test this on Rust Crypto as we override the config manually",
         );
+        test.slow();
         await page.goto("/#/login");
 
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
@@ -125,6 +126,7 @@ test.describe("Adoption of rust stack", () => {
             workerInfo.project.name === "Rust Crypto",
             "No need to test this on Rust Crypto as we override the config manually",
         );
+        test.slow();
 
         await page.goto("/#/login");
 
@@ -158,6 +160,7 @@ test.describe("Adoption of rust stack", () => {
             workerInfo.project.name === "Rust Crypto",
             "No need to test this on Rust Crypto as we override the config manually",
         );
+        test.slow();
 
         await page.goto("/#/login");
 
