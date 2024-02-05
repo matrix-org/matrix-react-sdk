@@ -77,7 +77,7 @@ describe("StorageManager", () => {
             indexedDB = new IDBFactory();
         });
 
-        describe(".with `feature_rust_crypto` enabled", () => {
+        describe("with `feature_rust_crypto` enabled", () => {
             beforeEach(() => {
                 jest.spyOn(SettingsStore, "getValue").mockImplementation(async (key) => {
                     if (key === "feature_rust_crypto") {
@@ -101,7 +101,7 @@ describe("StorageManager", () => {
                 expect(result.dataInCryptoStore).toBe(true);
             });
 
-            describe(".without rust store", () => {
+            describe("without rust store", () => {
                 it("should be ok if there is non migrated legacy crypto store", async () => {
                     await populateLegacyStore(undefined);
 
@@ -126,7 +126,7 @@ describe("StorageManager", () => {
                     expect(result.dataInCryptoStore).toBe(false);
                 });
 
-                it("should not be healthy in no indexeddb", async () => {
+                it("should not be healthy if no indexeddb", async () => {
                     // eslint-disable-next-line no-global-assign
                     indexedDB = {} as IDBFactory;
 
@@ -139,7 +139,7 @@ describe("StorageManager", () => {
             });
         });
 
-        describe(".with `feature_rust_crypto` disabled", () => {
+        describe("with `feature_rust_crypto` disabled", () => {
             beforeEach(() => {
                 jest.spyOn(SettingsStore, "getValue").mockImplementation(async (key) => {
                     if (key === "feature_rust_crypto") {
