@@ -17,11 +17,12 @@ limitations under the License.
 import "fake-indexeddb/auto";
 
 import { IDBFactory } from "fake-indexeddb";
+import { IndexedDBCryptoStore } from "matrix-js-sdk/src/matrix";
+// eslint-disable-next-line no-restricted-imports
+import { MigrationState } from "matrix-js-sdk/src/crypto/store/base";
 
 import * as StorageManager from "../../src/utils/StorageManager";
 import SettingsStore from "../../src/settings/SettingsStore";
-import { MigrationState } from "../../../matrix-js-sdk/src/crypto/store/base";
-import { IndexedDBCryptoStore } from "../../../matrix-js-sdk";
 
 const LEGACY_CRYPTO_STORE_NAME = "matrix-js-sdk:crypto";
 const RUST_CRYPTO_STORE_NAME = "matrix-js-sdk::matrix-sdk-crypto";
