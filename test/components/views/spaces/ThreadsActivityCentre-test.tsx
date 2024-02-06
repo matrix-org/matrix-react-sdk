@@ -155,4 +155,22 @@ describe("ThreadsActivityCentre", () => {
 
         expect(screen.getByRole("menu")).toMatchSnapshot();
     });
+
+    it("should display a caption when no threads are unread", async () => {
+        cli.getVisibleRooms = jest.fn().mockReturnValue([]);
+        renderTAC();
+        await userEvent.click(getTACButton());
+
+        expect(screen.getByRole("menu").getElementsByClassName("mx_ThreadsActivityCentre_emptyCaption").length).toEqual(
+            1,
+        );
+    });
+
+    it("should match snapshot when empty", async () => {
+        cli.getVisibleRooms = jest.fn().mockReturnValue([]);
+        renderTAC();
+        await userEvent.click(getTACButton());
+
+        expect(screen.getByRole("menu")).toMatchSnapshot();
+    });
 });

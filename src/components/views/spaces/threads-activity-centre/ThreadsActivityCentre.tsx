@@ -77,6 +77,11 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
                         onClick={() => setOpen(false)}
                     />
                 ))}
+                {roomsAndNotifications.rooms.length === 0 && (
+                    <div className="mx_ThreadsActivityCentre_emptyCaption">
+                        {_t("threads_activity_centre|no_rooms_with_unreads_threads")}
+                    </div>
+                )}
             </div>
         </Menu>
     );
