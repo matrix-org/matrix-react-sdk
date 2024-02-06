@@ -3162,7 +3162,8 @@
         "unable_to_decrypt": "Unable to decrypt message"
     },
     "threads_activity_centre": {
-        "header": "Threads activity"
+        "header": "Threads activity",
+        "no_rooms_with_unreads_threads": "You don't have rooms with unread threads yet."
     },
     "time": {
         "about_day_ago": "about a day ago",
