@@ -28,7 +28,7 @@ import { Icon as LeaveIcon } from "@vector-im/compound-design-tokens/icons/leave
 import { Icon as FilesIcon } from "@vector-im/compound-design-tokens/icons/files.svg";
 import { Icon as PollsIcon } from "@vector-im/compound-design-tokens/icons/polls.svg";
 import { Icon as PinIcon } from "@vector-im/compound-design-tokens/icons/pin.svg";
-import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock.svg";
+import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock-solid.svg";
 import { Icon as LockOffIcon } from "@vector-im/compound-design-tokens/icons/lock-off.svg";
 import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
 import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
