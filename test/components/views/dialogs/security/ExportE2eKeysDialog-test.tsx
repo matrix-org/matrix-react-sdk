@@ -17,8 +17,7 @@ limitations under the License.
 import React from "react";
 import { screen, fireEvent, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mocked } from "jest-mock";
-import { IMegolmSessionData } from "matrix-js-sdk/src/matrix";
+import { CryptoApi, IMegolmSessionData } from "matrix-js-sdk/src/matrix";
 
 import * as MegolmExportEncryption from "../../../../../src/utils/MegolmExportEncryption";
 import ExportE2eKeysDialog from "../../../../../src/async-components/views/dialogs/security/ExportE2eKeysDialog";
@@ -67,7 +66,12 @@ describe("ExportE2eKeysDialog", () => {
         const cli = createTestClient();
         const keys: IMegolmSessionData[] = [];
         const passphrase = "ThisIsAMoreSecurePW123$$";
-        mocked(cli.exportRoomKeys).mockResolvedValue(keys);
+        const exportRoomKeys = jest.fn().mockResolvedValue(keys);
+        cli.getCrypto = () => {
+            return {
+                exportRoomKeys,
+            } as unknown as CryptoApi;
+        };
 
         // Mock the result of encrypting the sessions. If we don't do this, the
         // encryption process fails, possibly because we didn't initialise
@@ -81,7 +85,7 @@ describe("ExportE2eKeysDialog", () => {
         fireEvent.click(container.querySelector("[type=submit]")!);
 
         // Then it exports keys and encrypts them
-        await waitFor(() => expect(cli.exportRoomKeys).toHaveBeenCalled());
+        await waitFor(() => expect(exportRoomKeys).toHaveBeenCalled());
         await waitFor(() =>
             expect(MegolmExportEncryption.encryptMegolmKeyFile).toHaveBeenCalledWith(JSON.stringify(keys), passphrase),
         );
