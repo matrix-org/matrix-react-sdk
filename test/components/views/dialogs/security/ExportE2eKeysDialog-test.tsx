@@ -17,7 +17,10 @@ limitations under the License.
 import React from "react";
 import { screen, fireEvent, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { mocked } from "jest-mock";
+import { IMegolmSessionData } from "matrix-js-sdk/src/matrix";
 
+import * as MegolmExportEncryption from "../../../../../src/utils/MegolmExportEncryption";
 import ExportE2eKeysDialog from "../../../../../src/async-components/views/dialogs/security/ExportE2eKeysDialog";
 import { createTestClient } from "../../../../test-utils";
 
@@ -60,13 +63,27 @@ describe("ExportE2eKeysDialog", () => {
     });
 
     it("should export if everything is fine", async () => {
+        // Given a client able to export keys
         const cli = createTestClient();
-        const onFinished = jest.fn();
+        const keys: IMegolmSessionData[] = [];
+        const passphrase = "ThisIsAMoreSecurePW123$$";
+        mocked(cli.exportRoomKeys).mockResolvedValue(keys);
 
-        const { container } = render(<ExportE2eKeysDialog matrixClient={cli} onFinished={onFinished} />);
-        await userEvent.type(screen.getByLabelText("Enter passphrase"), "ThisIsAMoreSecurePW123$$");
-        await userEvent.type(screen.getByLabelText("Confirm passphrase"), "ThisIsAMoreSecurePW123$$");
+        // Mock the result of encrypting the sessions. If we don't do this, the
+        // encryption process fails, possibly because we didn't initialise
+        // something.
+        jest.spyOn(MegolmExportEncryption, "encryptMegolmKeyFile").mockResolvedValue(new ArrayBuffer(3));
+
+        // When we tell the dialog to export
+        const { container } = render(<ExportE2eKeysDialog matrixClient={cli} onFinished={jest.fn()} />);
+        await userEvent.type(screen.getByLabelText("Enter passphrase"), passphrase);
+        await userEvent.type(screen.getByLabelText("Confirm passphrase"), passphrase);
         fireEvent.click(container.querySelector("[type=submit]")!);
+
+        // Then it exports keys and encrypts them
         await waitFor(() => expect(cli.exportRoomKeys).toHaveBeenCalled());
+        await waitFor(() =>
+            expect(MegolmExportEncryption.encryptMegolmKeyFile).toHaveBeenCalledWith(JSON.stringify(keys), passphrase),
+        );
     });
 });
