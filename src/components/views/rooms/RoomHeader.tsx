@@ -172,6 +172,7 @@ export default function RoomHeader({
                         <MenuItem
                             key={option}
                             label={getPlatformCallTypeLabel(option)}
+                            aria-label={getPlatformCallTypeLabel(option)}
                             onClick={(ev) => videoCallClick(ev, option)}
                             Icon={VideoCallIcon}
                             onSelect={() => {} /* Dummy handler since we want the click event.*/}

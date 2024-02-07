@@ -57,6 +57,7 @@ import { Container, WidgetLayoutStore } from "../../../../src/stores/widgets/Wid
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import * as UseCall from "../../../../src/hooks/useCall";
 import { SdkContextClass } from "../../../../src/contexts/SDKContext";
+import WidgetStore, { IApp } from "../../../../src/stores/WidgetStore";
 jest.mock("../../../../src/utils/ShieldUtils");
 
 function getWrapper(): RenderOptions {
@@ -323,25 +324,30 @@ describe("RoomHeader", () => {
             // allow element calls
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
             jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(true);
-
-            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({ widget: {}, on: () => {} } as unknown as Call);
-
+            const widget = { type: "m.jitsi" } as IApp;
+            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({
+                widget,
+                on: () => {},
+            } as unknown as Call);
+            jest.spyOn(WidgetStore.instance, "getApps").mockReturnValue([widget]);
             const { container } = render(<RoomHeader room={room} />, getWrapper());
             expect(getByLabelText(container, "Ongoing call")).toHaveAttribute("aria-disabled", "true");
         });
 
         it("clicking on ongoing (unpinned) call re-pins it", () => {
-            jest.spyOn(SdkConfig, "get").mockReturnValue({ use_exclusively: true });
+            mockRoomMembers(room, 3);
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
             // allow calls
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
             jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(false);
             const spy = jest.spyOn(WidgetLayoutStore.instance, "moveToContainer");
 
-            const widget = {};
+            const widget = { type: "m.jitsi" } as IApp;
             jest.spyOn(CallStore.instance, "getCall").mockReturnValue({
                 widget,
                 on: () => {},
             } as unknown as Call);
+            jest.spyOn(WidgetStore.instance, "getApps").mockReturnValue([widget]);
 
             const { container } = render(<RoomHeader room={room} />, getWrapper());
             expect(getByLabelText(container, "Video call")).not.toHaveAttribute("aria-disabled", "true");
