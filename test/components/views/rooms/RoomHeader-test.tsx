@@ -55,7 +55,8 @@ import { Call, ElementCall } from "../../../../src/models/Call";
 import * as ShieldUtils from "../../../../src/utils/ShieldUtils";
 import { Container, WidgetLayoutStore } from "../../../../src/stores/widgets/WidgetLayoutStore";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
-
+import * as UseCall from "../../../../src/hooks/useCall";
+import { SdkContextClass } from "../../../../src/contexts/SDKContext";
 jest.mock("../../../../src/utils/ShieldUtils");
 
 function getWrapper(): RenderOptions {
@@ -430,6 +431,57 @@ describe("RoomHeader", () => {
             const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
             fireEvent.click(videoButton);
             expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true }));
+        });
+
+        it("buttons are disabled if there is an ongoing call", async () => {
+            mockRoomMembers(room, 3);
+
+            jest.spyOn(CallStore.prototype, "activeCalls", "get").mockReturnValue(
+                new Set([{ roomId: "some_other_room" } as Call]),
+            );
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+
+            const [videoButton, voiceButton] = getAllByLabelText(container, "Ongoing call");
+
+            expect(voiceButton).toHaveAttribute("aria-disabled", "true");
+            expect(videoButton).toHaveAttribute("aria-disabled", "true");
+        });
+
+        it("join button is shown if there is an ongoing call", async () => {
+            mockRoomMembers(room, 3);
+            jest.spyOn(UseCall, "useParticipantCount").mockReturnValue(3);
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            const joinButton = getByLabelText(container, "Join");
+            expect(joinButton).not.toHaveAttribute("aria-disabled", "true");
+        });
+
+        it("join button is disabled if there is an other ongoing call", async () => {
+            mockRoomMembers(room, 3);
+            jest.spyOn(UseCall, "useParticipantCount").mockReturnValue(3);
+            jest.spyOn(CallStore.prototype, "activeCalls", "get").mockReturnValue(
+                new Set([{ roomId: "some_other_room" } as Call]),
+            );
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            const joinButton = getByLabelText(container, "Ongoing call");
+
+            expect(joinButton).toHaveAttribute("aria-disabled", "true");
+        });
+
+        it("close lobby button is shown", async () => {
+            mockRoomMembers(room, 3);
+
+            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(true);
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            getByLabelText(container, "Close lobby");
+        });
+
+        it("close lobby button is shown if there is an ongoing call but we are viewing the lobby", async () => {
+            mockRoomMembers(room, 3);
+            jest.spyOn(UseCall, "useParticipantCount").mockReturnValue(3);
+            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(true);
+
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            getByLabelText(container, "Close lobby");
         });
     });
 
