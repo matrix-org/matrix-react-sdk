@@ -149,13 +149,21 @@ export default function RoomHeader({
     );
 
     const [menuOpen, setMenuOpen] = useState(false);
+
+    const onOpenChange = useCallback(
+        (newOpen: boolean) => {
+            if (!videoCallDisabledReason) setMenuOpen(newOpen);
+        },
+        [videoCallDisabledReason],
+    );
+
     const startVideoCallButton = (
         <>
             {/* Can be either a menu or just a button depending on the number of call options.*/}
             {callOptions.length > 1 ? (
                 <Menu
                     open={menuOpen}
-                    onOpenChange={setMenuOpen}
+                    onOpenChange={onOpenChange}
                     title={_t("voip|video_call_using")}
                     trigger={
                         <IconButton
