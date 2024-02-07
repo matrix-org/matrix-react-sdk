@@ -125,23 +125,30 @@ export default function RoomHeader({
             </IconButton>
         </Tooltip>
     );
+
     const joinCallButton = (
-        <Button
-            size="sm"
-            onClick={videoClick}
-            Icon={VideoCallIcon}
-            className="mx_RoomHeader_join_button"
-            color="primary"
-        >
-            {_t("action|join")}
-        </Button>
+        <Tooltip label={videoCallDisabledReason ?? _t("voip|video_call")}>
+            <Button
+                size="sm"
+                onClick={videoClick}
+                Icon={VideoCallIcon}
+                className="mx_RoomHeader_join_button"
+                disabled={!!videoCallDisabledReason}
+                color="primary"
+                aria-label={videoCallDisabledReason ?? _t("action|join")}
+            >
+                {_t("action|join")}
+            </Button>
+        </Tooltip>
     );
-    const [menuOpen, setMenuOpen] = useState(false);
+
     const callIconWithTooltip = (
         <Tooltip label={videoCallDisabledReason ?? _t("voip|video_call")}>
             <VideoCallIcon />
         </Tooltip>
     );
+
+    const [menuOpen, setMenuOpen] = useState(false);
     const startVideoCallButton = (
         <>
             {/* Can be either a menu or just a button depending on the number of call options.*/}

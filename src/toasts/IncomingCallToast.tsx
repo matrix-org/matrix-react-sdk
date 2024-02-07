@@ -20,7 +20,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
-import { Button } from "@vector-im/compound-web";
+import { Button, Tooltip } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 
 import { _t } from "../languageHandler";
@@ -49,22 +49,27 @@ const MAX_RING_TIME_MS = 10 * 1000;
 
 interface JoinCallButtonWithCallProps {
     onClick: (e: ButtonEvent) => void;
-    call: Call;
+    disabledTooltip: string | undefined;
 }
 
-function JoinCallButtonWithCall({ onClick, call }: JoinCallButtonWithCallProps): JSX.Element {
-    const disabledTooltip = useJoinCallButtonDisabledTooltip(call);
+function JoinCallButtonWithCall({ onClick, call, disabledTooltip }: JoinCallButtonWithCallProps): JSX.Element {
+    let disTooltip = disabledTooltip;
+    const disabledBecauseFullTooltip = useJoinCallButtonDisabledTooltip(call);
+    disTooltip = disabledTooltip ?? disabledBecauseFullTooltip ?? undefined;
 
     return (
-        <Button
-            className="mx_IncomingCallToast_joinButton"
-            onClick={onClick}
-            disabled={disabledTooltip !== null}
-            kind="primary"
-            size="sm"
-        >
-            {_t("action|join")}
-        </Button>
+        <Tooltip label={disTooltip ?? _t("voip|video_call")}>
+            <Button
+                className="mx_IncomingCallToast_joinButton"
+                onClick={onClick}
+                disabled={disTooltip != undefined}
+                kind="primary"
+                Icon={VideoCallIcon}
+                size="sm"
+            >
+                {_t("action|join")}
+            </Button>
+        </Tooltip>
     );
 }
 
@@ -178,19 +183,11 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
                         />
                     )}
                 </div>
-                {call ? (
-                    <JoinCallButtonWithCall onClick={onJoinClick} call={call} />
-                ) : (
-                    <Button
-                        className="mx_IncomingCallToast_joinButton"
-                        onClick={onJoinClick}
-                        kind="primary"
-                        size="sm"
-                        Icon={VideoCallIcon}
-                    >
-                        {_t("action|join")}
-                    </Button>
-                )}
+                <JoinCallButtonWithCall
+                    onClick={onJoinClick}
+                    call={call}
+                    disabledTooltip={otherCallIsOngoing ? "Ongoing call" : undefined}
+                />
             </div>
             <AccessibleTooltipButton
                 className="mx_IncomingCallToast_closeButton"
