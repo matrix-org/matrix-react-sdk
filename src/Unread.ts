@@ -120,12 +120,12 @@ export function doesRoomHaveUnreadThreads(room: Room): boolean {
 
     for (const thread of room.getThreads()) {
         if (doesTimelineHaveUnreadMessages(room, thread.timeline)) {
-            // We found an unread, so the room is unread
+            // We found an unread, so the room has an unread thread
             return true;
         }
     }
 
-    // If we got here then no timelines were found with unread messages.
+    // If we got here then no threads were found with unread messages.
     return false;
 }
 
