@@ -202,7 +202,7 @@ export default function RoomHeader({
     );
     const closeLobbyButton = (
         <Tooltip label={_t("voip|close_lobby")}>
-            <IconButton onClick={toggleCall}>
+            <IconButton onClick={toggleCall} aria-label={_t("voip|close_lobby")}>
                 <CloseCallIcon />
             </IconButton>
         </Tooltip>
@@ -303,7 +303,7 @@ export default function RoomHeader({
 
                     {((isConnectedToCall && isViewingCall) || isVideoRoom(room)) && <VideoRoomChatButton room={room} />}
 
-                    {hasActiveCallSession && !isConnectedToCall ? (
+                    {hasActiveCallSession && !isConnectedToCall && !isViewingCall ? (
                         joinCallButton
                     ) : (
                         <>
