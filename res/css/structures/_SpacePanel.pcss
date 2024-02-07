@@ -18,12 +18,16 @@ limitations under the License.
     --activeBackground-color: $panel-actions;
     --activeBorder-color: $primary-content;
     --activeBorder-transparent-gap: 1px;
-    --gutterSize: 16px;
+    /* The size of the left margin. There's also 4px of padding on the spac icons for
+    the border when selected, makign a total of 18px */
+    --gutterSize: 14px;
+    --spaceSelectedBorderSize: 4px;
     --height-nested: 24px;
     --height-topLevel: 32px;
 
     background-color: $spacePanel-bg-color;
     flex: 0 0 auto;
+    width: 68px;
     padding: 0;
     margin: 0;
     position: relative;
@@ -123,7 +127,7 @@ limitations under the License.
         border-radius: 8px;
         display: flex;
         align-items: center;
-        padding: 4px 4px 4px 0;
+        padding: 4px 0px 4px 0;
         width: 100%;
         cursor: pointer;
 
@@ -144,7 +148,7 @@ limitations under the License.
             flex: 1;
             align-items: center;
             border-radius: 12px;
-            padding: 4px;
+            padding: var(--spaceSelectedBorderSize);
             width: calc(100% - 32px);
             min-width: 0;
         }
@@ -323,7 +327,9 @@ limitations under the License.
     /* root space buttons are bigger and not indented */
     & > .mx_AutoHideScrollbar {
         flex: 1;
-        padding: 0 8px 16px 0;
+        scrollbar-gutter: stable;
+        padding-top: 12px;
+        padding-bottom: 16px;
 
         & > .mx_SpaceButton {
             height: var(--height-topLevel);
@@ -338,11 +344,11 @@ limitations under the License.
         }
 
         &.mx_IndicatorScrollbar_topOverflow {
-            mask-image: linear-gradient(to bottom, transparent, black 16px);
+            mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 40%) 14px, black 56px);
         }
 
         &.mx_IndicatorScrollbar_bottomOverflow {
-            mask-image: linear-gradient(to top, transparent, black 32px);
+            mask-image: linear-gradient(to top, transparent, rgba(0, 0, 0, 40%) 14px, black 56px);
         }
 
         &.mx_IndicatorScrollbar_topOverflow.mx_IndicatorScrollbar_bottomOverflow {
@@ -350,8 +356,8 @@ limitations under the License.
             have a fixed pixel offset from both top and bottom for the colour stops.
             Note the top fade is much smaller because the spaces start close to the top,
             so otherwise a large gradient suddenly appears when you scroll down. */
-            mask-image: linear-gradient(to bottom, transparent, black 16px),
-                linear-gradient(to top, transparent, black 32px);
+            mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 40%) 14px, black 56px),
+                linear-gradient(to top, transparent, rgba(0, 0, 0, 40%) 14px, black 56px);
             mask-position:
                 0% 0%,
                 0% 100%;
@@ -363,10 +369,16 @@ limitations under the License.
     }
 
     .mx_UserMenu {
-        padding: 0 2px 8px;
+        padding-bottom: 12px;
         border-bottom: 1px solid $separator;
-        margin: 12px 14px 4px 18px;
+        /*margin: 12px 14px 4px calc(var(--gutterSize) + var(--spaceSelectedBorderSize));*/
+        margin: 12px auto 0 auto;
         max-width: 226px;
+
+        .mx_UserMenu_userAvatar_BaseAvatar {
+            /* Otherwise it's an inline element and causes the container to gain extra height */
+            display: block;
+        }
     }
 }
 
