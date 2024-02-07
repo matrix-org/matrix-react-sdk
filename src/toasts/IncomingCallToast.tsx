@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
@@ -41,14 +41,16 @@ import { useDispatcher } from "../hooks/useDispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { Call } from "../models/Call";
 import { AudioID } from "../LegacyCallHandler";
-import { useTypedEventEmitter } from "../hooks/useEventEmitter";
+import { useEventEmitter, useTypedEventEmitter } from "../hooks/useEventEmitter";
 import AccessibleTooltipButton from "../components/views/elements/AccessibleTooltipButton";
+import { CallStore, CallStoreEvent } from "../stores/CallStore";
 
 export const getIncomingCallToastKey = (callId: string, roomId: string): string => `call_${callId}_${roomId}`;
 const MAX_RING_TIME_MS = 10 * 1000;
 
 interface JoinCallButtonWithCallProps {
     onClick: (e: ButtonEvent) => void;
+    call: Call | null;
     disabledTooltip: string | undefined;
 }
 
@@ -82,7 +84,11 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
     const room = MatrixClientPeg.safeGet().getRoom(roomId) ?? undefined;
     const call = useCall(roomId);
     const audio = useMemo(() => document.getElementById(AudioID.Ring) as HTMLMediaElement, []);
-
+    const [activeCalls, setActiveCalls] = useState<Call[]>(Array.from(CallStore.instance.activeCalls));
+    useEventEmitter(CallStore.instance, CallStoreEvent.ActiveCalls, () => {
+        setActiveCalls(Array.from(CallStore.instance.activeCalls));
+    });
+    const otherCallIsOngoing = activeCalls.find((call) => call.roomId !== roomId);
     // Start ringing if not already.
     useEffect(() => {
         const isRingToast = (notifyEvent.getContent() as unknown as { notify_type: string })["notify_type"] == "ring";
