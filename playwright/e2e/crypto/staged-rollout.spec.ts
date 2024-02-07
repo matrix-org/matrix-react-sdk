@@ -16,6 +16,7 @@ limitations under the License.
 
 import { test, expect } from "../../element-web-test";
 import { createRoom, enableKeyBackup, logIntoElement, logOutOfElement, sendMessageInCurrentRoom } from "./utils";
+import { SettingLevel } from "../../../src/settings/SettingLevel";
 
 test.describe("Adoption of rust stack", () => {
     test("Test migration of existing logins when rollout is 100%", async ({
