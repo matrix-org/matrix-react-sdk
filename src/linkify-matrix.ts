@@ -19,7 +19,7 @@ import * as linkifyjs from "linkifyjs";
 import { EventListeners, Opts, registerCustomProtocol, registerPlugin } from "linkifyjs";
 import linkifyElement from "linkify-element";
 import linkifyString from "linkify-string";
-import { User } from "matrix-js-sdk/src/matrix";
+import { getHttpUriForMxc, User } from "matrix-js-sdk/src/matrix";
 
 import {
     parsePermalink,
@@ -32,7 +32,6 @@ import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { PERMITTED_URL_SCHEMES } from "./utils/UrlUtils";
-import { mediaFromMxc } from "./customisations/Media";
 
 export enum Type {
     URL = "url",
@@ -185,7 +184,7 @@ export const options: Opts = {
         switch (type) {
             case "url":
                 if (href.startsWith("mxc://") && MatrixClientPeg.get()) {
-                    return mediaFromMxc(href, MatrixClientPeg.safeGet()).srcHttp!;
+                    return getHttpUriForMxc(MatrixClientPeg.get()!.baseUrl, href, undefined, undefined, undefined, false, true);
                 }
             // fallthrough
             case Type.RoomAlias:
