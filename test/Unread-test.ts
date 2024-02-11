@@ -23,6 +23,7 @@ import { makeBeaconEvent, mkEvent, stubClient } from "./test-utils";
 import { makeThreadEvents, mkThread, populateThread } from "./test-utils/threads";
 import {
     doesRoomHaveUnreadMessages,
+    doesRoomHaveUnreadThreads,
     doesRoomOrThreadHaveUnreadMessages,
     eventTriggersUnreadCount,
 } from "../src/Unread";
@@ -152,7 +153,7 @@ describe("Unread", () => {
             });
 
             it("returns true for a room with no receipts", () => {
-                expect(doesRoomHaveUnreadMessages(room)).toBe(true);
+                expect(doesRoomHaveUnreadMessages(room, false)).toBe(true);
             });
 
             it("returns false for a room when the latest event was sent by the current user", () => {
@@ -166,7 +167,7 @@ describe("Unread", () => {
                 // Only for timeline events.
                 room.addLiveEvents([event]);
 
-                expect(doesRoomHaveUnreadMessages(room)).toBe(false);
+                expect(doesRoomHaveUnreadMessages(room, false)).toBe(false);
             });
 
             it("returns false for a room when the read receipt is at the latest event", () => {
@@ -183,7 +184,7 @@ describe("Unread", () => {
                 });
                 room.addReceipt(receipt);
 
-                expect(doesRoomHaveUnreadMessages(room)).toBe(false);
+                expect(doesRoomHaveUnreadMessages(room, false)).toBe(false);
             });
 
             it("returns true for a room when the read receipt is earlier than the latest event", () => {
@@ -210,7 +211,7 @@ describe("Unread", () => {
                 // Only for timeline events.
                 room.addLiveEvents([event2]);
 
-                expect(doesRoomHaveUnreadMessages(room)).toBe(true);
+                expect(doesRoomHaveUnreadMessages(room, false)).toBe(true);
             });
 
             it("returns true for a room with an unread message in a thread", async () => {
@@ -247,7 +248,7 @@ describe("Unread", () => {
                 // Create a thread as a different user.
                 await populateThread({ room, client, authorId: myId, participantUserIds: [aliceId] });
 
-                expect(doesRoomHaveUnreadMessages(room)).toBe(true);
+                expect(doesRoomHaveUnreadMessages(room, true)).toBe(true);
             });
 
             it("returns false for a room when the latest thread event was sent by the current user", async () => {
@@ -268,7 +269,7 @@ describe("Unread", () => {
                 // Create a thread as the current user.
                 await populateThread({ room, client, authorId: myId, participantUserIds: [myId] });
 
-                expect(doesRoomHaveUnreadMessages(room)).toBe(false);
+                expect(doesRoomHaveUnreadMessages(room, true)).toBe(false);
             });
 
             it("returns false for a room with read thread messages", async () => {
@@ -308,7 +309,7 @@ describe("Unread", () => {
                 });
                 room.addReceipt(receipt);
 
-                expect(doesRoomHaveUnreadMessages(room)).toBe(false);
+                expect(doesRoomHaveUnreadMessages(room, true)).toBe(false);
             });
 
             it("returns true for a room when read receipt is not on the latest thread messages", async () => {
@@ -348,7 +349,7 @@ describe("Unread", () => {
                 });
                 room.addReceipt(receipt);
 
-                expect(doesRoomHaveUnreadMessages(room)).toBe(true);
+                expect(doesRoomHaveUnreadMessages(room, true)).toBe(true);
             });
 
             it("returns true when the event for a thread receipt can't be found", async () => {
@@ -394,7 +395,7 @@ describe("Unread", () => {
                 });
                 room.addReceipt(receipt);
 
-                expect(doesRoomHaveUnreadMessages(room)).toBe(true);
+                expect(doesRoomHaveUnreadMessages(room, true)).toBe(true);
             });
         });
 
@@ -412,7 +413,7 @@ describe("Unread", () => {
             // Only for timeline events.
             room.addLiveEvents([redactedEvent]);
 
-            expect(doesRoomHaveUnreadMessages(room)).toBe(true);
+            expect(doesRoomHaveUnreadMessages(room, true)).toBe(true);
             expect(logger.warn).toHaveBeenCalledWith(
                 "Falling back to unread room because of no read receipt or counting message found",
                 {
@@ -420,6 +421,11 @@ describe("Unread", () => {
                     earliestUnimportantEventId: redactedEvent.getId(),
                 },
             );
+        });
+
+        it("returns false for space", () => {
+            jest.spyOn(room, "isSpaceRoom").mockReturnValue(true);
+            expect(doesRoomHaveUnreadMessages(room, false)).toBe(false);
         });
     });
 
@@ -526,6 +532,114 @@ describe("Unread", () => {
 
                 expect(doesRoomOrThreadHaveUnreadMessages(room)).toBe(false);
             });
+        });
+    });
+
+    describe("doesRoomHaveUnreadThreads()", () => {
+        let room: Room;
+        const roomId = "!abc:server.org";
+        const myId = client.getSafeUserId();
+
+        beforeAll(() => {
+            client.supportsThreads = () => true;
+        });
+
+        beforeEach(async () => {
+            room = new Room(roomId, client, myId);
+            jest.spyOn(logger, "warn");
+
+            // Don't care about the code path of hidden events.
+            mocked(haveRendererForEvent).mockClear().mockReturnValue(true);
+        });
+
+        it("returns false when no threads", () => {
+            expect(doesRoomHaveUnreadThreads(room)).toBe(false);
+
+            // Add event to the room
+            const event = mkEvent({
+                event: true,
+                type: "m.room.message",
+                user: aliceId,
+                room: roomId,
+                content: {},
+            });
+            room.addLiveEvents([event]);
+
+            // It still returns false
+            expect(doesRoomHaveUnreadThreads(room)).toBe(false);
+        });
+
+        it("return true when we don't have any receipt for the thread", async () => {
+            await populateThread({
+                room,
+                client,
+                authorId: myId,
+                participantUserIds: [aliceId],
+            });
+
+            // There is no receipt for the thread, it should be unread
+            expect(doesRoomHaveUnreadThreads(room)).toBe(true);
+        });
+
+        it("return false when we have a receipt for the thread", async () => {
+            const { events, rootEvent } = await populateThread({
+                room,
+                client,
+                authorId: myId,
+                participantUserIds: [aliceId],
+            });
+
+            // Mark the thread as read.
+            const receipt = new MatrixEvent({
+                type: "m.receipt",
+                room_id: "!foo:bar",
+                content: {
+                    [events[events.length - 1].getId()!]: {
+                        [ReceiptType.Read]: {
+                            [myId]: { ts: 1, thread_id: rootEvent.getId()! },
+                        },
+                    },
+                },
+            });
+            room.addReceipt(receipt);
+
+            // There is a receipt for the thread, it should be read
+            expect(doesRoomHaveUnreadThreads(room)).toBe(false);
+        });
+
+        it("return true when only of the threads has a receipt", async () => {
+            // Create a first thread
+            await populateThread({
+                room,
+                client,
+                authorId: myId,
+                participantUserIds: [aliceId],
+            });
+
+            // Create a second thread
+            const { events, rootEvent } = await populateThread({
+                room,
+                client,
+                authorId: myId,
+                participantUserIds: [aliceId],
+            });
+
+            // Mark the thread as read.
+            const receipt = new MatrixEvent({
+                type: "m.receipt",
+                room_id: "!foo:bar",
+                content: {
+                    [events[events.length - 1].getId()!]: {
+                        [ReceiptType.Read]: {
+                            [myId]: { ts: 1, thread_id: rootEvent.getId()! },
+                        },
+                    },
+                },
+            });
+            room.addReceipt(receipt);
+
+            // The first thread doesn't have a receipt, it should be unread
+            expect(doesRoomHaveUnreadThreads(room)).toBe(true);
         });
     });
 });
