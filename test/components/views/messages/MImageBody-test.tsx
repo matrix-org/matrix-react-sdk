@@ -180,8 +180,7 @@ describe("<MImageBody/>", () => {
     });
 
     it("should fall back to /download/ if /thumbnail/ fails", async () => {
-        const thumbUrl =
-            "https://server/_matrix/media/v3/thumbnail/server/image?width=800&height=600&method=scale";
+        const thumbUrl = "https://server/_matrix/media/v3/thumbnail/server/image?width=800&height=600&method=scale";
         const downloadUrl = "https://server/_matrix/media/v3/download/server/image";
 
         const event = new MatrixEvent({
