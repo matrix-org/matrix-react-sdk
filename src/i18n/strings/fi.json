@@ -236,6 +236,7 @@
             "error_device_unsupported": "Tämän laitteen kanssa linkittäminen ei ole tuettu.",
             "error_invalid_scanned_code": "Skannattu koodi on virheellinen.",
             "error_linking_incomplete": "Linkitystä ei suoritettu vaaditussa ajassa.",
+            "error_rate_limited": "Liikaa yrityksiä lyhyessä ajassa. Odota hetki, ennen kuin yrität uudelleen.",
             "error_request_cancelled": "Pyyntö peruttiin.",
             "error_request_declined": "Pyyntö hylättiin toiselta laitteelta.",
             "error_unexpected": "Tapahtui odottamaton virhe.",
@@ -448,10 +449,6 @@
         "n_members": {
             "one": "%(count)s jäsen",
             "other": "%(count)s jäsentä"
-        },
-        "n_participants": {
-            "one": "1 osallistuja",
-            "other": "%(count)s osallistujaa"
         },
         "n_rooms": {
             "one": "%(count)s huone",
@@ -1391,6 +1388,8 @@
         "error_change_title": "Muokkaa ilmoitusasetuksia",
         "keyword": "Avainsana",
         "keyword_new": "Uusi avainsana",
+        "level_activity": "Aktiivisuus",
+        "level_none": "Ei mitään",
         "mark_all_read": "Merkitse kaikki luetuiksi",
         "mentions_and_keywords": "@maininnat & asiasanat",
         "mentions_and_keywords_description": "Vastaanota ilmoitukset maininnoista ja asiasanoista <a>asetuksissa</a> määrittämälläsi tavalla",
@@ -3324,7 +3323,6 @@
         "already_in_call_person": "Olet jo puhelussa tämän henkilön kanssa.",
         "answered_elsewhere": "Vastattu muualla",
         "answered_elsewhere_description": "Puheluun vastattiin toisessa laitteessa.",
-        "audio_devices": "Äänilaitteet",
         "call_failed": "Puhelu epäonnistui",
         "call_failed_description": "Puhelua ei voitu muodostaa",
         "call_failed_media": "Puhelu epäonnistui, koska kameraa tai mikrofonia ei voitu käyttää. Tarkista että:",
@@ -3406,7 +3404,6 @@
         "user_is_presenting": "%(sharerName)s esittää",
         "video_call": "Videopuhelu",
         "video_call_started": "Videopuhelu aloitettu",
-        "video_devices": "Videolaitteet",
         "voice_call": "Äänipuhelu",
         "you_are_presenting": "Esität parhaillaan"
     },

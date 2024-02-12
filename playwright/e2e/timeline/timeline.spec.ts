@@ -49,7 +49,7 @@ const expectAvatar = async (cli: Client, e: Locator, avatarUrl: string): Promise
     const url = await cli.evaluate(
         (client, { avatarUrl, size, resizeMethod }) => {
             // eslint-disable-next-line no-restricted-properties
-            return client.mxcUrlToHttp(avatarUrl, size, size, resizeMethod);
+            return client.mxcUrlToHttp(avatarUrl, size, size, resizeMethod, false, true);
         },
         { avatarUrl, size, resizeMethod: AVATAR_RESIZE_METHOD },
     );
@@ -552,7 +552,11 @@ test.describe("Timeline", () => {
             );
         });
 
-        test("should set inline start padding to a hidden event line", async ({ page, app, room }) => {
+        test("should set inline start padding to a hidden event line", async ({ page, app, room, cryptoBackend }) => {
+            test.skip(
+                cryptoBackend === "rust",
+                "Disabled due to screenshot test being flaky - https://github.com/element-hq/element-web/issues/26890",
+            );
             await sendEvent(app.client, room.roomId);
             await page.goto(`/#/room/${room.roomId}`);
             await app.settings.setValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);

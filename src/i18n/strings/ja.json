@@ -240,6 +240,7 @@
             "error_homeserver_lacks_support": "ホームサーバーは他の端末でのサインインをサポートしていません。",
             "error_invalid_scanned_code": "スキャンされたコードは無効です。",
             "error_linking_incomplete": "時間内にリンクが完了しませんでした。",
+            "error_rate_limited": "再試行の数が多すぎます。少し待ってから再度試してください。",
             "error_request_cancelled": "リクエストはキャンセルされました。",
             "error_request_declined": "リクエストはもう一方の端末で拒否されました。",
             "error_unexpected": "予期しないエラーが発生しました。",
@@ -466,10 +467,6 @@
         "n_members": {
             "one": "%(count)s人",
             "other": "%(count)s人"
-        },
-        "n_participants": {
-            "other": "%(count)s人の参加者",
-            "one": "1人の参加者"
         },
         "n_rooms": {
             "one": "%(count)s個のルーム",
@@ -1500,6 +1497,9 @@
         "error_change_title": "通知設定を変更",
         "keyword": "キーワード",
         "keyword_new": "新しいキーワード",
+        "level_activity": "アクティビティー順",
+        "level_none": "なし",
+        "level_unsent": "未送信",
         "mark_all_read": "全て既読にする",
         "mentions_and_keywords": "メンションとキーワード",
         "mentions_and_keywords_description": "メンションと、<a>設定</a>したキーワードのみを通知",
@@ -3501,7 +3501,6 @@
         "already_in_call_person": "既にこの人と通話中です。",
         "answered_elsewhere": "他の端末で応答しました",
         "answered_elsewhere_description": "他の端末で呼び出しに応答しました。",
-        "audio_devices": "オーディオ装置",
         "call_failed": "呼び出しに失敗しました",
         "call_failed_description": "通話を確立できませんでした",
         "call_failed_media": "Webカメラまたはマイクを使用できなかったため、通話に失敗しました。以下を確認してください：",
@@ -3586,7 +3585,6 @@
         "user_is_presenting": "%(sharerName)sが画面を共有しています",
         "video_call": "ビデオ通話",
         "video_call_started": "ビデオ通話を開始しました",
-        "video_devices": "ビデオ装置",
         "voice_call": "音声通話",
         "you_are_presenting": "あなたが画面を共有しています"
     },

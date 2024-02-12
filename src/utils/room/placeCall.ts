@@ -29,27 +29,21 @@ import { Action } from "../../dispatcher/actions";
  * @param callType the type of call
  * @param platformCallType the platform to pass the call on
  */
-export const placeCall = async (room: Room, callType: CallType, platformCallType: PlatformCallType): Promise<void> => {
-    switch (platformCallType) {
-        case "legacy_or_jitsi":
-            await LegacyCallHandler.instance.placeCall(room.roomId, callType);
-            break;
-        // TODO: Remove the jitsi_or_element_call case and
-        // use the commented code below
-        case "element_call":
-        case "jitsi_or_element_call":
-            defaultDispatcher.dispatch<ViewRoomPayload>({
-                action: Action.ViewRoom,
-                room_id: room.roomId,
-                view_call: true,
-                metricsTrigger: undefined,
-            });
-            break;
-
-        // case "jitsi_or_element_call":
-        // TODO: Open dropdown menu to choice between
-        // EC and Jitsi. Waiting on Compound's dropdown
-        // component
-        // break;
+export const placeCall = async (
+    room: Room,
+    callType: CallType,
+    platformCallType: PlatformCallType,
+    skipLobby: boolean,
+): Promise<void> => {
+    if (platformCallType == PlatformCallType.LegacyCall || platformCallType == PlatformCallType.JitsiCall) {
+        await LegacyCallHandler.instance.placeCall(room.roomId, callType);
+    } else if (platformCallType == PlatformCallType.ElementCall) {
+        defaultDispatcher.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: room.roomId,
+            view_call: true,
+            skipLobby,
+            metricsTrigger: undefined,
+        });
     }
 };

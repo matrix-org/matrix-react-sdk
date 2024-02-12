@@ -13,6 +13,9 @@ on:
                 type: string
                 required: true
                 description: "The name of the github repository to check out and build."
+        secrets:
+            ELEMENT_BOT_TOKEN:
+                required: true
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || github.run_id }}
@@ -51,12 +54,11 @@ jobs:
                 # Run multiple instances in parallel to speed up the tests
                 runner: [1, 2, 3, 4, 5, 6, 7, 8]
         steps:
-            # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
-            # (https://github.com/actions/download-artifact/issues/60) so instead we get this mess:
             - name: 📥 Download artifact
-              uses: dawidd6/action-download-artifact@f29d1b6a8930683e80acedfbe6baa2930cd646b4 # v2
+              uses: actions/download-artifact@v4
               with:
-                  run_id: ${{ github.event.workflow_run.id }}
+                  github-token: ${{ secrets.ELEMENT_BOT_TOKEN }}
+                  run-id: ${{ github.event.workflow_run.id }}
                   name: previewbuild
                   path: webapp
 
@@ -93,15 +95,17 @@ jobs:
               run: yarn install --frozen-lockfile
 
             - name: Get installed Playwright version
-              run: echo "PLAYWRIGHT_VERSION=$(yarn info @playwright/test -A --json | jq -r .data.version)" >> $GITHUB_ENV
+              id: playwright
+              working-directory: matrix-react-sdk
+              run: echo "version=$(yarn list --pattern @playwright/test --depth=0 --json --non-interactive --no-progress | jq -r '.data.trees[].name')" >> $GITHUB_OUTPUT
 
             - name: Cache playwright binaries
-              uses: actions/cache@v3
+              uses: actions/cache@v4
               id: playwright-cache
               with:
                   path: |
                       ~/.cache/ms-playwright
-                  key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+                  key: ${{ runner.os }}-playwright-${{ steps.playwright.outputs.version }}
 
             - name: Install Playwright browsers
               if: steps.playwright-cache.outputs.cache-hit != 'true'
@@ -116,9 +120,9 @@ jobs:
 
             - name: Upload blob report to GitHub Actions Artifacts
               if: always()
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
-                  name: all-blob-reports
+                  name: all-blob-reports-${{ matrix.runner }}
                   path: matrix-react-sdk/blob-report
                   retention-days: 1
 
@@ -145,16 +149,17 @@ jobs:
               run: yarn install --frozen-lockfile
 
             - name: Download blob reports from GitHub Actions Artifacts
-              uses: actions/download-artifact@v3
+              uses: actions/download-artifact@v4
               with:
-                  name: all-blob-reports
+                  pattern: all-blob-reports-*
                   path: all-blob-reports
+                  merge-multiple: true
 
             - name: Merge into HTML Report
               run: yarn playwright merge-reports --reporter=html,github ./all-blob-reports
 
             - name: Upload HTML report
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                   name: html-report--attempt-${{ github.run_attempt }}
                   path: playwright-report

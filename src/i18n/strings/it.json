@@ -446,6 +446,7 @@
         "encrypted": "Crittografato",
         "encryption_enabled": "Crittografia attivata",
         "error": "Errore",
+        "faq": "Domande frequenti",
         "favourites": "Preferiti",
         "filter_results": "Filtra risultati",
         "forward_message": "Inoltra messaggio",
@@ -455,6 +456,7 @@
         "help": "Aiuto",
         "historical": "Cronologia",
         "home": "Pagina iniziale",
+        "homeserver": "Homeserver",
         "identity_server": "Server di identità",
         "image": "Immagine",
         "integration_manager": "Gestore di integrazioni",
@@ -476,10 +478,6 @@
         "n_members": {
             "one": "%(count)s membro",
             "other": "%(count)s membri"
-        },
-        "n_participants": {
-            "one": "1 partecipante",
-            "other": "%(count)s partecipanti"
         },
         "n_rooms": {
             "one": "%(count)s stanza",
@@ -525,6 +523,7 @@
         "someone": "Qualcuno",
         "space": "Spazio",
         "spaces": "Spazi",
+        "sticker": "Adesivo",
         "stickerpack": "Pacchetto adesivi",
         "success": "Successo",
         "suggestions": "Suggerimenti",
@@ -570,6 +569,7 @@
         "close_sticker_picker": "Nascondi gli adesivi",
         "edit_composer_label": "Modifica messaggio",
         "format_bold": "Grassetto",
+        "format_code_block": "Blocco di codice",
         "format_decrease_indent": "Diminuzione indentazione",
         "format_increase_indent": "Aumento indentazione",
         "format_inline_code": "Codice",
@@ -748,7 +748,6 @@
         "room_notifications_total": "Totale: ",
         "room_notifications_type": "Tipo: ",
         "room_status": "Stato della stanza",
-        "room_unread_status": "Stato \"non letto\" nella stanza: <strong>%(status)s</strong>",
         "room_unread_status_count": {
             "other": "Stato \"non letto\" nella stanza: <strong>%(status)s</strong>, conteggio: <strong>%(count)s</strong>"
         },
@@ -1288,10 +1287,12 @@
     },
     "keyboard": {
         "activate_button": "Attiva pulsante selezionato",
+        "alt": "Alt",
         "autocomplete_cancel": "Annulla autocompletamento",
         "autocomplete_force": "Forza completamento",
         "autocomplete_navigate_next": "Prossimo suggerimento di autocompletamento",
         "autocomplete_navigate_prev": "Precedente suggerimento di autocompletamento",
+        "backspace": "Backspace",
         "cancel_reply": "Annulla la risposta a un messaggio",
         "category_autocomplete": "Autocompletamento",
         "category_calls": "Chiamate",
@@ -1314,6 +1315,7 @@
         "dismiss_read_marker_and_jump_bottom": "Scarta il segno di lettura e salta alla fine",
         "end": "Fine",
         "enter": "Invio",
+        "escape": "Esc",
         "go_home_view": "Vai alla vista home",
         "home": "Pagina iniziale",
         "jump_first_message": "Salta al primo messaggio",
@@ -1342,6 +1344,7 @@
         "scroll_up_timeline": "Scorri in su nella linea temporale",
         "search": "Cerca (deve essere attivato)",
         "send_sticker": "Invia uno sticker",
+        "shift": "Shift",
         "space": "Spazio",
         "switch_to_space": "Passa allo spazio per numero",
         "toggle_hidden_events": "Cambia visibilità evento nascosto",
@@ -1403,7 +1406,7 @@
         "location_share_live_description": "Implementazione temporanea: le posizioni persistono nella cronologia della stanza.",
         "mjolnir": "Nuovi modi di ignorare le persone",
         "msc3531_hide_messages_pending_moderation": "Lascia che i moderatori nascondano i messaggi in attesa di moderazione.",
-        "new_room_decoration_ui": "In sviluppo attivo, nuova interfaccia per intestazione e dettagli stanza",
+        "new_room_decoration_ui": "In sviluppo attivo, nuova interfaccia per intestazione e dettagli della stanza",
         "notification_settings": "Nuove impostazioni di notifica",
         "notification_settings_beta_title": "Impostazioni di notifica",
         "oidc_native_flow": "Attiva i nuovi flussi OIDC nativi (in sviluppo attivo)",
@@ -1411,7 +1414,6 @@
         "report_to_moderators": "Segnala ai moderatori",
         "report_to_moderators_description": "Nelle stanze che supportano la moderazione, il pulsante \"Segnala\" ti permetterà di segnalare abusi ai moderatori della stanza.",
         "rust_crypto": "Implementazione crittografia Rust",
-        "rust_crypto_disabled_notice": "Attualmente può essere attivato solo via config.json",
         "sliding_sync": "Modalità di sincr. con slide",
         "sliding_sync_checking": "Controllo…",
         "sliding_sync_configuration": "Configurazione sincr. Sliding",
@@ -3723,7 +3725,6 @@
         "already_in_call_person": "Sei già in una chiamata con questa persona.",
         "answered_elsewhere": "Risposto altrove",
         "answered_elsewhere_description": "La chiamata è stata accettata su un altro dispositivo.",
-        "audio_devices": "Dispositivi audio",
         "call_failed": "Chiamata fallita",
         "call_failed_description": "Impossibile stabilire la chiamata",
         "call_failed_media": "Chiamata fallita perchè la webcam o il microfono non sono accessibili. Controlla che:",
@@ -3810,7 +3811,6 @@
         "user_is_presenting": "%(sharerName)s sta presentando",
         "video_call": "Videochiamata",
         "video_call_started": "Videochiamata iniziata",
-        "video_devices": "Dispositivi video",
         "voice_call": "Telefonata",
         "you_are_presenting": "Stai presentando"
     },

@@ -239,6 +239,7 @@
             "error_homeserver_lacks_support": "Tu servidor base no es compatible con el inicio de sesión en otro dispositivo.",
             "error_invalid_scanned_code": "El código escaneado no es válido.",
             "error_linking_incomplete": "El proceso de enlace ha tardado demasiado tiempo, por lo que no se ha completado.",
+            "error_rate_limited": "Demasiados intentos en poco tiempo. Espera un poco antes de volverlo a intentar.",
             "error_request_cancelled": "La solicitud ha sido cancelada.",
             "error_request_declined": "El otro dispositivo ha rechazado la solicitud.",
             "error_unexpected": "Ha ocurrido un error inesperado.",
@@ -451,10 +452,6 @@
         "n_members": {
             "one": "%(count)s miembro",
             "other": "%(count)s miembros"
-        },
-        "n_participants": {
-            "one": "1 participante",
-            "other": "%(count)s participantes"
         },
         "n_rooms": {
             "one": "%(count)s sala",
@@ -1329,7 +1326,6 @@
         "report_to_moderators": "Denunciar ante los moderadores",
         "report_to_moderators_description": "En las salas que sean compatible con la moderación, el botón de «Denunciar» avisará a los moderadores de la sala.",
         "rust_crypto": "Implementación de la criptografía en Rust",
-        "rust_crypto_disabled_notice": "Ahora mismo solo se puede activar a través de config.json",
         "sliding_sync": "Modo de sincronización progresiva",
         "sliding_sync_checking": "Comprobando…",
         "sliding_sync_configuration": "Configuración de la sincronización progresiva",
@@ -1485,6 +1481,9 @@
         "error_change_title": "Cambiar los ajustes de notificaciones",
         "keyword": "Palabra clave",
         "keyword_new": "Nueva palabra clave",
+        "level_activity": "Actividad",
+        "level_none": "Ninguno",
+        "level_unsent": "No enviado",
         "mark_all_read": "Marcar todo como leído",
         "mentions_and_keywords": "@menciones y palabras clave",
         "mentions_and_keywords_description": "Recibir notificaciones solo cuando me mencionen o escriban una palabra vigilada configurada en los <a>ajustes</a>",
@@ -3481,7 +3480,6 @@
         "already_in_call_person": "Ya estás en una llamada con esta persona.",
         "answered_elsewhere": "Respondida en otra parte",
         "answered_elsewhere_description": "Esta llamada fue respondida en otro dispositivo.",
-        "audio_devices": "Dispositivos de audio",
         "call_failed": "Llamada fallida",
         "call_failed_description": "No se ha podido establecer la llamada",
         "call_failed_media": "La llamada ha fallado porque no se ha podido acceder a la cámara o al micrófono. Comprueba que:",
@@ -3567,7 +3565,6 @@
         "user_is_presenting": "%(sharerName)s está presentando",
         "video_call": "Llamada de vídeo",
         "video_call_started": "Videollamada iniciada",
-        "video_devices": "Dispositivos de vídeo",
         "voice_call": "Llamada de voz",
         "you_are_presenting": "Estás presentando"
     },

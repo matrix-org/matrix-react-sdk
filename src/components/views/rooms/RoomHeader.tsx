@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useMemo, useState } from "react";
-import { Body as BodyText, IconButton, Tooltip } from "@vector-im/compound-web";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Body as BodyText, Button, IconButton, Menu, MenuItem, Tooltip } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
+import { Icon as CloseCallIcon } from "@vector-im/compound-design-tokens/icons/close.svg";
 import { Icon as ThreadsIcon } from "@vector-im/compound-design-tokens/icons/threads-solid.svg";
 import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/icons/notifications-solid.svg";
 import { Icon as VerifiedIcon } from "@vector-im/compound-design-tokens/icons/verified.svg";
@@ -35,9 +36,8 @@ import { useRoomMemberCount, useRoomMembers } from "../../../hooks/useRoomMember
 import { _t } from "../../../languageHandler";
 import { Flex } from "../../utils/Flex";
 import { Box } from "../../utils/Box";
-import { useRoomCall } from "../../../hooks/room/useRoomCall";
+import { getPlatformCallTypeLabel, useRoomCall } from "../../../hooks/room/useRoomCall";
 import { useRoomThreadNotifications } from "../../../hooks/room/useRoomThreadNotifications";
-import { NotificationLevel } from "../../../stores/notifications/NotificationLevel";
 import { useGlobalNotificationState } from "../../../hooks/useGlobalNotificationState";
 import SdkConfig from "../../../SdkConfig";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
@@ -52,20 +52,8 @@ import { Linkify, topicToHtml } from "../../../HtmlUtils";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { VideoRoomChatButton } from "./RoomHeader/VideoRoomChatButton";
 import { RoomKnocksBar } from "./RoomKnocksBar";
-
-/**
- * A helper to transform a notification color to the what the Compound Icon Button
- * expects
- */
-function notificationLevelToIndicator(color: NotificationLevel): React.ComponentProps<typeof IconButton>["indicator"] {
-    if (color <= NotificationLevel.None) {
-        return undefined;
-    } else if (color <= NotificationLevel.Notification) {
-        return "default";
-    } else {
-        return "highlight";
-    }
-}
+import { isVideoRoom } from "../../../utils/video-rooms";
+import { notificationLevelToIndicator } from "../../../utils/notifications";
 
 export default function RoomHeader({
     room,
@@ -83,7 +71,17 @@ export default function RoomHeader({
     const members = useRoomMembers(room, 2500);
     const memberCount = useRoomMemberCount(room, { throttleWait: 2500 });
 
-    const { voiceCallDisabledReason, voiceCallClick, videoCallDisabledReason, videoCallClick } = useRoomCall(room);
+    const {
+        voiceCallDisabledReason,
+        voiceCallClick,
+        videoCallDisabledReason,
+        videoCallClick,
+        toggleCallMaximized: toggleCall,
+        isViewingCall,
+        isConnectedToCall,
+        hasActiveCallSession,
+        callOptions,
+    } = useRoomCall(room);
 
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     /**
@@ -117,6 +115,113 @@ export default function RoomHeader({
     );
 
     const askToJoinEnabled = useFeatureEnabled("feature_ask_to_join");
+
+    const videoClick = useCallback((ev) => videoCallClick(ev, callOptions[0]), [callOptions, videoCallClick]);
+
+    const toggleCallButton = (
+        <Tooltip label={isViewingCall ? _t("voip|minimise_call") : _t("voip|maximise_call")}>
+            <IconButton onClick={toggleCall}>
+                <VideoCallIcon />
+            </IconButton>
+        </Tooltip>
+    );
+
+    const joinCallButton = (
+        <Tooltip label={videoCallDisabledReason ?? _t("voip|video_call")}>
+            <Button
+                size="sm"
+                onClick={videoClick}
+                Icon={VideoCallIcon}
+                className="mx_RoomHeader_join_button"
+                disabled={!!videoCallDisabledReason}
+                color="primary"
+                aria-label={videoCallDisabledReason ?? _t("action|join")}
+            >
+                {_t("action|join")}
+            </Button>
+        </Tooltip>
+    );
+
+    const callIconWithTooltip = (
+        <Tooltip label={videoCallDisabledReason ?? _t("voip|video_call")}>
+            <VideoCallIcon />
+        </Tooltip>
+    );
+
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const onOpenChange = useCallback(
+        (newOpen: boolean) => {
+            if (!videoCallDisabledReason) setMenuOpen(newOpen);
+        },
+        [videoCallDisabledReason],
+    );
+
+    const startVideoCallButton = (
+        <>
+            {/* Can be either a menu or just a button depending on the number of call options.*/}
+            {callOptions.length > 1 ? (
+                <Menu
+                    open={menuOpen}
+                    onOpenChange={onOpenChange}
+                    title={_t("voip|video_call_using")}
+                    trigger={
+                        <IconButton
+                            disabled={!!videoCallDisabledReason}
+                            aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
+                        >
+                            {callIconWithTooltip}
+                        </IconButton>
+                    }
+                    side="left"
+                    align="start"
+                >
+                    {callOptions.map((option) => (
+                        <MenuItem
+                            key={option}
+                            label={getPlatformCallTypeLabel(option)}
+                            aria-label={getPlatformCallTypeLabel(option)}
+                            onClick={(ev) => videoCallClick(ev, option)}
+                            Icon={VideoCallIcon}
+                            onSelect={() => {} /* Dummy handler since we want the click event.*/}
+                        />
+                    ))}
+                </Menu>
+            ) : (
+                <IconButton
+                    disabled={!!videoCallDisabledReason}
+                    aria-label={videoCallDisabledReason ?? _t("voip|video_call")}
+                    onClick={videoClick}
+                >
+                    {callIconWithTooltip}
+                </IconButton>
+            )}
+        </>
+    );
+    const voiceCallButton = (
+        <Tooltip label={voiceCallDisabledReason ?? _t("voip|voice_call")}>
+            <IconButton
+                disabled={!!voiceCallDisabledReason}
+                aria-label={voiceCallDisabledReason ?? _t("voip|voice_call")}
+                onClick={(ev) => voiceCallClick(ev, callOptions[0])}
+            >
+                <VoiceCallIcon />
+            </IconButton>
+        </Tooltip>
+    );
+    const closeLobbyButton = (
+        <Tooltip label={_t("voip|close_lobby")}>
+            <IconButton onClick={toggleCall} aria-label={_t("voip|close_lobby")}>
+                <CloseCallIcon />
+            </IconButton>
+        </Tooltip>
+    );
+    let videoCallButton = startVideoCallButton;
+    if (isConnectedToCall) {
+        videoCallButton = toggleCallButton;
+    } else if (isViewingCall) {
+        videoCallButton = closeLobbyButton;
+    }
 
     return (
         <>
@@ -204,29 +309,17 @@ export default function RoomHeader({
                             </Tooltip>
                         );
                     })}
-                    <Tooltip label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}>
-                        <IconButton
-                            disabled={!!videoCallDisabledReason}
-                            aria-label={!videoCallDisabledReason ? _t("voip|video_call") : videoCallDisabledReason!}
-                            onClick={videoCallClick}
-                        >
-                            <VideoCallIcon />
-                        </IconButton>
-                    </Tooltip>
-                    {!useElementCallExclusively && (
-                        <Tooltip label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}>
-                            <IconButton
-                                disabled={!!voiceCallDisabledReason}
-                                aria-label={!voiceCallDisabledReason ? _t("voip|voice_call") : voiceCallDisabledReason!}
-                                onClick={voiceCallClick}
-                            >
-                                <VoiceCallIcon />
-                            </IconButton>
-                        </Tooltip>
-                    )}
 
-                    {/* Renders nothing when room is not a video room */}
-                    <VideoRoomChatButton room={room} />
+                    {((isConnectedToCall && isViewingCall) || isVideoRoom(room)) && <VideoRoomChatButton room={room} />}
+
+                    {hasActiveCallSession && !isConnectedToCall && !isViewingCall ? (
+                        joinCallButton
+                    ) : (
+                        <>
+                            {!isVideoRoom(room) && videoCallButton}
+                            {!useElementCallExclusively && !isVideoRoom(room) && voiceCallButton}
+                        </>
+                    )}
 
                     <Tooltip label={_t("common|threads")}>
                         <IconButton

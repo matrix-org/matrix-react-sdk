@@ -46,6 +46,7 @@ import RustCryptoSdkController from "./controllers/RustCryptoSdkController";
 import ServerSupportUnstableFeatureController from "./controllers/ServerSupportUnstableFeatureController";
 import { WatchManager } from "./WatchManager";
 import { CustomTheme } from "../theme";
+import SettingsStore from "./SettingsStore";
 
 export const defaultWatchManager = new WatchManager();
 
@@ -80,6 +81,7 @@ export enum LabGroup {
     Spaces,
     Widgets,
     Rooms,
+    Threads,
     VoiceAndVideo,
     Moderation,
     Analytics,
@@ -94,6 +96,8 @@ export enum Features {
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
     NotificationSettings2 = "feature_notification_settings2",
     OidcNativeFlow = "feature_oidc_native_flow",
+    // If true, every new login will use the new rust crypto implementation
+    RustCrypto = "feature_rust_crypto",
 }
 
 export const labGroupNames: Record<LabGroup, TranslationKey> = {
@@ -102,6 +106,7 @@ export const labGroupNames: Record<LabGroup, TranslationKey> = {
     [LabGroup.Spaces]: _td("labs|group_spaces"),
     [LabGroup.Widgets]: _td("labs|group_widgets"),
     [LabGroup.Rooms]: _td("labs|group_rooms"),
+    [LabGroup.Threads]: _td("labs|group_threads"),
     [LabGroup.VoiceAndVideo]: _td("labs|group_voip"),
     [LabGroup.Moderation]: _td("labs|group_moderation"),
     [LabGroup.Analytics]: _td("common|analytics"),
@@ -480,17 +485,31 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         description: _td("labs|oidc_native_flow_description"),
         default: false,
     },
-    "feature_rust_crypto": {
-        // use the rust matrix-sdk-crypto-js for crypto.
+    [Features.RustCrypto]: {
+        // use the rust matrix-sdk-crypto-wasm for crypto.
         isFeature: true,
         labsGroup: LabGroup.Developer,
-        configDisablesSetting: true,
+        // unlike most features, `configDisablesSetting` is false here.
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|rust_crypto"),
-        description: _td("labs|under_active_development"),
-        // shouldWarn: true,
-        default: false,
+        description: () => {
+            if (SettingsStore.getValueAt(SettingLevel.CONFIG, Features.RustCrypto)) {
+                // It's enabled in the config, so you can't get rid of it even by logging out.
+                return _t("labs|rust_crypto_in_config_description");
+            } else {
+                return _t("labs|rust_crypto_optin_warning");
+            }
+        },
+        shouldWarn: true,
+        default: true,
         controller: new RustCryptoSdkController(),
+    },
+    // Must be set under `setting_defaults` in config.json.
+    // If set to 100 in conjunction with `feature_rust_crypto`, all existing users will migrate to the new crypto.
+    // Default is 0, meaning no existing users on legacy crypto will migrate.
+    "RustCrypto.staged_rollout_percent": {
+        supportedLevels: [SettingLevel.CONFIG],
+        default: 0,
     },
     "baseFontSize": {
         displayName: _td("settings|appearance|font_size"),
@@ -1103,6 +1122,15 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "activeCallRoomIds": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: [],
+    },
+    "threadsActivityCentre": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        labsGroup: LabGroup.Threads,
+        controller: new ReloadOnChangeController(),
+        displayName: _td("labs|threads_activity_centre"),
+        description: _td("labs|threads_activity_centre_description"),
+        default: false,
+        isFeature: true,
     },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,

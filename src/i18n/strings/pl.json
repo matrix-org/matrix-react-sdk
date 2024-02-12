@@ -256,6 +256,7 @@
             "error_homeserver_lacks_support": "Serwer domowy nie wspiera logowania innych urządzeń.",
             "error_invalid_scanned_code": "Zeskanowany kod jest nieprawidłowy.",
             "error_linking_incomplete": "Wiązanie nie zostało zakończone w ustalonym czasie.",
+            "error_rate_limited": "Za dużo prób w krótkim odstępie czasu. Odczekaj trochę, zanim spróbujesz ponownie.",
             "error_request_cancelled": "Żądanie zostało anulowane.",
             "error_request_declined": "Żądanie zostało odrzucone przez drugie urządzenie.",
             "error_unexpected": "Wystąpił niespodziewany błąd.",
@@ -492,10 +493,6 @@
             "few": "%(count)s członki",
             "many": "%(count)s członków"
         },
-        "n_participants": {
-            "one": "1 uczestnik",
-            "other": "%(count)s uczestników"
-        },
         "n_rooms": {
             "one": "%(count)s pokój",
             "other": "%(count)s pokojów"
@@ -510,7 +507,7 @@
         "options": "Opcje",
         "orphan_rooms": "Inne pokoje",
         "password": "Hasło",
-        "people": "Ludzie",
+        "people": "Osoby",
         "preferences": "Preferencje",
         "presence": "Prezencja",
         "preview_message": "Hej, ty. Jesteś super!",
@@ -765,7 +762,6 @@
         "room_notifications_total": "Łącznie: ",
         "room_notifications_type": "Typ: ",
         "room_status": "Status pokoju",
-        "room_unread_status": "Status nieprzeczytanych wiadomości pokoju: <strong>%(status)s</strong>",
         "room_unread_status_count": {
             "other": "Status nieprzeczytanych wiadomości pokoju: <strong>%(status)s</strong>, ilość: <strong>%(count)s</strong>"
         },
@@ -1447,7 +1443,10 @@
         "report_to_moderators": "Zgłoś do moderatorów",
         "report_to_moderators_description": "W pokojach, które wspierają moderacje, przycisk \"Zgłoś\" pozwoli Ci zgłosić nadużycia moderatorom.",
         "rust_crypto": "Implementacja kryptografii Rust",
-        "rust_crypto_disabled_notice": "Można go tylko włączyć przez config.json",
+        "rust_crypto_in_config": "Kryptografia Rust nie może zostać włączona na tym wydaniu %(brand)s",
+        "rust_crypto_in_config_description": "Przejście na kryptografię Rust wymaga procesu migracji, która może potrwać kilka minut. Nie można jej wyłączyć; zachowaj ostrożność!",
+        "rust_crypto_optin_warning": "Przejście na kryptografię Rust wymaga procesu migracji, która może potrwać kilka minut. Aby ją wyłączyć, będziesz musiał zalogować się ponownie; zachowaj ostrożność!",
+        "rust_crypto_requires_logout": "Po włączeniu, kryptografia Rust może zostać wyłączona tylko po ponownym zalogowaniu.",
         "sliding_sync": "Tryb synchronizacji przesuwanej",
         "sliding_sync_checking": "Sprawdzanie…",
         "sliding_sync_configuration": "Konfiguracja synchronizacji przesuwanej",
@@ -1587,6 +1586,7 @@
     },
     "member_list_back_action_label": "Członkowie pokoju",
     "message_edit_dialog_title": "Edycje wiadomości",
+    "migrating_crypto": "Trzymaj się mocno. Aktualizujemy Element, aby szyfrowanie było szybsze i bardziej niezawodne.",
     "mobile_guide": {
         "toast_accept": "Użyj aplikacji",
         "toast_description": "%(brand)s jest eksperymentalne na przeglądarce mobilnej. Dla lepszego doświadczenia i najnowszych funkcji użyj naszej darmowej natywnej aplikacji.",
@@ -1611,6 +1611,12 @@
         "error_change_title": "Zmień ustawienia powiadomień",
         "keyword": "Słowo kluczowe",
         "keyword_new": "Nowe słowo kluczowe",
+        "level_activity": "Aktywności",
+        "level_highlight": "Wyróżnij",
+        "level_muted": "Wyciszony",
+        "level_none": "Brak",
+        "level_notification": "Powiadomienie",
+        "level_unsent": "Niewysłane",
         "mark_all_read": "Oznacz wszystko jako przeczytane",
         "mentions_and_keywords": "@wzmianki & słowa kluczowe",
         "mentions_and_keywords_description": "Otrzymuj powiadomienia tylko z wzmiankami i słowami kluczowymi zgodnie z Twoimi <a>ustawieniami</a>",
@@ -1664,7 +1670,7 @@
         "send_dm": "Wyślij wiadomość prywatną",
         "set_up_profile": "Utwórz swój profil",
         "set_up_profile_action": "Twój profil",
-        "set_up_profile_description": "Upewnij się, że ludzie wiedzą, że to naprawdę ty",
+        "set_up_profile_description": "Upewnij się, że osoby wiedzą, że to naprawdę ty",
         "use_case_community_messaging": "Członkowie społeczności online",
         "use_case_heading1": "Wszedłeś",
         "use_case_heading2": "Z kim będziesz najczęściej rozmawiał?",
@@ -2277,7 +2283,7 @@
             "history_visibility_world_readable": "Każdy",
             "join_rule_description": "Decyduj kto może dołączyć %(roomName)s.",
             "join_rule_invite": "Prywatny (tylko na zaproszenie)",
-            "join_rule_invite_description": "Tylko zaproszeni ludzie mogą dołączyć.",
+            "join_rule_invite_description": "Tylko zaproszone osoby mogą dołączyć",
             "join_rule_knock": "Poproś o dołączenie",
             "join_rule_knock_description": "Osoby nie mogą dołączyć, dopóki nie otrzymają zezwolenia.",
             "join_rule_public_description": "Każdy może znaleźć i dołączyć.",
@@ -3782,7 +3788,6 @@
         "already_in_call_person": "Prowadzisz już rozmowę z tą osobą.",
         "answered_elsewhere": "Odebrano gdzie indziej",
         "answered_elsewhere_description": "Połączenie zostało odebrane na innym urządzeniu.",
-        "audio_devices": "Urządzenia audio",
         "call_failed": "Nieudane połączenie",
         "call_failed_description": "Nie udało się nawiązać połączenia",
         "call_failed_media": "Połączenie nieudane z powodu braku dostępu do kamery bądź mikrofonu. Sprawdź czy:",
@@ -3869,7 +3874,6 @@
         "user_is_presenting": "%(sharerName)s prezentuje",
         "video_call": "Rozmowa wideo",
         "video_call_started": "Rozpoczęto rozmowę wideo",
-        "video_devices": "Urządzenia wideo",
         "voice_call": "Rozmowa głosowa",
         "you_are_presenting": "Prezentujesz"
     },

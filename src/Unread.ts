@@ -20,6 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import shouldHideEvent from "./shouldHideEvent";
 import { haveRendererForEvent } from "./events/EventTileFactory";
 import SettingsStore from "./settings/SettingsStore";
+import { RoomNotifState, getRoomNotifsState } from "./RoomNotifs";
 
 /**
  * Returns true if this event arriving in a room should affect the room's
@@ -50,14 +51,19 @@ export function eventTriggersUnreadCount(client: MatrixClient, ev: MatrixEvent):
     return haveRendererForEvent(ev, client, false /* hidden messages should never trigger unread counts anyways */);
 }
 
-export function doesRoomHaveUnreadMessages(room: Room): boolean {
+export function doesRoomHaveUnreadMessages(room: Room, includeThreads: boolean): boolean {
     if (SettingsStore.getValue("feature_sliding_sync")) {
         // TODO: https://github.com/vector-im/element-web/issues/23207
         // Sliding Sync doesn't support unread indicator dots (yet...)
         return false;
     }
 
-    for (const withTimeline of [room, ...room.getThreads()]) {
+    const toCheck: Array<Room | Thread> = [room];
+    if (includeThreads) {
+        toCheck.push(...room.getThreads());
+    }
+
+    for (const withTimeline of toCheck) {
         if (doesTimelineHaveUnreadMessages(room, withTimeline.timeline)) {
             // We found an unread, so the room is unread
             return true;
@@ -69,6 +75,9 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
 }
 
 function doesTimelineHaveUnreadMessages(room: Room, timeline: Array<MatrixEvent>): boolean {
+    // The room is a space, let's ignore it
+    if (room.isSpaceRoom()) return false;
+
     const myUserId = room.client.getSafeUserId();
     const latestImportantEventId = findLatestImportantEvent(room.client, timeline)?.getId();
     if (latestImportantEventId) {
@@ -95,6 +104,29 @@ function doesTimelineHaveUnreadMessages(room: Room, timeline: Array<MatrixEvent>
             return true;
         }
     }
+}
+
+/**
+ * Returns true if this room has unread threads.
+ * @param room The room to check
+ * @returns {boolean} True if the given room has unread threads
+ */
+export function doesRoomHaveUnreadThreads(room: Room): boolean {
+    if (getRoomNotifsState(room.client, room.roomId) === RoomNotifState.Mute) {
+        // No unread for muted rooms, nor their threads
+        // NB. This logic duplicated in RoomNotifs.determineUnreadState
+        return false;
+    }
+
+    for (const thread of room.getThreads()) {
+        if (doesTimelineHaveUnreadMessages(room, thread.timeline)) {
+            // We found an unread, so the room has an unread thread
+            return true;
+        }
+    }
+
+    // If we got here then no threads were found with unread messages.
+    return false;
 }
 
 export function doesRoomOrThreadHaveUnreadMessages(roomOrThread: Room | Thread): boolean {
