@@ -66,9 +66,7 @@ export function useUnreadThreadRooms(forceComputation: boolean): Result {
     useEventEmitter(mxClient, ClientEvent.Sync, scheduleUpdate);
     // and also when events get decrypted, since this will often happen after the sync
     // event and may change notifications.
-    useEventEmitter(mxClient, MatrixEventEvent.Decrypted, () => {
-        scheduleUpdate();
-    });
+    useEventEmitter(mxClient, MatrixEventEvent.Decrypted, scheduleUpdate);
 
     // Force the list computation
     useEffect(() => {
