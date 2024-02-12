@@ -37,7 +37,7 @@ export class OidcClientStore {
         if (this.authenticatedIssuer) {
             this.getOidcClient();
         } else {
-            this._accountManagementEndpoint = getDelegatedAuthAccountUrl(matrixClient);
+            this._accountManagementEndpoint = getDelegatedAuthAccountUrl(matrixClient.getClientWellKnown());
         }
     }
 
