@@ -695,12 +695,6 @@ describe("Lifecycle", () => {
             });
 
             beforeEach(() => {
-                // mock oidc config for oidc client initialisation
-                mockClient.waitForClientWellKnown.mockResolvedValue({
-                    "m.authentication": {
-                        issuer: issuer,
-                    },
-                });
                 initSessionStorageMock();
                 // set values in session storage as they would be after a successful oidc authentication
                 persistOidcAuthenticatedSettings(clientId, issuer, idTokenClaims);
