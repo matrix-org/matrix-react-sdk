@@ -15,14 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import {
-    AutoDiscovery,
-    AutoDiscoveryError,
-    ClientConfig,
-    OidcClientConfig,
-    M_AUTHENTICATION,
-    IClientWellKnown,
-} from "matrix-js-sdk/src/matrix";
+import { AutoDiscovery, AutoDiscoveryError, ClientConfig, IClientWellKnown } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td, TranslationKey, UserFriendlyError } from "../languageHandler";
@@ -293,28 +286,6 @@ export default class AutoDiscoveryUtils {
             throw new UserFriendlyError("auth|autodiscovery_unexpected_error_hs");
         }
 
-        let delegatedAuthentication: OidcClientConfig | undefined;
-        if (discoveryResult[M_AUTHENTICATION.stable!]?.state === AutoDiscovery.SUCCESS) {
-            const {
-                authorizationEndpoint,
-                registrationEndpoint,
-                tokenEndpoint,
-                account,
-                issuer,
-                metadata,
-                signingKeys,
-            } = discoveryResult[M_AUTHENTICATION.stable!] as OidcClientConfig;
-            delegatedAuthentication = Object.freeze({
-                authorizationEndpoint,
-                registrationEndpoint,
-                tokenEndpoint,
-                account,
-                issuer,
-                metadata,
-                signingKeys,
-            });
-        }
-
         return {
             hsUrl: preferredHomeserverUrl,
             hsName: preferredHomeserverName,
@@ -323,7 +294,6 @@ export default class AutoDiscoveryUtils {
             isDefault: false,
             warning: hsResult.error,
             isNameResolvable: !isSynthetic,
-            delegatedAuthentication,
         } as ValidatedServerConfig;
     }
 }

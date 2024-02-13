@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { registerOidcClient } from "matrix-js-sdk/src/oidc/register";
+import { registerOidcClient, OidcClientConfig } from "matrix-js-sdk/src/matrix";
 
 import { IConfigOptions } from "../../IConfigOptions";
-import { ValidatedDelegatedAuthConfig } from "../ValidatedServerConfig";
 
 /**
  * Get the statically configured clientId for the issuer
@@ -47,7 +46,7 @@ const getStaticOidcClientId = (
  * @throws if no clientId is found
  */
 export const getOidcClientId = async (
-    delegatedAuthConfig: ValidatedDelegatedAuthConfig,
+    delegatedAuthConfig: Omit<OidcClientConfig, "metadata"> & { issuer: string },
     clientName: string,
     baseUrl: string,
     staticOidcClients?: IConfigOptions["oidc_static_clients"],

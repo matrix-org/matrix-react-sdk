@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { AutoDiscovery, AutoDiscoveryAction, ClientConfig, M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
+import { AutoDiscovery, AutoDiscoveryAction, ClientConfig } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import AutoDiscoveryUtils from "../../src/utils/AutoDiscoveryUtils";
@@ -198,51 +198,6 @@ describe("AutoDiscoveryUtils", () => {
             ).toEqual({
                 ...expectedValidatedConfig,
                 warning: "Homeserver URL does not appear to be a valid Matrix homeserver",
-            });
-        });
-
-        it("ignores delegated auth config when discovery was not successful", () => {
-            const discoveryResult = {
-                ...validIsConfig,
-                ...validHsConfig,
-                [M_AUTHENTICATION.stable!]: {
-                    state: AutoDiscoveryAction.FAIL_ERROR,
-                    error: "",
-                },
-            };
-            const syntaxOnly = true;
-            expect(
-                AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult, syntaxOnly),
-            ).toEqual({
-                ...expectedValidatedConfig,
-                delegatedAuthentication: undefined,
-                warning: undefined,
-            });
-        });
-
-        it("sets delegated auth config when discovery was successful", () => {
-            const authConfig = {
-                issuer: "https://test.com/",
-                authorizationEndpoint: "https://test.com/auth",
-                registrationEndpoint: "https://test.com/registration",
-                tokenEndpoint: "https://test.com/token",
-            };
-            const discoveryResult: ClientConfig = {
-                ...validIsConfig,
-                ...validHsConfig,
-                [M_AUTHENTICATION.stable!]: {
-                    state: AutoDiscoveryAction.SUCCESS,
-                    error: null,
-                    ...authConfig,
-                },
-            };
-            const syntaxOnly = true;
-            expect(
-                AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult, syntaxOnly),
-            ).toEqual({
-                ...expectedValidatedConfig,
-                delegatedAuthentication: authConfig,
-                warning: undefined,
             });
         });
 

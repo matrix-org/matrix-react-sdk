@@ -17,9 +17,8 @@ limitations under the License.
 import fetchMock from "fetch-mock-jest";
 import { mocked } from "jest-mock";
 import { OidcClient } from "oidc-client-ts";
-import { M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { discoverAndValidateAuthenticationConfig } from "matrix-js-sdk/src/oidc/discovery";
+import { discoverAndValidateOIDCIssuerWellKnown } from "matrix-js-sdk/src/oidc/discovery";
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
 
 import { OidcClientStore } from "../../../src/stores/oidc/OidcClientStore";
@@ -27,7 +26,7 @@ import { flushPromises, getMockClientWithEventEmitter } from "../../test-utils";
 import { mockOpenIdConfiguration } from "../../test-utils/oidc";
 
 jest.mock("matrix-js-sdk/src/oidc/discovery", () => ({
-    discoverAndValidateAuthenticationConfig: jest.fn(),
+    discoverAndValidateOIDCIssuerWellKnown: jest.fn(),
 }));
 
 describe("OidcClientStore", () => {
@@ -44,16 +43,11 @@ describe("OidcClientStore", () => {
         localStorage.setItem("mx_oidc_client_id", clientId);
         localStorage.setItem("mx_oidc_token_issuer", metadata.issuer);
 
-        mocked(discoverAndValidateAuthenticationConfig).mockClear().mockResolvedValue({
+        mocked(discoverAndValidateOIDCIssuerWellKnown).mockClear().mockResolvedValue({
             metadata,
-            account,
-            issuer: metadata.issuer,
-        });
-        mockClient.waitForClientWellKnown.mockResolvedValue({
-            [M_AUTHENTICATION.stable!]: {
-                issuer: metadata.issuer,
-                account,
-            },
+            accountManagementEndpoint: account,
+            authorizationEndpoint: "authorization-endpoint",
+            tokenEndpoint: "token-endpoint",
         });
         jest.spyOn(logger, "error").mockClear();
 
@@ -108,7 +102,7 @@ describe("OidcClientStore", () => {
         });
 
         it("should log and return when discovery and validation fails", async () => {
-            mocked(discoverAndValidateAuthenticationConfig).mockRejectedValue(new Error(OidcError.OpSupport));
+            mocked(discoverAndValidateOIDCIssuerWellKnown).mockRejectedValue(new Error(OidcError.OpSupport));
             const store = new OidcClientStore(mockClient);
 
             await flushPromises();
@@ -142,15 +136,15 @@ describe("OidcClientStore", () => {
         });
 
         it("should set account management endpoint to issuer when not configured", async () => {
-            mocked(discoverAndValidateAuthenticationConfig).mockClear().mockResolvedValue({
+            mocked(discoverAndValidateOIDCIssuerWellKnown).mockClear().mockResolvedValue({
                 metadata,
-                account: undefined,
-                issuer: metadata.issuer,
+                accountManagementEndpoint: undefined,
+                authorizationEndpoint: "authorization-endpoint",
+                tokenEndpoint: "token-endpoint",
             });
             const store = new OidcClientStore(mockClient);
 
-            // @ts-ignore private property
-            await store.getOidcClient();
+            await store.readyPromise;
 
             expect(store.accountManagementEndpoint).toEqual(metadata.issuer);
         });
@@ -174,7 +168,7 @@ describe("OidcClientStore", () => {
 
             // only called once for multiple calls to getOidcClient
             // before and after initialisation is complete
-            expect(discoverAndValidateAuthenticationConfig).toHaveBeenCalledTimes(1);
+            expect(discoverAndValidateOIDCIssuerWellKnown).toHaveBeenCalledTimes(1);
         });
     });
 
