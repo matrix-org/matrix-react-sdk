@@ -26,16 +26,24 @@ import { clamp } from "../../utils/numbers";
 
 export class FontWatcher implements IWatcher {
     /**
-     * Value indirectly defined by Compound.
-     * All `rem` calculations are made from a `16px` values in the
-     * @vector-im/compound-design-tokens package
-     *
-     * We might want to move to using `100%` instead so we can inherit the user
-     * preference set in the browser regarding font sizes.
+     * This Compound value is using `100%` of the default browser font size.
+     * It allows EW to use the browser's default font size instead of a fixed value.
+     * All the Compound font size are using `rem`, they are relative to the root font size
+     * and therefore of the browser font size.
      */
-    public static readonly DEFAULT_SIZE = 16;
-    public static readonly MIN_SIZE = FontWatcher.DEFAULT_SIZE - 5;
-    public static readonly MAX_SIZE = FontWatcher.DEFAULT_SIZE + 5;
+    private static readonly DEFAULT_SIZE = "var(--cpd-font-size-root)";
+    /**
+     * Default delta added to the ${@link DEFAULT_SIZE}
+     */
+    public static readonly DEFAULT_DELTA = 0;
+    /**
+     * The lowest value that can be added to the ${@link DEFAULT_SIZE}
+     */
+    public static readonly MIN_DELTA = -5;
+    /**
+     * The highest value that can be added to the ${@link DEFAULT_SIZE}
+     */
+    public static readonly MAX_DELTA = 5;
 
     private dispatcherRef: string | null;
 
@@ -47,6 +55,7 @@ export class FontWatcher implements IWatcher {
         this.updateFont();
         this.dispatcherRef = dis.register(this.onAction);
         /**
+         * TODO To change before review
          * baseFontSize is an account level setting which is loaded after the initial
          * sync. Hence why we can't do that in the `constructor`
          */
@@ -84,7 +93,7 @@ export class FontWatcher implements IWatcher {
     }
 
     private updateFont(): void {
-        this.setRootFontSize(SettingsStore.getValue("baseFontSizeV2"));
+        this.setRootFontSize(SettingsStore.getValue<number>("baseFontSizeV3"));
         this.setSystemFont({
             useBundledEmojiFont: SettingsStore.getValue("useBundledEmojiFont"),
             useSystemFont: SettingsStore.getValue("useSystemFont"),
@@ -94,14 +103,15 @@ export class FontWatcher implements IWatcher {
 
     private onAction = (payload: ActionPayload): void => {
         if (payload.action === Action.MigrateBaseFontSize) {
+            // TODO Migration to v3
             this.migrateBaseFontSize();
-        } else if (payload.action === Action.UpdateFontSize) {
-            this.setRootFontSize(payload.size);
+        } else if (payload.action === Action.UpdateFontSizeDeltaSize) {
+            this.setRootFontSize(payload.delta);
         } else if (payload.action === Action.UpdateSystemFont) {
             this.setSystemFont(payload as UpdateSystemFontPayload);
         } else if (payload.action === Action.OnLoggedOut) {
             // Clear font overrides when logging out
-            this.setRootFontSize(FontWatcher.DEFAULT_SIZE);
+            this.setRootFontSize(FontWatcher.DEFAULT_DELTA);
             this.setSystemFont({
                 useBundledEmojiFont: false,
                 useSystemFont: false,
@@ -113,13 +123,17 @@ export class FontWatcher implements IWatcher {
         }
     };
 
-    private setRootFontSize = async (size: number): Promise<void> => {
-        const fontSize = clamp(size, FontWatcher.MIN_SIZE, FontWatcher.MAX_SIZE);
+    private setRootFontSize = async (delta: number): Promise<void> => {
+        // Check that the new delta doesn't exceed the limits
+        const fontDelta = clamp(delta, FontWatcher.MIN_DELTA, FontWatcher.MAX_DELTA);
 
-        if (fontSize !== size) {
-            await SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, fontSize);
+        if (fontDelta !== delta) {
+            await SettingsStore.setValue("baseFontSizeV3", null, SettingLevel.DEVICE, fontDelta);
         }
-        document.querySelector<HTMLElement>(":root")!.style.fontSize = toPx(fontSize);
+
+        // Add the delta to the browser default font size
+        document.querySelector<HTMLElement>(":root")!.style.fontSize =
+            `calc(${FontWatcher.DEFAULT_SIZE} + ${toPx(fontDelta)})`;
     };
 
     public static readonly FONT_FAMILY_CUSTOM_PROPERTY = "--cpd-font-family-sans";
