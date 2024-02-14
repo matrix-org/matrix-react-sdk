@@ -22,7 +22,7 @@ test.describe("OIDC Aware", () => {
     test.skip(isDendrite, "does not yet support MAS");
     test.slow(); // trace recording takes a while here
 
-    test("can register an account and manage it", async ({ context, page, homeserver, mailhog }) => {
+    test("can register an account and manage it", async ({ context, page, homeserver, mailhog, app }) => {
         await page.goto("/#/login");
 
         await page.getByRole("button", { name: "Continue" }).click();
@@ -52,9 +52,7 @@ test.describe("OIDC Aware", () => {
         await expect(page.getByRole("heading", { name: "Welcome alice", exact: true })).toBeVisible();
 
         // Open settings and navigate to account management
-        // XXX: We cannot use `app` fixture here as `client` subfixture overrides the network redirects necessary for MAS
-        const settings = new Settings(page);
-        await settings.openUserSettings("General");
+        await app.settings.openUserSettings("General");
         const newPagePromise = context.waitForEvent("page");
         await page.getByRole("button", { name: "Manage account" }).click();
 
