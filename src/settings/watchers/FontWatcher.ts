@@ -55,7 +55,6 @@ export class FontWatcher implements IWatcher {
         this.updateFont();
         this.dispatcherRef = dis.register(this.onAction);
         /**
-         * TODO To change before review
          * baseFontSize is an account level setting which is loaded after the initial
          * sync. Hence why we can't do that in the `constructor`
          */
@@ -63,28 +62,99 @@ export class FontWatcher implements IWatcher {
     }
 
     /**
-     * Migrating the old `baseFontSize` for Compound.
-     * Everything will becomes slightly larger, and getting rid of the `SIZE_DIFF`
-     * weirdness for locally persisted values
+     * Migrate the base font size from the V1 and V2 version to the V3 version
+     * @private
      */
     private async migrateBaseFontSize(): Promise<void> {
-        const legacyBaseFontSize = SettingsStore.getValue("baseFontSize");
-        if (legacyBaseFontSize) {
-            console.log("Migrating base font size for Compound, current value", legacyBaseFontSize);
+        await this.migrateBaseFontV1toV3();
+        await this.migrateBaseFontV2toV3();
+    }
 
-            // For some odd reason, the persisted value in user storage has an offset
-            // of 5 pixels for all values stored under `baseFontSize`
-            const LEGACY_SIZE_DIFF = 5;
-            // Compound uses a base font size of `16px`, whereas the old Element
-            // styles based their calculations off a `15px` root font size.
-            const ROOT_FONT_SIZE_INCREASE = 1;
+    /**
+     * Migrating from the V1 version of the base font size to the V3 version
+     * The V3 is using the default browser font size as a base
+     * Everything will become slightly larger, and getting rid of the `SIZE_DIFF`
+     * weirdness for locally persisted values
+     * @private
+     */
+    private async migrateBaseFontV1toV3(): Promise<void> {
+        const legacyBaseFontSize = SettingsStore.getValue<number>("baseFontSize");
+        // No baseFontV1 found, nothing to migrate
+        if (!legacyBaseFontSize) return;
 
-            const baseFontSize = legacyBaseFontSize + ROOT_FONT_SIZE_INCREASE + LEGACY_SIZE_DIFF;
+        console.log(
+            "Migrating base font size -> base font size V2 -> base font size V3 for Compound, current value",
+            legacyBaseFontSize,
+        );
 
-            await SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, baseFontSize);
-            await SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, "");
-            console.log("Migration complete, deleting legacy `baseFontSize`");
-        }
+        // Compute the new font size of the V2 version before migrating to V3
+        const baseFontSizeV2 = this.computeBaseFontSizeV1toV2(legacyBaseFontSize);
+
+        // Compute the difference between the V2 and the V3 version
+        const deltaV3 = this.computeFontSizeDeltaFromV2BaseFont(baseFontSizeV2);
+
+        await SettingsStore.setValue("baseFontSizeV3", null, SettingLevel.DEVICE, deltaV3);
+        await SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, 0);
+        console.log("Migration complete, deleting legacy `baseFontSize`");
+    }
+
+    /**
+     * Migrating from the V2 version of the base font size to the V3 version
+     * @private
+     */
+    private async migrateBaseFontV2toV3(): Promise<void> {
+        const legacyBaseFontV2Size = SettingsStore.getValue<number>("baseFontSizeV2");
+        // No baseFontV2 found, nothing to migrate
+        if (!legacyBaseFontV2Size) return;
+
+        console.log("Migrating base font size V2 for Compound, current value", legacyBaseFontV2Size);
+
+        // Compute the difference between the V2 and the V3 version
+        const deltaV3 = this.computeFontSizeDeltaFromV2BaseFont(legacyBaseFontV2Size);
+
+        await SettingsStore.setValue("baseFontSizeV3", null, SettingLevel.DEVICE, deltaV3);
+        await SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, 0);
+        console.log("Migration complete, deleting legacy `baseFontSizeV2`");
+    }
+
+    /**
+     * Compute the V2 font size from the V1 font size
+     * @param legacyBaseFontSize
+     * @private
+     */
+    private computeBaseFontSizeV1toV2(legacyBaseFontSize: number): number {
+        // For some odd reason, the persisted value in user storage has an offset
+        // of 5 pixels for all values stored under `baseFontSize`
+        const LEGACY_SIZE_DIFF = 5;
+
+        // Compound uses a base font size of `16px`, whereas the old Element
+        // styles based their calculations off a `15px` root font size.
+        const ROOT_FONT_SIZE_INCREASE = 1;
+
+        // Compute the font size of the V2 version before migrating to V3
+        return legacyBaseFontSize + ROOT_FONT_SIZE_INCREASE + LEGACY_SIZE_DIFF;
+    }
+
+    /**
+     * Compute the difference between the V2 font size and the default browser font size
+     * @param legacyBaseFontV2Size
+     * @private
+     */
+    private computeFontSizeDeltaFromV2BaseFont(legacyBaseFontV2Size: number): number {
+        const browserDefaultFontSize = this.getBrowserDefaultFontSize();
+
+        // Compute the difference between the V2 font size and the default browser font size
+        return legacyBaseFontV2Size - browserDefaultFontSize;
+    }
+
+    /**
+     * Get the default font size of the browser
+     * Fallback to 16px if the value is not found
+     * @private
+     * @returns {number} the value of ${@link DEFAULT_SIZE} in pixels
+     */
+    private getBrowserDefaultFontSize(): number {
+        return parseInt(window.getComputedStyle(document.documentElement).getPropertyValue("font-size"), 10) || 16;
     }
 
     public stop(): void {
@@ -123,6 +193,10 @@ export class FontWatcher implements IWatcher {
         }
     };
 
+    /**
+     * Set the root font size of the document
+     * @param delta {number} the delta to add to the default font size
+     */
     private setRootFontSize = async (delta: number): Promise<void> => {
         // Check that the new delta doesn't exceed the limits
         const fontDelta = clamp(delta, FontWatcher.MIN_DELTA, FontWatcher.MAX_DELTA);

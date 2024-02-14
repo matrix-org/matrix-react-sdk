@@ -26,8 +26,6 @@ export default class FontSizeController extends SettingController {
     }
 
     public onChange(level: SettingLevel, roomId: string, newValue: any): void {
-        // TODO migrate fontV2 to fontV3
-
         // In a distant past, `baseFontSize` was set on the account and config
         // level. This can be accessed only after the initial sync. If we end up
         // discovering that a logged in user has this kind of setting, we want to

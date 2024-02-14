@@ -527,6 +527,18 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: false,
     },
     /**
+     * With the transition to Compound we are moving to a base font size
+     * of 16px. We're taking the opportunity to move away from the `baseFontSize`
+     * setting that had a 5px offset.
+     *
+     */
+    "baseFontSizeV2": {
+        displayName: _td("settings|appearance|font_size"),
+        supportedLevels: [SettingLevel.DEVICE],
+        default: "",
+        controller: new FontSizeController(),
+    },
+    /**
      * Moving from `baseFontSizeV2` to `baseFontSizeV3` to replace the default 16px to --cpd-font-size-root
      * which is using the browser default font size.
      * This delta is added to the browser default font size
