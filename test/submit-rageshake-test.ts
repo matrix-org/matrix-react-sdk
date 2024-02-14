@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import { Mocked, mocked } from "jest-mock";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { getMockClientWithEventEmitter, mockClientMethodsCrypto } from "./test-utils";
 import { collectBugReport } from "../src/rageshake/submit-rageshake";
-import { MatrixClient } from "../../matrix-js-sdk";
 
 describe("Rageshakes", () => {
     const RUST_CRYPTO_VERSION = "Rust SDK 0.7.0 (691ec63), Vodozemac 0.5.0";
@@ -76,7 +76,6 @@ describe("Rageshakes", () => {
         expect(labelNames).toContain("Foo");
     });
 
-
     test("Should not panic if there is no crypto", async () => {
         mocked(mockClient.getCrypto).mockReturnValue(undefined);
 
@@ -85,5 +84,4 @@ describe("Rageshakes", () => {
         const labelNames = Array.from(labelsFormEntries.values()).map((label) => label);
         expect(labelNames).not.toContain("A-Element-R");
     });
-
 });
