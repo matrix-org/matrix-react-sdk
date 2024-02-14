@@ -74,7 +74,6 @@ export class SlidingSyncProxy {
             image: "ghcr.io/matrix-org/sliding-sync:" + SLIDING_SYNC_PROXY_TAG,
             containerName: "react-sdk-playwright-sliding-sync-proxy",
             params: [
-                "--rm",
                 "-p",
                 `${port}:8008/tcp`,
                 "-e",
