@@ -28,7 +28,7 @@ import { getStoredOidcTokenIssuer, getStoredOidcClientId } from "../../utils/oid
 export class OidcClientStore {
     private oidcClient?: OidcClient;
     private initialisingOidcClientPromise: Promise<void> | undefined;
-    private authenticatedIssuer?: string;
+    private authenticatedIssuer?: string; // set only in OIDC-native mode
     private _accountManagementEndpoint?: string;
     public readonly readyPromise: Promise<void>;
 
@@ -38,17 +38,19 @@ export class OidcClientStore {
 
     private async init(): Promise<void> {
         this.authenticatedIssuer = getStoredOidcTokenIssuer();
-        if (!this.authenticatedIssuer) {
+        if (this.authenticatedIssuer) {
+            await this.getOidcClient();
+        } else {
+            // Are we in OIDC-aware mode?
             try {
                 const authIssuer = await this.matrixClient.getAuthIssuer();
-                this.authenticatedIssuer = authIssuer.issuer;
+                const { accountManagementEndpoint, metadata } = await discoverAndValidateOIDCIssuerWellKnown(
+                    authIssuer.issuer,
+                );
+                this._accountManagementEndpoint = accountManagementEndpoint ?? metadata.issuer;
             } catch (e) {
                 console.log("Auth issuer not found", e);
             }
-        }
-
-        if (this.authenticatedIssuer) {
-            await this.getOidcClient();
         }
     }
 
@@ -56,7 +58,7 @@ export class OidcClientStore {
      * True when the active user is authenticated via OIDC
      */
     public get isUserAuthenticatedWithOidc(): boolean {
-        return !!this.oidcClient;
+        return !!this.authenticatedIssuer;
     }
 
     public get accountManagementEndpoint(): string | undefined {
@@ -132,14 +134,12 @@ export class OidcClientStore {
             return;
         }
         try {
+            const clientId = getStoredOidcClientId();
             const { accountManagementEndpoint, metadata, signingKeys } = await discoverAndValidateOIDCIssuerWellKnown(
                 this.authenticatedIssuer,
             );
             // if no account endpoint is configured default to the issuer
             this._accountManagementEndpoint = accountManagementEndpoint ?? metadata.issuer;
-
-            // We might not have the clientId in oidc-aware mode, so we do this after resolving the account management endpoint
-            const clientId = getStoredOidcClientId();
             this.oidcClient = new OidcClient({
                 ...metadata,
                 authority: metadata.issuer,
