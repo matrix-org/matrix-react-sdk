@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import { test, expect } from "../../element-web-test";
-import { MailHogServer } from "../../plugins/mailhog";
 import { isDendrite } from "../../plugins/homeserver/dendrite";
 
 test.describe("Email Registration", async () => {
