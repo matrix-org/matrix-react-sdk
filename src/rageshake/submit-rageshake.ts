@@ -37,7 +37,11 @@ interface IOpts {
     customFields?: Record<string, string>;
 }
 
-async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<FormData> {
+/**
+ * Exported only for testing.
+ * @internal public for test
+ */
+export async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<FormData> {
     const progressCallback = opts.progressCallback || ((): void => {});
 
     progressCallback(_t("bug_reporting|collecting_information"));
@@ -161,6 +165,10 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
                 }
             }
         }
+    }
+
+    if (client?.getCrypto()?.getVersion()?.startsWith(`Rust SDK`)) {
+        body.append("label", "A-Element-R");
     }
 
     if (opts.labels) {
