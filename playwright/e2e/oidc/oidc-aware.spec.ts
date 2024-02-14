@@ -16,7 +16,6 @@ limitations under the License.
 
 import { test, expect } from ".";
 import { isDendrite } from "../../plugins/homeserver/dendrite";
-import { Settings } from "../../pages/settings";
 
 test.describe("OIDC Aware", () => {
     test.skip(isDendrite, "does not yet support MAS");

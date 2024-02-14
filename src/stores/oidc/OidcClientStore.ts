@@ -56,7 +56,7 @@ export class OidcClientStore {
      * True when the active user is authenticated via OIDC
      */
     public get isUserAuthenticatedWithOidc(): boolean {
-        return !!this.authenticatedIssuer;
+        return !!this.oidcClient;
     }
 
     public get accountManagementEndpoint(): string | undefined {
