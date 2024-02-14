@@ -16,19 +16,21 @@ limitations under the License.
 
 import React, { ReactNode } from "react";
 import { decode } from "blurhash";
+import { thumbHashToDataURL } from "thumbhash";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import InlineSpinner from "../elements/InlineSpinner";
 import { mediaFromContent } from "../../../customisations/Media";
-import { BLURHASH_FIELD } from "../../../utils/image-media";
+import { BLURHASH_FIELD, THUMBHASH_FIELD } from "../../../utils/image-media";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 import { IBodyProps } from "./IBodyProps";
 import MFileBody from "./MFileBody";
 import { ImageSize, suggestedSize as suggestedVideoSize } from "../../../settings/enums/ImageSize";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import MediaProcessingError from "./shared/MediaProcessingError";
+import { base64ToArrayBuffer } from "../../../ThumbhashEncoder";
 
 interface IState {
     decryptedUrl: string | null;
@@ -98,26 +100,35 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
 
     private loadBlurhash(): void {
         const info = this.props.mxEvent.getContent()?.info;
-        if (!info[BLURHASH_FIELD]) return;
 
-        const canvas = document.createElement("canvas");
+        // We prefer thumbhash over blurhash due to alpha channel support
+        let blurhashUrl: string | undefined;
+        if (info[THUMBHASH_FIELD]) {
+            blurhashUrl = thumbHashToDataURL(base64ToArrayBuffer(info[THUMBHASH_FIELD]));
+        } else if (info[BLURHASH_FIELD]) {
+            const canvas = document.createElement("canvas");
 
-        const { w: width, h: height } = suggestedVideoSize(SettingsStore.getValue("Images.size") as ImageSize, {
-            w: info.w,
-            h: info.h,
-        });
+            const { w: width, h: height } = suggestedVideoSize(SettingsStore.getValue("Images.size") as ImageSize, {
+                w: info.w,
+                h: info.h,
+            });
 
-        canvas.width = width;
-        canvas.height = height;
+            canvas.width = width;
+            canvas.height = height;
 
-        const pixels = decode(info[BLURHASH_FIELD], width, height);
-        const ctx = canvas.getContext("2d")!;
-        const imgData = ctx.createImageData(width, height);
-        imgData.data.set(pixels);
-        ctx.putImageData(imgData, 0, 0);
+            const pixels = decode(info[BLURHASH_FIELD], width, height);
+            const ctx = canvas.getContext("2d")!;
+            const imgData = ctx.createImageData(width, height);
+            imgData.data.set(pixels);
+            ctx.putImageData(imgData, 0, 0);
+
+            blurhashUrl = canvas.toDataURL();
+        }
+
+        if (!blurhashUrl) return;
 
         this.setState({
-            blurhashUrl: canvas.toDataURL(),
+            blurhashUrl,
             posterLoading: true,
         });
 

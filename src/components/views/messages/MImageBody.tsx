@@ -22,6 +22,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
 import { Tooltip } from "@vector-im/compound-web";
+import { thumbHashToDataURL } from "thumbhash";
 
 import MFileBody from "./MFileBody";
 import Modal from "../../../Modal";
@@ -29,7 +30,7 @@ import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import Spinner from "../elements/Spinner";
 import { Media, mediaFromContent } from "../../../customisations/Media";
-import { BLURHASH_FIELD, createThumbnail } from "../../../utils/image-media";
+import { BLURHASH_FIELD, createThumbnail, THUMBHASH_FIELD } from "../../../utils/image-media";
 import { ImageContent } from "../../../customisations/models/IMediaEventContent";
 import ImageView from "../elements/ImageView";
 import { IBodyProps } from "./IBodyProps";
@@ -41,6 +42,7 @@ import { presentableTextForFile } from "../../../utils/FileUtils";
 import { createReconnectedListener } from "../../../utils/connection";
 import MediaProcessingError from "./shared/MediaProcessingError";
 import { DecryptError, DownloadError } from "../../../utils/DecryptFile";
+import { base64ToArrayBuffer } from "../../../ThumbhashEncoder";
 
 enum Placeholder {
     NoImage,
@@ -576,12 +578,25 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
     // Overridden by MStickerBody
     protected getPlaceholder(width: number, height: number): ReactNode {
+        const thumbhash = this.props.mxEvent.getContent().info?.[THUMBHASH_FIELD];
         const blurhash = this.props.mxEvent.getContent().info?.[BLURHASH_FIELD];
 
-        if (blurhash) {
+        if (thumbhash || blurhash) {
             if (this.state.placeholder === Placeholder.NoImage) {
                 return null;
             } else if (this.state.placeholder === Placeholder.Blurhash) {
+                if (thumbhash) {
+                    return (
+                        <img
+                            className="mx_Blurhash"
+                            src={thumbHashToDataURL(base64ToArrayBuffer(thumbhash))}
+                            width={width}
+                            height={height}
+                            role="presentation"
+                            alt=""
+                        />
+                    );
+                }
                 return <Blurhash className="mx_Blurhash" hash={blurhash} width={width} height={height} />;
             }
         }
