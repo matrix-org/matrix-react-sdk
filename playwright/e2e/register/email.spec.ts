@@ -22,13 +22,6 @@ test.describe("Email Registration", async () => {
     test.skip(isDendrite, "not yet wired up");
 
     test.use({
-        // eslint-disable-next-line no-empty-pattern
-        mailhog: async ({}, use) => {
-            const mailhog = new MailHogServer();
-            const instance = await mailhog.start();
-            await use(instance);
-            await mailhog.stop();
-        },
         startHomeserverOpts: ({ mailhog }, use) =>
             use({
                 template: "email",
