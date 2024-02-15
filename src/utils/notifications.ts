@@ -21,6 +21,7 @@ import {
     Room,
     LocalNotificationSettings,
     ReceiptType,
+    IMarkedUnreadEvent,
 } from "matrix-js-sdk/src/matrix";
 import { IndicatorIcon } from "@vector-im/compound-web";
 
@@ -123,7 +124,10 @@ export function clearAllNotifications(client: MatrixClient): Promise<Array<{} | 
 }
 
 export async function setUnreadMarker(room: Room, client: MatrixClient, unread: boolean): Promise<void> {
-    if (room.getAccountData(MARKED_UNREAD_TYPE)?.getContent()?.unread !== unread) {
+    // if there's no event, treat this as false as we don't need to send the flag to clear it if the event isn't there
+    const currentState = Boolean(room.getAccountData(MARKED_UNREAD_TYPE)?.getContent<IMarkedUnreadEvent>()?.unread);
+
+    if (currentState !== unread) {
         await client.setRoomAccountData(room.roomId, MARKED_UNREAD_TYPE, { unread });
     }
 }

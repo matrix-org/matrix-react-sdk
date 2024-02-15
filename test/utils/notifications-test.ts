@@ -16,6 +16,7 @@ limitations under the License.
 
 import { MatrixEvent, NotificationCountType, Room, MatrixClient, ReceiptType } from "matrix-js-sdk/src/matrix";
 import { Mocked, mocked } from "jest-mock";
+import { set } from "lodash";
 
 import {
     localNotificationsAreSilenced,
@@ -26,6 +27,7 @@ import {
     clearRoomNotification,
     notificationLevelToIndicator,
     getThreadNotificationLevel,
+    setUnreadMarker,
 } from "../../src/utils/notifications";
 import SettingsStore from "../../src/settings/SettingsStore";
 import { getMockClientWithEventEmitter } from "../test-utils/client";
@@ -216,6 +218,74 @@ describe("notifications", () => {
             clearAllNotifications(client);
 
             expect(sendReadReceiptSpy).toHaveBeenCalledWith(message, ReceiptType.ReadPrivate, true);
+        });
+    });
+
+    describe("setUnreadMarker", () => {
+        let client: MatrixClient;
+        let room: Room;
+
+        const ROOM_ID = "123";
+        const USER_ID = "@bob:example.org";
+
+        beforeEach(() => {
+            stubClient();
+            client = mocked(MatrixClientPeg.safeGet());
+            room = new Room(ROOM_ID, client, USER_ID);
+        });
+
+        // set true, no existing event
+        it("sets unread flag if event doesn't exist", async () => {
+            await setUnreadMarker(room, client, true);
+            expect(client.setRoomAccountData).toHaveBeenCalledWith(ROOM_ID, "com.famedly.marked_unread", {
+                unread: true,
+            });
+        });
+
+        // set false, no existing event
+        it("does nothing when clearing if flag is false", async () => {
+            await setUnreadMarker(room, client, false);
+            expect(client.setRoomAccountData).not.toHaveBeenCalled();
+        });
+
+        // set true, existing event = false
+        it("sets unread flag to if existing event is false", async () => {
+            room.getAccountData = jest
+                .fn()
+                .mockReturnValue({ getContent: jest.fn().mockReturnValue({ unread: false }) });
+            await setUnreadMarker(room, client, true);
+            expect(client.setRoomAccountData).toHaveBeenCalledWith(ROOM_ID, "com.famedly.marked_unread", {
+                unread: true,
+            });
+        });
+
+        // set false, existing event = false
+        it("does nothing if set false and existing event is false", async () => {
+            room.getAccountData = jest
+                .fn()
+                .mockReturnValue({ getContent: jest.fn().mockReturnValue({ unread: false }) });
+            await setUnreadMarker(room, client, false);
+            expect(client.setRoomAccountData).not.toHaveBeenCalled();
+        });
+
+        // set true, existing event = true
+        it("does nothing if setting true and existing event is true", async () => {
+            room.getAccountData = jest
+                .fn()
+                .mockReturnValue({ getContent: jest.fn().mockReturnValue({ unread: true }) });
+            await setUnreadMarker(room, client, true);
+            expect(client.setRoomAccountData).not.toHaveBeenCalled();
+        });
+
+        // set false, existing event = true
+        it("sets flag if setting false and existing event is true", async () => {
+            room.getAccountData = jest
+                .fn()
+                .mockReturnValue({ getContent: jest.fn().mockReturnValue({ unread: true }) });
+            await setUnreadMarker(room, client, false);
+            expect(client.setRoomAccountData).toHaveBeenCalledWith(ROOM_ID, "com.famedly.marked_unread", {
+                unread: false,
+            });
         });
     });
 
