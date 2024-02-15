@@ -97,7 +97,7 @@ exports[`<PhoneNumbers /> should allow a phone number to be added 1`] = `
       </div>
       <div
         aria-disabled="true"
-        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary mx_AccessibleButton_disabled"
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline mx_AccessibleButton_disabled"
         disabled=""
         role="button"
         tabindex="0"

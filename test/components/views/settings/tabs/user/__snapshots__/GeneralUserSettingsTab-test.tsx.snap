@@ -55,7 +55,7 @@ exports[`<GeneralUserSettingsTab /> 3pids should display 3pid email addresses an
         </label>
       </div>
       <div
-        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
         role="button"
         tabindex="0"
       >
@@ -165,7 +165,7 @@ exports[`<GeneralUserSettingsTab /> 3pids should display 3pid email addresses an
       </div>
     </form>
     <div
-      class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
       role="button"
       tabindex="0"
     >

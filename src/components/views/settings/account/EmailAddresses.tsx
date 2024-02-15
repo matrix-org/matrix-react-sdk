@@ -264,7 +264,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
         });
 
         let addButton = (
-            <AccessibleButton onClick={this.onAddClick} kind="primary" disabled={this.props.disabled}>
+            <AccessibleButton onClick={this.onAddClick} kind="primary_outline" disabled={this.props.disabled}>
                 {_t("action|add")}
             </AccessibleButton>
         );
@@ -274,7 +274,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
                     <div>{_t("settings|general|add_email_instructions")}</div>
                     <AccessibleButton
                         onClick={this.onContinueClick}
-                        kind="primary"
+                        kind="primary_outline"
                         disabled={this.state.continueDisabled}
                     >
                         {_t("action|continue")}

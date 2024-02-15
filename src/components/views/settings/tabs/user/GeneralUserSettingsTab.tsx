@@ -373,7 +373,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     <ChangePassword
                         className="mx_GeneralUserSettingsTab_section--account_changePassword"
                         rowClassName=""
-                        buttonKind="primary"
+                        buttonKind="primary_outline"
                         onError={this.onPasswordChangeError}
                         onFinished={this.onPasswordChanged}
                     />
@@ -397,7 +397,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     <AccessibleButton
                         onClick={null}
                         element="a"
-                        kind="primary"
+                        kind="primary_outline"
                         target="_blank"
                         rel="noreferrer noopener"
                         href={this.state.externalAccountManagementUrl}
