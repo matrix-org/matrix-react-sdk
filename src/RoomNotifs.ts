@@ -23,12 +23,13 @@ import {
     TweakName,
 } from "matrix-js-sdk/src/matrix";
 
-import type { IPushRule, Room, MatrixClient } from "matrix-js-sdk/src/matrix";
+import type { IPushRule, Room, MatrixClient, IMarkedUnreadEvent } from "matrix-js-sdk/src/matrix";
 import { NotificationLevel } from "./stores/notifications/NotificationLevel";
 import { getUnsentMessages } from "./components/structures/RoomStatusBar";
 import { doesRoomHaveUnreadMessages, doesRoomOrThreadHaveUnreadMessages } from "./Unread";
 import { EffectiveMembership, getEffectiveMembership, isKnockDenied } from "./utils/membership";
 import SettingsStore from "./settings/SettingsStore";
+import { MARKED_UNREAD_TYPE } from "./utils/notifications";
 
 export enum RoomNotifState {
     AllMessagesLoud = "all_messages_loud",
@@ -279,7 +280,8 @@ export function determineUnreadState(
         return { symbol: null, count: trueCount, level: NotificationLevel.Highlight };
     }
 
-    if (greyNotifs > 0) {
+    const markedUnreadData = room.getAccountData(MARKED_UNREAD_TYPE);
+    if (greyNotifs > 0 || markedUnreadData?.getContent<IMarkedUnreadEvent>()?.unread) {
         return { symbol: null, count: trueCount, level: NotificationLevel.Notification };
     }
 

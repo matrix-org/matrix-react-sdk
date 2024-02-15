@@ -61,10 +61,12 @@ export const StatelessNotificationBadge = forwardRef<HTMLDivElement, XOR<Props, 
             mx_NotificationBadge_visible: isEmptyBadge || knocked ? true : hasUnreadCount,
             mx_NotificationBadge_level_notification: level == NotificationLevel.Notification,
             mx_NotificationBadge_level_highlight: level >= NotificationLevel.Highlight,
-            mx_NotificationBadge_dot: (isEmptyBadge && !knocked) || type === "dot",
+            mx_NotificationBadge_dot: type === "dot" || (!knocked && level <= NotificationLevel.Activity),
             mx_NotificationBadge_knocked: knocked,
-            mx_NotificationBadge_2char: type === "badge" && symbol && symbol.length > 0 && symbol.length < 3,
-            mx_NotificationBadge_3char: type === "badge" && symbol && symbol.length > 2,
+            mx_NotificationBadge_2char:
+                type === "badge" && level > NotificationLevel.Activity && (!symbol || symbol.length < 3),
+            mx_NotificationBadge_3char:
+                type === "badge" && level > NotificationLevel.Activity && symbol && symbol.length > 2,
         });
 
         if (props.onClick) {

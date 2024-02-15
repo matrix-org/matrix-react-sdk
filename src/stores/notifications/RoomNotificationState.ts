@@ -23,6 +23,7 @@ import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import * as RoomNotifs from "../../RoomNotifs";
 import { NotificationState } from "./NotificationState";
 import SettingsStore from "../../settings/SettingsStore";
+import { MARKED_UNREAD_TYPE } from "../../utils/notifications";
 
 export class RoomNotificationState extends NotificationState implements IDestroyable {
     public constructor(
@@ -36,6 +37,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         this.room.on(RoomEvent.LocalEchoUpdated, this.handleLocalEchoUpdated);
         this.room.on(RoomEvent.Timeline, this.handleRoomEventUpdate);
         this.room.on(RoomEvent.Redaction, this.handleRoomEventUpdate);
+        this.room.on(RoomEvent.AccountData, this.handleRoomAccountDataUpdate);
 
         this.room.on(RoomEvent.UnreadNotifications, this.handleNotificationCountUpdate); // for server-sent counts
         cli.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
@@ -86,6 +88,12 @@ export class RoomNotificationState extends NotificationState implements IDestroy
 
     private handleAccountDataUpdate = (ev: MatrixEvent): void => {
         if (ev.getType() === "m.push_rules") {
+            this.updateNotificationState();
+        }
+    };
+
+    private handleRoomAccountDataUpdate = (ev: MatrixEvent): void => {
+        if (ev.getType() === MARKED_UNREAD_TYPE) {
             this.updateNotificationState();
         }
     };

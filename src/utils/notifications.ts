@@ -28,6 +28,9 @@ import SettingsStore from "../settings/SettingsStore";
 import { NotificationLevel } from "../stores/notifications/NotificationLevel";
 import { doesRoomHaveUnreadMessages } from "../Unread";
 
+// change when MSC2867 is in spec
+export const MARKED_UNREAD_TYPE = "com.famedly.marked_unread";
+
 export const deviceNotificationSettingsKeys = [
     "notificationsEnabled",
     "notificationBodyEnabled",
