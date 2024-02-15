@@ -55,7 +55,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            fontSizeDelta: SettingsStore.getValue<number>("baseFontSizeV3", null),
+            fontSizeDelta: SettingsStore.getValue<number>("fontSizeDelta", null),
             browserFontSize: FontWatcher.getBrowserDefaultFontSize(),
             useCustomFontSize: SettingsStore.getValue("useCustomFontSize"),
             layout: SettingsStore.getValue("layout"),
@@ -99,7 +99,7 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
     private onFontSizeChanged = async (delta: string): Promise<void> => {
         const parsedDelta = parseInt(delta, 10) || 0;
         this.setState({ fontSizeDelta: parsedDelta });
-        await SettingsStore.setValue("baseFontSizeV3", null, SettingLevel.DEVICE, parsedDelta);
+        await SettingsStore.setValue("fontSizeDelta", null, SettingLevel.DEVICE, parsedDelta);
     };
 
     /**

@@ -74,17 +74,17 @@ export class FontWatcher implements IWatcher {
         if (!legacyBaseFontSize) return;
 
         console.log(
-            "Migrating base font size -> base font size V2 -> base font size V3 for Compound, current value",
+            "Migrating base font size -> base font size V2 -> font size delta for Compound, current value",
             legacyBaseFontSize,
         );
 
-        // Compute the new font size of the V2 version before migrating to V3
+        // Compute the new font size of the V2 version before migrating to fontSizeDelta
         const baseFontSizeV2 = this.computeBaseFontSizeV1toV2(legacyBaseFontSize);
 
-        // Compute the difference between the V2 and the V3 version
-        const deltaV3 = this.computeFontSizeDeltaFromV2BaseFont(baseFontSizeV2);
+        // Compute the difference between the V2 and the fontSizeDelta
+        const delta = this.computeFontSizeDeltaFromV2BaseFontSize(baseFontSizeV2);
 
-        await SettingsStore.setValue("baseFontSizeV3", null, SettingLevel.DEVICE, deltaV3);
+        await SettingsStore.setValue("fontSizeDelta", null, SettingLevel.DEVICE, delta);
         await SettingsStore.setValue("baseFontSize", null, SettingLevel.DEVICE, 0);
         console.log("Migration complete, deleting legacy `baseFontSize`");
     }
@@ -100,10 +100,10 @@ export class FontWatcher implements IWatcher {
 
         console.log("Migrating base font size V2 for Compound, current value", legacyBaseFontV2Size);
 
-        // Compute the difference between the V2 and the V3 version
-        const deltaV3 = this.computeFontSizeDeltaFromV2BaseFont(legacyBaseFontV2Size);
+        // Compute the difference between the V2 and the fontSizeDelta
+        const delta = this.computeFontSizeDeltaFromV2BaseFontSize(legacyBaseFontV2Size);
 
-        await SettingsStore.setValue("baseFontSizeV3", null, SettingLevel.DEVICE, deltaV3);
+        await SettingsStore.setValue("fontSizeDelta", null, SettingLevel.DEVICE, delta);
         await SettingsStore.setValue("baseFontSizeV2", null, SettingLevel.DEVICE, 0);
         console.log("Migration complete, deleting legacy `baseFontSizeV2`");
     }
@@ -131,7 +131,7 @@ export class FontWatcher implements IWatcher {
      * @param legacyBaseFontV2Size
      * @private
      */
-    private computeFontSizeDeltaFromV2BaseFont(legacyBaseFontV2Size: number): number {
+    private computeFontSizeDeltaFromV2BaseFontSize(legacyBaseFontV2Size: number): number {
         const browserDefaultFontSize = FontWatcher.getRootFontSize();
 
         // Compute the difference between the V2 font size and the default browser font size
@@ -153,7 +153,7 @@ export class FontWatcher implements IWatcher {
      * @returns {number} the default font size of the browser
      */
     public static getBrowserDefaultFontSize(): number {
-        return this.getRootFontSize() - SettingsStore.getValue<number>("baseFontSizeV3");
+        return this.getRootFontSize() - SettingsStore.getValue<number>("fontSizeDelta");
     }
 
     public stop(): void {
@@ -162,7 +162,7 @@ export class FontWatcher implements IWatcher {
     }
 
     private updateFont(): void {
-        this.setRootFontSize(SettingsStore.getValue<number>("baseFontSizeV3"));
+        this.setRootFontSize(SettingsStore.getValue<number>("fontSizeDelta"));
         this.setSystemFont({
             useBundledEmojiFont: SettingsStore.getValue("useBundledEmojiFont"),
             useSystemFont: SettingsStore.getValue("useSystemFont"),

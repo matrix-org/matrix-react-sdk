@@ -710,7 +710,7 @@ describe("ElementCall", () => {
             const originalGetValue = SettingsStore.getValue;
             SettingsStore.getValue = <T>(name: string, roomId?: string, excludeDefault?: boolean) => {
                 switch (name) {
-                    case "baseFontSizeV3":
+                    case "fontSizeDelta":
                         return 4 as T;
                     case "useSystemFont":
                         return true as T;
