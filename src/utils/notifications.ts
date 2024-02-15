@@ -77,6 +77,10 @@ export function localNotificationsAreSilenced(cli: MatrixClient): boolean {
 export async function clearRoomNotification(room: Room, client: MatrixClient): Promise<{} | undefined> {
     const lastEvent = room.getLastLiveEvent();
 
+    if (room.getAccountData(MARKED_UNREAD_TYPE)?.getContent()?.unread) {
+        await client.setRoomAccountData(room.roomId, MARKED_UNREAD_TYPE, { unread: false });
+    }
+
     try {
         if (lastEvent) {
             const receiptType = SettingsStore.getValue("sendReadReceipts", room.roomId)
@@ -118,6 +122,10 @@ export function clearAllNotifications(client: MatrixClient): Promise<Array<{} | 
     }, []);
 
     return Promise.all(receiptPromises);
+}
+
+export async function markAsUnread(room: Room, client: MatrixClient): Promise<void> {
+    await client.setRoomAccountData(room.roomId, MARKED_UNREAD_TYPE, { unread: true });
 }
 
 /**

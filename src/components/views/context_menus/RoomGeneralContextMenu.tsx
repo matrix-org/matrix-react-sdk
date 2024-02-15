@@ -30,7 +30,7 @@ import { NotificationLevel } from "../../../stores/notifications/NotificationLev
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import { clearRoomNotification } from "../../../utils/notifications";
+import { clearRoomNotification, markAsUnread } from "../../../utils/notifications";
 import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
 import IconizedContextMenu, {
     IconizedContextMenuCheckbox,
@@ -215,16 +215,24 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
     const { level } = useUnreadNotifications(room);
     const markAsReadOption: JSX.Element | null =
         level > NotificationLevel.None ? (
-            <IconizedContextMenuCheckbox
+            <IconizedContextMenuOption
                 onClick={() => {
                     clearRoomNotification(room, cli);
                     onFinished?.();
                 }}
-                active={false}
                 label={_t("room|context_menu|mark_read")}
                 iconClassName="mx_RoomGeneralContextMenu_iconMarkAsRead"
             />
-        ) : null;
+        ) : (
+            <IconizedContextMenuOption
+                onClick={() => {
+                    markAsUnread(room, cli);
+                    onFinished?.();
+                }}
+                label={_t("room|context_menu|mark_unread")}
+                iconClassName="mx_RoomGeneralContextMenu_iconMarkAsRead"
+            />
+        );
 
     const developerModeEnabled = useSettingValue<boolean>("developerMode");
     const developerToolsOption = developerModeEnabled ? (
