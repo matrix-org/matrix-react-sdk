@@ -213,26 +213,33 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
     }
 
     const { level } = useUnreadNotifications(room);
-    const markAsReadOption: JSX.Element | null =
-        level > NotificationLevel.None ? (
-            <IconizedContextMenuOption
-                onClick={() => {
-                    clearRoomNotification(room, cli);
-                    onFinished?.();
-                }}
-                label={_t("room|context_menu|mark_read")}
-                iconClassName="mx_RoomGeneralContextMenu_iconMarkAsRead"
-            />
-        ) : (
-            <IconizedContextMenuOption
-                onClick={() => {
-                    setUnreadMarker(room, cli, true);
-                    onFinished?.();
-                }}
-                label={_t("room|context_menu|mark_unread")}
-                iconClassName="mx_RoomGeneralContextMenu_iconMarkAsRead"
-            />
-        );
+    const markAsReadOption: JSX.Element | null = (() => {
+        if (level > NotificationLevel.None) {
+            return (
+                <IconizedContextMenuOption
+                    onClick={() => {
+                        clearRoomNotification(room, cli);
+                        onFinished?.();
+                    }}
+                    label={_t("room|context_menu|mark_read")}
+                    iconClassName="mx_RoomGeneralContextMenu_iconMarkAsRead"
+                />
+            );
+        } else if (!roomTags.includes(DefaultTagID.Archived)) {
+            return (
+                <IconizedContextMenuOption
+                    onClick={() => {
+                        setUnreadMarker(room, cli, true);
+                        onFinished?.();
+                    }}
+                    label={_t("room|context_menu|mark_unread")}
+                    iconClassName="mx_RoomGeneralContextMenu_iconMarkAsRead"
+                />
+            );
+        } else {
+            return null;
+        }
+    })();
 
     const developerModeEnabled = useSettingValue<boolean>("developerMode");
     const developerToolsOption = developerModeEnabled ? (
