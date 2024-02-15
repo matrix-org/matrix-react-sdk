@@ -158,6 +158,7 @@ describe("Rageshakes", () => {
             const userAgent = formData.get("user_agent");
             expect(userAgent).toBe("jest navigator");
 
+            // @ts-ignore - Need to force navigator to be undefined for test
             jest.replaceProperty(mockWindow, "navigator", undefined);
             const formDataWithoutNav = await collectBugReport();
             expect(formDataWithoutNav.get("user_agent")).toBe("UNKNOWN");
