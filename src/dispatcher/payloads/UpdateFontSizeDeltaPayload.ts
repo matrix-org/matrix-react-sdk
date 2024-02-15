@@ -18,7 +18,7 @@ import { ActionPayload } from "../payloads";
 import { Action } from "../actions";
 
 export interface UpdateFontSizeDeltaPayload extends ActionPayload {
-    action: Action.UpdateFontSizeDeltaSize;
+    action: Action.UpdateFontSizeDelta;
 
     /**
      * The delta is added to the current font size.

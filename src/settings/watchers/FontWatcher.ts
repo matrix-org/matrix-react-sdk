@@ -174,7 +174,7 @@ export class FontWatcher implements IWatcher {
         if (payload.action === Action.MigrateBaseFontSize) {
             // TODO Migration to v3
             this.migrateBaseFontSize();
-        } else if (payload.action === Action.UpdateFontSizeDeltaSize) {
+        } else if (payload.action === Action.UpdateFontSizeDelta) {
             this.setRootFontSize(payload.delta);
         } else if (payload.action === Action.UpdateSystemFont) {
             this.setSystemFont(payload as UpdateSystemFontPayload);

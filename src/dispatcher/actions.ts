@@ -111,7 +111,7 @@ export enum Action {
      * It will add the delta to the current font size.
      * The delta should be between {@link FontWatcher.MIN_DELTA} and {@link FontWatcher.MAX_DELTA}.
      */
-    UpdateFontSizeDeltaSize = "update_font_size_delta",
+    UpdateFontSizeDelta = "update_font_size_delta",
 
     /**
      * Sets a system font. Should be used with UpdateSystemFontPayload

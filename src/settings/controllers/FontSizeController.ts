@@ -35,7 +35,7 @@ export default class FontSizeController extends SettingController {
         } else if (newValue !== "") {
             // Dispatch font size change so that everything open responds to the change.
             dis.dispatch<UpdateFontSizeDeltaPayload>({
-                action: Action.UpdateFontSizeDeltaSize,
+                action: Action.UpdateFontSizeDelta,
                 delta: newValue,
             });
         }
