@@ -22,7 +22,6 @@ import { Action } from "../../dispatcher/actions";
 import { SettingLevel } from "../SettingLevel";
 import { UpdateSystemFontPayload } from "../../dispatcher/payloads/UpdateSystemFontPayload";
 import { ActionPayload } from "../../dispatcher/payloads";
-import { clamp } from "../../utils/numbers";
 
 export class FontWatcher implements IWatcher {
     /**
@@ -36,14 +35,6 @@ export class FontWatcher implements IWatcher {
      * Default delta added to the ${@link DEFAULT_SIZE}
      */
     public static readonly DEFAULT_DELTA = 0;
-    /**
-     * The lowest value that can be added to the ${@link DEFAULT_SIZE}
-     */
-    public static readonly MIN_DELTA = -5;
-    /**
-     * The highest value that can be added to the ${@link DEFAULT_SIZE}
-     */
-    public static readonly MAX_DELTA = 5;
 
     private dispatcherRef: string | null;
 
@@ -141,20 +132,28 @@ export class FontWatcher implements IWatcher {
      * @private
      */
     private computeFontSizeDeltaFromV2BaseFont(legacyBaseFontV2Size: number): number {
-        const browserDefaultFontSize = this.getBrowserDefaultFontSize();
+        const browserDefaultFontSize = FontWatcher.getRootFontSize();
 
         // Compute the difference between the V2 font size and the default browser font size
         return legacyBaseFontV2Size - browserDefaultFontSize;
     }
 
     /**
-     * Get the default font size of the browser
+     * Get the root font size of the document
      * Fallback to 16px if the value is not found
      * @private
-     * @returns {number} the value of ${@link DEFAULT_SIZE} in pixels
+     * @returns {number}
      */
-    private getBrowserDefaultFontSize(): number {
+    public static getRootFontSize(): number {
         return parseInt(window.getComputedStyle(document.documentElement).getPropertyValue("font-size"), 10) || 16;
+    }
+
+    /**
+     * Get the browser default font size
+     * @returns {number} the default font size of the browser
+     */
+    public static getBrowserDefaultFontSize(): number {
+        return this.getRootFontSize() - SettingsStore.getValue<number>("baseFontSizeV3");
     }
 
     public stop(): void {
@@ -198,16 +197,9 @@ export class FontWatcher implements IWatcher {
      * @param delta {number} the delta to add to the default font size
      */
     private setRootFontSize = async (delta: number): Promise<void> => {
-        // Check that the new delta doesn't exceed the limits
-        const fontDelta = clamp(delta, FontWatcher.MIN_DELTA, FontWatcher.MAX_DELTA);
-
-        if (fontDelta !== delta) {
-            await SettingsStore.setValue("baseFontSizeV3", null, SettingLevel.DEVICE, fontDelta);
-        }
-
         // Add the delta to the browser default font size
         document.querySelector<HTMLElement>(":root")!.style.fontSize =
-            `calc(${FontWatcher.DEFAULT_SIZE} + ${toPx(fontDelta)})`;
+            `calc(${FontWatcher.DEFAULT_SIZE} + ${toPx(delta)})`;
     };
 
     public static readonly FONT_FAMILY_CUSTOM_PROPERTY = "--cpd-font-family-sans";
