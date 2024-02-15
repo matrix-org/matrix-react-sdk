@@ -313,7 +313,7 @@ export default abstract class BasePlatform {
         return null;
     }
 
-    protected getSSOCallbackUrl(fragmentAfterLogin = ""): URL {
+    public getSSOCallbackUrl(fragmentAfterLogin = ""): URL {
         const url = new URL(window.location.href);
         url.hash = fragmentAfterLogin;
         return url;
@@ -478,5 +478,12 @@ export default abstract class BasePlatform {
             // @ts-ignore
             policyUri: config.privacy_policy_url,
         };
+    }
+
+    /**
+     * Suffix to append to the `state` parameter of OIDC /auth calls, will be round-tripped to the callback URI
+     */
+    public getOidcClientState(): string {
+        return "";
     }
 }
