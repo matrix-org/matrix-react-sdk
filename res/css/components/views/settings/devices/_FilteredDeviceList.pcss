@@ -25,7 +25,7 @@ limitations under the License.
     display: grid;
     grid-gap: $spacing-16;
     margin: 0;
-    padding: 0 $spacing-8;
+    padding: 0 $spacing-16;
 }
 
 .mx_FilteredDeviceList_listItem {
@@ -41,4 +41,17 @@ limitations under the License.
     width: 100%;
     text-align: center;
     margin-bottom: $spacing-32;
+}
+
+.mx_FilteredDeviceList_headerButton {
+    flex-shrink: 0;
+    /* override inline button styling */
+    display: flex !important;
+    flex-direction: row;
+    gap: $spacing-8;
+}
+
+.mx_FilteredDeviceList_deviceDetails {
+    /* align with text of session tile */
+    margin-left: 88px;
 }

@@ -14,45 +14,53 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { MatrixEvent, RelationType } from "matrix-js-sdk/src/matrix";
 
 import {
-    VoiceBroadcastInfoState,
     VoiceBroadcastRecordingBody,
-    VoiceBroadcastRecordingsStore,
-    VoiceBroadcastRecording,
-    VoiceBroadcastRecordingEvent,
+    shouldDisplayAsVoiceBroadcastRecordingTile,
+    VoiceBroadcastInfoEventType,
+    VoiceBroadcastPlaybackBody,
+    VoiceBroadcastInfoState,
 } from "..";
 import { IBodyProps } from "../../components/views/messages/IBodyProps";
-import { MatrixClientPeg } from "../../MatrixClientPeg";
-import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
+import { RelationsHelper, RelationsHelperEvent } from "../../events/RelationsHelper";
+import { SDKContext } from "../../contexts/SDKContext";
+import { useMatrixClientContext } from "../../contexts/MatrixClientContext";
 
 export const VoiceBroadcastBody: React.FC<IBodyProps> = ({ mxEvent }) => {
-    const client = MatrixClientPeg.get();
-    const room = client.getRoom(mxEvent.getRoomId());
-    const recording = VoiceBroadcastRecordingsStore.instance().getByInfoEvent(mxEvent, client);
-    const [recordingState, setRecordingState] = useState(recording.state);
+    const sdkContext = useContext(SDKContext);
+    const client = useMatrixClientContext();
+    const [infoState, setInfoState] = useState(mxEvent.getContent()?.state || VoiceBroadcastInfoState.Stopped);
 
-    useTypedEventEmitter(
-        recording,
-        VoiceBroadcastRecordingEvent.StateChanged,
-        (state: VoiceBroadcastInfoState, _recording: VoiceBroadcastRecording) => {
-            setRecordingState(state);
-        },
-    );
+    useEffect(() => {
+        const onInfoEvent = (event: MatrixEvent): void => {
+            if (event.getContent()?.state === VoiceBroadcastInfoState.Stopped) {
+                // only a stopped event can change the tile state
+                setInfoState(VoiceBroadcastInfoState.Stopped);
+            }
+        };
 
-    const stopVoiceBroadcast = () => {
-        if (recordingState !== VoiceBroadcastInfoState.Started) return;
-        recording.stop();
-    };
+        const relationsHelper = new RelationsHelper(
+            mxEvent,
+            RelationType.Reference,
+            VoiceBroadcastInfoEventType,
+            client,
+        );
+        relationsHelper.on(RelationsHelperEvent.Add, onInfoEvent);
+        relationsHelper.emitCurrent();
 
-    const senderId = mxEvent.getSender();
-    const sender = mxEvent.sender;
-    return <VoiceBroadcastRecordingBody
-        onClick={stopVoiceBroadcast}
-        live={recordingState === VoiceBroadcastInfoState.Started}
-        member={sender}
-        userId={senderId}
-        title={`${sender?.name ?? senderId} • ${room.name}`}
-    />;
+        return () => {
+            relationsHelper.destroy();
+        };
+    });
+
+    if (shouldDisplayAsVoiceBroadcastRecordingTile(infoState, client, mxEvent)) {
+        const recording = sdkContext.voiceBroadcastRecordingsStore.getByInfoEvent(mxEvent, client);
+        return <VoiceBroadcastRecordingBody recording={recording} />;
+    }
+
+    const playback = sdkContext.voiceBroadcastPlaybacksStore.getByInfoEvent(mxEvent, client);
+    return <VoiceBroadcastPlaybackBody playback={playback} />;
 };

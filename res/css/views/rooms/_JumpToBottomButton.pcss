@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@charset "utf-8";
-
 .mx_JumpToBottomButton {
     z-index: 1000;
     position: absolute;
@@ -64,12 +62,11 @@ limitations under the License.
 .mx_JumpToBottomButton_scrollDown::before {
     content: "";
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    mask-image: url('$(res)/img/feather-customised/chevron-down-thin.svg');
+    inset: 0;
+    mask-image: url("$(res)/img/element-icons/message/chevron-up.svg");
     mask-repeat: no-repeat;
-    mask-size: contain;
+    mask-size: 20px;
+    mask-position: center 6px;
+    transform: rotate(180deg);
     background: $muted-fg-color;
 }

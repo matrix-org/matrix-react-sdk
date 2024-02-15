@@ -13,11 +13,11 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
         class="mx_DeviceDetailHeading"
         data-testid="device-detail-heading"
       >
-        <h3
-          class="mx_Heading_h3"
+        <h4
+          class="mx_Heading_h4"
         >
           my-device
-        </h3>
+        </h4>
         <div
           class="mx_AccessibleButton mx_DeviceDetailHeading_renameCta mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
           data-testid="device-heading-rename-cta"
@@ -49,7 +49,14 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            This session is ready for secure messaging.
+            Your current session is ready for secure messaging.
+            <div
+              class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+              role="button"
+              tabindex="0"
+            >
+              Learn more
+            </div>
           </p>
         </div>
       </div>
@@ -64,6 +71,7 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
       </p>
       <table
         class="mx_DeviceDetails_metadataTable"
+        data-testid="device-detail-metadata-session"
       >
         <tbody>
           <tr>
@@ -77,39 +85,6 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
             >
               my-device
             </td>
-          </tr>
-          <tr>
-            <td
-              class="mxDeviceDetails_metadataLabel"
-            >
-              Last activity
-            </td>
-            <td
-              class="mxDeviceDetails_metadataValue"
-            />
-          </tr>
-        </tbody>
-      </table>
-      <table
-        class="mx_DeviceDetails_metadataTable"
-      >
-        <thead>
-          <tr>
-            <th>
-              Device
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td
-              class="mxDeviceDetails_metadataLabel"
-            >
-              IP address
-            </td>
-            <td
-              class="mxDeviceDetails_metadataValue"
-            />
           </tr>
         </tbody>
       </table>
@@ -147,11 +122,11 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
         class="mx_DeviceDetailHeading"
         data-testid="device-detail-heading"
       >
-        <h3
-          class="mx_Heading_h3"
+        <h4
+          class="mx_Heading_h4"
         >
           My Device
-        </h3>
+        </h4>
         <div
           class="mx_AccessibleButton mx_DeviceDetailHeading_renameCta mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
           data-testid="device-heading-rename-cta"
@@ -183,7 +158,14 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Verify or sign out from this session for best security and reliability.
+            Verify your current session for enhanced secure messaging.
+            <div
+              class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+              role="button"
+              tabindex="0"
+            >
+              Learn more
+            </div>
           </p>
         </div>
       </div>
@@ -198,6 +180,7 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
       </p>
       <table
         class="mx_DeviceDetails_metadataTable"
+        data-testid="device-detail-metadata-session"
       >
         <tbody>
           <tr>
@@ -228,6 +211,33 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
       </table>
       <table
         class="mx_DeviceDetails_metadataTable"
+        data-testid="device-detail-metadata-application"
+      >
+        <thead>
+          <tr>
+            <th>
+              Application
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td
+              class="mxDeviceDetails_metadataLabel"
+            >
+              Name
+            </td>
+            <td
+              class="mxDeviceDetails_metadataValue"
+            >
+              Element Web
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table
+        class="mx_DeviceDetails_metadataTable"
+        data-testid="device-detail-metadata-device"
       >
         <thead>
           <tr>
@@ -237,6 +247,42 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td
+              class="mxDeviceDetails_metadataLabel"
+            >
+              Model
+            </td>
+            <td
+              class="mxDeviceDetails_metadataValue"
+            >
+              Iphone X
+            </td>
+          </tr>
+          <tr>
+            <td
+              class="mxDeviceDetails_metadataLabel"
+            >
+              Operating system
+            </td>
+            <td
+              class="mxDeviceDetails_metadataValue"
+            >
+              Windows 95
+            </td>
+          </tr>
+          <tr>
+            <td
+              class="mxDeviceDetails_metadataLabel"
+            >
+              Browser
+            </td>
+            <td
+              class="mxDeviceDetails_metadataValue"
+            >
+              Firefox 100
+            </td>
+          </tr>
           <tr>
             <td
               class="mxDeviceDetails_metadataLabel"
@@ -285,11 +331,11 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
         class="mx_DeviceDetailHeading"
         data-testid="device-detail-heading"
       >
-        <h3
-          class="mx_Heading_h3"
+        <h4
+          class="mx_Heading_h4"
         >
           my-device
-        </h3>
+        </h4>
         <div
           class="mx_AccessibleButton mx_DeviceDetailHeading_renameCta mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
           data-testid="device-heading-rename-cta"
@@ -321,7 +367,14 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Verify or sign out from this session for best security and reliability.
+            Verify your current session for enhanced secure messaging.
+            <div
+              class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
+              role="button"
+              tabindex="0"
+            >
+              Learn more
+            </div>
           </p>
         </div>
       </div>
@@ -336,6 +389,7 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
       </p>
       <table
         class="mx_DeviceDetails_metadataTable"
+        data-testid="device-detail-metadata-session"
       >
         <tbody>
           <tr>
@@ -349,39 +403,6 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
             >
               my-device
             </td>
-          </tr>
-          <tr>
-            <td
-              class="mxDeviceDetails_metadataLabel"
-            >
-              Last activity
-            </td>
-            <td
-              class="mxDeviceDetails_metadataValue"
-            />
-          </tr>
-        </tbody>
-      </table>
-      <table
-        class="mx_DeviceDetails_metadataTable"
-      >
-        <thead>
-          <tr>
-            <th>
-              Device
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td
-              class="mxDeviceDetails_metadataLabel"
-            >
-              IP address
-            </td>
-            <td
-              class="mxDeviceDetails_metadataValue"
-            />
           </tr>
         </tbody>
       </table>

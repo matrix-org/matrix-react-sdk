@@ -14,23 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MSC3575Filter, SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
+import { Optional } from "matrix-events-sdk";
 
 import { RoomUpdateCause, TagID, OrderedDefaultTagIDs, DefaultTagID } from "./models";
 import { ITagMap, ListAlgorithm, SortAlgorithm } from "./algorithms/models";
 import { ActionPayload } from "../../dispatcher/payloads";
-import defaultDispatcher from "../../dispatcher/dispatcher";
+import { MatrixDispatcher } from "../../dispatcher/dispatcher";
 import { IFilterCondition } from "./filters/IFilterCondition";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import { RoomListStore as Interface, RoomListStoreEvent } from "./Interface";
-import { SlidingSyncManager } from "../../SlidingSyncManager";
-import SpaceStore from "../spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../spaces";
 import { LISTS_LOADING_EVENT } from "./RoomListStore";
-import { RoomViewStore } from "../RoomViewStore";
 import { UPDATE_EVENT } from "../AsyncStore";
+import { SdkContextClass } from "../../contexts/SDKContext";
 
 interface IState {
     // state is tracked in underlying classes
@@ -38,7 +37,7 @@ interface IState {
 
 export const SlidingSyncSortToFilter: Record<SortAlgorithm, string[]> = {
     [SortAlgorithm.Alphabetic]: ["by_name", "by_recency"],
-    [SortAlgorithm.Recent]: ["by_highlight_count", "by_notification_count", "by_recency"],
+    [SortAlgorithm.Recent]: ["by_notification_level", "by_recency"],
     [SortAlgorithm.Manual]: ["by_recency"],
 };
 
@@ -48,21 +47,16 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
     },
     [DefaultTagID.Favourite]: {
         tags: ["m.favourite"],
-        is_tombstoned: false,
     },
-    // TODO https://github.com/vector-im/element-web/issues/23207
-    // DefaultTagID.SavedItems,
     [DefaultTagID.DM]: {
         is_dm: true,
         is_invite: false,
-        is_tombstoned: false,
         // If a DM has a Favourite & Low Prio tag then it'll be shown in those lists instead
         not_tags: ["m.favourite", "m.lowpriority"],
     },
     [DefaultTagID.Untagged]: {
         is_dm: false,
         is_invite: false,
-        is_tombstoned: false,
         not_room_types: ["m.space"],
         not_tags: ["m.favourite", "m.lowpriority"],
         // spaces filter added dynamically
@@ -71,7 +65,6 @@ const filterConditions: Record<TagID, MSC3575Filter> = {
         tags: ["m.lowpriority"],
         // If a room has both Favourite & Low Prio tags then it'll be shown under Favourites
         not_tags: ["m.favourite"],
-        is_tombstoned: false,
     },
     // TODO https://github.com/vector-im/element-web/issues/23207
     // DefaultTagID.ServerNotice,
@@ -85,31 +78,29 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     private tagIdToSortAlgo: Record<TagID, SortAlgorithm> = {};
     private tagMap: ITagMap = {};
     private counts: Record<TagID, number> = {};
-    private stickyRoomId: string | null;
+    private stickyRoomId: Optional<string>;
 
-    public constructor() {
-        super(defaultDispatcher);
+    public constructor(
+        dis: MatrixDispatcher,
+        private readonly context: SdkContextClass,
+    ) {
+        super(dis);
         this.setMaxListeners(20); // RoomList + LeftPanel + 8xRoomSubList + spares
     }
 
-    public async setTagSorting(tagId: TagID, sort: SortAlgorithm) {
+    public async setTagSorting(tagId: TagID, sort: SortAlgorithm): Promise<void> {
         logger.info("SlidingRoomListStore.setTagSorting ", tagId, sort);
         this.tagIdToSortAlgo[tagId] = sort;
-        const slidingSyncIndex = SlidingSyncManager.instance.getOrAllocateListIndex(tagId);
         switch (sort) {
             case SortAlgorithm.Alphabetic:
-                await SlidingSyncManager.instance.ensureListRegistered(
-                    slidingSyncIndex, {
-                        sort: SlidingSyncSortToFilter[SortAlgorithm.Alphabetic],
-                    },
-                );
+                await this.context.slidingSyncManager.ensureListRegistered(tagId, {
+                    sort: SlidingSyncSortToFilter[SortAlgorithm.Alphabetic],
+                });
                 break;
             case SortAlgorithm.Recent:
-                await SlidingSyncManager.instance.ensureListRegistered(
-                    slidingSyncIndex, {
-                        sort: SlidingSyncSortToFilter[SortAlgorithm.Recent],
-                    },
-                );
+                await this.context.slidingSyncManager.ensureListRegistered(tagId, {
+                    sort: SlidingSyncSortToFilter[SortAlgorithm.Recent],
+                });
                 break;
             case SortAlgorithm.Manual:
                 logger.error("cannot enable manual sort in sliding sync mode");
@@ -132,7 +123,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         return this.counts[tagId] || 0;
     }
 
-    public setListOrder(tagId: TagID, order: ListAlgorithm) {
+    public setListOrder(tagId: TagID, order: ListAlgorithm): void {
         // TODO: https://github.com/vector-im/element-web/issues/23207
     }
 
@@ -174,10 +165,12 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         // check all lists for each tag we know about and see if the room is there
         const tags: TagID[] = [];
         for (const tagId in this.tagIdToSortAlgo) {
-            const index = SlidingSyncManager.instance.getOrAllocateListIndex(tagId);
-            const { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync.getListData(index);
-            for (const roomIndex in roomIndexToRoomId) {
-                const roomId = roomIndexToRoomId[roomIndex];
+            const listData = this.context.slidingSyncManager.slidingSync?.getListData(tagId);
+            if (!listData) {
+                continue;
+            }
+            for (const roomIndex in listData.roomIndexToRoomId) {
+                const roomId = listData.roomIndexToRoomId[roomIndex];
                 if (roomId === room.roomId) {
                     tags.push(tagId);
                     break;
@@ -194,7 +187,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
      * @param {Room} room The room to update.
      * @param {RoomUpdateCause} cause The cause to update for.
      */
-    public async manualRoomUpdate(room: Room, cause: RoomUpdateCause) {
+    public async manualRoomUpdate(room: Room, cause: RoomUpdateCause): Promise<void> {
         // TODO: this is only used when you forget a room, not that important for now.
     }
 
@@ -207,18 +200,20 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
 
         // this room will not move due to it being viewed: it is sticky. This can be null to indicate
         // no sticky room if you aren't viewing a room.
-        this.stickyRoomId = RoomViewStore.instance.getRoomId();
+        this.stickyRoomId = this.context.roomViewStore.getRoomId();
         let stickyRoomNewIndex = -1;
-        const stickyRoomOldIndex = (tagMap[tagId] || []).findIndex((room) => {
+        const stickyRoomOldIndex = (tagMap[tagId] || []).findIndex((room): boolean => {
             return room.roomId === this.stickyRoomId;
         });
 
         // order from low to high
-        const orderedRoomIndexes = Object.keys(roomIndexToRoomId).map((numStr) => {
-            return Number(numStr);
-        }).sort((a, b) => {
-            return a-b;
-        });
+        const orderedRoomIndexes = Object.keys(roomIndexToRoomId)
+            .map((numStr) => {
+                return Number(numStr);
+            })
+            .sort((a, b) => {
+                return a - b;
+            });
         const seenRoomIds = new Set<string>();
         const orderedRoomIds = orderedRoomIndexes.map((i) => {
             const rid = roomIndexToRoomId[i];
@@ -256,24 +251,28 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         }
 
         // now set the rooms
-        const rooms = orderedRoomIds.map((roomId) => {
-            return this.matrixClient.getRoom(roomId);
+        const rooms: Room[] = [];
+        orderedRoomIds.forEach((roomId) => {
+            const room = this.matrixClient?.getRoom(roomId);
+            if (!room) {
+                return;
+            }
+            rooms.push(room);
         });
         tagMap[tagId] = rooms;
         this.tagMap = tagMap;
     }
 
-    private onSlidingSyncListUpdate(listIndex: number, joinCount: number, roomIndexToRoomId: Record<number, string>) {
-        const tagId = SlidingSyncManager.instance.listIdForIndex(listIndex);
-        this.counts[tagId]= joinCount;
+    private onSlidingSyncListUpdate(tagId: string, joinCount: number, roomIndexToRoomId: Record<number, string>): void {
+        this.counts[tagId] = joinCount;
         this.refreshOrderedLists(tagId, roomIndexToRoomId);
         // let the UI update
         this.emit(LISTS_UPDATE_EVENT);
     }
 
-    private onRoomViewStoreUpdated() {
+    private onRoomViewStoreUpdated(): void {
         // we only care about this to know when the user has clicked on a room to set the stickiness value
-        if (RoomViewStore.instance.getRoomId() === this.stickyRoomId) {
+        if (this.context.roomViewStore.getRoomId() === this.stickyRoomId) {
             return;
         }
 
@@ -296,14 +295,16 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
             if (room) {
                 // resort it based on the slidingSync view of the list. This may cause this old sticky
                 // room to cease to exist.
-                const index = SlidingSyncManager.instance.getOrAllocateListIndex(tagId);
-                const { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync.getListData(index);
-                this.refreshOrderedLists(tagId, roomIndexToRoomId);
+                const listData = this.context.slidingSyncManager.slidingSync?.getListData(tagId);
+                if (!listData) {
+                    continue;
+                }
+                this.refreshOrderedLists(tagId, listData.roomIndexToRoomId);
                 hasUpdatedAnyList = true;
             }
         }
         // in the event we didn't call refreshOrderedLists, it helps to still remember the sticky room ID.
-        this.stickyRoomId = RoomViewStore.instance.getRoomId();
+        this.stickyRoomId = this.context.roomViewStore.getRoomId();
 
         if (hasUpdatedAnyList) {
             this.emit(LISTS_UPDATE_EVENT);
@@ -313,11 +314,11 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
     protected async onReady(): Promise<any> {
         logger.info("SlidingRoomListStore.onReady");
         // permanent listeners: never get destroyed. Could be an issue if we want to test this in isolation.
-        SlidingSyncManager.instance.slidingSync.on(SlidingSyncEvent.List, this.onSlidingSyncListUpdate.bind(this));
-        RoomViewStore.instance.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdated.bind(this));
-        SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdated.bind(this));
-        if (SpaceStore.instance.activeSpace) {
-            this.onSelectedSpaceUpdated(SpaceStore.instance.activeSpace, false);
+        this.context.slidingSyncManager.slidingSync!.on(SlidingSyncEvent.List, this.onSlidingSyncListUpdate.bind(this));
+        this.context.roomViewStore.addListener(UPDATE_EVENT, this.onRoomViewStoreUpdated.bind(this));
+        this.context.spaceStore.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdated.bind(this));
+        if (this.context.spaceStore.activeSpace) {
+            this.onSelectedSpaceUpdated(this.context.spaceStore.activeSpace, false);
         }
 
         // sliding sync has an initial response for spaces. Now request all the lists.
@@ -332,38 +333,53 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
             const sort = SortAlgorithm.Recent; // default to recency sort, TODO: read from config
             this.tagIdToSortAlgo[tagId] = sort;
             this.emit(LISTS_LOADING_EVENT, tagId, true);
-            const index = SlidingSyncManager.instance.getOrAllocateListIndex(tagId);
-            SlidingSyncManager.instance.ensureListRegistered(index, {
-                filters: filter,
-                sort: SlidingSyncSortToFilter[sort],
-            }).then(() => {
-                this.emit(LISTS_LOADING_EVENT, tagId, false);
-            });
+            this.context.slidingSyncManager
+                .ensureListRegistered(tagId, {
+                    filters: filter,
+                    sort: SlidingSyncSortToFilter[sort],
+                })
+                .then(() => {
+                    this.emit(LISTS_LOADING_EVENT, tagId, false);
+                });
         });
     }
 
-    private onSelectedSpaceUpdated = (activeSpace: SpaceKey, allRoomsInHome: boolean) => {
+    private onSelectedSpaceUpdated = (activeSpace: SpaceKey, allRoomsInHome: boolean): void => {
         logger.info("SlidingRoomListStore.onSelectedSpaceUpdated", activeSpace);
         // update the untagged filter
         const tagId = DefaultTagID.Untagged;
         const filters = filterConditions[tagId];
         const oldSpace = filters.spaces?.[0];
-        filters.spaces = (activeSpace && activeSpace != MetaSpace.Home) ? [activeSpace] : undefined;
+        filters.spaces = activeSpace && activeSpace != MetaSpace.Home ? [activeSpace] : undefined;
         if (oldSpace !== activeSpace) {
-            this.emit(LISTS_LOADING_EVENT, tagId, true);
-            SlidingSyncManager.instance.ensureListRegistered(
-                SlidingSyncManager.instance.getOrAllocateListIndex(tagId),
-                {
-                    filters: filters,
+            // include subspaces in this list
+            this.context.spaceStore.traverseSpace(
+                activeSpace,
+                (roomId: string) => {
+                    if (roomId === activeSpace) {
+                        return;
+                    }
+                    if (!filters.spaces) {
+                        filters.spaces = [];
+                    }
+                    filters.spaces.push(roomId); // add subspace
                 },
-            ).then(() => {
-                this.emit(LISTS_LOADING_EVENT, tagId, false);
-            });
+                false,
+            );
+
+            this.emit(LISTS_LOADING_EVENT, tagId, true);
+            this.context.slidingSyncManager
+                .ensureListRegistered(tagId, {
+                    filters: filters,
+                })
+                .then(() => {
+                    this.emit(LISTS_LOADING_EVENT, tagId, false);
+                });
         }
     };
 
     // Intended for test usage
-    public async resetStore() {
+    public async resetStore(): Promise<void> {
         // Test function
     }
 
@@ -375,7 +391,7 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
      * @param trigger Set to false to prevent a list update from being sent. Should only
      * be used if the calling code will manually trigger the update.
      */
-    public regenerateAllLists({ trigger = true }) {
+    public regenerateAllLists({ trigger = true }): void {
         // Test function
     }
 
@@ -383,9 +399,5 @@ export class SlidingRoomListStoreClass extends AsyncStoreWithClient<IState> impl
         await this.resetStore();
     }
 
-    protected async onAction(payload: ActionPayload) {
-    }
-
-    protected async onDispatchAsync(payload: ActionPayload) {
-    }
+    protected async onAction(payload: ActionPayload): Promise<void> {}
 }

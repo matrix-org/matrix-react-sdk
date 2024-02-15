@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022-2023 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,24 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import { MatrixClient, MatrixEvent, TypedEventEmitter } from "matrix-js-sdk/src/matrix";
 
-import { VoiceBroadcastRecording } from "..";
+import {
+    VoiceBroadcastInfoState,
+    VoiceBroadcastRecording,
+    VoiceBroadcastRecordingEvent,
+    VoiceBroadcastRecordingState,
+} from "..";
 
 export enum VoiceBroadcastRecordingsStoreEvent {
     CurrentChanged = "current_changed",
 }
 
 interface EventMap {
-    [VoiceBroadcastRecordingsStoreEvent.CurrentChanged]: (recording: VoiceBroadcastRecording) => void;
+    [VoiceBroadcastRecordingsStoreEvent.CurrentChanged]: (recording: VoiceBroadcastRecording | null) => void;
 }
 
 /**
  * This store provides access to the current and specific Voice Broadcast recordings.
  */
 export class VoiceBroadcastRecordingsStore extends TypedEventEmitter<VoiceBroadcastRecordingsStoreEvent, EventMap> {
-    private _current: VoiceBroadcastRecording | null;
+    private current: VoiceBroadcastRecording | null = null;
     private recordings = new Map<string, VoiceBroadcastRecording>();
 
     public constructor() {
@@ -39,33 +43,55 @@ export class VoiceBroadcastRecordingsStore extends TypedEventEmitter<VoiceBroadc
     }
 
     public setCurrent(current: VoiceBroadcastRecording): void {
-        if (this._current === current) return;
+        if (this.current === current) return;
 
-        this._current = current;
-        this.recordings.set(current.infoEvent.getId(), current);
+        const infoEventId = current.infoEvent.getId();
+
+        if (!infoEventId) {
+            throw new Error("Got broadcast info event without Id");
+        }
+
+        if (this.current) {
+            this.current.off(VoiceBroadcastRecordingEvent.StateChanged, this.onCurrentStateChanged);
+        }
+
+        this.current = current;
+        this.current.on(VoiceBroadcastRecordingEvent.StateChanged, this.onCurrentStateChanged);
+        this.recordings.set(infoEventId, current);
         this.emit(VoiceBroadcastRecordingsStoreEvent.CurrentChanged, current);
     }
 
-    public get current(): VoiceBroadcastRecording {
-        return this._current;
+    public getCurrent(): VoiceBroadcastRecording | null {
+        return this.current;
+    }
+
+    public hasCurrent(): boolean {
+        return this.current !== null;
+    }
+
+    public clearCurrent(): void {
+        if (!this.current) return;
+
+        this.current.off(VoiceBroadcastRecordingEvent.StateChanged, this.onCurrentStateChanged);
+        this.current = null;
+        this.emit(VoiceBroadcastRecordingsStoreEvent.CurrentChanged, null);
     }
 
     public getByInfoEvent(infoEvent: MatrixEvent, client: MatrixClient): VoiceBroadcastRecording {
         const infoEventId = infoEvent.getId();
 
-        if (!this.recordings.has(infoEventId)) {
-            this.recordings.set(infoEventId, new VoiceBroadcastRecording(infoEvent, client));
+        if (!infoEventId) {
+            throw new Error("Got broadcast info event without Id");
         }
 
-        return this.recordings.get(infoEventId);
+        const recording = this.recordings.get(infoEventId) || new VoiceBroadcastRecording(infoEvent, client);
+        this.recordings.set(infoEventId, recording);
+        return recording;
     }
 
-    public static readonly _instance = new VoiceBroadcastRecordingsStore();
-
-    /**
-     * TODO Michael W: replace when https://github.com/matrix-org/matrix-react-sdk/pull/9293 has been merged
-     */
-    public static instance() {
-        return VoiceBroadcastRecordingsStore._instance;
-    }
+    private onCurrentStateChanged = (state: VoiceBroadcastRecordingState): void => {
+        if (state === VoiceBroadcastInfoState.Stopped) {
+            this.clearCurrent();
+        }
+    };
 }

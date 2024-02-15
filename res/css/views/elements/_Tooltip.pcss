@@ -38,7 +38,7 @@ limitations under the License.
 .mx_Tooltip_chevron {
     position: absolute;
     left: -7px;
-    top: 10px;
+    top: calc(50% - 6px);
     width: 0;
     height: 0;
     border-top: 7px solid transparent;
@@ -47,7 +47,7 @@ limitations under the License.
 }
 
 .mx_Tooltip_chevron::after {
-    content: '';
+    content: "";
     width: 0;
     height: 0;
     border-top: 6px solid transparent;
@@ -71,15 +71,10 @@ limitations under the License.
     max-width: 300px;
     word-break: break-word;
 
-    background-color: #21262C; /* Same on both themes */
+    background-color: #21262c; /* Same on both themes */
     color: $accent-fg-color;
     border: 0;
     text-align: center;
-
-    &:not(.mx_Tooltip_noMargin) {
-        margin-left: 6px;
-        margin-right: 6px;
-    }
 
     .mx_Tooltip_chevron {
         display: none;
@@ -91,6 +86,11 @@ limitations under the License.
 
     &.mx_Tooltip_invisible {
         animation: mx_fadeout 0.1s forwards;
+    }
+
+    ul,
+    ol {
+        text-align: start; /* for list items */
     }
 }
 
@@ -107,7 +107,7 @@ limitations under the License.
 }
 
 .mx_Tooltip_title {
-    font-weight: 600;
+    font-weight: var(--cpd-font-weight-semibold);
 }
 
 .mx_Tooltip_sub {

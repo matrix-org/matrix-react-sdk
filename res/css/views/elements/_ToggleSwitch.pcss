@@ -17,14 +17,15 @@ limitations under the License.
 .mx_ToggleSwitch {
     --ToggleSwitch-min-width: $font-44px;
 
-    transition: background-color 0.20s ease-out 0.1s;
+    transition: background-color 0.2s ease-out 0.1s;
 
     width: $font-44px;
     height: $font-20px;
     border-radius: 1.5rem;
     padding: 2px;
 
-    background-color: $togglesw-off-color;
+    background-color: $background;
+    border: 1px solid $strong-input-border-color;
     opacity: 0.5;
 
     &[aria-disabled="true"] {
@@ -38,10 +39,11 @@ limitations under the License.
 }
 
 .mx_ToggleSwitch.mx_ToggleSwitch_on {
-    background-color: $accent;
+    background-color: $inverted-bg-color;
 
     > .mx_ToggleSwitch_ball {
         left: calc(100% - $font-20px);
+        background-color: $background;
     }
 }
 

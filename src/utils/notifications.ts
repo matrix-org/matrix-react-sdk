@@ -14,10 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { LOCAL_NOTIFICATION_SETTINGS_PREFIX } from "matrix-js-sdk/src/@types/event";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import {
+    MatrixClient,
+    LOCAL_NOTIFICATION_SETTINGS_PREFIX,
+    NotificationCountType,
+    Room,
+    LocalNotificationSettings,
+    ReceiptType,
+} from "matrix-js-sdk/src/matrix";
+import { IndicatorIcon } from "@vector-im/compound-web";
 
 import SettingsStore from "../settings/SettingsStore";
+import { NotificationLevel } from "../stores/notifications/NotificationLevel";
+import { doesRoomHaveUnreadMessages } from "../Unread";
 
 export const deviceNotificationSettingsKeys = [
     "notificationsEnabled",
@@ -25,14 +34,16 @@ export const deviceNotificationSettingsKeys = [
     "audioNotificationsEnabled",
 ];
 
-export function getLocalNotificationAccountDataEventType(deviceId: string): string {
+export function getLocalNotificationAccountDataEventType(deviceId: string | null): string {
     return `${LOCAL_NOTIFICATION_SETTINGS_PREFIX.name}.${deviceId}`;
 }
 
 export async function createLocalNotificationSettingsIfNeeded(cli: MatrixClient): Promise<void> {
-    const eventType = getLocalNotificationAccountDataEventType(cli.deviceId);
+    if (cli.isGuest()) {
+        return;
+    }
+    const eventType = getLocalNotificationAccountDataEventType(cli.deviceId!);
     const event = cli.getAccountData(eventType);
-
     // New sessions will create an account data event to signify they support
     // remote toggling of push notifications on this device. Default `is_silenced=true`
     // For backwards compat purposes, older sessions will need to check settings value
@@ -40,10 +51,103 @@ export async function createLocalNotificationSettingsIfNeeded(cli: MatrixClient)
     if (!event) {
         // If any of the above is true, we fall in the "backwards compat" case,
         // and `is_silenced` will be set to `false`
-        const isSilenced = !deviceNotificationSettingsKeys.some(key => SettingsStore.getValue(key));
+        const isSilenced = !deviceNotificationSettingsKeys.some((key) => SettingsStore.getValue(key));
 
         await cli.setAccountData(eventType, {
             is_silenced: isSilenced,
         });
+    }
+}
+
+export function localNotificationsAreSilenced(cli: MatrixClient): boolean {
+    const eventType = getLocalNotificationAccountDataEventType(cli.deviceId!);
+    const event = cli.getAccountData(eventType);
+    return event?.getContent<LocalNotificationSettings>()?.is_silenced ?? false;
+}
+
+/**
+ * Mark a room as read
+ * @param room
+ * @param client
+ * @returns a promise that resolves when the room has been marked as read
+ */
+export async function clearRoomNotification(room: Room, client: MatrixClient): Promise<{} | undefined> {
+    const lastEvent = room.getLastLiveEvent();
+
+    try {
+        if (lastEvent) {
+            const receiptType = SettingsStore.getValue("sendReadReceipts", room.roomId)
+                ? ReceiptType.Read
+                : ReceiptType.ReadPrivate;
+            return await client.sendReadReceipt(lastEvent, receiptType, true);
+        } else {
+            return {};
+        }
+    } finally {
+        // We've had a lot of stuck unread notifications that in e2ee rooms
+        // They occur on event decryption when clients try to replicate the logic
+        //
+        // This resets the notification on a room, even though no read receipt
+        // has been sent, particularly useful when the clients has incorrectly
+        // notified a user.
+        room.setUnreadNotificationCount(NotificationCountType.Highlight, 0);
+        room.setUnreadNotificationCount(NotificationCountType.Total, 0);
+        for (const thread of room.getThreads()) {
+            room.setThreadUnreadNotificationCount(thread.id, NotificationCountType.Highlight, 0);
+            room.setThreadUnreadNotificationCount(thread.id, NotificationCountType.Total, 0);
+        }
+    }
+}
+
+/**
+ * Marks all rooms with an unread counter as read
+ * @param client The matrix client
+ * @returns a promise that resolves when all rooms have been marked as read
+ */
+export function clearAllNotifications(client: MatrixClient): Promise<Array<{} | undefined>> {
+    const receiptPromises = client.getRooms().reduce((promises: Array<Promise<{} | undefined>>, room: Room) => {
+        if (doesRoomHaveUnreadMessages(room, true)) {
+            const promise = clearRoomNotification(room, client);
+            promises.push(promise);
+        }
+
+        return promises;
+    }, []);
+
+    return Promise.all(receiptPromises);
+}
+
+/**
+ * A helper to transform a notification color to the what the Compound Icon Button
+ * expects
+ */
+export function notificationLevelToIndicator(
+    level: NotificationLevel,
+): React.ComponentPropsWithRef<typeof IndicatorIcon>["indicator"] {
+    if (level <= NotificationLevel.None) {
+        return undefined;
+    } else if (level <= NotificationLevel.Activity) {
+        return "default";
+    } else if (level <= NotificationLevel.Notification) {
+        return "success";
+    } else {
+        return "critical";
+    }
+}
+
+/**
+ * Return the thread notification level for a room
+ * @param room
+ * @returns {NotificationLevel}
+ */
+export function getThreadNotificationLevel(room: Room): NotificationLevel {
+    const notificationCountType = room.threadsAggregateNotificationType;
+    switch (notificationCountType) {
+        case NotificationCountType.Highlight:
+            return NotificationLevel.Highlight;
+        case NotificationCountType.Total:
+            return NotificationLevel.Notification;
+        default:
+            return NotificationLevel.Activity;
     }
 }
