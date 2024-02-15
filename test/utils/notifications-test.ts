@@ -16,7 +16,6 @@ limitations under the License.
 
 import { MatrixEvent, NotificationCountType, Room, MatrixClient, ReceiptType } from "matrix-js-sdk/src/matrix";
 import { Mocked, mocked } from "jest-mock";
-import { set } from "lodash";
 
 import {
     localNotificationsAreSilenced,
