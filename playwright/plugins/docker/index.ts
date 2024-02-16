@@ -55,9 +55,10 @@ export class Docker {
         const userInfo = os.userInfo();
         const params = opts.params ?? [];
 
-        if (params?.includes("-v") && userInfo.uid >= 0) {
+        const isPodman = await Docker.isPodman();
+        if (params.includes("-v") && userInfo.uid >= 0) {
             // Run the docker container as our uid:gid to prevent problems with permissions.
-            if (await Docker.isPodman()) {
+            if (isPodman) {
                 // Note: this setup is for podman rootless containers.
 
                 // In podman, run as root in the container, which maps to the current
@@ -72,6 +73,16 @@ export class Docker {
             } else {
                 params.push("-u", `${userInfo.uid}:${userInfo.gid}`);
             }
+        }
+
+        if (isPodman) {
+            // Make host.containers.internal work to allow the container to talk to other services via host ports.
+            params.push("--network");
+            params.push("slirp4netns:allow_host_loopback=true");
+        } else {
+            // Make host.docker.internal work to allow the container to talk to other services via host ports.
+            params.push("--add-host");
+            params.push("host.containers.internal:host-gateway");
         }
 
         // Provided we are not running in CI, add a `--rm` parameter.
@@ -138,13 +149,5 @@ export class Docker {
     static async isPodman(): Promise<boolean> {
         const { stdout } = await exec("docker", ["--help"], false);
         return stdout.toLowerCase().includes("podman");
-    }
-
-    /**
-     * Supply the right hostname to use to talk to the host machine. On Docker this
-     * is "host.docker.internal" and on Podman this is "host.containers.internal".
-     */
-    static async hostnameOfHost(): Promise<"host.containers.internal" | "host.docker.internal"> {
-        return (await Docker.isPodman()) ? "host.containers.internal" : "host.docker.internal";
     }
 }
