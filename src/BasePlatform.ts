@@ -434,7 +434,7 @@ export default abstract class BasePlatform {
     /**
      * Delete a previously stored pickle key from storage.
      * @param {string} userId the user ID for the user that the pickle key is for.
-     * @param {string} userId the device ID that the pickle key is for.
+     * @param {string} deviceId the device ID that the pickle key is for.
      */
     public async destroyPickleKey(userId: string, deviceId: string): Promise<void> {
         try {
