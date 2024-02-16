@@ -136,8 +136,8 @@ describe("notifications", () => {
             });
         });
 
-        it("sends a request even if everything has been read", () => {
-            clearRoomNotification(room, client);
+        it("sends a request even if everything has been read", async () => {
+            await clearRoomNotification(room, client);
             expect(sendReadReceiptSpy).toHaveBeenCalledWith(message, ReceiptType.Read, true);
         });
 
@@ -156,8 +156,8 @@ describe("notifications", () => {
                 sendReceiptsSetting = false;
             });
 
-            it("should send a private read receipt", () => {
-                clearRoomNotification(room, client);
+            it("should send a private read receipt", async () => {
+                await clearRoomNotification(room, client);
                 expect(sendReadReceiptSpy).toHaveBeenCalledWith(message, ReceiptType.ReadPrivate, true);
             });
         });
@@ -187,7 +187,7 @@ describe("notifications", () => {
             expect(sendReadReceiptSpy).not.toHaveBeenCalled();
         });
 
-        it("sends unthreaded receipt requests", () => {
+        it("sends unthreaded receipt requests", async () => {
             const message = mkMessage({
                 event: true,
                 room: ROOM_ID,
@@ -197,12 +197,12 @@ describe("notifications", () => {
             room.addLiveEvents([message]);
             room.setUnreadNotificationCount(NotificationCountType.Total, 1);
 
-            clearAllNotifications(client);
+            await clearAllNotifications(client);
 
             expect(sendReadReceiptSpy).toHaveBeenCalledWith(message, ReceiptType.Read, true);
         });
 
-        it("sends private read receipts", () => {
+        it("sends private read receipts", async () => {
             const message = mkMessage({
                 event: true,
                 room: ROOM_ID,
@@ -214,7 +214,7 @@ describe("notifications", () => {
 
             jest.spyOn(SettingsStore, "getValue").mockReset().mockReturnValue(false);
 
-            clearAllNotifications(client);
+            await clearAllNotifications(client);
 
             expect(sendReadReceiptSpy).toHaveBeenCalledWith(message, ReceiptType.ReadPrivate, true);
         });
