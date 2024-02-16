@@ -81,7 +81,7 @@ describe("RoomNotificationState", () => {
         room.setUnreadNotificationCount(NotificationCountType.Total, greys);
     }
 
-    it("Updates on event decryption", () => {
+    it("updates on event decryption", () => {
         const roomNotifState = new RoomNotificationState(room, true);
         const listener = jest.fn();
         roomNotifState.addListener(NotificationStateEvents.Update, listener);
@@ -93,7 +93,7 @@ describe("RoomNotificationState", () => {
         expect(listener).toHaveBeenCalled();
     });
 
-    it("updates on room account data", () => {
+    it("updates on marked unread room account data", () => {
         const roomNotifState = new RoomNotificationState(room, true);
         const listener = jest.fn();
         roomNotifState.addListener(NotificationStateEvents.Update, listener);
@@ -106,6 +106,21 @@ describe("RoomNotificationState", () => {
         room.getAccountData = jest.fn().mockReturnValue(accountDataEvent);
         room.emit(RoomEvent.AccountData, accountDataEvent, room);
         expect(listener).toHaveBeenCalled();
+    });
+
+    it("does not update on other account data", () => {
+        const roomNotifState = new RoomNotificationState(room, true);
+        const listener = jest.fn();
+        roomNotifState.addListener(NotificationStateEvents.Update, listener);
+        const accountDataEvent = {
+            getType: () => "else.something",
+            getContent: () => {
+                return {};
+            },
+        } as unknown as MatrixEvent;
+        room.getAccountData = jest.fn().mockReturnValue(accountDataEvent);
+        room.emit(RoomEvent.AccountData, accountDataEvent, room);
+        expect(listener).not.toHaveBeenCalled();
     });
 
     it("removes listeners", () => {
