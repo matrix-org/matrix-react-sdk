@@ -38,7 +38,6 @@ export async function waitForVerificationRequest(client: Client): Promise<JSHand
         return new Promise<VerificationRequest>((resolve) => {
             console.log("~~");
             const onVerificationRequestEvent = async (request: VerificationRequest) => {
-                console.log("@@", request);
                 await request.accept();
                 resolve(request);
             };
