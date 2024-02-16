@@ -233,7 +233,7 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
                         onFinished?.();
                     }}
                     label={_t("room|context_menu|mark_unread")}
-                    iconClassName="mx_RoomGeneralContextMenu_iconMarkAsRead"
+                    iconClassName="mx_RoomGeneralContextMenu_iconMarkAsUnread"
                 />
             );
         } else {
