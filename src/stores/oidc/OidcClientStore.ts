@@ -30,17 +30,21 @@ import PlatformPeg from "../../PlatformPeg";
 export class OidcClientStore {
     private oidcClient?: OidcClient;
     private initialisingOidcClientPromise: Promise<void> | undefined;
-    private authenticatedIssuer?: string;
+    private authenticatedIssuer?: string; // set only in OIDC-native mode
     private _accountManagementEndpoint?: string;
+    public readonly readyPromise: Promise<void>;
 
     public constructor(private readonly matrixClient: MatrixClient) {
+        this.readyPromise = this.init();
+    }
+
+    private async init(): Promise<void> {
         this.authenticatedIssuer = getStoredOidcTokenIssuer();
         if (this.authenticatedIssuer) {
-            this.getOidcClient();
+            await this.getOidcClient();
         } else {
-            matrixClient.waitForClientWellKnown().then((wellKnown) => {
-                this._accountManagementEndpoint = getDelegatedAuthAccountUrl(wellKnown);
-            });
+            const wellKnown = await this.matrixClient.waitForClientWellKnown();
+            this._accountManagementEndpoint = getDelegatedAuthAccountUrl(wellKnown);
         }
     }
 
