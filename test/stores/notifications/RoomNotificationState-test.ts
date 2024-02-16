@@ -22,6 +22,7 @@ import {
     NotificationCountType,
     EventType,
     MatrixEvent,
+    RoomEvent,
 } from "matrix-js-sdk/src/matrix";
 
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
@@ -89,6 +90,21 @@ describe("RoomNotificationState", () => {
         } as unknown as MatrixEvent;
         room.getUnreadNotificationCount = jest.fn().mockReturnValue(1);
         client.emit(MatrixEventEvent.Decrypted, testEvent);
+        expect(listener).toHaveBeenCalled();
+    });
+
+    it("updates on room account data", () => {
+        const roomNotifState = new RoomNotificationState(room, true);
+        const listener = jest.fn();
+        roomNotifState.addListener(NotificationStateEvents.Update, listener);
+        const accountDataEvent = {
+            getType: () => "com.famedly.marked_unread",
+            getContent: () => {
+                return { unread: true };
+            },
+        } as unknown as MatrixEvent;
+        room.getAccountData = jest.fn().mockReturnValue(accountDataEvent);
+        room.emit(RoomEvent.AccountData, accountDataEvent, room);
         expect(listener).toHaveBeenCalled();
     });
 
