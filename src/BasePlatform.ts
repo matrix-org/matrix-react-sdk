@@ -434,7 +434,7 @@ export default abstract class BasePlatform {
     /**
      * Delete a previously stored pickle key from storage.
      * @param {string} userId the user ID for the user that the pickle key is for.
-     * @param {string} userId the device ID that the pickle key is for.
+     * @param {string} deviceId the device ID that the pickle key is for.
      */
     public async destroyPickleKey(userId: string, deviceId: string): Promise<void> {
         try {
@@ -463,11 +463,10 @@ export default abstract class BasePlatform {
      * Metadata to use for dynamic OIDC client registrations
      */
     public async getOidcClientMetadata(): Promise<OidcRegistrationClientMetadata> {
-        const baseUrl = window.location.origin;
         const config = SdkConfig.get();
         return {
             clientName: config.brand,
-            clientUri: baseUrl,
+            clientUri: this.baseUrl,
             redirectUris: [this.getSSOCallbackUrl().href],
             logoUri: new URL("vector-icons/1024.png", this.baseUrl).href,
             applicationType: "web",
