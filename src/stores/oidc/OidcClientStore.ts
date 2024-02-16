@@ -32,6 +32,10 @@ export class OidcClientStore {
     private initialisingOidcClientPromise: Promise<void> | undefined;
     private authenticatedIssuer?: string; // set only in OIDC-native mode
     private _accountManagementEndpoint?: string;
+    /**
+     * Promise which resolves once this store is read to use, which may mean there is no OIDC client if we're in legacy mode,
+     * or we just have the account management endpoint if running in OIDC-aware mode.
+     */
     public readonly readyPromise: Promise<void>;
 
     public constructor(private readonly matrixClient: MatrixClient) {
