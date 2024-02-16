@@ -116,7 +116,7 @@ export class Synapse implements Homeserver, HomeserverInstance {
 
         const synCfg = await cfgDirFromTemplate(opts);
         console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
-        const dockerSynapseParams = ["--rm", "-v", `${synCfg.configDir}:/data`, "-p", `${synCfg.port}:8008/tcp`];
+        const dockerSynapseParams = ["-v", `${synCfg.configDir}:/data`, "-p", `${synCfg.port}:8008/tcp`];
         if (await Docker.isPodman()) {
             // Make host.containers.internal work to allow Synapse to talk to the test OIDC server.
             dockerSynapseParams.push("--network");

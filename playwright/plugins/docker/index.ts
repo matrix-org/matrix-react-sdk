@@ -45,12 +45,16 @@ export class Docker {
             }
         }
 
+        // Provided we are not running in CI, add a `--rm` parameter.
+        // There is no need to remove containers in CI (since they are automatically removed anyway), and
+        // `--rm` means that if a container crashes this means its logs are wiped out.
+        if (!process.env.CI) params.unshift("--rm");
+
         const args = [
             "run",
             "--name",
             `${opts.containerName}-${crypto.randomBytes(4).toString("hex")}`,
             "-d",
-            "--rm",
             ...params,
             opts.image,
         ];
