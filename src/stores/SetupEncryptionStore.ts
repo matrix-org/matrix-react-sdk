@@ -152,6 +152,14 @@ export class SetupEncryptionStore extends EventEmitter {
                         // to advance before this.
                         await cli.restoreKeyBackupWithSecretStorage(backupInfo);
                     }
+                    const wellknown = cli.getClientWellKnown();
+                    if (wellknown?.["org.matrix.msc3814"]) {
+                        logger.log("Device dehydration enabled in well-known");
+                        // if we accessed secret storage, we know crypto is available
+                        const crypto = cli.getCrypto()!;
+                        await crypto.rehydrateDeviceIfAvailable();
+                        await crypto.createAndUploadDehydratedDevice();
+                    }
                 }).catch(reject);
             });
 
