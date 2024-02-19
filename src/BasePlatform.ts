@@ -313,6 +313,10 @@ export default abstract class BasePlatform {
         return null;
     }
 
+    /**
+     * The URL to return to after a successful SSO/OIDC authentication
+     * @param fragmentAfterLogin optional fragment for specific view to return to
+     */
     public getSSOCallbackUrl(fragmentAfterLogin = ""): URL {
         const url = new URL(window.location.href);
         url.hash = fragmentAfterLogin;
