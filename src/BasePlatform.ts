@@ -484,7 +484,7 @@ export default abstract class BasePlatform {
     }
 
     /**
-     * Suffix to append to the `state` parameter of OIDC /auth calls, will be round-tripped to the callback URI.
+     * Suffix to append to the `state` parameter of OIDC /auth calls. Will be round-tripped to the callback URI.
      * Currently only required for ElectronPlatform for passing element-desktop-ssoid.
      */
     public getOidcClientState(): string {
