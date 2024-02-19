@@ -348,7 +348,14 @@ limitations under the License.
         }
 
         &.mx_IndicatorScrollbar_bottomOverflow {
-            mask-image: linear-gradient(to top, transparent, black 16px);
+            mask-image: linear-gradient(
+                to top,
+                transparent,
+                rgba(255, 255, 255, 30%) 4px,
+                rgba(255, 255, 255, 55%) 8px,
+                rgba(255, 255, 255, 75%) 12px,
+                black 16px
+            );
         }
 
         &.mx_IndicatorScrollbar_topOverflow.mx_IndicatorScrollbar_bottomOverflow {
@@ -357,7 +364,14 @@ limitations under the License.
             Note the top fade is much smaller because the spaces start close to the top,
             so otherwise a large gradient suddenly appears when you scroll down. */
             mask-image: linear-gradient(to bottom, transparent, black 16px),
-                linear-gradient(to top, transparent, black 16px);
+                linear-gradient(
+                    to top,
+                    transparent,
+                    rgba(255, 255, 255, 30%) 4px,
+                    rgba(255, 255, 255, 55%) 8px,
+                    rgba(255, 255, 255, 75%) 12px,
+                    black 16px
+                );
             mask-position:
                 0% 0%,
                 0% 100%;
