@@ -57,18 +57,18 @@ export class FontWatcher implements IWatcher {
      * @private
      */
     private async migrateBaseFontSize(): Promise<void> {
-        await this.migrateBaseFontV1toV3();
-        await this.migrateBaseFontV2toV3();
+        await this.migrateBaseFontV1toFontSizeDelta();
+        await this.migrateBaseFontV2toFontSizeDelta();
     }
 
     /**
-     * Migrating from the V1 version of the base font size to the V3 version
-     * The V3 is using the default browser font size as a base
+     * Migrating from the V1 version of the base font size to the new delta system.
+     * The delta system is using the default browser font size as a base
      * Everything will become slightly larger, and getting rid of the `SIZE_DIFF`
      * weirdness for locally persisted values
      * @private
      */
-    private async migrateBaseFontV1toV3(): Promise<void> {
+    private async migrateBaseFontV1toFontSizeDelta(): Promise<void> {
         const legacyBaseFontSize = SettingsStore.getValue<number>("baseFontSize");
         // No baseFontV1 found, nothing to migrate
         if (!legacyBaseFontSize) return;
@@ -78,7 +78,7 @@ export class FontWatcher implements IWatcher {
             legacyBaseFontSize,
         );
 
-        // Compute the new font size of the V2 version before migrating to fontSizeDelta
+        // Compute the V1 to V2 version before migrating to fontSizeDelta
         const baseFontSizeV2 = this.computeBaseFontSizeV1toV2(legacyBaseFontSize);
 
         // Compute the difference between the V2 and the fontSizeDelta
@@ -90,10 +90,10 @@ export class FontWatcher implements IWatcher {
     }
 
     /**
-     * Migrating from the V2 version of the base font size to the V3 version
+     * Migrating from the V2 version of the base font size to the new delta system
      * @private
      */
-    private async migrateBaseFontV2toV3(): Promise<void> {
+    private async migrateBaseFontV2toFontSizeDelta(): Promise<void> {
         const legacyBaseFontV2Size = SettingsStore.getValue<number>("baseFontSizeV2");
         // No baseFontV2 found, nothing to migrate
         if (!legacyBaseFontV2Size) return;
