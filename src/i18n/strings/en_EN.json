@@ -2422,6 +2422,7 @@
             "custom_theme_success": "Theme added!",
             "custom_theme_url": "Custom theme URL",
             "font_size": "Font size",
+            "font_size_default": "%(fontSize)s (default)",
             "heading": "Customise your appearance",
             "image_size_default": "Default",
             "image_size_large": "Large",

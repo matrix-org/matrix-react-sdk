@@ -65,7 +65,7 @@ exports[`FontScalingPanel renders the font scaling UI 1`] = `
           <option
             value="0"
           >
-            16
+            16 (default)
           </option>
           <option
             value="1"

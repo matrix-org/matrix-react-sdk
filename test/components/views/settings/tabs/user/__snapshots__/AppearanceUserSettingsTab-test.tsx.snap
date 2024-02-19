@@ -294,7 +294,7 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                   <option
                     value="0"
                   >
-                    16
+                    16 (default)
                   </option>
                   <option
                     value="1"

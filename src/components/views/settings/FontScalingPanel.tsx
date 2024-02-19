@@ -126,7 +126,9 @@ export default class FontScalingPanel extends React.Component<IProps, IState> {
                 >
                     {this.sizes.map((size) => (
                         <option key={size} value={this.computeDeltaFontSize(size)}>
-                            {size}
+                            {size === this.state.browserFontSize
+                                ? _t("settings|appearance|font_size_default", { fontSize: size })
+                                : size}
                         </option>
                     ))}
                 </Field>
