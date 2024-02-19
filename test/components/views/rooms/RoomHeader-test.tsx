@@ -55,6 +55,9 @@ import { Call, ElementCall } from "../../../../src/models/Call";
 import * as ShieldUtils from "../../../../src/utils/ShieldUtils";
 import { Container, WidgetLayoutStore } from "../../../../src/stores/widgets/WidgetLayoutStore";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
+import { _t } from "../../../../src/languageHandler";
+import { SdkContextClass } from "../../../../src/contexts/SDKContext";
+import { todataurljpeg } from "modernizr";
 
 jest.mock("../../../../src/utils/ShieldUtils");
 
@@ -430,6 +433,40 @@ describe("RoomHeader", () => {
             const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
             fireEvent.click(videoButton);
             expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true }));
+        });
+    });
+
+    describe("External conference", () => {
+        beforeEach(() => {
+            mockRoomMembers(room, 3);
+            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(true);
+        });
+        it("shows the external conference if the room has public join rules", () => {
+            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Public);
+
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            expect(getByLabelText(container, _t("voip|get_call_link"))).toBeInTheDocument();
+        });
+
+        it("shows the external conference if the room has Knock join rules", () => {
+            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
+
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            expect(getByLabelText(container, _t("voip|get_call_link"))).toBeInTheDocument();
+        });
+
+        it("don't show External conference if the call is not shown", () => {
+            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Public);
+            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(false);
+
+            let { container } = render(<RoomHeader room={room} />, getWrapper());
+            expect(screen.queryByLabelText(_t("voip|get_call_link"))).not.toBeInTheDocument();
+
+            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(true);
+
+            container = render(<RoomHeader room={room} />, getWrapper()).container;
+
+            expect(getByLabelText(container, _t("voip|get_call_link"))).toBeInTheDocument();
         });
     });
 

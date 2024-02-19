@@ -18,6 +18,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Body as BodyText, Button, IconButton, Menu, MenuItem, Tooltip } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
+import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add.svg";
 import { Icon as CloseCallIcon } from "@vector-im/compound-design-tokens/icons/close.svg";
 import { Icon as ThreadsIcon } from "@vector-im/compound-design-tokens/icons/threads-solid.svg";
 import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/icons/notifications-solid.svg";
@@ -78,6 +79,7 @@ export default function RoomHeader({
         videoCallClick,
         toggleCallMaximized: toggleCall,
         isViewingCall,
+        generateCallLink,
         isConnectedToCall,
         hasActiveCallSession,
         callOptions,
@@ -122,6 +124,13 @@ export default function RoomHeader({
         <Tooltip label={isViewingCall ? _t("voip|minimise_call") : _t("voip|maximise_call")}>
             <IconButton onClick={toggleCall}>
                 <VideoCallIcon />
+            </IconButton>
+        </Tooltip>
+    );
+    const createExternalLinkButton = (
+        <Tooltip label={_t("voip|get_call_link")}>
+            <IconButton onClick={generateCallLink} aria-label={_t("voip|get_call_link")}>
+                <UserAddIcon />
             </IconButton>
         </Tooltip>
     );
@@ -293,7 +302,7 @@ export default function RoomHeader({
                             </Tooltip>
                         );
                     })}
-
+                    {isViewingCall && generateCallLink && createExternalLinkButton}
                     {((isConnectedToCall && isViewingCall) || isVideoRoom(room)) && <VideoRoomChatButton room={room} />}
 
                     {hasActiveCallSession && !isConnectedToCall ? (

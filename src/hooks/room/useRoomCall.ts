@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/matrix";
+import { JoinRule, Room } from "matrix-js-sdk/src/matrix";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { useFeatureEnabled } from "../useSettings";
-import SdkConfig from "../../SdkConfig";
+import SdkConfig, { DEFAULTS } from "../../SdkConfig";
 import { useEventEmitter, useEventEmitterState } from "../useEventEmitter";
 import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../LegacyCallHandler";
 import { useWidgets } from "../../components/views/right_panel/RoomSummaryCard";
@@ -77,10 +78,12 @@ export const useRoomCall = (
     videoCallClick(evt: React.MouseEvent | undefined, selectedType: PlatformCallType): void;
     toggleCallMaximized: () => void;
     isViewingCall: boolean;
+    generateCallLink: (() => URL) | undefined;
     isConnectedToCall: boolean;
     hasActiveCallSession: boolean;
     callOptions: PlatformCallType[];
 } => {
+    //settings
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     const useElementCallExclusively = useMemo(() => {
         return SdkConfig.get("element_call").use_exclusively;
@@ -91,13 +94,14 @@ export const useRoomCall = (
         LegacyCallHandlerEvent.CallsChanged,
         () => LegacyCallHandler.instance.getCallForRoom(room.roomId) !== null,
     );
-
+    // settings
     const widgets = useWidgets(room);
     const jitsiWidget = useMemo(() => widgets.find((widget) => WidgetType.JITSI.matches(widget.type)), [widgets]);
     const hasJitsiWidget = !!jitsiWidget;
     const managedHybridWidget = useMemo(() => widgets.find(isManagedHybridWidget), [widgets]);
     const hasManagedHybridWidget = !!managedHybridWidget;
 
+    // group call
     const groupCall = useCall(room.roomId);
     const isConnectedToCall = useConnectionState(groupCall) === ConnectionState.Connected;
     const hasGroupCall = groupCall !== null;
@@ -106,11 +110,14 @@ export const useRoomCall = (
         SdkContextClass.instance.roomViewStore.isViewingCall(),
     );
 
+    // room
     const memberCount = useRoomMemberCount(room);
 
-    const [mayEditWidgets, mayCreateElementCalls] = useRoomState(room, () => [
+    const [mayEditWidgets, mayCreateElementCalls, canJoinWithoutInvite] = useRoomState(room, () => [
         room.currentState.mayClientSendStateEvent("im.vector.modular.widgets", room.client),
         room.currentState.mayClientSendStateEvent(ElementCall.MEMBER_EVENT_TYPE.name, room.client),
+        room.getJoinRule() === "public" || room.getJoinRule() === JoinRule.Knock,
+        /*|| room.getJoinRule() === JoinRule.Restricted <- rule for joining via token?*/
     ]);
 
     // The options provided to the RoomHeader.
@@ -256,6 +263,22 @@ export const useRoomCall = (
         });
     }, [isViewingCall, room.roomId]);
 
+    const generateCallLink = useCallback(() => {
+        const url = new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url!);
+        url.pathname = "/room/";
+        // Set params for the sharable url
+        url.searchParams.set("roomId", room.roomId);
+        url.searchParams.set("perParticipantE2EE", "true");
+        url.searchParams.set("viaServers", "matrix.org");
+
+        // Move params into hash
+        url.hash = "/" + room.name + url.search;
+        url.search = "";
+
+        logger.log("Generated element call external url:", url);
+        navigator.clipboard.writeText(url.toString());
+        return url;
+    }, [room.name, room.roomId]);
     /**
      * We've gone through all the steps
      */
@@ -266,6 +289,7 @@ export const useRoomCall = (
         videoCallClick,
         toggleCallMaximized: toggleCallMaximized,
         isViewingCall: isViewingCall,
+        generateCallLink: canJoinWithoutInvite ? generateCallLink : undefined,
         isConnectedToCall: isConnectedToCall,
         hasActiveCallSession: hasActiveCallSession,
         callOptions,
