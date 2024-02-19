@@ -141,7 +141,6 @@ export class FontWatcher implements IWatcher {
     /**
      * Get the root font size of the document
      * Fallback to 16px if the value is not found
-     * @private
      * @returns {number}
      */
     public static getRootFontSize(): number {
