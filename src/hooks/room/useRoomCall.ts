@@ -62,6 +62,7 @@ const enum State {
     NoPermission,
     Unpinned,
     Ongoing,
+    NotJoined,
 }
 
 /**
@@ -183,7 +184,7 @@ export const useRoomCall = (
         if (activeCalls.find((call) => call.roomId != room.roomId)) {
             return State.Ongoing;
         }
-        if (hasGroupCall || hasJitsiWidget || hasManagedHybridWidget) {
+        if (hasGroupCall && (hasJitsiWidget || hasManagedHybridWidget)) {
             return promptPinWidget ? State.Unpinned : State.Ongoing;
         }
         if (hasLegacyCall) {
@@ -250,6 +251,7 @@ export const useRoomCall = (
             videoCallDisabledReason = _t("voip|disabled_no_one_here");
             break;
         case State.Unpinned:
+        case State.NotJoined:
         case State.NoCall:
             voiceCallDisabledReason = null;
             videoCallDisabledReason = null;

@@ -16,12 +16,12 @@ exports[`<ManageRestrictedJoinRuleDialog /> should list spaces which are not par
     <div
       class="mx_Dialog_header mx_Dialog_headerWithCancel"
     >
-      <h2
+      <h1
         class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         Select spaces
-      </h2>
+      </h1>
       <div
         aria-label="Close dialog"
         class="mx_AccessibleButton mx_Dialog_cancelButton"
@@ -71,8 +71,8 @@ exports[`<ManageRestrictedJoinRuleDialog /> should list spaces which are not par
           <div>
             <div>
               <span
-                class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
-                data-color="7"
+                class="_avatar_k41ul_17 mx_BaseAvatar _avatar-imageless_k41ul_60"
+                data-color="1"
                 data-testid="avatar-img"
                 data-type="round"
                 role="presentation"
@@ -166,12 +166,12 @@ exports[`<ManageRestrictedJoinRuleDialog /> should render empty state 1`] = `
     <div
       class="mx_Dialog_header mx_Dialog_headerWithCancel"
     >
-      <h2
+      <h1
         class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         Select spaces
-      </h2>
+      </h1>
       <div
         aria-label="Close dialog"
         class="mx_AccessibleButton mx_Dialog_cancelButton"

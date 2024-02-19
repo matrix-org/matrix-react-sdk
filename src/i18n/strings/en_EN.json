@@ -1460,7 +1460,8 @@
         "sliding_sync_server_no_support": "Your server lacks native support",
         "sliding_sync_server_specify_proxy": "Your server lacks native support, you must specify a proxy",
         "sliding_sync_server_support": "Your server has native support",
-        "threads_activity_centre": "Threads Activity Centre (in development). Currently this just removes thread notification counts from the count total in the room list",
+        "threads_activity_centre": "Threads Activity Centre (in development)",
+        "threads_activity_centre_description": "Warning: Under active development; reloads Element.",
         "under_active_development": "Under active development.",
         "unrealiable_e2e": "Unreliable in encrypted rooms",
         "video_rooms": "Video rooms",
@@ -2396,11 +2397,9 @@
         "help_about": {
             "access_token_detail": "Your access token gives full access to your account. Do not share it with anyone.",
             "brand_version": "%(brand)s version:",
-            "chat_bot": "Chat with %(brand)s Bot",
             "clear_cache_reload": "Clear cache and reload",
             "crypto_version": "Crypto version:",
             "help_link": "For help with using %(brand)s, click <a>here</a>.",
-            "help_link_chat_bot": "For help with using %(brand)s, click <a>here</a> or start a chat with our bot using the button below.",
             "homeserver": "Homeserver is <code>%(homeserverUrl)s</code>",
             "identity_server": "Identity server is <code>%(identityServerUrl)s</code>",
             "title": "Help & About",
@@ -3159,6 +3158,10 @@
         "show_all_threads": "Show all threads",
         "show_thread_filter": "Show:",
         "unable_to_decrypt": "Unable to decrypt message"
+    },
+    "threads_activity_centre": {
+        "header": "Threads activity",
+        "no_rooms_with_unreads_threads": "You don't have rooms with unread threads yet."
     },
     "time": {
         "about_day_ago": "about a day ago",
