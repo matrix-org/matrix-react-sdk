@@ -344,11 +344,11 @@ limitations under the License.
         }
 
         &.mx_IndicatorScrollbar_topOverflow {
-            mask-image: linear-gradient(to bottom, transparent, black 24px);
+            mask-image: linear-gradient(to bottom, transparent, black 16px);
         }
 
         &.mx_IndicatorScrollbar_bottomOverflow {
-            mask-image: linear-gradient(to top, transparent, black 24px);
+            mask-image: linear-gradient(to top, transparent, black 16px);
         }
 
         &.mx_IndicatorScrollbar_topOverflow.mx_IndicatorScrollbar_bottomOverflow {
@@ -356,8 +356,8 @@ limitations under the License.
             have a fixed pixel offset from both top and bottom for the colour stops.
             Note the top fade is much smaller because the spaces start close to the top,
             so otherwise a large gradient suddenly appears when you scroll down. */
-            mask-image: linear-gradient(to bottom, transparent, black 24px),
-                linear-gradient(to top, transparent, black 24px);
+            mask-image: linear-gradient(to bottom, transparent, black 16px),
+                linear-gradient(to top, transparent, black 16px);
             mask-position:
                 0% 0%,
                 0% 100%;
