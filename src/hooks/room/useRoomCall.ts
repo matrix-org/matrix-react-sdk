@@ -84,10 +84,13 @@ export const useRoomCall = (
     hasActiveCallSession: boolean;
     callOptions: PlatformCallType[];
 } => {
-    //settings
+    // settings
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     const useElementCallExclusively = useMemo(() => {
         return SdkConfig.get("element_call").use_exclusively;
+    }, []);
+    const spaHomeserverUrl = useMemo(() => {
+        return SdkConfig.get("element_call").spa_link_homeserver_url;
     }, []);
 
     const hasLegacyCall = useEventEmitterState(
@@ -272,6 +275,9 @@ export const useRoomCall = (
         url.searchParams.set("roomId", room.roomId);
         url.searchParams.set("perParticipantE2EE", "true");
         url.searchParams.set("viaServers", "matrix.org");
+        if (spaHomeserverUrl) {
+            url.searchParams.set("customHomeserver", spaHomeserverUrl);
+        }
 
         // Move params into hash
         url.hash = "/" + room.name + url.search;
@@ -280,7 +286,7 @@ export const useRoomCall = (
         logger.log("Generated element call external url:", url);
         navigator.clipboard.writeText(url.toString());
         return url;
-    }, [room.name, room.roomId]);
+    }, [room.name, room.roomId, spaHomeserverUrl]);
     /**
      * We've gone through all the steps
      */
