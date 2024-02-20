@@ -50,11 +50,11 @@ export class PostgresDocker extends Docker {
     }
 
     public async start(): Promise<{
-        postgresIp: string;
-        postgresId: string;
+        ipAddress: string;
+        containerId: string;
     }> {
         console.log(new Date(), "starting postgres container");
-        const postgresId = await this.run({
+        const containerId = await this.run({
             image: "postgres",
             containerName: `react-sdk-playwright-postgres-${this.key}`,
             params: ["--tmpfs=/pgtmpfs", "-e", "PGDATA=/pgtmpfs", "-e", `POSTGRES_PASSWORD=${PG_PASSWORD}`],
@@ -62,11 +62,11 @@ export class PostgresDocker extends Docker {
             cmd: ["-c", `fsync=off`, "-c", `synchronous_commit=off`, "-c", `full_page_writes=off`],
         });
 
-        const postgresIp = await this.getContainerIp();
+        const ipAddress = await this.getContainerIp();
         console.log(new Date(), "postgres container up");
 
         await this.waitForPostgresReady();
         console.log(new Date(), "postgres container ready");
-        return { postgresIp, postgresId };
+        return { ipAddress, containerId };
     }
 }

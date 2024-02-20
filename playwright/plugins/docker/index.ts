@@ -19,31 +19,35 @@ import * as crypto from "crypto";
 import * as childProcess from "child_process";
 import * as fse from "fs-extra";
 
+/**
+ * @param cmd - command to execute
+ * @param args - arguments to pass to executed command
+ * @param pipeStdout - whether to pipe stdout to that of this process
+ * @param pipeStderr - whether to pipe stderr to that of this process
+ * @return Promise which resolves to an object containing the string value of what was
+ *         written to stdout and stderr by the executed command, unaffected by the pipe options.
+ */
 const exec = (
-    // Command to execute
     cmd: string,
-    // Arguments to pass to executed command
     args: string[],
-    // Whether to pipe stdout and stderr to that of this process
-    pipe = true,
+    pipeStdout = true,
+    pipeStderr = true,
 ): Promise<{ stdout: string; stderr: string }> => {
     return new Promise((resolve, reject) => {
-        if (pipe) {
+        if (pipeStdout || pipeStderr) {
             const log = ["Running command:", cmd, ...args, "\n"].join(" ");
-            process.stdout.write(log);
-            process.stderr.write(log);
+            if (pipeStdout) process.stdout.write(log);
+            if (pipeStderr) process.stderr.write(log);
         }
         const { stdout, stderr } = childProcess.execFile(cmd, args, { encoding: "utf8" }, (err, stdout, stderr) => {
             if (err) reject(err);
             resolve({ stdout, stderr });
-            if (pipe) {
-                process.stdout.write("\n");
-                process.stderr.write("\n");
-            }
+            if (pipeStdout) process.stdout.write("\n");
+            if (pipeStderr) process.stderr.write("\n");
         });
-        if (pipe) {
-            stdout.pipe(process.stdout);
-            stderr.pipe(process.stderr);
+        if (pipeStdout || pipeStderr) {
+            if (pipeStdout) stdout.pipe(process.stdout);
+            if (pipeStderr) stderr.pipe(process.stderr);
         }
     });
 };
@@ -75,12 +79,13 @@ export class Docker {
             }
         }
 
+        // Make host.containers.internal work to allow the container to talk to other services via host ports.
         if (isPodman) {
-            // Make host.containers.internal work to allow the container to talk to other services via host ports.
             params.push("--network");
             params.push("slirp4netns:allow_host_loopback=true");
         } else {
-            // Make host.docker.internal work to allow the container to talk to other services via host ports.
+            // Docker for Desktop includes a host-gateway mapping on host.docker.internal but to simplify the config
+            // we use the Podman variant host.containers.internal in all environments.
             params.push("--add-host");
             params.push("host.containers.internal:host-gateway");
         }
@@ -111,16 +116,16 @@ export class Docker {
             await exec("docker", ["stop", this.id]);
         } catch (err) {
             console.error(`Failed to stop docker container`, this.id, err);
-            await exec("docker", ["container", "ls"]);
         }
     }
 
     /**
      * @param params - list of parameters to pass to `docker exec`
-     * @param pipe - whether to pipe stdout and stderr to that of this process for introspection
+     * @param pipeStdout - whether to pipe stdout to that of this process, if set to false stdout will be suppressed
+     * @param pipeStderr - whether to pipe stderr to that of this process, if set to false stderr will be suppressed
      */
-    async exec(params: string[], pipe = true): Promise<void> {
-        await exec("docker", ["exec", this.id, ...params], pipe);
+    async exec(params: string[], pipeStdout = true, pipeStderr = true): Promise<void> {
+        await exec("docker", ["exec", this.id, ...params], pipeStdout, pipeStderr);
     }
 
     async getContainerIp(): Promise<string> {
