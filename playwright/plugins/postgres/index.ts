@@ -35,7 +35,7 @@ export class PostgresDocker extends Docker {
         let lastErr: Error | null = null;
         while (new Date().getTime() - startTime < waitTimeMillis) {
             try {
-                await this.exec(["pg_isready", "-U", "postgres"], false);
+                await this.exec(["pg_isready", "-U", "postgres"]);
                 lastErr = null;
                 break;
             } catch (err) {

@@ -22,33 +22,22 @@ import * as fse from "fs-extra";
 /**
  * @param cmd - command to execute
  * @param args - arguments to pass to executed command
- * @param pipeStdout - whether to pipe stdout to that of this process
- * @param pipeStderr - whether to pipe stderr to that of this process
  * @return Promise which resolves to an object containing the string value of what was
- *         written to stdout and stderr by the executed command, unaffected by the pipe options.
+ *         written to stdout and stderr by the executed command.
  */
-const exec = (
-    cmd: string,
-    args: string[],
-    pipeStdout = true,
-    pipeStderr = true,
-): Promise<{ stdout: string; stderr: string }> => {
+const exec = (cmd: string, args: string[]): Promise<{ stdout: string; stderr: string }> => {
     return new Promise((resolve, reject) => {
-        if (pipeStdout || pipeStderr) {
-            const log = ["Running command:", cmd, ...args, "\n"].join(" ");
-            if (pipeStdout) process.stdout.write(log);
-            if (pipeStderr) process.stderr.write(log);
-        }
+        const log = ["Running command:", cmd, ...args, "\n"].join(" ");
+        process.stdout.write(log);
+        process.stderr.write(log);
         const { stdout, stderr } = childProcess.execFile(cmd, args, { encoding: "utf8" }, (err, stdout, stderr) => {
             if (err) reject(err);
             resolve({ stdout, stderr });
-            if (pipeStdout) process.stdout.write("\n");
-            if (pipeStderr) process.stderr.write("\n");
+            process.stdout.write("\n");
+            process.stderr.write("\n");
         });
-        if (pipeStdout || pipeStderr) {
-            if (pipeStdout) stdout.pipe(process.stdout);
-            if (pipeStderr) stderr.pipe(process.stderr);
-        }
+        stdout.pipe(process.stdout);
+        stderr.pipe(process.stderr);
     });
 };
 
@@ -121,11 +110,9 @@ export class Docker {
 
     /**
      * @param params - list of parameters to pass to `docker exec`
-     * @param pipeStdout - whether to pipe stdout to that of this process, if set to false stdout will be suppressed
-     * @param pipeStderr - whether to pipe stderr to that of this process, if set to false stderr will be suppressed
      */
-    async exec(params: string[], pipeStdout = true, pipeStderr = true): Promise<void> {
-        await exec("docker", ["exec", this.id, ...params], pipeStdout, pipeStderr);
+    async exec(params: string[]): Promise<void> {
+        await exec("docker", ["exec", this.id, ...params]);
     }
 
     async getContainerIp(): Promise<string> {
@@ -152,7 +139,7 @@ export class Docker {
      * To do this, it looks for "podman" in the output of "docker --help".
      */
     static async isPodman(): Promise<boolean> {
-        const { stdout } = await exec("docker", ["--help"], false);
+        const { stdout } = await exec("docker", ["--help"]);
         return stdout.toLowerCase().includes("podman");
     }
 }
