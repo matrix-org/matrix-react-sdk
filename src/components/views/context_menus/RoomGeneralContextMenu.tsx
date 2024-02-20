@@ -52,6 +52,8 @@ export interface RoomGeneralContextMenuProps extends IContextMenuProps {
     onPostSettingsClick?: (event: ButtonEvent) => void;
     onPostForgetClick?: (event: ButtonEvent) => void;
     onPostLeaveClick?: (event: ButtonEvent) => void;
+    onPostMarkAsReadClick?: (event: ButtonEvent) => void;
+    onPostMarkAsUnreadClick?: (event: ButtonEvent) => void;
 }
 
 /**
@@ -67,6 +69,8 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
     onPostSettingsClick,
     onPostLeaveClick,
     onPostForgetClick,
+    onPostMarkAsReadClick,
+    onPostMarkAsUnreadClick,
     ...props
 }) => {
     const cli = useContext(MatrixClientContext);
@@ -217,10 +221,10 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
         if (level > NotificationLevel.None) {
             return (
                 <IconizedContextMenuOption
-                    onClick={() => {
+                    onClick={wrapHandler(() => {
                         clearRoomNotification(room, cli);
                         onFinished?.();
-                    }}
+                    }, onPostMarkAsReadClick)}
                     label={_t("room|context_menu|mark_read")}
                     iconClassName="mx_RoomGeneralContextMenu_iconMarkAsRead"
                 />
@@ -228,10 +232,10 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
         } else if (!roomTags.includes(DefaultTagID.Archived)) {
             return (
                 <IconizedContextMenuOption
-                    onClick={() => {
+                    onClick={wrapHandler(() => {
                         setUnreadMarker(room, cli, true);
                         onFinished?.();
-                    }}
+                    }, onPostMarkAsUnreadClick)}
                     label={_t("room|context_menu|mark_unread")}
                     iconClassName="mx_RoomGeneralContextMenu_iconMarkAsUnread"
                 />
