@@ -22,7 +22,7 @@ import { discoverAndValidateOIDCIssuerWellKnown } from "matrix-js-sdk/src/oidc/d
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
 
 import { OidcClientStore } from "../../../src/stores/oidc/OidcClientStore";
-import { flushPromises, getMockClientWithEventEmitter } from "../../test-utils";
+import { flushPromises, getMockClientWithEventEmitter, mockPlatformPeg } from "../../test-utils";
 import { mockOpenIdConfiguration } from "../../test-utils/oidc";
 
 jest.mock("matrix-js-sdk/src/oidc/discovery", () => ({
@@ -52,6 +52,7 @@ describe("OidcClientStore", () => {
         jest.spyOn(logger, "error").mockClear();
 
         fetchMock.get(`${metadata.issuer}.well-known/openid-configuration`, metadata);
+        mockPlatformPeg();
     });
 
     describe("isUserAuthenticatedWithOidc()", () => {

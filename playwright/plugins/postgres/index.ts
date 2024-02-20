@@ -18,16 +18,24 @@ import { Docker } from "../docker";
 
 export const PG_PASSWORD = "p4S5w0rD";
 
-export abstract class WithPostgres {
-    protected readonly postgresDocker = new Docker();
+/**
+ * Class to manage a postgres database in docker
+ */
+export class PostgresDocker extends Docker {
+    /**
+     * @param key an opaque string to use when naming the docker containers instantiated by this class
+     */
+    public constructor(private key: string) {
+        super();
+    }
 
-    protected async waitForPostgresReady(): Promise<void> {
+    private async waitForPostgresReady(): Promise<void> {
         const waitTimeMillis = 30000;
         const startTime = new Date().getTime();
         let lastErr: Error | null = null;
         while (new Date().getTime() - startTime < waitTimeMillis) {
             try {
-                await this.postgresDocker.exec(["pg_isready", "-U", "postgres"]);
+                await this.exec(["pg_isready", "-U", "postgres"], true);
                 lastErr = null;
                 break;
             } catch (err) {
@@ -41,22 +49,24 @@ export abstract class WithPostgres {
         }
     }
 
-    protected async startPostgres(id: string): Promise<{
-        postgresIp: string;
-        postgresId: string;
+    public async start(): Promise<{
+        ipAddress: string;
+        containerId: string;
     }> {
-        console.log(new Date(), "Starting sliding sync proxy...");
-
-        const postgresId = await this.postgresDocker.run({
+        console.log(new Date(), "starting postgres container");
+        const containerId = await this.run({
             image: "postgres",
-            containerName: `react-sdk-playwright-postgres-${id}`,
-            params: ["-e", `POSTGRES_PASSWORD=${PG_PASSWORD}`],
+            containerName: `react-sdk-playwright-postgres-${this.key}`,
+            params: ["--tmpfs=/pgtmpfs", "-e", "PGDATA=/pgtmpfs", "-e", `POSTGRES_PASSWORD=${PG_PASSWORD}`],
+            // Optimise for testing - https://www.postgresql.org/docs/current/non-durability.html
+            cmd: ["-c", `fsync=off`, "-c", `synchronous_commit=off`, "-c", `full_page_writes=off`],
         });
 
-        const postgresIp = await this.postgresDocker.getContainerIp();
+        const ipAddress = await this.getContainerIp();
         console.log(new Date(), "postgres container up");
 
         await this.waitForPostgresReady();
-        return { postgresIp, postgresId };
+        console.log(new Date(), "postgres container ready");
+        return { ipAddress, containerId };
     }
 }
