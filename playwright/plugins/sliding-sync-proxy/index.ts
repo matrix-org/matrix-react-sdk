@@ -37,7 +37,7 @@ export class SlidingSyncProxy {
     async start(): Promise<ProxyInstance> {
         console.log(new Date(), "Starting sliding sync proxy...");
 
-        const { ipAddress: postgresId, containerId: postgresIp } = await this.postgresDocker.start();
+        const { ipAddress: postgresIp, containerId: postgresId } = await this.postgresDocker.start();
 
         const port = await getFreePort();
         console.log(new Date(), "starting proxy container...", SLIDING_SYNC_PROXY_TAG);
