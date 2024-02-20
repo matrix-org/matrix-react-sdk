@@ -30,16 +30,16 @@ const exec = (cmd: string, args: string[], pipe = true): Promise<{ stdout: strin
     return new Promise((resolve, reject) => {
         if (pipe) {
             const log = ["Running command:", cmd, ...args, "\n"].join(" ");
+            // When in CI mode Playwright will write stdout & stderr to files, so print the command to both there
             process.stdout.write(log);
-            process.stderr.write(log);
+            if (process.env.CI) process.stderr.write(log);
         }
         const { stdout, stderr } = childProcess.execFile(cmd, args, { encoding: "utf8" }, (err, stdout, stderr) => {
             if (err) reject(err);
             resolve({ stdout, stderr });
             if (pipe) {
-                // Write a heading to both as playwright writes them to separate files
                 process.stdout.write("\n");
-                process.stderr.write("\n");
+                if (process.env.CI) process.stderr.write("\n");
             }
         });
         if (pipe) {
