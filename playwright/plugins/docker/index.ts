@@ -22,27 +22,28 @@ import * as fse from "fs-extra";
 /**
  * @param cmd - command to execute
  * @param args - arguments to pass to executed command
- * @param pipe - whether to pipe stdout & stderr to that of this process
+ * @param suppressOutput - whether to suppress the stdout and stderr resulting from this command.
  * @return Promise which resolves to an object containing the string value of what was
- *         written to stdout and stderr by the executed command, unaffected by the pipe options.
+ *         written to stdout and stderr by the executed command.
  */
-const exec = (cmd: string, args: string[], pipe = true): Promise<{ stdout: string; stderr: string }> => {
+const exec = (cmd: string, args: string[], suppressOutput = false): Promise<{ stdout: string; stderr: string }> => {
     return new Promise((resolve, reject) => {
-        if (pipe) {
+        if (!suppressOutput) {
             const log = ["Running command:", cmd, ...args, "\n"].join(" ");
-            // When in CI mode Playwright will write stdout & stderr to files, so print the command to both there
+            // When in CI mode we combine reports from multiple runners into a single HTML report
+            // which has separate files for stdout and stderr, so we print the executed command to both
             process.stdout.write(log);
             if (process.env.CI) process.stderr.write(log);
         }
         const { stdout, stderr } = childProcess.execFile(cmd, args, { encoding: "utf8" }, (err, stdout, stderr) => {
             if (err) reject(err);
             resolve({ stdout, stderr });
-            if (pipe) {
+            if (!suppressOutput) {
                 process.stdout.write("\n");
                 if (process.env.CI) process.stderr.write("\n");
             }
         });
-        if (pipe) {
+        if (!suppressOutput) {
             stdout.pipe(process.stdout);
             stderr.pipe(process.stderr);
         }
@@ -118,11 +119,10 @@ export class Docker {
 
     /**
      * @param params - list of parameters to pass to `docker exec`
-     * @param pipe - whether to pipe stdout and stderr to that of this process for introspection,
-     *               if set to false, stdout and stderr will be suppressed.
+     * @param suppressOutput - whether to suppress the stdout and stderr resulting from this command.
      */
-    async exec(params: string[], pipe = true): Promise<void> {
-        await exec("docker", ["exec", this.id, ...params], pipe);
+    async exec(params: string[], suppressOutput = true): Promise<void> {
+        await exec("docker", ["exec", this.id, ...params], suppressOutput);
     }
 
     async getContainerIp(): Promise<string> {
@@ -149,7 +149,7 @@ export class Docker {
      * To do this, it looks for "podman" in the output of "docker --help".
      */
     static async isPodman(): Promise<boolean> {
-        const { stdout } = await exec("docker", ["--help"], false);
+        const { stdout } = await exec("docker", ["--help"], true);
         return stdout.toLowerCase().includes("podman");
     }
 }
