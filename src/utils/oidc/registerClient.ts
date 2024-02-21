@@ -45,12 +45,12 @@ const getStaticOidcClientId = (
  * @throws if no clientId is found
  */
 export const getOidcClientId = async (
-    delegatedAuthConfig: Omit<OidcClientConfig, "metadata"> & { issuer: string },
+    delegatedAuthConfig: OidcClientConfig,
     staticOidcClients?: IConfigOptions["oidc_static_clients"],
 ): Promise<string> => {
-    const staticClientId = getStaticOidcClientId(delegatedAuthConfig.issuer, staticOidcClients);
+    const staticClientId = getStaticOidcClientId(delegatedAuthConfig.metadata.issuer, staticOidcClients);
     if (staticClientId) {
-        logger.debug(`Using static clientId for issuer ${delegatedAuthConfig.issuer}`);
+        logger.debug(`Using static clientId for issuer ${delegatedAuthConfig.metadata.issuer}`);
         return staticClientId;
     }
     return await registerOidcClient(delegatedAuthConfig, await PlatformPeg.get()!.getOidcClientMetadata());

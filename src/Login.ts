@@ -236,10 +236,7 @@ const tryInitOidcNativeFlow = async (
     if (isRegistration && !isUserRegistrationSupported(delegatedAuthConfig)) {
         throw new Error("Registration is not supported by OP");
     }
-    const clientId = await getOidcClientId(
-        { issuer: delegatedAuthConfig.metadata.issuer, ...delegatedAuthConfig },
-        staticOidcClientIds,
-    );
+    const clientId = await getOidcClientId(delegatedAuthConfig, staticOidcClientIds);
 
     const flow = {
         type: "oidcNativeFlow",
