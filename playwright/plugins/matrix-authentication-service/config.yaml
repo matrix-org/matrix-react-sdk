@@ -61,7 +61,7 @@ email:
     reply_to: '"Authentication Service" <root@localhost>'
     transport: smtp
     mode: plain
-    hostname: "{{HOST_DOCKER_INTERNAL}}"
+    hostname: "host.containers.internal"
     port: %{{SMTP_PORT}}
     username: username
     password: password
@@ -136,7 +136,10 @@ policy:
     authorization_grant_entrypoint: authorization_grant/violation
     password_entrypoint: password/violation
     email_entrypoint: email/violation
-    data: null
+    data:
+        client_registration:
+            allow_insecure_uris: true # allow non-SSL and localhost URIs
+            allow_missing_contacts: true # EW doesn't have contacts at this time
 upstream_oauth2:
     providers: []
 branding:

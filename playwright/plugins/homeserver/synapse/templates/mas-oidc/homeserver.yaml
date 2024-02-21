@@ -136,7 +136,7 @@ experimental_features:
                         "ES256K",
                     ],
                 # This is the only changed value
-                "introspection_endpoint": "http://{{HOST_DOCKER_INTERNAL}}:%MAS_PORT%/oauth2/introspect",
+                "introspection_endpoint": "http://host.containers.internal:%MAS_PORT%/oauth2/introspect",
                 "introspection_endpoint_auth_methods_supported":
                     ["client_secret_basic", "client_secret_post", "client_secret_jwt", "private_key_jwt", "none"],
                 "introspection_endpoint_auth_signing_alg_values_supported":

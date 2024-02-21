@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test, expect } from ".";
+import { test, expect, registerAccountMas } from ".";
 import { isDendrite } from "../../plugins/homeserver/dendrite";
 
 test.describe("OIDC Aware", () => {
@@ -23,28 +23,8 @@ test.describe("OIDC Aware", () => {
 
     test("can register an account and manage it", async ({ context, page, homeserver, mailhog, app }) => {
         await page.goto("/#/login");
-
         await page.getByRole("button", { name: "Continue" }).click();
-
-        await expect(page.getByText("Please sign in to continue:")).toBeVisible();
-
-        // Register an account
-        await page.getByRole("link", { name: "Create Account" }).click();
-        await page.getByRole("textbox", { name: "Username" }).fill("alice");
-        await page.getByRole("textbox", { name: "Email address" }).fill("alice@email.com");
-        await page.getByRole("textbox", { name: "Password", exact: true }).fill("Pa$sW0rD!");
-        await page.getByRole("textbox", { name: "Confirm Password" }).fill("Pa$sW0rD!");
-        await page.getByRole("button", { name: "Continue" }).click();
-
-        const messages = await mailhog.api.messages();
-        expect(messages.items).toHaveLength(1);
-        expect(messages.items[0].to).toEqual("alice <alice@email.com>");
-        const [code] = messages.items[0].text.match(/(\d{6})/);
-
-        await page.getByRole("textbox", { name: "6-digit code" }).fill(code);
-        await page.getByRole("button", { name: "Continue" }).click();
-        await expect(page.getByText("Allow access to your account?")).toBeVisible();
-        await page.getByRole("button", { name: "Continue" }).click();
+        await registerAccountMas(page, mailhog.api, "alice", "alice@email.com", "Pa$sW0rD!");
 
         // Eventually, we should end up at the home screen.
         await expect(page).toHaveURL(/\/#\/home$/, { timeout: 10000 });

@@ -14,23 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import path from "node:path";
+import path, { basename } from "node:path";
 import os from "node:os";
 import * as fse from "fs-extra";
-import { BrowserContext } from "@playwright/test";
+import { BrowserContext, TestInfo } from "@playwright/test";
 
 import { getFreePort } from "../utils/port";
 import { Docker } from "../docker";
-import { PG_PASSWORD, WithPostgres } from "../postgres";
+import { PG_PASSWORD, PostgresDocker } from "../postgres";
 import { HomeserverInstance } from "../homeserver";
 import { Instance as MailhogInstance } from "../mailhog";
 
 // Docker tag to use for `ghcr.io/matrix-org/matrix-authentication-service` image.
-const TAG = "0.8.0";
+// We use a debug tag so that we have a shell and can run all 3 necessary commands in one run.
+const TAG = "0.8.0-debug";
 
 export interface ProxyInstance {
     containerId: string;
     postgresId: string;
+    configDir: string;
     port: number;
 }
 
@@ -53,7 +55,6 @@ async function cfgDirFromTemplate(opts: {
     config = config.replace(/{{POSTGRES_PASSWORD}}/g, PG_PASSWORD);
     config = config.replace(/%{{SMTP_PORT}}/g, opts.smtpPort);
     config = config.replace(/{{SYNAPSE_URL}}/g, opts.synapseUrl);
-    config = config.replace(/{{HOST_DOCKER_INTERNAL}}/g, await Docker.hostnameOfHost());
 
     await fse.writeFile(outputHomeserver, config);
 
@@ -66,14 +67,13 @@ async function cfgDirFromTemplate(opts: {
     };
 }
 
-export class MatrixAuthenticationService extends WithPostgres {
+export class MatrixAuthenticationService {
     private readonly masDocker = new Docker();
+    private readonly postgresDocker = new PostgresDocker("mas");
     private instance: ProxyInstance;
-    private port: number;
+    public port: number;
 
-    constructor(private context: BrowserContext) {
-        super();
-    }
+    constructor(private context: BrowserContext) {}
 
     async prepare(): Promise<{ port: number }> {
         this.port = await getFreePort();
@@ -83,8 +83,9 @@ export class MatrixAuthenticationService extends WithPostgres {
     async start(homeserver: HomeserverInstance, mailhog: MailhogInstance): Promise<ProxyInstance> {
         console.log(new Date(), "Starting mas...");
 
+        if (!this.port) await this.prepare();
         const port = this.port;
-        const { postgresId, postgresIp } = await this.startPostgres("mas");
+        const { containerId: postgresId, ipAddress: postgresIp } = await this.postgresDocker.start();
         const { configDir } = await cfgDirFromTemplate({
             masPort: port.toString(),
             postgresHost: postgresIp,
@@ -92,31 +93,17 @@ export class MatrixAuthenticationService extends WithPostgres {
             smtpPort: mailhog.smtpPort.toString(),
         });
 
-        const image = "ghcr.io/matrix-org/matrix-authentication-service:" + TAG;
-        const containerName = "react-sdk-playwright-mas";
-
-        console.log(new Date(), "migrating mas database...", TAG);
-        await this.masDocker.run({
-            image,
-            containerName,
-            params: ["-v", `${configDir}:/config`],
-            cmd: ["database", "migrate", "--config", "/config/config.yaml"],
-        });
-
-        console.log(new Date(), "syncing mas config...", TAG);
-        await this.masDocker.run({
-            image,
-            containerName,
-            params: ["-v", `${configDir}:/config`],
-            cmd: ["config", "sync", "--config", "/config/config.yaml"],
-        });
-
         console.log(new Date(), "starting mas container...", TAG);
         const containerId = await this.masDocker.run({
-            image,
-            containerName,
-            params: ["-p", `${port}:8080/tcp`, "-v", `${configDir}:/config`],
-            cmd: ["server", "--config", "/config/config.yaml"],
+            image: "ghcr.io/matrix-org/matrix-authentication-service:" + TAG,
+            containerName: "react-sdk-playwright-mas",
+            params: ["-p", `${port}:8080/tcp`, "-v", `${configDir}:/config`, "--entrypoint", "sh"],
+            cmd: [
+                "-c",
+                "mas-cli database migrate --config /config/config.yaml && " +
+                    "mas-cli config sync --config /config/config.yaml && " +
+                    "mas-cli server --config /config/config.yaml",
+            ],
         });
         console.log(new Date(), "started!");
 
@@ -135,13 +122,38 @@ export class MatrixAuthenticationService extends WithPostgres {
             });
         }
 
-        this.instance = { containerId, postgresId, port };
+        this.instance = { containerId, postgresId, port, configDir };
         return this.instance;
     }
 
-    async stop(): Promise<void> {
-        await this.postgresDocker.stop();
+    async stop(testInfo: TestInfo): Promise<void> {
+        if (!this.instance) return; // nothing to stop
+        const id = this.instance.containerId;
+        const logPath = path.join("playwright", "logs", "matrix-authentication-service", id);
+        await fse.ensureDir(logPath);
+        await this.masDocker.persistLogsToFile({
+            stdoutFile: path.join(logPath, "stdout.log"),
+            stderrFile: path.join(logPath, "stderr.log"),
+        });
+
         await this.masDocker.stop();
+        await this.postgresDocker.stop();
+
+        if (testInfo.status !== "passed") {
+            const logs = [path.join(logPath, "stdout.log"), path.join(logPath, "stderr.log")];
+            for (const path of logs) {
+                await testInfo.attach(`mas-${basename(path)}`, {
+                    path,
+                    contentType: "text/plain",
+                });
+            }
+            await testInfo.attach("mas-config.yaml", {
+                path: path.join(this.instance.configDir, "config.yaml"),
+                contentType: "text/plain",
+            });
+        }
+
+        await fse.remove(this.instance.configDir);
         console.log(new Date(), "Stopped mas.");
     }
 }
