@@ -56,24 +56,24 @@ describe("AutoDiscoveryUtils", () => {
             isUrl: "identity.com",
         };
 
-        it("throws an error when discovery result is falsy", () => {
-            expect(() => AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, undefined as any)).toThrow(
-                "Unexpected error resolving homeserver configuration",
-            );
+        it("throws an error when discovery result is falsy", async () => {
+            await expect(() =>
+                AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, undefined as any),
+            ).rejects.toThrow("Unexpected error resolving homeserver configuration");
             expect(logger.error).toHaveBeenCalled();
         });
 
-        it("throws an error when discovery result does not include homeserver config", () => {
+        it("throws an error when discovery result does not include homeserver config", async () => {
             const discoveryResult = {
                 ...validIsConfig,
             } as unknown as ClientConfig;
-            expect(() => AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult)).toThrow(
-                "Unexpected error resolving homeserver configuration",
-            );
+            await expect(() =>
+                AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult),
+            ).rejects.toThrow("Unexpected error resolving homeserver configuration");
             expect(logger.error).toHaveBeenCalled();
         });
 
-        it("throws an error when identity server config has fail error and recognised error string", () => {
+        it("throws an error when identity server config has fail error and recognised error string", async () => {
             const discoveryResult = {
                 ...validHsConfig,
                 "m.identity_server": {
@@ -81,13 +81,13 @@ describe("AutoDiscoveryUtils", () => {
                     error: "GenericFailure",
                 },
             };
-            expect(() => AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult)).toThrow(
-                "Unexpected error resolving identity server configuration",
-            );
+            await expect(() =>
+                AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult),
+            ).rejects.toThrow("Unexpected error resolving identity server configuration");
             expect(logger.error).toHaveBeenCalled();
         });
 
-        it("throws an error when homeserver config has fail error and recognised error string", () => {
+        it("throws an error when homeserver config has fail error and recognised error string", async () => {
             const discoveryResult = {
                 ...validIsConfig,
                 "m.homeserver": {
@@ -95,25 +95,25 @@ describe("AutoDiscoveryUtils", () => {
                     error: AutoDiscovery.ERROR_INVALID_HOMESERVER,
                 },
             };
-            expect(() => AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult)).toThrow(
-                "Homeserver URL does not appear to be a valid Matrix homeserver",
-            );
+            await expect(() =>
+                AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult),
+            ).rejects.toThrow("Homeserver URL does not appear to be a valid Matrix homeserver");
             expect(logger.error).toHaveBeenCalled();
         });
 
-        it("throws an error with fallback message identity server config has fail error", () => {
+        it("throws an error with fallback message identity server config has fail error", async () => {
             const discoveryResult = {
                 ...validHsConfig,
                 "m.identity_server": {
                     state: AutoDiscoveryAction.FAIL_ERROR,
                 },
             };
-            expect(() => AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult)).toThrow(
-                "Unexpected error resolving identity server configuration",
-            );
+            await expect(() =>
+                AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult),
+            ).rejects.toThrow("Unexpected error resolving identity server configuration");
         });
 
-        it("throws an error when error is ERROR_INVALID_HOMESERVER", () => {
+        it("throws an error when error is ERROR_INVALID_HOMESERVER", async () => {
             const discoveryResult = {
                 ...validIsConfig,
                 "m.homeserver": {
@@ -121,12 +121,12 @@ describe("AutoDiscoveryUtils", () => {
                     error: AutoDiscovery.ERROR_INVALID_HOMESERVER,
                 },
             };
-            expect(() => AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult)).toThrow(
-                "Homeserver URL does not appear to be a valid Matrix homeserver",
-            );
+            await expect(() =>
+                AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult),
+            ).rejects.toThrow("Homeserver URL does not appear to be a valid Matrix homeserver");
         });
 
-        it("throws an error when homeserver base_url is falsy", () => {
+        it("throws an error when homeserver base_url is falsy", async () => {
             const discoveryResult = {
                 ...validIsConfig,
                 "m.homeserver": {
@@ -134,13 +134,13 @@ describe("AutoDiscoveryUtils", () => {
                     base_url: "",
                 },
             };
-            expect(() => AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult)).toThrow(
-                "Unexpected error resolving homeserver configuration",
-            );
+            await expect(() =>
+                AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult),
+            ).rejects.toThrow("Unexpected error resolving homeserver configuration");
             expect(logger.error).toHaveBeenCalledWith("No homeserver URL configured");
         });
 
-        it("throws an error when homeserver base_url is not a valid URL", () => {
+        it("throws an error when homeserver base_url is not a valid URL", async () => {
             const discoveryResult = {
                 ...validIsConfig,
                 "m.homeserver": {
@@ -148,24 +148,24 @@ describe("AutoDiscoveryUtils", () => {
                     base_url: "banana",
                 },
             };
-            expect(() => AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult)).toThrow(
-                "Invalid URL: banana",
-            );
+            await expect(() =>
+                AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult),
+            ).rejects.toThrow("Invalid URL: banana");
         });
 
-        it("uses hs url hostname when serverName is falsy in args and config", () => {
+        it("uses hs url hostname when serverName is falsy in args and config", async () => {
             const discoveryResult = {
                 ...validIsConfig,
                 ...validHsConfig,
             };
-            expect(AutoDiscoveryUtils.buildValidatedConfigFromDiscovery("", discoveryResult)).toEqual({
+            await expect(AutoDiscoveryUtils.buildValidatedConfigFromDiscovery("", discoveryResult)).resolves.toEqual({
                 ...expectedValidatedConfig,
                 hsNameIsDifferent: false,
                 hsName: "matrix.org",
             });
         });
 
-        it("uses serverName from props", () => {
+        it("uses serverName from props", async () => {
             const discoveryResult = {
                 ...validIsConfig,
                 "m.homeserver": {
@@ -174,16 +174,16 @@ describe("AutoDiscoveryUtils", () => {
                 },
             };
             const syntaxOnly = true;
-            expect(
+            await expect(
                 AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult, syntaxOnly),
-            ).toEqual({
+            ).resolves.toEqual({
                 ...expectedValidatedConfig,
                 hsNameIsDifferent: true,
                 hsName: serverName,
             });
         });
 
-        it("ignores liveliness error when checking syntax only", () => {
+        it("ignores liveliness error when checking syntax only", async () => {
             const discoveryResult = {
                 ...validIsConfig,
                 "m.homeserver": {
@@ -193,15 +193,15 @@ describe("AutoDiscoveryUtils", () => {
                 },
             };
             const syntaxOnly = true;
-            expect(
+            await expect(
                 AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult, syntaxOnly),
-            ).toEqual({
+            ).resolves.toEqual({
                 ...expectedValidatedConfig,
                 warning: "Homeserver URL does not appear to be a valid Matrix homeserver",
             });
         });
 
-        it("handles homeserver too old error", () => {
+        it("handles homeserver too old error", async () => {
             const discoveryResult: ClientConfig = {
                 ...validIsConfig,
                 "m.homeserver": {
@@ -211,9 +211,9 @@ describe("AutoDiscoveryUtils", () => {
                 },
             };
             const syntaxOnly = true;
-            expect(() =>
+            await expect(() =>
                 AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult, syntaxOnly),
-            ).toThrow(
+            ).rejects.toThrow(
                 "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.",
             );
         });
