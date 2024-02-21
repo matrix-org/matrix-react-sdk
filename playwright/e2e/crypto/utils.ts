@@ -148,7 +148,7 @@ export async function logIntoElement(
     // select homeserver
     await page.getByRole("button", { name: "Edit" }).click();
     await page.getByRole("textbox", { name: "Other homeserver" }).fill(homeserver.config.baseUrl);
-    await page.getByRole("button", { name: "Continue" }).click();
+    await page.getByRole("button", { name: "Continue", exact: true }).click();
 
     // wait for the dialog to go away
     await expect(page.locator(".mx_ServerPickerDialog")).not.toBeVisible();
