@@ -142,7 +142,7 @@ export class OidcClientStore {
         try {
             const clientId = getStoredOidcClientId();
             const { accountManagementEndpoint, metadata, signingKeys } = await discoverAndValidateOIDCIssuerWellKnown(
-                this.authenticatedIssuer!,
+                this.authenticatedIssuer,
             );
             // if no account endpoint is configured default to the issuer
             this._accountManagementEndpoint = accountManagementEndpoint ?? metadata.issuer;
