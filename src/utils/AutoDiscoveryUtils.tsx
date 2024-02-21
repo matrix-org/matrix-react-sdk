@@ -15,7 +15,15 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { AutoDiscovery, AutoDiscoveryError, ClientConfig, IClientWellKnown } from "matrix-js-sdk/src/matrix";
+import {
+    AutoDiscovery,
+    AutoDiscoveryError,
+    ClientConfig,
+    discoverAndValidateOIDCIssuerWellKnown,
+    IClientWellKnown,
+    MatrixClient,
+    OidcClientConfig,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td, TranslationKey, UserFriendlyError } from "../languageHandler";
@@ -210,12 +218,12 @@ export default class AutoDiscoveryUtils {
      * @param {boolean} isSynthetic If true, then the discoveryResult was synthesised locally.
      * @returns {Promise<ValidatedServerConfig>} Resolves to the validated configuration.
      */
-    public static buildValidatedConfigFromDiscovery(
+    public static async buildValidatedConfigFromDiscovery(
         serverName?: string,
         discoveryResult?: ClientConfig,
         syntaxOnly = false,
         isSynthetic = false,
-    ): ValidatedServerConfig {
+    ): Promise<ValidatedServerConfig> {
         if (!discoveryResult?.["m.homeserver"]) {
             // This shouldn't happen without major misconfiguration, so we'll log a bit of information
             // in the log so we can find this bit of code but otherwise tell the user "it broke".
@@ -286,6 +294,17 @@ export default class AutoDiscoveryUtils {
             throw new UserFriendlyError("auth|autodiscovery_unexpected_error_hs");
         }
 
+        // This isn't inherently auto-discovery but used to be in an earlier incarnation of the MSC,
+        // and shuttling the data together makes a lot of sense
+        let delegatedAuthentication: OidcClientConfig | undefined;
+        try {
+            const tempClient = new MatrixClient({ baseUrl: preferredHomeserverUrl });
+            const { issuer } = await tempClient.getAuthIssuer();
+            delegatedAuthentication = await discoverAndValidateOIDCIssuerWellKnown(issuer);
+        } catch (e) {
+            // This is expected for servers not delegating auth via OIDC
+        }
+
         return {
             hsUrl: preferredHomeserverUrl,
             hsName: preferredHomeserverName,
@@ -294,6 +313,7 @@ export default class AutoDiscoveryUtils {
             isDefault: false,
             warning: hsResult.error,
             isNameResolvable: !isSynthetic,
+            delegatedAuthentication,
         } as ValidatedServerConfig;
     }
 }
