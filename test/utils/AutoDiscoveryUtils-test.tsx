@@ -16,6 +16,7 @@ limitations under the License.
 
 import { AutoDiscovery, AutoDiscoveryAction, ClientConfig } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
+import fetchMock from "fetch-mock-jest";
 
 import AutoDiscoveryUtils from "../../src/utils/AutoDiscoveryUtils";
 
@@ -216,6 +217,172 @@ describe("AutoDiscoveryUtils", () => {
             ).rejects.toThrow(
                 "Your homeserver is too old and does not support the minimum API version required. Please contact your server owner, or upgrade your server.",
             );
+        });
+
+        it("should validate delegated oidc auth", async () => {
+            const issuer = "https://auth.matrix.org/";
+            fetchMock.get(
+                `${validHsConfig["m.homeserver"].base_url}/_matrix/client/unstable/org.matrix.msc2965/auth_issuer`,
+                {
+                    issuer,
+                },
+            );
+            fetchMock.get(`${issuer}.well-known/openid-configuration`, {
+                "issuer": `${issuer}`,
+                "authorization_endpoint": `${issuer}authorize`,
+                "token_endpoint": `${issuer}oauth2/token`,
+                "jwks_uri": `${issuer}oauth2/keys.json`,
+                "registration_endpoint": `${issuer}oauth2/registration`,
+                "scopes_supported": ["openid", "email"],
+                "response_types_supported": ["code", "id_token", "code id_token"],
+                "response_modes_supported": ["form_post", "query", "fragment"],
+                "grant_types_supported": [
+                    "authorization_code",
+                    "refresh_token",
+                    "client_credentials",
+                    "urn:ietf:params:oauth:grant-type:device_code",
+                ],
+                "token_endpoint_auth_methods_supported": [
+                    "client_secret_basic",
+                    "client_secret_post",
+                    "client_secret_jwt",
+                    "private_key_jwt",
+                    "none",
+                ],
+                "token_endpoint_auth_signing_alg_values_supported": [
+                    "HS256",
+                    "HS384",
+                    "HS512",
+                    "RS256",
+                    "RS384",
+                    "RS512",
+                    "PS256",
+                    "PS384",
+                    "PS512",
+                    "ES256",
+                    "ES384",
+                    "ES256K",
+                ],
+                "revocation_endpoint": `${issuer}oauth2/revoke`,
+                "revocation_endpoint_auth_methods_supported": [
+                    "client_secret_basic",
+                    "client_secret_post",
+                    "client_secret_jwt",
+                    "private_key_jwt",
+                    "none",
+                ],
+                "revocation_endpoint_auth_signing_alg_values_supported": [
+                    "HS256",
+                    "HS384",
+                    "HS512",
+                    "RS256",
+                    "RS384",
+                    "RS512",
+                    "PS256",
+                    "PS384",
+                    "PS512",
+                    "ES256",
+                    "ES384",
+                    "ES256K",
+                ],
+                "introspection_endpoint": `${issuer}oauth2/introspect`,
+                "introspection_endpoint_auth_methods_supported": [
+                    "client_secret_basic",
+                    "client_secret_post",
+                    "client_secret_jwt",
+                    "private_key_jwt",
+                    "none",
+                ],
+                "introspection_endpoint_auth_signing_alg_values_supported": [
+                    "HS256",
+                    "HS384",
+                    "HS512",
+                    "RS256",
+                    "RS384",
+                    "RS512",
+                    "PS256",
+                    "PS384",
+                    "PS512",
+                    "ES256",
+                    "ES384",
+                    "ES256K",
+                ],
+                "code_challenge_methods_supported": ["plain", "S256"],
+                "userinfo_endpoint": `${issuer}oauth2/userinfo`,
+                "subject_types_supported": ["public"],
+                "id_token_signing_alg_values_supported": [
+                    "RS256",
+                    "RS384",
+                    "RS512",
+                    "ES256",
+                    "ES384",
+                    "PS256",
+                    "PS384",
+                    "PS512",
+                    "ES256K",
+                ],
+                "userinfo_signing_alg_values_supported": [
+                    "RS256",
+                    "RS384",
+                    "RS512",
+                    "ES256",
+                    "ES384",
+                    "PS256",
+                    "PS384",
+                    "PS512",
+                    "ES256K",
+                ],
+                "display_values_supported": ["page"],
+                "claim_types_supported": ["normal"],
+                "claims_supported": ["iss", "sub", "aud", "iat", "exp", "nonce", "auth_time", "at_hash", "c_hash"],
+                "claims_parameter_supported": false,
+                "request_parameter_supported": false,
+                "request_uri_parameter_supported": false,
+                "prompt_values_supported": ["none", "login", "create"],
+                "device_authorization_endpoint": `${issuer}oauth2/device`,
+                "org.matrix.matrix-authentication-service.graphql_endpoint": `${issuer}graphql`,
+                "account_management_uri": `${issuer}account/`,
+                "account_management_actions_supported": [
+                    "org.matrix.profile",
+                    "org.matrix.sessions_list",
+                    "org.matrix.session_view",
+                    "org.matrix.session_end",
+                    "org.matrix.cross_signing_reset",
+                ],
+            });
+            fetchMock.get(`${issuer}oauth2/keys.json`, {
+                keys: [],
+            });
+
+            const discoveryResult = {
+                ...validIsConfig,
+                ...validHsConfig,
+            };
+            await expect(
+                AutoDiscoveryUtils.buildValidatedConfigFromDiscovery(serverName, discoveryResult),
+            ).resolves.toEqual({
+                ...expectedValidatedConfig,
+                hsNameIsDifferent: true,
+                hsName: serverName,
+                delegatedAuthentication: expect.objectContaining({
+                    accountManagementActionsSupported: [
+                        "org.matrix.profile",
+                        "org.matrix.sessions_list",
+                        "org.matrix.session_view",
+                        "org.matrix.session_end",
+                        "org.matrix.cross_signing_reset",
+                    ],
+                    accountManagementEndpoint: "https://auth.matrix.org/account/",
+                    authorizationEndpoint: "https://auth.matrix.org/authorize",
+                    metadata: expect.objectContaining({
+                        issuer,
+                    }),
+                    registrationEndpoint: "https://auth.matrix.org/oauth2/registration",
+                    signingKeys: [],
+                    tokenEndpoint: "https://auth.matrix.org/oauth2/token",
+                }),
+                warning: undefined,
+            });
         });
     });
 

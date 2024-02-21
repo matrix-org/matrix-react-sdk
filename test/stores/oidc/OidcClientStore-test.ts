@@ -35,7 +35,7 @@ describe("OidcClientStore", () => {
     const account = metadata.issuer + "account";
 
     const mockClient = getMockClientWithEventEmitter({
-        waitForClientWellKnown: jest.fn().mockResolvedValue({}),
+        getAuthIssuer: jest.fn(),
     });
 
     beforeEach(() => {
@@ -72,7 +72,6 @@ describe("OidcClientStore", () => {
 
     describe("initialising oidcClient", () => {
         it("should initialise oidc client from constructor", () => {
-            mockClient.waitForClientWellKnown.mockResolvedValue(undefined as any);
             const store = new OidcClientStore(mockClient);
 
             // started initialising
@@ -81,7 +80,6 @@ describe("OidcClientStore", () => {
         });
 
         it("should fallback to stored issuer when no client well known is available", async () => {
-            mockClient.waitForClientWellKnown.mockResolvedValue(undefined as any);
             const store = new OidcClientStore(mockClient);
 
             // successfully created oidc client
@@ -193,7 +191,6 @@ describe("OidcClientStore", () => {
 
         it("should throw when oidcClient could not be initialised", async () => {
             // make oidcClient initialisation fail
-            mockClient.waitForClientWellKnown.mockResolvedValue(undefined as any);
             localStorage.removeItem("mx_oidc_token_issuer");
 
             const store = new OidcClientStore(mockClient);
@@ -237,6 +234,19 @@ describe("OidcClientStore", () => {
 
             expect(fetchMock).toHaveFetchedTimes(2, metadata.revocation_endpoint);
             expect(OidcClient.prototype.revokeToken).toHaveBeenCalledWith(accessToken, "access_token");
+        });
+    });
+
+    describe("OIDC Aware", () => {
+        beforeEach(() => {
+            localStorage.clear();
+        });
+
+        it("should resolve account management endpoint", async () => {
+            mockClient.getAuthIssuer.mockResolvedValue({ issuer: metadata.issuer });
+            const store = new OidcClientStore(mockClient);
+            await store.readyPromise;
+            expect(store.accountManagementEndpoint).toBe(account);
         });
     });
 });
