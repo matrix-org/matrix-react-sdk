@@ -14,13 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IDelegatedAuthConfig, MatrixClient, M_AUTHENTICATION } from "matrix-js-sdk/src/matrix";
-import { discoverAndValidateAuthenticationConfig } from "matrix-js-sdk/src/oidc/discovery";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { discoverAndValidateOIDCIssuerWellKnown } from "matrix-js-sdk/src/oidc/discovery";
 import { logger } from "matrix-js-sdk/src/logger";
 import { OidcClient } from "oidc-client-ts";
 
 import { getStoredOidcTokenIssuer, getStoredOidcClientId } from "../../utils/oidc/persistOidcSettings";
-import { getDelegatedAuthAccountUrl } from "../../utils/oidc/getDelegatedAuthAccountUrl";
 import PlatformPeg from "../../PlatformPeg";
 
 /**
@@ -47,8 +46,16 @@ export class OidcClientStore {
         if (this.authenticatedIssuer) {
             await this.getOidcClient();
         } else {
-            const wellKnown = await this.matrixClient.waitForClientWellKnown();
-            this._accountManagementEndpoint = getDelegatedAuthAccountUrl(wellKnown);
+            // Are we in OIDC-aware mode?
+            try {
+                const authIssuer = await this.matrixClient.getAuthIssuer();
+                const { accountManagementEndpoint, metadata } = await discoverAndValidateOIDCIssuerWellKnown(
+                    authIssuer.issuer,
+                );
+                this._accountManagementEndpoint = accountManagementEndpoint ?? metadata.issuer;
+            } catch (e) {
+                console.log("Auth issuer not found", e);
+            }
         }
     }
 
@@ -127,23 +134,18 @@ export class OidcClientStore {
      * @returns promise that resolves when initialising OidcClient succeeds or fails
      */
     private async initOidcClient(): Promise<void> {
-        const wellKnown = await this.matrixClient.waitForClientWellKnown();
-        if (!wellKnown && !this.authenticatedIssuer) {
+        if (!this.authenticatedIssuer) {
             logger.error("Cannot initialise OIDC client without issuer.");
             return;
         }
-        const delegatedAuthConfig =
-            (wellKnown && M_AUTHENTICATION.findIn<IDelegatedAuthConfig>(wellKnown)) ?? undefined;
 
         try {
             const clientId = getStoredOidcClientId();
-            const { account, metadata, signingKeys } = await discoverAndValidateAuthenticationConfig(
-                // if HS has valid delegated auth config in .well-known, use it
-                // otherwise fallback to the known issuer
-                delegatedAuthConfig ?? { issuer: this.authenticatedIssuer! },
+            const { accountManagementEndpoint, metadata, signingKeys } = await discoverAndValidateOIDCIssuerWellKnown(
+                this.authenticatedIssuer!,
             );
             // if no account endpoint is configured default to the issuer
-            this._accountManagementEndpoint = account ?? metadata.issuer;
+            this._accountManagementEndpoint = accountManagementEndpoint ?? metadata.issuer;
             this.oidcClient = new OidcClient({
                 ...metadata,
                 authority: metadata.issuer,
