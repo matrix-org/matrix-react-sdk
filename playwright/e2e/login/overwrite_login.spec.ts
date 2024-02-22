@@ -19,22 +19,7 @@ import { logIntoElement } from "../crypto/utils";
 import { IMatrixClientCreds } from "../../../src/MatrixClientPeg";
 
 test.describe("Overwrite login action", () => {
-    test.use({
-        config: ({ homeserver }, use) =>
-            use({
-                default_server_config: {
-                    "m.homeserver": {
-                        base_url: homeserver.config.baseUrl,
-                    },
-                    "m.identity_server": {
-                        base_url: "https://server.invalid",
-                    },
-                },
-            }),
-    });
-
     test("Try replace existing login with new one", async ({ page, app, credentials, homeserver }) => {
-        // await page.pause();
         await logIntoElement(page, homeserver, credentials);
 
         const userMenu = await app.openUserMenu();
