@@ -373,7 +373,7 @@ describe("AutoDiscoveryUtils", () => {
                     signingKeys: [],
                     tokenEndpoint: "https://auth.matrix.org/token",
                 }),
-                warning: undefined,
+                warning: null,
             });
         });
     });
