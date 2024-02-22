@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { discoverAndValidateOIDCIssuerWellKnown } from "matrix-js-sdk/src/oidc/discovery";
+import { MatrixClient, discoverAndValidateOIDCIssuerWellKnown } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { OidcClient } from "oidc-client-ts";
 

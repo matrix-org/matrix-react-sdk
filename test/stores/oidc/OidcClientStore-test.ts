@@ -18,14 +18,15 @@ import fetchMock from "fetch-mock-jest";
 import { mocked } from "jest-mock";
 import { OidcClient } from "oidc-client-ts";
 import { logger } from "matrix-js-sdk/src/logger";
-import { discoverAndValidateOIDCIssuerWellKnown } from "matrix-js-sdk/src/oidc/discovery";
+import { discoverAndValidateOIDCIssuerWellKnown } from "matrix-js-sdk/src/matrix";
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
 
 import { OidcClientStore } from "../../../src/stores/oidc/OidcClientStore";
 import { flushPromises, getMockClientWithEventEmitter, mockPlatformPeg } from "../../test-utils";
 import { mockOpenIdConfiguration } from "../../test-utils/oidc";
 
-jest.mock("matrix-js-sdk/src/oidc/discovery", () => ({
+jest.mock("matrix-js-sdk/src/matrix", () => ({
+    ...jest.requireActual("matrix-js-sdk/src/matrix"),
     discoverAndValidateOIDCIssuerWellKnown: jest.fn(),
 }));
 
@@ -52,6 +53,7 @@ describe("OidcClientStore", () => {
         jest.spyOn(logger, "error").mockClear();
 
         fetchMock.get(`${metadata.issuer}.well-known/openid-configuration`, metadata);
+        fetchMock.get(`${metadata.issuer}jwks`, { keys: [] });
         mockPlatformPeg();
     });
 
@@ -104,7 +106,7 @@ describe("OidcClientStore", () => {
             mocked(discoverAndValidateOIDCIssuerWellKnown).mockRejectedValue(new Error(OidcError.OpSupport));
             const store = new OidcClientStore(mockClient);
 
-            await flushPromises();
+            await store.readyPromise;
 
             expect(logger.error).toHaveBeenCalledWith(
                 "Failed to initialise OidcClientStore",

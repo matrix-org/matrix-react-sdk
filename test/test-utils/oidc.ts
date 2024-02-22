@@ -49,4 +49,5 @@ export const mockOpenIdConfiguration = (issuer = "https://auth.org/"): Validated
     response_types_supported: ["code"],
     grant_types_supported: ["authorization_code", "refresh_token"],
     code_challenge_methods_supported: ["S256"],
+    account_management_uri: issuer + "account",
 });
