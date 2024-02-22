@@ -317,7 +317,7 @@ export default class AutoDiscoveryUtils {
             hsNameIsDifferent: url.hostname !== preferredHomeserverName,
             isUrl: preferredIdentityUrl,
             isDefault: false,
-            warning: hsResult.error ?? delegatedAuthenticationError,
+            warning: hsResult.error ?? delegatedAuthenticationError ?? null,
             isNameResolvable: !isSynthetic,
             delegatedAuthentication,
         } as ValidatedServerConfig;
