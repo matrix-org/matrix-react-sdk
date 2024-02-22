@@ -889,8 +889,8 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     }
     checkSessionLock();
 
-    await startMatrixClient(client, /*startSyncing=*/ !softLogout);
     dis.fire(Action.OnLoggedIn);
+    await startMatrixClient(client, /*startSyncing=*/ !softLogout);
 
     return client;
 }
