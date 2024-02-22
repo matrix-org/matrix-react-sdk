@@ -10,11 +10,6 @@ on:
                 options:
                     - rc
                     - final
-            matrix-js-sdk:
-                description: JS SDK version to use (current|X.Y.Z)
-                required: false
-                default: current
-                type: string
             npm:
                 description: Publish to npm
                 required: true
@@ -23,10 +18,9 @@ on:
 concurrency: ${{ github.workflow }}
 jobs:
     release:
-        uses: matrix-org/matrix-js-sdk/.github/workflows/release-action.yml@develop
+        uses: matrix-org/matrix-js-sdk/.github/workflows/release-make.yml@develop
         secrets: inherit
         with:
             final: ${{ inputs.mode == 'final' }}
             npm: ${{ inputs.npm }}
-            dependencies: |
-                matrix-js-sdk=${{ inputs.matrix-js-sdk }}
+            downstreams: '["element-hq/element-web"]'

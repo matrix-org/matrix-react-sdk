@@ -475,7 +475,9 @@ export class MessageComposer extends React.Component<IProps, IState> {
     public render(): React.ReactNode {
         const hasE2EIcon = Boolean(!this.state.isWysiwygLabEnabled && this.props.e2eStatus);
         const e2eIcon = hasE2EIcon && (
-            <E2EIcon key="e2eIcon" status={this.props.e2eStatus!} className="mx_MessageComposer_e2eIcon" />
+            <div className="mx_MessageComposer_e2eIconWrapper">
+                <E2EIcon key="e2eIcon" status={this.props.e2eStatus!} className="mx_MessageComposer_e2eIcon" />
+            </div>
         );
 
         const controls: ReactNode[] = [];
@@ -602,6 +604,8 @@ export class MessageComposer extends React.Component<IProps, IState> {
                 className={classes}
                 ref={this.ref}
                 aria-describedby={this.state.recordingTimeLeftSeconds ? this.tooltipId : undefined}
+                role="region"
+                aria-label={_t("a11y|message_composer")}
             >
                 {recordingTooltip}
                 <div className="mx_MessageComposer_wrapper">

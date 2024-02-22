@@ -1,6 +1,8 @@
 {
     "a11y": {
+        "emoji_picker": "Selektor emoji",
         "jump_first_invite": "Przejdź do pierwszego zaproszenia.",
+        "message_composer": "Kompozytor wiadomości",
         "n_unread_messages": {
             "other": "%(count)s nieprzeczytanych wiadomości.",
             "one": "1 nieprzeczytana wiadomość."
@@ -9,7 +11,10 @@
             "other": "%(count)s nieprzeczytanych wiadomości, wliczając wzmianki.",
             "one": "1 nieprzeczytana wzmianka."
         },
+        "recent_rooms": "Ostatnie pokoje",
         "room_name": "Pokój %(name)s",
+        "room_status_bar": "Pasek stanu pokoju",
+        "seek_bar_label": "Pasek wyszukiwania audio",
         "unread_messages": "Nieprzeczytane wiadomości.",
         "user_menu": "Menu użytkownika"
     },
@@ -251,6 +256,7 @@
             "error_homeserver_lacks_support": "Serwer domowy nie wspiera logowania innych urządzeń.",
             "error_invalid_scanned_code": "Zeskanowany kod jest nieprawidłowy.",
             "error_linking_incomplete": "Wiązanie nie zostało zakończone w ustalonym czasie.",
+            "error_rate_limited": "Za dużo prób w krótkim odstępie czasu. Odczekaj trochę, zanim spróbujesz ponownie.",
             "error_request_cancelled": "Żądanie zostało anulowane.",
             "error_request_declined": "Żądanie zostało odrzucone przez drugie urządzenie.",
             "error_unexpected": "Wystąpił niespodziewany błąd.",
@@ -418,7 +424,6 @@
         "spaceinvaders_message": "wysyła kosmicznych najeźdźców"
     },
     "common": {
-        "about": "Informacje",
         "access_token": "Token dostępu",
         "accessibility": "Ułatwienia dostępu",
         "advanced": "Zaawansowane",
@@ -474,6 +479,7 @@
         "legal": "Zasoby prawne",
         "light": "Jasny",
         "loading": "Wczytywanie…",
+        "lobby": "Poczekalnia",
         "location": "Lokalizacja",
         "low_priority": "Niski priorytet",
         "matrix": "Matrix",
@@ -485,11 +491,8 @@
         "mute": "Wycisz",
         "n_members": {
             "one": "%(count)s członek",
-            "other": "%(count)s członkowie"
-        },
-        "n_participants": {
-            "one": "1 uczestnik",
-            "other": "%(count)s uczestników"
+            "few": "%(count)s członki",
+            "many": "%(count)s członków"
         },
         "n_rooms": {
             "one": "%(count)s pokój",
@@ -505,7 +508,7 @@
         "options": "Opcje",
         "orphan_rooms": "Inne pokoje",
         "password": "Hasło",
-        "people": "Ludzie",
+        "people": "Osoby",
         "preferences": "Preferencje",
         "presence": "Prezencja",
         "preview_message": "Hej, ty. Jesteś super!",
@@ -760,9 +763,10 @@
         "room_notifications_total": "Łącznie: ",
         "room_notifications_type": "Typ: ",
         "room_status": "Status pokoju",
-        "room_unread_status": "Status nieprzeczytanych wiadomości pokoju: <strong>%(status)s</strong>",
         "room_unread_status_count": {
-            "other": "Status nieprzeczytanych wiadomości pokoju: <strong>%(status)s</strong>, ilość: <strong>%(count)s</strong>"
+            "one": "Status nieprzeczytanej w pokoju: <strong>%(status)s</strong>, liczba: <strong>%(count)s</strong>",
+            "few": "Status nieprzeczytanych w pokoju: <strong>%(status)s</strong>, liczba: <strong>%(count)s</strong>",
+            "many": "Status nieprzeczytanych w pokoju: <strong>%(status)s</strong>, liczba: <strong>%(count)s</strong>"
         },
         "save_setting_values": "Zapisz ustawione wartości",
         "see_history": "Pokaż historię",
@@ -1057,10 +1061,14 @@
         "unknown_error_code": "nieznany kod błędu",
         "update_power_level": "Nie udało się zmienić poziomu mocy"
     },
-    "error_app_open_in_another_tab": "%(brand)s został otwarty w innej karcie.",
+    "error_app_open_in_another_tab": "Zmień kartę aby połączyć się do %(brand)s. Ta karta może zostać zamknięta.",
+    "error_app_open_in_another_tab_title": "%(brand)s jest włączony na innej karcie",
     "error_app_opened_in_another_window": "%(brand)s jest już otwarty w innym oknie. Kliknij \"%(label)s\", aby otworzyć tutaj %(brand)s i odłączyć drugie okno.",
-    "error_database_closed_description": "Może być to spowodowane przez aplikacje otwartą w wielu kartach lub po wyczyszczeniu danych przeglądarki.",
-    "error_database_closed_title": "Baza danych została nieoczekiwanie zamknięta",
+    "error_database_closed_description": {
+        "for_desktop": "Twój dysk może być pełny. Zwolnij trochę miejsca i wczytaj ponownie.",
+        "for_web": "Jeśli niedawno czyściłeś dane przeglądania, można się spodziewać tej wiadomości. %(brand)s może być otwarty na innej karcie lub Twój dysk jest pełny. Zwolnij trochę miejsca i spróbuj ponownie"
+    },
+    "error_database_closed_title": "%(brand)s przestał działać",
     "error_dialog": {
         "copy_room_link_failed": {
             "description": "Nie można skopiować linku pokoju do schowka.",
@@ -1395,9 +1403,10 @@
         "dehydration": "Szyfrowane wiadomości offline korzystające z urządzeń odwodnionych",
         "dynamic_room_predecessors": "Dynamiczne poprzedniki pokoju",
         "dynamic_room_predecessors_description": "Włącz MSC3946 (dla opóźnionych archiwów pokoju)",
-        "element_call_video_rooms": "Pokoje rozmów wideo Element",
+        "element_call_video_rooms": "Pokoje rozmów wideo Element Call",
         "experimental_description": "Chcesz poeksperymentować? Wypróbuj nasze najnowsze pomysły w trakcie rozwoju. Przedstawione funkcje nie zostały w pełni ukończone; mogą być niestabilne; mogą się zmienić lub zostać kompletnie porzucone. <a>Dowiedz się więcej</a>.",
         "experimental_section": "Wczesny podgląd",
+        "feature_disable_call_per_sender_encryption": "Wyłącz szyfrowanie nadawcy dla Element Call",
         "feature_wysiwyg_composer_description": "Użyj bogatego edytora tekstu zamiast edytora Markdown podczas tworzenia wiadomości.",
         "group_calls": "Nowe wrażenia rozmów grupowych",
         "group_developer": "Deweloper",
@@ -1409,6 +1418,7 @@
         "group_rooms": "Pokoje",
         "group_spaces": "Przestrzenie",
         "group_themes": "Motywy",
+        "group_threads": "Wątki",
         "group_voip": "Głos i wideo",
         "group_widgets": "Widżety",
         "hidebold": "Ukryj kropkę powiadomienia (wyświetlaj tylko licznik plakietek)",
@@ -1437,7 +1447,10 @@
         "report_to_moderators": "Zgłoś do moderatorów",
         "report_to_moderators_description": "W pokojach, które wspierają moderacje, przycisk \"Zgłoś\" pozwoli Ci zgłosić nadużycia moderatorom.",
         "rust_crypto": "Implementacja kryptografii Rust",
-        "rust_crypto_disabled_notice": "Można go tylko włączyć przez config.json",
+        "rust_crypto_in_config": "Kryptografia Rust nie może zostać włączona na tym wydaniu %(brand)s",
+        "rust_crypto_in_config_description": "Przejście na kryptografię Rust wymaga procesu migracji, która może potrwać kilka minut. Nie można jej wyłączyć; zachowaj ostrożność!",
+        "rust_crypto_optin_warning": "Przejście na kryptografię Rust wymaga procesu migracji, która może potrwać kilka minut. Aby ją wyłączyć, będziesz musiał zalogować się ponownie; zachowaj ostrożność!",
+        "rust_crypto_requires_logout": "Po włączeniu, kryptografia Rust może zostać wyłączona tylko po ponownym zalogowaniu.",
         "sliding_sync": "Tryb synchronizacji przesuwanej",
         "sliding_sync_checking": "Sprawdzanie…",
         "sliding_sync_configuration": "Konfiguracja synchronizacji przesuwanej",
@@ -1449,7 +1462,8 @@
         "sliding_sync_server_no_support": "Twój serwer nie posiada wsparcia natywnego",
         "sliding_sync_server_specify_proxy": "Twój serwer nie posiada wsparcia natywnego, musisz podać serwer proxy",
         "sliding_sync_server_support": "Twój serwer posiada wsparcie natywne",
-        "state_counters": "Wyświetl proste liczniki w nagłówku pokoju",
+        "threads_activity_centre": "Centrum aktywności wątków (w trakcie rozwoju)",
+        "threads_activity_centre_description": "Ostrzeżenie: W trakcie aktywnego rozwoju; przeładowuje Element.",
         "under_active_development": "W trakcie aktywnego rozwoju.",
         "unrealiable_e2e": "Problematyczny w pokojach szyfrowanych",
         "video_rooms": "Pokoje wideo",
@@ -1578,6 +1592,7 @@
     },
     "member_list_back_action_label": "Członkowie pokoju",
     "message_edit_dialog_title": "Edycje wiadomości",
+    "migrating_crypto": "Trzymaj się mocno. Aktualizujemy Element, aby szyfrowanie było szybsze i bardziej niezawodne.",
     "mobile_guide": {
         "toast_accept": "Użyj aplikacji",
         "toast_description": "%(brand)s jest eksperymentalne na przeglądarce mobilnej. Dla lepszego doświadczenia i najnowszych funkcji użyj naszej darmowej natywnej aplikacji.",
@@ -1594,12 +1609,6 @@
         "all_messages_description": "Otrzymuj powiadomienie każdej wiadomości",
         "class_global": "Globalne",
         "class_other": "Inne",
-        "colour_bold": "Pogrubienie",
-        "colour_grey": "Szary",
-        "colour_muted": "Wyciszony",
-        "colour_none": "Brak",
-        "colour_red": "Czerwony",
-        "colour_unsent": "Niewysłane",
         "default": "Zwykły",
         "email_pusher_app_display_name": "Powiadomienia e-mail",
         "enable_prompt_toast_description": "Włącz powiadomienia na pulpicie",
@@ -1608,6 +1617,12 @@
         "error_change_title": "Zmień ustawienia powiadomień",
         "keyword": "Słowo kluczowe",
         "keyword_new": "Nowe słowo kluczowe",
+        "level_activity": "Aktywności",
+        "level_highlight": "Wyróżnij",
+        "level_muted": "Wyciszony",
+        "level_none": "Brak",
+        "level_notification": "Powiadomienie",
+        "level_unsent": "Niewysłane",
         "mark_all_read": "Oznacz wszystko jako przeczytane",
         "mentions_and_keywords": "@wzmianki & słowa kluczowe",
         "mentions_and_keywords_description": "Otrzymuj powiadomienia tylko z wzmiankami i słowami kluczowymi zgodnie z Twoimi <a>ustawieniami</a>",
@@ -1661,7 +1676,7 @@
         "send_dm": "Wyślij wiadomość prywatną",
         "set_up_profile": "Utwórz swój profil",
         "set_up_profile_action": "Twój profil",
-        "set_up_profile_description": "Upewnij się, że ludzie wiedzą, że to naprawdę ty",
+        "set_up_profile_description": "Upewnij się, że osoby wiedzą, że to naprawdę ty",
         "use_case_community_messaging": "Członkowie społeczności online",
         "use_case_heading1": "Wszedłeś",
         "use_case_heading2": "Z kim będziesz najczęściej rozmawiał?",
@@ -1740,7 +1755,8 @@
         "online": "Dostępny",
         "online_for": "Online przez %(duration)s",
         "unknown": "Nieznany",
-        "unknown_for": "Nieznany przez %(duration)s"
+        "unknown_for": "Nieznany przez %(duration)s",
+        "unreachable": "Serwer użytkownika jest nieosiągalny"
     },
     "quick_settings": {
         "all_settings": "Wszystkie ustawienia",
@@ -1852,8 +1868,6 @@
         "room_summary_card": {
             "title": "Informacje pokoju"
         },
-        "settings_button": "Ustawienia pokoju",
-        "share_button": "Udostępnij pokój",
         "thread_list": {
             "context_menu_label": "Opcje wątków"
         },
@@ -1935,11 +1949,13 @@
             "show_widgets_button": "Pokaż widżety",
             "video_call_button_ec": "Rozmowa wideo (%(brand)s)",
             "video_call_button_jitsi": "Rozmowa wideo (Jitsi)",
+            "video_call_button_legacy": "Stary tryb połączenia video",
             "video_call_ec_change_layout": "Zmień układ",
             "video_call_ec_layout_freedom": "Wolność",
             "video_call_ec_layout_spotlight": "Centrum uwagi",
             "video_room_view_chat_button": "Wyświetl oś czasu czatu"
         },
+        "header_face_pile_tooltip": "Przełącz listę członków",
         "header_untrusted_label": "Niezaufany",
         "inaccessible": "Ten pokój lub przestrzeń nie jest dostępna w tym momencie.",
         "inaccessible_name": "%(roomName)s nie jest dostępny w tym momencie.",
@@ -2273,7 +2289,7 @@
             "history_visibility_world_readable": "Każdy",
             "join_rule_description": "Decyduj kto może dołączyć %(roomName)s.",
             "join_rule_invite": "Prywatny (tylko na zaproszenie)",
-            "join_rule_invite_description": "Tylko zaproszeni ludzie mogą dołączyć.",
+            "join_rule_invite_description": "Tylko zaproszone osoby mogą dołączyć",
             "join_rule_knock": "Poproś o dołączenie",
             "join_rule_knock_description": "Osoby nie mogą dołączyć, dopóki nie otrzymają zezwolenia.",
             "join_rule_public_description": "Każdy może znaleźć i dołączyć.",
@@ -2384,11 +2400,9 @@
         "help_about": {
             "access_token_detail": "Twój token dostępu daje pełen dostęp do Twojego konta. Nie dziel się nim z nikim.",
             "brand_version": "Wersja %(brand)s:",
-            "chat_bot": "Rozmowa z Botem %(brand)s",
             "clear_cache_reload": "Wyczyść pamięć podręczną i przeładuj",
             "crypto_version": "Wersja krypto:",
             "help_link": "Aby uzyskać pomoc w używaniu %(brand)s, naciśnij <a>tutaj</a>.",
-            "help_link_chat_bot": "Aby uzyskać pomoc w korzystaniu z %(brand)s, kliknij <a>tutaj</a> lub rozpocznij czat z botem za pomocą przycisku poniżej.",
             "homeserver": "Serwer domowy to <code>%(homeserverUrl)s</code>",
             "identity_server": "Serwer tożsamości to <code>%(identityServerUrl)s</code>",
             "title": "Pomoc i o aplikacji",
@@ -2400,6 +2414,7 @@
         "all_rooms_home_description": "Wszystkie pokoje w których jesteś zostaną pokazane na ekranie głównym.",
         "always_show_message_timestamps": "Zawsze pokazuj znaczniki czasu wiadomości",
         "appearance": {
+            "bundled_emoji_font": "Użyj wbudowanej czcionki emoji",
             "custom_font": "Użyj czcionki systemowej",
             "custom_font_description": "Wybierz nazwę czcionki zainstalowanej w systemie, a %(brand)s spróbuje jej użyć.",
             "custom_font_name": "Nazwa czcionki systemowej",
@@ -2911,7 +2926,7 @@
         "devtools": "Otwiera narzędzia deweloperskie",
         "discardsession": "Wymusza odrzucenie bieżącej sesji grupowej wychodzącej z zaszyfrowanego pokoju",
         "error_invalid_rendering_type": "Błąd polecenia: Nie można znaleźć renderowania typu (%(renderingType)s)",
-        "error_invalid_room": "Błąd komendy: Nie można znaleźć pokoju (%(roomId)s",
+        "error_invalid_room": "Błąd komendy: Nie można znaleźć pokoju (%(roomId)s)",
         "error_invalid_runfn": "Błąd polecenia: Nie można obsłużyć polecenia z ukośnikiem.",
         "error_invalid_user_in_room": "Nie można znaleźć użytkownika w pokoju",
         "help": "Wyświetla listę komend z przykładami i opisami",
@@ -3044,7 +3059,7 @@
         "suggested_tooltip": "Ten pokój jest polecany jako dobry do dołączenia",
         "title_when_query_available": "Wyniki",
         "title_when_query_unavailable": "Pokoje i przestrzenie",
-        "unmark_suggested": "Oznacz jako nie sugerowane",
+        "unmark_suggested": "Oznacz jako niesugerowane",
         "user_lacks_permission": "Nie masz uprawnień"
     },
     "space_settings": {
@@ -3146,6 +3161,10 @@
         "show_all_threads": "Pokaż wszystkie wątki",
         "show_thread_filter": "Pokaż:",
         "unable_to_decrypt": "Nie można rozszyfrować wiadomości"
+    },
+    "threads_activity_centre": {
+        "header": "Aktywność wątków",
+        "no_rooms_with_unreads_threads": "Nie masz jeszcze pokoi z nieprzeczytanymi wątkami."
     },
     "time": {
         "about_day_ago": "około dzień temu",
@@ -3261,20 +3280,8 @@
             "sent": "%(senderDisplayName)s wysłał obraz.",
             "show_image": "Pokaż obraz"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s anulował weryfikację",
-            "you_cancelled": "Anulowałeś weryfikację %(name)s"
-        },
-        "m.key.verification.done": "Zweryfikowałeś %(name)s",
         "m.key.verification.request": {
-            "declining": "Odrzucanie…",
-            "user_accepted": "%(name)s zaakceptował",
-            "user_cancelled": "%(name)s anulował",
-            "user_declined": "%(name)s odrzucił",
             "user_wants_to_verify": "%(name)s chce weryfikacji",
-            "you_accepted": "Zaakceptowałeś",
-            "you_cancelled": "Anulowałeś",
-            "you_declined": "Odrzuciłeś",
             "you_started": "Wysłałeś żądanie weryfikacji"
         },
         "m.location": {
@@ -3789,7 +3796,6 @@
         "already_in_call_person": "Prowadzisz już rozmowę z tą osobą.",
         "answered_elsewhere": "Odebrano gdzie indziej",
         "answered_elsewhere_description": "Połączenie zostało odebrane na innym urządzeniu.",
-        "audio_devices": "Urządzenia audio",
         "call_failed": "Nieudane połączenie",
         "call_failed_description": "Nie udało się nawiązać połączenia",
         "call_failed_media": "Połączenie nieudane z powodu braku dostępu do kamery bądź mikrofonu. Sprawdź czy:",
@@ -3805,6 +3811,7 @@
         "camera_enabled": "Twoja kamera jest nadal włączona",
         "cannot_call_yourself_description": "Nie możesz wykonać połączenia do siebie.",
         "change_input_device": "Zmień urządzenie wejściowe",
+        "close_lobby": "Zamknij poczekalnię",
         "connecting": "Łączenie",
         "connection_lost": "Połączenie z serwerem zostało przerwane",
         "connection_lost_description": "Nie możesz wykonywać rozmów bez połączenia z serwerem.",
@@ -3818,6 +3825,7 @@
         "disabled_no_perms_start_video_call": "Nie posiadasz wymaganych uprawnień do rozpoczęcia rozmowy wideo",
         "disabled_no_perms_start_voice_call": "Nie posiadasz uprawnień do rozpoczęcia rozmowy głosowej",
         "disabled_ongoing_call": "Rozmowa w toku",
+        "element_call": "Element Call",
         "enable_camera": "Włącz kamerę",
         "enable_microphone": "Wyłącz wyciszenie mikrofonu",
         "expand": "Wróć do połączenia",
@@ -3826,9 +3834,13 @@
         "hangup": "Rozłącz",
         "hide_sidebar_button": "Ukryj pasek boczny",
         "input_devices": "Urządzenia wejściowe",
+        "jitsi_call": "Konferencja Jitsi",
         "join_button_tooltip_call_full": "Przepraszamy — to połączenie jest już zapełnione",
         "join_button_tooltip_connecting": "Łączenie",
+        "legacy_call": "Połączenie Legacy",
         "maximise": "Wypełnij ekran",
+        "maximise_call": "Maksymalizuj połączenie",
+        "minimise_call": "Minimalizuj połączenie",
         "misconfigured_server": "Połączenie nie udało się przez błędną konfigurację serwera",
         "misconfigured_server_description": "Poproś administratora swojego serwera głównego (<code>%(homeserverDomain)s</code>) by skonfigurował serwer TURN aby rozmowy działały bardziej niezawodnie.",
         "misconfigured_server_fallback": "Alternatywnie możesz spróbować użyć serwera publicznego <server/>, ale mogą wystąpić problemy i zostanie udostępniony Twój adres IP z serwerem. Zarządzaj tym również w Ustawieniach.",
@@ -3876,7 +3888,7 @@
         "user_is_presenting": "%(sharerName)s prezentuje",
         "video_call": "Rozmowa wideo",
         "video_call_started": "Rozpoczęto rozmowę wideo",
-        "video_devices": "Urządzenia wideo",
+        "video_call_using": "Połączenie wideo za pomocą:",
         "voice_call": "Rozmowa głosowa",
         "you_are_presenting": "Prezentujesz"
     },

@@ -93,6 +93,13 @@ interface IProps {
     showLayoutButtons?: boolean;
     // Handle to manually notify the PersistedElement that it needs to move
     movePersistedElement?: MutableRefObject<(() => void) | undefined>;
+    // An element to render after the iframe as an overlay
+    overlay?: ReactNode;
+    // If defined this async method will be called when the widget requests to become sticky.
+    // It will only become sticky once the returned promise resolves.
+    // This is useful because: Widget B is sticky. Making widget A sticky will kill widget B immediately.
+    // This promise allows to do Widget B related cleanup before Widget A becomes sticky. (e.g. hangup a Voip call)
+    stickyPromise?: () => Promise<void>;
 }
 
 interface IState {
@@ -612,6 +619,8 @@ export default class AppTile extends React.Component<IProps, IState> {
             "mx_AppTileBody--large": !this.props.miniMode,
             "mx_AppTileBody--mini": this.props.miniMode,
             "mx_AppTileBody--loading": this.state.loading,
+            // We don't want mx_AppTileBody (rounded corners) for call widgets
+            "mx_AppTileBody--call": this.props.app.type === WidgetType.CALL.preferred,
         });
         const appTileBodyStyles: CSSProperties = {};
         if (this.props.pointerEvents) {
@@ -661,17 +670,20 @@ export default class AppTile extends React.Component<IProps, IState> {
                 );
             } else {
                 appTileBody = (
-                    <div className={appTileBodyClass} style={appTileBodyStyles}>
-                        {this.state.loading && loadingElement}
-                        <iframe
-                            title={widgetTitle}
-                            allow={iframeFeatures}
-                            ref={this.iframeRefChange}
-                            src={this.sgWidget.embedUrl}
-                            allowFullScreen={true}
-                            sandbox={sandboxFlags}
-                        />
-                    </div>
+                    <>
+                        <div className={appTileBodyClass} style={appTileBodyStyles}>
+                            {this.state.loading && loadingElement}
+                            <iframe
+                                title={widgetTitle}
+                                allow={iframeFeatures}
+                                ref={this.iframeRefChange}
+                                src={this.sgWidget.embedUrl}
+                                allowFullScreen={true}
+                                sandbox={sandboxFlags}
+                            />
+                        </div>
+                        {this.props.overlay}
+                    </>
                 );
 
                 if (!this.props.userWidget) {
@@ -787,7 +799,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                                         className="mx_AppTileMenuBar_widgets_button"
                                         label={_t("common|options")}
                                         isExpanded={this.state.menuDisplayed}
-                                        inputRef={this.contextMenuButton}
+                                        ref={this.contextMenuButton}
                                         onClick={this.onContextMenuClick}
                                     >
                                         <MenuIcon className="mx_Icon mx_Icon_12" />

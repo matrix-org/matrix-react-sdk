@@ -31,9 +31,9 @@ const config: Config = {
         "decoderWorker\\.min\\.js": "<rootDir>/__mocks__/empty.js",
         "decoderWorker\\.min\\.wasm": "<rootDir>/__mocks__/empty.js",
         "waveWorker\\.min\\.js": "<rootDir>/__mocks__/empty.js",
-        "workers/(.+)\\.worker\\.ts": "<rootDir>/__mocks__/workerMock.js",
+        "workers/(.+)Factory": "<rootDir>/__mocks__/workerFactoryMock.js",
         "^!!raw-loader!.*": "jest-raw-loader",
-        "RecorderWorklet": "<rootDir>/__mocks__/empty.js",
+        "recorderWorkletFactory": "<rootDir>/__mocks__/empty.js",
     },
     transformIgnorePatterns: ["/node_modules/(?!matrix-js-sdk).+$"],
     collectCoverageFrom: [
@@ -44,6 +44,7 @@ const config: Config = {
     ],
     coverageReporters: ["text-summary", "lcov"],
     testResultsProcessor: "@casualbot/jest-sonar-reporter",
+    prettierPath: null,
 };
 
 // if we're running under GHA, enable the GHA reporter

@@ -23,7 +23,7 @@ import { discoverAndValidateAuthenticationConfig } from "matrix-js-sdk/src/oidc/
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
 
 import { OidcClientStore } from "../../../src/stores/oidc/OidcClientStore";
-import { flushPromises, getMockClientWithEventEmitter } from "../../test-utils";
+import { flushPromises, getMockClientWithEventEmitter, mockPlatformPeg } from "../../test-utils";
 import { mockOpenIdConfiguration } from "../../test-utils/oidc";
 
 jest.mock("matrix-js-sdk/src/oidc/discovery", () => ({
@@ -34,19 +34,16 @@ describe("OidcClientStore", () => {
     const clientId = "test-client-id";
     const metadata = mockOpenIdConfiguration();
     const account = metadata.issuer + "account";
-    const mockSessionStorage: Record<string, string> = {
-        mx_oidc_client_id: clientId,
-        mx_oidc_token_issuer: metadata.issuer,
-    };
 
     const mockClient = getMockClientWithEventEmitter({
         waitForClientWellKnown: jest.fn().mockResolvedValue({}),
     });
 
     beforeEach(() => {
-        jest.spyOn(sessionStorage.__proto__, "getItem")
-            .mockClear()
-            .mockImplementation((key) => mockSessionStorage[key as string] ?? null);
+        localStorage.clear();
+        localStorage.setItem("mx_oidc_client_id", clientId);
+        localStorage.setItem("mx_oidc_token_issuer", metadata.issuer);
+
         mocked(discoverAndValidateAuthenticationConfig).mockClear().mockResolvedValue({
             metadata,
             account,
@@ -61,6 +58,7 @@ describe("OidcClientStore", () => {
         jest.spyOn(logger, "error").mockClear();
 
         fetchMock.get(`${metadata.issuer}.well-known/openid-configuration`, metadata);
+        mockPlatformPeg();
     });
 
     describe("isUserAuthenticatedWithOidc()", () => {
@@ -71,7 +69,7 @@ describe("OidcClientStore", () => {
         });
 
         it("should return false when no issuer is in session storage", () => {
-            jest.spyOn(sessionStorage.__proto__, "getItem").mockReturnValue(null);
+            localStorage.clear();
             const store = new OidcClientStore(mockClient);
 
             expect(store.isUserAuthenticatedWithOidc).toEqual(false);
@@ -98,14 +96,7 @@ describe("OidcClientStore", () => {
         });
 
         it("should log and return when no clientId is found in storage", async () => {
-            const sessionStorageWithoutClientId: Record<string, string | null> = {
-                ...mockSessionStorage,
-                mx_oidc_client_id: null,
-            };
-            jest.spyOn(sessionStorage.__proto__, "getItem").mockImplementation(
-                (key) => sessionStorageWithoutClientId[key as string] ?? null,
-            );
-
+            localStorage.removeItem("mx_oidc_client_id");
             const store = new OidcClientStore(mockClient);
 
             // no oidc client
@@ -209,13 +200,7 @@ describe("OidcClientStore", () => {
         it("should throw when oidcClient could not be initialised", async () => {
             // make oidcClient initialisation fail
             mockClient.waitForClientWellKnown.mockResolvedValue(undefined as any);
-            const sessionStorageWithoutIssuer: Record<string, string | null> = {
-                ...mockSessionStorage,
-                mx_oidc_token_issuer: null,
-            };
-            jest.spyOn(sessionStorage.__proto__, "getItem").mockImplementation(
-                (key) => sessionStorageWithoutIssuer[key as string] ?? null,
-            );
+            localStorage.removeItem("mx_oidc_token_issuer");
 
             const store = new OidcClientStore(mockClient);
 

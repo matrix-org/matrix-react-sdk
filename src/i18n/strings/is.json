@@ -209,7 +209,8 @@
         "msisdn_field_required_invalid": "Settu inn símanúmer",
         "no_hs_url_provided": "Engin slóð heimaþjóns tilgreind",
         "oidc": {
-            "error_title": "Við gátum ekki skráð þig inn"
+            "error_title": "Við gátum ekki skráð þig inn",
+            "missing_or_invalid_stored_state": "Við báðum vafrann þinn að muna hvaða heimaþjón þú notar til að skrá þig inn, en því miður virðist það hafa gleymst. Farðu á innskráningarsíðuna og reyndu aftur."
         },
         "password_field_label": "Settu inn lykilorð",
         "password_field_strong_label": "Fínt, sterkt lykilorð!",
@@ -351,7 +352,6 @@
         "spaceinvaders_message": "sendir geimverur til árásar"
     },
     "common": {
-        "about": "Um hugbúnaðinn",
         "access_token": "Aðgangsteikn",
         "accessibility": "Auðveldað aðgengi",
         "advanced": "Nánar",
@@ -414,10 +414,6 @@
         "mute": "Þagga niður",
         "n_members": {
             "one": "%(count)s þátttakandi",
-            "other": "%(count)s þátttakendur"
-        },
-        "n_participants": {
-            "one": "1 þáttakandi",
             "other": "%(count)s þátttakendur"
         },
         "n_rooms": {
@@ -1175,7 +1171,6 @@
         "report_to_moderators_description": "Í spjallrásum sem styðja eftirlit umsjónarmanna, mun 'Kæra'-hnappurinn gefa þér færi á að tilkynna misnotkun til umsjónarmanna spjallrása.",
         "sliding_sync_proxy_url_label": "Slóð milliþjóns",
         "sliding_sync_proxy_url_optional_label": "Slóð milliþjóns (valfrjálst)",
-        "state_counters": "Myndgera einfalda teljara í haus spjallrása",
         "under_active_development": "Í virkri þróun.",
         "video_rooms": "Myndspjallrásir",
         "video_rooms_a_new_way_to_chat": "Ný leið til að spjalla með tali og myndmerki í %(brand)s.",
@@ -1295,9 +1290,6 @@
         "all_messages_description": "Fáðu tilkynningu fyrir öll skilaboð",
         "class_global": "Víðvært",
         "class_other": "Annað",
-        "colour_bold": "Feitletrað",
-        "colour_none": "Ekkert",
-        "colour_unsent": "Ósent",
         "default": "Sjálfgefið",
         "enable_prompt_toast_description": "Virkja tilkynningar á skjáborði",
         "enable_prompt_toast_title": "Tilkynningar",
@@ -1305,6 +1297,9 @@
         "error_change_title": "Breytta tilkynningastillingum",
         "keyword": "Stikkorð",
         "keyword_new": "Nýtt stikkorð",
+        "level_activity": "Virkni",
+        "level_none": "Ekkert",
+        "level_unsent": "Ósent",
         "mark_all_read": "Merkja allt sem lesið",
         "mentions_and_keywords": "@minnst á og stikkorð",
         "mentions_keywords": "Tilvísanir og stikkorð",
@@ -1504,8 +1499,6 @@
         "room_summary_card": {
             "title": "Upplýsingar um spjallrás"
         },
-        "settings_button": "Stillingar spjallrásar",
-        "share_button": "Deila spjallrás",
         "thread_list": {
             "context_menu_label": "Valkostir spjallþráðar"
         },
@@ -1922,10 +1915,8 @@
         "help_about": {
             "access_token_detail": "Aðgangsteiknið þitt gefur fullan aðgang að notandaaðgangnum þínum. Ekki deila því með neinum.",
             "brand_version": "Útgáfa %(brand)s:",
-            "chat_bot": "Spjalla við %(brand)s vélmenni",
             "clear_cache_reload": "Hreinsa skyndiminni og endurhlaða",
             "help_link": "Til að fá aðstoð við að nota %(brand)s, smelltu <a>hér</a>.",
-            "help_link_chat_bot": "Til að fá aðstoð við að nota %(brand)s, smelltu <a>hér</a> eða byrjaðu að spjalla við vélmennið okkar með hnappnum hér fyrir neðan.",
             "title": "Hjálp og um hugbúnaðinn",
             "versions": "Útgáfur"
         }
@@ -2658,19 +2649,8 @@
             "sent": "%(senderDisplayName)s sendi mynd.",
             "show_image": "Birta mynd"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s hætti við sannvottun",
-            "you_cancelled": "Þú hættir við sannvottun á %(name)s"
-        },
-        "m.key.verification.done": "Þú sannreyndir %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s samþykkti",
-            "user_cancelled": "%(name)s hætti við",
-            "user_declined": "%(name)s hafnaði",
             "user_wants_to_verify": "%(name)s vill sannreyna",
-            "you_accepted": "Þú samþykktir",
-            "you_cancelled": "Þú hættir við",
-            "you_declined": "Þú hafnaðir",
             "you_started": "Þú sendir beiðni um sannvottun"
         },
         "m.location": {
@@ -3117,7 +3097,6 @@
         "already_in_call_person": "Þú ert nú þegar í símtali við þennan aðila.",
         "answered_elsewhere": "Svarað annars staðar",
         "answered_elsewhere_description": "Símtalinu var svarað á öðru tæki.",
-        "audio_devices": "Hljóðtæki",
         "call_failed": "Símtal mistókst",
         "call_failed_description": "Ekki tókst að koma símtalinu á",
         "call_failed_media": "Símtal mistókst þar sem ekki tókst að fá aðgang að vefmyndavél eða hljóðnema. Athugaðu þetta:",
@@ -3200,7 +3179,6 @@
         "user_is_presenting": "%(sharerName)s er að kynna",
         "video_call": "Myndsímtal",
         "video_call_started": "Myndsímtal er byrjað",
-        "video_devices": "Myndmerkistæki",
         "voice_call": "Raddsímtal",
         "you_are_presenting": "Þú ert að kynna"
     },

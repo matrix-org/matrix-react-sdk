@@ -488,7 +488,7 @@ $left-gutter: 64px;
         .mx_EventTile_e2eIcon {
             inset: 0 0 0 44px;
 
-            // Keep height equal to text for alignment
+            /* Keep height equal to text for alignment */
             height: var(--EventTile_group_line-line-height);
             margin: 1px;
         }
@@ -701,11 +701,11 @@ $left-gutter: 64px;
             background-color: $inlinecode-background-color;
             border: 1px solid $inlinecode-border-color;
             border-radius: 4px;
-            // The horizontal padding is added by gfm.css .markdown-body
+            /* The horizontal padding is added by gfm.css .markdown-body */
             padding: $spacing-2 0;
-            // Avoid inline code blocks to be sticked when on multiple lines
+            /* Avoid inline code blocks to be sticked when on multiple lines */
             line-height: $font-22px;
-            // Avoid the border to be glued to the other words
+            /* Avoid the border to be glued to the other words */
             margin-right: $spacing-2;
         }
 
@@ -792,7 +792,7 @@ $left-gutter: 64px;
 .mx_EventTile_spoiler {
     cursor: pointer;
 
-    // clear button styles
+    /* clear button styles */
     appearance: none;
     background: none;
     border: none;
@@ -852,17 +852,17 @@ $left-gutter: 64px;
     }
 
     &.mx_EventTile_e2eIcon_warning::after {
-        mask-image: url("$(res)/img/e2e/warning.svg"); // (!) in a shield
-        background-color: $e2e-warning-color; // red
+        mask-image: url("$(res)/img/e2e/warning.svg"); /* (!) in a shield */
+        background-color: $e2e-warning-color; /* red */
     }
 
     &.mx_EventTile_e2eIcon_normal::after {
-        mask-image: url("$(res)/img/e2e/normal.svg"); // regular shield
-        background-color: $header-panel-text-primary-color; // grey
+        mask-image: url("$(res)/img/e2e/normal.svg"); /* regular shield */
+        background-color: $header-panel-text-primary-color; /* grey */
     }
 
     &.mx_EventTile_e2eIcon_decryption_failure::after {
-        mask-image: url("$(res)/img/e2e/decryption-failure.svg"); // key in a circle
+        mask-image: url("$(res)/img/e2e/decryption-failure.svg"); /* key in a circle */
         background-color: $secondary-content;
     }
 }
@@ -1051,23 +1051,6 @@ $left-gutter: 64px;
     &::before {
         inset: 0;
         pointer-events: none; /* ensures the title for the sender name can be correctly displayed */
-    }
-
-    /* Display notification dot */
-    &[data-notification]::before,
-    .mx_NotificationBadge {
-        position: absolute;
-        $notification-inset-block-start: 14px; /* 14px: align the dot with the timestamp row */
-
-        /* !important to fix overly specific CSS selector applied on mx_NotificationBadge */
-        width: $notification-dot-size !important;
-        height: $notification-dot-size !important;
-        border-radius: 50%;
-        inset: $notification-inset-block-start $spacing-8 auto auto;
-    }
-
-    .mx_NotificationBadge_count {
-        display: none;
     }
 
     &[data-notification="total"]::before {
@@ -1440,14 +1423,6 @@ $left-gutter: 64px;
             table {
                 margin-bottom: $spacing-4; /* 1/4 of the non-compact margin-bottom */
             }
-        }
-
-        &[data-shape="ThreadsList"][data-notification]::before,
-        .mx_NotificationBadge {
-            /* stylelint-disable-next-line declaration-colon-space-after */
-            inset-block-start: calc(
-                $notification-inset-block-start - var(--MatrixChat_useCompactLayout_group-padding-top)
-            );
         }
     }
 }

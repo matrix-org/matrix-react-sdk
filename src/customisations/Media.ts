@@ -36,7 +36,10 @@ export class Media {
     private client: MatrixClient;
 
     // Per above, this constructor signature can be whatever is helpful for you.
-    public constructor(private prepared: IPreparedMedia, client?: MatrixClient) {
+    public constructor(
+        private prepared: IPreparedMedia,
+        client?: MatrixClient,
+    ) {
         this.client = client ?? MatrixClientPeg.safeGet();
         if (!this.client) {
             throw new Error("No possible MatrixClient for media resolution. Please provide one or log in.");
@@ -77,7 +80,7 @@ export class Media {
      */
     public get srcHttp(): string | null {
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.srcMxc) || null;
+        return this.client.mxcUrlToHttp(this.srcMxc, undefined, undefined, undefined, false, true) || null;
     }
 
     /**
@@ -87,7 +90,7 @@ export class Media {
     public get thumbnailHttp(): string | null {
         if (!this.hasThumbnail) return null;
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.thumbnailMxc!);
+        return this.client.mxcUrlToHttp(this.thumbnailMxc!, undefined, undefined, undefined, false, true);
     }
 
     /**
@@ -104,7 +107,7 @@ export class Media {
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.thumbnailMxc!, width, height, mode);
+        return this.client.mxcUrlToHttp(this.thumbnailMxc!, width, height, mode, false, true);
     }
 
     /**
@@ -119,7 +122,7 @@ export class Media {
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.srcMxc, width, height, mode);
+        return this.client.mxcUrlToHttp(this.srcMxc, width, height, mode, false, true);
     }
 
     /**

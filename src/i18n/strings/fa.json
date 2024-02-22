@@ -20,8 +20,10 @@
         "add_existing_room": "اضافه‌کردن اتاق موجود",
         "approve": "تایید",
         "back": "بازگشت",
+        "call": "تماس",
         "cancel": "لغو",
         "change": "تغییر بده",
+        "clear": "پاک کردن",
         "click_to_copy": "برای گرفتن رونوشت کلیک کنید",
         "close": "بستن",
         "complete": "تکمیل",
@@ -72,6 +74,7 @@
         "reject": "پس زدن",
         "reload": "بارگذاری مجدد",
         "remove": "حذف کن",
+        "rename": "تغییر نام",
         "reply": "پاسخ",
         "report_content": "گزارش محتوا",
         "resend": "بازفرست",
@@ -186,7 +189,8 @@
         "msisdn_field_required_invalid": "شماره تلفن را وارد کنید",
         "no_hs_url_provided": "هیچ آدرس سروری وارد نشده‌است",
         "oidc": {
-            "error_title": "نتوانستیم شما را وارد کنیم"
+            "error_title": "نتوانستیم شما را وارد کنیم",
+            "missing_or_invalid_stored_state": "ما از مرورگر خواستیم تا سروری را که شما برای ورود استفاده می‌کنید به خاطر بسپارد، اما متاسفانه مرورگر شما آن را فراموش کرده‌است. به صفحه‌ی ورود بروید و دوباره امتحان کنید."
         },
         "password_field_label": "گذرواژه را وارد کنید",
         "password_field_strong_label": "احسنت، گذرواژه‌ی انتخابی قوی است!",
@@ -314,7 +318,6 @@
         "spaceinvaders_message": "ارسال مهاجمان فضایی"
     },
     "common": {
-        "about": "درباره",
         "access_token": "توکن دسترسی",
         "accessibility": "دسترسی",
         "advanced": "پیشرفته",
@@ -735,7 +738,6 @@
         "unknown_error_code": "کد خطای ناشناخته",
         "update_power_level": "تغییر سطح قدرت انجام نشد"
     },
-    "error_database_closed_description": "این ممکن است به دلیل باز بودن برنامه در چندین برگه یا به دلیل پاک کردن داده های مرورگر باشد.",
     "error_database_closed_title": "پایگاه داده به طور غیرمنتظره ای بسته شد",
     "error_dialog": {
         "error_loading_user_profile": "امکان نمایش پروفایل کاربر میسر نیست",
@@ -984,7 +986,6 @@
         "latex_maths": "نمایش لاتکس ریاضیات در پیام‌ها",
         "leave_beta": "ترک نسخه‌ی بتا",
         "pinning": "پین کردن پیام",
-        "state_counters": "شمارنده‌های ساده‌ای در سرآیند اتاق نمایش بده",
         "video_rooms": "اتاق های تصویری",
         "video_rooms_a_new_way_to_chat": "راهکار جدیدی برای گفتگوی صوتی و تصویری در%(brand)sوجود دارد.",
         "voice_broadcast": "صدای جمعی"
@@ -1074,8 +1075,6 @@
     "notifications": {
         "all_messages": "همه‌ی پیام‌ها",
         "class_other": "دیگر",
-        "colour_bold": "پررنگ",
-        "colour_none": "هیچ‌کدام",
         "default": "پیشفرض",
         "enable_prompt_toast_description": "فعال‌کردن اعلان‌های دسکتاپ",
         "enable_prompt_toast_title": "آگاهی‌ها",
@@ -1183,8 +1182,6 @@
                 "other": "فقط می توانید تا %(count)s ابزارک را پین کنید"
             }
         },
-        "settings_button": "تنظیمات اتاق",
-        "share_button": "به اشتراک گذاری اتاق",
         "widgets_section": "ابزارک ها"
     },
     "room": {
@@ -1491,10 +1488,8 @@
         "help_about": {
             "access_token_detail": "توکن دسترسی شما، دسترسی کامل به حساب کاربری شما را میسر می‌سازد. لطفا آن را در اختیار فرد دیگری قرار ندهید.",
             "brand_version": "نسخه‌ی %(brand)s:",
-            "chat_bot": "گفتگو با بات %(brand)s",
             "clear_cache_reload": "پاک‌کردن حافظه‌ی کش و راه‌اندازی مجدد",
             "help_link": "برای گرفتن کمک در استفاده از %(brand)s، <a>اینجا</a> کلیک کنید.",
-            "help_link_chat_bot": "برای گرفتن کمک در استفاده از %(brand)s، <a>اینجا</a> کلید کرده یا با استفاده از دکمه‌ی زیر اقدام به شروع گفتگو با بات ما نمائید.",
             "title": "کمک و درباره‌ی‌ ما",
             "versions": "نسخه‌ها"
         }
@@ -2013,19 +2008,8 @@
             "sent": "%(senderDisplayName)s تصویری ارسال کرد.",
             "show_image": "نمایش تصویر"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s تأیید هویت را لغو کرد",
-            "you_cancelled": "شما تأیید هویت %(name)s را لغو کردید"
-        },
-        "m.key.verification.done": "شما هویت %(name)s را تأیید کردید",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s پذیرفت",
-            "user_cancelled": "%(name)s لغو کرد",
-            "user_declined": "%(name)s رد کرد",
             "user_wants_to_verify": "%(name)s می‌خواهد تأیید هویت کند",
-            "you_accepted": "پذیرفتید",
-            "you_cancelled": "شما لغو کردید",
-            "you_declined": "شما رد کردید",
             "you_started": "شما یک درخواست تأیید هویت ارسال کرده‌اید"
         },
         "m.location": {

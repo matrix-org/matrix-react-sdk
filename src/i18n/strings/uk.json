@@ -40,6 +40,7 @@
         "create_a_room": "Створити кімнату",
         "decline": "Відхилити",
         "delete": "Видалити",
+        "deny": "Відхилити",
         "disable": "Вимкнути",
         "disconnect": "Від'єднатися",
         "dismiss": "Відхилити",
@@ -226,7 +227,8 @@
         "msisdn_field_required_invalid": "Введіть телефонний номер",
         "no_hs_url_provided": "URL адресу домашнього сервера не вказано",
         "oidc": {
-            "error_title": "Нам не вдалося виконати вхід"
+            "error_title": "Нам не вдалося виконати вхід",
+            "missing_or_invalid_stored_state": "Ми попросили браузер запам’ятати, який домашній сервер ви використовуєте, щоб дозволити вам увійти, але, на жаль, ваш браузер забув його. Перейдіть на сторінку входу та повторіть спробу."
         },
         "password_field_keep_going_prompt": "Продовжуйте…",
         "password_field_label": "Введіть пароль",
@@ -246,6 +248,7 @@
             "error_homeserver_lacks_support": "Домашній сервер не підтримує вхід на іншому пристрої.",
             "error_invalid_scanned_code": "Сканований код недійсний.",
             "error_linking_incomplete": "У встановлені терміни з'єднання не було виконано.",
+            "error_rate_limited": "Забагато спроб за короткий час. Зачекайте трохи, перш ніж повторити спробу.",
             "error_request_cancelled": "Запит було скасовано.",
             "error_request_declined": "На іншому пристрої запит відхилено.",
             "error_unexpected": "Виникла непередбачувана помилка.",
@@ -412,7 +415,6 @@
         "spaceinvaders_message": "надсилає тему про космічних загарбників"
     },
     "common": {
-        "about": "Відомості",
         "access_token": "Токен доступу",
         "accessibility": "Доступність",
         "advanced": "Подробиці",
@@ -461,6 +463,7 @@
         "identity_server": "Сервер ідентифікації",
         "image": "Зображення",
         "integration_manager": "Менеджер інтеграцій",
+        "ios": "iOS",
         "joined": "Приєднано",
         "labs": "Лабораторія",
         "legal": "Правові положення",
@@ -476,10 +479,6 @@
         "mute": "Стишити",
         "n_members": {
             "one": "%(count)s учасник",
-            "other": "%(count)s учасників"
-        },
-        "n_participants": {
-            "one": "1 учасник",
             "other": "%(count)s учасників"
         },
         "n_rooms": {
@@ -749,7 +748,6 @@
         "room_notifications_total": "Загалом: ",
         "room_notifications_type": "Тип: ",
         "room_status": "Статус кімнати",
-        "room_unread_status": "Стан непрочитаного в кімнаті: <strong>%(status)s</strong>",
         "room_unread_status_count": {
             "other": "Стан непрочитаного в кімнаті: <strong>%(status)s</strong>, кількість: <strong>%(count)s</strong>"
         },
@@ -1043,7 +1041,6 @@
         "unknown_error_code": "невідомий код помилки",
         "update_power_level": "Не вдалося змінити рівень повноважень"
     },
-    "error_database_closed_description": "Це може бути пов'язано з тим, що застосунок відкрито в кількох вкладках, або з очищенням даних браузера.",
     "error_database_closed_title": "База даних несподівано закрилася",
     "error_dialog": {
         "copy_room_link_failed": {
@@ -1287,6 +1284,7 @@
         "autocomplete_force": "Примусово завершити",
         "autocomplete_navigate_next": "Наступна пропозиція автодоповнення",
         "autocomplete_navigate_prev": "Попередня пропозиція автодоповнення",
+        "backspace": "Назад",
         "cancel_reply": "Скасувати відповідання на повідомлення",
         "category_autocomplete": "Автозаповнення",
         "category_calls": "Виклики",
@@ -1393,7 +1391,7 @@
         "location_share_live_description": "Тимчасова реалізація. Місце перебування зберігається в історії кімнати.",
         "mjolnir": "Нові способи нехтувати людей",
         "msc3531_hide_messages_pending_moderation": "Дозволити модераторам ховати повідомлення у черзі модерування.",
-        "new_room_decoration_ui": "В активній розробці новий інтерфейс заголовка та подробиць кімнати",
+        "new_room_decoration_ui": "В активній розробці новий заголовок кімнати та інтерфейс деталей",
         "notification_settings": "Нові налаштування сповіщень",
         "notification_settings_beta_title": "Налаштування сповіщень",
         "oidc_native_flow": "Увімкнути нові вбудовані потоки OIDC (в активній розробці)",
@@ -1401,7 +1399,6 @@
         "report_to_moderators": "Поскаржитись модераторам",
         "report_to_moderators_description": "У кімнатах, які підтримують модерацію, кнопка «Поскаржитися» дає змогу повідомити про зловживання модераторам кімнати.",
         "rust_crypto": "Реалізація криптографії Rust",
-        "rust_crypto_disabled_notice": "Наразі можна ввімкнути лише через config.json",
         "sliding_sync": "Режим ковзної синхронізації",
         "sliding_sync_checking": "Перевірка…",
         "sliding_sync_configuration": "Конфігурація ковзної синхронізації",
@@ -1413,7 +1410,6 @@
         "sliding_sync_server_no_support": "На вашому сервері немає вбудованої підтримки",
         "sliding_sync_server_specify_proxy": "На вашому сервері немає вбудованої підтримки, ви повинні вказати проксі",
         "sliding_sync_server_support": "Ваш сервер має вбудовану підтримку",
-        "state_counters": "Показувати звичайні лічильники у заголовку кімнати",
         "under_active_development": "У стадії активної розробки.",
         "video_rooms": "Відеокімнати",
         "video_rooms_a_new_way_to_chat": "Новий спосіб спілкування за допомогою голосового та відеозв’язку в %(brand)s.",
@@ -1555,11 +1551,6 @@
         "all_messages_description": "Отримувати сповіщення про кожне повідомлення",
         "class_global": "Глобально",
         "class_other": "Інше",
-        "colour_bold": "Жирний",
-        "colour_grey": "Сірий",
-        "colour_none": "Вимкнено",
-        "colour_red": "Червоний",
-        "colour_unsent": "Не надіслано",
         "default": "Типовий",
         "email_pusher_app_display_name": "Сповіщення е-поштою",
         "enable_prompt_toast_description": "Увімкнути сповіщення стільниці",
@@ -1568,6 +1559,9 @@
         "error_change_title": "Змінити налаштування сповіщень",
         "keyword": "Ключове слово",
         "keyword_new": "Нове ключове слово",
+        "level_activity": "Активністю",
+        "level_none": "Вимкнено",
+        "level_unsent": "Не надіслано",
         "mark_all_read": "Позначити все прочитаним",
         "mentions_and_keywords": "@згадки й ключові слова",
         "mentions_and_keywords_description": "Отримувати лише вказані у ваших <a>налаштуваннях</a> згадки й ключові слова",
@@ -1809,8 +1803,6 @@
         "room_summary_card": {
             "title": "Відомості про кімнату"
         },
-        "settings_button": "Налаштування кімнати",
-        "share_button": "Поділитись кімнатою",
         "thread_list": {
             "context_menu_label": "Параметри гілки"
         },
@@ -2325,10 +2317,8 @@
         "help_about": {
             "access_token_detail": "Токен доступу надає повний доступ до вашого облікового запису. Не передавайте його нікому.",
             "brand_version": "Версія %(brand)s:",
-            "chat_bot": "Бесіда з %(brand)s-ботом",
             "clear_cache_reload": "Очистити кеш та перезавантажити",
             "help_link": "Якщо необхідна допомога у користуванні %(brand)s'ом, клацніть <a>тут</a>.",
-            "help_link_chat_bot": "Якщо необхідна допомога у користуванні %(brand)s, клацніть <a>тут</a> або розпочніть бесіду з нашим ботом, клацнувши на кнопку внизу.",
             "homeserver": "Домашній сервер <code>%(homeserverUrl)s</code>",
             "identity_server": "Сервер ідентифікації <code>%(identityServerUrl)s</code>",
             "title": "Допомога та про програму",
@@ -2566,6 +2556,7 @@
             "voip": "Голосові та відеовиклики"
         },
         "preferences": {
+            "Electron.enableHardwareAcceleration": "Увімкнути апаратне прискорення (перезапустіть %(appName)s, щоб зміни вступили в силу)",
             "always_show_menu_bar": "Завжди показувати рядок меню",
             "autocomplete_delay": "Затримка автозаповнення (мс)",
             "code_blocks_heading": "Блоки коду",
@@ -2592,6 +2583,7 @@
         "security": {
             "4s_public_key_in_account_data": "у даних облікового запису",
             "4s_public_key_status": "Таємне сховище відкритого ключа:",
+            "analytics_description": "Поділіться анонімними даними, щоб допомагати нам виявляти проблеми. Нічого особистого. Ніяких третіх осіб.",
             "backup_key_cached_status": "Резервну копію ключа кешовано:",
             "backup_key_stored_status": "Резервну копію ключа розміщено:",
             "backup_key_unexpected_type": "несподіваний тип",
@@ -2627,14 +2619,17 @@
             "ignore_users_section": "Нехтувані користувачі",
             "import_megolm_keys": "Імпортувати ключі кімнат наскрізного шифрування",
             "key_backup_active": "Під час цього сеансу створюється резервна копія ваших ключів.",
+            "key_backup_active_version": "Активна версія резервної копії:",
             "key_backup_active_version_none": "Вимкнено",
             "key_backup_algorithm": "Алгоритм:",
+            "key_backup_can_be_restored": "Ця резервна копія може бути відновлена в цьому сеансі",
             "key_backup_complete": "Усі ключі збережено",
             "key_backup_connect": "Налаштувати цьому сеансу резервне копіювання ключів",
             "key_backup_connect_prompt": "Налаштуйте цьому сеансу резервне копіювання, інакше при виході втратите ключі, доступні лише в цьому сеансі.",
             "key_backup_in_progress": "Резервне копіювання %(sessionsRemaining)s ключів…",
             "key_backup_inactive": "Цей сеанс <b>не створює резервну копію ваших ключів</b>, але у вас є резервна копія, з якої ви можете їх відновити.",
             "key_backup_inactive_warning": "<b>Резервна копія ваших ключів не створюється з цього сеансу</b>.",
+            "key_backup_latest_version": "Остання версія резервної копії на сервері:",
             "manually_verify_all_sessions": "Звірити всі сеанси власноруч",
             "message_search_disable_warning": "Якщо вимкнути, пошук не показуватиме повідомлень зашифрованих кімнат.",
             "message_search_disabled": "Безпечно локально кешувати зашифровані повідомлення щоб вони з'являлись у результатах пошуку.",
@@ -2693,6 +2688,7 @@
             "device_verified_description": "Цей сеанс готовий для безпечного обміну повідомленнями.",
             "device_verified_description_current": "Ваш поточний сеанс готовий до захищеного обміну повідомленнями.",
             "error_pusher_state": "Не вдалося встановити стан push-служби",
+            "error_set_name": "Не вдалося встановити назву сеансу",
             "filter_all": "Усі",
             "filter_inactive": "Неактивний",
             "filter_inactive_description": "Неактивний впродовж %(inactiveAgeDays)s днів чи довше",
@@ -2753,6 +2749,7 @@
             "unverified_sessions_explainer_1": "Не звірені сеанси — це сеанси, які увійшли в систему з вашими обліковими даними, але не пройшли перехресну перевірку.",
             "unverified_sessions_explainer_2": "Ви повинні бути впевнені, що розпізнаєте ці сеанси, оскільки вони можуть бути несанкціонованим використанням вашого облікового запису.",
             "unverified_sessions_list_description": "Звірте свої сеанси для покращеного безпечного обміну повідомленнями або вийдіть із тих, які ви не розпізнаєте або не використовуєте.",
+            "url": "URL-адреса",
             "verified_session": "Звірений сеанс",
             "verified_sessions": "Звірені сеанси",
             "verified_sessions_explainer_1": "Звірені сеанси — це будь-який пристрій, на якому ви використовуєте цей обліковий запис після введення парольної фрази або підтвердження вашої особи за допомогою іншого перевіреного сеансу.",
@@ -2780,6 +2777,7 @@
             "metaspaces_orphans_description": "Групуйте всі свої кімнати, не приєднані до простору, в одному місці.",
             "metaspaces_people_description": "Групуйте всіх своїх людей в одному місці.",
             "metaspaces_subsection": "Показувати такі простори",
+            "spaces_explainer": "Простір це спосіб групування кімнат та людей. Окрім просторів, які ви створюєте, ви також можете використовувати вже готові.",
             "title": "Бічна панель"
         },
         "start_automatically": "Автозапуск при вході в систему",
@@ -3186,20 +3184,8 @@
             "sent": "%(senderDisplayName)s надсилає зображення.",
             "show_image": "Показати зображення"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s скасовує звірку",
-            "you_cancelled": "Ви скасували звірку %(name)s"
-        },
-        "m.key.verification.done": "Ви звірили %(name)s",
         "m.key.verification.request": {
-            "declining": "Відхилення…",
-            "user_accepted": "%(name)s погоджується",
-            "user_cancelled": "%(name)s скасовує",
-            "user_declined": "%(name)s відхиляє",
             "user_wants_to_verify": "%(name)s бажає звірити",
-            "you_accepted": "Ви погодились",
-            "you_cancelled": "Ви скасували",
-            "you_declined": "Ви відхилили",
             "you_started": "Ви надіслали запит перевірки"
         },
         "m.location": {
@@ -3712,7 +3698,6 @@
         "already_in_call_person": "Ви вже спілкуєтесь із цією особою.",
         "answered_elsewhere": "Відповіли деінде",
         "answered_elsewhere_description": "На виклик відповіли на іншому пристрої.",
-        "audio_devices": "Аудіопристрої",
         "call_failed": "Виклик не вдався",
         "call_failed_description": "Не вдалося встановити зв'язок",
         "call_failed_media": "Збій виклику, оскільки не вдалося отримати доступ до вебкамери або мікрофона. Перевірте, що:",
@@ -3799,7 +3784,6 @@
         "user_is_presenting": "%(sharerName)s показує",
         "video_call": "Відеовиклик",
         "video_call_started": "Відеовиклик розпочато",
-        "video_devices": "Відеопристрої",
         "voice_call": "Голосовий виклик",
         "you_are_presenting": "Ви показуєте"
     },

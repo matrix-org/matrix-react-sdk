@@ -6,26 +6,28 @@ exports[`<MatrixChat /> Multi-tab lockout shows the lockout page when a second t
     class="mx_SessionLockStolenView mx_SplashPage"
   >
     <h1>
-      Error
+      Test is connected in another tab
     </h1>
     <h2>
-      Test has been opened in another tab.
+      Switch to the other tab to connect to Test. This tab can now be closed.
     </h2>
   </main>
 </div>
 `;
 
 exports[`<MatrixChat /> Multi-tab lockout shows the lockout page when a second tab opens during crypto init 1`] = `
-<body>
+<body
+  style="--emoji-font-family: Twemoji;"
+>
   <div>
     <main
       class="mx_SessionLockStolenView mx_SplashPage"
     >
       <h1>
-        Error
+        Test is connected in another tab
       </h1>
       <h2>
-        Test has been opened in another tab.
+        Switch to the other tab to connect to Test. This tab can now be closed.
       </h2>
     </main>
   </div>
@@ -38,10 +40,10 @@ exports[`<MatrixChat /> Multi-tab lockout shows the lockout page when a second t
     class="mx_SessionLockStolenView mx_SplashPage"
   >
     <h1>
-      Error
+      Test is connected in another tab
     </h1>
     <h2>
-      Test has been opened in another tab.
+      Switch to the other tab to connect to Test. This tab can now be closed.
     </h2>
   </main>
 </div>
@@ -53,10 +55,10 @@ exports[`<MatrixChat /> Multi-tab lockout shows the lockout page when a second t
     class="mx_SessionLockStolenView mx_SplashPage"
   >
     <h1>
-      Error
+      Test is connected in another tab
     </h1>
     <h2>
-      Test has been opened in another tab.
+      Switch to the other tab to connect to Test. This tab can now be closed.
     </h2>
   </main>
 </div>
@@ -325,12 +327,12 @@ exports[`<MatrixChat /> with an existing session onAction() room actions leave_r
   <div
     class="mx_Dialog_header mx_Dialog_headerWithCancel"
   >
-    <h2
+    <h1
       class="mx_Heading_h3 mx_Dialog_title"
       id="mx_BaseDialog_title"
     >
       Leave room
-    </h2>
+    </h1>
     <div
       aria-label="Close dialog"
       class="mx_AccessibleButton mx_Dialog_cancelButton"
@@ -381,12 +383,12 @@ exports[`<MatrixChat /> with an existing session onAction() room actions leave_r
   <div
     class="mx_Dialog_header mx_Dialog_headerWithCancel"
   >
-    <h2
+    <h1
       class="mx_Heading_h3 mx_Dialog_title"
       id="mx_BaseDialog_title"
     >
       Leave space
-    </h2>
+    </h1>
     <div
       aria-label="Close dialog"
       class="mx_AccessibleButton mx_Dialog_cancelButton"

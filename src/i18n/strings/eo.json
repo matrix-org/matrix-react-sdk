@@ -196,7 +196,8 @@
         "msisdn_field_required_invalid": "Enigu telefonnumeron",
         "no_hs_url_provided": "Neniu hejmservila URL donita",
         "oidc": {
-            "error_title": "Ni ne povis salutigi vin"
+            "error_title": "Ni ne povis salutigi vin",
+            "missing_or_invalid_stored_state": "Ni petis la foliumilon memori, kiun hejmservilon vi uzas por saluti, sed domaĝe, via foliumilo forgesis. Iru al la saluta paĝo kaj reprovu."
         },
         "password_field_label": "Enigu pasvorton",
         "password_field_strong_label": "Bona, forta pasvorto!",
@@ -329,7 +330,6 @@
         "spaceinvaders_message": "sendas imiton de ludo « Space Invaders »"
     },
     "common": {
-        "about": "Prio",
         "access_token": "Alirpeco",
         "accessibility": "Alirebleco",
         "advanced": "Altnivela",
@@ -1067,7 +1067,6 @@
         "mjolnir": "Novaj manieroj ignori personojn",
         "pinning": "Fiksado de mesaĝoj",
         "report_to_moderators": "Raportu al moderigaĵoj",
-        "state_counters": "Bildigi simplajn kalkulilojn en la ĉapo de la fenestro",
         "video_rooms": "Videoĉambroj",
         "video_rooms_a_new_way_to_chat": "Nova maniero babili per voĉo kaj video en %(brand)s.",
         "video_rooms_always_on_voip_channels": "Videoĉambroj estas ĉiam ŝaltitaj VoIP-kanaloj enkonstruitaj en ĉambro en %(brand)s.",
@@ -1169,8 +1168,6 @@
         "all_messages": "Ĉiuj mesaĝoj",
         "class_global": "Ĉie",
         "class_other": "Alia",
-        "colour_bold": "Grase",
-        "colour_none": "Neniu",
         "default": "Ordinara",
         "enable_prompt_toast_description": "Ŝalti labortablajn sciigojn",
         "enable_prompt_toast_title": "Sciigoj",
@@ -1178,6 +1175,8 @@
         "error_change_title": "Ŝanĝi agordojn pri sciigoj",
         "keyword": "Ĉefvorto",
         "keyword_new": "Nova ĉefvorto",
+        "level_activity": "Aktiveco",
+        "level_none": "Neniu",
         "mark_all_read": "Marki ĉion legita",
         "mentions_keywords": "Mencioj kaj ĉefvortoj",
         "message_didnt_send": "Mesaĝo ne sendiĝis. Klaku por akiri informojn."
@@ -1308,8 +1307,6 @@
             },
             "title": "Fiksitaj mesaĝoj"
         },
-        "settings_button": "Agordoj de ĉambro",
-        "share_button": "Kunhavigi ĉambron",
         "widgets_section": "Fenestraĵoj"
     },
     "room": {
@@ -1701,10 +1698,8 @@
         "help_about": {
             "access_token_detail": "Via alirpeco donas plenan aliron al via konto. Donu ĝin al neniu.",
             "brand_version": "versio de %(brand)s:",
-            "chat_bot": "Babilu kun la roboto %(brand)s Bot",
             "clear_cache_reload": "Vakigi kaŝmemoron kaj relegi",
             "help_link": "Por helpo pri uzado de %(brand)s, klaku <a>ĉi tien</a>.",
-            "help_link_chat_bot": "Por helpo pri uzado de %(brand)s, klaku <a>ĉi tien</a> aŭ komencu babilon kun nia roboto per la butono sube.",
             "title": "Helpo kaj Prio",
             "versions": "Versioj"
         }
@@ -2315,19 +2310,8 @@
             "sent": "%(senderDisplayName)s sendis bildon.",
             "show_image": "Montri bildon"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s nuligis kontrolon",
-            "you_cancelled": "Vi nuligis kontrolon de %(name)s"
-        },
-        "m.key.verification.done": "Vi kontrolis %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s akceptis",
-            "user_cancelled": "%(name)s nuligis",
-            "user_declined": "%(name)s rifuzis",
             "user_wants_to_verify": "%(name)s volas kontroli",
-            "you_accepted": "Vi akceptis",
-            "you_cancelled": "Vi nuligis",
-            "you_declined": "Vi rifuzis",
             "you_started": "Vi sendis peton de kontrolo"
         },
         "m.location": {

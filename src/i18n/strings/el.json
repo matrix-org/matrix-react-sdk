@@ -206,7 +206,8 @@
         "msisdn_field_required_invalid": "Εισάγετε αριθμό τηλεφώνου",
         "no_hs_url_provided": "Δεν παρέχεται URL του κεντρικού διακομιστή",
         "oidc": {
-            "error_title": "Δεν μπορέσαμε να σας συνδέσουμε"
+            "error_title": "Δεν μπορέσαμε να σας συνδέσουμε",
+            "missing_or_invalid_stored_state": "Ζητήσαμε από το πρόγραμμα περιήγησης να θυμάται τον διακομιστή που χρησιμοποιείτε για να συνδέεστε, αλλά το πρόγραμμα περιήγησης δεν το έχει αποθηκεύσει. Πηγαίνετε στην σελίδα σύνδεσεις για να προσπαθήσετε ξανά."
         },
         "password_field_label": "Εισάγετε τον κωδικό πρόσβασης",
         "password_field_strong_label": "Πολύ καλά, ισχυρός κωδικός πρόσβασης!",
@@ -341,7 +342,6 @@
         "spaceinvaders_message": "στέλνει διαστημικούς εισβολείς"
     },
     "common": {
-        "about": "Σχετικά με",
         "access_token": "Διακριτικό πρόσβασης",
         "accessibility": "Προσβασιμότητα",
         "advanced": "Προχωρημένες",
@@ -400,10 +400,6 @@
         "n_members": {
             "one": "%(count)s μέλος",
             "other": "%(count)s μέλη"
-        },
-        "n_participants": {
-            "one": "1 συμμετέχων",
-            "other": "%(count)s συμμετέχοντες"
         },
         "n_rooms": {
             "one": "%(count)s δωμάτιο",
@@ -1177,7 +1173,6 @@
         "leave_beta": "Αποχώρηση από τη beta",
         "msc3531_hide_messages_pending_moderation": "Επιτρέψτε στους επόπτες να αποκρύψουν μηνύματα που βρίσκονται σε εκκρεμότητα.",
         "pinning": "Καρφίτσωμα Μηνυμάτων",
-        "state_counters": "Απόδοση απλών μετρητών στην κεφαλίδα δωματίου",
         "video_rooms": "Δωμάτια βίντεο",
         "video_rooms_a_new_way_to_chat": "Ένας νέος τρόπος για συνομιλία μέσω φωνής και βίντεο με το %(brand)s.",
         "video_rooms_beta": "Οι αίθουσες βίντεο είναι μια λειτουργία beta",
@@ -1288,9 +1283,6 @@
         "all_messages_description": "Λάβετε ειδοποιήσεις για κάθε μήνυμα",
         "class_global": "Γενικές ρυθμίσεις",
         "class_other": "Άλλα",
-        "colour_bold": "Έντονα",
-        "colour_none": "Κανένα",
-        "colour_unsent": "Μη απεσταλμένα",
         "default": "Προεπιλογή",
         "enable_prompt_toast_description": "Ενεργοποίηση ειδοποιήσεων επιφάνειας εργασίας",
         "enable_prompt_toast_title": "Ειδοποιήσεις",
@@ -1298,6 +1290,9 @@
         "error_change_title": "Αλλάξτε τις ρυθμίσεις ειδοποιήσεων",
         "keyword": "Λέξη-κλειδί",
         "keyword_new": "Νέα λέξη-κλειδί",
+        "level_activity": "Δραστηριότητα",
+        "level_none": "Κανένα",
+        "level_unsent": "Μη απεσταλμένα",
         "mark_all_read": "Επισήμανση όλων ως αναγνωσμένων",
         "mentions_and_keywords": "@αναφορές & λέξεις-κλειδιά",
         "mentions_and_keywords_description": "Λάβετε ειδοποιήσεις μόνο με αναφορές και λέξεις-κλειδιά όπως έχουν ρυθμιστεί στις <a>ρυθμίσεις</a> σας",
@@ -1458,8 +1453,6 @@
                 "other": "Τελικό αποτέλεσμα με βάση %(count)s ψήφους"
             }
         },
-        "settings_button": "Ρυθμίσεις δωματίου",
-        "share_button": "Κοινή χρήση δωματίου",
         "thread_list": {
             "context_menu_label": "Επιλογές νήματος συζήτησης"
         },
@@ -1908,10 +1901,8 @@
         "help_about": {
             "access_token_detail": "Το διακριτικό πρόσβασής σας παρέχει πλήρη πρόσβαση στον λογαριασμό σας. Μην το μοιραστείτε με κανέναν.",
             "brand_version": "Έκδοση %(brand)s:",
-            "chat_bot": "Συνομιλία με το %(brand)s Bot",
             "clear_cache_reload": "Εκκαθάριση προσωρινής μνήμης και επαναφόρτωση",
             "help_link": "Για βοήθεια σχετικά με τη χρήση του %(brand)s, κάντε κλικ <a>εδώ</a>.",
-            "help_link_chat_bot": "Για βοήθεια σχετικά με τη χρήση του %(brand)s, κάντε κλικ <a>εδώ</a> ή ξεκινήστε μια συνομιλία με το bot μας χρησιμοποιώντας το παρακάτω κουμπί.",
             "title": "Βοήθεια & Σχετικά",
             "versions": "Εκδόσεις"
         }
@@ -2577,19 +2568,8 @@
             "sent": "Ο %(senderDisplayName)s έστειλε μια φωτογραφία.",
             "show_image": "Εμφάνιση εικόνας"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s ακύρωσε την επαλήθευση",
-            "you_cancelled": "Ακυρώσατε την επαλήθευση του χρήστη %(name)s"
-        },
-        "m.key.verification.done": "Επαληθεύσατε τον χρήστη %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "Ο/η %(name)s αποδέχθηκε",
-            "user_cancelled": "%(name)s ακύρωσε",
-            "user_declined": "%(name)s αρνήθηκε",
             "user_wants_to_verify": "%(name)s θέλει να επαληθεύσει",
-            "you_accepted": "Αποδεχθήκατε",
-            "you_cancelled": "Ακυρώσατε",
-            "you_declined": "Αρνηθήκατε",
             "you_started": "Στείλατε ένα αίτημα επαλήθευσης"
         },
         "m.location": {
@@ -3042,7 +3022,6 @@
         "already_in_call_person": "Είστε ήδη σε κλήση με αυτόν τον χρήστη.",
         "answered_elsewhere": "Απαντήθηκε αλλού",
         "answered_elsewhere_description": "Η κλήση απαντήθηκε σε μια άλλη συσκευή.",
-        "audio_devices": "Συσκευές ήχου",
         "call_failed": "Η κλήση απέτυχε",
         "call_failed_description": "Η κλήση δεν μπόρεσε να πραγματοποιηθεί",
         "call_failed_media": "Η κλήση απέτυχε επειδή δεν μπόρεσε να βρεθεί κάμερα ή μικρόφωνο. Ελέγξτε ότι:",
@@ -3111,7 +3090,6 @@
         "user_busy_description": "Ο χρήστης που καλέσατε είναι απασχολημένος.",
         "user_is_presenting": "%(sharerName)s παρουσιάζει",
         "video_call": "Βιντεοκλήση",
-        "video_devices": "Συσκευές βίντεο",
         "voice_call": "Φωνητική κλήση",
         "you_are_presenting": "Παρουσιάζετε"
     },

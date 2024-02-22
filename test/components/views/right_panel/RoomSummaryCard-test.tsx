@@ -18,6 +18,7 @@ import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { EventType, MatrixEvent, Room, MatrixClient, JoinRule } from "matrix-js-sdk/src/matrix";
 import { mocked, MockedObject } from "jest-mock";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import RoomSummaryCard from "../../../../src/components/views/right_panel/RoomSummaryCard";
@@ -34,6 +35,10 @@ import { PollHistoryDialog } from "../../../../src/components/views/dialogs/Poll
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { _t } from "../../../../src/languageHandler";
 import SettingsStore from "../../../../src/settings/SettingsStore";
+import { tagRoom } from "../../../../src/utils/room/tagRoom";
+import { DefaultTagID } from "../../../../src/stores/room-list/models";
+
+jest.mock("../../../../src/utils/room/tagRoom");
 
 describe("<RoomSummaryCard />", () => {
     const userId = "@alice:domain.org";
@@ -51,7 +56,9 @@ describe("<RoomSummaryCard />", () => {
 
         return render(<RoomSummaryCard {...defaultProps} {...props} />, {
             wrapper: ({ children }) => (
-                <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
+                <MatrixClientContext.Provider value={mockClient}>
+                    <TooltipProvider>{children}</TooltipProvider>
+                </MatrixClientContext.Provider>
             ),
         });
     };
@@ -63,6 +70,9 @@ describe("<RoomSummaryCard />", () => {
             isRoomEncrypted: jest.fn(),
             getOrCreateFilter: jest.fn().mockResolvedValue({ filterId: 1 }),
             getRoom: jest.fn(),
+            isGuest: jest.fn().mockReturnValue(false),
+            deleteRoomTag: jest.fn().mockResolvedValue({}),
+            setRoomTag: jest.fn().mockResolvedValue({}),
         });
         room = new Room(roomId, mockClient, userId);
         const roomCreateEvent = new MatrixEvent({
@@ -76,6 +86,7 @@ describe("<RoomSummaryCard />", () => {
             state_key: "",
         });
         room.currentState.setStateEvents([roomCreateEvent]);
+        room.updateMyMembership("join");
 
         jest.spyOn(Modal, "createDialog");
         jest.spyOn(RightPanelStore.instance, "pushCard");
@@ -131,6 +142,22 @@ describe("<RoomSummaryCard />", () => {
         fireEvent.click(getByText(_t("action|copy_link")));
 
         expect(Modal.createDialog).toHaveBeenCalledWith(ShareDialog, { target: room });
+    });
+
+    it("opens invite dialog on button click", () => {
+        const { getByText } = getComponent();
+
+        fireEvent.click(getByText(_t("action|invite")));
+
+        expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({ action: "view_invite", roomId: room.roomId });
+    });
+
+    it("fires favourite dispatch on button click", () => {
+        const { getByText } = getComponent();
+
+        fireEvent.click(getByText(_t("room|context_menu|favourite")));
+
+        expect(tagRoom).toHaveBeenCalledWith(room, DefaultTagID.Favourite);
     });
 
     it("opens room settings on button click", () => {
@@ -231,7 +258,7 @@ describe("<RoomSummaryCard />", () => {
                                 "@ernie:sesame.st": ["some-other-room-id", room.roomId],
                             },
                         }),
-                    }[eventType]),
+                    })[eventType],
             );
             getComponent();
 

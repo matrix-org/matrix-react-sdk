@@ -23,7 +23,7 @@ import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MINIMUM_MATRIX_VERSION } from "matrix-js-sdk/src/version-support";
+import { MINIMUM_MATRIX_VERSION, SUPPORTED_MATRIX_VERSIONS } from "matrix-js-sdk/src/version-support";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
@@ -40,6 +40,7 @@ import PlatformPeg from "./PlatformPeg";
 import { sendLoginRequest } from "./Login";
 import * as StorageManager from "./utils/StorageManager";
 import SettingsStore from "./settings/SettingsStore";
+import { SettingLevel } from "./settings/SettingLevel";
 import ToastStore from "./stores/ToastStore";
 import { IntegrationManagers } from "./integrations/IntegrationManagers";
 import { Mjolnir } from "./mjolnir/Mjolnir";
@@ -634,7 +635,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             },
             false,
         );
-        checkServerVersions();
+        await checkServerVersions();
         return true;
     } else {
         logger.log("No previous session found.");
@@ -643,29 +644,34 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
 }
 
 async function checkServerVersions(): Promise<void> {
-    MatrixClientPeg.get()
-        ?.getVersions()
-        .then((response) => {
-            if (!response.versions.includes(MINIMUM_MATRIX_VERSION)) {
-                const toastKey = "LEGACY_SERVER";
-                ToastStore.sharedInstance().addOrReplaceToast({
-                    key: toastKey,
-                    title: _t("unsupported_server_title"),
-                    props: {
-                        description: _t("unsupported_server_description", {
-                            version: MINIMUM_MATRIX_VERSION,
-                            brand: SdkConfig.get().brand,
-                        }),
-                        acceptLabel: _t("action|ok"),
-                        onAccept: () => {
-                            ToastStore.sharedInstance().dismissToast(toastKey);
-                        },
-                    },
-                    component: GenericToast,
-                    priority: 98,
-                });
-            }
-        });
+    const client = MatrixClientPeg.get();
+    if (!client) return;
+    for (const version of SUPPORTED_MATRIX_VERSIONS) {
+        // Check if the server supports this spec version. (`isVersionSupported` caches the response, so this loop will
+        // only make a single HTTP request).
+        if (await client.isVersionSupported(version)) {
+            // we found a compatible spec version
+            return;
+        }
+    }
+
+    const toastKey = "LEGACY_SERVER";
+    ToastStore.sharedInstance().addOrReplaceToast({
+        key: toastKey,
+        title: _t("unsupported_server_title"),
+        props: {
+            description: _t("unsupported_server_description", {
+                version: MINIMUM_MATRIX_VERSION,
+                brand: SdkConfig.get().brand,
+            }),
+            acceptLabel: _t("action|ok"),
+            onAccept: () => {
+                ToastStore.sharedInstance().dismissToast(toastKey);
+            },
+        },
+        component: GenericToast,
+        priority: 98,
+    });
 }
 
 async function handleLoadSessionFailure(e: unknown): Promise<boolean> {
@@ -771,7 +777,7 @@ async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promis
     try {
         const clientId = getStoredOidcClientId();
         const idTokenClaims = getStoredOidcIdTokenClaims();
-        const redirectUri = window.location.origin;
+        const redirectUri = PlatformPeg.get()!.getSSOCallbackUrl().href;
         const deviceId = credentials.deviceId;
         if (!deviceId) {
             throw new Error("Expected deviceId in user credentials.");
@@ -1105,6 +1111,9 @@ export async function onLoggedOut(): Promise<void> {
  */
 async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void> {
     if (window.localStorage) {
+        // get the currently defined device language, if set, so we can restore it later
+        const language = SettingsStore.getValueAt(SettingLevel.DEVICE, "language", null, true, true);
+
         // try to save any 3pid invites from being obliterated and registration time
         const pendingInvites = ThreepidInviteStore.instance.getWireInvites();
         const registrationTime = window.localStorage.getItem("mx_registration_time");
@@ -1118,8 +1127,12 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
             logger.error("idbDelete failed for account:mx_access_token", e);
         }
 
-        // now restore those invites and registration time
+        // now restore those invites, registration time and previously set device language
         if (!opts?.deleteEverything) {
+            if (language) {
+                await SettingsStore.setValue("language", null, SettingLevel.DEVICE, language);
+            }
+
             pendingInvites.forEach(({ roomId, ...invite }) => {
                 ThreepidInviteStore.instance.storeInvite(roomId, invite);
             });

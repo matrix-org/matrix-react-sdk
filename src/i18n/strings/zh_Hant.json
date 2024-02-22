@@ -226,7 +226,8 @@
         "msisdn_field_required_invalid": "輸入電話號碼",
         "no_hs_url_provided": "未提供家伺服器網址",
         "oidc": {
-            "error_title": "我們無法讓您登入"
+            "error_title": "我們無法讓您登入",
+            "missing_or_invalid_stored_state": "我們要求瀏覽器記住它讓您登入時使用的家伺服器，但不幸的是，您的瀏覽器忘了它。到登入頁面然後重試。"
         },
         "password_field_keep_going_prompt": "繼續前進…",
         "password_field_label": "輸入密碼",
@@ -246,6 +247,7 @@
             "error_homeserver_lacks_support": "家伺服器不支援在其他裝置上登入。",
             "error_invalid_scanned_code": "掃描的代碼無效。",
             "error_linking_incomplete": "未在要求的時間內完成連結。",
+            "error_rate_limited": "短時間內嘗試太多次，請稍待一段時間後再嘗試。",
             "error_request_cancelled": "請求已取消。",
             "error_request_declined": "請求在另一台裝置上被拒絕。",
             "error_unexpected": "發生預料之外的錯誤。",
@@ -412,7 +414,6 @@
         "spaceinvaders_message": "傳送太空侵略者"
     },
     "common": {
-        "about": "關於",
         "access_token": "存取權杖",
         "accessibility": "可近用性",
         "advanced": "進階",
@@ -476,10 +477,6 @@
         "n_members": {
             "one": "%(count)s 位成員",
             "other": "%(count)s 位成員"
-        },
-        "n_participants": {
-            "one": "1 位成員",
-            "other": "%(count)s 個參與者"
         },
         "n_rooms": {
             "one": "%(count)s 個聊天室",
@@ -748,7 +745,6 @@
         "room_notifications_total": "總共： ",
         "room_notifications_type": "類型： ",
         "room_status": "聊天室狀態",
-        "room_unread_status": "聊天室未讀狀態：<strong>%(status)s</strong>",
         "room_unread_status_count": {
             "other": "聊天室未讀狀態：<strong>%(status)s</strong>，數量：<strong>%(count)s</strong>"
         },
@@ -1042,7 +1038,6 @@
         "unknown_error_code": "未知的錯誤代碼",
         "update_power_level": "無法變更權限等級"
     },
-    "error_database_closed_description": "這個問題可能是因為在多個分頁中開啟此應用程式，或是清除瀏覽資料所導致。",
     "error_database_closed_title": "資料庫意外關閉",
     "error_dialog": {
         "copy_room_link_failed": {
@@ -1400,7 +1395,6 @@
         "report_to_moderators": "回報給版主",
         "report_to_moderators_description": "在支援審核的聊天室中，「回報」按鈕讓您可以回報濫用行為給聊天室管理員。",
         "rust_crypto": "Rust 密碼學實作",
-        "rust_crypto_disabled_notice": "目前僅能透過 config.json 啟用",
         "sliding_sync": "滑動同步模式",
         "sliding_sync_checking": "正在檢查…",
         "sliding_sync_configuration": "滑動同步設定",
@@ -1412,7 +1406,6 @@
         "sliding_sync_server_no_support": "您的伺服器缺乏原生支援",
         "sliding_sync_server_specify_proxy": "您的伺服器缺乏原生支援，您必須指定代理",
         "sliding_sync_server_support": "您的伺服器有原生支援",
-        "state_counters": "在聊天室標頭顯示簡單的計數器",
         "under_active_development": "正在積極開發中。",
         "video_rooms": "視訊聊天室",
         "video_rooms_a_new_way_to_chat": "在 %(brand)s 中透過語音及視訊聊天的新方式。",
@@ -1554,11 +1547,6 @@
         "all_messages_description": "收到所有訊息的通知",
         "class_global": "全域",
         "class_other": "其他",
-        "colour_bold": "粗體",
-        "colour_grey": "灰",
-        "colour_none": "無",
-        "colour_red": "紅",
-        "colour_unsent": "未傳送",
         "default": "預設",
         "email_pusher_app_display_name": "電子郵件通知",
         "enable_prompt_toast_description": "啟用桌面通知",
@@ -1567,6 +1555,9 @@
         "error_change_title": "變更通知設定",
         "keyword": "關鍵字",
         "keyword_new": "新關鍵字",
+        "level_activity": "訊息順序",
+        "level_none": "無",
+        "level_unsent": "未傳送",
         "mark_all_read": "全部標示為已讀",
         "mentions_and_keywords": "@提及與關鍵字",
         "mentions_and_keywords_description": "僅在提及您與您在<a>設定</a>中列出的關鍵字時收到通知",
@@ -1808,8 +1799,6 @@
         "room_summary_card": {
             "title": "聊天室資訊"
         },
-        "settings_button": "聊天室設定",
-        "share_button": "分享聊天室",
         "thread_list": {
             "context_menu_label": "討論串選項"
         },
@@ -2323,10 +2312,8 @@
         "help_about": {
             "access_token_detail": "您的存取權杖可提供您帳號完整的存取權限。請勿分享給任何人。",
             "brand_version": "%(brand)s 版本：",
-            "chat_bot": "與 %(brand)s 機器人聊天",
             "clear_cache_reload": "清除快取並重新載入",
             "help_link": "若需 %(brand)s 的使用說明，請點擊<a>這裡</a>。",
-            "help_link_chat_bot": "對於使用 %(brand)s 的說明，點選<a>這裡</a>或是使用下面的按鈕開始與我們的聊天機器人聊天。",
             "homeserver": "家伺服器為 <code>%(homeserverUrl)s</code>",
             "identity_server": "身分伺服器為 <code>%(identityServerUrl)s</code>",
             "title": "說明與關於",
@@ -3181,20 +3168,8 @@
             "sent": "%(senderDisplayName)s 傳了一張圖片。",
             "show_image": "顯示圖片"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s 已取消驗證",
-            "you_cancelled": "您已取消驗證 %(name)s"
-        },
-        "m.key.verification.done": "您驗證了 %(name)s",
         "m.key.verification.request": {
-            "declining": "正在拒絕…",
-            "user_accepted": "%(name)s 已接受",
-            "user_cancelled": "%(name)s 已取消",
-            "user_declined": "%(name)s 拒絕了",
             "user_wants_to_verify": "%(name)s 想要驗證",
-            "you_accepted": "您已接受",
-            "you_cancelled": "您已取消",
-            "you_declined": "您拒絕了",
             "you_started": "您已傳送了驗證請求"
         },
         "m.location": {
@@ -3707,7 +3682,6 @@
         "already_in_call_person": "您正在與此人通話。",
         "answered_elsewhere": "在其他地方回答",
         "answered_elsewhere_description": "通話已在其他裝置上回應。",
-        "audio_devices": "音訊裝置",
         "call_failed": "無法通話",
         "call_failed_description": "無法建立通話",
         "call_failed_media": "無法通話，因為無法存取網路攝影機或麥克風。請檢查：",
@@ -3794,7 +3768,6 @@
         "user_is_presenting": "%(sharerName)s 正在投影",
         "video_call": "視訊通話",
         "video_call_started": "視訊通話已開始",
-        "video_devices": "視訊裝置",
         "voice_call": "語音通話",
         "you_are_presenting": "您正在投影"
     },

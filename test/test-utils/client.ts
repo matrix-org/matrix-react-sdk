@@ -130,6 +130,7 @@ export const mockClientMethodsServer = (): Partial<Record<MethodLikeKeys<MatrixC
     getHomeserverUrl: jest.fn(),
     getCapabilities: jest.fn().mockReturnValue({}),
     getClientWellKnown: jest.fn().mockReturnValue({}),
+    waitForClientWellKnown: jest.fn().mockResolvedValue({}),
     doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(false),
     isVersionSupported: jest.fn().mockResolvedValue(false),
     getVersions: jest.fn().mockResolvedValue({}),
@@ -169,5 +170,7 @@ export const mockClientMethodsCrypto = (): Partial<
         isSecretStorageReady: jest.fn(),
         getSessionBackupPrivateKey: jest.fn(),
         getVersion: jest.fn().mockReturnValue("Version 0"),
+        getOwnDeviceKeys: jest.fn(),
+        getCrossSigningKeyId: jest.fn(),
     }),
 });

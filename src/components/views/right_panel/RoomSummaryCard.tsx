@@ -18,7 +18,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from "re
 import classNames from "classnames";
 import { MenuItem, Tooltip, Separator, ToggleMenuItem, Text, Badge, Heading } from "@vector-im/compound-web";
 import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
-import { Icon as FavouriteIcon } from "@vector-im/compound-design-tokens/icons/favourite-off.svg";
+import { Icon as FavouriteIcon } from "@vector-im/compound-design-tokens/icons/favourite.svg";
 import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add.svg";
 import { Icon as UserProfileSolidIcon } from "@vector-im/compound-design-tokens/icons/user-profile-solid.svg";
 import { Icon as LinkIcon } from "@vector-im/compound-design-tokens/icons/link.svg";
@@ -27,8 +27,8 @@ import { Icon as ExportArchiveIcon } from "@vector-im/compound-design-tokens/ico
 import { Icon as LeaveIcon } from "@vector-im/compound-design-tokens/icons/leave.svg";
 import { Icon as FilesIcon } from "@vector-im/compound-design-tokens/icons/files.svg";
 import { Icon as PollsIcon } from "@vector-im/compound-design-tokens/icons/polls.svg";
-import { Icon as PinIcon } from "@vector-im/compound-design-tokens/icons/pin-off.svg";
-import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock.svg";
+import { Icon as PinIcon } from "@vector-im/compound-design-tokens/icons/pin.svg";
+import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock-solid.svg";
 import { Icon as LockOffIcon } from "@vector-im/compound-design-tokens/icons/lock-off.svg";
 import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
 import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
@@ -39,7 +39,7 @@ import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
 import BaseCard, { Group } from "./BaseCard";
 import { _t } from "../../../languageHandler";
 import RoomAvatar from "../avatars/RoomAvatar";
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
+import AccessibleButton from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import Modal from "../../../Modal";
@@ -268,7 +268,7 @@ const onRoomPinsClick = (): void => {
     RightPanelStore.instance.pushCard({ phase: RightPanelPhases.PinnedMessages }, true);
 };
 
-const onRoomSettingsClick = (ev: ButtonEvent): void => {
+const onRoomSettingsClick = (ev: Event): void => {
     defaultDispatcher.dispatch({ action: "open_room_settings" });
     PosthogTrackers.trackInteraction("WebRightPanelRoomInfoSettingsButton", ev);
 };
@@ -303,7 +303,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
         });
     };
 
-    const onRoomMembersClick = (ev: ButtonEvent): void => {
+    const onRoomMembersClick = (ev: Event): void => {
         RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, true);
         PosthogTrackers.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
     };
@@ -433,15 +433,17 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 label={_t("room|context_menu|favourite")}
                 checked={isFavorite}
                 onChange={() => tagRoom(room, DefaultTagID.Favourite)}
+                // XXX: https://github.com/element-hq/compound/issues/288
+                onSelect={() => {}}
             />
             <MenuItem
                 Icon={UserAddIcon}
                 label={_t("action|invite")}
                 disabled={!canInviteTo(room)}
-                onClick={() => inviteToRoom(room)}
+                onSelect={() => inviteToRoom(room)}
             />
-            <MenuItem Icon={LinkIcon} label={_t("action|copy_link")} onClick={onShareRoomClick} />
-            <MenuItem Icon={SettingsIcon} label={_t("common|settings")} onClick={onRoomSettingsClick} />
+            <MenuItem Icon={LinkIcon} label={_t("action|copy_link")} onSelect={onShareRoomClick} />
+            <MenuItem Icon={SettingsIcon} label={_t("common|settings")} onSelect={onRoomSettingsClick} />
 
             <Separator />
             <MenuItem
@@ -449,34 +451,34 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 // and is a short term solution until legacy room header is removed
                 Icon={UserProfileSolidIcon}
                 label={_t("common|people")}
-                onClick={onRoomMembersClick}
+                onSelect={onRoomMembersClick}
             />
             {!isVideoRoom && (
                 <>
-                    <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onClick={onRoomFilesClick} />
+                    <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onSelect={onRoomFilesClick} />
                     <MenuItem
                         Icon={PollsIcon}
                         label={_t("right_panel|polls_button")}
-                        onClick={onRoomPollHistoryClick}
+                        onSelect={onRoomPollHistoryClick}
                     />
                     {pinningEnabled && (
                         <MenuItem
                             Icon={PinIcon}
                             label={_t("right_panel|pinned_messages_button")}
-                            onClick={onRoomPinsClick}
+                            onSelect={onRoomPinsClick}
                         >
                             <Text as="span" size="sm">
                                 {pinCount}
                             </Text>
                         </MenuItem>
                     )}
-                    <MenuItem Icon={ExportArchiveIcon} label={_t("export_chat|title")} onClick={onRoomExportClick} />
+                    <MenuItem Icon={ExportArchiveIcon} label={_t("export_chat|title")} onSelect={onRoomExportClick} />
                 </>
             )}
 
             <Separator />
 
-            <MenuItem Icon={LeaveIcon} kind="critical" label={_t("action|leave_room")} onClick={onLeaveRoomClick} />
+            <MenuItem Icon={LeaveIcon} kind="critical" label={_t("action|leave_room")} onSelect={onLeaveRoomClick} />
 
             {SettingsStore.getValue(UIFeature.Widgets) &&
                 !isVideoRoom &&

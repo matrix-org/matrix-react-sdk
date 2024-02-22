@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import url("@vector-im/compound-design-tokens/assets/web/css/compound-design-tokens.css");
+@import url("@vector-im/compound-design-tokens/assets/web/css/compound-design-tokens.css") layer(compound);
 @import url("@vector-im/compound-web/dist/style.css");
 @import "./_font-sizes.pcss";
 @import "./_animations.pcss";
@@ -52,6 +52,18 @@ limitations under the License.
     --dialog-zIndex-standard: calc(var(--dialog-zIndex-standard-background) + 1); /* 4012 */
 }
 
+#matrixchat {
+    /* This is required to ensure Compound tooltips correctly draw where they should with z-index: auto */
+    contain: strict;
+}
+#mx_ContextualMenu_Container,
+#mx_PersistedElement_container,
+#mx_Dialog_Container,
+#mx_Dialog_StaticContainer {
+    /* This is required to ensure Compound tooltips correctly draw where they should with z-index: auto */
+    isolation: isolate;
+}
+
 /**
  * We need to increase the specificity of the selector to override the
  * custom property set by the design tokens package
@@ -64,14 +76,6 @@ limitations under the License.
      * system ones
      */
     --cpd-font-family-sans: $font-family;
-}
-
-@media only percy {
-    :root {
-        --percy-color-avatar: $username-variant2-color;
-        --percy-color-displayName: $username-variant1-color;
-        --percy-color-replyChain-border: $username-variant1-color;
-    }
 }
 
 @media (prefers-reduced-motion) {
@@ -100,7 +104,10 @@ body {
      * `font-feature-settings` allows us to override this behaviour and have the
      * correct ligatures and the proper dynamic metric spacing.
      */
-    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    font-feature-settings:
+        "kern" 1,
+        "liga" 1,
+        "calt" 1;
 
     background-color: $background;
     color: $primary-content;
@@ -467,6 +474,7 @@ legend {
     display: inline-block;
     width: 100%;
     box-sizing: border-box;
+    letter-spacing: var(--cpd-font-letter-spacing-heading-lg);
 
     &.danger {
         color: $alert;
@@ -701,14 +709,6 @@ legend {
 
 .mx_Username_color6 {
     color: $username-variant6-color;
-}
-
-.mx_Username_color7 {
-    color: $username-variant7-color;
-}
-
-.mx_Username_color8 {
-    color: $username-variant8-color;
 }
 
 .mx_AppWarning,

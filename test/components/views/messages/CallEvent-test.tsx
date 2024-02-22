@@ -19,6 +19,7 @@ import { render, screen, act, cleanup, fireEvent, waitFor } from "@testing-libra
 import { mocked, Mocked } from "jest-mock";
 import { Room, RoomStateEvent, MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import {
@@ -102,7 +103,7 @@ describe("CallEvent", () => {
     });
 
     const renderEvent = () => {
-        render(<CallEvent mxEvent={call.event} />);
+        render(<CallEvent mxEvent={call.event} />, { wrapper: TooltipProvider });
     };
 
     it("shows a message and duration if the call was ended", () => {
@@ -140,7 +141,7 @@ describe("CallEvent", () => {
         renderEvent();
 
         screen.getByText("@alice:example.org started a video call");
-        screen.getByLabelText("2 participants");
+        screen.getByLabelText("2 people joined");
 
         // Test that the join button works
         const dispatcherSpy = jest.fn();
@@ -154,7 +155,7 @@ describe("CallEvent", () => {
             }),
         );
         defaultDispatcher.unregister(dispatcherRef);
-        await act(() => call.connect());
+        await act(() => call.start());
 
         // Test that the leave button works
         fireEvent.click(screen.getByRole("button", { name: "Leave" }));

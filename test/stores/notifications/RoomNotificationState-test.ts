@@ -28,7 +28,7 @@ import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { mkEvent, muteRoom, stubClient } from "../../test-utils";
 import { RoomNotificationState } from "../../../src/stores/notifications/RoomNotificationState";
 import { NotificationStateEvents } from "../../../src/stores/notifications/NotificationState";
-import { NotificationColor } from "../../../src/stores/notifications/NotificationColor";
+import { NotificationLevel } from "../../../src/stores/notifications/NotificationLevel";
 import { createMessageEventContent } from "../../test-utils/events";
 
 describe("RoomNotificationState", () => {
@@ -81,7 +81,7 @@ describe("RoomNotificationState", () => {
     }
 
     it("Updates on event decryption", () => {
-        const roomNotifState = new RoomNotificationState(room);
+        const roomNotifState = new RoomNotificationState(room, true);
         const listener = jest.fn();
         roomNotifState.addListener(NotificationStateEvents.Update, listener);
         const testEvent = {
@@ -93,12 +93,12 @@ describe("RoomNotificationState", () => {
     });
 
     it("removes listeners", () => {
-        const roomNotifState = new RoomNotificationState(room);
+        const roomNotifState = new RoomNotificationState(room, false);
         expect(() => roomNotifState.destroy()).not.toThrow();
     });
 
     it("suggests an 'unread' ! if there are unsent messages", () => {
-        const roomNotifState = new RoomNotificationState(room);
+        const roomNotifState = new RoomNotificationState(room, false);
 
         const event = mkEvent({
             event: true,
@@ -109,57 +109,57 @@ describe("RoomNotificationState", () => {
         event.status = EventStatus.NOT_SENT;
         room.addPendingEvent(event, "txn");
 
-        expect(roomNotifState.color).toBe(NotificationColor.Unsent);
+        expect(roomNotifState.level).toBe(NotificationLevel.Unsent);
         expect(roomNotifState.symbol).toBe("!");
         expect(roomNotifState.count).toBeGreaterThan(0);
     });
 
     it("suggests nothing if the room is muted", () => {
-        const roomNotifState = new RoomNotificationState(room);
+        const roomNotifState = new RoomNotificationState(room, false);
 
         muteRoom(room);
         setUnreads(room, 1234, 0);
         room.updateMyMembership("join"); // emit
 
-        expect(roomNotifState.color).toBe(NotificationColor.None);
+        expect(roomNotifState.level).toBe(NotificationLevel.None);
         expect(roomNotifState.symbol).toBe(null);
         expect(roomNotifState.count).toBe(0);
     });
 
     it("suggests a red ! if the user has been invited to a room", () => {
-        const roomNotifState = new RoomNotificationState(room);
+        const roomNotifState = new RoomNotificationState(room, false);
 
         room.updateMyMembership("invite"); // emit
 
-        expect(roomNotifState.color).toBe(NotificationColor.Red);
+        expect(roomNotifState.level).toBe(NotificationLevel.Highlight);
         expect(roomNotifState.symbol).toBe("!");
         expect(roomNotifState.count).toBeGreaterThan(0);
     });
 
     it("returns a proper count and color for regular unreads", () => {
-        const roomNotifState = new RoomNotificationState(room);
+        const roomNotifState = new RoomNotificationState(room, false);
 
         setUnreads(room, 4321, 0);
         room.updateMyMembership("join"); // emit
 
-        expect(roomNotifState.color).toBe(NotificationColor.Grey);
+        expect(roomNotifState.level).toBe(NotificationLevel.Notification);
         expect(roomNotifState.symbol).toBe(null);
         expect(roomNotifState.count).toBe(4321);
     });
 
     it("returns a proper count and color for highlights", () => {
-        const roomNotifState = new RoomNotificationState(room);
+        const roomNotifState = new RoomNotificationState(room, false);
 
         setUnreads(room, 0, 69);
         room.updateMyMembership("join"); // emit
 
-        expect(roomNotifState.color).toBe(NotificationColor.Red);
+        expect(roomNotifState.level).toBe(NotificationLevel.Highlight);
         expect(roomNotifState.symbol).toBe(null);
         expect(roomNotifState.count).toBe(69);
     });
 
     it("includes threads", async () => {
-        const roomNotifState = new RoomNotificationState(room);
+        const roomNotifState = new RoomNotificationState(room, true);
 
         room.timeline.push(
             new MatrixEvent({
@@ -173,7 +173,7 @@ describe("RoomNotificationState", () => {
         addThread(room);
         room.updateMyMembership("join"); // emit
 
-        expect(roomNotifState.color).toBe(NotificationColor.Bold);
+        expect(roomNotifState.level).toBe(NotificationLevel.Activity);
         expect(roomNotifState.symbol).toBe(null);
     });
 });

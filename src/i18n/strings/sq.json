@@ -221,7 +221,8 @@
         "msisdn_field_required_invalid": "Jepni numër telefoni",
         "no_hs_url_provided": "S’u dha URL shërbyesi Home",
         "oidc": {
-            "error_title": "S’ju nxorëm dot nga llogaria juaj"
+            "error_title": "S’ju nxorëm dot nga llogaria juaj",
+            "missing_or_invalid_stored_state": "I kërkuam shfletuesit të mbajë mend cilin shërbyes Home përdorni, për t’ju lënë të bëni hyrje, por për fat të keq, shfletuesi juaj e ka harruar këtë. Kaloni te faqja e hyrjeve dhe riprovoni."
         },
         "password_field_keep_going_prompt": "Vazhdoni…",
         "password_field_label": "Jepni fjalëkalim",
@@ -241,6 +242,7 @@
             "error_homeserver_lacks_support": "Shërbyesi Home nuk mbulon bërje hyrjeje në një pajisje tjetër.",
             "error_invalid_scanned_code": "Kodi i skanuar është i pavlefshëm.",
             "error_linking_incomplete": "Lidhja s’u plotësua brenda kohës së domosdoshme.",
+            "error_rate_limited": "Shumë përpjekje në një kohë të shkurtër. Prisni ca, para se të riprovoni.",
             "error_request_cancelled": "Kërkesa u anulua.",
             "error_request_declined": "Kërkesa u hodh poshtë në pajisjen tjetër.",
             "error_unexpected": "Ndodhi një gabim të papritur.",
@@ -406,7 +408,6 @@
         "spaceinvaders_message": "dërgon pushtues hapësire"
     },
     "common": {
-        "about": "Mbi",
         "access_token": "Token Hyrjesh",
         "accessibility": "Përdorim nga persona me aftësi të kufizuara",
         "advanced": "Të mëtejshme",
@@ -465,10 +466,6 @@
         "n_members": {
             "one": "%(count)s anëtar",
             "other": "%(count)s anëtarë"
-        },
-        "n_participants": {
-            "one": "1 pjesëmarrës",
-            "other": "%(count)s pjesëmarrës"
         },
         "n_rooms": {
             "one": "%(count)s dhomë",
@@ -728,7 +725,6 @@
         "room_notifications_total": "Gjithsej: ",
         "room_notifications_type": "Lloj: ",
         "room_status": "Gjendje dhome",
-        "room_unread_status": "Gjendje e palexuar në dhomë: <strong>%(status)s</strong>",
         "room_unread_status_count": {
             "other": "Gjendje të palexuara në dhomë: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>"
         },
@@ -1016,7 +1012,6 @@
         "unknown_error_code": "kod gabimi të panjohur",
         "update_power_level": "S’u arrit të ndryshohej shkalla e pushtetit"
     },
-    "error_database_closed_description": "Kjo mund të jetë e shkaktuar nga pasja e aplikacionit hapur në shumë skeda, ose për shkak të spastrimit të të dhënave të shfletuesit.",
     "error_database_closed_title": "Baza e të dhënave u mbyll papritur",
     "error_dialog": {
         "copy_room_link_failed": {
@@ -1357,7 +1352,6 @@
         "report_to_moderators": "Raportojeni te moderatorët",
         "report_to_moderators_description": "Në dhoma që mbulojnë moderimin, butoni “Raportojeni” do t’ju lejojë t’u raportoni abuzim moderatorëve të dhomës.",
         "rust_crypto": "Sendërtim kriptografie Rust",
-        "rust_crypto_disabled_notice": "Aktualisht mund të aktivizohet vetëm përmes config.json-it",
         "sliding_sync_checking": "Po kontrollohet…",
         "sliding_sync_configuration": "Formësim Sliding Sync-u",
         "sliding_sync_description": "Nën zhvillim aktiv, s’mund të çaktivizohet.",
@@ -1368,7 +1362,6 @@
         "sliding_sync_server_no_support": "Shërbyesit tuaj i mungon mbulim i brendshëm për këtë",
         "sliding_sync_server_specify_proxy": "Shërbyesit tuaj i mungon mbulimi së brendshmi, duhet të specifikoni një ndërmjetës",
         "sliding_sync_server_support": "Shërbyesi juaj ka mbulim të brendshëm për këtë",
-        "state_counters": "Vizato numëratorë të thjeshtë te kryet e dhomës",
         "under_active_development": "Nën zhvillim aktiv.",
         "video_rooms": "Dhoma me video",
         "video_rooms_a_new_way_to_chat": "Një rrugë e re për të biseduar me zë dhe video në %(brand)s.",
@@ -1507,11 +1500,6 @@
         "all_messages": "Krejt mesazhet",
         "all_messages_description": "Merrni njoftim për çdo mesazh",
         "class_other": "Tjetër",
-        "colour_bold": "Të trasha",
-        "colour_grey": "Gri",
-        "colour_none": "Asnjë",
-        "colour_red": "E kuqe",
-        "colour_unsent": "Të padërguar",
         "default": "Parazgjedhje",
         "enable_prompt_toast_description": "Aktivizoni njoftime desktopi",
         "enable_prompt_toast_title": "Njoftime",
@@ -1519,6 +1507,9 @@
         "error_change_title": "Ndryshoni rregullime njoftimesh",
         "keyword": "Fjalëkyç",
         "keyword_new": "Fjalëkyç i ri",
+        "level_activity": "Veprimtari",
+        "level_none": "Asnjë",
+        "level_unsent": "Të padërguar",
         "mark_all_read": "Vëru të tërave shenjë si të lexuara",
         "mentions_and_keywords": "@përmendje & fjalëkyçe",
         "mentions_and_keywords_description": "Merrni njoftime vetëm për përmendje dhe fjalëkyçe që keni ujdisur te <a>rregullimet</a> tuaja",
@@ -1757,8 +1748,6 @@
         "room_summary_card": {
             "title": "Hollësi dhome"
         },
-        "settings_button": "Rregullime dhome",
-        "share_button": "Ndani dhomë me të tjerë",
         "thread_list": {
             "context_menu_label": "Mundësi rrjedhe"
         },
@@ -2256,10 +2245,8 @@
         "help_about": {
             "access_token_detail": "Tokeni-i juaj i hyrjeve jep hyrje të plotë në llogarinë tuaj. Mos ia jepni kujt.",
             "brand_version": "Version %(brand)s:",
-            "chat_bot": "Fjalosuni me Robotin %(brand)s",
             "clear_cache_reload": "Spastro fshehtinën dhe ringarko",
             "help_link": "Për ndihmë rreth përdorimit të %(brand)s-it, klikoni <a>këtu</a>.",
-            "help_link_chat_bot": "Për ndihmë rreth përdorimit të %(brand)s-it, klikoni <a>këtu</a>, ose nisni një fjalosje me robotin tonë duke përdorur butonin më poshtë.",
             "homeserver": "Shërbyes Home është <code>%(homeserverUrl)s</code>",
             "identity_server": "Shërbyes identiteti është <code>%(identityServerUrl)s</code>",
             "title": "Ndihmë & Rreth",
@@ -3075,20 +3062,8 @@
             "sent": "%(senderDisplayName)s dërgoi një figurë.",
             "show_image": "Shfaq figurë"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s anuloi verifikimin",
-            "you_cancelled": "Anuluat verifikimin e %(name)s"
-        },
-        "m.key.verification.done": "Verifikuat %(name)s",
         "m.key.verification.request": {
-            "declining": "Po hidhet poshtë…",
-            "user_accepted": "%(name)s pranoi",
-            "user_cancelled": "%(name)s anuloi",
-            "user_declined": "%(name)s hodhi poshtë",
             "user_wants_to_verify": "%(name)s dëshiron të verifikojë",
-            "you_accepted": "Pranuat",
-            "you_cancelled": "Anuluat",
-            "you_declined": "Hodhët poshtë",
             "you_started": "Dërguat një kërkesë verifikimi"
         },
         "m.location": {
@@ -3586,7 +3561,6 @@
         "already_in_call_person": "Gjendeni tashmë në thirrje me këtë person.",
         "answered_elsewhere": "Përgjigjur Gjetkë",
         "answered_elsewhere_description": "Thirrjes iu përgjigj në një tjetër pajisje.",
-        "audio_devices": "Pajisje audio",
         "call_failed": "Thirrja Dështoi",
         "call_failed_description": "Thirrja s’u nis dot",
         "call_failed_media": "Thirrja dështoi, ngaqë s’u hy dot kamera ose mikrofoni. Kontrolloni që:",
@@ -3670,7 +3644,6 @@
         "user_is_presenting": "%(sharerName)s përfaqëson",
         "video_call": "Thirrje video",
         "video_call_started": "Nisi thirrje me video",
-        "video_devices": "Pajisje video",
         "voice_call": "Thirrje audio",
         "you_are_presenting": "Përfaqësoni"
     },

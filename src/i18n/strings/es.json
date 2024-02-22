@@ -219,7 +219,8 @@
         "msisdn_field_required_invalid": "Escribe tu teléfono móvil",
         "no_hs_url_provided": "No se ha indicado la URL del servidor local",
         "oidc": {
-            "error_title": "No hemos podido iniciar tu sesión"
+            "error_title": "No hemos podido iniciar tu sesión",
+            "missing_or_invalid_stored_state": "Le hemos preguntado a tu navegador qué servidor base usar para iniciar tu sesión, pero parece que no lo recuerda. Vuelve a la página de inicio de sesión e inténtalo de nuevo."
         },
         "password_field_keep_going_prompt": "Sigue…",
         "password_field_label": "Escribe tu contraseña",
@@ -238,6 +239,7 @@
             "error_homeserver_lacks_support": "Tu servidor base no es compatible con el inicio de sesión en otro dispositivo.",
             "error_invalid_scanned_code": "El código escaneado no es válido.",
             "error_linking_incomplete": "El proceso de enlace ha tardado demasiado tiempo, por lo que no se ha completado.",
+            "error_rate_limited": "Demasiados intentos en poco tiempo. Espera un poco antes de volverlo a intentar.",
             "error_request_cancelled": "La solicitud ha sido cancelada.",
             "error_request_declined": "El otro dispositivo ha rechazado la solicitud.",
             "error_unexpected": "Ha ocurrido un error inesperado.",
@@ -391,7 +393,6 @@
         "spaceinvaders_message": "enviar space invaders"
     },
     "common": {
-        "about": "Acerca de",
         "access_token": "Token de acceso",
         "accessibility": "Accesibilidad",
         "advanced": "Avanzado",
@@ -451,10 +452,6 @@
         "n_members": {
             "one": "%(count)s miembro",
             "other": "%(count)s miembros"
-        },
-        "n_participants": {
-            "one": "1 participante",
-            "other": "%(count)s participantes"
         },
         "n_rooms": {
             "one": "%(count)s sala",
@@ -1329,7 +1326,6 @@
         "report_to_moderators": "Denunciar ante los moderadores",
         "report_to_moderators_description": "En las salas que sean compatible con la moderación, el botón de «Denunciar» avisará a los moderadores de la sala.",
         "rust_crypto": "Implementación de la criptografía en Rust",
-        "rust_crypto_disabled_notice": "Ahora mismo solo se puede activar a través de config.json",
         "sliding_sync": "Modo de sincronización progresiva",
         "sliding_sync_checking": "Comprobando…",
         "sliding_sync_configuration": "Configuración de la sincronización progresiva",
@@ -1341,7 +1337,6 @@
         "sliding_sync_server_no_support": "Tu servidor no es compatible",
         "sliding_sync_server_specify_proxy": "Tu servidor no es compatible, debes configurar un intermediario (proxy)",
         "sliding_sync_server_support": "Tu servidor es compatible",
-        "state_counters": "Muestra contadores simples en la cabecera de la sala",
         "under_active_development": "Funcionalidad en desarrollo.",
         "video_rooms": "Salas de vídeo",
         "video_rooms_a_new_way_to_chat": "Una nueva forma de hablar por voz y vídeo en %(brand)s.",
@@ -1479,11 +1474,6 @@
         "all_messages": "Todos los mensajes",
         "all_messages_description": "Recibe notificaciones para todos los mensajes",
         "class_other": "Otros",
-        "colour_bold": "Negrita",
-        "colour_grey": "Gris",
-        "colour_none": "Ninguno",
-        "colour_red": "Rojo",
-        "colour_unsent": "No enviado",
         "default": "Por defecto",
         "enable_prompt_toast_description": "Activar las notificaciones de escritorio",
         "enable_prompt_toast_title": "Notificaciones",
@@ -1491,6 +1481,9 @@
         "error_change_title": "Cambiar los ajustes de notificaciones",
         "keyword": "Palabra clave",
         "keyword_new": "Nueva palabra clave",
+        "level_activity": "Actividad",
+        "level_none": "Ninguno",
+        "level_unsent": "No enviado",
         "mark_all_read": "Marcar todo como leído",
         "mentions_and_keywords": "@menciones y palabras clave",
         "mentions_and_keywords_description": "Recibir notificaciones solo cuando me mencionen o escriban una palabra vigilada configurada en los <a>ajustes</a>",
@@ -1714,8 +1707,6 @@
         "room_summary_card": {
             "title": "Info. de la sala"
         },
-        "settings_button": "Configuración de la sala",
-        "share_button": "Compartir la sala",
         "thread_list": {
             "context_menu_label": "Ajustes del hilo"
         },
@@ -2204,10 +2195,8 @@
         "help_about": {
             "access_token_detail": "Tu token de acceso da acceso completo a tu cuenta. No lo compartas con nadie.",
             "brand_version": "Versión de %(brand)s:",
-            "chat_bot": "Hablar con %(brand)s Bot",
             "clear_cache_reload": "Limpiar caché y recargar",
             "help_link": "Si necesitas ayuda usando %(brand)s, haz clic <a>aquí</a>.",
-            "help_link_chat_bot": "Si necesitas ayuda usando %(brand)s, haz clic <a>aquí</a> o abre un chat con nuestro bot usando el botón de abajo.",
             "homeserver": "El servidor base es <code>%(homeserverUrl)s</code>",
             "title": "Ayuda y acerca de",
             "versions": "Versiones"
@@ -3000,20 +2989,8 @@
             "sent": "%(senderDisplayName)s envió una imagen.",
             "show_image": "Ver imagen"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s canceló la verificación",
-            "you_cancelled": "Has cancelado la verificación de %(name)s"
-        },
-        "m.key.verification.done": "Has verificado a %(name)s",
         "m.key.verification.request": {
-            "declining": "Rechazando…",
-            "user_accepted": "%(name)s aceptó",
-            "user_cancelled": "%(name)s canceló",
-            "user_declined": "%(name)s declinó",
             "user_wants_to_verify": "%(name)s quiere verificar",
-            "you_accepted": "Aceptaste",
-            "you_cancelled": "Cancelaste",
-            "you_declined": "Declinaste",
             "you_started": "Has enviado solicitud de verificación"
         },
         "m.location": {
@@ -3501,7 +3478,6 @@
         "already_in_call_person": "Ya estás en una llamada con esta persona.",
         "answered_elsewhere": "Respondida en otra parte",
         "answered_elsewhere_description": "Esta llamada fue respondida en otro dispositivo.",
-        "audio_devices": "Dispositivos de audio",
         "call_failed": "Llamada fallida",
         "call_failed_description": "No se ha podido establecer la llamada",
         "call_failed_media": "La llamada ha fallado porque no se ha podido acceder a la cámara o al micrófono. Comprueba que:",
@@ -3587,7 +3563,6 @@
         "user_is_presenting": "%(sharerName)s está presentando",
         "video_call": "Llamada de vídeo",
         "video_call_started": "Videollamada iniciada",
-        "video_devices": "Dispositivos de vídeo",
         "voice_call": "Llamada de voz",
         "you_are_presenting": "Estás presentando"
     },

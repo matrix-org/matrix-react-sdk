@@ -219,7 +219,8 @@
         "msisdn_field_required_invalid": "電話番号を入力",
         "no_hs_url_provided": "ホームサーバーのURLが指定されていません",
         "oidc": {
-            "error_title": "ログインできませんでした"
+            "error_title": "ログインできませんでした",
+            "missing_or_invalid_stored_state": "残念ながら、ブラウザーはサインインするホームサーバーを忘れてしまいました。サインインページに移動して再試行してください。"
         },
         "password_field_keep_going_prompt": "続行…",
         "password_field_label": "パスワードを入力してください",
@@ -239,6 +240,7 @@
             "error_homeserver_lacks_support": "ホームサーバーは他の端末でのサインインをサポートしていません。",
             "error_invalid_scanned_code": "スキャンされたコードは無効です。",
             "error_linking_incomplete": "時間内にリンクが完了しませんでした。",
+            "error_rate_limited": "再試行の数が多すぎます。少し待ってから再度試してください。",
             "error_request_cancelled": "リクエストはキャンセルされました。",
             "error_request_declined": "リクエストはもう一方の端末で拒否されました。",
             "error_unexpected": "予期しないエラーが発生しました。",
@@ -401,7 +403,6 @@
         "spaceinvaders_message": "スペースインベーダーを送る"
     },
     "common": {
-        "about": "概要",
         "access_token": "アクセストークン",
         "accessibility": "アクセシビリティー",
         "advanced": "詳細",
@@ -466,10 +467,6 @@
         "n_members": {
             "one": "%(count)s人",
             "other": "%(count)s人"
-        },
-        "n_participants": {
-            "other": "%(count)s人の参加者",
-            "one": "1人の参加者"
         },
         "n_rooms": {
             "one": "%(count)s個のルーム",
@@ -1354,7 +1351,6 @@
         "sliding_sync_server_no_support": "あなたのサーバーはネイティブでサポートしていません",
         "sliding_sync_server_specify_proxy": "あなたのサーバーはネイティブでサポートしていません。プロクシーを指定してください",
         "sliding_sync_server_support": "あなたのサーバーはネイティブでサポートしています",
-        "state_counters": "ルームのヘッダーにな単純なカウンターを表示",
         "under_active_development": "開発中。",
         "video_rooms": "ビデオ通話ルーム",
         "video_rooms_a_new_way_to_chat": "%(brand)sで音声と動画により会話する新しい方法です。",
@@ -1494,11 +1490,6 @@
         "all_messages_description": "全てのメッセージを通知",
         "class_global": "全体",
         "class_other": "その他",
-        "colour_bold": "太字",
-        "colour_grey": "灰色",
-        "colour_none": "なし",
-        "colour_red": "赤色",
-        "colour_unsent": "未送信",
         "default": "既定値",
         "enable_prompt_toast_description": "デスクトップ通知を有効にする",
         "enable_prompt_toast_title": "通知",
@@ -1506,6 +1497,9 @@
         "error_change_title": "通知設定を変更",
         "keyword": "キーワード",
         "keyword_new": "新しいキーワード",
+        "level_activity": "アクティビティー順",
+        "level_none": "なし",
+        "level_unsent": "未送信",
         "mark_all_read": "全て既読にする",
         "mentions_and_keywords": "メンションとキーワード",
         "mentions_and_keywords_description": "メンションと、<a>設定</a>したキーワードのみを通知",
@@ -1721,8 +1715,6 @@
         "room_summary_card": {
             "title": "ルームの情報"
         },
-        "settings_button": "ルームの設定",
-        "share_button": "ルームを共有",
         "thread_list": {
             "context_menu_label": "スレッドの設定"
         },
@@ -2200,10 +2192,8 @@
         "help_about": {
             "access_token_detail": "アクセストークンを用いると、あなたのアカウントの全ての情報にアクセスできます。外部に公開したり、誰かと共有したりしないでください。",
             "brand_version": "%(brand)sのバージョン：",
-            "chat_bot": "%(brand)sボットとチャット",
             "clear_cache_reload": "キャッシュを削除して再読み込み",
             "help_link": "%(brand)sの使用方法に関するヘルプは<a>こちら</a>をご覧ください。",
-            "help_link_chat_bot": "%(brand)sの使用についてサポートが必要な場合は、<a>こちら</a>をクリックするか、下のボタンを使用してボットとチャットを開始してください。",
             "title": "ヘルプと概要",
             "versions": "バージョン"
         }
@@ -3011,20 +3001,8 @@
             "sent": "%(senderDisplayName)sが画像を送信しました。",
             "show_image": "画像を表示"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)sは認証を中止しました",
-            "you_cancelled": "%(name)sの認証を中止しました"
-        },
-        "m.key.verification.done": "%(name)sを認証しました",
         "m.key.verification.request": {
-            "declining": "拒否しています…",
-            "user_accepted": "%(name)sは受け付けました",
-            "user_cancelled": "%(name)sは中止しました",
-            "user_declined": "%(name)sは拒否しました",
             "user_wants_to_verify": "%(name)sが認証を要求しています",
-            "you_accepted": "受け付けました",
-            "you_cancelled": "中止しました",
-            "you_declined": "拒否しました",
             "you_started": "認証リクエストを送信しました"
         },
         "m.location": {
@@ -3521,7 +3499,6 @@
         "already_in_call_person": "既にこの人と通話中です。",
         "answered_elsewhere": "他の端末で応答しました",
         "answered_elsewhere_description": "他の端末で呼び出しに応答しました。",
-        "audio_devices": "オーディオ装置",
         "call_failed": "呼び出しに失敗しました",
         "call_failed_description": "通話を確立できませんでした",
         "call_failed_media": "Webカメラまたはマイクを使用できなかったため、通話に失敗しました。以下を確認してください：",
@@ -3606,7 +3583,6 @@
         "user_is_presenting": "%(sharerName)sが画面を共有しています",
         "video_call": "ビデオ通話",
         "video_call_started": "ビデオ通話を開始しました",
-        "video_devices": "ビデオ装置",
         "voice_call": "音声通話",
         "you_are_presenting": "あなたが画面を共有しています"
     },

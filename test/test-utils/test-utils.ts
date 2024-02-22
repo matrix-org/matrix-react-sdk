@@ -116,6 +116,10 @@ export function createTestClient(): MatrixClient {
         bootstrapCrossSigning: jest.fn(),
         hasSecretStorageKey: jest.fn(),
 
+        secretStorage: {
+            get: jest.fn(),
+        },
+
         store: {
             getPendingEvents: jest.fn().mockResolvedValue([]),
             setPendingEvents: jest.fn().mockResolvedValue(undefined),
@@ -132,6 +136,8 @@ export function createTestClient(): MatrixClient {
             getUserDeviceInfo: jest.fn(),
             getUserVerificationStatus: jest.fn(),
             getDeviceVerificationStatus: jest.fn(),
+            resetKeyBackup: jest.fn(),
+            isEncryptionEnabledInRoom: jest.fn(),
         }),
 
         getPushActionsForEvent: jest.fn(),
@@ -154,6 +160,7 @@ export function createTestClient(): MatrixClient {
         getProfileInfo: jest.fn().mockResolvedValue({}),
         getThirdpartyProtocols: jest.fn().mockResolvedValue({}),
         getClientWellKnown: jest.fn().mockReturnValue(null),
+        waitForClientWellKnown: jest.fn().mockResolvedValue({}),
         supportsVoip: jest.fn().mockReturnValue(true),
         getTurnServers: jest.fn().mockReturnValue([]),
         getTurnServersExpiry: jest.fn().mockReturnValue(2 ^ 32),

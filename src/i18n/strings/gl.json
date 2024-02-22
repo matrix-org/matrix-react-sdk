@@ -209,7 +209,8 @@
         "msisdn_field_required_invalid": "Escribe número de teléfono",
         "no_hs_url_provided": "Non se estableceu URL do servidor",
         "oidc": {
-            "error_title": "Non puidemos conectarte"
+            "error_title": "Non puidemos conectarte",
+            "missing_or_invalid_stored_state": "Pedíramoslle ao teu navegador que lembrase o teu servidor de inicio para acceder, pero o navegador esqueceuno. Vaite á páxina de conexión e inténtao outra vez."
         },
         "password_field_label": "Escribe contrasinal",
         "password_field_strong_label": "Ben, bo contrasinal!",
@@ -352,7 +353,6 @@
         "spaceinvaders_message": "enviar invasores espaciais"
     },
     "common": {
-        "about": "Acerca de",
         "access_token": "Token de acceso",
         "accessibility": "Accesibilidade",
         "advanced": "Avanzado",
@@ -408,10 +408,6 @@
         "mute": "Acalar",
         "n_members": {
             "one": "%(count)s participante",
-            "other": "%(count)s participantes"
-        },
-        "n_participants": {
-            "one": "1 participante",
             "other": "%(count)s participantes"
         },
         "n_rooms": {
@@ -1223,7 +1219,6 @@
         "sliding_sync_server_no_support": "O teu servidor non ten soporte nativo",
         "sliding_sync_server_specify_proxy": "O teu servidor non ten servidor nativo, tes que indicar un proxy",
         "sliding_sync_server_support": "O teu servidor ten soporte nativo",
-        "state_counters": "Mostrar contadores simples na cabeceira da sala",
         "video_rooms": "Salas de vídeo",
         "video_rooms_a_new_way_to_chat": "Un novo xeito de conversar con voz e vídeo en %(brand)s.",
         "video_rooms_always_on_voip_channels": "As salas de vídeo son canles VoIP sempre activas dentro dunha sala en %(brand)s.",
@@ -1356,9 +1351,6 @@
         "all_messages": "Todas as mensaxes",
         "all_messages_description": "Ter notificación de tódalas mensaxes",
         "class_other": "Outro",
-        "colour_bold": "Resaltado",
-        "colour_none": "Nada",
-        "colour_unsent": "Sen enviar",
         "default": "Por defecto",
         "enable_prompt_toast_description": "Activar notificacións de escritorio",
         "enable_prompt_toast_title": "Notificacións",
@@ -1366,6 +1358,9 @@
         "error_change_title": "Cambiar os axustes das notificacións",
         "keyword": "Palabra chave",
         "keyword_new": "Nova palabra chave",
+        "level_activity": "Actividade",
+        "level_none": "Nada",
+        "level_unsent": "Sen enviar",
         "mark_all_read": "Marcar todo como lido",
         "mentions_and_keywords": "@mencións & palabras chave",
         "mentions_and_keywords_description": "Ter notificacións só cando te mencionan e con palabras chave que indiques nos <a>axustes</a>",
@@ -1573,8 +1568,6 @@
                 "other": "Resultado final baseado en %(count)s votos"
             }
         },
-        "settings_button": "Axustes da sala",
-        "share_button": "Compartir sala",
         "thread_list": {
             "context_menu_label": "Opcións da conversa"
         }
@@ -2028,10 +2021,8 @@
         "help_about": {
             "access_token_detail": "O teu token de acceso da acceso completo á túa conta. Non o compartas con ninguén.",
             "brand_version": "versión %(brand)s:",
-            "chat_bot": "Chat co Bot %(brand)s",
             "clear_cache_reload": "Baleirar caché e recargar",
             "help_link": "Para ter axuda con %(brand)s, preme <a>aquí</a>.",
-            "help_link_chat_bot": "Se precisas axuda usando %(brand)s, preme <a>aquí</a> ou inicia unha conversa co noso bot usando o botón inferior.",
             "title": "Axuda & Acerca de",
             "versions": "Versións"
         }
@@ -2748,19 +2739,8 @@
             "sent": "%(senderDisplayName)s enviou unha imaxe.",
             "show_image": "Mostrar imaxe"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s cancelou a verificación",
-            "you_cancelled": "Cancelaches a verificación de %(name)s"
-        },
-        "m.key.verification.done": "Verificaches a %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s aceptou",
-            "user_cancelled": "%(name)s cancelou",
-            "user_declined": "%(name)s declinou",
             "user_wants_to_verify": "%(name)s desexa verificar",
-            "you_accepted": "Aceptaches",
-            "you_cancelled": "Cancelaches",
-            "you_declined": "Declinaches",
             "you_started": "Enviaches unha solicitude de verificación"
         },
         "m.location": {
@@ -3220,7 +3200,6 @@
         "already_in_call_person": "Xa estás nunha conversa con esta persoa.",
         "answered_elsewhere": "Respondido noutro lugar",
         "answered_elsewhere_description": "A chamada foi respondida noutro dispositivo.",
-        "audio_devices": "Dispositivos de audio",
         "call_failed": "Fallou a chamada",
         "call_failed_description": "Non se puido establecer a chamada",
         "call_failed_media": "A chamada fallou porque non tiñas acceso á cámara ou ó micrófono. Comproba:",
@@ -3293,7 +3272,6 @@
         "user_busy_description": "A persoa á que chamas está ocupada.",
         "user_is_presenting": "%(sharerName)s estase presentando",
         "video_call": "Chamada de vídeo",
-        "video_devices": "Dispositivos de vídeo",
         "voice_call": "Chamada de voz",
         "you_are_presenting": "Estaste a presentar"
     },

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_ReplyChain {
-    margin: 0; // Reset default blockquote margin
+    margin: 0; /* Reset default blockquote margin */
     padding-left: 10px;
     border-left: 2px solid var(--username-color);
     border-radius: 2px;
@@ -54,21 +54,5 @@ limitations under the License.
 
     &.mx_ReplyChain_color6 {
         --username-color: $username-variant6-color;
-    }
-
-    &.mx_ReplyChain_color7 {
-        --username-color: $username-variant7-color;
-    }
-
-    &.mx_ReplyChain_color8 {
-        --username-color: $username-variant8-color;
-    }
-}
-
-/* Percy screenshot test specific CSS */
-@media only percy {
-    .mx_ReplyChain {
-        /* Override the colour in percy tests for screenshot consistency */
-        border-left-color: var(--percy-color-replyChain-border) !important;
     }
 }

@@ -126,7 +126,7 @@ interface VideoCallButtonProps {
     room: Room;
     busy: boolean;
     setBusy: (value: boolean) => void;
-    behavior: DisabledWithReason | "legacy_or_jitsi" | "element" | "jitsi_or_element";
+    behavior: DisabledWithReason | "legacy_or_jitsi" | "element" | "jitsi_or_element" | "legacy_or_element";
 }
 
 /**
@@ -143,16 +143,20 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
         setBusy(false);
     }, [setBusy, room]);
 
-    const startElementCall = useCallback(() => {
-        setBusy(true);
-        defaultDispatcher.dispatch<ViewRoomPayload>({
-            action: Action.ViewRoom,
-            room_id: room.roomId,
-            view_call: true,
-            metricsTrigger: undefined,
-        });
-        setBusy(false);
-    }, [setBusy, room]);
+    const startElementCall = useCallback(
+        (skipLobby: boolean) => {
+            setBusy(true);
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
+                room_id: room.roomId,
+                view_call: true,
+                skipLobby: skipLobby,
+                metricsTrigger: undefined,
+            });
+            setBusy(false);
+        },
+        [setBusy, room],
+    );
 
     const { onClick, tooltip, disabled } = useMemo(() => {
         if (behavior instanceof DisabledWithReason) {
@@ -173,12 +177,12 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
             return {
                 onClick: async (ev: ButtonEvent): Promise<void> => {
                     ev.preventDefault();
-                    startElementCall();
+                    startElementCall("shiftKey" in ev ? ev.shiftKey : false);
                 },
                 disabled: false,
             };
         } else {
-            // behavior === "jitsi_or_element"
+            // behavior === "jitsi_or_element" | "legacy_or_element"
             return {
                 onClick: async (ev: ButtonEvent): Promise<void> => {
                     ev.preventDefault();
@@ -202,7 +206,7 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
         (ev: ButtonEvent) => {
             ev.preventDefault();
             closeMenu();
-            startElementCall();
+            startElementCall("shiftKey" in ev ? ev.shiftKey : false);
         },
         [closeMenu, startElementCall],
     );
@@ -215,7 +219,11 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
             <IconizedContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu}>
                 <IconizedContextMenuOptionList>
                     <IconizedContextMenuOption
-                        label={_t("room|header|video_call_button_jitsi")}
+                        label={
+                            behavior == "legacy_or_element"
+                                ? _t("room|header|video_call_button_legacy")
+                                : _t("room|header|video_call_button_jitsi")
+                        }
                         onClick={onJitsiClick}
                     />
                     <IconizedContextMenuOption
@@ -230,7 +238,7 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
     return (
         <>
             <AccessibleTooltipButton
-                inputRef={buttonRef}
+                ref={buttonRef}
                 className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_videoCallButton"
                 onClick={onClick}
                 title={_t("voip|video_call")}
@@ -301,7 +309,7 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
             } else {
                 return makeVideoCallButton(new DisabledWithReason(_t("voip|disabled_no_perms_start_video_call")));
             }
-        } else if (hasLegacyCall || hasJitsiWidget || hasGroupCall) {
+        } else if (hasLegacyCall || hasJitsiWidget) {
             return (
                 <>
                     {makeVoiceCallButton(new DisabledWithReason(_t("voip|disabled_ongoing_call")))}
@@ -319,7 +327,7 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
             return (
                 <>
                     {makeVoiceCallButton("legacy_or_jitsi")}
-                    {makeVideoCallButton("legacy_or_jitsi")}
+                    {makeVideoCallButton("legacy_or_element")}
                 </>
             );
         } else if (mayEditWidgets) {
@@ -435,7 +443,7 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
     return (
         <>
             <AccessibleTooltipButton
-                inputRef={buttonRef}
+                ref={buttonRef}
                 className={classNames("mx_LegacyRoomHeader_button", {
                     "mx_LegacyRoomHeader_layoutButton--freedom": layout === Layout.Tile,
                     "mx_LegacyRoomHeader_layoutButton--spotlight": layout === Layout.Spotlight,
@@ -776,11 +784,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         const icon = this.props.viewingCall ? (
             <div className="mx_LegacyRoomHeader_icon mx_LegacyRoomHeader_icon_video" />
         ) : this.props.e2eStatus ? (
-            <E2EIcon
-                className="mx_LegacyRoomHeader_icon"
-                status={this.props.e2eStatus}
-                tooltipAlignment={Alignment.Bottom}
-            />
+            <E2EIcon className="mx_LegacyRoomHeader_icon" status={this.props.e2eStatus} tooltipSide="bottom" />
         ) : // If we're expecting an E2EE status to come in, but it hasn't
         // yet been loaded, insert a blank div to reserve space
         this.client.isRoomEncrypted(this.props.room.roomId) && this.client.isCryptoEnabled() ? (

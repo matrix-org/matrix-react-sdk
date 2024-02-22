@@ -65,8 +65,6 @@ import ShareDialog from "../dialogs/ShareDialog";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import ConfirmUserActionDialog from "../dialogs/ConfirmUserActionDialog";
-import RoomAvatar from "../avatars/RoomAvatar";
-import RoomName from "../elements/RoomName";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import ConfirmSpaceUserActionDialog from "../dialogs/ConfirmSpaceUserActionDialog";
@@ -83,6 +81,7 @@ import { DirectoryMember, startDmOnFirstMessage } from "../../../utils/direct-me
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { asyncSome } from "../../../utils/arrays";
 import UIStore from "../../../stores/UIStore";
+import { SpaceScopeHeader } from "../rooms/SpaceScopeHeader";
 
 export interface IDevice extends Device {
     ambiguous?: boolean;
@@ -522,7 +521,8 @@ export const UserOptionsSection: React.FC<{
         </AccessibleButton>
     );
 
-    const directMessageButton = isMe ? null : <MessageButton member={member} />;
+    const directMessageButton =
+        isMe || !shouldShowComponent(UIComponent.CreateRooms) ? null : <MessageButton member={member} />;
 
     return (
         <div className="mx_UserInfo_container">
@@ -651,8 +651,8 @@ export const RoomKickButton = ({
                     ? _t("user_info|disinvite_button_space")
                     : _t("user_info|kick_button_space")
                 : member.membership === "invite"
-                ? _t("user_info|disinvite_button_room")
-                : _t("user_info|kick_button_room"),
+                  ? _t("user_info|disinvite_button_room")
+                  : _t("user_info|kick_button_room"),
             title:
                 member.membership === "invite"
                     ? _t("user_info|disinvite_button_room_name", { roomName: room.name })
@@ -722,8 +722,8 @@ export const RoomKickButton = ({
             ? _t("user_info|disinvite_button_space")
             : _t("user_info|kick_button_space")
         : member.membership === "invite"
-        ? _t("user_info|disinvite_button_room")
-        : _t("user_info|kick_button_room");
+          ? _t("user_info|disinvite_button_room")
+          : _t("user_info|kick_button_room");
 
     return (
         <AccessibleButton
@@ -783,8 +783,8 @@ export const BanToggleButton = ({
                     ? _t("user_info|unban_button_space")
                     : _t("user_info|ban_button_space")
                 : isBanned
-                ? _t("user_info|unban_button_room")
-                : _t("user_info|ban_button_room"),
+                  ? _t("user_info|unban_button_room")
+                  : _t("user_info|ban_button_room"),
             title: isBanned
                 ? _t("user_info|unban_room_confirm_title", { roomName: room.name })
                 : _t("user_info|ban_room_confirm_title", { roomName: room.name }),
@@ -1744,26 +1744,15 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
         }
     }
 
-    let scopeHeader;
-    if (room?.isSpaceRoom()) {
-        scopeHeader = (
-            <div data-testid="space-header" className="mx_RightPanel_scopeHeader">
-                <RoomAvatar room={room} size="32px" />
-                <RoomName room={room} />
-            </div>
-        );
-    }
-
     const header = (
         <>
-            {scopeHeader}
             <UserInfoHeader member={member} e2eStatus={e2eStatus} roomId={room?.roomId} />
         </>
     );
     return (
         <BaseCard
             className={classes.join(" ")}
-            header={<span />}
+            header={room ? <SpaceScopeHeader room={room} /> : undefined}
             onClose={onClose}
             closeLabel={closeLabel}
             cardState={cardState}

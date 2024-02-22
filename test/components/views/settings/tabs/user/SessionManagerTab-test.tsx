@@ -35,12 +35,14 @@ import {
     MatrixClient,
 } from "matrix-js-sdk/src/matrix";
 import { mocked, MockedObject } from "jest-mock";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import {
     clearAllModals,
     flushPromises,
     getMockClientWithEventEmitter,
     mkPusher,
+    mockClientMethodsServer,
     mockClientMethodsUser,
     mockPlatformPeg,
 } from "../../../../../test-utils";
@@ -97,9 +99,11 @@ describe("<SessionManagerTab />", () => {
 
     const defaultProps = {};
     const getComponent = (props = {}): React.ReactElement => (
-        <SDKContext.Provider value={sdkContext}>
-            <SessionManagerTab {...defaultProps} {...props} />
-        </SDKContext.Provider>
+        <TooltipProvider>
+            <SDKContext.Provider value={sdkContext}>
+                <SessionManagerTab {...defaultProps} {...props} />
+            </SDKContext.Provider>
+        </TooltipProvider>
     );
 
     const toggleDeviceDetails = (
@@ -164,6 +168,7 @@ describe("<SessionManagerTab />", () => {
     beforeEach(async () => {
         mockClient = getMockClientWithEventEmitter({
             ...mockClientMethodsUser(aliceId),
+            ...mockClientMethodsServer(),
             getCrypto: jest.fn().mockReturnValue(mockCrypto),
             getDevices: jest.fn(),
             getStoredDevice: jest.fn(),
@@ -177,9 +182,6 @@ describe("<SessionManagerTab />", () => {
             getPushers: jest.fn(),
             setPusher: jest.fn(),
             setLocalNotificationSettings: jest.fn(),
-            getVersions: jest.fn().mockResolvedValue({}),
-            getCapabilities: jest.fn().mockResolvedValue({}),
-            getClientWellKnown: jest.fn().mockReturnValue({}),
         });
         jest.clearAllMocks();
         jest.spyOn(logger, "error").mockRestore();

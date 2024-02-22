@@ -37,6 +37,7 @@ import {
 import { defer } from "matrix-js-sdk/src/utils";
 import { EventEmitter } from "events";
 import { UserVerificationStatus } from "matrix-js-sdk/src/crypto-api";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import UserInfo, {
     BanToggleButton,
@@ -61,6 +62,8 @@ import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
 import { clearAllModals, flushPromises } from "../../../test-utils";
 import ErrorDialog from "../../../../src/components/views/dialogs/ErrorDialog";
+import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
+import { UIComponent } from "../../../../src/settings/UIFeature";
 
 jest.mock("../../../../src/utils/direct-messages", () => ({
     ...jest.requireActual("../../../../src/utils/direct-messages"),
@@ -84,6 +87,13 @@ jest.mock("../../../../src/utils/DMRoomMap", () => {
     return {
         shared: jest.fn().mockReturnValue(mock),
         sharedInstance: mock,
+    };
+});
+
+jest.mock("../../../../src/customisations/helpers/UIComponents", () => {
+    const original = jest.requireActual("../../../../src/customisations/helpers/UIComponents");
+    return {
+        shouldShowComponent: jest.fn().mockImplementation(original.shouldShowComponent),
     };
 });
 
@@ -195,7 +205,11 @@ describe("<UserInfo />", () => {
 
     const renderComponent = (props = {}) => {
         const Wrapper = (wrapperProps = {}) => {
-            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
+            return (
+                <TooltipProvider>
+                    <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />
+                </TooltipProvider>
+            );
         };
 
         return render(<UserInfo {...defaultProps} {...props} />, {
@@ -320,6 +334,33 @@ describe("<UserInfo />", () => {
             // will not return true, so we expect to see the noCommonMethod error from VerificationPanel
             expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
         });
+
+        it("renders the message button", () => {
+            render(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <UserInfo {...defaultProps} />
+                </MatrixClientContext.Provider>,
+            );
+
+            screen.getByRole("button", { name: "Message" });
+        });
+
+        it("hides the message button if the visibility customisation hides all create room features", () => {
+            mocked(shouldShowComponent).withImplementation(
+                (component) => {
+                    return component !== UIComponent.CreateRooms;
+                },
+                () => {
+                    render(
+                        <MatrixClientContext.Provider value={mockClient}>
+                            <UserInfo {...defaultProps} />
+                        </MatrixClientContext.Provider>,
+                    );
+
+                    expect(screen.queryByRole("button", { name: "Message" })).toBeNull();
+                },
+            );
+        });
     });
 
     describe("with crypto enabled", () => {
@@ -412,7 +453,11 @@ describe("<UserInfoHeader />", () => {
 
     const renderComponent = (props = {}) => {
         const Wrapper = (wrapperProps = {}) => {
-            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
+            return (
+                <TooltipProvider>
+                    <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />
+                </TooltipProvider>
+            );
         };
 
         return render(<UserInfoHeader {...defaultProps} {...props} />, {

@@ -14,24 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { MouseEvent, ReactNode } from "react";
+import React, { forwardRef } from "react";
 import classNames from "classnames";
 
 import { formatCount } from "../../../../utils/FormattingUtils";
 import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
-import { NotificationColor } from "../../../../stores/notifications/NotificationColor";
+import { NotificationLevel } from "../../../../stores/notifications/NotificationLevel";
 import { useSettingValue } from "../../../../hooks/useSettings";
 import { XOR } from "../../../../@types/common";
 
 interface Props {
     symbol: string | null;
     count: number;
-    color: NotificationColor;
+    level: NotificationLevel;
     knocked?: boolean;
-    onMouseOver?: (ev: MouseEvent) => void;
-    onMouseLeave?: (ev: MouseEvent) => void;
-    children?: ReactNode;
-    label?: string;
+    type?: "badge" | "dot";
 }
 
 interface ClickableProps extends Props {
@@ -42,57 +39,47 @@ interface ClickableProps extends Props {
     tabIndex?: number;
 }
 
-export function StatelessNotificationBadge({
-    symbol,
-    count,
-    color,
-    knocked,
-    ...props
-}: XOR<Props, ClickableProps>): JSX.Element {
-    const hideBold = useSettingValue("feature_hidebold");
+export const StatelessNotificationBadge = forwardRef<HTMLDivElement, XOR<Props, ClickableProps>>(
+    ({ symbol, count, level, knocked, type = "badge", ...props }, ref) => {
+        const hideBold = useSettingValue("feature_hidebold");
 
-    // Don't show a badge if we don't need to
-    if ((color === NotificationColor.None || (hideBold && color == NotificationColor.Bold)) && !knocked) {
-        return <></>;
-    }
+        // Don't show a badge if we don't need to
+        if ((level === NotificationLevel.None || (hideBold && level == NotificationLevel.Activity)) && !knocked) {
+            return <></>;
+        }
 
-    const hasUnreadCount = color >= NotificationColor.Grey && (!!count || !!symbol);
+        const hasUnreadCount = level >= NotificationLevel.Notification && (!!count || !!symbol);
 
-    const isEmptyBadge = symbol === null && count === 0;
+        const isEmptyBadge = symbol === null && count === 0;
 
-    if (symbol === null && count > 0) {
-        symbol = formatCount(count);
-    }
+        if (symbol === null && count > 0) {
+            symbol = formatCount(count);
+        }
 
-    const classes = classNames({
-        mx_NotificationBadge: true,
-        mx_NotificationBadge_visible: isEmptyBadge || knocked ? true : hasUnreadCount,
-        mx_NotificationBadge_highlighted: color >= NotificationColor.Red,
-        mx_NotificationBadge_dot: isEmptyBadge && !knocked,
-        mx_NotificationBadge_knocked: knocked,
-        mx_NotificationBadge_2char: symbol && symbol.length > 0 && symbol.length < 3,
-        mx_NotificationBadge_3char: symbol && symbol.length > 2,
-    });
+        const classes = classNames({
+            mx_NotificationBadge: true,
+            mx_NotificationBadge_visible: isEmptyBadge || knocked ? true : hasUnreadCount,
+            mx_NotificationBadge_level_notification: level == NotificationLevel.Notification,
+            mx_NotificationBadge_level_highlight: level >= NotificationLevel.Highlight,
+            mx_NotificationBadge_dot: (isEmptyBadge && !knocked) || type === "dot",
+            mx_NotificationBadge_knocked: knocked,
+            mx_NotificationBadge_2char: type === "badge" && symbol && symbol.length > 0 && symbol.length < 3,
+            mx_NotificationBadge_3char: type === "badge" && symbol && symbol.length > 2,
+        });
 
-    if (props.onClick) {
+        if (props.onClick) {
+            return (
+                <AccessibleButton {...props} className={classes} onClick={props.onClick} ref={ref}>
+                    <span className="mx_NotificationBadge_count">{symbol}</span>
+                    {props.children}
+                </AccessibleButton>
+            );
+        }
+
         return (
-            <AccessibleButton
-                aria-label={props.label}
-                {...props}
-                className={classes}
-                onClick={props.onClick}
-                onMouseOver={props.onMouseOver}
-                onMouseLeave={props.onMouseLeave}
-            >
+            <div className={classes} ref={ref}>
                 <span className="mx_NotificationBadge_count">{symbol}</span>
-                {props.children}
-            </AccessibleButton>
+            </div>
         );
-    }
-
-    return (
-        <div className={classes}>
-            <span className="mx_NotificationBadge_count">{symbol}</span>
-        </div>
-    );
-}
+    },
+);

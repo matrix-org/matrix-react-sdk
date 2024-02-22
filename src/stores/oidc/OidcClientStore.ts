@@ -20,6 +20,8 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { OidcClient } from "oidc-client-ts";
 
 import { getStoredOidcTokenIssuer, getStoredOidcClientId } from "../../utils/oidc/persistOidcSettings";
+import { getDelegatedAuthAccountUrl } from "../../utils/oidc/getDelegatedAuthAccountUrl";
+import PlatformPeg from "../../PlatformPeg";
 
 /**
  * @experimental
@@ -28,14 +30,25 @@ import { getStoredOidcTokenIssuer, getStoredOidcClientId } from "../../utils/oid
 export class OidcClientStore {
     private oidcClient?: OidcClient;
     private initialisingOidcClientPromise: Promise<void> | undefined;
-    private authenticatedIssuer?: string;
+    private authenticatedIssuer?: string; // set only in OIDC-native mode
     private _accountManagementEndpoint?: string;
+    /**
+     * Promise which resolves once this store is read to use, which may mean there is no OIDC client if we're in legacy mode,
+     * or we just have the account management endpoint if running in OIDC-aware mode.
+     */
+    public readonly readyPromise: Promise<void>;
 
     public constructor(private readonly matrixClient: MatrixClient) {
+        this.readyPromise = this.init();
+    }
+
+    private async init(): Promise<void> {
         this.authenticatedIssuer = getStoredOidcTokenIssuer();
-        // don't bother initialising store when we didnt authenticate via oidc
         if (this.authenticatedIssuer) {
-            this.getOidcClient();
+            await this.getOidcClient();
+        } else {
+            const wellKnown = await this.matrixClient.waitForClientWellKnown();
+            this._accountManagementEndpoint = getDelegatedAuthAccountUrl(wellKnown);
         }
     }
 
@@ -135,7 +148,7 @@ export class OidcClientStore {
                 ...metadata,
                 authority: metadata.issuer,
                 signingKeys,
-                redirect_uri: window.location.origin,
+                redirect_uri: PlatformPeg.get()!.getSSOCallbackUrl().href,
                 client_id: clientId,
             });
         } catch (error) {

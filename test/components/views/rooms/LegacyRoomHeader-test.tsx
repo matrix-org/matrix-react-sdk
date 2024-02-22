@@ -30,6 +30,11 @@ import { ClientWidgetApi, Widget } from "matrix-widget-api";
 import EventEmitter from "events";
 import { setupJestCanvasMock } from "jest-canvas-mock";
 import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
+import { TooltipProvider } from "@vector-im/compound-web";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
+// eslint-disable-next-line no-restricted-imports
+import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
 
 import type { MatrixClient, MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import type { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
@@ -58,11 +63,11 @@ import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
 import WidgetStore from "../../../../src/stores/WidgetStore";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
-import WidgetUtils from "../../../../src/utils/WidgetUtils";
-import { ElementWidgetActions } from "../../../../src/stores/widgets/ElementWidgetActions";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../../src/MediaDeviceHandler";
 import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
 import { UIComponent } from "../../../../src/settings/UIFeature";
+import WidgetUtils from "../../../../src/utils/WidgetUtils";
+import { ElementWidgetActions } from "../../../../src/stores/widgets/ElementWidgetActions";
 
 jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
     shouldShowComponent: jest.fn(),
@@ -219,6 +224,7 @@ describe("LegacyRoomHeader", () => {
                     {...props}
                 />
             </RoomContext.Provider>,
+            { wrapper: TooltipProvider },
         );
     };
 
@@ -272,6 +278,7 @@ describe("LegacyRoomHeader", () => {
                 expect(dispatcherSpy).toHaveBeenCalledWith({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
+                    skipLobby: false,
                     view_call: true,
                 }),
             );
@@ -347,6 +354,8 @@ describe("LegacyRoomHeader", () => {
             placeCallSpy.mockClear();
             fireEvent.click(screen.getByRole("button", { name: "Video call" }));
             await act(() => Promise.resolve()); // Allow effects to settle
+            fireEvent.click(screen.getByRole("menuitem", { name: "Legacy video call" }));
+            await act(() => Promise.resolve()); // Allow effects to settle
             expect(placeCallSpy).toHaveBeenCalledWith(room.roomId, CallType.Video);
         },
     );
@@ -403,6 +412,7 @@ describe("LegacyRoomHeader", () => {
                 expect(dispatcherSpy).toHaveBeenCalledWith({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
+                    skipLobby: false,
                     view_call: true,
                 }),
             );
@@ -428,6 +438,7 @@ describe("LegacyRoomHeader", () => {
                 expect(dispatcherSpy).toHaveBeenCalledWith({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
+                    skipLobby: false,
                     view_call: true,
                 }),
             );
@@ -558,7 +569,20 @@ describe("LegacyRoomHeader", () => {
         mockEnabledSettings(["feature_group_calls"]);
 
         await withCall(async (call) => {
-            await call.connect();
+            // We set the call to skip lobby because otherwise the connection will wait until
+            // the user clicks the "join" button, inside the widget lobby which is hard to mock.
+            call.widget.data = { ...call.widget.data, skipLobby: true };
+            // The connect method will wait until the session actually connected. Otherwise it will timeout.
+            // Emitting SessionStarted will trigger the connect method to resolve.
+            setTimeout(
+                () =>
+                    client.matrixRTC.emit(MatrixRTCSessionManagerEvents.SessionStarted, room.roomId, {
+                        room,
+                    } as MatrixRTCSession),
+                100,
+            );
+            await call.start();
+
             const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(call.widget))!;
             renderHeader({ viewingCall: true, activeCall: call });
 
@@ -788,8 +812,11 @@ function createRoom(info: IRoomCreationInfo) {
     const userId = client.getUserId()!;
     if (info.isDm) {
         client.getAccountData = (eventType) => {
-            expect(eventType).toEqual("m.direct");
-            return mkDirectEvent(roomId, userId, info.userIds);
+            if (eventType === "m.direct") {
+                return mkDirectEvent(roomId, userId, info.userIds);
+            } else {
+                return undefined;
+            }
         };
     }
 
@@ -841,6 +868,7 @@ function mountHeader(room: Room, propsOverride = {}, roomContext?: Partial<IRoom
         <RoomContext.Provider value={{ ...roomContext, room } as IRoomState}>
             <RoomHeader {...props} />
         </RoomContext.Provider>,
+        { wrapper: TooltipProvider },
     );
 }
 
