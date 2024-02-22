@@ -55,6 +55,8 @@ import { VideoRoomChatButton } from "./RoomHeader/VideoRoomChatButton";
 import { RoomKnocksBar } from "./RoomKnocksBar";
 import { isVideoRoom } from "../../../utils/video-rooms";
 import { notificationLevelToIndicator } from "../../../utils/notifications";
+import Modal from "../../../Modal";
+import ShareDialog from "../dialogs/ShareDialog";
 
 export default function RoomHeader({
     room,
@@ -119,6 +121,12 @@ export default function RoomHeader({
     const askToJoinEnabled = useFeatureEnabled("feature_ask_to_join");
 
     const videoClick = useCallback((ev) => videoCallClick(ev, callOptions[0]), [callOptions, videoCallClick]);
+    const shareClick = useCallback(() => {
+        Modal.createDialog(ShareDialog, {
+            target: room,
+            customLink: generateCallLink ? generateCallLink() : undefined,
+        });
+    }, [generateCallLink, room]);
 
     const toggleCallButton = (
         <Tooltip label={isViewingCall ? _t("voip|minimise_call") : _t("voip|maximise_call")}>
@@ -129,7 +137,7 @@ export default function RoomHeader({
     );
     const createExternalLinkButton = (
         <Tooltip label={_t("voip|get_call_link")}>
-            <IconButton onClick={generateCallLink} aria-label={_t("voip|get_call_link")}>
+            <IconButton onClick={shareClick} aria-label={_t("voip|get_call_link")}>
                 <UserAddIcon />
             </IconButton>
         </Tooltip>

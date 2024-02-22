@@ -68,6 +68,7 @@ interface BaseProps {
 interface Props extends BaseProps {
     target: Room | User | RoomMember;
     permalinkCreator?: RoomPermalinkCreator;
+    customLink?: URL;
 }
 
 interface EventProps extends BaseProps {
@@ -109,6 +110,9 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
     };
 
     private getUrl(): string {
+        if (this.props.customLink) {
+            return this.props.customLink.toString();
+        }
         if (this.props.target instanceof Room) {
             if (this.state.linkSpecificEvent) {
                 const events = this.props.target.getLiveTimeline().getEvents();
@@ -129,7 +133,9 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
         let title: string | undefined;
         let checkbox: JSX.Element | undefined;
 
-        if (this.props.target instanceof Room) {
+        if (this.props.customLink) {
+            title = _t("share|share_call");
+        } else if (this.props.target instanceof Room) {
             title = _t("share|title_room");
 
             const events = this.props.target.getLiveTimeline().getEvents();

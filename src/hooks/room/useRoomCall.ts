@@ -40,6 +40,7 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../dispatcher/actions";
 import { CallStore, CallStoreEvent } from "../../stores/CallStore";
+import { calculateRoomVia } from "../../utils/permalinks/Permalinks";
 
 export enum PlatformCallType {
     ElementCall,
@@ -90,7 +91,7 @@ export const useRoomCall = (
         return SdkConfig.get("element_call").use_exclusively;
     }, []);
     const spaHomeserverUrl = useMemo(() => {
-        return SdkConfig.get("element_call").spa_link_homeserver_url;
+        return SdkConfig.get("element_call").call_link_homeserver_url;
     }, []);
 
     const hasLegacyCall = useEventEmitterState(
@@ -274,19 +275,20 @@ export const useRoomCall = (
         // Set params for the sharable url
         url.searchParams.set("roomId", room.roomId);
         url.searchParams.set("perParticipantE2EE", "true");
-        url.searchParams.set("viaServers", "matrix.org");
+        for (const server of calculateRoomVia(room)) {
+            url.searchParams.set("viaServers", server);
+        }
         if (spaHomeserverUrl) {
-            url.searchParams.set("customHomeserver", spaHomeserverUrl);
+            url.searchParams.set("homeserver", spaHomeserverUrl);
         }
 
         // Move params into hash
         url.hash = "/" + room.name + url.search;
         url.search = "";
 
-        logger.log("Generated element call external url:", url);
-        navigator.clipboard.writeText(url.toString());
+        logger.info("Generated element call external url:", url);
         return url;
-    }, [room.name, room.roomId, spaHomeserverUrl]);
+    }, [room, spaHomeserverUrl]);
     /**
      * We've gone through all the steps
      */
