@@ -168,6 +168,7 @@ describe("AutoDiscoveryUtils", () => {
                 ...expectedValidatedConfig,
                 hsNameIsDifferent: false,
                 hsName: "matrix.org",
+                warning: null,
             });
         });
 
@@ -186,6 +187,7 @@ describe("AutoDiscoveryUtils", () => {
                 ...expectedValidatedConfig,
                 hsNameIsDifferent: true,
                 hsName: serverName,
+                warning: null,
             });
         });
 
