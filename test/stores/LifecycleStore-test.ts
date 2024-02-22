@@ -25,10 +25,14 @@ import LifecycleStore from "../../src/stores/LifecycleStore";
 describe("LifecycleStore", () => {
     stubClient();
     const client = MatrixClientPeg.safeGet();
+    let addOrReplaceToast: jest.SpyInstance;
 
-    it("should show a toast if the matrix server version is unsupported", async () => {
-        const toastSpy = jest.spyOn(ToastStore.sharedInstance(), "addOrReplaceToast");
-        mocked(client).isVersionSupported.mockImplementation(async (version) => version == "r0.6.0");
+    beforeEach(() => {
+        addOrReplaceToast = jest.spyOn(ToastStore.sharedInstance(), "addOrReplaceToast");
+    });
+
+    it("should do nothing if the matrix server version is supported", async () => {
+        mocked(client).isVersionSupported.mockResolvedValue(true);
 
         (LifecycleStore as any).onDispatch({
             action: "MatrixActions.sync",
@@ -38,10 +42,45 @@ describe("LifecycleStore", () => {
 
         await new Promise(setImmediate);
 
-        expect(toastSpy).toHaveBeenCalledWith(
+        expect(addOrReplaceToast).not.toHaveBeenCalledWith(
             expect.objectContaining({
                 title: "Your server is unsupported",
             }),
         );
+    });
+
+    it("should show a toast if the matrix server version is unsupported", async () => {
+        mocked(client).isVersionSupported.mockResolvedValue(false);
+
+        (LifecycleStore as any).onDispatch({
+            action: "MatrixActions.sync",
+            state: SyncState.Syncing,
+            prevState: SyncState.Prepared,
+        });
+
+        await new Promise(setImmediate);
+
+        expect(addOrReplaceToast).toHaveBeenCalledWith(
+            expect.objectContaining({
+                title: "Your server is unsupported",
+            }),
+        );
+    });
+
+    it("dismisses toast on accept button", async () => {
+        const dismissToast = jest.spyOn(ToastStore.sharedInstance(), "dismissToast");
+        mocked(client).isVersionSupported.mockResolvedValue(false);
+
+        (LifecycleStore as any).onDispatch({
+            action: "MatrixActions.sync",
+            state: SyncState.Syncing,
+            prevState: SyncState.Prepared,
+        });
+
+        await new Promise(setImmediate);
+
+        addOrReplaceToast.mock.calls[0][0].props.onAccept();
+
+        expect(dismissToast).toHaveBeenCalledWith(addOrReplaceToast.mock.calls[0][0].key);
     });
 });
