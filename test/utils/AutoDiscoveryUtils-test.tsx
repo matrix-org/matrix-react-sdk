@@ -19,6 +19,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import fetchMock from "fetch-mock-jest";
 
 import AutoDiscoveryUtils from "../../src/utils/AutoDiscoveryUtils";
+import { mockOpenIdConfiguration } from "../test-utils/oidc";
 
 describe("AutoDiscoveryUtils", () => {
     describe("buildValidatedConfigFromDiscovery()", () => {
@@ -228,20 +229,9 @@ describe("AutoDiscoveryUtils", () => {
                 },
             );
             fetchMock.get(`${issuer}.well-known/openid-configuration`, {
-                "issuer": `${issuer}`,
-                "authorization_endpoint": `${issuer}authorize`,
-                "token_endpoint": `${issuer}oauth2/token`,
-                "jwks_uri": `${issuer}oauth2/keys.json`,
-                "registration_endpoint": `${issuer}oauth2/registration`,
+                ...mockOpenIdConfiguration(issuer),
                 "scopes_supported": ["openid", "email"],
-                "response_types_supported": ["code", "id_token", "code id_token"],
                 "response_modes_supported": ["form_post", "query", "fragment"],
-                "grant_types_supported": [
-                    "authorization_code",
-                    "refresh_token",
-                    "client_credentials",
-                    "urn:ietf:params:oauth:grant-type:device_code",
-                ],
                 "token_endpoint_auth_methods_supported": [
                     "client_secret_basic",
                     "client_secret_post",
@@ -263,7 +253,6 @@ describe("AutoDiscoveryUtils", () => {
                     "ES384",
                     "ES256K",
                 ],
-                "revocation_endpoint": `${issuer}oauth2/revoke`,
                 "revocation_endpoint_auth_methods_supported": [
                     "client_secret_basic",
                     "client_secret_post",
@@ -307,7 +296,6 @@ describe("AutoDiscoveryUtils", () => {
                     "ES384",
                     "ES256K",
                 ],
-                "code_challenge_methods_supported": ["plain", "S256"],
                 "userinfo_endpoint": `${issuer}oauth2/userinfo`,
                 "subject_types_supported": ["public"],
                 "id_token_signing_alg_values_supported": [
@@ -350,7 +338,7 @@ describe("AutoDiscoveryUtils", () => {
                     "org.matrix.cross_signing_reset",
                 ],
             });
-            fetchMock.get(`${issuer}oauth2/keys.json`, {
+            fetchMock.get(`${issuer}jwks`, {
                 keys: [],
             });
 
@@ -373,13 +361,13 @@ describe("AutoDiscoveryUtils", () => {
                         "org.matrix.cross_signing_reset",
                     ],
                     accountManagementEndpoint: "https://auth.matrix.org/account/",
-                    authorizationEndpoint: "https://auth.matrix.org/authorize",
+                    authorizationEndpoint: "https://auth.matrix.org/auth",
                     metadata: expect.objectContaining({
                         issuer,
                     }),
-                    registrationEndpoint: "https://auth.matrix.org/oauth2/registration",
+                    registrationEndpoint: "https://auth.matrix.org/registration",
                     signingKeys: [],
-                    tokenEndpoint: "https://auth.matrix.org/oauth2/token",
+                    tokenEndpoint: "https://auth.matrix.org/token",
                 }),
                 warning: undefined,
             });
