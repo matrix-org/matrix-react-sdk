@@ -14,11 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { SyncState } from "matrix-js-sdk/src/matrix";
+import { MINIMUM_MATRIX_VERSION, SUPPORTED_MATRIX_VERSIONS } from "matrix-js-sdk/src/version-support";
+
 import { Action } from "../dispatcher/actions";
 import dis from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { DoAfterSyncPreparedPayload } from "../dispatcher/payloads/DoAfterSyncPreparedPayload";
 import { AsyncStore } from "./AsyncStore";
+import { MatrixClientPeg } from "../MatrixClientPeg";
+import ToastStore from "./ToastStore";
+import { _t } from "../languageHandler";
+import SdkConfig from "../SdkConfig";
+import GenericToast from "../components/views/toasts/GenericToast";
 
 interface IState {
     deferredAction: ActionPayload | null;
@@ -51,6 +59,11 @@ class LifecycleStore extends AsyncStore<IState> {
                 });
                 break;
             case "MatrixActions.sync": {
+                if (payload.state === SyncState.Syncing && payload.prevState !== SyncState.Syncing) {
+                    // We've reconnected to the server: update server version support
+                    checkServerVersions();
+                }
+
                 if (payload.state !== "PREPARED") {
                     break;
                 }
@@ -68,6 +81,40 @@ class LifecycleStore extends AsyncStore<IState> {
                 break;
         }
     }
+}
+
+async function checkServerVersions(): Promise<void> {
+    const client = MatrixClientPeg.get();
+    if (!client) return;
+    for (const version of SUPPORTED_MATRIX_VERSIONS) {
+        // Check if the server supports this spec version. (`isVersionSupported` caches the response, so this loop will
+        // only make a single HTTP request).
+        // Note that although we do this on a reconnect, we cache the server's versions in memory
+        // indefinitely, so it will only ever trigger the toast on the first connection after a fresh
+        // restart of the client.
+        if (await client.isVersionSupported(version)) {
+            // we found a compatible spec version
+            return;
+        }
+    }
+
+    const toastKey = "LEGACY_SERVER";
+    ToastStore.sharedInstance().addOrReplaceToast({
+        key: toastKey,
+        title: _t("unsupported_server_title"),
+        props: {
+            description: _t("unsupported_server_description", {
+                version: MINIMUM_MATRIX_VERSION,
+                brand: SdkConfig.get().brand,
+            }),
+            acceptLabel: _t("action|ok"),
+            onAccept: () => {
+                ToastStore.sharedInstance().dismissToast(toastKey);
+            },
+        },
+        component: GenericToast,
+        priority: 98,
+    });
 }
 
 let singletonLifecycleStore: LifecycleStore | null = null;
