@@ -16,7 +16,6 @@ limitations under the License.
 
 import { test, expect } from "../../element-web-test";
 import { logIntoElement } from "../crypto/utils";
-import { IMatrixClientCreds } from "../../../src/MatrixClientPeg";
 
 test.describe("Overwrite login action", () => {
     test("Try replace existing login with new one", async ({ page, app, credentials, homeserver }) => {
@@ -30,7 +29,7 @@ test.describe("Overwrite login action", () => {
         // just assert that it's a different user
         expect(credentials.userId).not.toBe(bobRegister.userId);
 
-        const clientCredentials: IMatrixClientCreds = {
+        const clientCredentials /* IMatrixClientCreds */ = {
             homeserverUrl: homeserver.config.baseUrl,
             ...bobRegister,
         };
@@ -49,6 +48,6 @@ test.describe("Overwrite login action", () => {
 
         // It should be now another user!!
         const newUserMenu = await app.openUserMenu();
-        await expect(newUserMenu.getByText("@boboverwrite:localhost")).toBeVisible();
+        await expect(newUserMenu.getByText(bobRegister.userId)).toBeVisible();
     });
 });
