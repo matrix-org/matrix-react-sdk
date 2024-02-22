@@ -22,6 +22,7 @@ import {
     discoverAndValidateOIDCIssuerWellKnown,
     IClientWellKnown,
     MatrixClient,
+    MatrixError,
     OidcClientConfig,
 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -302,7 +303,10 @@ export default class AutoDiscoveryUtils {
             const { issuer } = await tempClient.getAuthIssuer();
             delegatedAuthentication = await discoverAndValidateOIDCIssuerWellKnown(issuer);
         } catch (e) {
-            // This is expected for servers not delegating auth via OIDC
+            // This is expected for servers not delegating auth via OIDC - there is no defined "unsupported" response atm
+            if (!(e instanceof MatrixError)) {
+                throw e;
+            }
         }
 
         return {
