@@ -22,6 +22,10 @@ import AutoDiscoveryUtils from "../../src/utils/AutoDiscoveryUtils";
 import { mockOpenIdConfiguration } from "../test-utils/oidc";
 
 describe("AutoDiscoveryUtils", () => {
+    beforeEach(() => {
+        fetchMock.catch(404);
+    });
+
     describe("buildValidatedConfigFromDiscovery()", () => {
         const serverName = "my-server";
 

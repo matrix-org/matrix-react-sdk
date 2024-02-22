@@ -64,6 +64,7 @@ describe("<ServerPickerDialog />", () => {
         });
 
         fetchMock.resetHistory();
+        fetchMock.catch(404);
     });
 
     it("should render dialog", () => {
