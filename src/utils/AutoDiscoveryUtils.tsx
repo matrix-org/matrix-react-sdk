@@ -298,6 +298,7 @@ export default class AutoDiscoveryUtils {
         // This isn't inherently auto-discovery but used to be in an earlier incarnation of the MSC,
         // and shuttling the data together makes a lot of sense
         let delegatedAuthentication: OidcClientConfig | undefined;
+        let delegatedAuthenticationError: Error | undefined;
         try {
             const tempClient = new MatrixClient({ baseUrl: preferredHomeserverUrl });
             const { issuer } = await tempClient.getAuthIssuer();
@@ -306,7 +307,7 @@ export default class AutoDiscoveryUtils {
             // The request is expected to fail for servers not delegating auth via OIDC,
             // there is no defined "unsupported" response in the MSC at this time so assume a 5xx is an actual error
             if (!(e instanceof HTTPError) || !e.httpStatus || e.httpStatus >= 500) {
-                throw e;
+                delegatedAuthenticationError = e as Error;
             }
         }
 
@@ -316,7 +317,7 @@ export default class AutoDiscoveryUtils {
             hsNameIsDifferent: url.hostname !== preferredHomeserverName,
             isUrl: preferredIdentityUrl,
             isDefault: false,
-            warning: hsResult.error,
+            warning: hsResult.error ?? delegatedAuthenticationError,
             isNameResolvable: !isSynthetic,
             delegatedAuthentication,
         } as ValidatedServerConfig;
