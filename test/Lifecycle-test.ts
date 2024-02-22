@@ -873,7 +873,6 @@ describe("Lifecycle", () => {
             });
 
             // Trigger the overwrite login action
-            // @ts-ignore - raw access to the dispatcher to simulate the action
             dis.dispatch(
                 {
                     action: "overwrite_login",
