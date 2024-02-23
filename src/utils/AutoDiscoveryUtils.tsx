@@ -20,9 +20,9 @@ import {
     AutoDiscoveryError,
     ClientConfig,
     discoverAndValidateOIDCIssuerWellKnown,
-    HTTPError,
     IClientWellKnown,
     MatrixClient,
+    MatrixError,
     OidcClientConfig,
 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -304,9 +304,9 @@ export default class AutoDiscoveryUtils {
             const { issuer } = await tempClient.getAuthIssuer();
             delegatedAuthentication = await discoverAndValidateOIDCIssuerWellKnown(issuer);
         } catch (e) {
-            // The request is expected to fail for servers not delegating auth via OIDC,
-            // there is no defined "unsupported" response in the MSC at this time so assume a 5xx is an actual error
-            if (!(e instanceof HTTPError) || !e.httpStatus || e.httpStatus >= 500) {
+            if (e instanceof MatrixError && e.httpStatus === 404 && e.errcode === "M_UNRECOGNIZED") {
+                // 404 M_UNRECOGNIZED means the server does not support OIDC
+            } else {
                 delegatedAuthenticationError = e as Error;
             }
         }
