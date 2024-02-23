@@ -77,6 +77,7 @@ export enum OwnDevicesError {
 }
 export type DevicesState = {
     devices: DevicesDictionary;
+    dehydratedDeviceId?: string;
     pushers: IPusher[];
     localNotificationSettings: Map<string, LocalNotificationSettings>;
     currentDeviceId: string;
@@ -97,6 +98,7 @@ export const useOwnDevices = (): DevicesState => {
     const userId = matrixClient.getSafeUserId();
 
     const [devices, setDevices] = useState<DevicesState["devices"]>({});
+    const [dehydratedDeviceId, setDehydratedDeviceId] = useState<DevicesState["devices"]>(undefined);
     const [pushers, setPushers] = useState<DevicesState["pushers"]>([]);
     const [localNotificationSettings, setLocalNotificationSettings] = useState<
         DevicesState["localNotificationSettings"]
@@ -130,6 +132,16 @@ export const useOwnDevices = (): DevicesState => {
                 }
             });
             setLocalNotificationSettings(notificationSettings);
+
+            const userDevices = await matrixClient.getCrypto()?.getUserDevices(matrixClient.getUserId()!);
+            const dehydratedDeviceIds: string[] = [];
+            for (const device of userDevices.values()) {
+                if (device.dehydrated) {
+                    logger.debug("Found dehydrated device", device.deviceId);
+                    dehydratedDeviceIds.push(device.deviceId);
+                }
+            }
+            setDehydratedDeviceId(dehydratedDeviceIds.length == 1 ? dehydratedDeviceIds[0] : undefined);
 
             setIsLoadingDeviceList(false);
         } catch (error) {
@@ -228,6 +240,7 @@ export const useOwnDevices = (): DevicesState => {
 
     return {
         devices,
+        dehydratedDeviceId,
         pushers,
         localNotificationSettings,
         currentDeviceId,

@@ -150,6 +150,7 @@ const useSignOut = (
 const SessionManagerTab: React.FC = () => {
     const {
         devices,
+        dehydratedDeviceId,
         pushers,
         localNotificationSettings,
         currentDeviceId,
@@ -205,6 +206,9 @@ const SessionManagerTab: React.FC = () => {
     };
 
     const { [currentDeviceId]: currentDevice, ...otherDevices } = devices;
+    if (dehydratedDeviceId) {
+        delete otherDevices[dehydratedDeviceId];
+    }
     const otherSessionsCount = Object.keys(otherDevices).length;
     const shouldShowOtherSessions = otherSessionsCount > 0;
 
@@ -330,6 +334,7 @@ const SessionManagerTab: React.FC = () => {
                         />
                     </SettingsSubsection>
                 )}
+                {dehydratedDeviceId && <div>Dehydrated device enabled</div>}
                 <LoginWithQRSection
                     onShowQr={onShowQrClicked}
                     versions={clientVersions}

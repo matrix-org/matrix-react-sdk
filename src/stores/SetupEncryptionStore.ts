@@ -114,6 +114,9 @@ export class SetupEncryptionStore extends EventEmitter {
         this.hasDevicesToVerifyAgainst = await asyncSome(userDevices, async (device) => {
             // ignore the dehydrated device
             if (dehydratedDevice && device.deviceId == dehydratedDevice?.device_id) return false;
+            if (device.dehydrated) {
+                return false;
+            }
 
             // ignore devices without an identity key
             if (!device.getIdentityKey()) return false;
