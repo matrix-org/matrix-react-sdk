@@ -24,10 +24,13 @@ import PlatformPeg from "../../PlatformPeg";
 /**
  * @experimental
  * Stores information about configured OIDC provider
- * In OIDC Native mode the client is registered with OIDC directly and maintains an OIDC token
- * In OIDC Aware mode, the client is aware that the Server is using OIDC, but is using the standard Matrix APIs for most things,
- * notable exceptions are account management where a link to the account management endpoint will be provided instead.
- * Otherwise, the store is not operating, the auth is then in Legacy mode and everything uses normal Matrix APIs.
+ *
+ * In OIDC Native mode the client is registered with OIDC directly and maintains an OIDC token.
+ *
+ * In OIDC Aware mode, the client is aware that the Server is using OIDC, but is using the standard Matrix APIs for most things.
+ * (Notable exceptions are account management, where a link to the account management endpoint will be provided instead.)
+ *
+ * Otherwise, the store is not operating. Auth is then in Legacy mode and everything uses normal Matrix APIs.
  */
 export class OidcClientStore {
     private oidcClient?: OidcClient;
@@ -49,7 +52,7 @@ export class OidcClientStore {
         if (this.authenticatedIssuer) {
             await this.getOidcClient();
         } else {
-            // We are not in OIDC Native mode as we have no locally stored issuer, check if the server delegates auth to OIDC.
+            // We are not in OIDC Native mode, as we have no locally stored issuer. Check if the server delegates auth to OIDC.
             try {
                 const authIssuer = await this.matrixClient.getAuthIssuer();
                 const { accountManagementEndpoint, metadata } = await discoverAndValidateOIDCIssuerWellKnown(
