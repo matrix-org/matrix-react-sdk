@@ -38,6 +38,12 @@ describe("DecoratedRoomAvatar", () => {
     let mockClient: MatrixClient;
     let room: Room;
 
+    function renderComponent() {
+        return render(<DecoratedRoomAvatar room={room} size="32px" />, {
+            wrapper: TooltipProvider,
+        });
+    }
+
     beforeEach(() => {
         stubClient();
         mockClient = mocked(MatrixClientPeg.safeGet());
@@ -56,11 +62,9 @@ describe("DecoratedRoomAvatar", () => {
             getUserIdForRoomId: jest.fn(),
         } as unknown as DMRoomMap;
         jest.spyOn(DMRoomMap, "shared").mockReturnValue(dmRoomMap);
-
         room.getJoinRule = jest.fn().mockReturnValue(JoinRule.Public);
-        const { container, asFragment } = render(<DecoratedRoomAvatar room={room} size="32px" />, {
-            wrapper: TooltipProvider,
-        });
+
+        const { container, asFragment } = renderComponent();
 
         const globe = container.querySelector(".mx_DecoratedRoomAvatar_icon_globe")!;
         expect(globe).toBeVisible();
@@ -87,9 +91,7 @@ describe("DecoratedRoomAvatar", () => {
         jest.spyOn(DMRoomMap, "shared").mockReturnValue(dmRoomMap);
         jest.spyOn(DecoratedRoomAvatar.prototype as any, "getPresenceIcon").mockImplementation(() => "ONLINE");
 
-        const { container, asFragment } = render(<DecoratedRoomAvatar room={room} size="32px" />, {
-            wrapper: TooltipProvider,
-        });
+        const { container, asFragment } = renderComponent();
 
         const presence = container.querySelector(".mx_DecoratedRoomAvatar_icon")!;
         expect(presence).toBeVisible();
