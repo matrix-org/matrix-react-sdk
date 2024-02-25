@@ -32,8 +32,6 @@ jest.mock("../../../../src/utils/room/getJoinedNonFunctionalMembers", () => ({
     getJoinedNonFunctionalMembers: jest.fn().mockReturnValue([0, 1]),
 }));
 
-jest.spyOn(DecoratedRoomAvatar.prototype as any, "getPresenceIcon").mockImplementation(() => "ONLINE");
-
 describe("DecoratedRoomAvatar", () => {
     const ROOM_ID = "roomId";
 
@@ -47,6 +45,10 @@ describe("DecoratedRoomAvatar", () => {
         room = new Room(ROOM_ID, mockClient, mockClient.getUserId() ?? "", {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it("shows an avatar with globe icon and tooltip for public room", async () => {
@@ -83,6 +85,8 @@ describe("DecoratedRoomAvatar", () => {
             },
         } as unknown as DMRoomMap;
         jest.spyOn(DMRoomMap, "shared").mockReturnValue(dmRoomMap);
+        jest.spyOn(DecoratedRoomAvatar.prototype as any, "getPresenceIcon").mockImplementation(() => "ONLINE");
+
         const { container, asFragment } = render(<DecoratedRoomAvatar room={room} size="32px" />, {
             wrapper: TooltipProvider,
         });
