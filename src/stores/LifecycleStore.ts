@@ -94,8 +94,7 @@ async function checkServerVersions(): Promise<void> {
             // only make a single HTTP request).
             // Note that although we do this on a reconnect, we cache the server's versions in memory
             // indefinitely, so it will only ever trigger the toast on the first connection after a fresh
-            // restart of the client (which has just happened since it's started syncing, so this should
-            // never actually cause a request).)
+            // restart of the client.
             if (await client.isVersionSupported(version)) {
                 // we found a compatible spec version
                 return;
