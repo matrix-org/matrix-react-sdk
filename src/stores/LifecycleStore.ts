@@ -102,7 +102,7 @@ async function checkServerVersions(): Promise<void> {
             }
         }
 
-        // This is retrospective doc having debated about the exactyl what this toast is for, but
+        // This is retrospective doc having debated about the exactly what this toast is for, but
         // our guess is that it's a nudge to update, or ask your HS admin to update your Homeserver
         // after a new version of Element has come out, in a way that doesn't lock you out of all
         // your messages.
