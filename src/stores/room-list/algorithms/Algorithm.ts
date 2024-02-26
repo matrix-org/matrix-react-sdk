@@ -483,6 +483,8 @@ export class Algorithm extends EventEmitter {
             // noinspection JSUnfilteredForInLoop
             newTags[tagId] = [];
         }
+        // We may not have had an archived section previously, so make sure its there.
+        newTags[DefaultTagID.Archived] = [];
 
         // If we can avoid doing work, do so.
         if (!rooms.length) {
