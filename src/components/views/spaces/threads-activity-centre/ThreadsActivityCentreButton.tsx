@@ -51,6 +51,8 @@ export const ThreadsActivityCentreButton = forwardRef<HTMLDivElement, ThreadsAct
                 ref={ref}
                 forceHide={displayLabel}
                 aria-expanded={displayLabel}
+                // The compound component Menu is already handling the keyboard events
+                disableKeyboardOverrides={true}
                 {...props}
             >
                 <IndicatorIcon

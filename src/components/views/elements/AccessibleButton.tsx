@@ -86,6 +86,10 @@ type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> &
      * Event handler for button activation. Should be implemented exactly like a normal `onClick` handler.
      */
     onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
+    /**
+     * Disable keyboard overrides for this button. Defaults to false.
+     */
+    disableKeyboardOverrides?: boolean;
 };
 
 /**
@@ -116,6 +120,7 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
         onKeyDown,
         onKeyUp,
         triggerOnMouseDown,
+        disableKeyboardOverrides = false,
         ...restProps
     }: Props<T>,
     ref: Ref<HTMLElement>,
@@ -138,8 +143,9 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
         // Browsers handle space and enter key presses differently and we are only adjusting to the
         // inconsistencies here
         newProps.onKeyDown = (e) => {
-            const action = getKeyBindingsManager().getAccessibilityAction(e);
+            if (disableKeyboardOverrides) return onKeyDown?.(e);
 
+            const action = getKeyBindingsManager().getAccessibilityAction(e);
             switch (action) {
                 case KeyBindingAction.Enter:
                     e.stopPropagation();
@@ -154,6 +160,8 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
             }
         };
         newProps.onKeyUp = (e) => {
+            if (disableKeyboardOverrides) return onKeyUp?.(e);
+
             const action = getKeyBindingsManager().getAccessibilityAction(e);
 
             switch (action) {
