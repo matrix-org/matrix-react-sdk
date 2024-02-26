@@ -143,7 +143,7 @@ export const useRoomCall = (
                 return [PlatformCallType.ElementCall];
             }
             if (hasGroupCall && WidgetType.CALL.matches(groupCall.widget.type)) {
-                // only allow joining joining the ongoing Element call if there is one.
+                // only allow joining the ongoing Element call if there is one.
                 return [PlatformCallType.ElementCall];
             }
         }
