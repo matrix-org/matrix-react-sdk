@@ -63,12 +63,13 @@ const socials = [
 
 interface BaseProps {
     onFinished(): void;
+    customTitle?: string;
+    subtitle?: string;
 }
 
 interface Props extends BaseProps {
-    target: Room | User | RoomMember;
+    target: Room | User | RoomMember | URL;
     permalinkCreator?: RoomPermalinkCreator;
-    customLink?: URL;
 }
 
 interface EventProps extends BaseProps {
@@ -110,10 +111,9 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
     };
 
     private getUrl(): string {
-        if (this.props.customLink) {
-            return this.props.customLink.toString();
-        }
-        if (this.props.target instanceof Room) {
+        if (this.props.target instanceof URL) {
+            return this.props.target.toString();
+        } else if (this.props.target instanceof Room) {
             if (this.state.linkSpecificEvent) {
                 const events = this.props.target.getLiveTimeline().getEvents();
                 return this.state.permalinkCreator!.forEvent(events[events.length - 1].getId()!);
@@ -133,8 +133,8 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
         let title: string | undefined;
         let checkbox: JSX.Element | undefined;
 
-        if (this.props.customLink) {
-            title = _t("share|share_call");
+        if (this.props.target instanceof URL) {
+            title = _t("share|share_link");
         } else if (this.props.target instanceof Room) {
             title = _t("share|title_room");
 
@@ -212,6 +212,7 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
                 contentId="mx_Dialog_content"
                 onFinished={this.props.onFinished}
             >
+                {this.props.subtitle && <p>{this.props.subtitle}</p>}
                 <div className="mx_ShareDialog_content">
                     <CopyableText getTextToCopy={() => matrixToUrl}>
                         <a title={_t("share|link_title")} href={matrixToUrl} onClick={ShareDialog.onLinkClick}>

@@ -27,6 +27,7 @@ import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error
 import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
 import { EventType, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
 import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { useRoomName } from "../../../hooks/useRoomName";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
@@ -121,12 +122,19 @@ export default function RoomHeader({
     const askToJoinEnabled = useFeatureEnabled("feature_ask_to_join");
 
     const videoClick = useCallback((ev) => videoCallClick(ev, callOptions[0]), [callOptions, videoCallClick]);
+
     const shareClick = useCallback(() => {
-        Modal.createDialog(ShareDialog, {
-            target: room,
-            customLink: generateCallLink ? generateCallLink() : undefined,
-        });
-    }, [generateCallLink, room]);
+        const target = generateCallLink ? generateCallLink() : undefined;
+        if (target) {
+            Modal.createDialog(ShareDialog, {
+                target,
+                customTitle: _t("share|share_call"),
+                subtitle: _t("share|share_call_subtitle"),
+            });
+        } else {
+            logger.error("Could not generate call link.");
+        }
+    }, [generateCallLink]);
 
     const toggleCallButton = (
         <Tooltip label={isViewingCall ? _t("voip|minimise_call") : _t("voip|maximise_call")}>
