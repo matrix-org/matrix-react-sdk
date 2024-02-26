@@ -2896,9 +2896,9 @@
         "link_title": "Link to room",
         "permalink_message": "Link to selected message",
         "permalink_most_recent": "Link to most recent message",
-        "share_link": "Share Link",
         "share_call": "Conference invite link",
         "share_call_subtitle": "Link for external users to join the call without matrix account:",
+        "title_link": "Share Link",
         "title_message": "Share Room Message",
         "title_room": "Share Room",
         "title_user": "Share User"
