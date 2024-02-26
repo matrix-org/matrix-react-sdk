@@ -20,7 +20,7 @@ import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { useFeatureEnabled } from "../useSettings";
-import SdkConfig, { DEFAULTS } from "../../SdkConfig";
+import SdkConfig from "../../SdkConfig";
 import { useEventEmitter, useEventEmitterState } from "../useEventEmitter";
 import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../LegacyCallHandler";
 import { useWidgets } from "../../components/views/right_panel/RoomSummaryCard";
@@ -89,6 +89,10 @@ export const useRoomCall = (
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     const useElementCallExclusively = useMemo(() => {
         return SdkConfig.get("element_call").use_exclusively;
+    }, []);
+
+    const guestSpaUrl = useMemo(() => {
+        return SdkConfig.get("element_call").guest_spa_url;
     }, []);
 
     const hasLegacyCall = useEventEmitterState(
@@ -267,7 +271,9 @@ export const useRoomCall = (
     }, [isViewingCall, room.roomId]);
 
     const generateCallLink = useCallback(() => {
-        const url = new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url!);
+        // Should never happen, because the hook only passes generateCallLink if externalSpaUrl is set.
+        if (!guestSpaUrl) throw new Error("No guest SPA url for external links provided.");
+        const url = new URL(guestSpaUrl);
         url.pathname = "/room/";
         // Set params for the sharable url
         url.searchParams.set("roomId", room.roomId);
@@ -282,7 +288,7 @@ export const useRoomCall = (
 
         logger.info("Generated element call external url:", url);
         return url;
-    }, [room]);
+    }, [guestSpaUrl, room]);
     /**
      * We've gone through all the steps
      */
@@ -293,7 +299,7 @@ export const useRoomCall = (
         videoCallClick,
         toggleCallMaximized: toggleCallMaximized,
         isViewingCall: isViewingCall,
-        generateCallLink: canJoinWithoutInvite ? generateCallLink : undefined,
+        generateCallLink: guestSpaUrl && canJoinWithoutInvite ? generateCallLink : undefined,
         isConnectedToCall: isConnectedToCall,
         hasActiveCallSession: hasActiveCallSession,
         callOptions,

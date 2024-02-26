@@ -134,9 +134,9 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
         let checkbox: JSX.Element | undefined;
 
         if (this.props.target instanceof URL) {
-            title = _t("share|share_link");
+            title = this.props.customTitle ?? _t("share|share_link");
         } else if (this.props.target instanceof Room) {
-            title = _t("share|title_room");
+            title = this.props.customTitle ?? _t("share|title_room");
 
             const events = this.props.target.getLiveTimeline().getEvents();
             if (events.length > 0) {
@@ -152,9 +152,9 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
                 );
             }
         } else if (this.props.target instanceof User || this.props.target instanceof RoomMember) {
-            title = _t("share|title_user");
+            title = this.props.customTitle ?? _t("share|title_user");
         } else if (this.props.target instanceof MatrixEvent) {
-            title = _t("share|title_message");
+            title = this.props.customTitle ?? _t("share|title_message");
             checkbox = (
                 <div>
                     <StyledCheckbox
