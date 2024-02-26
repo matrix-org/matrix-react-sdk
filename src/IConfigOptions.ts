@@ -119,7 +119,6 @@ export interface IConfigOptions {
     };
     element_call: {
         url?: string;
-        call_link_homeserver_url?: string;
         use_exclusively?: boolean;
         participant_limit?: number;
         brand?: string;

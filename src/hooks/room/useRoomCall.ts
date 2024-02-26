@@ -90,9 +90,6 @@ export const useRoomCall = (
     const useElementCallExclusively = useMemo(() => {
         return SdkConfig.get("element_call").use_exclusively;
     }, []);
-    const spaHomeserverUrl = useMemo(() => {
-        return SdkConfig.get("element_call").call_link_homeserver_url;
-    }, []);
 
     const hasLegacyCall = useEventEmitterState(
         LegacyCallHandler.instance,
@@ -278,9 +275,6 @@ export const useRoomCall = (
         for (const server of calculateRoomVia(room)) {
             url.searchParams.set("viaServers", server);
         }
-        if (spaHomeserverUrl) {
-            url.searchParams.set("homeserver", spaHomeserverUrl);
-        }
 
         // Move params into hash
         url.hash = "/" + room.name + url.search;
@@ -288,7 +282,7 @@ export const useRoomCall = (
 
         logger.info("Generated element call external url:", url);
         return url;
-    }, [room, spaHomeserverUrl]);
+    }, [room]);
     /**
      * We've gone through all the steps
      */
