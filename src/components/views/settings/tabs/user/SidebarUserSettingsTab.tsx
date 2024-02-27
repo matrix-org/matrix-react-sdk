@@ -45,7 +45,14 @@ export const onMetaSpaceChangeFactory =
         PosthogTrackers.trackInteraction(
             interactionName,
             e,
-            [MetaSpace.Home, null, MetaSpace.Favourites, MetaSpace.People, MetaSpace.Orphans].indexOf(metaSpace),
+            [
+                MetaSpace.Home,
+                null,
+                MetaSpace.Favourites,
+                MetaSpace.People,
+                MetaSpace.Orphans,
+                MetaSpace.VideoRooms,
+            ].indexOf(metaSpace),
         );
     };
 

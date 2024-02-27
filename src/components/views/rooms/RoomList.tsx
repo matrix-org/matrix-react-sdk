@@ -83,6 +83,7 @@ export const TAG_ORDER: TagID[] = [
     DefaultTagID.Invite,
     DefaultTagID.Favourite,
     DefaultTagID.DM,
+    DefaultTagID.Conferences,
     DefaultTagID.Untagged,
     DefaultTagID.LowPriority,
     DefaultTagID.ServerNotice,
@@ -380,6 +381,12 @@ const TAG_AESTHETICS: TagAestheticsMap = {
     },
     [DefaultTagID.DM]: {
         sectionLabel: _td("common|people"),
+        isInvite: false,
+        defaultHidden: false,
+        AuxButtonComponent: DmAuxButton,
+    },
+    [DefaultTagID.Conferences]: {
+        sectionLabel: _td("common|conferences"),
         isInvite: false,
         defaultHidden: false,
         AuxButtonComponent: DmAuxButton,

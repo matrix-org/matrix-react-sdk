@@ -444,6 +444,7 @@
         "camera": "Camera",
         "cameras": "Cameras",
         "capabilities": "Capabilities",
+        "conferences": "common|conferences",
         "copied": "Copied!",
         "credits": "Credits",
         "cross_signing": "Cross-signing",
@@ -2858,6 +2859,8 @@
             "metaspaces_orphans_description": "Group all your rooms that aren't part of a space in one place.",
             "metaspaces_people_description": "Group all your people in one place.",
             "metaspaces_subsection": "Spaces to show",
+            "metaspaces_video_rooms": "settings|sidebar|metaspaces_video_rooms",
+            "metaspaces_video_rooms_description": "settings|sidebar|metaspaces_video_rooms_description",
             "spaces_explainer": "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.",
             "title": "Sidebar"
         },

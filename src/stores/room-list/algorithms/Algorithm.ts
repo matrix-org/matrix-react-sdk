@@ -574,6 +574,9 @@ export class Algorithm extends EventEmitter {
                 tags = [DefaultTagID.DM];
             }
         }
+        if (room.isCallRoom() && room.getJoinRule() === "public") {
+            tags.push(DefaultTagID.Conferences);
+        }
 
         return tags;
     }
