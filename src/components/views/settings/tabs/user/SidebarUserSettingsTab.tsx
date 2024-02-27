@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { ChangeEvent } from "react";
+import { Icon as CameraCircle } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 
 import { Icon as HomeIcon } from "../../../../../../res/img/element-icons/home.svg";
 import { Icon as FavoriteIcon } from "../../../../../../res/img/element-icons/roomlist/favorite.svg";
@@ -54,6 +55,7 @@ const SidebarUserSettingsTab: React.FC = () => {
         [MetaSpace.Favourites]: favouritesEnabled,
         [MetaSpace.People]: peopleEnabled,
         [MetaSpace.Orphans]: orphansEnabled,
+        [MetaSpace.VideoRooms]: videoRoomsEnabled,
     } = useSettingValue<Record<MetaSpace, boolean>>("Spaces.enabledMetaSpaces");
     const allRoomsInHome = useSettingValue<boolean>("Spaces.allRoomsInHome");
 
@@ -138,6 +140,19 @@ const SidebarUserSettingsTab: React.FC = () => {
                         </SettingsSubsectionText>
                         <SettingsSubsectionText>
                             {_t("settings|sidebar|metaspaces_orphans_description")}
+                        </SettingsSubsectionText>
+                    </StyledCheckbox>
+                    <StyledCheckbox
+                        checked={!!videoRoomsEnabled}
+                        onChange={onMetaSpaceChangeFactory(MetaSpace.VideoRooms, "WebSettingsSidebarTabSpacesCheckbox")}
+                        className="mx_SidebarUserSettingsTab_checkbox"
+                    >
+                        <SettingsSubsectionText>
+                            <CameraCircle />
+                            {_t("settings|sidebar|metaspaces_video_rooms")}
+                        </SettingsSubsectionText>
+                        <SettingsSubsectionText>
+                            {_t("settings|sidebar|metaspaces_video_rooms_description")}
                         </SettingsSubsectionText>
                     </StyledCheckbox>
                 </SettingsSubsection>
