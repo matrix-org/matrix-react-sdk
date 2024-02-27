@@ -250,7 +250,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         return {
             initialising: true, // True while we are mangling the widget URL
             // True while the iframe content is loading
-            loading: this.props.waitForIframeLoad && !PersistedElement.isMounted(this.persistKey),
+            loading: !PersistedElement.isMounted(this.persistKey),
             // Assume that widget has permission to load if we are the user who
             // added it to the room, or if explicitly granted by the user
             hasPermissionToLoad: this.hasPermissionToLoad(newProps),
