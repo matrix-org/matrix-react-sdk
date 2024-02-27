@@ -64,6 +64,7 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
                 <ThreadsActivityCentreButton
                     displayLabel={displayButtonLabel}
                     notificationLevel={roomsAndNotifications.greatestNotificationLevel}
+                    disableTooltip={open}
                 />
             }
         >
