@@ -27,6 +27,7 @@ import {
     notificationLevelToIndicator,
     getThreadNotificationLevel,
     setUnreadMarker,
+    getMarkedUnreadState,
 } from "../../src/utils/notifications";
 import SettingsStore from "../../src/settings/SettingsStore";
 import { getMockClientWithEventEmitter } from "../test-utils/client";
@@ -217,6 +218,47 @@ describe("notifications", () => {
             await clearAllNotifications(client);
 
             expect(sendReadReceiptSpy).toHaveBeenCalledWith(message, ReceiptType.ReadPrivate, true);
+        });
+    });
+
+    describe("getMarkedUnreadState", () => {
+        let client: MatrixClient;
+        let room: Room;
+
+        const ROOM_ID = "123";
+        const USER_ID = "@bob:example.org";
+
+        beforeEach(() => {
+            stubClient();
+            client = mocked(MatrixClientPeg.safeGet());
+            room = new Room(ROOM_ID, client, USER_ID);
+        });
+
+        it("reads from stable prefix", async () => {
+            room.getAccountData = jest.fn().mockImplementation((eventType: string) => {
+                if (eventType === "m.marked_unread") {
+                    return { getContent: jest.fn().mockReturnValue({ unread: true }) };
+                }
+                return null;
+            });
+            expect(getMarkedUnreadState(room)).toBe(true);
+        });
+
+        it("reads from unstable prefix", async () => {
+            room.getAccountData = jest.fn().mockImplementation((eventType: string) => {
+                if (eventType === "com.famedly.marked_unread") {
+                    return { getContent: jest.fn().mockReturnValue({ unread: true }) };
+                }
+                return null;
+            });
+            expect(getMarkedUnreadState(room)).toBe(true);
+        });
+
+        it("returns undefined if neither prefix is present", async () => {
+            room.getAccountData = jest.fn().mockImplementation((eventType: string) => {
+                return null;
+            });
+            expect(getMarkedUnreadState(room)).toBe(undefined);
         });
     });
 

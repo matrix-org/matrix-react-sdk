@@ -29,8 +29,14 @@ import SettingsStore from "../settings/SettingsStore";
 import { NotificationLevel } from "../stores/notifications/NotificationLevel";
 import { doesRoomHaveUnreadMessages } from "../Unread";
 
-// change when MSC2867 is in spec
-export const MARKED_UNREAD_TYPE = "com.famedly.marked_unread";
+// MSC2867 is not yet spec at time of writing. We read from both stable
+// and unstable prefixes and accept the risk that the format may change,
+// since the stable prefix is not actually defined yet.
+// Assuming is passes FCP with no changes, we should update to start writing
+// the flag to the stable prefix (or both) and then ultimately use only the
+// stable prefix.
+export const MARKED_UNREAD_TYPE_UNSTABLE = "com.famedly.marked_unread";
+export const MARKED_UNREAD_TYPE_STABLE = "m.marked_unread";
 
 export const deviceNotificationSettingsKeys = [
     "notificationsEnabled",
@@ -123,12 +129,25 @@ export function clearAllNotifications(client: MatrixClient): Promise<Array<{} | 
     return Promise.all(receiptPromises);
 }
 
+/**
+ * Gives the marked_unread state of the given room
+ * @param room The room to check
+ * @returns - The marked_unread state of the room, or undefined if no explicit state is set.
+ */
+export function getMarkedUnreadState(room: Room): boolean | undefined {
+    const currentStateStable = room.getAccountData(MARKED_UNREAD_TYPE_STABLE)?.getContent<IMarkedUnreadEvent>()?.unread;
+    const currentStateUnstable = room
+        .getAccountData(MARKED_UNREAD_TYPE_UNSTABLE)
+        ?.getContent<IMarkedUnreadEvent>()?.unread;
+    return currentStateStable ?? currentStateUnstable;
+}
+
 export async function setUnreadMarker(room: Room, client: MatrixClient, unread: boolean): Promise<void> {
     // if there's no event, treat this as false as we don't need to send the flag to clear it if the event isn't there
-    const currentState = Boolean(room.getAccountData(MARKED_UNREAD_TYPE)?.getContent<IMarkedUnreadEvent>()?.unread);
+    const currentState = getMarkedUnreadState(room);
 
     if (currentState !== unread) {
-        await client.setRoomAccountData(room.roomId, MARKED_UNREAD_TYPE, { unread });
+        await client.setRoomAccountData(room.roomId, MARKED_UNREAD_TYPE_UNSTABLE, { unread });
     }
 }
 
