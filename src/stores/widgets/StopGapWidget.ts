@@ -507,7 +507,8 @@ export class StopGapWidget extends EventEmitter {
                 return;
             }
 
-            let isBeforeMark = true;
+            // should be true to forward the event to the widget
+            let shouldForward = false;
 
             const room = this.client.getRoom(ev.getRoomId()!);
             if (!room) return;
@@ -520,12 +521,13 @@ export class StopGapWidget extends EventEmitter {
                 if (timelineEvent.getId() === upToEventId) {
                     break;
                 } else if (timelineEvent.getId() === ev.getId()) {
-                    isBeforeMark = false;
+                    shouldForward = true;
                     break;
                 }
             }
 
-            if (isBeforeMark) {
+            if (!shouldForward) {
+                // checks that the event has a relation to unknown event
                 isRelationToUnknown =
                     !ev.replyEventId && !!ev.relationEventId && !room.findEventById(ev.relationEventId);
                 if (!isRelationToUnknown) {
