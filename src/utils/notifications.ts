@@ -146,7 +146,7 @@ export async function setUnreadMarker(room: Room, client: MatrixClient, unread: 
     // if there's no event, treat this as false as we don't need to send the flag to clear it if the event isn't there
     const currentState = getMarkedUnreadState(room);
 
-    if (currentState !== unread) {
+    if (Boolean(currentState) !== unread) {
         await client.setRoomAccountData(room.roomId, MARKED_UNREAD_TYPE_UNSTABLE, { unread });
     }
 }
