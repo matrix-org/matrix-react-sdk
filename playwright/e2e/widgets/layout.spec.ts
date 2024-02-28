@@ -25,7 +25,7 @@ const WIDGET_HTML = `
         <head>
             <title>Fake Widget</title>
         </head>
-        <body>
+        <body class="widget_body_class">
             Hello World
         </body>
     </html>
@@ -38,7 +38,7 @@ test.describe("Widget Layout", () => {
 
     let roomId: string;
     let widgetUrl: string;
-    test.beforeEach(async ({ webserver, app, user }) => {
+    test.beforeEach(async ({ webserver, app, user, page }) => {
         widgetUrl = webserver.start(WIDGET_HTML);
 
         roomId = await app.client.createRoom({ name: ROOM_NAME });
@@ -76,6 +76,7 @@ test.describe("Widget Layout", () => {
 
         // open the room
         await app.viewRoomByName(ROOM_NAME);
+        await page.waitForSelector(".widget_body_class");
     });
 
     test("should be set properly", async ({ page }) => {
