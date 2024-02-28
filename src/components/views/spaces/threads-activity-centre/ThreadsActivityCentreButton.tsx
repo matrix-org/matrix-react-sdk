@@ -63,6 +63,7 @@ export const ThreadsActivityCentreButton = forwardRef<HTMLDivElement, ThreadsAct
                 >
                     <>
                         <Icon className="mx_ThreadsActivityCentreButton_Icon" />
+                        {/* This is dirty, but we need to add the label to the indicator icon */}
                         {displayLabel && (
                             <Text
                                 className="mx_ThreadsActivityCentreButton_Text"
