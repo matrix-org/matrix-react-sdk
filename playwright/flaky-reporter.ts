@@ -36,46 +36,48 @@ class FlakyReporter implements Reporter {
     }
 
     public async onExit(): Promise<void> {
-        if (this.flakes.size) {
-            console.log("Found flakes: ");
-            for (const flake of this.flakes) {
-                console.log(flake);
-            }
-
-            const { GITHUB_TOKEN, GITHUB_API_URL, GITHUB_SERVER_URL, GITHUB_REPOSITORY, GITHUB_RUN_ID } = process.env;
-            if (!GITHUB_TOKEN) return;
-
-            const body = `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}`;
-
-            const headers = { Authorization: `Bearer ${GITHUB_TOKEN}` };
-            const issuesRequest = await fetch(`${GITHUB_API_URL}/repos/${REPO}/issues?labels=${LABEL}`, { headers });
-            const issues = await issuesRequest.json();
-            for (const flake of this.flakes) {
-                const title = ISSUE_TITLE_PREFIX + "`" + flake + "`";
-                const existingIssue = issues.find((issue) => issue.title === title);
-
-                if (existingIssue) {
-                    console.log(`Found issue ${existingIssue.number} for ${flake}, adding comment...`);
-                    await fetch(`${existingIssue.url}/comments`, {
-                        method: "POST",
-                        headers,
-                        body: JSON.stringify({ body }),
-                    });
-                } else {
-                    console.log(`Creating new issue for ${flake}...`);
-                    await fetch(`${GITHUB_API_URL}/repos/${REPO}/issues`, {
-                        method: "POST",
-                        headers,
-                        body: JSON.stringify({
-                            title,
-                            body,
-                            labels: [LABEL],
-                        }),
-                    });
-                }
-            }
-        } else {
+        if (this.flakes.size === 0) {
             console.log("No flakes found");
+            return;
+        }
+
+        console.log("Found flakes: ");
+        for (const flake of this.flakes) {
+            console.log(flake);
+        }
+
+        const { GITHUB_TOKEN, GITHUB_API_URL, GITHUB_SERVER_URL, GITHUB_REPOSITORY, GITHUB_RUN_ID } = process.env;
+        if (!GITHUB_TOKEN) return;
+
+        const body = `${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}`;
+
+        const headers = { Authorization: `Bearer ${GITHUB_TOKEN}` };
+        // Fetch all existing issues with the flaky-test label.
+        const issuesRequest = await fetch(`${GITHUB_API_URL}/repos/${REPO}/issues?labels=${LABEL}`, { headers });
+        const issues = await issuesRequest.json();
+        for (const flake of this.flakes) {
+            const title = ISSUE_TITLE_PREFIX + "`" + flake + "`";
+            const existingIssue = issues.find((issue) => issue.title === title);
+
+            if (existingIssue) {
+                console.log(`Found issue ${existingIssue.number} for ${flake}, adding comment...`);
+                await fetch(`${existingIssue.url}/comments`, {
+                    method: "POST",
+                    headers,
+                    body: JSON.stringify({ body }),
+                });
+            } else {
+                console.log(`Creating new issue for ${flake}...`);
+                await fetch(`${GITHUB_API_URL}/repos/${REPO}/issues`, {
+                    method: "POST",
+                    headers,
+                    body: JSON.stringify({
+                        title,
+                        body,
+                        labels: [LABEL],
+                    }),
+                });
+            }
         }
     }
 }
