@@ -16,7 +16,7 @@
  * /
  */
 
-import React from "react";
+import React, { ComponentProps } from "react";
 import { getByText, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { NotificationCountType, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
@@ -38,10 +38,14 @@ describe("ThreadsActivityCentre", () => {
         return screen.getByRole("menu");
     };
 
-    const renderTAC = () => {
+    const getTACDescription = () => {
+        return screen.getByText("Threads");
+    };
+
+    const renderTAC = (props?: ComponentProps<typeof ThreadsActivityCentre>) => {
         render(
             <MatrixClientContext.Provider value={cli}>
-                <ThreadsActivityCentre />
+                <ThreadsActivityCentre {...props} />
             </MatrixClientContext.Provider>,
             { wrapper: TooltipProvider },
         );
@@ -104,6 +108,12 @@ describe("ThreadsActivityCentre", () => {
     it("should render the threads activity centre button", async () => {
         renderTAC();
         expect(getTACButton()).toBeInTheDocument();
+    });
+
+    it("should render the threads activity centre button and the display label", async () => {
+        renderTAC({ displayButtonLabel: true });
+        expect(getTACButton()).toBeInTheDocument();
+        expect(getTACDescription()).toBeInTheDocument();
     });
 
     it("should render the threads activity centre menu when the button is clicked", async () => {
