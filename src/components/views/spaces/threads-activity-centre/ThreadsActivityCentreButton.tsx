@@ -34,21 +34,15 @@ interface ThreadsActivityCentreButtonProps extends HTMLProps<HTMLDivElement> {
      * The notification level of the threads.
      */
     notificationLevel: NotificationLevel;
-    /**
-     * Whether to disable the tooltip.
-     */
-    disableTooltip?: boolean;
 }
 
 /**
  * A button to open the thread activity centre.
  */
 export const ThreadsActivityCentreButton = forwardRef<HTMLDivElement, ThreadsActivityCentreButtonProps>(
-    function ThreadsActivityCentreButton(
-        { displayLabel, notificationLevel, disableTooltip = false, ...props },
-        ref,
-    ): React.JSX.Element {
-        const openTooltip = displayLabel || disableTooltip ? false : undefined;
+    function ThreadsActivityCentreButton({ displayLabel, notificationLevel, ...props }, ref): React.JSX.Element {
+        // Disable tooltip when the label is displayed
+        const openTooltip = displayLabel ? false : undefined;
 
         return (
             <Tooltip label={_t("common|threads")} side="right" open={openTooltip}>
