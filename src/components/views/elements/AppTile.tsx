@@ -57,6 +57,7 @@ import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingSto
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { ModuleRunner } from "../../../modules/ModuleRunner";
 import { parseUrl } from "../../../utils/UrlUtils";
+import ThemeWatcher from "../../../settings/watchers/ThemeWatcher";
 
 interface IProps {
     app: IWidget | IApp;
@@ -115,6 +116,7 @@ interface IState {
     menuDisplayed: boolean;
     requiresClient: boolean;
     hasContextMenuOptions: boolean;
+    widgetUrl?: string;
 }
 
 export default class AppTile extends React.Component<IProps, IState> {
@@ -140,7 +142,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     private sgWidget: StopGapWidget | null;
     private dispatcherRef?: string;
     private unmounted = false;
-
+    private themeWatcher = new ThemeWatcher();
     public constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
         super(props);
         this.context = context; // XXX: workaround for lack of `declare` support on `public context!:` definition
@@ -266,6 +268,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 !newProps.userWidget,
                 newProps.onDeleteClick,
             ),
+            widgetUrl: this.sgWidget?.embedUrl,
         };
     }
 
@@ -352,6 +355,8 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private setupSgListeners(): void {
+        this.themeWatcher.on("themeChange", this.onThemeChanged);
+        this.themeWatcher.start();
         this.sgWidget?.on("preparing", this.onWidgetPreparing);
         this.sgWidget?.on("error:preparing", this.updateRequiresClient);
         // emits when the capabilities have been set up or changed
@@ -359,7 +364,9 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private stopSgListeners(): void {
+        this.themeWatcher.stop();
         if (!this.sgWidget) return;
+        this.themeWatcher.off("themeChange", this.onThemeChanged);
         this.sgWidget.off("preparing", this.onWidgetPreparing);
         this.sgWidget.off("error:preparing", this.updateRequiresClient);
         this.sgWidget.off("capabilitiesNotified", this.updateRequiresClient);
@@ -457,6 +464,13 @@ export default class AppTile extends React.Component<IProps, IState> {
         });
     };
 
+    private onThemeChanged = (): void => {
+        // Regenerate widget url when the theme changes
+        // this updates the url from e.g. `theme=light` to `theme=dark`
+        // the widget should react to this accordingly.
+        this.setState({ widgetUrl: this.sgWidget?.embedUrl });
+    };
+
     private onAction = (payload: ActionPayload): void => {
         switch (payload.action) {
             case "m.sticker":
@@ -549,9 +563,9 @@ export default class AppTile extends React.Component<IProps, IState> {
             this.resetWidget(this.props);
             this.startMessaging();
 
-            if (this.iframe && this.sgWidget) {
+            if (this.iframe && this.state.widgetUrl) {
                 // Reload iframe
-                this.iframe.src = this.sgWidget.embedUrl;
+                this.iframe.src = this.state.widgetUrl;
             }
         });
     }
@@ -649,7 +663,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                     <AppPermission
                         roomId={this.props.room.roomId}
                         creatorUserId={this.props.creatorUserId}
-                        url={this.sgWidget.embedUrl}
+                        url={this.state.widgetUrl}
                         isRoomEncrypted={isEncrypted}
                         onPermissionGranted={this.grantWidgetPermission}
                     />
@@ -677,7 +691,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                                 title={widgetTitle}
                                 allow={iframeFeatures}
                                 ref={this.iframeRefChange}
-                                src={this.sgWidget.embedUrl}
+                                src={this.state.widgetUrl}
                                 allowFullScreen={true}
                                 sandbox={sandboxFlags}
                             />
