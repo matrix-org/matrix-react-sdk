@@ -53,6 +53,7 @@ export const ThreadsActivityCentreButton = forwardRef<HTMLDivElement, ThreadsAct
         return (
             <Tooltip label={_t("common|threads")} side="right" open={openTooltip}>
                 <IconButton
+                    aria-label={_t("common|threads")}
                     className={classNames("mx_ThreadsActivityCentreButton", { expanded: displayLabel })}
                     indicator={notificationLevelToIndicator(notificationLevel)}
                     // @ts-ignore
