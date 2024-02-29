@@ -53,6 +53,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         this.room.removeListener(RoomEvent.LocalEchoUpdated, this.handleLocalEchoUpdated);
         this.room.removeListener(RoomEvent.Timeline, this.handleRoomEventUpdate);
         this.room.removeListener(RoomEvent.Redaction, this.handleRoomEventUpdate);
+        this.room.removeListener(RoomEvent.AccountData, this.handleRoomAccountDataUpdate);
         cli.removeListener(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         cli.removeListener(ClientEvent.AccountData, this.handleAccountDataUpdate);
     }
