@@ -35,7 +35,14 @@ import { doesRoomHaveUnreadMessages } from "../Unread";
 // Assuming it passes FCP with no changes, we should update to start writing
 // the flag to the stable prefix (or both) and then ultimately use only the
 // stable prefix.
+
+/**
+ * Unstable identifier for the marked_unread event
+ */
 export const MARKED_UNREAD_TYPE_UNSTABLE = "com.famedly.marked_unread";
+/**
+ * Stable identifier for the marked_unread event
+ */
 export const MARKED_UNREAD_TYPE_STABLE = "m.marked_unread";
 
 export const deviceNotificationSettingsKeys = [
