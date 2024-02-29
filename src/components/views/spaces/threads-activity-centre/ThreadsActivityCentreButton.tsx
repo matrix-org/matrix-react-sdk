@@ -16,7 +16,7 @@
  * /
  */
 
-import React, { forwardRef, HTMLProps } from "react";
+import React, { ComponentProps, forwardRef } from "react";
 import { Icon } from "@vector-im/compound-design-tokens/icons/threads-solid.svg";
 import classNames from "classnames";
 import { IconButton, Text, Tooltip } from "@vector-im/compound-web";
@@ -25,7 +25,7 @@ import { _t } from "../../../../languageHandler";
 import { NotificationLevel } from "../../../../stores/notifications/NotificationLevel";
 import { notificationLevelToIndicator } from "../../../../utils/notifications";
 
-interface ThreadsActivityCentreButtonProps extends HTMLProps<HTMLDivElement> {
+interface ThreadsActivityCentreButtonProps extends ComponentProps<typeof IconButton> {
     /**
      * Display the `Treads` label next to the icon.
      */
@@ -50,10 +50,8 @@ export const ThreadsActivityCentreButton = forwardRef<HTMLButtonElement, Threads
                     aria-label={_t("common|threads")}
                     className={classNames("mx_ThreadsActivityCentreButton", { expanded: displayLabel })}
                     indicator={notificationLevelToIndicator(notificationLevel)}
-                    // @ts-ignore
-                    // ref nightmare...
-                    ref={ref}
                     {...props}
+                    ref={ref}
                 >
                     <>
                         <Icon className="mx_ThreadsActivityCentreButton_Icon" />
