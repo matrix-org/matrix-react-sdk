@@ -501,11 +501,10 @@ legend {
 }
 
 @define-mixin customisedCancelButton {
-    mask: url("$(res)/img/cancel.svg");
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: cover;
-    background-color: $dialog-close-fg-color;
+    background-image: url("$(res)/img/cancel.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     cursor: pointer;
     position: unset;
     width: unset;
@@ -514,12 +513,23 @@ legend {
 
 .mx_Dialog_cancelButton {
     @mixin customisedCancelButton;
+    position: relative;
     width: 18px;
     height: 18px;
     position: absolute;
     top: 10px;
     right: 0;
 }
+
+.mx_Dialog_cancelButton::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    bottom: -8px;
+    left: -8px;
+}
+
 
 .mx_Dialog_content {
     margin: 24px 0 68px;
