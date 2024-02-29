@@ -26,8 +26,8 @@ import {
     clearRoomNotification,
     notificationLevelToIndicator,
     getThreadNotificationLevel,
-    setUnreadMarker,
     getMarkedUnreadState,
+    setMarkedUnreadState,
 } from "../../src/utils/notifications";
 import SettingsStore from "../../src/settings/SettingsStore";
 import { getMockClientWithEventEmitter } from "../test-utils/client";
@@ -277,7 +277,7 @@ describe("notifications", () => {
 
         // set true, no existing event
         it("sets unread flag if event doesn't exist", async () => {
-            await setUnreadMarker(room, client, true);
+            await setMarkedUnreadState(room, client, true);
             expect(client.setRoomAccountData).toHaveBeenCalledWith(ROOM_ID, "com.famedly.marked_unread", {
                 unread: true,
             });
@@ -285,7 +285,7 @@ describe("notifications", () => {
 
         // set false, no existing event
         it("does nothing when clearing if flag is false", async () => {
-            await setUnreadMarker(room, client, false);
+            await setMarkedUnreadState(room, client, false);
             expect(client.setRoomAccountData).not.toHaveBeenCalled();
         });
 
@@ -294,7 +294,7 @@ describe("notifications", () => {
             room.getAccountData = jest
                 .fn()
                 .mockReturnValue({ getContent: jest.fn().mockReturnValue({ unread: false }) });
-            await setUnreadMarker(room, client, true);
+            await setMarkedUnreadState(room, client, true);
             expect(client.setRoomAccountData).toHaveBeenCalledWith(ROOM_ID, "com.famedly.marked_unread", {
                 unread: true,
             });
@@ -305,7 +305,7 @@ describe("notifications", () => {
             room.getAccountData = jest
                 .fn()
                 .mockReturnValue({ getContent: jest.fn().mockReturnValue({ unread: false }) });
-            await setUnreadMarker(room, client, false);
+            await setMarkedUnreadState(room, client, false);
             expect(client.setRoomAccountData).not.toHaveBeenCalled();
         });
 
@@ -314,7 +314,7 @@ describe("notifications", () => {
             room.getAccountData = jest
                 .fn()
                 .mockReturnValue({ getContent: jest.fn().mockReturnValue({ unread: true }) });
-            await setUnreadMarker(room, client, true);
+            await setMarkedUnreadState(room, client, true);
             expect(client.setRoomAccountData).not.toHaveBeenCalled();
         });
 
@@ -323,7 +323,7 @@ describe("notifications", () => {
             room.getAccountData = jest
                 .fn()
                 .mockReturnValue({ getContent: jest.fn().mockReturnValue({ unread: true }) });
-            await setUnreadMarker(room, client, false);
+            await setMarkedUnreadState(room, client, false);
             expect(client.setRoomAccountData).toHaveBeenCalledWith(ROOM_ID, "com.famedly.marked_unread", {
                 unread: false,
             });

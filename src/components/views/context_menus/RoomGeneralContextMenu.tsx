@@ -30,7 +30,7 @@ import { NotificationLevel } from "../../../stores/notifications/NotificationLev
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import { clearRoomNotification, setUnreadMarker } from "../../../utils/notifications";
+import { clearRoomNotification, setMarkedUnreadState } from "../../../utils/notifications";
 import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
 import IconizedContextMenu, {
     IconizedContextMenuCheckbox,
@@ -269,7 +269,7 @@ export const RoomGeneralContextMenu: React.FC<RoomGeneralContextMenuProps> = ({
             return (
                 <IconizedContextMenuOption
                     onClick={wrapHandler(() => {
-                        setUnreadMarker(room, cli, true);
+                        setMarkedUnreadState(room, cli, true);
                         onFinished?.();
                     }, onPostMarkAsUnreadClick)}
                     label={_t("room|context_menu|mark_unread")}

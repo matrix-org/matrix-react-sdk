@@ -84,7 +84,7 @@ export function localNotificationsAreSilenced(cli: MatrixClient): boolean {
 export async function clearRoomNotification(room: Room, client: MatrixClient): Promise<{} | undefined> {
     const lastEvent = room.getLastLiveEvent();
 
-    await setUnreadMarker(room, client, false);
+    await setMarkedUnreadState(room, client, false);
 
     try {
         if (lastEvent) {
@@ -142,7 +142,13 @@ export function getMarkedUnreadState(room: Room): boolean | undefined {
     return currentStateStable ?? currentStateUnstable;
 }
 
-export async function setUnreadMarker(room: Room, client: MatrixClient, unread: boolean): Promise<void> {
+/**
+ * Sets the marked_unread state of the given room
+ * @param room The room to set
+ * @param client MatrixClient object to use
+ * @param unread The new marked_unread state of the room
+ */
+export async function setMarkedUnreadState(room: Room, client: MatrixClient, unread: boolean): Promise<void> {
     // if there's no event, treat this as false as we don't need to send the flag to clear it if the event isn't there
     const currentState = getMarkedUnreadState(room);
 
