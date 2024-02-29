@@ -32,7 +32,7 @@ import { doesRoomHaveUnreadMessages } from "../Unread";
 // MSC2867 is not yet spec at time of writing. We read from both stable
 // and unstable prefixes and accept the risk that the format may change,
 // since the stable prefix is not actually defined yet.
-// Assuming is passes FCP with no changes, we should update to start writing
+// Assuming it passes FCP with no changes, we should update to start writing
 // the flag to the stable prefix (or both) and then ultimately use only the
 // stable prefix.
 export const MARKED_UNREAD_TYPE_UNSTABLE = "com.famedly.marked_unread";
