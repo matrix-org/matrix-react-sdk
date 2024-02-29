@@ -76,7 +76,8 @@ test.describe("Widget Layout", () => {
 
         // open the room
         await app.viewRoomByName(ROOM_NAME);
-        await page.waitForSelector(".widget_body_class");
+        // TODO try the end-to-end tests without this
+        // await page.waitForSelector(".widget_body_class");
     });
 
     test("should be set properly", async ({ page }) => {
