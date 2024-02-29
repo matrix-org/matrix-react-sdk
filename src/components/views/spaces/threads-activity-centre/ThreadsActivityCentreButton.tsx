@@ -39,7 +39,7 @@ interface ThreadsActivityCentreButtonProps extends HTMLProps<HTMLDivElement> {
 /**
  * A button to open the thread activity centre.
  */
-export const ThreadsActivityCentreButton = forwardRef<HTMLDivElement, ThreadsActivityCentreButtonProps>(
+export const ThreadsActivityCentreButton = forwardRef<HTMLButtonElement, ThreadsActivityCentreButtonProps>(
     function ThreadsActivityCentreButton({ displayLabel, notificationLevel, ...props }, ref): React.JSX.Element {
         // Disable tooltip when the label is displayed
         const openTooltip = displayLabel ? false : undefined;
