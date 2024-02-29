@@ -353,6 +353,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private setupSgListeners(): void {
         this.sgWidget?.on("ready", this.onWidgetReady);
+        this.sgWidget?.on("preparing", this.onWidgetPreparing);
         this.sgWidget?.on("error:preparing", this.updateRequiresClient);
         // emits when the capabilities have been set up or changed
         this.sgWidget?.on("capabilitiesNotified", this.updateRequiresClient);
@@ -361,6 +362,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     private stopSgListeners(): void {
         if (!this.sgWidget) return;
         this.sgWidget?.on("ready", this.onWidgetReady);
+        this.sgWidget?.on("off", this.onWidgetPreparing);
         this.sgWidget.off("error:preparing", this.updateRequiresClient);
         this.sgWidget.off("capabilitiesNotified", this.updateRequiresClient);
     }
@@ -446,7 +448,15 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         this.sgWidget?.stopMessaging({ forceDestroy: true });
     }
-
+    private onWidgetPreparing = (): void => {
+        if (this.props.waitForIframeLoad) {
+            // If the widget is configured to start immediately after the IFrame is loaded, (it does not have any custom initialization)
+            // we need to consider it ready now since it might not even use the widget api.
+            this.onWidgetReady();
+        }
+        // If waitForIframeLoad = false. We do nothing here. The widget is responsible to send a content_loaded action
+        // and the messaging will emit "ready" (-> this will call onWidgetReady)
+    };
     private onWidgetReady = (): void => {
         this.setState({ loading: false });
     };
