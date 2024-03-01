@@ -205,6 +205,38 @@ exports[`<SidebarUserSettingsTab /> renders sidebar settings 1`] = `
                   </div>
                 </label>
               </span>
+              <span
+                class="mx_Checkbox mx_SidebarUserSettingsTab_checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+              >
+                <input
+                  id="checkbox_MwbPDmfGtm"
+                  type="checkbox"
+                />
+                <label
+                  for="checkbox_MwbPDmfGtm"
+                >
+                  <div
+                    class="mx_Checkbox_background"
+                  >
+                    <div
+                      class="mx_Checkbox_checkmark"
+                    />
+                  </div>
+                  <div>
+                    <div
+                      class="mx_SettingsSubsection_text"
+                    >
+                      <div />
+                      Video rooms and conferences
+                    </div>
+                    <div
+                      class="mx_SettingsSubsection_text"
+                    >
+                      Group all your conferences, video rooms where you can invite people outside of matrix and normal private video rooms.
+                    </div>
+                  </div>
+                </label>
+              </span>
             </div>
           </div>
         </div>
