@@ -250,7 +250,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         return {
             initialising: true, // True while we are mangling the widget URL
             // True while the iframe content is loading
-            loading: !PersistedElement.isMounted(this.persistKey),
+            loading: true,
             // Assume that widget has permission to load if we are the user who
             // added it to the room, or if explicitly granted by the user
             hasPermissionToLoad: this.hasPermissionToLoad(newProps),
@@ -361,8 +361,8 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private stopSgListeners(): void {
         if (!this.sgWidget) return;
-        this.sgWidget?.on("ready", this.onWidgetReady);
-        this.sgWidget?.on("off", this.onWidgetPreparing);
+        this.sgWidget?.off("ready", this.onWidgetReady);
+        this.sgWidget?.off("preparing", this.onWidgetPreparing);
         this.sgWidget.off("error:preparing", this.updateRequiresClient);
         this.sgWidget.off("capabilitiesNotified", this.updateRequiresClient);
     }
