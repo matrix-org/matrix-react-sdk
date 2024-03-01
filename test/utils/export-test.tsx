@@ -26,7 +26,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
-import { IExportOptions, ExportType, ExportFormat } from "../../src/utils/exportUtils/exportUtils";
+import { IExportOptions, ExportType, ExportFormat, textForReplyEvent } from "../../src/utils/exportUtils/exportUtils";
 import PlainTextExporter from "../../src/utils/exportUtils/PlainTextExport";
 import HTMLExporter from "../../src/utils/exportUtils/HtmlExport";
 import * as TestUtilsMatrix from "../test-utils";
@@ -333,9 +333,8 @@ describe("export", function () {
                 expectedText: '<@me:here "This"> Reply',
             },
         ];
-        const exporter = new PlainTextExporter(mockRoom, ExportType.Beginning, mockExportOptions, setProgressText);
         for (const content of eventContents) {
-            expect(exporter.textForReplyEvent(content)).toBe(content.expectedText);
+            expect(textForReplyEvent(content)).toBe(content.expectedText);
         }
     });
 
