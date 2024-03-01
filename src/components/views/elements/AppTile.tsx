@@ -467,8 +467,12 @@ export default class AppTile extends React.Component<IProps, IState> {
     private onThemeChanged = (): void => {
         // Regenerate widget url when the theme changes
         // this updates the url from e.g. `theme=light` to `theme=dark`
-        // the widget should react to this accordingly.
-        this.setState({ widgetUrl: this.sgWidget?.embedUrl });
+        // We only do this with EC widgets where the theme prop is in the hash. If the widget puts the
+        // theme template variable outside the url hash this would cause a (IFrame) page reload on every theme change.
+        if (this.props.app.type === WidgetType.CALL.preferred) this.setState({ widgetUrl: this.sgWidget?.embedUrl });
+
+        // TODO: This is a stop gap solution to responsively update the theme of the widget.
+        // A new action should be introduced and the widget driver should be called here, so it informs the widget. (or connect to this by itself)
     };
 
     private onAction = (payload: ActionPayload): void => {
