@@ -14,8 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ClientEvent, MatrixEvent, MatrixEventEvent, SyncStateData, SyncState } from "matrix-js-sdk/src/matrix";
+import {
+    ClientEvent,
+    MatrixEvent,
+    MatrixEventEvent,
+    SyncStateData,
+    SyncState,
+    ToDeviceMessageId,
+} from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
+import { v4 as uuidv4 } from "uuid";
 
 import SdkConfig from "../SdkConfig";
 import sendBugReport from "../rageshake/submit-rageshake";
@@ -134,6 +142,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
             const messageContent = {
                 ...eventInfo,
                 recipient_rageshake: rageshakeURL,
+                [ToDeviceMessageId]: uuidv4(),
             };
             this.matrixClient?.sendToDevice(
                 AUTO_RS_REQUEST,
