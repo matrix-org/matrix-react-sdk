@@ -113,12 +113,13 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
 
             await this.updateState({ lastRageshakeTime: now });
 
+            const senderUserId = ev.getSender()!;
             const eventInfo = {
                 event_id: ev.getId(),
                 room_id: ev.getRoomId(),
                 session_id: sessionId,
                 device_id: wireContent.device_id,
-                user_id: ev.getSender()!,
+                user_id: senderUserId,
                 sender_key: wireContent.sender_key,
             };
 
@@ -136,7 +137,7 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
             };
             this.matrixClient?.sendToDevice(
                 AUTO_RS_REQUEST,
-                new Map([["messageContent.user_id", new Map([[messageContent.device_id, messageContent]])]]),
+                new Map([[senderUserId, new Map([[messageContent.device_id, messageContent]])]]),
             );
         }
     }
