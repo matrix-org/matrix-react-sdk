@@ -150,10 +150,11 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
             className={classnames("mx_ForwardList_entry", {
                 mx_ForwardList_entry_active: isActive,
             })}
-            aria-labelledby={id}
+            aria-labelledby={`${id}_name`}
             role="listitem"
             ref={ref}
             onFocus={onFocus}
+            id={id}
         >
             <AccessibleTooltipButton
                 className="mx_ForwardList_roomButton"
@@ -163,7 +164,7 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
                 tabIndex={isActive ? 0 : -1}
             >
                 <DecoratedRoomAvatar room={room} size="32px" tooltipProps={{ tabIndex: isActive ? 0 : -1 }} />
-                <span className="mx_ForwardList_entry_name" id={id}>
+                <span className="mx_ForwardList_entry_name" id={`${id}_name`}>
                     {room.name}
                 </span>
                 <RoomContextDetails component="span" className="mx_ForwardList_entry_detail" room={room} />
@@ -175,8 +176,8 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
                 disabled={disabled}
                 title={title}
                 alignment={Alignment.Top}
-                aria-describedby={id}
                 tabIndex={isActive ? 0 : -1}
+                id={`${id}_send`}
             >
                 <div className="mx_ForwardList_sendLabel">{_t("forward|send_label")}</div>
                 {icon}
@@ -299,9 +300,10 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
 
         const action = getKeyBindingsManager().getAccessibilityAction(ev);
         switch (action) {
-            case KeyBindingAction.Enter:
+            case KeyBindingAction.Enter: {
                 state.activeRef?.current?.querySelector<HTMLButtonElement>(".mx_ForwardList_sendButton")?.click();
                 break;
+            }
 
             default:
                 handled = false;
@@ -366,7 +368,11 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                                     }}
                                     autoFocus={true}
                                     onKeyDown={onKeyDownHandler}
-                                    aria-activedescendant={context.state.activeRef?.current?.id}
+                                    aria-activedescendant={
+                                        context.state.activeRef?.current?.id
+                                            ? `${context.state.activeRef?.current?.id}_send`
+                                            : undefined
+                                    }
                                     aria-owns="mx_ForwardDialog_resultsList"
                                 />
                             )}
