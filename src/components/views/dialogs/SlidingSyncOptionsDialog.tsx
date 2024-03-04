@@ -27,47 +27,35 @@ import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import { SettingLevel } from "../../../settings/SettingLevel";
 
 /**
- * Check that the server natively supports sliding sync.
+ * Check if the server declares native support for sliding sync via a proxy.
  * @param cli The MatrixClient of the logged in user.
  * @throws if the proxy server is unreachable or not configured to the given homeserver
  */
-async function syncHealthCheck(cli: MatrixClient): Promise<void> {
-    await cli.http.authedRequest(Method.Post, "/sync", undefined, undefined, {
-        localTimeoutMs: 10 * 1000, // 10s
-        prefix: "/_matrix/client/unstable/org.matrix.msc3575",
-    });
-    logger.info("server natively support sliding sync OK");
-}
-
-/**
- * Check that the proxy url is in fact a sliding sync proxy endpoint and it is up.
- * @param endpoint The proxy endpoint url
- * @param hsUrl The homeserver url of the logged in user.
- * @throws if the proxy server is unreachable or not configured to the given homeserver
- */
-async function proxyHealthCheck(endpoint: string, hsUrl?: string): Promise<void> {
+async function nativeSlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
+    //const proxyUrl = getSlidingSyncWellKnown(cli)?.url;
     const controller = new AbortController();
     const id = window.setTimeout(() => controller.abort(), 10 * 1000); // 10s
-    const res = await fetch(endpoint + "/client/server.json", {
+    const res = await fetch(cli.baseUrl + "/.well-known/matrix/client", {
         signal: controller.signal,
     });
     clearTimeout(id);
     if (res.status != 200) {
-        throw new Error(`proxyHealthCheck: proxy server returned HTTP ${res.status}`);
+        throw new Error(`nativeSlidingSyncSupportCheck: server-side .well-known check gave HTTP ${res.status}`);
     }
     const body = await res.json();
-    if (body.server !== hsUrl) {
-        throw new Error(`proxyHealthCheck: client using ${hsUrl} but server is as ${body.server}`);
+    const proxyUrl = body["org.matrix.msc3575.proxy"]?.url;
+    if (proxyUrl == undefined) {
+        throw new Error(`nativeSlidingSyncSupportCheck: no proxy defined in our client well-known`);
     }
-    logger.info("sliding sync proxy is OK");
+    SettingsStore.setValue("feature_sliding_sync_proxy_url", null, SettingLevel.DEVICE, proxyUrl);
+    logger.info("server natively support sliding sync OK");
 }
 
 export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): void }> = ({ onFinished }) => {
     const cli = MatrixClientPeg.safeGet();
-    const currentProxy = SettingsStore.getValue("feature_sliding_sync_proxy_url");
     const hasNativeSupport = useAsyncMemo(
         () =>
-            syncHealthCheck(cli).then(
+            nativeSlidingSyncSupportCheck(cli).then(
                 () => true,
                 () => false,
             ),
@@ -83,32 +71,6 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
             ? _t("labs|sliding_sync_server_support")
             : _t("labs|sliding_sync_server_no_support");
     }
-
-    const validProxy = withValidation<undefined, { error?: unknown }>({
-        async deriveData({ value }): Promise<{ error?: unknown }> {
-            if (!value) return {};
-            try {
-                await proxyHealthCheck(value, MatrixClientPeg.safeGet().baseUrl);
-                return {};
-            } catch (error) {
-                return { error };
-            }
-        },
-        rules: [
-            {
-                key: "required",
-                test: async ({ value }) => !!value || !!hasNativeSupport,
-                invalid: () => _t("labs|sliding_sync_server_specify_proxy"),
-            },
-            {
-                key: "working",
-                final: true,
-                test: async (_, { error }) => !error,
-                valid: () => _t("spotlight|public_rooms|network_dropdown_available_valid"),
-                invalid: ({ error }) => (error instanceof Error ? error.message : null),
-            },
-        ],
-    });
 
     return (
         <TextInputDialog
@@ -126,12 +88,9 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
                     ? _t("labs|sliding_sync_proxy_url_optional_label")
                     : _t("labs|sliding_sync_proxy_url_label")
             }
-            value={currentProxy}
             button={_t("action|enable")}
-            validator={validProxy}
-            onFinished={(enable, proxyUrl) => {
+            onFinished={(enable) => {
                 if (enable) {
-                    SettingsStore.setValue("feature_sliding_sync_proxy_url", null, SettingLevel.DEVICE, proxyUrl);
                     onFinished(true);
                 } else {
                     onFinished(false);
