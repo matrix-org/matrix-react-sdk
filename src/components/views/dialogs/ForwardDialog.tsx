@@ -151,6 +151,7 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
                 mx_ForwardList_entry_active: isActive,
             })}
             aria-labelledby={`${id}_name`}
+            aria-describedby={`${id}_send`}
             role="listitem"
             ref={ref}
             onFocus={onFocus}
@@ -368,11 +369,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                                     }}
                                     autoFocus={true}
                                     onKeyDown={onKeyDownHandler}
-                                    aria-activedescendant={
-                                        context.state.activeRef?.current?.id
-                                            ? `${context.state.activeRef?.current?.id}_send`
-                                            : undefined
-                                    }
+                                    aria-activedescendant={context.state.activeRef?.current?.id}
                                     aria-owns="mx_ForwardDialog_resultsList"
                                 />
                             )}
