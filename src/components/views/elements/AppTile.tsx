@@ -469,7 +469,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         // this updates the url from e.g. `theme=light` to `theme=dark`
         // We only do this with EC widgets where the theme prop is in the hash. If the widget puts the
         // theme template variable outside the url hash this would cause a (IFrame) page reload on every theme change.
-        if (this.props.app.type === WidgetType.CALL.preferred) this.setState({ widgetUrl: this.sgWidget?.embedUrl });
+        if (WidgetType.CALL.matches(this.props.app.type)) this.setState({ widgetUrl: this.sgWidget?.embedUrl });
 
         // TODO: This is a stop gap solution to responsively update the theme of the widget.
         // A new action should be introduced and the widget driver should be called here, so it informs the widget. (or connect to this by itself)
@@ -638,7 +638,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             "mx_AppTileBody--mini": this.props.miniMode,
             "mx_AppTileBody--loading": this.state.loading,
             // We don't want mx_AppTileBody (rounded corners) for call widgets
-            "mx_AppTileBody--call": this.props.app.type === WidgetType.CALL.preferred,
+            "mx_AppTileBody--call": WidgetType.CALL.matches(this.props.app.type),
         });
         const appTileBodyStyles: CSSProperties = {};
         if (this.props.pointerEvents) {
