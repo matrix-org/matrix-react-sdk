@@ -60,7 +60,7 @@ const socials = [
         url: (url: string) => `mailto:?body=${url}`,
     },
 ];
-// add doc strings to BaseProps
+
 interface BaseProps {
     /**
      * A function that is called when the dialog is dismissed
