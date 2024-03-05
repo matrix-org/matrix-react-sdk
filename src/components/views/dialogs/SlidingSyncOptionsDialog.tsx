@@ -27,11 +27,11 @@ import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import { SettingLevel } from "../../../settings/SettingLevel";
 
 /**
- * Check if the server declares native support for sliding sync via a proxy.
+ * Check if the server declares support for sliding sync via a proxy in its client `.well-known`.
  * @param cli The MatrixClient of the logged in user.
  * @throws if the proxy server is unreachable or not configured to the given homeserver
  */
-async function nativeSlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
+async function proxySlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
     const controller = new AbortController();
     const id = window.setTimeout(() => controller.abort(), 10 * 1000); // 10s
     const res = await fetch(cli.baseUrl + "/.well-known/matrix/client", {
@@ -52,9 +52,9 @@ async function nativeSlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
 
 export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): void }> = ({ onFinished }) => {
     const cli = MatrixClientPeg.safeGet();
-    const hasNativeSupport = useAsyncMemo(
+    const hasProxySupport = useAsyncMemo(
         () =>
-            nativeSlidingSyncSupportCheck(cli).then(
+            proxySlidingSyncSupportCheck(cli).then(
                 () => true,
                 () => false,
             ),
