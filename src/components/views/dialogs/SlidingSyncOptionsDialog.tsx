@@ -50,6 +50,19 @@ async function proxySlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
     logger.info("server natively support sliding sync OK");
 }
 
+/**
+ * Check if the server natively supports sliding sync.
+ * @param cli The MatrixClient of the logged in user.
+ * @throws if the server is unreachable or doesn't natively support sliding sync
+ */
+async function nativeSlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
+    await cli.http.authedRequest(Method.Post, "/sync", undefined, undefined, {
+        localTimeoutMs: 10 * 1000, // 10s
+        prefix: "/_matrix/client/unstable/org.matrix.msc3575",
+    });
+    logger.info("nativeSlidingSyncSupportCheck: server natively supports sliding sync");
+}
+
 export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): void }> = ({ onFinished }) => {
     const cli = MatrixClientPeg.safeGet();
     const hasProxySupport = useAsyncMemo(
