@@ -17,8 +17,8 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import { decode } from "blurhash";
 import { MediaEventContent } from "matrix-js-sdk/src/matrix";
-
 import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import InlineSpinner from "../elements/InlineSpinner";
