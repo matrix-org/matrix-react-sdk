@@ -23,11 +23,11 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { mediaFromContent } from "../../../customisations/Media";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import { fileSize, presentableTextForFile } from "../../../utils/FileUtils";
-import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 import { IBodyProps } from "./IBodyProps";
 import { FileDownloader } from "../../../utils/FileDownloader";
 import TextWithTooltip from "../elements/TextWithTooltip";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import { MediaEventContent } from "matrix-js-sdk";
 
 export let DOWNLOAD_ICON_URL: string; // cached copy of the download.svg asset for the sandboxed iframe later on
 
@@ -128,8 +128,8 @@ export default class MFileBody extends React.Component<IProps, IState> {
         const media = mediaFromContent(this.props.mxEvent.getContent());
         return media.srcHttp;
     }
-    private get content(): IMediaEventContent {
-        return this.props.mxEvent.getContent<IMediaEventContent>();
+    private get content(): MediaEventContent {
+        return this.props.mxEvent.getContent<MediaEventContent>();
     }
 
     private get fileName(): string {

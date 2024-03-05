@@ -25,8 +25,8 @@ import {
     FileSizeReturnArray,
     FileSizeReturnObject,
 } from "filesize";
+import { MediaEventContent } from "matrix-js-sdk/src/matrix";
 
-import { IMediaEventContent } from "../customisations/models/IMediaEventContent";
 import { _t } from "../languageHandler";
 
 /**
@@ -40,7 +40,7 @@ import { _t } from "../languageHandler";
  * @return {string} the human-readable link text for the attachment.
  */
 export function presentableTextForFile(
-    content: IMediaEventContent,
+    content: MediaEventContent,
     fallbackText = _t("common|attachment"),
     withSize = true,
     shortened = false,

@@ -28,10 +28,10 @@ import {
     Room,
     Relations,
     SyncState,
+    EncryptedFile,
 } from "matrix-js-sdk/src/matrix";
 
 import { uploadFile } from "../../../src/ContentMessages";
-import { EncryptedFile } from "../../../src/customisations/models/IMediaEventContent";
 import { createVoiceMessageContent } from "../../../src/utils/createVoiceMessageContent";
 import {
     createVoiceBroadcastRecorder,

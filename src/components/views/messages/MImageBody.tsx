@@ -20,7 +20,7 @@ import { Blurhash } from "react-blurhash";
 import classNames from "classnames";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
+import { ClientEvent, ClientEventHandlerMap, ImageContent } from "matrix-js-sdk/src/matrix";
 import { Tooltip } from "@vector-im/compound-web";
 
 import MFileBody from "./MFileBody";
@@ -30,7 +30,6 @@ import SettingsStore from "../../../settings/SettingsStore";
 import Spinner from "../elements/Spinner";
 import { Media, mediaFromContent } from "../../../customisations/Media";
 import { BLURHASH_FIELD, createThumbnail } from "../../../utils/image-media";
-import { ImageContent } from "../../../customisations/models/IMediaEventContent";
 import ImageView from "../elements/ImageView";
 import { IBodyProps } from "./IBodyProps";
 import { ImageSize, suggestedSize as suggestedImageSize } from "../../../settings/enums/ImageSize";
