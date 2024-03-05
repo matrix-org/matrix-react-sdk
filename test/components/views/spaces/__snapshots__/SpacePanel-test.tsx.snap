@@ -1,0 +1,373 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SpacePanel /> should show all activated metaspaces 1`] = `
+<DocumentFragment>
+  <nav
+    aria-label="Spaces"
+    class="mx_SpacePanel collapsed"
+  >
+    <div
+      class="mx_UserMenu"
+    >
+      <div
+        aria-expanded="false"
+        aria-haspopup="true"
+        aria-label="User menu"
+        class="mx_AccessibleButton mx_UserMenu_contextMenuButton"
+        role="button"
+        tabindex="0"
+        title="User menu"
+      >
+        <div
+          class="mx_UserMenu_userAvatar"
+        >
+          <span
+            class="_avatar_k41ul_17 mx_BaseAvatar mx_UserMenu_userAvatar_BaseAvatar _avatar-imageless_k41ul_60"
+            data-color="5"
+            data-testid="avatar-img"
+            data-type="round"
+            role="presentation"
+            style="--cpd-avatar-size: 32px;"
+          >
+            t
+          </span>
+        </div>
+      </div>
+      <div
+        aria-label="Expand"
+        class="mx_AccessibleButton mx_SpacePanel_toggleCollapse"
+        role="button"
+        tabindex="0"
+      />
+    </div>
+    <ul
+      aria-label="Spaces"
+      class="mx_AutoHideScrollbar mx_SpaceTreeLevel"
+      data-rbd-droppable-context-id="4"
+      data-rbd-droppable-id="top-level-spaces"
+      role="tree"
+      tabindex="-1"
+    >
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Home"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_home mx_SpaceButton_narrow"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                />
+              </div>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            />
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Favourites"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_favourites mx_SpaceButton_narrow"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="People"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_people mx_SpaceButton_narrow"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Other rooms"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_orphans mx_SpaceButton_narrow"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Conferences"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_videoRooms mx_SpaceButton_narrow"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem mx_SpaceItem_narrow collapsed"
+        data-rbd-draggable-context-id="4"
+        data-rbd-draggable-id="!room1:server"
+        role="treeitem"
+      >
+        <div
+          aria-describedby="rbd-hidden-text-4-hidden-text-11"
+          aria-label="Room 1"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow"
+          data-rbd-drag-handle-context-id="4"
+          data-rbd-drag-handle-draggable-id="!room1:server"
+          draggable="false"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <span
+                class="_avatar_k41ul_17 mx_BaseAvatar _avatar-imageless_k41ul_60"
+                data-color="1"
+                data-testid="avatar-img"
+                data-type="round"
+                role="presentation"
+                style="--cpd-avatar-size: 32px;"
+              >
+                R
+              </span>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Space options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            />
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem mx_SpaceItem_narrow collapsed"
+        data-rbd-draggable-context-id="4"
+        data-rbd-draggable-id="!room2:server"
+        role="treeitem"
+      >
+        <div
+          aria-describedby="rbd-hidden-text-4-hidden-text-11"
+          aria-label="Room 2"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow"
+          data-rbd-drag-handle-context-id="4"
+          data-rbd-drag-handle-draggable-id="!room2:server"
+          draggable="false"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <span
+                class="_avatar_k41ul_17 mx_BaseAvatar _avatar-imageless_k41ul_60"
+                data-color="2"
+                data-testid="avatar-img"
+                data-type="round"
+                role="presentation"
+                style="--cpd-avatar-size: 32px;"
+              >
+                R
+              </span>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Space options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            />
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem mx_SpaceItem_narrow collapsed"
+        data-rbd-draggable-context-id="4"
+        data-rbd-draggable-id="!room3:server"
+        role="treeitem"
+      >
+        <div
+          aria-describedby="rbd-hidden-text-4-hidden-text-11"
+          aria-label="Room 3"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_narrow"
+          data-rbd-drag-handle-context-id="4"
+          data-rbd-drag-handle-draggable-id="!room3:server"
+          draggable="false"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <span
+                class="_avatar_k41ul_17 mx_BaseAvatar _avatar-imageless_k41ul_60"
+                data-color="3"
+                data-testid="avatar-img"
+                data-type="round"
+                role="presentation"
+                style="--cpd-avatar-size: 32px;"
+              >
+                R
+              </span>
+            </div>
+            <div
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-label="Space options"
+              class="mx_AccessibleButton mx_SpaceButton_menuButton"
+              role="button"
+              tabindex="0"
+            />
+          </div>
+        </div>
+      </li>
+      <li
+        aria-selected="false"
+        class="mx_SpaceItem mx_SpaceItem_new collapsed"
+        role="treeitem"
+      >
+        <div
+          aria-label="Create a space"
+          class="mx_AccessibleButton mx_SpaceButton mx_SpaceButton_new mx_SpaceButton_narrow"
+          data-testid="create-space-button"
+          role="button"
+          tabindex="-1"
+        >
+          <div
+            class="mx_SpaceButton_selectionWrapper"
+          >
+            <div
+              class="mx_SpaceButton_avatarWrapper"
+            >
+              <div
+                class="mx_SpaceButton_avatarPlaceholder"
+              >
+                <div
+                  class="mx_SpaceButton_icon"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div
+      aria-expanded="false"
+      aria-label="Quick settings"
+      class="mx_AccessibleButton mx_QuickSettingsButton"
+      role="button"
+      tabindex="0"
+    />
+  </nav>
+</DocumentFragment>
+`;
