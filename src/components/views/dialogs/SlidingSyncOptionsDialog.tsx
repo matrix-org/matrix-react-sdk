@@ -32,7 +32,6 @@ import { SettingLevel } from "../../../settings/SettingLevel";
  * @throws if the proxy server is unreachable or not configured to the given homeserver
  */
 async function nativeSlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
-    //const proxyUrl = getSlidingSyncWellKnown(cli)?.url;
     const controller = new AbortController();
     const id = window.setTimeout(() => controller.abort(), 10 * 1000); // 10s
     const res = await fetch(cli.baseUrl + "/.well-known/matrix/client", {
