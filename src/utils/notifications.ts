@@ -32,9 +32,6 @@ import { doesRoomHaveUnreadMessages } from "../Unread";
 // MSC2867 is not yet spec at time of writing. We read from both stable
 // and unstable prefixes and accept the risk that the format may change,
 // since the stable prefix is not actually defined yet.
-// Assuming it passes FCP with no changes, we should update to start writing
-// the flag to the stable prefix (or both) and then ultimately use only the
-// stable prefix.
 
 /**
  * Unstable identifier for the marked_unread event
@@ -160,6 +157,9 @@ export async function setMarkedUnreadState(room: Room, client: MatrixClient, unr
     const currentState = getMarkedUnreadState(room);
 
     if (Boolean(currentState) !== unread) {
+        // Assuming MSC2867 passes FCP with no changes, we should update to start writing
+        // the flag to the stable prefix (or both) and then ultimately use only the
+        // stable prefix.
         await client.setRoomAccountData(room.roomId, MARKED_UNREAD_TYPE_UNSTABLE, { unread });
     }
 }
