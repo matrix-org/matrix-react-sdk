@@ -480,10 +480,9 @@ describe("AppTile", () => {
     });
 
     describe("with an element call widget", () => {
-        let renderResult: RenderResult;
-
-        beforeEach(() => {
-            renderResult = render(
+        beforeEach(() => {});
+        it("should update the widget url on theme change", async () => {
+            const renderResult = render(
                 <MatrixClientContext.Provider value={cli}>
                     <a href="http://themeb" data-mx-theme="light">
                         A
@@ -494,8 +493,6 @@ describe("AppTile", () => {
                     <AppTile key={appElementCall.id} app={appElementCall} room={r1} />
                 </MatrixClientContext.Provider>,
             );
-        });
-        it("should update the widget url on theme change", async () => {
             await waitFor(() => {
                 expect(renderResult.getByLabelText("widget-container").dataset.widgetUrl).toEqual(
                     "https://example.com/?widgetId=1&parentUrl=http%3A%2F%2Flocalhost%2F#theme=light",
@@ -508,6 +505,31 @@ describe("AppTile", () => {
                 );
             });
             await SettingsStore.setValue("theme", null, SettingLevel.DEVICE, "light");
+            await waitFor(() => {
+                expect(renderResult.getByLabelText("widget-container").dataset.widgetUrl).toEqual(
+                    "https://example.com/?widgetId=1&parentUrl=http%3A%2F%2Flocalhost%2F#theme=light",
+                );
+            });
+        });
+        it("should not update the widget url for non Element Call widgets on theme change", async () => {
+            const appNonElementCall = { ...appElementCall, type: MatrixWidgetType.Custom };
+            const renderResult = render(
+                <MatrixClientContext.Provider value={cli}>
+                    <a href="http://themeb" data-mx-theme="light">
+                        A
+                    </a>
+                    <a href="http://themeA" data-mx-theme="dark">
+                        B
+                    </a>
+                    <AppTile key={appNonElementCall.id} app={appNonElementCall} room={r1} />
+                </MatrixClientContext.Provider>,
+            );
+            await waitFor(() => {
+                expect(renderResult.getByLabelText("widget-container").dataset.widgetUrl).toEqual(
+                    "https://example.com/?widgetId=1&parentUrl=http%3A%2F%2Flocalhost%2F#theme=light",
+                );
+            });
+            await SettingsStore.setValue("theme", null, SettingLevel.DEVICE, "dark");
             await waitFor(() => {
                 expect(renderResult.getByLabelText("widget-container").dataset.widgetUrl).toEqual(
                     "https://example.com/?widgetId=1&parentUrl=http%3A%2F%2Flocalhost%2F#theme=light",
