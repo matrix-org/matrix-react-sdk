@@ -28,6 +28,7 @@ import { VoiceBroadcastInfoEventType, VoiceBroadcastRecording } from "../../../s
 import { SdkContextClass } from "../../../src/contexts/SDKContext";
 import ActiveWidgetStore from "../../../src/stores/ActiveWidgetStore";
 import SettingsStore from "../../../src/settings/SettingsStore";
+import * as Theme from "../../../src/theme";
 
 jest.mock("matrix-widget-api/lib/ClientWidgetApi");
 
@@ -63,18 +64,31 @@ describe("StopGapWidget", () => {
         widget.stopMessaging();
     });
 
-    it("should replace parameters in widget url template", () => {
-        const originGetValue = SettingsStore.getValue;
-        const spy = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
-            if (setting === "theme") return "my-theme-for-testing";
-            return originGetValue(setting);
+    describe("url template", () => {
+        it("should replace parameters in widget url template", () => {
+            const originGetValue = SettingsStore.getValue;
+            const spy = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
+                if (setting === "theme") return "my-theme-for-testing";
+                return originGetValue(setting);
+            });
+            expect(widget.embedUrl).toBe(
+                "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=my-theme-for-testing&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
+            );
+            spy.mockClear();
         });
-        expect(widget.embedUrl).toBe(
-            "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=my-theme-for-testing&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
-        );
-        spy.mockClear();
+        it("should replace custom theme with light/dark", () => {
+            const originGetValue = SettingsStore.getValue;
+            const spy = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
+                if (setting === "theme") return "custom-my-theme-light";
+                return originGetValue(setting);
+            });
+            jest.spyOn(Theme, "getCustomTheme").mockReturnValue({ is_dark: false } as unknown as Theme.CustomTheme);
+            expect(widget.embedUrl).toBe(
+                "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=light&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
+            );
+            spy.mockClear();
+        });
     });
-
     it("feeds incoming to-device messages to the widget", async () => {
         const event = mkEvent({
             event: true,
