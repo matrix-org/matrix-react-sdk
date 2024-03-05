@@ -334,7 +334,6 @@ const SessionManagerTab: React.FC = () => {
                         />
                     </SettingsSubsection>
                 )}
-                {dehydratedDeviceId && <div>Dehydrated device enabled</div>}
                 <LoginWithQRSection
                     onShowQr={onShowQrClicked}
                     versions={clientVersions}

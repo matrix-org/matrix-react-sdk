@@ -41,11 +41,27 @@ import type { IServerVersions } from "matrix-js-sdk/src/matrix";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
+import { useOwnDevices } from "../../devices/useOwnDevices";
 
 interface IIgnoredUserProps {
     userId: string;
     onUnignored: (userId: string) => void;
     inProgress: boolean;
+}
+
+const DehydratedDeviceStatus: ReactFC = () => {
+    const { dehydratedDeviceId } = useOwnDevices();
+
+    if (dehydratedDeviceId) {
+        return (
+            <div class="mx_SettingsSubsection_content">
+                <div class="mx_SettingsFlag_label">{_t("settings|security|dehydrated_device_enabled")}</div>
+                <div class="mx_SettingsSubsection_text">{_t("settings|security|dehydrated_device_description")}</div>
+            </div>
+        );
+    } else {
+        return null;
+    }
 }
 
 export class IgnoredUser extends React.Component<IIgnoredUserProps> {
@@ -358,6 +374,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     {secureBackup}
                     {eventIndex}
                     {crossSigning}
+                    <DehydratedDeviceStatus />
                     <CryptographyPanel />
                 </SettingsSection>
                 {privacySection}
