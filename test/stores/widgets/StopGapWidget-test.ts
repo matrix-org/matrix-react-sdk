@@ -66,38 +66,38 @@ describe("StopGapWidget", () => {
 
     describe("url template", () => {
         it("should replace parameters in widget url template", () => {
-            const originGetValue = SettingsStore.getValue;
+            const originalGetValue = SettingsStore.getValue;
             const spy = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
                 if (setting === "theme") return "my-theme-for-testing";
-                return originGetValue(setting);
+                return originalGetValue(setting);
             });
             expect(widget.embedUrl).toBe(
                 "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=my-theme-for-testing&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
             );
-            spy.mockClear();
+            spy.mockRestore();
         });
         it("should replace custom theme with light/dark", () => {
-            const originGetValue = SettingsStore.getValue;
+            const originalGetValue = SettingsStore.getValue;
             const spy = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
                 if (setting === "theme") return "custom-my-theme-light";
-                return originGetValue(setting);
+                return originalGetValue(setting);
             });
             jest.spyOn(Theme, "getCustomTheme").mockReturnValue({ is_dark: false } as unknown as Theme.CustomTheme);
             expect(widget.embedUrl).toBe(
                 "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=light&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
             );
-            spy.mockClear();
+            spy.mockRestore();
         });
         it("should replace parameters in widget popoutUrl template", () => {
-            const originGetValue = SettingsStore.getValue;
+            const originalGetValue = SettingsStore.getValue;
             const spy = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
                 if (setting === "theme") return "my-theme-for-testing";
-                return originGetValue(setting);
+                return originalGetValue(setting);
             });
             expect(widget.popoutUrl).toBe(
                 "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=my-theme-for-testing",
             );
-            spy.mockClear();
+            spy.mockRestore();
         });
     });
     it("feeds incoming to-device messages to the widget", async () => {
