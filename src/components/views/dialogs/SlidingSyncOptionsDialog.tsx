@@ -63,6 +63,24 @@ async function nativeSlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
     logger.info("nativeSlidingSyncSupportCheck: server natively supports sliding sync");
 }
 
+/**
+ * Check that the sliding sync endpoint is in fact a sliding sync endpoint and is up
+ * @param endpoint The proxy endpoint url
+ * @throws if the endpoint is unreachable
+ */
+async function slidingSyncHealthCheck(endpoint: string): Promise<void> {
+    const controller = new AbortController();
+    const id = window.setTimeout(() => controller.abort(), 10 * 1000); // 10s
+    const res = await fetch(endpoint + "/client/server.json", {
+        signal: controller.signal,
+    });
+    clearTimeout(id);
+    if (res.status != 200) {
+        throw new Error(`slidingSyncHealthCheck: endpoint returned ${res.status}`);
+    }
+    logger.info("slidingSyncHealthCheck: sliding sync endpoint exists");
+}
+
 export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): void }> = ({ onFinished }) => {
     const cli = MatrixClientPeg.safeGet();
     const hasNativeSupport = useAsyncMemo(
