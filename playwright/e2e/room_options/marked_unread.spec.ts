@@ -43,8 +43,6 @@ test.describe("Threads", () => {
         },
     });
 
-    test.beforeEach(async ({ page }) => {});
-
     test("should mark a room as unread", async ({ page, app, bot }) => {
         const roomId = await app.client.createRoom({
             name: TEST_ROOM_NAME,
