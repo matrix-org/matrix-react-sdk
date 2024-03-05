@@ -147,7 +147,9 @@ export function getMarkedUnreadState(room: Room): boolean | undefined {
 }
 
 /**
- * Sets the marked_unread state of the given room
+ * Sets the marked_unread state of the given room. This sets some room account data that indicates to
+ * clients that the user considers this room to be 'unread', but without any actual notifications.
+ *
  * @param room The room to set
  * @param client MatrixClient object to use
  * @param unread The new marked_unread state of the room
