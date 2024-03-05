@@ -65,6 +65,15 @@ async function nativeSlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
 
 export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): void }> = ({ onFinished }) => {
     const cli = MatrixClientPeg.safeGet();
+    const hasNativeSupport = useAsyncMemo(
+        () =>
+            nativeSlidingSyncSupportCheck(cli).then(
+                () => true,
+                () => false,
+            ),
+        [],
+        null,
+    );
     const hasProxySupport = useAsyncMemo(
         () =>
             proxySlidingSyncSupportCheck(cli).then(
@@ -75,11 +84,11 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
         null,
     );
 
-    let nativeSupport: string;
-    if (hasNativeSupport === null) {
-        nativeSupport = _t("labs|sliding_sync_checking");
+    let hasSupport: string;
+    if (hasNativeSupport === null && hasProxySupport === null) {
+        hasSupport = _t("labs|sliding_sync_checking");
     } else {
-        nativeSupport = hasNativeSupport
+        hasSupport = hasNativeSupport || hasProxySupport
             ? _t("labs|sliding_sync_server_support")
             : _t("labs|sliding_sync_server_no_support");
     }
@@ -92,7 +101,7 @@ export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): 
                     <div>
                         <b>{_t("labs|sliding_sync_disable_warning")}</b>
                     </div>
-                    {nativeSupport}
+                    {hasSupport}
                 </div>
             }
             placeholder={
