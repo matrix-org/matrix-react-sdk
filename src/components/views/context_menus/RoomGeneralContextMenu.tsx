@@ -46,47 +46,56 @@ import { useSettingValue } from "../../../hooks/useSettings";
 export interface RoomGeneralContextMenuProps extends IContextMenuProps {
     room: Room;
     /**
-     * Called when the 'favourite' option is clicked, after the handler is executed.
+     * Called when the 'favourite' option is clicked, after the menu has processed
+     * whatever the click in the normal way.
      * @param event The event that caused the click
      */
     onPostFavoriteClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the 'low priority'' option is clicked, after the handler is executed.
+     * Called when the 'low priority'' option is clicked, after the menu has processed
+     * whatever the click in the normal way.
      * @param event The event that caused the click
      */
     onPostLowPriorityClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the invite option is clicked, after the handler is executed.
+     * Called when the invite option is clicked, after the menu has processed
+     * whatever the click in the normal way.
      * @param event The event that caused the click
      */
     onPostInviteClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the 'copy link' option is clicked, after the handler is executed.
+     * Called when the 'copy link' option is clicked, after the menu has processed
+     * whatever the click in the normal way.
      * @param event The event that caused the click
      */
     onPostCopyLinkClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the settings option is clicked, after the handler is executed.
+     * Called when the settings option is clicked, after the menu has processed
+     * whatever the click in the normal way.
      * @param event The event that caused the click
      */
     onPostSettingsClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the 'forget room' option is clicked, after the handler is executed.
+     * Called when the 'forget room' option is clicked, after the menu has processed
+     * whatever the click in the normal way.
      * @param event The event that caused the click
      */
     onPostForgetClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the leave option is clicked, after the handler is executed.
+     * Called when the leave option is clicked, after the menu has processed
+     * whatever the click in the normal way.
      * @param event The event that caused the click
      */
     onPostLeaveClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the mark as read option is clicked, after the handler is executed.
+     * Called when the mark as read option is clicked, after the menu has processed
+     * whatever the click in the normal way.
      * @param event The event that caused the click
      */
     onPostMarkAsReadClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the mark as unread option is clicked, after the handler is executed.
+     * Called when the mark as unread option is clicked, after the menu has processed
+     * whatever the click in the normal way.
      * @param event The event that caused the click
      */
     onPostMarkAsUnreadClick?: (event: ButtonEvent) => void;
