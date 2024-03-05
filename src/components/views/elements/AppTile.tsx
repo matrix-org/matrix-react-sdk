@@ -389,6 +389,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     private startWidget(): void {
         this.sgWidget?.prepare().then(() => {
             if (this.unmounted) return;
+            if (!this.state.initialising) return;
             this.setState({ initialising: false });
         });
     }
@@ -718,7 +719,12 @@ export default class AppTile extends React.Component<IProps, IState> {
                     const zIndexAboveOtherPersistentElements = 101;
 
                     appTileBody = (
-                        <div className="mx_AppTile_persistedWrapper">
+                        <div
+                            className="mx_AppTile_persistedWrapper"
+                            // We store the widget url to make it possible to test the value of the widgetUrl. since the iframe itself wont be here. (PersistedElement are in a different dom tree)
+                            data-widget-url={this.state.widgetUrl}
+                            aria-label="widget-container"
+                        >
                             <PersistedElement
                                 zIndex={this.props.miniMode ? zIndexAboveOtherPersistentElements : 9}
                                 persistKey={this.persistKey}
