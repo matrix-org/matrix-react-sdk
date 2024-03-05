@@ -88,6 +88,17 @@ describe("StopGapWidget", () => {
             );
             spy.mockClear();
         });
+        it("should replace parameters in widget popoutUrl template", () => {
+            const originGetValue = SettingsStore.getValue;
+            const spy = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
+                if (setting === "theme") return "my-theme-for-testing";
+                return originGetValue(setting);
+            });
+            expect(widget.popoutUrl).toBe(
+                "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=my-theme-for-testing",
+            );
+            spy.mockClear();
+        });
     });
     it("feeds incoming to-device messages to the widget", async () => {
         const event = mkEvent({
