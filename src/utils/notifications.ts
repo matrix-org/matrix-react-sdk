@@ -34,7 +34,7 @@ import { doesRoomHaveUnreadMessages } from "../Unread";
 // since the stable prefix is not actually defined yet.
 
 /**
- * Unstable identifier for the marked_unread event
+ * Unstable identifier for the marked_unread event, per MSC2867
  */
 export const MARKED_UNREAD_TYPE_UNSTABLE = "com.famedly.marked_unread";
 /**
