@@ -80,7 +80,8 @@ export const useRoomCall = (
     videoCallClick(evt: React.MouseEvent | undefined, selectedType: PlatformCallType): void;
     toggleCallMaximized: () => void;
     isViewingCall: boolean;
-    generateCallLink: (() => URL) | undefined;
+    generateCallLink: () => URL;
+    canGenerateCallLink: boolean;
     isConnectedToCall: boolean;
     hasActiveCallSession: boolean;
     callOptions: PlatformCallType[];
@@ -271,7 +272,8 @@ export const useRoomCall = (
     }, [isViewingCall, room.roomId]);
 
     const generateCallLink = useCallback(() => {
-        // Should never happen, because the hook only passes generateCallLink if externalSpaUrl is set.
+        if (!canJoinWithoutInvite)
+            throw new Error("Cannot create link for room that users can not join without invite.");
         if (!guestSpaUrl) throw new Error("No guest SPA url for external links provided.");
         const url = new URL(guestSpaUrl);
         url.pathname = "/room/";
@@ -288,7 +290,7 @@ export const useRoomCall = (
 
         logger.info("Generated element call external url:", url);
         return url;
-    }, [guestSpaUrl, room]);
+    }, [canJoinWithoutInvite, guestSpaUrl, room]);
     /**
      * We've gone through all the steps
      */
@@ -299,7 +301,8 @@ export const useRoomCall = (
         videoCallClick,
         toggleCallMaximized: toggleCallMaximized,
         isViewingCall: isViewingCall,
-        generateCallLink: guestSpaUrl && canJoinWithoutInvite ? generateCallLink : undefined,
+        generateCallLink,
+        canGenerateCallLink: guestSpaUrl !== undefined && canJoinWithoutInvite,
         isConnectedToCall: isConnectedToCall,
         hasActiveCallSession: hasActiveCallSession,
         callOptions,

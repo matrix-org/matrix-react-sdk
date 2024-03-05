@@ -60,14 +60,29 @@ const socials = [
         url: (url: string) => `mailto:?body=${url}`,
     },
 ];
-
+// add doc strings to BaseProps
 interface BaseProps {
+    /**
+     * A function that is called when the dialog is dismissed
+     */
     onFinished(): void;
+    /**
+     * An optional string to use as the dialog title.
+     * If not provided, an appropriate title for the target type will be used.
+     */
     customTitle?: string;
+    /**
+     * An optional string to use as the dialog subtitle
+     */
     subtitle?: string;
 }
 
 interface Props extends BaseProps {
+    /**
+     * The target to link to.
+     * This can be a Room, User, RoomMember, or MatrixEvent or an already computed URL.
+     * A <u>matrix.to</u> link will be generated out of it if its no already a computed url.
+     */
     target: Room | User | RoomMember | URL;
     permalinkCreator?: RoomPermalinkCreator;
 }

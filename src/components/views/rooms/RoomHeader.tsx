@@ -83,6 +83,7 @@ export default function RoomHeader({
         toggleCallMaximized: toggleCall,
         isViewingCall,
         generateCallLink,
+        canGenerateCallLink,
         isConnectedToCall,
         hasActiveCallSession,
         callOptions,
@@ -124,15 +125,16 @@ export default function RoomHeader({
     const videoClick = useCallback((ev) => videoCallClick(ev, callOptions[0]), [callOptions, videoCallClick]);
 
     const shareClick = useCallback(() => {
-        const target = generateCallLink ? generateCallLink() : undefined;
-        if (target) {
+        try {
+            // generateCallLink throws if the permissions are not met
+            const target = generateCallLink();
             Modal.createDialog(ShareDialog, {
                 target,
                 customTitle: _t("share|share_call"),
                 subtitle: _t("share|share_call_subtitle"),
             });
-        } else {
-            logger.error("Could not generate call link.");
+        } catch (e) {
+            logger.error("Could not generate call link.", e);
         }
     }, [generateCallLink]);
 
@@ -333,7 +335,7 @@ export default function RoomHeader({
                             </Tooltip>
                         );
                     })}
-                    {isViewingCall && generateCallLink && createExternalLinkButton}
+                    {isViewingCall && canGenerateCallLink && createExternalLinkButton}
                     {((isConnectedToCall && isViewingCall) || isVideoRoom(room)) && <VideoRoomChatButton room={room} />}
 
                     {hasActiveCallSession && !isConnectedToCall && !isViewingCall ? (
