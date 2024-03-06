@@ -79,12 +79,16 @@ describe("StopGapWidget", () => {
         it("should replace custom theme with light/dark", () => {
             const originalGetValue = SettingsStore.getValue;
             const spy = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
-                if (setting === "theme") return "custom-my-theme-light";
+                if (setting === "theme") return "custom-my-theme";
                 return originalGetValue(setting);
             });
             jest.spyOn(Theme, "getCustomTheme").mockReturnValue({ is_dark: false } as unknown as Theme.CustomTheme);
             expect(widget.embedUrl).toBe(
                 "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=light&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
+            );
+            jest.spyOn(Theme, "getCustomTheme").mockReturnValue({ is_dark: true } as unknown as Theme.CustomTheme);
+            expect(widget.embedUrl).toBe(
+                "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=dark&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
             );
             spy.mockRestore();
         });
