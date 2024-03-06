@@ -43,7 +43,6 @@ import { normalize } from "matrix-js-sdk/src/utils";
 import { ReEmitter } from "matrix-js-sdk/src/ReEmitter";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
-import { CryptoBackend } from "matrix-js-sdk/src/common-crypto/CryptoBackend";
 import { MapperOpts } from "matrix-js-sdk/src/event-mapper";
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSessionManager } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
@@ -441,9 +440,10 @@ export async function mkEncryptedEvent(opts: {
     };
 
     const mockCrypto = {
-        decryptEvent: async (_ev): Promise<IEventDecryptionResult> => decryptionResult,
-    } as CryptoBackend;
+        decryptEvent: async (_ev: MatrixEvent): Promise<IEventDecryptionResult> => decryptionResult,
+    };
 
+    // @ts-ignore `mockCrypto` is not a `CryptoBackend`, which is an internal type in the js-sdk
     await mxEvent.attemptDecryption(mockCrypto);
     return mxEvent;
 }

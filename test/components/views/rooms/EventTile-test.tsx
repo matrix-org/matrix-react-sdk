@@ -29,7 +29,6 @@ import {
     TweakName,
 } from "matrix-js-sdk/src/matrix";
 import { EventEncryptionInfo, EventShieldColour, EventShieldReason } from "matrix-js-sdk/src/crypto-api";
-import { CryptoBackend } from "matrix-js-sdk/src/common-crypto/CryptoBackend";
 import { TooltipProvider } from "@vector-im/compound-web";
 
 import EventTile, { EventTileProps } from "../../../../src/components/views/rooms/EventTile";
@@ -317,11 +316,12 @@ describe("EventTile", () => {
                 });
 
                 const mockCrypto = {
-                    decryptEvent: async (_ev): Promise<IEventDecryptionResult> => {
+                    decryptEvent: async (_ev: MatrixEvent): Promise<IEventDecryptionResult> => {
                         throw new Error("can't decrypt");
                     },
-                } as CryptoBackend;
+                };
 
+                // @ts-ignore `mockCrypto` is not a `CryptoBackend`, which is an internal type in the js-sdk
                 await mxEvent.attemptDecryption(mockCrypto);
 
                 const { container } = getComponent();
