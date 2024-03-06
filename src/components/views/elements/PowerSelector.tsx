@@ -39,7 +39,7 @@ interface Props<K extends undefined | string> {
     // The name to annotate the selector with
     label?: string;
 
-    onChange(value: number, powerLevelKey: K extends undefined ? void : K): void;
+    onChange(value: number, powerLevelKey: K extends undefined ? void : K): Promise<void>;
 
     // Optional key to pass as the second argument to `onChange`
     powerLevelKey: K extends undefined ? void : K;
@@ -112,8 +112,10 @@ export default class PowerSelector<K extends undefined | string> extends React.C
             this.setState({ custom: true });
         } else {
             const powerLevel = parseInt(event.target.value);
-            this.props.onChange(powerLevel, this.props.powerLevelKey);
             this.setState({ selectValue: powerLevel });
+            this.props.onChange(powerLevel, this.props.powerLevelKey).catch(() => {
+                this.initStateFromProps();
+            });
         }
     };
 
@@ -126,7 +128,9 @@ export default class PowerSelector<K extends undefined | string> extends React.C
         event.stopPropagation();
 
         if (Number.isFinite(this.state.customValue)) {
-            this.props.onChange(this.state.customValue, this.props.powerLevelKey);
+            this.props.onChange(this.state.customValue, this.props.powerLevelKey).catch(() => {
+                this.initStateFromProps();
+            });
         } else {
             this.initStateFromProps(); // reset, invalid input
         }
