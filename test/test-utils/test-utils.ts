@@ -440,10 +440,8 @@ export async function mkEncryptedEvent(opts: {
     };
 
     const mockCrypto = {
-        decryptEvent: async (_ev: MatrixEvent): Promise<IEventDecryptionResult> => decryptionResult,
-    };
-
-    // @ts-ignore `mockCrypto` is not a `CryptoBackend`, which is an internal type in the js-sdk
+        decryptEvent: async (_ev): Promise<IEventDecryptionResult> => decryptionResult,
+    } as Parameters<MatrixEvent["attemptDecryption"]>[0];
     await mxEvent.attemptDecryption(mockCrypto);
     return mxEvent;
 }

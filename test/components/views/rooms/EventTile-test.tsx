@@ -316,12 +316,10 @@ describe("EventTile", () => {
                 });
 
                 const mockCrypto = {
-                    decryptEvent: async (_ev: MatrixEvent): Promise<IEventDecryptionResult> => {
+                    decryptEvent: async (_ev): Promise<IEventDecryptionResult> => {
                         throw new Error("can't decrypt");
                     },
-                };
-
-                // @ts-ignore `mockCrypto` is not a `CryptoBackend`, which is an internal type in the js-sdk
+                } as Parameters<MatrixEvent["attemptDecryption"]>[0];
                 await mxEvent.attemptDecryption(mockCrypto);
 
                 const { container } = getComponent();
