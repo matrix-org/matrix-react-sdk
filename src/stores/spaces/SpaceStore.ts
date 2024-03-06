@@ -435,7 +435,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return true;
         }
         if (space === MetaSpace.VideoRooms) {
-            return this.matrixClient?.getRoom(roomId)?.isCallRoom() ?? false;
+            return !!this.matrixClient?.getRoom(roomId)?.isCallRoom();
         }
         if (this.getSpaceFilteredRoomIds(space, includeDescendantSpaces)?.has(roomId)) {
             return true;
