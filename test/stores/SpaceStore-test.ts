@@ -129,6 +129,13 @@ describe("SpaceStore", () => {
         await emitProm;
     };
 
+    const setShowIndirectRoomsInSpace = async (value: boolean) => {
+        const emitProm = testUtils.emitPromise(store, store.activeSpace);
+        await SettingsStore.setValue("Spaces.showIndirectRoomsInSpace", null, SettingLevel.ACCOUNT, value);
+        jest.runOnlyPendingTimers(); // run async dispatch
+        await emitProm;
+    };
+
     beforeEach(async () => {
         jest.runOnlyPendingTimers(); // run async dispatch
         mocked(client).getVisibleRooms.mockReturnValue((rooms = []));
@@ -677,6 +684,14 @@ describe("SpaceStore", () => {
 
             it("does not honour m.space.parent if sender does not have permission in parent space", () => {
                 expect(store.isRoomInSpace(space3, room3)).toBeFalsy();
+            });
+
+            it("correctly emits events for SettingUpdate of Spaces.showIndirectRoomsInSpace", async () => {
+                const emitSpy = jest.spyOn(store, "emit");
+
+                setShowIndirectRoomsInSpace(false);
+
+                expect(emitSpy).toHaveBeenCalledWith(store.activeSpace);
             });
         });
     });

@@ -161,6 +161,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         SettingsStore.monitorSetting("Spaces.allRoomsInHome", null);
         SettingsStore.monitorSetting("Spaces.enabledMetaSpaces", null);
         SettingsStore.monitorSetting("Spaces.showPeopleInSpace", null);
+        SettingsStore.monitorSetting("Spaces.showIndirectRoomsInSpace", null);
         SettingsStore.monitorSetting("feature_dynamic_room_predecessors", null);
     }
 
@@ -1304,6 +1305,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                                 this.updateNotificationStates([payload.roomId]);
                             }
                         }
+                        break;
+
+                    case "Spaces.showIndirectRoomsInSpace":
+                        // triggers SpaceFilterCondition onStoreUpdate
+                        this.emit(this.activeSpace);
                         break;
 
                     case "feature_dynamic_room_predecessors":
