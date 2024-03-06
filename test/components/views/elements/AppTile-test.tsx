@@ -480,7 +480,10 @@ describe("AppTile", () => {
     });
 
     describe("with an element call widget", () => {
-        beforeEach(() => {});
+        beforeEach(() => {
+            document.body.style.setProperty("--custom-color", "red");
+            document.body.style.setProperty("normal-color", "blue");
+        });
         it("should update the widget url on theme change", async () => {
             const renderResult = render(
                 <MatrixClientContext.Provider value={cli}>
