@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen, fireEvent, act } from "@testing-library/react";
+import { render, screen, fireEvent, act, cleanup } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
 
@@ -143,6 +143,14 @@ describe("<SpacePanel />", () => {
     beforeEach(() => {
         mocked(shouldShowComponent).mockClear().mockReturnValue(true);
     });
+    afterEach(() => {
+        cleanup();
+    });
+
+    it("should show all activated MetaSpaces in the correct order", async () => {
+        const renderResult = render(<SpacePanel />);
+        expect(renderResult.asFragment()).toMatchSnapshot();
+    });
 
     describe("create new space button", () => {
         it("renders create space button when UIComponent.CreateSpaces component should be shown", () => {
@@ -181,9 +189,5 @@ describe("<SpacePanel />", () => {
         await drop(room1);
 
         expect(SpaceStore.instance.moveRootSpace).toHaveBeenCalledWith(0, 1);
-    });
-    it("should show all activated MetaSpaces in the correct order", async () => {
-        const renderResult = render(<SpacePanel />);
-        expect(renderResult.asFragment()).toMatchSnapshot();
     });
 });
