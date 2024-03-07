@@ -52,6 +52,7 @@ interface IProps {
     showPollsButton: boolean;
     showStickersButton: boolean;
     toggleButtonMenu: () => void;
+    showVoiceRecordingButton: boolean;
     showVoiceBroadcastButton: boolean;
     onStartVoiceBroadcastClick: () => void;
     isRichTextEnabled: boolean;
@@ -88,7 +89,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         moreButtons = [
             uploadButton(), // props passed via UploadButtonContext
             showStickersButton(props),
-            voiceRecordingButton(props, narrow),
+            props.showVoiceRecordingButton ? voiceRecordingButton(props, narrow) : null,
             startVoiceBroadcastButton(props),
             props.showPollsButton ? pollButton(room, props.relation) : null,
             showLocationButton(props, room, matrixClient),
@@ -108,7 +109,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         ];
         moreButtons = [
             showStickersButton(props),
-            voiceRecordingButton(props, narrow),
+            props.showVoiceRecordingButton ? voiceRecordingButton(props, narrow) : null,
             startVoiceBroadcastButton(props),
             props.showPollsButton ? pollButton(room, props.relation) : null,
             showLocationButton(props, room, matrixClient),
