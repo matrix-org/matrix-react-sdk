@@ -20,7 +20,8 @@ import { Blurhash } from "react-blurhash";
 import classNames from "classnames";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, ClientEventHandlerMap, ImageContent } from "matrix-js-sdk/src/matrix";
+import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
+import { ImageContent } from "matrix-js-sdk/src/types";
 import { Tooltip } from "@vector-im/compound-web";
 
 import MFileBody from "./MFileBody";

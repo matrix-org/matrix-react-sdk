@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { EncryptedFile, MediaEventContent } from "matrix-js-sdk/src/matrix";
+import { EncryptedFile, MediaEventContent } from "matrix-js-sdk/src/types";
 
 export interface IPreparedMedia extends IMediaObject {
     thumbnail?: IMediaObject;

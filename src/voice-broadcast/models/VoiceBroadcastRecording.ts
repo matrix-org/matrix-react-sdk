@@ -18,7 +18,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import {
     ClientEvent,
     ClientEventHandlerMap,
-    EncryptedFile,
     EventType,
     MatrixClient,
     MatrixEvent,
@@ -27,6 +26,7 @@ import {
     RelationType,
     TypedEventEmitter,
 } from "matrix-js-sdk/src/matrix";
+import { EncryptedFile } from "matrix-js-sdk/src/types";
 
 import {
     ChunkRecordedPayload,

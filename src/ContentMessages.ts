@@ -27,13 +27,15 @@ import {
     UploadOpts,
     UploadProgress,
     THREAD_RELATION_TYPE,
+} from "matrix-js-sdk/src/matrix";
+import {
     ImageInfo,
     AudioInfo,
     VideoInfo,
     EncryptedFile,
     MediaEventContent,
     MediaEventInfo,
-} from "matrix-js-sdk/src/matrix";
+} from "matrix-js-sdk/src/types";
 import encrypt from "matrix-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import { logger } from "matrix-js-sdk/src/logger";

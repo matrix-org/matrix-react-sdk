@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ComponentProps, ReactNode } from "react";
 import { Tooltip } from "@vector-im/compound-web";
-import { MediaEventContent } from "matrix-js-sdk/src/matrix";
+import { MediaEventContent } from "matrix-js-sdk/src/types";
 
 import MImageBody from "./MImageBody";
 import { BLURHASH_FIELD } from "../../../utils/image-media";

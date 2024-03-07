@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { AllHTMLAttributes, createRef } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MediaEventContent } from "matrix-js-sdk/src/matrix";
+import { MediaEventContent } from "matrix-js-sdk/src/types";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";

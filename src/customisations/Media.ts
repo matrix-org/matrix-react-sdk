@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import { MatrixClient, MediaEventContent, ResizeMethod } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, ResizeMethod } from "matrix-js-sdk/src/matrix";
+import { MediaEventContent } from "matrix-js-sdk/src/types";
 import { Optional } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -154,7 +155,7 @@ export class Media {
 
 /**
  * Creates a media object from event content.
- * @param {IMediaEventContent} content The event content.
+ * @param {MediaEventContent} content The event content.
  * @param {MatrixClient} client? Optional client to use.
  * @returns {Media} The media object.
  */

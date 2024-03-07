@@ -14,14 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-    MatrixEvent,
-    EventType,
-    MsgType,
-    FileContent,
-    ImageContent,
-    MediaEventContent,
-} from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, EventType, MsgType } from "matrix-js-sdk/src/matrix";
+import { FileContent, ImageContent, MediaEventContent } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { LazyValue } from "./LazyValue";

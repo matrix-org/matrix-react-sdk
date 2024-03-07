@@ -16,7 +16,8 @@ limitations under the License.
 
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IContent, MediaEventContent } from "matrix-js-sdk/src/matrix";
+import { IContent } from "matrix-js-sdk/src/matrix";
+import { MediaEventContent } from "matrix-js-sdk/src/types";
 
 import { Playback } from "../../../audio/Playback";
 import InlineSpinner from "../elements/InlineSpinner";

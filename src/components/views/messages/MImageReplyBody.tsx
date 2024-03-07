@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { ImageContent } from "matrix-js-sdk/src/matrix";
+import { ImageContent } from "matrix-js-sdk/src/types";
 
 import MImageBody from "./MImageBody";
 

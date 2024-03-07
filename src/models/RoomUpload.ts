@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EncryptedFile, IEventRelation, UploadProgress } from "matrix-js-sdk/src/matrix";
+import { IEventRelation, UploadProgress } from "matrix-js-sdk/src/matrix";
+import { EncryptedFile } from "matrix-js-sdk/src/types";
 
 export class RoomUpload {
     public readonly abortController = new AbortController();
