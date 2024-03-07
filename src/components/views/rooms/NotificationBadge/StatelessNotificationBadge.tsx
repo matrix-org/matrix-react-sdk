@@ -28,7 +28,10 @@ interface Props {
     count: number;
     level: NotificationLevel;
     knocked?: boolean;
-    type?: "badge" | "dot";
+    /**
+     * If true, the badge will always be displayed as a dot. Count will be ignored.
+     */
+    forceDot?: boolean;
 }
 
 interface ClickableProps extends Props {
@@ -40,7 +43,7 @@ interface ClickableProps extends Props {
 }
 
 export const StatelessNotificationBadge = forwardRef<HTMLDivElement, XOR<Props, ClickableProps>>(
-    ({ symbol, count, level, knocked, type = "badge", ...props }, ref) => {
+    ({ symbol, count, level, knocked, forceDot = false, ...props }, ref) => {
         const hideBold = useSettingValue("feature_hidebold");
 
         // Don't show a badge if we don't need to
@@ -56,15 +59,27 @@ export const StatelessNotificationBadge = forwardRef<HTMLDivElement, XOR<Props, 
             symbol = formatCount(count);
         }
 
+        // We show a dot if either:
+        // * The props force us to, or
+        // * It's just an activity-level notification or (in theory) lower and the room isn't knocked
+        const badgeType =
+            forceDot || (level <= NotificationLevel.Activity && !knocked)
+                ? "dot"
+                : !symbol || symbol.length < 3
+                  ? "badge_2char"
+                  : "badge_3char";
+
         const classes = classNames({
             mx_NotificationBadge: true,
             mx_NotificationBadge_visible: isEmptyBadge || knocked ? true : hasUnreadCount,
             mx_NotificationBadge_level_notification: level == NotificationLevel.Notification,
             mx_NotificationBadge_level_highlight: level >= NotificationLevel.Highlight,
-            mx_NotificationBadge_dot: (isEmptyBadge && !knocked) || type === "dot",
             mx_NotificationBadge_knocked: knocked,
-            mx_NotificationBadge_2char: type === "badge" && symbol && symbol.length > 0 && symbol.length < 3,
-            mx_NotificationBadge_3char: type === "badge" && symbol && symbol.length > 2,
+
+            // Exactly one of mx_NotificationBadge_dot, mx_NotificationBadge_2char, mx_NotificationBadge_3char
+            mx_NotificationBadge_dot: badgeType === "dot",
+            mx_NotificationBadge_2char: badgeType === "badge_2char",
+            mx_NotificationBadge_3char: badgeType === "badge_3char",
         });
 
         if (props.onClick) {

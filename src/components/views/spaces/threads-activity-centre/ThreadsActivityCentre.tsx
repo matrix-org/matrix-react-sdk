@@ -130,7 +130,7 @@ function ThreadsActivityRow({ room, onClick, notificationLevel }: ThreadsActivit
             label={room.name}
             Icon={<DecoratedRoomAvatar room={room} size="32px" />}
         >
-            <StatelessNotificationBadge level={notificationLevel} count={0} symbol={null} type="dot" />
+            <StatelessNotificationBadge level={notificationLevel} count={0} symbol={null} forceDot={true} />
         </MenuItem>
     );
 }
