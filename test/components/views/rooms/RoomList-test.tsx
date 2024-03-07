@@ -16,10 +16,11 @@ limitations under the License.
 */
 
 import React, { ComponentProps } from "react";
-import { render, screen, within } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { JoinRule, Room } from "matrix-js-sdk/src/matrix";
+import { TooltipProvider } from "@vector-im/compound-web";
 
 import RoomList from "../../../../src/components/views/rooms/RoomList";
 import ResizeNotifier from "../../../../src/utils/ResizeNotifier";
@@ -33,6 +34,9 @@ import { mkSpace, stubClient } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import SpaceStore from "../../../../src/stores/spaces/SpaceStore";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
+import RoomListStore from "../../../../src/stores/room-list/RoomListStore";
+import { ITagMap } from "../../../../src/stores/room-list/algorithms/models";
+import { DefaultTagID } from "../../../../src/stores/room-list/models";
 
 jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
     shouldShowComponent: jest.fn(),
@@ -52,16 +56,18 @@ describe("RoomList", () => {
 
     function getComponent(props: Partial<ComponentProps<typeof RoomList>> = {}): JSX.Element {
         return (
-            <RoomList
-                onKeyDown={jest.fn()}
-                onFocus={jest.fn()}
-                onBlur={jest.fn()}
-                onResize={jest.fn()}
-                resizeNotifier={new ResizeNotifier()}
-                isMinimized={false}
-                activeSpace={MetaSpace.Home}
-                {...props}
-            />
+            <TooltipProvider>
+                <RoomList
+                    onKeyDown={jest.fn()}
+                    onFocus={jest.fn()}
+                    onBlur={jest.fn()}
+                    onResize={jest.fn()}
+                    resizeNotifier={new ResizeNotifier()}
+                    isMinimized={false}
+                    activeSpace={MetaSpace.Home}
+                    {...props}
+                />
+            </TooltipProvider>
         );
     }
 
@@ -204,6 +210,61 @@ describe("RoomList", () => {
                     action: Action.ViewRoom,
                     room_id: space1,
                 });
+            });
+        });
+
+        describe("when video meta space is active", () => {
+            const videoRoomPrivate = "!videoRoomPrivate:server";
+            const videoRoomPublic = "!videoRoomPublic:server";
+
+            beforeEach(async () => {
+                cleanup();
+                const rooms: Room[] = [];
+                RoomListStore.instance;
+                testUtils.mkRoom(client, videoRoomPrivate, rooms);
+                testUtils.mkRoom(client, videoRoomPublic, rooms);
+
+                mocked(client).getRoom.mockImplementation(
+                    (roomId) => rooms.find((room) => room.roomId === roomId) || null,
+                );
+                mocked(client).getRooms.mockImplementation(() => rooms);
+
+                [videoRoomPrivate, videoRoomPublic].forEach((roomId) => {
+                    const videoRoom = client.getRoom(roomId);
+                    (videoRoom!.isCallRoom as jest.Mock).mockImplementation(() => {
+                        return true;
+                    });
+                });
+                const videoRoomPublicRoom = client.getRoom(videoRoomPublic);
+                (videoRoomPublicRoom!.getJoinRule as jest.Mock).mockReturnValue(JoinRule.Public);
+
+                const roomLists: ITagMap = {};
+                roomLists[DefaultTagID.Conference] = client.getRooms();
+                jest.spyOn(RoomListStore.instance, "orderedLists", "get").mockReturnValue(roomLists);
+                await testUtils.setupAsyncStoreWithClient(store, client);
+
+                store.setActiveSpace(MetaSpace.VideoRooms);
+            });
+
+            it("renders Conferences and Room but no People section", () => {
+                const renderResult = render(getComponent({ activeSpace: MetaSpace.VideoRooms }));
+                const roomsEl = renderResult.getByRole("treeitem", { name: "Rooms" });
+                const conferenceEl = renderResult.getByRole("treeitem", { name: "Conferences" });
+
+                const noInvites = screen.queryByRole("treeitem", { name: "Invites" });
+                const noFavourites = screen.queryByRole("treeitem", { name: "Favourites" });
+                const noPeople = screen.queryByRole("treeitem", { name: "People" });
+                const noLowPriority = screen.queryByRole("treeitem", { name: "Low priority" });
+                const noHistorical = screen.queryByRole("treeitem", { name: "Historical" });
+
+                expect(roomsEl).toBeVisible();
+                expect(conferenceEl).toBeVisible();
+
+                expect(noInvites).toBeFalsy();
+                expect(noFavourites).toBeFalsy();
+                expect(noPeople).toBeFalsy();
+                expect(noLowPriority).toBeFalsy();
+                expect(noHistorical).toBeFalsy();
             });
         });
     });
