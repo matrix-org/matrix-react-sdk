@@ -37,7 +37,7 @@ async function proxySlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
     if (proxyUrl == undefined) {
         throw new Error(`proxySlidingSyncSupportCheck: no proxy defined in our client well-known`);
     }
-    logger.info("server natively support sliding sync OK");
+    logger.info("proxySlidingSyncSupportCheck: server defines a sliding sync proxy");
 }
 
 /**
@@ -68,7 +68,7 @@ async function slidingSyncHealthCheck(endpoint: string): Promise<void> {
     if (res.status != 200) {
         throw new Error(`slidingSyncHealthCheck: endpoint returned ${res.status}`);
     }
-    logger.info("slidingSyncHealthCheck: sliding sync endpoint exists");
+    logger.info("slidingSyncHealthCheck: sliding sync endpoint is up");
 }
 
 export const SlidingSyncOptionsDialog: React.FC<{ onFinished(enabled: boolean): void }> = ({ onFinished }) => {
