@@ -389,7 +389,7 @@ const SpacePanel: React.FC = () => {
                             }
                             if (navAction === KeyBindingAction.NextLandmark) {
                                 // The next landmark is the room search input.
-                                document.querySelector(".mx_RoomSearch")?.focus();
+                                document.querySelector<HTMLElement>(".mx_RoomSearch")?.focus();
                                 ev.stopPropagation();
                                 ev.preventDefault();
                                 return;

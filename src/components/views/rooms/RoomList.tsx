@@ -667,7 +667,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
 
                             if (navAction === KeyBindingAction.PreviousLandmark) {
                                 // The previous landmark is the room search input.
-                                document.querySelector(".mx_RoomSearch")?.focus();
+                                document.querySelector<HTMLElement>(".mx_RoomSearch")?.focus();
                                 ev.stopPropagation();
                                 ev.preventDefault();
                                 return;
