@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useMemo } from "react";
 import { Icon as CameraCircle } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 
 import { Icon as HomeIcon } from "../../../../../../res/img/element-icons/home.svg";
@@ -31,6 +31,7 @@ import PosthogTrackers from "../../../../../PosthogTrackers";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
+import SdkConfig from "../../../../../SdkConfig";
 
 type InteractionName = "WebSettingsSidebarTabSpacesCheckbox" | "WebQuickSettingsPinToSidebarCheckbox";
 
@@ -65,7 +66,9 @@ const SidebarUserSettingsTab: React.FC = () => {
         [MetaSpace.VideoRooms]: videoRoomsEnabled,
     } = useSettingValue<Record<MetaSpace, boolean>>("Spaces.enabledMetaSpaces");
     const allRoomsInHome = useSettingValue<boolean>("Spaces.allRoomsInHome");
-    const guestSpaUrl = "true";
+    const guestSpaUrl = useMemo(() => {
+        return SdkConfig.get("element_call").guest_spa_url;
+    }, []);
     const onAllRoomsInHomeToggle = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
         await SettingsStore.setValue("Spaces.allRoomsInHome", null, SettingLevel.ACCOUNT, event.target.checked);
         PosthogTrackers.trackInteraction("WebSettingsSidebarTabSpacesCheckbox", event, 1);
@@ -160,7 +163,7 @@ const SidebarUserSettingsTab: React.FC = () => {
                         </SettingsSubsectionText>
                         <SettingsSubsectionText>
                             {_t("settings|sidebar|metaspaces_video_rooms_description") + guestSpaUrl
-                                ? " " + _t("settings|sidebar|metaspaces_video_rooms_description")
+                                ? " " + _t("settings|sidebar|metaspaces_video_rooms_description_invite_extension")
                                 : ""}
                         </SettingsSubsectionText>
                     </StyledCheckbox>
