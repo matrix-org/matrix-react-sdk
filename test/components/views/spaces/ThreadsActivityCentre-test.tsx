@@ -59,12 +59,12 @@ describe("ThreadsActivityCentre", () => {
     });
     roomWithActivity.name = "Just activity";
 
-    const roomWithNotif = new Room("!room:server", cli, cli.getSafeUserId(), {
+    const roomWithNotif = new Room("!room2:server", cli, cli.getSafeUserId(), {
         pendingEventOrdering: PendingEventOrdering.Detached,
     });
     roomWithNotif.name = "A notification";
 
-    const roomWithHighlight = new Room("!room:server", cli, cli.getSafeUserId(), {
+    const roomWithHighlight = new Room("!room3:server", cli, cli.getSafeUserId(), {
         pendingEventOrdering: PendingEventOrdering.Detached,
     });
     roomWithHighlight.name = "This is a real highlight";
@@ -179,7 +179,7 @@ describe("ThreadsActivityCentre", () => {
 
     it("should order the room with the same notification level by most recent", async () => {
         // Generate two new rooms with threads
-        const secondRoomWithHighlight = new Room("!room:server", cli, cli.getSafeUserId(), {
+        const secondRoomWithHighlight = new Room("!room4:server", cli, cli.getSafeUserId(), {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
         secondRoomWithHighlight.name = "This is a second real highlight";
@@ -195,7 +195,7 @@ describe("ThreadsActivityCentre", () => {
             1,
         );
 
-        const thirdRoomWithHighlight = new Room("!room:server", cli, cli.getSafeUserId(), {
+        const thirdRoomWithHighlight = new Room("!room5:server", cli, cli.getSafeUserId(), {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
         thirdRoomWithHighlight.name = "This is a third real highlight";
