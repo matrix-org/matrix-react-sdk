@@ -35,7 +35,7 @@ async function proxySlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
     const clientWellKnown = cli.getClientWellKnown();
     const proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
     if (proxyUrl == undefined) {
-        throw new Error(`nativeSlidingSyncSupportCheck: no proxy defined in our client well-known`);
+        throw new Error(`proxySlidingSyncSupportCheck: no proxy defined in our client well-known`);
     }
     SettingsStore.setValue("feature_sliding_sync_proxy_url", null, SettingLevel.DEVICE, proxyUrl);
     logger.info("server natively support sliding sync OK");
