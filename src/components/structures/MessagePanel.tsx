@@ -441,7 +441,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             for (let i = events.length - 1; i >= 0; i--) {
                 const eventId = events[i].event.getId()!;
                 if (previousEventId && eventId === currentEventId) {
-                    document.querySelector('.mx_EventTile[data-event-id="' + previousEventId + '"]')?.focus();
+                    document.querySelector<HTMLElement>('.mx_EventTile[data-event-id="' + previousEventId + '"]')?.focus();
                     this.focusedEventId = previousEventId;
                     ev.preventDefault();
                     return;

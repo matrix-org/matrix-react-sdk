@@ -120,10 +120,6 @@ export enum KeyBindingAction {
     SelectPrevUnreadRoom = "KeyBinding.previousUnreadRoom",
     /** Select next room with unread messages */
     SelectNextUnreadRoom = "KeyBinding.nextUnreadRoom",
-    /** Select prev message */
-    SelectPrevMessage = "KeyBinding.previousMessage",
-    /** Select next message */
-    SelectNextMessage = "KeyBinding.nextMessage",
 
     /** Switches to a space by number */
     SwitchToSpaceByNumber = "KeyBinding.switchToSpaceByNumber",

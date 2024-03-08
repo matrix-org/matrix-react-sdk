@@ -314,15 +314,14 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             case KeyBindingAction.NextLandmark:
                 ev.stopPropagation();
                 ev.preventDefault();
-                (
-                    document.querySelector(".mx_RoomTile_selected") ||
-                    document.querySelector(".mx_RoomListHeader_contextMenuButton")
-                )?.focus();
+                // The next landmark is the selected room or the room list header, if none selected.
+                document.querySelector<HTMLElement>(".mx_RoomTile_selected, .mx_RoomListHeader_contextMenuButton")?.focus();
                 break;
             case KeyBindingAction.PreviousLandmark:
                 ev.stopPropagation();
                 ev.preventDefault();
-                document.querySelector(".mx_SpaceButton_active")?.focus();
+                // The previous landmark is the active space button.
+                document.querySelector<HTMLElement>(".mx_SpaceButton_active")?.focus();
                 break;
         }
     };
