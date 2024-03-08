@@ -433,7 +433,11 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             const currentEventId =
                 this.focusedEventId ||
                 this.props.highlightedEventId ||
-                (events[events.length - 1] ? events[events.length - 1].event.getId()! : null);
+                events.reduce(
+                    // Get the id of the last event in the list that's shown.
+                    (prev, { event, shouldShow }) => shouldShow ? event.getId() : prev,
+                    null as string | null,
+                );
             if (navAction === KeyBindingAction.SelectPrevMessage) {
                 events.reverse();
             }
