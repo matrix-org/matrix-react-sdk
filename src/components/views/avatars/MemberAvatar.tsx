@@ -86,6 +86,7 @@ function MemberAvatar(
     return (
         <BaseAvatar
             {...props}
+            tabindex="-1"
             size={size}
             name={name ?? ""}
             title={hideTitle ? undefined : title}
@@ -102,6 +103,7 @@ function MemberAvatar(
                       }
                     : props.onClick
             }
+            aria-label={name ? name + ". " : ""}
             altText={_t("common|user_avatar")}
             ref={ref}
         />

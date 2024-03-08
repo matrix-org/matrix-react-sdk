@@ -1061,7 +1061,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     this.context.timelineRenderingType,
                 );
             avatar = (
-                <div className="mx_EventTile_avatar">
+                <div className="mx_EventTile_avatar" id={'mx_EventTile_avatar_'+this.props.mxEvent.getId()} tabindex="-1">
                     <MemberAvatar
                         member={member}
                         size={avatarSize}
@@ -1147,6 +1147,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             <a
                 href={permalink}
                 onClick={this.onPermalinkClicked}
+                tabindex="-1"
                 aria-label={formatTime(new Date(this.props.mxEvent.getTs()), this.props.isTwelveHour)}
                 onContextMenu={this.onTimestampContextMenu}
             >
@@ -1209,8 +1210,9 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     {
                         "ref": this.ref,
                         "className": classes,
+                        "tabindex": 0,
                         "aria-live": ariaLive,
-                        "aria-label": this.props.mxEvent.sender.name + '. ' + (this.props.mxEvent.clearEvent || this.props.mxEvent.event).content.body,
+                        "aria-labelledby": `mx_EventTile_avatar_${this.props.mxEvent.getId()} mx_EventTile_content_${this.props.mxEvent.getId()}`,
                         "aria-atomic": true,
                         "data-scroll-tokens": scrollToken,
                         "data-has-reply": !!replyChain,
@@ -1264,8 +1266,9 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     {
                         "ref": this.ref,
                         "className": classes,
-                        "tabIndex": -1,
+                        "tabindex": 0,
                         "aria-live": ariaLive,
+                        "aria-labelledby": `mx_EventTile_avatar_${this.props.mxEvent.getId()} mx_EventTile_content_${this.props.mxEvent.getId()}`,
                         "aria-atomic": "true",
                         "data-scroll-tokens": scrollToken,
                         "data-layout": this.props.layout,
@@ -1398,9 +1401,9 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     {
                         "ref": this.ref,
                         "className": classes,
-                        "tabIndex": -1,
+                        "tabindex": 0,
                         "aria-live": ariaLive,
-                        "aria-label": this.props.mxEvent.sender.name + '. ' + (this.props.mxEvent.clearEvent || this.props.mxEvent.event).content.body,
+                        "aria-labelledby": `mx_EventTile_avatar_${this.props.mxEvent.getId()} mx_EventTile_content_${this.props.mxEvent.getId()}`,
                         "aria-atomic": "true",
                         "data-scroll-tokens": scrollToken,
                         "data-layout": this.props.layout,
@@ -1415,7 +1418,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         {sender}
                         {ircPadlock}
                         {avatar}
-                        <div className={lineClasses} key="mx_EventTile_line" onContextMenu={this.onContextMenu}>
+                        <div className={lineClasses} key="mx_EventTile_line" onContextMenu={this.onContextMenu} aria-labelledby={'mx_EventTile_content_' + this.props.mxEvent.getId()}>
                             {this.renderContextMenu()}
                             {groupTimestamp}
                             {groupPadlock}

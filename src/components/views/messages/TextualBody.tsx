@@ -623,6 +623,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
 
         let widgets;
+        const id = 'mx_EventTile_content_' + mxEvent.getId();
         if (this.state.links.length && !this.state.widgetHidden && this.props.showUrlPreview) {
             widgets = (
                 <LinkPreviewGroup
@@ -636,7 +637,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
         if (isEmote) {
             return (
-                <div className="mx_MEmoteBody mx_EventTile_content" onClick={this.onBodyLinkClick}>
+                <div className="mx_MEmoteBody mx_EventTile_content" id={id} onClick={this.onBodyLinkClick}>
                     *&nbsp;
                     <span className="mx_MEmoteBody_sender" onClick={this.onEmoteSenderClick}>
                         {mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender()}
@@ -649,14 +650,14 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
         if (isNotice) {
             return (
-                <div className="mx_MNoticeBody mx_EventTile_content" onClick={this.onBodyLinkClick}>
+                <div className="mx_MNoticeBody mx_EventTile_content" id={id} onClick={this.onBodyLinkClick}>
                     {body}
                     {widgets}
                 </div>
             );
         }
         return (
-            <div className="mx_MTextBody mx_EventTile_content" onClick={this.onBodyLinkClick}>
+            <div className="mx_MTextBody mx_EventTile_content" id={id} onClick={this.onBodyLinkClick}>
                 {body}
                 {widgets}
             </div>
