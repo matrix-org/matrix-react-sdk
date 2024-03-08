@@ -497,19 +497,19 @@ describe("AppTile", () => {
                 </MatrixClientContext.Provider>,
             );
             await waitFor(() => {
-                expect(renderResult.getByLabelText("widget-container").dataset.widgetUrl).toEqual(
+                expect(renderResult.getByTestId("widget-app-tile").dataset.testWidgetUrl).toEqual(
                     "https://example.com/?widgetId=1&parentUrl=http%3A%2F%2Flocalhost%2F#theme=light",
                 );
             });
             await SettingsStore.setValue("theme", null, SettingLevel.DEVICE, "dark");
             await waitFor(() => {
-                expect(renderResult.getByLabelText("widget-container").dataset.widgetUrl).toEqual(
+                expect(renderResult.getByTestId("widget-app-tile").dataset.testWidgetUrl).toEqual(
                     "https://example.com/?widgetId=1&parentUrl=http%3A%2F%2Flocalhost%2F#theme=dark",
                 );
             });
             await SettingsStore.setValue("theme", null, SettingLevel.DEVICE, "light");
             await waitFor(() => {
-                expect(renderResult.getByLabelText("widget-container").dataset.widgetUrl).toEqual(
+                expect(renderResult.getByTestId("widget-app-tile").dataset.testWidgetUrl).toEqual(
                     "https://example.com/?widgetId=1&parentUrl=http%3A%2F%2Flocalhost%2F#theme=light",
                 );
             });
@@ -528,13 +528,13 @@ describe("AppTile", () => {
                 </MatrixClientContext.Provider>,
             );
             await waitFor(() => {
-                expect(renderResult.getByLabelText("widget-container").dataset.widgetUrl).toEqual(
+                expect(renderResult.getByTestId("widget-app-tile").dataset.testWidgetUrl).toEqual(
                     "https://example.com/?widgetId=1&parentUrl=http%3A%2F%2Flocalhost%2F#theme=light",
                 );
             });
             await SettingsStore.setValue("theme", null, SettingLevel.DEVICE, "dark");
             await waitFor(() => {
-                expect(renderResult.getByLabelText("widget-container").dataset.widgetUrl).toEqual(
+                expect(renderResult.getByTestId("widget-app-tile").dataset.testWidgetUrl).toEqual(
                     "https://example.com/?widgetId=1&parentUrl=http%3A%2F%2Flocalhost%2F#theme=light",
                 );
             });

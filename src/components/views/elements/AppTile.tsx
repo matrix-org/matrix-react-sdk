@@ -722,8 +722,8 @@ export default class AppTile extends React.Component<IProps, IState> {
                         <div
                             className="mx_AppTile_persistedWrapper"
                             // We store the widget url to make it possible to test the value of the widgetUrl. since the iframe itself wont be here. (PersistedElement are in a different dom tree)
-                            data-widget-url={this.state.widgetUrl}
-                            aria-label="widget-container"
+                            data-test-widget-url={this.state.widgetUrl}
+                            data-testid="widget-app-tile"
                         >
                             <PersistedElement
                                 zIndex={this.props.miniMode ? zIndexAboveOtherPersistentElements : 9}
