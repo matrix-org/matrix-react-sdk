@@ -650,27 +650,28 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                         onBlur={this.props.onBlur}
                         onKeyDown={(ev) => {
                             const navAction = getKeyBindingsManager().getNavigationAction(ev);
-                            switch (navAction) {
-                                case KeyBindingAction.NextLandmark:
-                                    const inThread = !!document.activeElement?.closest(".mx_ThreadView");
-                                    defaultDispatcher.dispatch(
-                                        {
-                                            action: Action.FocusSendMessageComposer,
-                                            context: inThread ? TimelineRenderingType.Thread : TimelineRenderingType.Room,
-                                        },
-                                        true,
-                                    );
-                                    ev.stopPropagation();
-                                    ev.preventDefault();
-                                    return;
-                                case KeyBindingAction.PreviousLandmark:
-                                    document.querySelector('.mx_RoomSearch')?.focus();
-                                    ev.stopPropagation();
-                                    ev.preventDefault();
-                                    return;
+                            if (navAction === KeyBindingAction.NextLandmark) {
+                                const inThread = !!document.activeElement?.closest(".mx_ThreadView");
+                                defaultDispatcher.dispatch(
+                                    {
+                                        action: Action.FocusSendMessageComposer,
+                                        context: inThread ? TimelineRenderingType.Thread : TimelineRenderingType.Room,
+                                    },
+                                    true,
+                                );
+                                ev.stopPropagation();
+                                ev.preventDefault();
+                                return;
                             }
 
-                            onKeyDownHandler(ev)
+                            if (navAction === KeyBindingAction.PreviousLandmark) {
+                                document.querySelector(".mx_RoomSearch")?.focus();
+                                ev.stopPropagation();
+                                ev.preventDefault();
+                                return;
+                            }
+
+                            onKeyDownHandler(ev);
                         }}
                         className="mx_RoomList"
                         role="tree"

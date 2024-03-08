@@ -262,7 +262,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.ExpandRoomListSection,
             KeyBindingAction.NextRoom,
             KeyBindingAction.PrevRoom,
-       ],
+        ],
     },
     [CategoryName.ACCESSIBILITY]: {
         categoryLabel: _td("common|accessibility"),

@@ -482,7 +482,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 break;
 
             case KeyBindingAction.NextLandmark:
-                document.querySelector('.mx_SpaceButton_active')?.focus();
+                document.querySelector(".mx_SpaceButton_active")?.focus();
                 handled = true;
                 break;
             case KeyBindingAction.FilterRooms:
@@ -557,8 +557,6 @@ class LoggedInView extends React.Component<IProps, IState> {
                 PlatformPeg.get()?.navigateForwardBack(false);
                 handled = true;
                 break;
-            case KeyBindingAction.SelectPrevMessage:
-                handled = true;
         }
 
         // Handle labs actions here, as they apply within the same scope
