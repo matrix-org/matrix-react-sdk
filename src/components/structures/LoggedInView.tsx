@@ -473,7 +473,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         const navAction = getKeyBindingsManager().getNavigationAction(ev);
         switch (navAction) {
             case KeyBindingAction.NextLandmark:
-                // The next landmark completes the cycle, back to the active space button.
+                // When no landmark area is selected, this is reached and we start at the first landmark, the active space button.
                 document.querySelector<HTMLElement>(".mx_SpaceButton_active")?.focus();
                 handled = true;
                 break;
