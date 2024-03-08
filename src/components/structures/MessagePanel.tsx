@@ -435,7 +435,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 this.props.highlightedEventId ||
                 events.reduce(
                     // Get the id of the last event in the list that's shown.
-                    (prev, { event, shouldShow }) => shouldShow ? event.getId() : prev,
+                    (prev, { event, shouldShow }) => (shouldShow ? event.getId() : prev),
                     null as string | null,
                 );
             if (navAction === KeyBindingAction.SelectPrevMessage) {
@@ -449,7 +449,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 }
                 const eventId = event.getId()!;
                 if (previousEventId && eventId === currentEventId) {
-                    document.querySelector<HTMLElement>('.mx_EventTile[data-event-id="' + previousEventId + '"]')?.focus();
+                    document
+                        .querySelector<HTMLElement>('.mx_EventTile[data-event-id="' + previousEventId + '"]')
+                        ?.focus();
                     this.focusedEventId = previousEventId;
                     ev.preventDefault();
                     return;
