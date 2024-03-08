@@ -314,21 +314,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
     }
 
-    private onKeyDown = (e: KeyboardEvent | React.KeyboardEvent): void => {
-        // Pass up the key event to the parent view (LoggedInView).
-        this.props.onKeyDown?.(e);
-
-        const action = getKeyBindingsManager().getAccessibilityAction(e);
-        switch (action) {
-            case KeyBindingAction.Escape:
-                if (!this.props.hasCancel) break;
-
-                e.stopPropagation();
-                e.preventDefault();
-                this.props.onFinished();
-                break;
-        }
-    };
     /**
      * Kick off a call to {@link initSession}, and handle any errors
      */
