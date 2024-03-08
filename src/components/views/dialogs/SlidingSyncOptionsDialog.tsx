@@ -32,17 +32,8 @@ import { SettingLevel } from "../../../settings/SettingLevel";
  * @throws if the proxy server is unreachable or not configured to the given homeserver
  */
 async function proxySlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
-    const controller = new AbortController();
-    const id = window.setTimeout(() => controller.abort(), 10 * 1000); // 10s
-    const res = await fetch(cli.baseUrl + "/.well-known/matrix/client", {
-        signal: controller.signal,
-    });
-    clearTimeout(id);
-    if (res.status != 200) {
-        throw new Error(`nativeSlidingSyncSupportCheck: server-side .well-known check gave HTTP ${res.status}`);
-    }
-    const body = await res.json();
-    const proxyUrl = body["org.matrix.msc3575.proxy"]?.url;
+    const clientWellKnown = cli.getClientWellKnown();
+    const proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
     if (proxyUrl == undefined) {
         throw new Error(`nativeSlidingSyncSupportCheck: no proxy defined in our client well-known`);
     }
