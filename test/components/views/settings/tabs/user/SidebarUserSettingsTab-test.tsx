@@ -23,6 +23,7 @@ import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import { MetaSpace } from "../../../../../../src/stores/spaces";
 import { SettingLevel } from "../../../../../../src/settings/SettingLevel";
 import { flushPromises } from "../../../../../test-utils";
+import SdkConfig from "../../../../../../src/SdkConfig";
 
 describe("<SidebarUserSettingsTab />", () => {
     beforeEach(() => {
@@ -31,7 +32,13 @@ describe("<SidebarUserSettingsTab />", () => {
         jest.spyOn(SettingsStore, "setValue").mockResolvedValue(undefined);
     });
 
-    it("renders sidebar settings", () => {
+    it("renders sidebar settings with guest spa url", () => {
+        const spy = jest.spyOn(SdkConfig, "get").mockReturnValue({ guest_spa_url: "https://somewhere.org" });
+        const { container } = render(<SidebarUserSettingsTab />);
+        expect(container).toMatchSnapshot();
+        spy.mockRestore();
+    });
+    it("renders sidebar settings without guest spa url", () => {
         const { container } = render(<SidebarUserSettingsTab />);
         expect(container).toMatchSnapshot();
     });

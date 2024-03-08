@@ -69,6 +69,10 @@ const SidebarUserSettingsTab: React.FC = () => {
     const guestSpaUrl = useMemo(() => {
         return SdkConfig.get("element_call").guest_spa_url;
     }, []);
+    const conferenceSubsectionText =
+        _t("settings|sidebar|metaspaces_video_rooms_description") +
+        (guestSpaUrl ? " " + _t("settings|sidebar|metaspaces_video_rooms_description_invite_extension") : "");
+
     const onAllRoomsInHomeToggle = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
         await SettingsStore.setValue("Spaces.allRoomsInHome", null, SettingLevel.ACCOUNT, event.target.checked);
         PosthogTrackers.trackInteraction("WebSettingsSidebarTabSpacesCheckbox", event, 1);
@@ -161,11 +165,7 @@ const SidebarUserSettingsTab: React.FC = () => {
                             <CameraCircle />
                             {_t("settings|sidebar|metaspaces_video_rooms")}
                         </SettingsSubsectionText>
-                        <SettingsSubsectionText>
-                            {_t("settings|sidebar|metaspaces_video_rooms_description") + guestSpaUrl
-                                ? " " + _t("settings|sidebar|metaspaces_video_rooms_description_invite_extension")
-                                : ""}
-                        </SettingsSubsectionText>
+                        <SettingsSubsectionText>{conferenceSubsectionText}</SettingsSubsectionText>
                     </StyledCheckbox>
                 </SettingsSubsection>
             </SettingsSection>
