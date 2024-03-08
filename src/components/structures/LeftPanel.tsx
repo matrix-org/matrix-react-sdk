@@ -314,8 +314,8 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             case KeyBindingAction.NextLandmark:
                 ev.stopPropagation();
                 ev.preventDefault();
-                // The next landmark is the selected room or the room list header, if none selected.
-                document.querySelector<HTMLElement>(".mx_RoomTile_selected, .mx_RoomListHeader_contextMenuButton")?.focus();
+                // The next landmark is the selected room or the room first room, if none selected.
+                (document.querySelector<HTMLElement>(".mx_RoomTile_selected") || document.querySelector<HTMLElement>(".mx_RoomTile"))?.focus();
                 break;
             case KeyBindingAction.PreviousLandmark:
                 ev.stopPropagation();

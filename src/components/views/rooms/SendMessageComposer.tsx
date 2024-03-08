@@ -308,7 +308,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             return;
         }
         const replyingToThread = this.props.relation?.key === THREAD_RELATION_TYPE.name;
-
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
             case KeyBindingAction.SendMessage:

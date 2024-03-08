@@ -651,6 +651,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                         onKeyDown={(ev) => {
                             const navAction = getKeyBindingsManager().getNavigationAction(ev);
                             if (navAction === KeyBindingAction.NextLandmark) {
+                                // The next landmark is the message composer or the thread message composer.
                                 const inThread = !!document.activeElement?.closest(".mx_ThreadView");
                                 defaultDispatcher.dispatch(
                                     {
@@ -665,6 +666,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                             }
 
                             if (navAction === KeyBindingAction.PreviousLandmark) {
+                                // The previous landmark is the room search input.
                                 document.querySelector(".mx_RoomSearch")?.focus();
                                 ev.stopPropagation();
                                 ev.preventDefault();
