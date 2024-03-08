@@ -1061,7 +1061,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     this.context.timelineRenderingType,
                 );
             avatar = (
-                <div className="mx_EventTile_avatar" id={'mx_EventTile_avatar_'+this.props.mxEvent.getId()} tabindex="-1">
+                <div className="mx_EventTile_avatar" id={'mx_EventTile_avatar_'+this.props.mxEvent.getId()} tabIndex={-1}>
                     <MemberAvatar
                         member={member}
                         size={avatarSize}
@@ -1147,7 +1147,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             <a
                 href={permalink}
                 onClick={this.onPermalinkClicked}
-                tabindex="-1"
+                tabIndex={-1}
                 aria-label={formatTime(new Date(this.props.mxEvent.getTs()), this.props.isTwelveHour)}
                 onContextMenu={this.onTimestampContextMenu}
             >
@@ -1210,7 +1210,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     {
                         "ref": this.ref,
                         "className": classes,
-                        "tabindex": 0,
+                        "tabIndex": 0,
                         "aria-live": ariaLive,
                         "aria-labelledby": `mx_EventTile_avatar_${this.props.mxEvent.getId()} mx_EventTile_content_${this.props.mxEvent.getId()}`,
                         "aria-atomic": true,

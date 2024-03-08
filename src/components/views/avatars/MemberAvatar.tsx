@@ -86,7 +86,7 @@ function MemberAvatar(
     return (
         <BaseAvatar
             {...props}
-            tabindex="-1"
+            tabIndex={-1}
             size={size}
             name={name ?? ""}
             title={hideTitle ? undefined : title}
