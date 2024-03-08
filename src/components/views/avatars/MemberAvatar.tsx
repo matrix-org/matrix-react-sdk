@@ -103,7 +103,7 @@ function MemberAvatar(
                       }
                     : props.onClick
             }
-            aria-label={name ? name + ". " : ""}
+            aria-label={name ? name + ". " : ""} // Full stop adds a pause between the name and the appended message.
             altText={_t("common|user_avatar")}
             ref={ref}
         />
