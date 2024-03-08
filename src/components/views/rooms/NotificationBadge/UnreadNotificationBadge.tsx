@@ -24,7 +24,7 @@ interface Props {
     room?: Room;
     threadId?: string;
     /**
-     * If true, the badge will always be displayed as a dot. Count will be ignored.
+     * If true, the badge will always be displayed as a dot.
      */
     forceDot?: boolean;
 }
