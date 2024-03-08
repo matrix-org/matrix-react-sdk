@@ -1061,7 +1061,11 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     this.context.timelineRenderingType,
                 );
             avatar = (
-                <div className="mx_EventTile_avatar" id={'mx_EventTile_avatar_'+this.props.mxEvent.getId()} tabIndex={-1}>
+                <div
+                    className="mx_EventTile_avatar"
+                    id={"mx_EventTile_avatar_" + this.props.mxEvent.getId()}
+                    tabIndex={-1}
+                >
                     <MemberAvatar
                         member={member}
                         size={avatarSize}
@@ -1418,7 +1422,12 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         {sender}
                         {ircPadlock}
                         {avatar}
-                        <div className={lineClasses} key="mx_EventTile_line" onContextMenu={this.onContextMenu} aria-labelledby={'mx_EventTile_content_' + this.props.mxEvent.getId()}>
+                        <div
+                            className={lineClasses}
+                            key="mx_EventTile_line"
+                            onContextMenu={this.onContextMenu}
+                            aria-labelledby={"mx_EventTile_content_" + this.props.mxEvent.getId()}
+                        >
                             {this.renderContextMenu()}
                             {groupTimestamp}
                             {groupPadlock}

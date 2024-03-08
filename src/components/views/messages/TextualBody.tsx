@@ -623,7 +623,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
 
         let widgets;
-        const id = 'mx_EventTile_content_' + mxEvent.getId();
+        const id = "mx_EventTile_content_" + mxEvent.getId();
         if (this.state.links.length && !this.state.widgetHidden && this.props.showUrlPreview) {
             widgets = (
                 <LinkPreviewGroup
