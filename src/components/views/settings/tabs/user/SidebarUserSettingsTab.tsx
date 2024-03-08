@@ -65,7 +65,7 @@ const SidebarUserSettingsTab: React.FC = () => {
         [MetaSpace.VideoRooms]: videoRoomsEnabled,
     } = useSettingValue<Record<MetaSpace, boolean>>("Spaces.enabledMetaSpaces");
     const allRoomsInHome = useSettingValue<boolean>("Spaces.allRoomsInHome");
-
+    const guestSpaUrl = "true";
     const onAllRoomsInHomeToggle = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
         await SettingsStore.setValue("Spaces.allRoomsInHome", null, SettingLevel.ACCOUNT, event.target.checked);
         PosthogTrackers.trackInteraction("WebSettingsSidebarTabSpacesCheckbox", event, 1);
@@ -159,7 +159,9 @@ const SidebarUserSettingsTab: React.FC = () => {
                             {_t("settings|sidebar|metaspaces_video_rooms")}
                         </SettingsSubsectionText>
                         <SettingsSubsectionText>
-                            {_t("settings|sidebar|metaspaces_video_rooms_description")}
+                            {_t("settings|sidebar|metaspaces_video_rooms_description") + guestSpaUrl
+                                ? " " + _t("settings|sidebar|metaspaces_video_rooms_description")
+                                : ""}
                         </SettingsSubsectionText>
                     </StyledCheckbox>
                 </SettingsSubsection>

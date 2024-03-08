@@ -234,7 +234,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
                     }
                 }
                 // If the join rule changes we need to update the tags for the room.
-                // A conference tag is determined by a room being publicly joinable.
+                // A conference tag is determined by the room public join rule.
                 if (eventPayload.event.getType() === EventType.RoomJoinRules)
                     await this.handleRoomUpdate(updatedRoom, RoomUpdateCause.PossibleTagChange);
                 else await this.handleRoomUpdate(updatedRoom, RoomUpdateCause.Timeline);
