@@ -60,7 +60,7 @@ export default class PowerSelector<K extends undefined | string> extends React.C
         maxValue: Infinity,
         usersDefault: 0,
     };
-    public unmounted = false;
+    private unmounted = false;
 
     public constructor(props: Props<K>) {
         super(props);
@@ -122,6 +122,7 @@ export default class PowerSelector<K extends undefined | string> extends React.C
                 await this.props.onChange(powerLevel, this.props.powerLevelKey);
             } catch {
                 if (this.unmounted) return;
+                // If the request failed, roll back the state of the selector.
                 this.initStateFromProps();
             }
         }
@@ -140,6 +141,7 @@ export default class PowerSelector<K extends undefined | string> extends React.C
                 await this.props.onChange(this.state.customValue, this.props.powerLevelKey);
             } catch {
                 if (this.unmounted) return;
+                // If the request failed, roll back the state of the selector.
                 this.initStateFromProps();
             }
         } else {
