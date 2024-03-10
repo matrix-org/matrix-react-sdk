@@ -22,6 +22,7 @@ import Modal from "../../Modal";
 import SettingsStore from "../SettingsStore";
 import { _t } from "../../languageHandler";
 import { logger } from "matrix-js-sdk/src/logger";
+import { Method } from "matrix-js-sdk/src/http-api/method";
 
 export default class SlidingSyncController extends SettingController {
     /**
