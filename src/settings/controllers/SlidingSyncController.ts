@@ -29,15 +29,12 @@ import { MatrixClientPeg } from "../../MatrixClientPeg";
 export default class SlidingSyncController extends SettingController {
     /**
      * Check if the server declares support for sliding sync via a proxy in its client `.well-known`.
-     * @throws if the proxy server is unreachable or not configured to the given homeserver
+     * @return {boolean} Whether the client well-known contains a proxy url
      */
-    private async proxySlidingSyncSupportCheck(): Promise<void> {
+    private async proxySlidingSyncSupport(): Promise<boolean> {
         const clientWellKnown = MatrixClientPeg.safeGet().getClientWellKnown();
         const proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
-        if (proxyUrl == undefined) {
-            throw new Error(`proxySlidingSyncSupportCheck: no proxy defined in our client well-known`);
-        }
-        logger.info("proxySlidingSyncSupportCheck: server defines a sliding sync proxy");
+        return proxyUrl != undefined;
     }
 
     /**
