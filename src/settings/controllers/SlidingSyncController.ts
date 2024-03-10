@@ -68,7 +68,7 @@ export default class SlidingSyncController extends SettingController {
 
         const controller = new AbortController();
         const id = window.setTimeout(() => controller.abort(), 10 * 1000); // 10s
-        const res = await fetch(baseUrl + "/_matrix/client/unstable/org.matrix.msc3575/client/server.json", {
+        const res = await fetch(baseUrl + "/client/server.json", {
             signal: controller.signal,
         });
         clearTimeout(id);
