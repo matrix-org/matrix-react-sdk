@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Method } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import SettingController from "./SettingController";
 import PlatformPeg from "../../PlatformPeg";
 import { SettingLevel } from "../SettingLevel";
@@ -21,9 +24,7 @@ import { SlidingSyncOptionsDialog } from "../../components/views/dialogs/Sliding
 import Modal from "../../Modal";
 import SettingsStore from "../SettingsStore";
 import { _t } from "../../languageHandler";
-import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import { Method } from "matrix-js-sdk/src/http-api/method";
 
 export default class SlidingSyncController extends SettingController {
     /**
