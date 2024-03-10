@@ -22,16 +22,16 @@ import Modal from "../../Modal";
 import SettingsStore from "../SettingsStore";
 import { _t } from "../../languageHandler";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { Method } from "matrix-js-sdk/src/http-api/method";
 
 export default class SlidingSyncController extends SettingController {
     /**
      * Check if the server declares support for sliding sync via a proxy in its client `.well-known`.
-     * @param cli The MatrixClient of the logged in user.
      * @throws if the proxy server is unreachable or not configured to the given homeserver
      */
-    async function proxySlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
-        const clientWellKnown = cli.getClientWellKnown();
+    async function proxySlidingSyncSupportCheck(): Promise<void> {
+        const clientWellKnown = MatrixClientPeg.safeGet().getClientWellKnown();
         const proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
         if (proxyUrl == undefined) {
             throw new Error(`proxySlidingSyncSupportCheck: no proxy defined in our client well-known`);
@@ -41,10 +41,10 @@ export default class SlidingSyncController extends SettingController {
 
     /**
      * Check if the server natively supports sliding sync.
-     * @param cli The MatrixClient of the logged in user.
      * @throws if the server is unreachable or doesn't natively support sliding sync
      */
-    async function nativeSlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
+    async function nativeSlidingSyncSupportCheck(): Promise<void> {
+        const cli = MatrixClientPeg.safeGet();
         await cli.http.authedRequest(Method.Post, "/sync", undefined, undefined, {
             localTimeoutMs: 10 * 1000, // 10s
             prefix: "/_matrix/client/unstable/org.matrix.msc3575",
