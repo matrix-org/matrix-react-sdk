@@ -30,7 +30,7 @@ export default class SlidingSyncController extends SettingController {
      * Check if the server declares support for sliding sync via a proxy in its client `.well-known`.
      * @throws if the proxy server is unreachable or not configured to the given homeserver
      */
-    async function proxySlidingSyncSupportCheck(): Promise<void> {
+    async proxySlidingSyncSupportCheck(): Promise<void> {
         const clientWellKnown = MatrixClientPeg.safeGet().getClientWellKnown();
         const proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
         if (proxyUrl == undefined) {
@@ -43,7 +43,7 @@ export default class SlidingSyncController extends SettingController {
      * Check if the server natively supports sliding sync.
      * @throws if the server is unreachable or doesn't natively support sliding sync
      */
-    async function nativeSlidingSyncSupportCheck(): Promise<void> {
+    async nativeSlidingSyncSupportCheck(): Promise<void> {
         const cli = MatrixClientPeg.safeGet();
         await cli.http.authedRequest(Method.Post, "/sync", undefined, undefined, {
             localTimeoutMs: 10 * 1000, // 10s
@@ -57,7 +57,7 @@ export default class SlidingSyncController extends SettingController {
      * @param endpoint The proxy endpoint url
      * @throws if the endpoint is unreachable
      */
-    async function slidingSyncHealthCheck(endpoint: string): Promise<void> {
+    async slidingSyncHealthCheck(endpoint: string): Promise<void> {
         const controller = new AbortController();
         const id = window.setTimeout(() => controller.abort(), 10 * 1000); // 10s
         const res = await fetch(endpoint + "/client/server.json", {
