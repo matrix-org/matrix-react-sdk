@@ -41,31 +41,40 @@ export default class SlidingSyncController extends SettingController {
      * Check if the server natively supports sliding sync.
      * @throws if the server is unreachable or doesn't natively support sliding sync
      */
-    private async nativeSlidingSyncSupportCheck(): Promise<void> {
+    private async nativeSlidingSyncSupport(): Promise<boolean> {
         const cli = MatrixClientPeg.safeGet();
-        await cli.http.authedRequest(Method.Post, "/sync", undefined, undefined, {
+        return cli.http.authedRequest(Method.Post, "/sync", undefined, undefined, {
             localTimeoutMs: 10 * 1000, // 10s
             prefix: "/_matrix/client/unstable/org.matrix.msc3575",
         });
-        logger.info("nativeSlidingSyncSupportCheck: server natively supports sliding sync");
+    }
     }
 
     /**
-     * Check that the sliding sync endpoint is in fact a sliding sync endpoint and is up
-     * @param endpoint The proxy endpoint url
-     * @throws if the endpoint is unreachable
+     * Check whether our homeserver has sliding sync support, that the endpoint is up, and
+     * is a sliding sync endpoint.
+     * @return {boolean} Whether the server has a working sliding sync implementation
      */
-    private async slidingSyncHealthCheck(endpoint: string): Promise<void> {
+    private async slidingSyncHealthCheck(): Promise<boolean> {
+        let baseUrl: String
+        if (await this.proxySlidingSyncSupport()) {
+            baseUrl = MatrixClientPeg.safeGet().getClientWellKnown()?.["org.matrix.msc3575.proxy"]!.url;
+        }
+        else if (await this.nativeSlidingSyncSupport()) {
+            baseUrl = MatrixClientPeg.safeGet().getHomeserverUrl();
+        }
+        else {
+            return false;
+        }
+
         const controller = new AbortController();
         const id = window.setTimeout(() => controller.abort(), 10 * 1000); // 10s
-        const res = await fetch(endpoint + "/client/server.json", {
+        const res = await fetch(baseUrl + "/_matrix/client/unstable/org.matrix.msc3575/client/server.json", {
             signal: controller.signal,
         });
         clearTimeout(id);
-        if (res.status != 200) {
-            throw new Error(`slidingSyncHealthCheck: endpoint returned ${res.status}`);
-        }
         logger.info("slidingSyncHealthCheck: sliding sync endpoint is up");
+        return (res.status === 200)
     }
 
     public async beforeChange(level: SettingLevel, roomId: string, newValue: any): Promise<boolean> {
