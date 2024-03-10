@@ -21,8 +21,54 @@ import { SlidingSyncOptionsDialog } from "../../components/views/dialogs/Sliding
 import Modal from "../../Modal";
 import SettingsStore from "../SettingsStore";
 import { _t } from "../../languageHandler";
+import { logger } from "matrix-js-sdk/src/logger";
 
 export default class SlidingSyncController extends SettingController {
+    /**
+     * Check if the server declares support for sliding sync via a proxy in its client `.well-known`.
+     * @param cli The MatrixClient of the logged in user.
+     * @throws if the proxy server is unreachable or not configured to the given homeserver
+     */
+    async function proxySlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
+        const clientWellKnown = cli.getClientWellKnown();
+        const proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
+        if (proxyUrl == undefined) {
+            throw new Error(`proxySlidingSyncSupportCheck: no proxy defined in our client well-known`);
+        }
+        logger.info("proxySlidingSyncSupportCheck: server defines a sliding sync proxy");
+    }
+
+    /**
+     * Check if the server natively supports sliding sync.
+     * @param cli The MatrixClient of the logged in user.
+     * @throws if the server is unreachable or doesn't natively support sliding sync
+     */
+    async function nativeSlidingSyncSupportCheck(cli: MatrixClient): Promise<void> {
+        await cli.http.authedRequest(Method.Post, "/sync", undefined, undefined, {
+            localTimeoutMs: 10 * 1000, // 10s
+            prefix: "/_matrix/client/unstable/org.matrix.msc3575",
+        });
+        logger.info("nativeSlidingSyncSupportCheck: server natively supports sliding sync");
+    }
+
+    /**
+     * Check that the sliding sync endpoint is in fact a sliding sync endpoint and is up
+     * @param endpoint The proxy endpoint url
+     * @throws if the endpoint is unreachable
+     */
+    async function slidingSyncHealthCheck(endpoint: string): Promise<void> {
+        const controller = new AbortController();
+        const id = window.setTimeout(() => controller.abort(), 10 * 1000); // 10s
+        const res = await fetch(endpoint + "/client/server.json", {
+            signal: controller.signal,
+        });
+        clearTimeout(id);
+        if (res.status != 200) {
+            throw new Error(`slidingSyncHealthCheck: endpoint returned ${res.status}`);
+        }
+        logger.info("slidingSyncHealthCheck: sliding sync endpoint is up");
+    }
+
     public async beforeChange(level: SettingLevel, roomId: string, newValue: any): Promise<boolean> {
         const { finished } = Modal.createDialog(SlidingSyncOptionsDialog);
         const [value] = await finished;
