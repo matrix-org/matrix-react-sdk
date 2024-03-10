@@ -20,16 +20,15 @@ import { logger } from "matrix-js-sdk/src/logger";
 import SettingController from "./SettingController";
 import PlatformPeg from "../../PlatformPeg";
 import { SettingLevel } from "../SettingLevel";
-import { SlidingSyncOptionsDialog } from "../../components/views/dialogs/SlidingSyncOptionsDialog";
-import Modal from "../../Modal";
 import SettingsStore from "../SettingsStore";
 import { _t } from "../../languageHandler";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 
 export default class SlidingSyncController extends SettingController {
     /**
-     * Check if the server declares support for sliding sync via a proxy in its client `.well-known`.
-     * @return {boolean} Whether the client well-known contains a proxy url
+     * Check if the server declares support for sliding sync via a proxy in its client
+     * `.well-known`, and check that the endpoint is, in fact, a sliding sync endpoint.
+     * @return {boolean} Whether the client well-known contains working proxy url
      */
     private async proxySlidingSyncSupport(): Promise<boolean> {
         const clientWellKnown = MatrixClientPeg.safeGet().getClientWellKnown();
@@ -38,8 +37,9 @@ export default class SlidingSyncController extends SettingController {
     }
 
     /**
-     * Check if the server natively supports sliding sync.
-     * @throws if the server is unreachable or doesn't natively support sliding sync
+     * Check if the server "natively" supports sliding sync (at the unstable endpoint),
+     * and check that the endpoint is, in fact, a sliding sync endpoint.
+     * @return {boolean} Whether the "native" (unstable) endpoint is up
      */
     private async nativeSlidingSyncSupport(): Promise<boolean> {
         const cli = MatrixClientPeg.safeGet();
@@ -47,7 +47,6 @@ export default class SlidingSyncController extends SettingController {
             localTimeoutMs: 10 * 1000, // 10s
             prefix: "/_matrix/client/unstable/org.matrix.msc3575",
         });
-    }
     }
 
     /**
@@ -79,7 +78,6 @@ export default class SlidingSyncController extends SettingController {
 
     public async beforeChange(level: SettingLevel, roomId: string, newValue: any): Promise<boolean> {
         const value = await this.slidingSyncHealthCheck();
-        const [value] = await finished;
         return newValue === value; // abort the operation if we're already in the state the user chose via modal
     }
 
