@@ -78,7 +78,7 @@ export default class SlidingSyncController extends SettingController {
     }
 
     public async beforeChange(level: SettingLevel, roomId: string, newValue: any): Promise<boolean> {
-        const { finished } = Modal.createDialog(SlidingSyncOptionsDialog);
+        const value = await this.slidingSyncHealthCheck();
         const [value] = await finished;
         return newValue === value; // abort the operation if we're already in the state the user chose via modal
     }
