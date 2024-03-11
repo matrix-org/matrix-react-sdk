@@ -29,6 +29,7 @@ import InteractiveAuthDialog from "../components/views/dialogs/InteractiveAuthDi
 import { _t } from "../languageHandler";
 import { SdkContextClass } from "../contexts/SDKContext";
 import { asyncSome } from "../utils/arrays";
+import { initializeDehydration } from "../utils/device/dehydration";
 
 export enum Phase {
     Loading = 0,
@@ -39,9 +40,6 @@ export enum Phase {
     Finished = 5, // UX can be closed
     ConfirmReset = 6,
 }
-
-// the interval between creating dehydrated devices
-const DEHYDRATION_INTERVAL = 7*24*60*60*1000;
 
 export class SetupEncryptionStore extends EventEmitter {
     private started?: boolean;
@@ -159,7 +157,7 @@ export class SetupEncryptionStore extends EventEmitter {
                         await cli.restoreKeyBackupWithSecretStorage(backupInfo);
                     }
 
-                    await this.initializeDehydration();
+                    await initializeDehydration();
                 }).catch(reject);
             });
 
@@ -265,7 +263,7 @@ export class SetupEncryptionStore extends EventEmitter {
                     setupNewCrossSigning: true,
                 });
 
-                await this.initializeDehydration();
+                await initializeDehydration(true);
 
                 this.phase = Phase.Finished;
             }, true);
@@ -303,26 +301,5 @@ export class SetupEncryptionStore extends EventEmitter {
 
     public lostKeys(): boolean {
         return !this.hasDevicesToVerifyAgainst && !this.keyInfo;
-    }
-
-    // check if device dehydration is enabled
-    private async deviceDehydrationEnabled(): Promise<boolean> {
-        const wellknown = await MatrixClientPeg.safeGet().waitForClientWellKnown();
-        return !!wellknown?.["org.matrix.msc3814"];
-    }
-
-    // if dehydration is enabled, rehydrate a device (if available) and create
-    // a new dehydrated device
-    private async initializeDehydration(): Promise<void> {
-        const crypto = MatrixClientPeg.safeGet().getCrypto();
-        if (crypto && await this.deviceDehydrationEnabled()) {
-            logger.log("Device dehydration enabled");
-            try {
-                await crypto.rehydrateDeviceIfAvailable();
-            } catch (e) {
-                logger.error("Error rehydrating device:", e);
-            }
-            await crypto.scheduleDeviceDehydration(DEHYDRATION_INTERVAL);
-        }
     }
 }
