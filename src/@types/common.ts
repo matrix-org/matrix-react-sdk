@@ -16,7 +16,7 @@ limitations under the License.
 
 import { JSXElementConstructor } from "react";
 
-export type { NonEmptyArray, Without, XOR, Writeable } from "matrix-js-sdk/src/matrix";
+export type { NonEmptyArray, XOR, Writeable } from "matrix-js-sdk/src/matrix";
 
 export type ComponentClass = keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 
