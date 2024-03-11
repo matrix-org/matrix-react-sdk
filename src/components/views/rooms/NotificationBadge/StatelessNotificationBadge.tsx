@@ -77,7 +77,7 @@ export const StatelessNotificationBadge = forwardRef<HTMLDivElement, XOR<Props, 
             mx_NotificationBadge_level_highlight: level >= NotificationLevel.Highlight,
             mx_NotificationBadge_knocked: knocked,
 
-            // Exactly one of mx_NotificationBadge_dot, mx_NotificationBadge_2char, mx_NotificationBadge_3char
+            // At most one of mx_NotificationBadge_dot, mx_NotificationBadge_2char, mx_NotificationBadge_3char
             mx_NotificationBadge_dot: (isEmptyBadge && !knocked) || forceDot,
             mx_NotificationBadge_2char: !forceDot && symbol && symbol.length > 0 && symbol.length < 3,
             mx_NotificationBadge_3char: !forceDot && symbol && symbol.length > 2,
