@@ -30,30 +30,30 @@ import { ElementAppPage } from "../../../pages/ElementAppPage";
  * - Invite the bot to both rooms and ensure that it has joined
  */
 export const test = base.extend<{
-    roomAlphaName?: string;
-    roomAlpha: { name: string; roomId: string };
-    roomBetaName?: string;
-    roomBeta: { name: string; roomId: string };
+    room1Name?: string;
+    room1: { name: string; roomId: string };
+    room2Name?: string;
+    room2: { name: string; roomId: string };
     msg: MessageBuilder;
     util: Helpers;
 }>({
     displayName: "Mae",
     botCreateOpts: { displayName: "Other User" },
 
-    roomAlphaName: "Room Alpha",
-    roomAlpha: async ({ roomAlphaName: name, app, user, bot }, use) => {
+    room1Name: "Room 1",
+    room1: async ({ room1Name: name, app, user, bot }, use) => {
         const roomId = await app.client.createRoom({ name, invite: [bot.credentials.userId] });
         await use({ name, roomId });
     },
-    roomBetaName: "Room Beta",
-    roomBeta: async ({ roomBetaName: name, app, user, bot }, use) => {
+    room2Name: "Room 2",
+    room2: async ({ room2Name: name, app, user, bot }, use) => {
         const roomId = await app.client.createRoom({ name, invite: [bot.credentials.userId] });
         await use({ name, roomId });
     },
     msg: async ({ page, app, util }, use) => {
         await use(new MessageBuilder(page, app, util));
     },
-    util: async ({ roomAlpha, roomBeta, page, app, bot }, use) => {
+    util: async ({ room1, room2, page, app, bot }, use) => {
         await use(new Helpers(page, app, bot));
     },
 });

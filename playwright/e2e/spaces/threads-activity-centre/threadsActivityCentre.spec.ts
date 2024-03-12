@@ -35,7 +35,7 @@ test.describe("Threads Activity Centre", () => {
         await expect(util.getSpacePanel()).toMatchScreenshot("tac-button-expanded.png");
     });
 
-    test("should not show indicator when there is no thread", async ({ roomAlpha: room1, util }) => {
+    test("should not show indicator when there is no thread", async ({ room1, util }) => {
         // No indicator should be shown
         await util.assertNoTacIndicator();
 
@@ -46,11 +46,7 @@ test.describe("Threads Activity Centre", () => {
         await util.assertNoTacIndicator();
     });
 
-    test("should show a notification indicator when there is a message in a thread", async ({
-        roomAlpha: room1,
-        util,
-        msg,
-    }) => {
+    test("should show a notification indicator when there is a message in a thread", async ({ room1, util, msg }) => {
         await util.goTo(room1);
         await util.receiveMessages(room1, ["Msg1", msg.threadedOff("Msg1", "Resp1")]);
 
@@ -58,11 +54,7 @@ test.describe("Threads Activity Centre", () => {
         await util.assertNotificationTac();
     });
 
-    test("should show a highlight indicator when there is a mention in a thread", async ({
-        roomAlpha: room1,
-        util,
-        msg,
-    }) => {
+    test("should show a highlight indicator when there is a mention in a thread", async ({ room1, util, msg }) => {
         await util.goTo(room1);
         await util.receiveMessages(room1, [
             "Msg1",
@@ -80,7 +72,7 @@ test.describe("Threads Activity Centre", () => {
         await util.assertHighlightIndicator();
     });
 
-    test("should show the rooms with unread threads", async ({ roomAlpha: room1, roomBeta: room2, util, msg }) => {
+    test("should show the rooms with unread threads", async ({ room1, room2, util, msg }) => {
         await util.goTo(room2);
         await util.populateThreads(room1, room2, msg);
         // The indicator should be shown
@@ -97,7 +89,7 @@ test.describe("Threads Activity Centre", () => {
         await expect(util.getTacPanel()).toMatchScreenshot("tac-panel-mix-unread.png");
     });
 
-    test("should update with a thread is read", async ({ roomAlpha: room1, roomBeta: room2, util, msg }) => {
+    test("should update with a thread is read", async ({ room1, room2, util, msg }) => {
         await util.goTo(room2);
         await util.populateThreads(room1, room2, msg);
 
@@ -134,4 +126,8 @@ test.describe("Threads Activity Centre", () => {
         await toggleSpotlight();
         await expect(page.locator(".mx_SpotlightDialog")).not.toBeVisible();
     });
+
+    // test("miaou", async ({ roomAlpha: room1, roomBeta: room2, roomAlphaName: room3, util, msg }) => {
+    //     await util.populateThreads(room1, room2, msg);
+    // });
 });
