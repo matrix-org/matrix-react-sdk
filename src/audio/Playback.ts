@@ -229,7 +229,7 @@ export class Playback extends EventEmitter implements IDestroyable, PlaybackInte
     private onPlaybackEnd = async (): Promise<void> => {
         await this.context.suspend();
         this.emit(PlaybackState.Stopped);
-        await this.stop(); // Stop the playback when the song ends
+        await this.stop(); // Stop the playback when the song end
     };
 
     public async play(): Promise<void> {
