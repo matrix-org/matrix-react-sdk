@@ -300,7 +300,7 @@ describe("<EditMessageComposer/>", () => {
 
             // both content.mentions and new_content.mentions are empty
             expect(messageContent["m.mentions"]).toEqual({});
-            expect(messageContent["m.new_content"]["m.mentions"]).toEqual({});
+            expect(messageContent["m.new_content"]!["m.mentions"]).toEqual({});
         });
 
         it("should retain mentions in the original message that are not removed by the edit", async () => {
@@ -317,7 +317,7 @@ describe("<EditMessageComposer/>", () => {
             // no new mentions were added, so nothing in top level mentions
             expect(messageContent["m.mentions"]).toEqual({});
             // bob is still mentioned, charlie removed
-            expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
+            expect(messageContent["m.new_content"]!["m.mentions"]).toEqual({
                 user_ids: ["@bob:server.org"],
             });
         });
@@ -336,7 +336,7 @@ describe("<EditMessageComposer/>", () => {
             // no new mentions were added, so nothing in top level mentions
             expect(messageContent["m.mentions"]).toEqual({});
             // bob is not longer mentioned in the edited message, so empty mentions in new_content
-            expect(messageContent["m.new_content"]["m.mentions"]).toEqual({});
+            expect(messageContent["m.new_content"]!["m.mentions"]).toEqual({});
         });
 
         it("should add mentions that were added in the edit", async () => {
@@ -358,7 +358,7 @@ describe("<EditMessageComposer/>", () => {
             expect(messageContent["m.mentions"]).toEqual({
                 user_ids: ["@dan:server.org"],
             });
-            expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
+            expect(messageContent["m.new_content"]!["m.mentions"]).toEqual({
                 user_ids: ["@dan:server.org"],
             });
         });
@@ -384,7 +384,7 @@ describe("<EditMessageComposer/>", () => {
                 user_ids: ["@dan:server.org"],
             });
             // all mentions in the edited version of the event
-            expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
+            expect(messageContent["m.new_content"]!["m.mentions"]).toEqual({
                 user_ids: ["@bob:server.org", "@dan:server.org"],
             });
         });
@@ -459,7 +459,7 @@ describe("<EditMessageComposer/>", () => {
             // no new mentions from edit
             expect(messageContent["m.mentions"]).toEqual({});
             // edited reply still mentions the parent event sender
-            expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
+            expect(messageContent["m.new_content"]!["m.mentions"]).toEqual({
                 user_ids: [originalEvent.getSender()],
             });
         });
@@ -483,7 +483,7 @@ describe("<EditMessageComposer/>", () => {
             });
             // edited reply still mentions the parent event sender
             // plus new mention @dan
-            expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
+            expect(messageContent["m.new_content"]!["m.mentions"]).toEqual({
                 user_ids: [originalEvent.getSender(), "@dan:server.org"],
             });
         });
@@ -502,7 +502,7 @@ describe("<EditMessageComposer/>", () => {
             expect(messageContent["m.mentions"]).toEqual({});
             // edited reply still mentions the parent event sender
             // existing @bob mention removed
-            expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
+            expect(messageContent["m.new_content"]!["m.mentions"]).toEqual({
                 user_ids: [originalEvent.getSender()],
             });
         });
@@ -541,7 +541,7 @@ describe("<EditMessageComposer/>", () => {
             // no mentions in edit
             expect(messageContent["m.mentions"]).toEqual({});
             // edited reply still mentions the parent event sender
-            expect(messageContent["m.new_content"]["m.mentions"]).toEqual({
+            expect(messageContent["m.new_content"]!["m.mentions"]).toEqual({
                 user_ids: [originalEvent.getSender()],
             });
         });

@@ -26,6 +26,7 @@ import {
     RoomType,
     SyncStateData,
     SyncState,
+    TimelineEvents,
 } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
@@ -1904,7 +1905,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         const cli = MatrixClientPeg.get();
         if (!cli) return;
 
-        cli.sendEvent(roomId, event.getType(), event.getContent()).then(() => {
+        cli.sendEvent(roomId, event.getType() as keyof TimelineEvents, event.getContent()).then(() => {
             dis.dispatch({ action: "message_sent" });
         });
     }

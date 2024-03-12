@@ -56,7 +56,16 @@ const MODERATED_BY_STATE_EVENT_TYPE = [
      */
 ];
 
-const ABUSE_EVENT_TYPE = "org.matrix.msc3215.abuse.report";
+export const ABUSE_EVENT_TYPE = "org.matrix.msc3215.abuse.report";
+
+export interface AbuseEventContent {
+    event_id: string;
+    room_id: string;
+    moderated_by_id: string;
+    nature?: ExtendedNature;
+    reporter: string;
+    comment: string;
+}
 
 // Standard abuse natures.
 enum Nature {
@@ -250,11 +259,11 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                 }
 
                 await client.sendEvent(dmRoomId, ABUSE_EVENT_TYPE, {
-                    event_id: ev.getId(),
-                    room_id: ev.getRoomId(),
+                    event_id: ev.getId()!,
+                    room_id: ev.getRoomId()!,
                     moderated_by_id: this.moderation.moderationRoomId,
                     nature,
-                    reporter: client.getUserId(),
+                    reporter: client.getUserId()!,
                     comment: this.state.reason.trim(),
                 });
             } else {
