@@ -112,6 +112,17 @@ test.describe("Threads Activity Centre", () => {
         await expect(util.getTacPanel()).toMatchScreenshot("tac-panel-notification-unread.png");
     });
 
+    test("should order by recency after notification level", async ({ room1, room2, util, msg }) => {
+        await util.goTo(room2);
+        await util.populateThreads(room1, room2, msg, false);
+
+        await util.openTac();
+        await util.assertRoomsInTac([
+            { room: room1.name, notificationLevel: "notification" },
+            { room: room2.name, notificationLevel: "notification" },
+        ]);
+    });
+
     test("should block the Spotlight to open when the TAC is opened", async ({ util, page }) => {
         const toggleSpotlight = () => page.keyboard.press(`${CommandOrControl}+k`);
 
@@ -126,8 +137,4 @@ test.describe("Threads Activity Centre", () => {
         await toggleSpotlight();
         await expect(page.locator(".mx_SpotlightDialog")).not.toBeVisible();
     });
-
-    // test("miaou", async ({ roomAlpha: room1, roomBeta: room2, roomAlphaName: room3, util, msg }) => {
-    //     await util.populateThreads(room1, room2, msg);
-    // });
 });

@@ -330,23 +330,27 @@ export class Helpers {
      * @param room1
      * @param room2
      * @param msg - MessageBuilder
+     * @param hasMention - whether to include a mention in the first message
      */
     async populateThreads(
         room1: { name: string; roomId: string },
         room2: { name: string; roomId: string },
         msg: MessageBuilder,
+        hasMention = true,
     ) {
-        await this.receiveMessages(room2, [
-            "Msg1",
-            msg.threadedOff("Msg1", {
-                "body": "User",
-                "format": "org.matrix.custom.html",
-                "formatted_body": "<a href='https://matrix.to/#/@user:localhost'>User</a>",
-                "m.mentions": {
-                    user_ids: ["@user:localhost"],
-                },
-            }),
-        ]);
+        if (hasMention) {
+            await this.receiveMessages(room2, [
+                "Msg1",
+                msg.threadedOff("Msg1", {
+                    "body": "User",
+                    "format": "org.matrix.custom.html",
+                    "formatted_body": "<a href='https://matrix.to/#/@user:localhost'>User</a>",
+                    "m.mentions": {
+                        user_ids: ["@user:localhost"],
+                    },
+                }),
+            ]);
+        }
         await this.receiveMessages(room2, ["Msg2", msg.threadedOff("Msg2", "Resp2")]);
         await this.receiveMessages(room1, ["Msg3", msg.threadedOff("Msg3", "Resp3")]);
     }
