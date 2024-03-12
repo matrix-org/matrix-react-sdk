@@ -57,7 +57,7 @@ import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingSto
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { ModuleRunner } from "../../../modules/ModuleRunner";
 import { parseUrl } from "../../../utils/UrlUtils";
-import ThemeWatcher from "../../../settings/watchers/ThemeWatcher";
+import ThemeWatcher, { ThemeWatcherEvents } from "../../../settings/watchers/ThemeWatcher";
 
 interface IProps {
     app: IWidget | IApp;
@@ -355,7 +355,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private setupSgListeners(): void {
-        this.themeWatcher.on("themeChange", this.onThemeChanged);
+        this.themeWatcher.on(ThemeWatcherEvents.ThemeChange, this.onThemeChanged);
         this.themeWatcher.start();
         this.sgWidget?.on("preparing", this.onWidgetPreparing);
         this.sgWidget?.on("error:preparing", this.updateRequiresClient);
@@ -366,7 +366,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     private stopSgListeners(): void {
         this.themeWatcher.stop();
         if (!this.sgWidget) return;
-        this.themeWatcher.off("themeChange", this.onThemeChanged);
+        this.themeWatcher.off(ThemeWatcherEvents.ThemeChange, this.onThemeChanged);
         this.sgWidget.off("preparing", this.onWidgetPreparing);
         this.sgWidget.off("error:preparing", this.updateRequiresClient);
         this.sgWidget.off("capabilitiesNotified", this.updateRequiresClient);
