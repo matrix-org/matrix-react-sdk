@@ -444,7 +444,6 @@
         "camera": "Camera",
         "cameras": "Cameras",
         "capabilities": "Capabilities",
-        "conferences": "Conferences",
         "copied": "Copied!",
         "credits": "Credits",
         "cross_signing": "Cross-signing",
@@ -3895,7 +3894,10 @@
         "video_call_started": "Video call started",
         "video_call_using": "Video call using:",
         "voice_call": "Voice call",
-        "you_are_presenting": "You are presenting"
+        "you_are_presenting": "You are presenting",
+        "metaspace_video_rooms":{
+            "conference_room_section": "Conferences"
+        }
     },
     "widget": {
         "added_by": "Widget added by",

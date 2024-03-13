@@ -1078,7 +1078,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.emit(MetaSpace.Favourites);
         }
     }
-    // TODO on video room changed
+
+    // TODO: room type, Once it is possible to update/change the room type of a room we need to add a `onRoomTypeChange` callback here
+    // to update the `SpaceStore` accordingly.
+
     private onRoomDmChange(room: Room, isDm: boolean): void {
         const enabledMetaSpaces = new Set(this.enabledMetaSpaces);
 

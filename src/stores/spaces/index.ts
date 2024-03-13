@@ -46,7 +46,7 @@ export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): s
         case MetaSpace.Orphans:
             return _t("common|orphan_rooms");
         case MetaSpace.VideoRooms:
-            return _t("common|conferences");
+            return _t("voip|metaspace_video_rooms|conference_room_section");
     }
 };
 
