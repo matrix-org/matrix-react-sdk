@@ -96,13 +96,7 @@ jest.mock("../../../../src/stores/spaces/SpaceStore", () => {
     const EventEmitter = require("events");
     class MockSpaceStore extends EventEmitter {
         invitedSpaces: SpaceKey[] = [];
-        enabledMetaSpaces: MetaSpace[] = [
-            MetaSpace.Home,
-            MetaSpace.Favourites,
-            MetaSpace.People,
-            MetaSpace.Orphans,
-            MetaSpace.VideoRooms,
-        ];
+        enabledMetaSpaces: MetaSpace[] = [];
         spacePanelSpaces: string[] = [];
         activeSpace: SpaceKey = "!space1";
         getChildSpaces = () => [] as Room[];
@@ -141,6 +135,13 @@ describe("<SpacePanel />", () => {
     });
 
     beforeEach(() => {
+        SpaceStore.instance.enabledMetaSpaces.push(
+            MetaSpace.Home,
+            MetaSpace.Favourites,
+            MetaSpace.People,
+            MetaSpace.Orphans,
+            MetaSpace.VideoRooms,
+        );
         mocked(shouldShowComponent).mockClear().mockReturnValue(true);
     });
     afterEach(() => {
