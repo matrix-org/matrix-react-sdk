@@ -3844,6 +3844,9 @@
         "legacy_call": "Legacy Call",
         "maximise": "Fill screen",
         "maximise_call": "Maximise call",
+        "metaspace_video_rooms": {
+            "conference_room_section": "Conferences"
+        },
         "minimise_call": "Minimise call",
         "misconfigured_server": "Call failed due to misconfigured server",
         "misconfigured_server_description": "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.",
@@ -3894,10 +3897,7 @@
         "video_call_started": "Video call started",
         "video_call_using": "Video call using:",
         "voice_call": "Voice call",
-        "you_are_presenting": "You are presenting",
-        "metaspace_video_rooms":{
-            "conference_room_section": "Conferences"
-        }
+        "you_are_presenting": "You are presenting"
     },
     "widget": {
         "added_by": "Widget added by",
