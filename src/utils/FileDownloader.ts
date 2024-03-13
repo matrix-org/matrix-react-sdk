@@ -98,7 +98,7 @@ export class FileDownloader {
                 download: name,
                 auto: autoDownload,
             },
-            "*",
+            window.location.origin,
         );
     }
 }
