@@ -22,7 +22,6 @@ import {
     Capabilities,
     IClientWellKnown,
     OidcClientConfig,
-    AutoDiscoveryState,
 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -35,7 +34,7 @@ interface IProps {
     versions?: IServerVersions;
     capabilities?: Capabilities;
     wellKnown?: IClientWellKnown;
-    authenticationConfig?: (OidcClientConfig & AutoDiscoveryState) | AutoDiscoveryState;
+    oidcClientConfig?: OidcClientConfig;
 }
 
 export default class LoginWithQRSection extends React.Component<IProps> {
@@ -56,9 +55,9 @@ export default class LoginWithQRSection extends React.Component<IProps> {
             !!this.props.wellKnown?.["io.element.rendezvous"]?.server;
 
         const deviceAuthorizationGrantSupported =
-            this.props.authenticationConfig &&
-            "metadata" in this.props.authenticationConfig &&
-            this.props.authenticationConfig.metadata.grant_types_supported.includes(
+            this.props.oidcClientConfig &&
+            "metadata" in this.props.oidcClientConfig &&
+            this.props.oidcClientConfig.metadata.grant_types_supported.includes(
                 "urn:ietf:params:oauth:grant-type:device_code",
             );
 
