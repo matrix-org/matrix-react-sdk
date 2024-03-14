@@ -294,10 +294,12 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
         const [invites, metaSpaces, actualSpaces, activeSpace] = useSpaces();
         const activeSpaces = activeSpace ? [activeSpace] : [];
 
-        const metaSpacesSection = metaSpaces.map((key) => {
-            const Component = metaSpaceComponentMap[key];
-            return <Component key={key} selected={activeSpace === key} isPanelCollapsed={isPanelCollapsed} />;
-        });
+        const metaSpacesSection = metaSpaces
+            .filter((key) => !(key === MetaSpace.VideoRooms && !SettingsStore.getValue("feature_video_rooms")))
+            .map((key) => {
+                const Component = metaSpaceComponentMap[key];
+                return <Component key={key} selected={activeSpace === key} isPanelCollapsed={isPanelCollapsed} />;
+            });
 
         return (
             <IndicatorScrollbar

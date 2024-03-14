@@ -156,17 +156,22 @@ const SidebarUserSettingsTab: React.FC = () => {
                             {_t("settings|sidebar|metaspaces_orphans_description")}
                         </SettingsSubsectionText>
                     </StyledCheckbox>
-                    <StyledCheckbox
-                        checked={!!videoRoomsEnabled}
-                        onChange={onMetaSpaceChangeFactory(MetaSpace.VideoRooms, "WebSettingsSidebarTabSpacesCheckbox")}
-                        className="mx_SidebarUserSettingsTab_checkbox"
-                    >
-                        <SettingsSubsectionText>
-                            <CameraCircle />
-                            {_t("settings|sidebar|metaspaces_video_rooms")}
-                        </SettingsSubsectionText>
-                        <SettingsSubsectionText>{conferenceSubsectionText}</SettingsSubsectionText>
-                    </StyledCheckbox>
+                    {SettingsStore.getValue("feature_video_rooms") && (
+                        <StyledCheckbox
+                            checked={!!videoRoomsEnabled}
+                            onChange={onMetaSpaceChangeFactory(
+                                MetaSpace.VideoRooms,
+                                "WebSettingsSidebarTabSpacesCheckbox",
+                            )}
+                            className="mx_SidebarUserSettingsTab_checkbox"
+                        >
+                            <SettingsSubsectionText>
+                                <CameraCircle />
+                                {_t("settings|sidebar|metaspaces_video_rooms")}
+                            </SettingsSubsectionText>
+                            <SettingsSubsectionText>{conferenceSubsectionText}</SettingsSubsectionText>
+                        </StyledCheckbox>
+                    )}
                 </SettingsSubsection>
             </SettingsSection>
         </SettingsTab>
