@@ -15,19 +15,15 @@ limitations under the License.
 */
 
 import React from "react";
-import {
-    MSC4108SignInWithQR,
-    RendezvousFailureReason,
-    RendezvousIntent,
-    buildLoginFromScannedCode,
-} from "matrix-js-sdk/src/rendezvous";
-import { MSC4108RendezvousSession } from "matrix-js-sdk/src/rendezvous/transports";
-import { MSC4108SecureChannel } from "matrix-js-sdk/src/rendezvous/channels";
+// We import "matrix-js-sdk/src/rendezvous" asynchronously to avoid importing the entire Rust Crypto WASM into the main bundle.
+import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous/RendezvousFailureReason";
+import { RendezvousIntent } from "matrix-js-sdk/src/rendezvous/RendezvousIntent";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient, discoverAndValidateOIDCIssuerWellKnown, generateScope } from "matrix-js-sdk/src/matrix";
 import { OnResultFunction } from "react-qr-reader";
 import { OidcClient } from "oidc-client-ts";
 
+import type { MSC4108SignInWithQR } from "matrix-js-sdk/src/rendezvous";
 import LoginWithQRFlow from "./LoginWithQRFlow";
 import { getOidcClientId } from "../../../utils/oidc/registerClient";
 import SdkConfig from "../../../SdkConfig";
@@ -171,19 +167,21 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     private generateAndShowCode = async (): Promise<void> => {
         let rendezvous: MSC4108SignInWithQR;
         try {
+            const Rendezvous = await import("matrix-js-sdk/src/rendezvous");
+
             const fallbackRzServer =
                 this.props.client?.getClientWellKnown()?.["io.element.rendezvous"]?.server ??
                 "https://rendezvous.lab.element.dev";
-            const transport = new MSC4108RendezvousSession({
+            const transport = new Rendezvous.MSC4108RendezvousSession({
                 onFailure: this.onFailure,
                 client: this.props.client,
                 fallbackRzServer,
             });
             await transport.send("");
 
-            const channel = new MSC4108SecureChannel(transport, undefined, this.onFailure);
+            const channel = new Rendezvous.MSC4108SecureChannel(transport, undefined, this.onFailure);
 
-            rendezvous = new MSC4108SignInWithQR(channel, false, this.props.client, this.onFailure);
+            rendezvous = new Rendezvous.MSC4108SignInWithQR(channel, false, this.props.client, this.onFailure);
 
             await rendezvous.generateCode();
             this.setState({
@@ -231,6 +229,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     private processScannedCode = async (scannedCode: Buffer): Promise<void> => {
         logger.info(scannedCode.toString());
         try {
+            const Rendezvous = await import("matrix-js-sdk/src/rendezvous");
             if (this.state.lastScannedCode?.equals(scannedCode)) {
                 return; // suppress duplicate scans
             }
@@ -240,7 +239,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             }
 
             const { signin: rendezvous, homeserverBaseUrl: homeserverBaseUrlFromCode } =
-                await buildLoginFromScannedCode(this.props.client, scannedCode, this.onFailure);
+                await Rendezvous.buildLoginFromScannedCode(this.props.client, scannedCode, this.onFailure);
 
             this.setState({
                 phase: Phase.Connecting,
