@@ -111,4 +111,3 @@ export function registerMockModuleWithCryptoSetupExtension(): MockModuleWithCryp
     }
     return module;
 }
-
