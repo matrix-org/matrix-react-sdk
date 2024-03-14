@@ -18,11 +18,13 @@ limitations under the License.
 */
 
 import { ReactNode } from "react";
-import { createClient, MatrixClient, SSOAction, OidcTokenRefresher } from "matrix-js-sdk/src/matrix";
+import { createClient, MatrixClient, SSOAction, OidcTokenRefresher, validateIdToken } from "matrix-js-sdk/src/matrix";
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
+import { DeviceAccessTokenResponse, IdTokenClaims, OidcClient } from "oidc-client-ts";
+import { QRSecretsBundle } from "matrix-js-sdk/src/crypto-api";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
@@ -283,6 +285,41 @@ export async function attemptDelegatedAuthLogin(
 
     return attemptTokenLogin(queryParams, defaultDeviceDisplayName, fragmentAfterLogin);
 }
+
+export async function completeDeviceAuthorizationGrant(
+    oidcClient: OidcClient,
+    { access_token: accessToken, refresh_token: refreshToken, id_token: idToken }: DeviceAccessTokenResponse,
+    homeserverUrl: string,
+    identityServerUrl?: string,
+): Promise<{ credentials?: IMatrixClientCreds }> {
+    try {
+        const {
+            user_id: userId,
+            device_id: deviceId,
+            is_guest: isGuest,
+        } = await getUserIdFromAccessToken(accessToken, homeserverUrl, identityServerUrl);
+
+        const credentials = {
+            accessToken,
+            refreshToken,
+            homeserverUrl,
+            identityServerUrl,
+            deviceId,
+            userId,
+            isGuest,
+        };
+
+        logger.info("Logged in via OIDC Device Authorization Grant");
+        await onSuccessfulDelegatedAuthLogin(credentials);
+        const idTokenClaims = validateIdToken(idToken, oidcClient.settings.authority, oidcClient.settings.client_id, undefined) as IdTokenClaims;
+        persistOidcAuthenticatedSettings(oidcClient.settings.client_id, oidcClient.settings.authority, idTokenClaims);
+        return { credentials };
+    } catch (error) {
+        logger.error("Failed to login via OIDC Device Authorization Grant", error);
+
+        await onFailedDelegatedAuthLogin(getOidcErrorMessage(error as Error));
+        return {};
+    }}
 
 /**
  * Attempt to login by completing OIDC authorization code flow
@@ -700,6 +737,9 @@ export async function setLoggedIn(credentials: IMatrixClientCreds): Promise<Matr
     return doSetLoggedIn(Object.assign({}, credentials, { pickleKey }), true);
 }
 
+export async function completeLoginWithQr(credentials: IMatrixClientCreds, secrets?: QRSecretsBundle): Promise<MatrixClient> {
+    return doSetLoggedIn(credentials, false, secrets);
+}
 /**
  * Hydrates an existing session by using the credentials provided. This will
  * not clear any local storage, unlike setLoggedIn().
@@ -785,7 +825,7 @@ async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promis
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
-async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnabled: boolean): Promise<MatrixClient> {
+async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnabled: boolean, secrets?: QRSecretsBundle): Promise<MatrixClient> {
     checkSessionLock();
     credentials.guest = Boolean(credentials.guest);
 
@@ -856,7 +896,7 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     checkSessionLock();
 
     dis.fire(Action.OnLoggedIn);
-    await startMatrixClient(client, /*startSyncing=*/ !softLogout);
+    await startMatrixClient(client, /*startSyncing=*/ !softLogout, secrets);
 
     return client;
 }
@@ -994,7 +1034,7 @@ export function isLoggingOut(): boolean {
  * @param {boolean} startSyncing True (default) to actually start
  * syncing the client.
  */
-async function startMatrixClient(client: MatrixClient, startSyncing = true): Promise<void> {
+async function startMatrixClient(client: MatrixClient, startSyncing = true, secrets?: QRSecretsBundle): Promise<void> {
     logger.log(`Lifecycle: Starting MatrixClient`);
 
     // dispatch this before starting the matrix client: it's used
@@ -1025,10 +1065,10 @@ async function startMatrixClient(client: MatrixClient, startSyncing = true): Pro
         // index (e.g. the FilePanel), therefore initialize the event index
         // before the client.
         await EventIndexPeg.init();
-        await MatrixClientPeg.start();
+        await MatrixClientPeg.start(secrets);
     } else {
         logger.warn("Caller requested only auxiliary services be started");
-        await MatrixClientPeg.assign();
+        await MatrixClientPeg.assign(secrets);
     }
 
     checkSessionLock();

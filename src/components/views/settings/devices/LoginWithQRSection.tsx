@@ -21,7 +21,10 @@ import {
     GET_LOGIN_TOKEN_CAPABILITY,
     Capabilities,
     IClientWellKnown,
+    OidcClientConfig,
+    AutoDiscoveryState,
 } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../languageHandler";
 import AccessibleButton from "../../elements/AccessibleButton";
@@ -32,6 +35,7 @@ interface IProps {
     versions?: IServerVersions;
     capabilities?: Capabilities;
     wellKnown?: IClientWellKnown;
+    authenticationConfig?: (OidcClientConfig & AutoDiscoveryState) | AutoDiscoveryState;
 }
 
 export default class LoginWithQRSection extends React.Component<IProps> {
@@ -40,15 +44,30 @@ export default class LoginWithQRSection extends React.Component<IProps> {
     }
 
     public render(): JSX.Element | null {
-        // Needs server support for get_login_token and MSC3886:
+        // Needs server support for (get_login_token or OIDC Device Authorization Grant) and MSC3886:
         // in r0 of MSC3882 it is exposed as a feature flag, but in stable and unstable r1 it is a capability
-        const capability = GET_LOGIN_TOKEN_CAPABILITY.findIn<IGetLoginTokenCapability>(this.props.capabilities);
+        const loginTokenCapability = GET_LOGIN_TOKEN_CAPABILITY.findIn<IGetLoginTokenCapability>(
+            this.props.capabilities,
+        );
         const getLoginTokenSupported =
-            !!this.props.versions?.unstable_features?.["org.matrix.msc3882"] || !!capability?.enabled;
+            !!this.props.versions?.unstable_features?.["org.matrix.msc3882"] || !!loginTokenCapability?.enabled;
         const msc3886Supported =
             !!this.props.versions?.unstable_features?.["org.matrix.msc3886"] ||
-            this.props.wellKnown?.["io.element.rendezvous"]?.server;
-        const offerShowQr = getLoginTokenSupported && msc3886Supported;
+            !!this.props.wellKnown?.["io.element.rendezvous"]?.server;
+
+        const deviceAuthorizationGrantSupported =
+            this.props.authenticationConfig &&
+            "metadata" in this.props.authenticationConfig &&
+            this.props.authenticationConfig.metadata.grant_types_supported.includes(
+                "urn:ietf:params:oauth:grant-type:device_code",
+            );
+
+        logger.info(
+            `getLoginTokenSupported: ${getLoginTokenSupported} msc3886Supported: ${msc3886Supported} deviceAuthorizationGrantSupported: ${deviceAuthorizationGrantSupported}`,
+        );
+        // PROTOTYPE: we hard code this to always show:
+        // We aren't checking for MSC4108 support
+        const offerShowQr = true || ((getLoginTokenSupported || deviceAuthorizationGrantSupported) && msc3886Supported);
 
         // don't show anything if no method is available
         if (!offerShowQr) {

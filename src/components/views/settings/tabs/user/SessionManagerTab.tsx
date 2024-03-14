@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { AutoDiscovery, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
@@ -184,6 +184,10 @@ const SessionManagerTab: React.FC = () => {
     const clientVersions = useAsyncMemo(() => matrixClient.getVersions(), [matrixClient]);
     const capabilities = useAsyncMemo(async () => matrixClient?.getCapabilities(), [matrixClient]);
     const wellKnown = useMemo(() => matrixClient?.getClientWellKnown(), [matrixClient]);
+    const authenticationConfig = useAsyncMemo(
+        async () => (wellKnown ? AutoDiscovery.discoverAndValidateAuthenticationConfig(wellKnown) : undefined),
+        [wellKnown],
+    );
 
     const onDeviceExpandToggle = (deviceId: ExtendedDevice["device_id"]): void => {
         if (expandedDeviceIds.includes(deviceId)) {
@@ -338,6 +342,7 @@ const SessionManagerTab: React.FC = () => {
                     versions={clientVersions}
                     capabilities={capabilities}
                     wellKnown={wellKnown}
+                    authenticationConfig={authenticationConfig}
                 />
             </SettingsSection>
         </SettingsTab>
