@@ -16,7 +16,7 @@ limitations under the License.
 
 import { mocked, MockedObject } from "jest-mock";
 import { last } from "lodash";
-import { MatrixEvent, MatrixClient, ClientEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, MatrixClient, ClientEvent, EventTimeline } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi, WidgetApiFromWidgetAction } from "matrix-widget-api";
 import { waitFor } from "@testing-library/react";
 
@@ -28,6 +28,7 @@ import { VoiceBroadcastInfoEventType, VoiceBroadcastRecording } from "../../../s
 import { SdkContextClass } from "../../../src/contexts/SDKContext";
 import ActiveWidgetStore from "../../../src/stores/ActiveWidgetStore";
 import SettingsStore from "../../../src/settings/SettingsStore";
+import * as Theme from "../../../src/theme";
 
 jest.mock("matrix-widget-api/lib/ClientWidgetApi");
 
@@ -63,18 +64,46 @@ describe("StopGapWidget", () => {
         widget.stopMessaging();
     });
 
-    it("should replace parameters in widget url template", () => {
-        const originGetValue = SettingsStore.getValue;
-        const spy = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
-            if (setting === "theme") return "my-theme-for-testing";
-            return originGetValue(setting);
+    describe("url template", () => {
+        it("should replace parameters in widget url template", () => {
+            const originalGetValue = SettingsStore.getValue;
+            const spy = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
+                if (setting === "theme") return "my-theme-for-testing";
+                return originalGetValue(setting);
+            });
+            expect(widget.embedUrl).toBe(
+                "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=my-theme-for-testing&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
+            );
+            spy.mockRestore();
         });
-        expect(widget.embedUrl).toBe(
-            "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=my-theme-for-testing&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
-        );
-        spy.mockClear();
+        it("should replace custom theme with light/dark", () => {
+            const originalGetValue = SettingsStore.getValue;
+            const spy = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
+                if (setting === "theme") return "custom-my-theme";
+                return originalGetValue(setting);
+            });
+            jest.spyOn(Theme, "getCustomTheme").mockReturnValue({ is_dark: false } as unknown as Theme.CustomTheme);
+            expect(widget.embedUrl).toBe(
+                "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=light&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
+            );
+            jest.spyOn(Theme, "getCustomTheme").mockReturnValue({ is_dark: true } as unknown as Theme.CustomTheme);
+            expect(widget.embedUrl).toBe(
+                "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=dark&widgetId=test&parentUrl=http%3A%2F%2Flocalhost%2F",
+            );
+            spy.mockRestore();
+        });
+        it("should replace parameters in widget popoutUrl template", () => {
+            const originalGetValue = SettingsStore.getValue;
+            const spy = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
+                if (setting === "theme") return "my-theme-for-testing";
+                return originalGetValue(setting);
+            });
+            expect(widget.popoutUrl).toBe(
+                "https://example.org/?user-id=%40userId%3Amatrix.org&device-id=ABCDEFGHI&base-url=https%3A%2F%2Fmatrix-client.matrix.org&theme=my-theme-for-testing",
+            );
+            spy.mockRestore();
+        });
     });
-
     it("feeds incoming to-device messages to the widget", async () => {
         const event = mkEvent({
             event: true,
@@ -86,6 +115,105 @@ describe("StopGapWidget", () => {
         client.emit(ClientEvent.ToDeviceEvent, event);
         await Promise.resolve(); // flush promises
         expect(messaging.feedToDevice).toHaveBeenCalledWith(event.getEffectiveEvent(), false);
+    });
+
+    describe("feed event", () => {
+        let event1: MatrixEvent;
+        let event2: MatrixEvent;
+
+        beforeEach(() => {
+            event1 = mkEvent({
+                event: true,
+                id: "$event-id1",
+                type: "org.example.foo",
+                user: "@alice:example.org",
+                content: { hello: "world" },
+                room: "!1:example.org",
+            });
+
+            event2 = mkEvent({
+                event: true,
+                id: "$event-id2",
+                type: "org.example.foo",
+                user: "@alice:example.org",
+                content: { hello: "world" },
+                room: "!1:example.org",
+            });
+
+            const room = mkRoom(client, "!1:example.org");
+            client.getRoom.mockImplementation((roomId) => (roomId === "!1:example.org" ? room : null));
+            room.getLiveTimeline.mockReturnValue({
+                getEvents: (): MatrixEvent[] => [event1, event2],
+            } as unknown as EventTimeline);
+
+            messaging.feedEvent.mockResolvedValue();
+        });
+
+        it("feeds incoming event to the widget", async () => {
+            client.emit(ClientEvent.Event, event1);
+            expect(messaging.feedEvent).toHaveBeenCalledWith(event1.getEffectiveEvent(), "!1:example.org");
+
+            client.emit(ClientEvent.Event, event2);
+            expect(messaging.feedEvent).toHaveBeenCalledTimes(2);
+            expect(messaging.feedEvent).toHaveBeenLastCalledWith(event2.getEffectiveEvent(), "!1:example.org");
+        });
+
+        it("should not feed incoming event to the widget if seen already", async () => {
+            client.emit(ClientEvent.Event, event1);
+            expect(messaging.feedEvent).toHaveBeenCalledWith(event1.getEffectiveEvent(), "!1:example.org");
+
+            client.emit(ClientEvent.Event, event2);
+            expect(messaging.feedEvent).toHaveBeenCalledTimes(2);
+            expect(messaging.feedEvent).toHaveBeenLastCalledWith(event2.getEffectiveEvent(), "!1:example.org");
+
+            client.emit(ClientEvent.Event, event1);
+            expect(messaging.feedEvent).toHaveBeenCalledTimes(2);
+            expect(messaging.feedEvent).toHaveBeenLastCalledWith(event2.getEffectiveEvent(), "!1:example.org");
+        });
+
+        it("should not feed incoming event if not in timeline", () => {
+            const event = mkEvent({
+                event: true,
+                id: "$event-id",
+                type: "org.example.foo",
+                user: "@alice:example.org",
+                content: {
+                    hello: "world",
+                },
+                room: "!1:example.org",
+            });
+
+            client.emit(ClientEvent.Event, event);
+            expect(messaging.feedEvent).toHaveBeenCalledWith(event.getEffectiveEvent(), "!1:example.org");
+        });
+
+        it("feeds incoming event that is not in timeline but relates to unknown parent to the widget", async () => {
+            const event = mkEvent({
+                event: true,
+                id: "$event-idRelation",
+                type: "org.example.foo",
+                user: "@alice:example.org",
+                content: {
+                    "hello": "world",
+                    "m.relates_to": {
+                        event_id: "$unknown-parent",
+                        rel_type: "m.reference",
+                    },
+                },
+                room: "!1:example.org",
+            });
+
+            client.emit(ClientEvent.Event, event1);
+            expect(messaging.feedEvent).toHaveBeenCalledWith(event1.getEffectiveEvent(), "!1:example.org");
+
+            client.emit(ClientEvent.Event, event);
+            expect(messaging.feedEvent).toHaveBeenCalledTimes(2);
+            expect(messaging.feedEvent).toHaveBeenLastCalledWith(event.getEffectiveEvent(), "!1:example.org");
+
+            client.emit(ClientEvent.Event, event1);
+            expect(messaging.feedEvent).toHaveBeenCalledTimes(2);
+            expect(messaging.feedEvent).toHaveBeenLastCalledWith(event.getEffectiveEvent(), "!1:example.org");
+        });
     });
 
     describe("when there is a voice broadcast recording", () => {

@@ -44,7 +44,6 @@ import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { OwnProfileStore } from "../OwnProfileStore";
 import WidgetUtils from "../../utils/WidgetUtils";
 import { IntegrationManagers } from "../../integrations/IntegrationManagers";
-import SettingsStore from "../../settings/SettingsStore";
 import { WidgetType } from "../../widgets/WidgetType";
 import ActiveWidgetStore from "../ActiveWidgetStore";
 import { objectShallowClone } from "../../utils/objects";
@@ -162,6 +161,7 @@ export class StopGapWidget extends EventEmitter {
     private readonly virtual: boolean;
     private readUpToMap: { [roomId: string]: string } = {}; // room ID to event ID
     private stickyPromise?: () => Promise<void>; // This promise will be called and needs to resolve before the widget will actually become sticky.
+    private themeWatcher = new ThemeWatcher();
 
     public constructor(private appTileProps: IAppTileProps) {
         super();
@@ -212,13 +212,19 @@ export class StopGapWidget extends EventEmitter {
 
     private runUrlTemplate(opts = { asPopout: false }): string {
         const fromCustomisation = WidgetVariableCustomisations?.provideVariables?.() ?? {};
+        let theme = this.themeWatcher.getEffectiveTheme();
+        if (theme.startsWith("custom-")) {
+            // simplify custom theme to only light/dark
+            const customTheme = getCustomTheme(theme.slice(7));
+            theme = customTheme.is_dark ? "dark" : "light";
+        }
         const defaults: ITemplateParams = {
             widgetRoomId: this.roomId,
             currentUserId: this.client.getUserId()!,
             userDisplayName: OwnProfileStore.instance.displayName ?? undefined,
             userHttpAvatarUrl: OwnProfileStore.instance.getHttpAvatarUrl() ?? undefined,
             clientId: ELEMENT_CLIENT_ID,
-            clientTheme: SettingsStore.getValue("theme"),
+            clientTheme: theme,
             clientLanguage: getUserLanguage(),
             deviceId: this.client.getDeviceId() ?? undefined,
             baseUrl: this.client.baseUrl,
@@ -495,6 +501,11 @@ export class StopGapWidget extends EventEmitter {
         //
         // This approach of "read up to" prevents widgets receiving decryption spam from startup or
         // receiving out-of-order events from backfill and such.
+        //
+        // Skip marker timeline check for events with relations to unknown parent because these
+        // events are not added to the timeline here and will be ignored otherwise:
+        // https://github.com/matrix-org/matrix-js-sdk/blob/d3dfcd924201d71b434af3d77343b5229b6ed75e/src/models/room.ts#L2207-L2213
+        let isRelationToUnknown: boolean | undefined = undefined;
         const upToEventId = this.readUpToMap[ev.getRoomId()!];
         if (upToEventId) {
             // Small optimization for exact match (prevent search)
@@ -502,7 +513,8 @@ export class StopGapWidget extends EventEmitter {
                 return;
             }
 
-            let isBeforeMark = true;
+            // should be true to forward the event to the widget
+            let shouldForward = false;
 
             const room = this.client.getRoom(ev.getRoomId()!);
             if (!room) return;
@@ -515,14 +527,19 @@ export class StopGapWidget extends EventEmitter {
                 if (timelineEvent.getId() === upToEventId) {
                     break;
                 } else if (timelineEvent.getId() === ev.getId()) {
-                    isBeforeMark = false;
+                    shouldForward = true;
                     break;
                 }
             }
 
-            if (isBeforeMark) {
-                // Ignore the event: it is before our interest.
-                return;
+            if (!shouldForward) {
+                // checks that the event has a relation to unknown event
+                isRelationToUnknown =
+                    !ev.replyEventId && !!ev.relationEventId && !room.findEventById(ev.relationEventId);
+                if (!isRelationToUnknown) {
+                    // Ignore the event: it is before our interest.
+                    return;
+                }
             }
         }
 
@@ -533,7 +550,7 @@ export class StopGapWidget extends EventEmitter {
         const evId = ev.getId();
         if (evRoomId && evId) {
             const room = this.client.getRoom(evRoomId);
-            if (room && room.getMyMembership() === "join") {
+            if (room && room.getMyMembership() === "join" && !isRelationToUnknown) {
                 this.readUpToMap[evRoomId] = evId;
             }
         }
