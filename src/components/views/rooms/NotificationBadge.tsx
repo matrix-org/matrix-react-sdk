@@ -48,7 +48,7 @@ interface IClickableProps extends IProps, React.InputHTMLAttributes<Element> {
 }
 
 interface IState {
-    showCounts: boolean; // whether to show counts. Independent of props.forceCount
+    showCounts: boolean; // whether to show counts.
 }
 
 export default class NotificationBadge extends React.PureComponent<XOR<IProps, IClickableProps>, IState> {
