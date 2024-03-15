@@ -73,7 +73,12 @@ export const StatelessNotificationBadge = forwardRef<HTMLDivElement, XOR<Props, 
         // We show a dot if either:
         // * The props force us to, or
         // * It's just an activity-level notification or (in theory) lower and the room isn't knocked
-        const badgeType = forceDot || (level <= NotificationLevel.Activity && !knocked) ? "dot" : "badge";
+        const badgeType =
+            forceDot || (level <= NotificationLevel.Activity && !knocked)
+                ? "dot"
+                : !symbol || symbol.length < 3
+                  ? "badge_2char"
+                  : "badge_3char";
 
         const classes = classNames({
             mx_NotificationBadge: true,
@@ -84,8 +89,8 @@ export const StatelessNotificationBadge = forwardRef<HTMLDivElement, XOR<Props, 
 
             // Exactly one of mx_NotificationBadge_dot, mx_NotificationBadge_2char, mx_NotificationBadge_3char
             mx_NotificationBadge_dot: badgeType === "dot",
-            mx_NotificationBadge_2char: badgeType === "badge" && (!symbol || symbol.length < 3),
-            mx_NotificationBadge_3char: badgeType === "badge" && symbol && symbol.length > 2,
+            mx_NotificationBadge_2char: badgeType === "badge_2char",
+            mx_NotificationBadge_3char: badgeType === "badge_3char",
         });
 
         if (props.onClick) {
