@@ -1033,6 +1033,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     this.onRoomsUpdate();
                 }
                 break;
+            case EventType.RoomCreate:
+                // The room might become a video room. We need to tag it for that videoRooms space.
+                this.onRoomsUpdate();
+                break;
         }
     };
 
