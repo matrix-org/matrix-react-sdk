@@ -392,7 +392,6 @@ const TAG_AESTHETICS: TagAestheticsMap = {
         sectionLabel: _td("voip|metaspace_video_rooms|conference_room_section"),
         isInvite: false,
         defaultHidden: false,
-        AuxButtonComponent: DmAuxButton,
     },
     [DefaultTagID.Untagged]: {
         sectionLabel: _td("common|rooms"),
