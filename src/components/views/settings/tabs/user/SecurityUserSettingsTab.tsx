@@ -294,6 +294,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         const secureBackup = (
             <SettingsSubsection heading={_t("common|secure_backup")}>
                 <SecureBackupPanel />
+                <DehydratedDeviceStatus />
             </SettingsSubsection>
         );
 
@@ -374,7 +375,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     {secureBackup}
                     {eventIndex}
                     {crossSigning}
-                    <DehydratedDeviceStatus />
                     <CryptographyPanel />
                 </SettingsSection>
                 {privacySection}

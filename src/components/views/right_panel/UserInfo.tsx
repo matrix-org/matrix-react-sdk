@@ -296,13 +296,11 @@ function DevicesSection({
         }
     }
     const dehydratedDeviceId: string | undefined = dehydratedDeviceIds.length == 1 ? dehydratedDeviceIds[0] : undefined;
+    let dehydratedDeviceInExpandSection = false;
 
     if (isUserVerified) {
         for (let i = 0; i < devices.length; ++i) {
             const device = devices[i];
-            if (device.deviceId === dehydratedDeviceId) {
-                continue;
-            }
             const deviceTrust = deviceTrusts[i];
             // For your own devices, we use the stricter check of cross-signing
             // verification to encourage everyone to trust their own devices via
@@ -312,7 +310,13 @@ function DevicesSection({
             const isVerified = deviceTrust && (isMe ? deviceTrust.crossSigningVerified : deviceTrust.isVerified());
 
             if (isVerified) {
-                expandSectionDevices.push(device);
+                // don't show dehydrated device as a normal device, if it's
+                // verified
+                if (device.deviceId === dehydratedDeviceId) {
+                    dehydratedDeviceInExpandSection = true;
+                } else {
+                    expandSectionDevices.push(device);
+                }
             } else {
                 unverifiedDevices.push(device);
             }
@@ -360,6 +364,9 @@ function DevicesSection({
                 );
             }),
         );
+        if (dehydratedDeviceInExpandSection) {
+            deviceList.push( ( <div>{_t("user_info|dehydrated_device_enabled")}</div> ) );
+        }
     }
 
     return (
