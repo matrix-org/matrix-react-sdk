@@ -49,20 +49,22 @@ interface IIgnoredUserProps {
     inProgress: boolean;
 }
 
-const DehydratedDeviceStatus: ReactFC = () => {
+const DehydratedDeviceStatus: React.FC = () => {
     const { dehydratedDeviceId } = useOwnDevices();
 
     if (dehydratedDeviceId) {
         return (
-            <div class="mx_SettingsSubsection_content">
-                <div class="mx_SettingsFlag_label">{_t("settings|security|dehydrated_device_enabled")}</div>
-                <div class="mx_SettingsSubsection_text">{_t("settings|security|dehydrated_device_description")}</div>
+            <div className="mx_SettingsSubsection_content">
+                <div className="mx_SettingsFlag_label">{_t("settings|security|dehydrated_device_enabled")}</div>
+                <div className="mx_SettingsSubsection_text">
+                    {_t("settings|security|dehydrated_device_description")}
+                </div>
             </div>
         );
     } else {
         return null;
     }
-}
+};
 
 export class IgnoredUser extends React.Component<IIgnoredUserProps> {
     private onUnignoreClicked = (): void => {

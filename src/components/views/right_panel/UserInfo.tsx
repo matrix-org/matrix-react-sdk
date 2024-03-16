@@ -365,7 +365,7 @@ function DevicesSection({
             }),
         );
         if (dehydratedDeviceInExpandSection) {
-            deviceList.push( ( <div>{_t("user_info|dehydrated_device_enabled")}</div> ) );
+            deviceList.push(<div>{_t("user_info|dehydrated_device_enabled")}</div>);
         }
     }
 

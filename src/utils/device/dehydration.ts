@@ -15,14 +15,18 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 
 // the interval between creating dehydrated devices
-const DEHYDRATION_INTERVAL = 7*24*60*60*1000;
+const DEHYDRATION_INTERVAL = 7 * 24 * 60 * 60 * 1000;
 
 // check if device dehydration is enabled
 export async function deviceDehydrationEnabled(): Promise<boolean> {
     const crypto = MatrixClientPeg.safeGet().getCrypto();
+    if (!crypto) {
+        return false;
+    }
     if (!(await crypto.isDehydrationSupported())) {
         return false;
     }
@@ -38,7 +42,7 @@ export async function deviceDehydrationEnabled(): Promise<boolean> {
 // a new dehydrated device
 export async function initializeDehydration(reset?: boolean): Promise<void> {
     const crypto = MatrixClientPeg.safeGet().getCrypto();
-    if (crypto && await deviceDehydrationEnabled()) {
+    if (crypto && (await deviceDehydrationEnabled())) {
         logger.log("Device dehydration enabled");
         if (reset) {
             await crypto.resetDehydrationKey();
