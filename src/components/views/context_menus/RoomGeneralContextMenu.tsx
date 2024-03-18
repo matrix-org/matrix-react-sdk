@@ -46,9 +46,9 @@ import { useSettingValue } from "../../../hooks/useSettings";
 export interface RoomGeneralContextMenuProps extends IContextMenuProps {
     room: Room;
     /**
-     * Called when the 'favourite' option is clicked, after the menu has processed
-     * whatever caused the click in the normal way.
-     * @param event The event that caused the click
+     * Called when the 'favourite' option is selected, after the menu has processed
+     * the mouse or keyboard event.
+     * @param event The event that caused the option to be selected.
      */
     onPostFavoriteClick?: (event: ButtonEvent) => void;
     /**
