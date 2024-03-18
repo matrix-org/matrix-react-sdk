@@ -52,51 +52,51 @@ export interface RoomGeneralContextMenuProps extends IContextMenuProps {
      */
     onPostFavoriteClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the 'low priority'' option is clicked, after the menu has processed
-     * whatever caused the click in the normal way.
-     * @param event The event that caused the click
+     * Called when the 'low priority'' option is selected, after the menu has processed
+     * the mouse or keyboard event.
+     * @param event The event that caused the option to be selected.
      */
     onPostLowPriorityClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the invite option is clicked, after the menu has processed
-     * whatever caused the click in the normal way.
-     * @param event The event that caused the click
+     * Called when the invite option is selected, after the menu has processed
+     * the mouse or keyboard event.
+     * @param event The event that caused the option to be selected.
      */
     onPostInviteClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the 'copy link' option is clicked, after the menu has processed
-     * whatever caused the click in the normal way.
-     * @param event The event that caused the click
+     * Called when the 'copy link' option is selected, after the menu has processed
+     * the mouse or keyboard event.
+     * @param event The event that caused the option to be selected.
      */
     onPostCopyLinkClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the settings option is clicked, after the menu has processed
-     * whatever caused the click in the normal way.
-     * @param event The event that caused the click
+     * Called when the settings option is selected, after the menu has processed
+     * the mouse or keyboard event.
+     * @param event The event that caused the option to be selected.
      */
     onPostSettingsClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the 'forget room' option is clicked, after the menu has processed
-     * whatever caused the click in the normal way.
-     * @param event The event that caused the click
+     * Called when the 'forget room' option is selected, after the menu has processed
+     * the mouse or keyboard event.
+     * @param event The event that caused the option to be selected.
      */
     onPostForgetClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the leave option is clicked, after the menu has processed
-     * whatever caused the click in the normal way.
-     * @param event The event that caused the click
+     * Called when the leave option is selected, after the menu has processed
+     * the mouse or keyboard event.
+     * @param event The event that caused the option to be selected.
      */
     onPostLeaveClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the mark as read option is clicked, after the menu has processed
-     * whatever caused the click in the normal way.
-     * @param event The event that caused the click
+     * Called when the mark as read option is selected, after the menu has processed
+     * the mouse or keyboard event.
+     * @param event The event that caused the option to be selected.
      */
     onPostMarkAsReadClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the mark as unread option is clicked, after the menu has processed
-     * whatever caused the click in the normal way.
-     * @param event The event that caused the click
+     * Called when the mark as unread option is selected, after the menu has processed
+     * the mouse or keyboard event.
+     * @param event The event that caused the option to be selected.
      */
     onPostMarkAsUnreadClick?: (event: ButtonEvent) => void;
 }
