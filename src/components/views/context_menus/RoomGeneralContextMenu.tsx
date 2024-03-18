@@ -58,7 +58,7 @@ export interface RoomGeneralContextMenuProps extends IContextMenuProps {
      */
     onPostLowPriorityClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the invite option is selected, after the menu has processed
+     * Called when the 'invite' option is selected, after the menu has processed
      * the mouse or keyboard event.
      * @param event The event that caused the option to be selected.
      */
@@ -70,7 +70,7 @@ export interface RoomGeneralContextMenuProps extends IContextMenuProps {
      */
     onPostCopyLinkClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the settings option is selected, after the menu has processed
+     * Called when the 'settings' option is selected, after the menu has processed
      * the mouse or keyboard event.
      * @param event The event that caused the option to be selected.
      */
@@ -82,19 +82,19 @@ export interface RoomGeneralContextMenuProps extends IContextMenuProps {
      */
     onPostForgetClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the leave option is selected, after the menu has processed
+     * Called when the 'leave' option is selected, after the menu has processed
      * the mouse or keyboard event.
      * @param event The event that caused the option to be selected.
      */
     onPostLeaveClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the mark as read option is selected, after the menu has processed
+     * Called when the 'mark as read' option is selected, after the menu has processed
      * the mouse or keyboard event.
      * @param event The event that caused the option to be selected.
      */
     onPostMarkAsReadClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the mark as unread option is selected, after the menu has processed
+     * Called when the 'mark as unread' option is selected, after the menu has processed
      * the mouse or keyboard event.
      * @param event The event that caused the option to be selected.
      */
