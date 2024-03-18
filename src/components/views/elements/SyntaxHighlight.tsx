@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from "react";
+import React from "react";
 
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 
@@ -24,7 +24,7 @@ interface Props {
     children: string;
 }
 
-export default function SyntaxHighlight({ children, language }: Props): ReactNode {
+export default function SyntaxHighlight({ children, language }: Props): JSX.Element {
     const highlighted = useAsyncMemo(async () => {
         const { default: highlight } = await import("highlight.js");
         return language ? highlight.highlight(children, { language }) : highlight.highlightAuto(children);
