@@ -93,7 +93,7 @@ describe("RoomNotificationState", () => {
         expect(listener).toHaveBeenCalled();
     });
 
-    it("updates on marked unread room account data", () => {
+    it("emits an Update event on marked unread room account data", () => {
         const roomNotifState = new RoomNotificationState(room, true);
         const listener = jest.fn();
         roomNotifState.addListener(NotificationStateEvents.Update, listener);
