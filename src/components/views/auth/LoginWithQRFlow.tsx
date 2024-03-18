@@ -31,7 +31,7 @@ import { Click, Phase } from "./LoginWithQR";
 
 interface IProps {
     phase: Phase;
-    code?: Buffer;
+    code?: Uint8Array;
     onClick(type: Click): Promise<void>;
     failureReason?: RendezvousFailureReason;
     onScannedQRCode?: OnResultFunction;
