@@ -52,7 +52,7 @@ export interface RoomGeneralContextMenuProps extends IContextMenuProps {
      */
     onPostFavoriteClick?: (event: ButtonEvent) => void;
     /**
-     * Called when the 'low priority'' option is selected, after the menu has processed
+     * Called when the 'low priority' option is selected, after the menu has processed
      * the mouse or keyboard event.
      * @param event The event that caused the option to be selected.
      */
