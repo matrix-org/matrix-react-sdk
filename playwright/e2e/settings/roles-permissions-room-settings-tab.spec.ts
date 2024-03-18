@@ -49,7 +49,7 @@ test.describe("Roles & Permissions room settings tab", () => {
         await expect(combobox).toHaveValue("50");
         await applyButton.click();
 
-        // Reload and check Admin is still Moderator (50)
+        // Reload and check Alice is still Moderator (50)
         await page.reload();
         settings = await app.settings.openRoomSettings("Roles & Permissions");
         combobox = privilegedUserSection.getByRole("combobox", { name: user.userId });
