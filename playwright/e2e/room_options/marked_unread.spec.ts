@@ -18,7 +18,7 @@ import { test, expect } from "../../element-web-test";
 
 const TEST_ROOM_NAME = "The mark unread test room";
 
-test.describe("Threads", () => {
+test.describe("Mark as Unread", () => {
     test.use({
         displayName: "Tom",
         botCreateOpts: {
