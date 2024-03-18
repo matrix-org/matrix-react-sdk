@@ -240,9 +240,6 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                 title: _t("room_settings|permissions|error_changing_pl_title"),
                 description: _t("room_settings|permissions|error_changing_pl_description"),
             });
-
-            // Rethrow so that the PowerSelector can roll back
-            throw e;
         }
     };
 
