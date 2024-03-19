@@ -35,7 +35,7 @@ test.describe("Roles & Permissions room settings tab", () => {
         settings = await app.settings.openRoomSettings("Roles & Permissions");
     });
 
-    test("should be able to change the role of an user", async ({ page, app, user }) => {
+    test("should be able to change the role of a user", async ({ page, app, user }) => {
         const privilegedUserSection = settings.locator(".mx_SettingsFieldset").first();
         const applyButton = privilegedUserSection.getByRole("button", { name: "Apply" });
 
