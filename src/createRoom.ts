@@ -233,7 +233,7 @@ export default async function createRoom(client: MatrixClient, opts: IOpts): Pro
         createOpts.initial_state.push(makeSpaceParentEvent(opts.parentSpace, true));
         if (!opts.historyVisibility) {
             opts.historyVisibility =
-                createOpts.preset === Preset.PublicChat ? HistoryVisibility.WorldReadable : HistoryVisibility.Invited;
+                createOpts.preset === Preset.PublicChat ? HistoryVisibility.WorldReadable : HistoryVisibility.Shared;
         }
 
         if (opts.joinRule === JoinRule.Restricted) {
