@@ -18,7 +18,6 @@ import React from "react";
 import { EventType, RoomMember, RoomState, RoomStateEvent, Room, IContent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { throttle, get } from "lodash";
-import { compare } from "matrix-js-sdk/src/utils";
 
 import { _t, _td, TranslationKey } from "../../../../../languageHandler";
 import AccessibleButton from "../../../elements/AccessibleButton";
@@ -34,6 +33,7 @@ import { AddPrivilegedUsers } from "../../AddPrivilegedUsers";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+import { PowerLevelSelector } from "../../PowerLevelSelector";
 
 interface IEventShowOpts {
     isState?: boolean;
@@ -174,7 +174,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         }
     }
 
-    private onPowerLevelsChanged = (value: number, powerLevelKey: string): void => {
+    private onPowerLevelsChanged = async (value: number, powerLevelKey: string): Promise<void> => {
         const client = this.context;
         const room = this.props.room;
         const plEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
@@ -203,17 +203,22 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             parentObj[keyPath[keyPath.length - 1]] = value;
         }
 
-        client.sendStateEvent(this.props.room.roomId, EventType.RoomPowerLevels, plContent).catch((e) => {
+        try {
+            await client.sendStateEvent(this.props.room.roomId, EventType.RoomPowerLevels, plContent);
+        } catch (e) {
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
                 title: _t("room_settings|permissions|error_changing_pl_reqs_title"),
                 description: _t("room_settings|permissions|error_changing_pl_reqs_description"),
             });
-        });
+
+            // Rethrow so that the PowerSelector can roll back
+            throw e;
+        }
     };
 
-    private onUserPowerLevelChanged = (value: number, powerLevelKey: string): void => {
+    private onUserPowerLevelChanged = async (value: number, powerLevelKey: string): Promise<void> => {
         const client = this.context;
         const room = this.props.room;
         const plEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
@@ -226,14 +231,16 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         if (!plContent["users"]) plContent["users"] = {};
         plContent["users"][powerLevelKey] = value;
 
-        client.sendStateEvent(this.props.room.roomId, EventType.RoomPowerLevels, plContent).catch((e) => {
+        try {
+            await client.sendStateEvent(this.props.room.roomId, EventType.RoomPowerLevels, plContent);
+        } catch (e) {
             logger.error(e);
 
             Modal.createDialog(ErrorDialog, {
                 title: _t("room_settings|permissions|error_changing_pl_title"),
                 description: _t("room_settings|permissions|error_changing_pl_description"),
             });
-        });
+        }
     };
 
     public render(): React.ReactNode {
@@ -342,65 +349,29 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         let privilegedUsersSection = <div>{_t("room_settings|permissions|no_privileged_users")}</div>;
         let mutedUsersSection;
         if (Object.keys(userLevels).length) {
-            const privilegedUsers: JSX.Element[] = [];
-            const mutedUsers: JSX.Element[] = [];
+            privilegedUsersSection = (
+                <PowerLevelSelector
+                    title={_t("room_settings|permissions|privileged_users_section")}
+                    userLevels={userLevels}
+                    canChangeLevels={canChangeLevels}
+                    currentUserLevel={currentUserLevel}
+                    onClick={this.onUserPowerLevelChanged}
+                    filter={(user) => userLevels[user] > defaultUserLevel}
+                >
+                    <div>{_t("room_settings|permissions|no_privileged_users")}</div>
+                </PowerLevelSelector>
+            );
 
-            Object.keys(userLevels).forEach((user) => {
-                if (!Number.isInteger(userLevels[user])) return;
-                const isMe = user === client.getUserId();
-                const canChange = canChangeLevels && (userLevels[user] < currentUserLevel || isMe);
-                if (userLevels[user] > defaultUserLevel) {
-                    // privileged
-                    privilegedUsers.push(
-                        <PowerSelector
-                            value={userLevels[user]}
-                            disabled={!canChange}
-                            label={user}
-                            key={user}
-                            powerLevelKey={user} // Will be sent as the second parameter to `onChange`
-                            onChange={this.onUserPowerLevelChanged}
-                        />,
-                    );
-                } else if (userLevels[user] < defaultUserLevel) {
-                    // muted
-                    mutedUsers.push(
-                        <PowerSelector
-                            value={userLevels[user]}
-                            disabled={!canChange}
-                            label={user}
-                            key={user}
-                            powerLevelKey={user} // Will be sent as the second parameter to `onChange`
-                            onChange={this.onUserPowerLevelChanged}
-                        />,
-                    );
-                }
-            });
-
-            // comparator for sorting PL users lexicographically on PL descending, MXID ascending. (case-insensitive)
-            const comparator = (a: JSX.Element, b: JSX.Element): number => {
-                const aKey = a.key as string;
-                const bKey = b.key as string;
-                const plDiff = userLevels[bKey] - userLevels[aKey];
-                return plDiff !== 0 ? plDiff : compare(aKey.toLocaleLowerCase(), bKey.toLocaleLowerCase());
-            };
-
-            privilegedUsers.sort(comparator);
-            mutedUsers.sort(comparator);
-
-            if (privilegedUsers.length) {
-                privilegedUsersSection = (
-                    <SettingsFieldset legend={_t("room_settings|permissions|privileged_users_section")}>
-                        {privilegedUsers}
-                    </SettingsFieldset>
-                );
-            }
-            if (mutedUsers.length) {
-                mutedUsersSection = (
-                    <SettingsFieldset legend={_t("room_settings|permissions|muted_users_section")}>
-                        {mutedUsers}
-                    </SettingsFieldset>
-                );
-            }
+            mutedUsersSection = (
+                <PowerLevelSelector
+                    title={_t("room_settings|permissions|muted_users_section")}
+                    userLevels={userLevels}
+                    canChangeLevels={canChangeLevels}
+                    currentUserLevel={currentUserLevel}
+                    onClick={this.onUserPowerLevelChanged}
+                    filter={(user) => userLevels[user] < defaultUserLevel}
+                />
+            );
         }
 
         const banned = room.getMembersWithMembership("ban");
