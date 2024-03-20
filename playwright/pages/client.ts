@@ -33,7 +33,6 @@ import type {
     Upload,
     StateEvents,
     TimelineEvents,
-    MsgType,
 } from "matrix-js-sdk/src/matrix";
 import type { RoomMessageEventContent } from "matrix-js-sdk/src/types";
 import { Credentials } from "../plugins/homeserver";
@@ -120,12 +119,12 @@ export class Client {
      */
     public async sendMessage(
         roomId: string,
-        content: RoomMessageEventContent | string,
+        content: IContent | string,
         threadId: string | null = null,
     ): Promise<ISendEventResponse> {
         if (typeof content === "string") {
             content = {
-                msgtype: "m.text" as MsgType.Text,
+                msgtype: "m.text",
                 body: content,
             };
         }
@@ -133,7 +132,7 @@ export class Client {
         const client = await this.prepareClient();
         return client.evaluate(
             (client, { roomId, content, threadId }) => {
-                return client.sendMessage(roomId, threadId, content);
+                return client.sendMessage(roomId, threadId, content as RoomMessageEventContent);
             },
             {
                 roomId,
