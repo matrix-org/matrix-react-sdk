@@ -57,7 +57,7 @@ import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { getJoinedNonFunctionalMembers } from "../utils/room/getJoinedNonFunctionalMembers";
 import { isVideoRoom } from "../utils/video-rooms";
 import { FontWatcher } from "../settings/watchers/FontWatcher";
-import { JitsiCallMemberEventType, JitsiCallMemberContent } from "./Call-types";
+import { JitsiCallMemberContent, JitsiCallMemberEventType } from "../call-types";
 
 const TIMEOUT_MS = 16000;
 
@@ -754,7 +754,7 @@ export class ElementCall extends Call {
                 name: "Element Call",
                 type: WidgetType.CALL.preferred,
                 url: url.toString(),
-                // waitForIframeLoad: false,
+                waitForIframeLoad: false,
                 data: ElementCall.getWidgetData(
                     client,
                     roomId,
