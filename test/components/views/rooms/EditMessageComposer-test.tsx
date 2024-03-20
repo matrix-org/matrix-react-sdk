@@ -18,6 +18,7 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Room } from "matrix-js-sdk/src/matrix";
+import { ReplacementEvent, RoomMessageEventContent } from "matrix-js-sdk/src/types";
 
 import EditMessageComposerWithMatrixClient, {
     createEditContent,
@@ -296,7 +297,8 @@ describe("<EditMessageComposer/>", () => {
 
             fireEvent.click(screen.getByText("Save"));
 
-            const messageContent = mockClient.sendMessage.mock.calls[0][2];
+            const messageContent = mockClient.sendMessage.mock.calls[0][2] as RoomMessageEventContent &
+                ReplacementEvent<RoomMessageEventContent>;
 
             // both content.mentions and new_content.mentions are empty
             expect(messageContent["m.mentions"]).toEqual({});
@@ -312,7 +314,8 @@ describe("<EditMessageComposer/>", () => {
 
             fireEvent.click(screen.getByText("Save"));
 
-            const messageContent = mockClient.sendMessage.mock.calls[0][2];
+            const messageContent = mockClient.sendMessage.mock.calls[0][2] as RoomMessageEventContent &
+                ReplacementEvent<RoomMessageEventContent>;
 
             // no new mentions were added, so nothing in top level mentions
             expect(messageContent["m.mentions"]).toEqual({});
@@ -331,7 +334,8 @@ describe("<EditMessageComposer/>", () => {
 
             fireEvent.click(screen.getByText("Save"));
 
-            const messageContent = mockClient.sendMessage.mock.calls[0][2];
+            const messageContent = mockClient.sendMessage.mock.calls[0][2] as RoomMessageEventContent &
+                ReplacementEvent<RoomMessageEventContent>;
 
             // no new mentions were added, so nothing in top level mentions
             expect(messageContent["m.mentions"]).toEqual({});
@@ -352,7 +356,8 @@ describe("<EditMessageComposer/>", () => {
 
             fireEvent.click(screen.getByText("Save"));
 
-            const messageContent = mockClient.sendMessage.mock.calls[0][2];
+            const messageContent = mockClient.sendMessage.mock.calls[0][2] as RoomMessageEventContent &
+                ReplacementEvent<RoomMessageEventContent>;
 
             // new mention in the edit
             expect(messageContent["m.mentions"]).toEqual({
@@ -377,7 +382,8 @@ describe("<EditMessageComposer/>", () => {
 
             fireEvent.click(screen.getByText("Save"));
 
-            const messageContent = mockClient.sendMessage.mock.calls[0][2];
+            const messageContent = mockClient.sendMessage.mock.calls[0][2] as RoomMessageEventContent &
+                ReplacementEvent<RoomMessageEventContent>;
 
             // new mention in the edit
             expect(messageContent["m.mentions"]).toEqual({
@@ -454,7 +460,8 @@ describe("<EditMessageComposer/>", () => {
 
             fireEvent.click(screen.getByText("Save"));
 
-            const messageContent = mockClient.sendMessage.mock.calls[0][2];
+            const messageContent = mockClient.sendMessage.mock.calls[0][2] as RoomMessageEventContent &
+                ReplacementEvent<RoomMessageEventContent>;
 
             // no new mentions from edit
             expect(messageContent["m.mentions"]).toEqual({});
@@ -475,7 +482,8 @@ describe("<EditMessageComposer/>", () => {
 
             fireEvent.click(screen.getByText("Save"));
 
-            const messageContent = mockClient.sendMessage.mock.calls[0][2];
+            const messageContent = mockClient.sendMessage.mock.calls[0][2] as RoomMessageEventContent &
+                ReplacementEvent<RoomMessageEventContent>;
 
             // new mention in edit
             expect(messageContent["m.mentions"]).toEqual({
@@ -496,7 +504,8 @@ describe("<EditMessageComposer/>", () => {
 
             fireEvent.click(screen.getByText("Save"));
 
-            const messageContent = mockClient.sendMessage.mock.calls[0][2];
+            const messageContent = mockClient.sendMessage.mock.calls[0][2] as RoomMessageEventContent &
+                ReplacementEvent<RoomMessageEventContent>;
 
             // no mentions in edit
             expect(messageContent["m.mentions"]).toEqual({});
@@ -536,7 +545,8 @@ describe("<EditMessageComposer/>", () => {
 
             fireEvent.click(screen.getByText("Save"));
 
-            const messageContent = mockClient.sendMessage.mock.calls[0][2];
+            const messageContent = mockClient.sendMessage.mock.calls[0][2] as RoomMessageEventContent &
+                ReplacementEvent<RoomMessageEventContent>;
 
             // no mentions in edit
             expect(messageContent["m.mentions"]).toEqual({});

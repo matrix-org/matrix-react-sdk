@@ -265,7 +265,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                     nature,
                     reporter: client.getUserId()!,
                     comment: this.state.reason.trim(),
-                });
+                } satisfies AbuseEventContent);
             } else {
                 // Report to homeserver admin through the dedicated Matrix API.
                 await client.reportEvent(ev.getRoomId()!, ev.getId()!, -100, this.state.reason.trim());
