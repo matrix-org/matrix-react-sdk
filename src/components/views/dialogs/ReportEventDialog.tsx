@@ -32,6 +32,12 @@ import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
 import LabelledCheckbox from "../elements/LabelledCheckbox";
 
+declare module "matrix-js-sdk/src/types" {
+    interface TimelineEvents {
+        [ABUSE_EVENT_TYPE]: AbuseEventContent;
+    }
+}
+
 interface IProps {
     mxEvent: MatrixEvent;
     onFinished(report?: boolean): void;
@@ -58,7 +64,7 @@ const MODERATED_BY_STATE_EVENT_TYPE = [
 
 export const ABUSE_EVENT_TYPE = "org.matrix.msc3215.abuse.report";
 
-export interface AbuseEventContent {
+interface AbuseEventContent {
     event_id: string;
     room_id: string;
     moderated_by_id: string;

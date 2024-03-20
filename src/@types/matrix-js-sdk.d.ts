@@ -19,7 +19,6 @@ import type { BLURHASH_FIELD } from "../utils/image-media";
 import type { JitsiCallMemberEventType, JitsiCallMemberContent } from "../models/Call-types";
 import type { ILayoutStateEvent, WIDGET_LAYOUT_EVENT_TYPE } from "../stores/widgets/types";
 import type { VoiceBroadcastInfoEventContent, VoiceBroadcastInfoEventType } from "../voice-broadcast/types";
-import type { ABUSE_EVENT_TYPE, AbuseEventContent } from "../components/views/dialogs/ReportEventDialog";
 import type { EncryptedFile } from "matrix-js-sdk/src/types";
 
 // Matrix JS SDK extensions
@@ -54,8 +53,6 @@ declare module "matrix-js-sdk/src/types" {
     }
 
     export interface TimelineEvents {
-        [ABUSE_EVENT_TYPE]: AbuseEventContent;
-
         "io.element.performance_metric": {
             "io.element.performance_metrics": {
                 forEventId: string;
