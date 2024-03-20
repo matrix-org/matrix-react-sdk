@@ -196,25 +196,28 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
 
         try {
-            const { homeserverBaseUrl } = await rendezvous.loginStep1();
-
             if (this.state.ourIntent === RendezvousIntent.LOGIN_ON_NEW_DEVICE) {
+                // MSC4108-Flow: ExistingScanned
+
+                // we get the homserver URL from the secure channel, but we don't trust it yet
+                const { homeserverBaseUrl } = await rendezvous.loginStep1();
+
                 if (!homeserverBaseUrl) {
                     throw new Error("We don't know the homeserver");
                 }
-                // PROTOTYPE: this feels bad, we have taken the homeserver URL that was sent by the other device
-                // before the channel was confirmed to the secure
-                // this could cause us to leak the OIDC registration data to a malicious server
-                // TODO: has this been implemented incorrectly? or is it a flaw in MSC4108?
-                await rendezvous.loginStep2(await this.getOidcClient(homeserverBaseUrl));
+                this.setState({
+                    phase: Phase.OutOfBandConfirmation,
+                    homeserverBaseUrl,
+                });
+            } else {
+                // MSC4108-Flow: NewScanned
+                await rendezvous.loginStep1();
+                const { verificationUri } = await rendezvous.loginStep2And3();
+                this.setState({
+                    phase: Phase.OutOfBandConfirmation,
+                    verificationUri,
+                });
             }
-
-            const { verificationUri } = await rendezvous.loginStep3();
-            this.setState({
-                phase: Phase.OutOfBandConfirmation,
-                verificationUri,
-                homeserverBaseUrl,
-            });
 
             // we ask the user to confirm that the channel is secure
         } catch (e) {
@@ -251,18 +254,14 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             const { homeserverBaseUrl: homeserverBaseUrlFromStep1 } = await rendezvous.loginStep1();
 
             if (this.state.ourIntent === RendezvousIntent.LOGIN_ON_NEW_DEVICE) {
+                // MSC4108-Flow: NewScanned
                 const homeserverBaseUrl = homeserverBaseUrlFromCode;
 
                 if (!homeserverBaseUrl) {
                     throw new Error("We don't know the homeserver");
                 }
                 const oidcClient = await this.getOidcClient(homeserverBaseUrl);
-                await rendezvous.loginStep2(oidcClient);
-
-                this.setState({
-                    phase: Phase.ShowChannelSecure,
-                });
-                const { userCode } = await rendezvous.loginStep3();
+                const { userCode } = await rendezvous.loginStep2And3(oidcClient);
                 this.setState({
                     phase: Phase.ShowChannelSecure,
                     userCode,
@@ -290,11 +289,12 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 // done
                 this.props.onFinished(credentials);
             } else {
+                // MSC4108-Flow: ExistingScanned
                 const homeserverBaseUrl = homeserverBaseUrlFromStep1;
                 this.setState({
                     phase: Phase.ShowChannelSecure,
                 });
-                const { verificationUri } = await rendezvous.loginStep3();
+                const { verificationUri } = await rendezvous.loginStep2And3();
                 this.setState({
                     phase: Phase.Continue,
                     verificationUri,
@@ -313,6 +313,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
 
         if (this.state.ourIntent === RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE) {
+            // MSC4108-Flow: NewScanned
             this.setState({ phase: Phase.Loading });
 
             if (this.state.verificationUri) {
@@ -327,13 +328,13 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             // done
             this.props.onFinished(true);
         } else {
-            if (!this.state.homeserverBaseUrl) {
+            // MSC4108-Flow: ExistingScanned
+            const { homeserverBaseUrl } = this.state;
+            if (!homeserverBaseUrl) {
                 throw new Error("We don't know the homeserver");
             }
-            const { homeserverBaseUrl } = this.state;
             const oidcClient = await this.getOidcClient(homeserverBaseUrl);
-            await this.state.rendezvous.loginStep2(oidcClient);
-            const { userCode } = await this.state.rendezvous.loginStep3();
+            const { userCode } = await this.state.rendezvous.loginStep2And3(oidcClient);
             this.setState({ phase: Phase.WaitingForDevice, userCode });
 
             // wait for grant:
