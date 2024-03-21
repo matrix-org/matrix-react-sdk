@@ -2808,9 +2808,9 @@
             "security_recommendations_description": "Improve your account security by following these recommendations.",
             "session_id": "Session ID",
             "show_details": "Show details",
-            "sign_in_with_qr": "Sign in with QR code",
+            "sign_in_with_qr": "Link new device",
             "sign_in_with_qr_button": "Show QR code",
-            "sign_in_with_qr_description": "You can use this device to sign in a new device with a QR code. You will need to scan the QR code shown on this device with your device that's signed out.",
+            "sign_in_with_qr_description": "Use a QR code to sign in to another device and set up secure messaging.",
             "sign_out": "Sign out of this session",
             "sign_out_all_other_sessions": "Sign out of all other sessions (%(otherSessionsCount)s)",
             "sign_out_confirm_description": {
