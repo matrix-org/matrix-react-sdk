@@ -16,7 +16,7 @@ limitations under the License.
 
 import type { IWidget } from "matrix-widget-api";
 import type { BLURHASH_FIELD } from "../utils/image-media";
-import type { JitsiCallMemberEventType, JitsiCallMemberContent } from "../models/Call-types";
+import type { JitsiCallMemberEventType, JitsiCallMemberContent } from "../call-types";
 import type { ILayoutStateEvent, WIDGET_LAYOUT_EVENT_TYPE } from "../stores/widgets/types";
 import type { VoiceBroadcastInfoEventContent, VoiceBroadcastInfoEventType } from "../voice-broadcast/types";
 import type { EncryptedFile } from "matrix-js-sdk/src/types";
