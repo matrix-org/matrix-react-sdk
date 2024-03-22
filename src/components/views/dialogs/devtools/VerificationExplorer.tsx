@@ -70,7 +70,7 @@ const VerificationRequestExplorer: React.FC<{
                 <dt>{_t("devtools|phase")}</dt>
                 <dd>{PHASE_MAP[request.phase] ? _t(PHASE_MAP[request.phase]) : request.phase}</dd>
                 <dt>{_t("devtools|timeout")}</dt>
-                <dd>{Math.floor(timeout / 1000)}</dd>
+                <dd>{timeout === null ? _t("devtools|timeout_none") : Math.floor(timeout / 1000)}</dd>
                 <dt>{_t("devtools|methods")}</dt>
                 <dd>{request.methods && request.methods.join(", ")}</dd>
                 <dt>{_t("devtools|other_user")}</dt>
