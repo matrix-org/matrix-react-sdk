@@ -31,7 +31,6 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import * as utils from "matrix-js-sdk/src/utils";
 import { verificationMethods } from "matrix-js-sdk/src/crypto";
-import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import createMatrixClient from "./utils/createMatrixClient";
@@ -434,7 +433,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             iceCandidatePoolSize: 20,
             verificationMethods: [
                 verificationMethods.SAS,
-                SHOW_QR_CODE_METHOD,
+                "m.qr_code.show.v1",
                 verificationMethods.RECIPROCATE_QR_CODE,
             ],
             identityServer: new IdentityAuthClient(),

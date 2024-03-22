@@ -16,16 +16,15 @@ limitations under the License.
 
 import React from "react";
 import { verificationMethods } from "matrix-js-sdk/src/crypto";
-import { SCAN_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import {
+    ShowQrCodeCallbacks,
+    ShowSasCallbacks,
     VerificationPhase as Phase,
     VerificationRequest,
     VerificationRequestEvent,
-    ShowQrCodeCallbacks,
-    ShowSasCallbacks,
     VerifierEvent,
 } from "matrix-js-sdk/src/crypto-api";
-import { RoomMember, Device, User } from "matrix-js-sdk/src/matrix";
+import { Device, RoomMember, User } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -88,7 +87,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
     private renderQRPhase(): JSX.Element {
         const { member, request } = this.props;
         const showSAS: boolean = request.otherPartySupportsMethod(verificationMethods.SAS);
-        const showQR: boolean = request.otherPartySupportsMethod(SCAN_QR_CODE_METHOD);
+        const showQR: boolean = request.otherPartySupportsMethod("m.qr_code.scan.v1");
         const brand = SdkConfig.get().brand;
 
         const noCommonMethodError: JSX.Element | null =
