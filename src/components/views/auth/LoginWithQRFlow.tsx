@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
+import { Icon as ChevronLeftIcon } from "@vector-im/compound-design-tokens/icons/chevron-left.svg";
 import { QrReader, OnResultFunction } from "react-qr-reader";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -23,11 +24,9 @@ import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import QRCode from "../elements/QRCode";
 import Spinner from "../elements/Spinner";
-import { Icon as BackButtonIcon } from "../../../../res/img/element-icons/back.svg";
-import { Icon as DevicesIcon } from "../../../../res/img/element-icons/devices.svg";
-import { Icon as WarningBadge } from "../../../../res/img/element-icons/warning-badge.svg";
 import { Icon as CheckmarkIcon } from "../../../../res/img/element-icons/check.svg";
-import { Click, Phase } from "./LoginWithQR";
+import { Click, FailureReason, LoginWithQRFailureReason, Phase } from "./LoginWithQR";
+import SdkConfig from "../../../SdkConfig";
 
 interface IProps {
     phase: Phase;
@@ -85,8 +84,6 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
 
     public render(): React.ReactNode {
         logger.info(`LoginWithQRFlow render: phase=${this.props.phase}`);
-        let title = "";
-        let titleIcon: JSX.Element | undefined;
         let main: JSX.Element | undefined;
         let buttons: JSX.Element | undefined;
         let backButton = true;
@@ -127,9 +124,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                         cancellationMessage = _t("auth|qr_code_login|error_request_cancelled");
                         break;
                 }
-                title = _t("timeline|m.call.invite|failed_connection");
                 centreTitle = true;
-                titleIcon = <WarningBadge className="error" />;
                 backButton = false;
                 main = <p data-testid="cancellation-message">{cancellationMessage}</p>;
                 buttons = (
@@ -146,8 +141,6 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                 );
                 break;
             case Phase.OutOfBandConfirmation:
-                title = "Do you see a green checkmark on your other device?";
-                titleIcon = <DevicesIcon className="normal" />;
                 backButton = false;
                 main = (
                     <>
@@ -191,8 +184,8 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                 break;
             case Phase.Continue:
                 // PROTOTYPE: I don't think we would offer the ability to scan from a web browser, so this is really just for the prototype.
-                title = "Go to your account to continue";
-                titleIcon = <DevicesIcon className="normal" />;
+                // title = "Go to your account to continue";
+                // titleIcon = <DevicesIcon className="normal" />;
                 backButton = false;
                 main = (
                     <>
@@ -223,8 +216,6 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                 );
                 break;
             case Phase.ShowChannelSecure:
-                title = "Go to your other device";
-                titleIcon = <DevicesIcon className="normal" />;
                 backButton = false;
                 main = (
                     <>
@@ -245,7 +236,6 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                 );
                 break;
             case Phase.ShowingQR:
-                title = _t("settings|sessions|sign_in_with_qr");
                 if (this.props.code) {
                     const code = (
                         <div className="mx_LoginWithQR_qrWrapper">
@@ -254,13 +244,22 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                     );
                     main = (
                         <>
-                            <p>Do something:</p>
-                            <ol>
-                                <li>A</li>
-                                <li>B</li>
-                                <li>C</li>
-                            </ol>
+                            <h1>{_t("auth|qr_code_login|scan_code_instruction")}</h1>
                             {code}
+                            <ol>
+                                <li>
+                                    {_t("auth|qr_code_login|open_element_other_device", {
+                                        brand: SdkConfig.get().brand,
+                                    })}
+                                </li>
+                                <li>
+                                    {_t("auth|qr_code_login|select_qr_code", {
+                                        scanQRCode: <b>{_t("auth|qr_code_login|scan_qr_code")}</b>,
+                                    })}
+                                </li>
+                                <li>{_t("auth|qr_code_login|point_the_camera")}</li>
+                                <li>{_t("auth|qr_code_login|follow_remaining_instructions")}</li>
+                            </ol>
                         </>
                     );
                     buttons = (
@@ -300,12 +299,10 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                 buttons = this.cancelButton();
                 break;
             case Phase.Verifying:
-                title = _t("common|success");
                 centreTitle = true;
                 main = this.simpleSpinner(_t("auth|qr_code_login|completing_setup"));
                 break;
             case Phase.ScanningQR:
-                title = _t("settings|sessions|sign_in_with_qr");
                 main = (
                     <>
                         <p>Line up the QR code in the square below:</p>
@@ -333,19 +330,20 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
             <div data-testid="login-with-qr" className="mx_LoginWithQR">
                 <div className={centreTitle ? "mx_LoginWithQR_centreTitle" : ""}>
                     {backButton ? (
-                        <AccessibleButton
-                            data-testid="back-button"
-                            className="mx_LoginWithQR_BackButton"
-                            onClick={this.handleClick(Click.Back)}
-                            title="Back"
-                        >
-                            <BackButtonIcon />
-                        </AccessibleButton>
+                        <div className="mx_LoginWithQR_heading">
+                            <AccessibleButton
+                                data-testid="back-button"
+                                className="mx_LoginWithQR_BackButton"
+                                onClick={this.handleClick(Click.Back)}
+                                title="Back"
+                            >
+                                <ChevronLeftIcon />
+                            </AccessibleButton>
+                            <div className="mx_LoginWithQR_breadcrumbs">
+                                {_t("settings|sessions|title")} / {_t("settings|sessions|sign_in_with_qr")}
+                            </div>
+                        </div>
                     ) : null}
-                    <h1>
-                        {titleIcon}
-                        {title}
-                    </h1>
                 </div>
                 <div className="mx_LoginWithQR_main">{main}</div>
                 <div className="mx_LoginWithQR_buttons">{buttons}</div>

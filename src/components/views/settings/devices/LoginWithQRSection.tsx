@@ -23,6 +23,7 @@ import {
     IClientWellKnown,
     OidcClientConfig,
 } from "matrix-js-sdk/src/matrix";
+import { Icon as QrCodeIcon } from "@vector-im/compound-design-tokens/icons/qr-code.svg";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../languageHandler";
@@ -80,6 +81,7 @@ export default class LoginWithQRSection extends React.Component<IProps> {
                         {_t("settings|sessions|sign_in_with_qr_description")}
                     </p>
                     <AccessibleButton onClick={this.props.onShowQr} kind="primary">
+                        <QrCodeIcon height={20} width={20} />
                         {_t("settings|sessions|sign_in_with_qr_button")}
                     </AccessibleButton>
                 </div>
