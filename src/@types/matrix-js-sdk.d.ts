@@ -21,7 +21,7 @@ import type { ILayoutStateEvent, WIDGET_LAYOUT_EVENT_TYPE } from "../stores/widg
 import type { VoiceBroadcastInfoEventContent, VoiceBroadcastInfoEventType } from "../voice-broadcast/types";
 import type { EncryptedFile } from "matrix-js-sdk/src/types";
 
-// Matrix JS SDK extensions
+// Extend Matrix JS SDK types via Typescript declaration merging to support unspecced event fields and types
 declare module "matrix-js-sdk/src/types" {
     export interface FileInfo {
         /**
