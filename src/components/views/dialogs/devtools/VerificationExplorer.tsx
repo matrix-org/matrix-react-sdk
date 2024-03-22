@@ -16,8 +16,11 @@ limitations under the License.
 */
 
 import React, { useContext, useEffect, useState } from "react";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { VerificationPhase as Phase, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
+import {
+    VerificationPhase as Phase,
+    VerificationRequest,
+    VerificationRequestEvent,
+} from "matrix-js-sdk/src/crypto-api";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { useTypedEventEmitter, useTypedEventEmitterState } from "../../../../hooks/useEventEmitter";
@@ -70,10 +73,8 @@ const VerificationRequestExplorer: React.FC<{
                 <dd>{Math.floor(timeout / 1000)}</dd>
                 <dt>{_t("devtools|methods")}</dt>
                 <dd>{request.methods && request.methods.join(", ")}</dd>
-                <dt>{_t("devtools|requester")}</dt>
-                <dd>{request.requestingUserId}</dd>
-                <dt>{_t("devtools|observe_only")}</dt>
-                <dd>{JSON.stringify(request.observeOnly)}</dd>
+                <dt>{_t("devtools|other_user")}</dt>
+                <dd>{request.otherUserId}</dd>
             </dl>
         </div>
     );
