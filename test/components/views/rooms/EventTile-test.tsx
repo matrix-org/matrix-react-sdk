@@ -275,7 +275,7 @@ describe("EventTile", () => {
             mxEvent = await mkEncryptedMatrixEvent({
                 plainContent: { msgtype: "m.text", body: "msg1" },
                 plainType: "m.room.message",
-                userId: "@alice:example.org",
+                sender: "@alice:example.org",
                 roomId: room.roomId,
             });
             eventToEncryptionInfoMap.set(mxEvent.getId()!, {
