@@ -33,6 +33,7 @@ import * as utils from "matrix-js-sdk/src/utils";
 import { verificationMethods } from "matrix-js-sdk/src/crypto";
 import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import { logger } from "matrix-js-sdk/src/logger";
+import { QRSecretsBundle } from "matrix-js-sdk/src/crypto-api";
 
 import createMatrixClient from "./utils/createMatrixClient";
 import SettingsStore from "./settings/SettingsStore";
@@ -54,7 +55,6 @@ import { formatList } from "./utils/FormattingUtils";
 import SdkConfig from "./SdkConfig";
 import { Features } from "./settings/Settings";
 import { PhasedRolloutFeature } from "./utils/PhasedRolloutFeature";
-import { QRSecretsBundle } from "matrix-js-sdk/src/crypto-api";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;

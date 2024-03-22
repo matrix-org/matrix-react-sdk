@@ -311,7 +311,12 @@ export async function completeDeviceAuthorizationGrant(
 
         logger.info("Logged in via OIDC Device Authorization Grant");
         await onSuccessfulDelegatedAuthLogin(credentials);
-        const idTokenClaims = validateIdToken(idToken, oidcClient.settings.authority, oidcClient.settings.client_id, undefined) as IdTokenClaims;
+        const idTokenClaims = validateIdToken(
+            idToken,
+            oidcClient.settings.authority,
+            oidcClient.settings.client_id,
+            undefined,
+        ) as IdTokenClaims;
         persistOidcAuthenticatedSettings(oidcClient.settings.client_id, oidcClient.settings.authority, idTokenClaims);
         return { credentials };
     } catch (error) {
@@ -319,7 +324,8 @@ export async function completeDeviceAuthorizationGrant(
 
         await onFailedDelegatedAuthLogin(getOidcErrorMessage(error as Error));
         return {};
-    }}
+    }
+}
 
 /**
  * Attempt to login by completing OIDC authorization code flow
@@ -737,7 +743,10 @@ export async function setLoggedIn(credentials: IMatrixClientCreds): Promise<Matr
     return doSetLoggedIn(Object.assign({}, credentials, { pickleKey }), true);
 }
 
-export async function completeLoginWithQr(credentials: IMatrixClientCreds, secrets?: QRSecretsBundle): Promise<MatrixClient> {
+export async function completeLoginWithQr(
+    credentials: IMatrixClientCreds,
+    secrets?: QRSecretsBundle,
+): Promise<MatrixClient> {
     return doSetLoggedIn(credentials, false, secrets);
 }
 /**
@@ -825,7 +834,11 @@ async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promis
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
-async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnabled: boolean, secrets?: QRSecretsBundle): Promise<MatrixClient> {
+async function doSetLoggedIn(
+    credentials: IMatrixClientCreds,
+    clearStorageEnabled: boolean,
+    secrets?: QRSecretsBundle,
+): Promise<MatrixClient> {
     checkSessionLock();
     credentials.guest = Boolean(credentials.guest);
 
