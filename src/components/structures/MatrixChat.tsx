@@ -28,7 +28,6 @@ import {
     SyncState,
     TimelineEvents,
 } from "matrix-js-sdk/src/matrix";
-import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
@@ -1200,6 +1199,35 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 );
             }
         }
+
+        const client = MatrixClientPeg.get();
+        if (client && roomToLeave) {
+            const plEvent = roomToLeave.currentState.getStateEvents(EventType.RoomPowerLevels, "");
+            const plContent = plEvent ? plEvent.getContent() : {};
+            const userLevels = plContent.users || {};
+            const currentUserLevel = userLevels[client.getUserId()!];
+            const userLevelValues = Object.values(userLevels);
+            if (userLevelValues.every((x) => typeof x === "number")) {
+                const maxUserLevel = Math.max(...(userLevelValues as number[]));
+                // If the user is the only user with highest power level
+                if (
+                    maxUserLevel === currentUserLevel &&
+                    userLevelValues.lastIndexOf(maxUserLevel) == userLevelValues.indexOf(maxUserLevel)
+                ) {
+                    const warning =
+                        maxUserLevel >= 100
+                            ? _t("leave_room_dialog|room_leave_admin_warning")
+                            : _t("leave_room_dialog|room_leave_mod_warning");
+                    warnings.push(
+                        <strong className="warning" key="last_admin_warning">
+                            {" " /* Whitespace, otherwise the sentences get smashed together */}
+                            {warning}
+                        </strong>,
+                    );
+                }
+            }
+        }
+
         return warnings;
     }
 
@@ -1224,6 +1252,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 </span>
             ),
             button: _t("action|leave"),
+            danger: warnings.length > 0,
             onFinished: async (shouldLeave) => {
                 if (shouldLeave) {
                     await leaveRoomBehaviour(cli, roomId);
@@ -1485,9 +1514,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         cli.on(ClientEvent.Sync, (state: SyncState, prevState: SyncState | null, data?: SyncStateData) => {
             if (state === SyncState.Error || state === SyncState.Reconnecting) {
-                if (data?.error instanceof InvalidStoreError) {
-                    Lifecycle.handleInvalidStoreError(data.error);
-                }
                 this.setState({ syncError: data?.error ?? null });
             } else if (this.state.syncError) {
                 this.setState({ syncError: null });
@@ -2019,14 +2045,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 />
             );
         } else if (this.state.view === Views.LOGGED_IN) {
-            // store errors stop the client syncing and require user intervention, so we'll
-            // be showing a dialog. Don't show anything else.
-            const isStoreError = this.state.syncError && this.state.syncError instanceof InvalidStoreError;
-
             // `ready` and `view==LOGGED_IN` may be set before `page_type` (because the
             // latter is set via the dispatcher). If we don't yet have a `page_type`,
             // keep showing the spinner for now.
-            if (this.state.ready && this.state.page_type && !isStoreError) {
+            if (this.state.ready && this.state.page_type) {
                 /* for now, we stuff the entirety of our props and state into the LoggedInView.
                  * we should go through and figure out what we actually need to pass down, as well
                  * as using something like redux to avoid having a billion bits of state kicking around.
@@ -2043,12 +2065,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 );
             } else {
                 // we think we are logged in, but are still waiting for the /sync to complete
-                // Suppress `InvalidStoreError`s here, since they have their own error dialog.
                 view = (
                     <LoginSplashView
                         matrixClient={MatrixClientPeg.safeGet()}
                         onLogoutClick={this.onLogoutClick}
-                        syncError={isStoreError ? null : this.state.syncError}
+                        syncError={this.state.syncError}
                     />
                 );
             }
