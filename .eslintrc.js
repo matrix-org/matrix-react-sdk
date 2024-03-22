@@ -77,6 +77,7 @@ module.exports = {
                             "matrix-js-sdk/src/**",
                             "!matrix-js-sdk/src/matrix",
                             "!matrix-js-sdk/src/types",
+                            "!matrix-js-sdk/src/testing",
                             "matrix-js-sdk/lib",
                             "matrix-js-sdk/lib/",
                             "matrix-js-sdk/lib/**",
