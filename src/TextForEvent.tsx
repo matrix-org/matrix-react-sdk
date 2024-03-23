@@ -373,7 +373,12 @@ function textForServerACLEvent(ev: MatrixEvent): (() => string) | null {
     return getText;
 }
 
-function textForMessageEvent(ev: MatrixEvent, client: MatrixClient): (() => string) | null {
+function textForMessageEvent(
+    ev: MatrixEvent,
+    client: MatrixClient,
+    allowJSX: boolean,
+    enclosedSender?: boolean,
+): (() => string) | null {
     if (isLocationEvent(ev)) {
         return textForLocationEvent(ev);
     }
@@ -393,7 +398,11 @@ function textForMessageEvent(ev: MatrixEvent, client: MatrixClient): (() => stri
             message = _t("timeline|m.sticker", { senderDisplayName });
         } else {
             // in this case, parse it as a plain text message
-            message = senderDisplayName + ": " + message;
+            if (enclosedSender) {
+                message = `<${senderDisplayName}>` + ": " + message;
+            } else {
+                message = senderDisplayName + ": " + message;
+            }
         }
         return message;
     };
@@ -876,6 +885,7 @@ interface IHandlers {
         client: MatrixClient,
         allowJSX: boolean,
         showHiddenEvents?: boolean,
+        enclosedSender?: boolean,
     ) => (() => Renderable) | null;
 }
 
@@ -941,20 +951,25 @@ export function hasText(ev: MatrixEvent, client: MatrixClient, showHiddenEvents?
  * @param allowJSX Whether to output rich JSX content
  * @param showHiddenEvents An optional cached setting value for showHiddenEventsInTimeline
  *     to avoid hitting the settings store
+ * @param enclosedSender An optional parameter to check the sender name should be enclosed within
+ *      < > brackets or not
  */
 export function textForEvent(ev: MatrixEvent, client: MatrixClient): string;
+export function textForEvent(ev: MatrixEvent, client: MatrixClient, allowJSX: true, enclosedSender: boolean): string;
 export function textForEvent(
     ev: MatrixEvent,
     client: MatrixClient,
     allowJSX: true,
     showHiddenEvents?: boolean,
+    enclosedSender?: boolean,
 ): string | React.ReactNode;
 export function textForEvent(
     ev: MatrixEvent,
     client: MatrixClient,
     allowJSX = false,
     showHiddenEvents?: boolean,
+    enclosedSender?: boolean,
 ): string | React.ReactNode {
     const handler = (ev.isState() ? stateHandlers : handlers)[ev.getType()];
-    return handler?.(ev, client, allowJSX, showHiddenEvents)?.() || "";
+    return handler?.(ev, client, allowJSX, showHiddenEvents, enclosedSender)?.() || "";
 }
