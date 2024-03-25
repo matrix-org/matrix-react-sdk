@@ -245,9 +245,7 @@
         "phone_label": "Phone",
         "phone_optional_label": "Phone (optional)",
         "qr_code_login": {
-            "approve_access_warning": "By approving access for this device, it will have full access to your account.",
             "completing_setup": "Completing set up of your new device",
-            "confirm_code_match": "Check that the code below matches with your other device:",
             "connecting": "Connecting…",
             "error_device_already_signed_in": "The other device is already signed in.",
             "error_device_not_signed_in": "The other device isn't signed in.",
@@ -255,7 +253,6 @@
             "error_homeserver_lacks_support": "The homeserver doesn't support signing in another device.",
             "error_invalid_scanned_code": "The scanned code is invalid.",
             "error_linking_incomplete": "The linking wasn't completed in the required time.",
-            "error_rate_limited": "Too many attempts in a short time. Wait some time before trying again.",
             "error_request_cancelled": "The request was cancelled.",
             "error_request_declined": "The request was declined on the other device.",
             "error_unexpected": "An unexpected error occurred.",
@@ -265,7 +262,6 @@
             "scan_code_instruction": "Scan the QR code with another device",
             "scan_qr_code": "Scan QR code",
             "select_qr_code": "Select \"%(scanQRCode)s\"",
-            "sign_in_new_device": "Sign in new device",
             "waiting_for_device": "Waiting for device to sign in"
         },
         "register_action": "Create Account",
