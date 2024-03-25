@@ -798,11 +798,7 @@ async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promis
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
-async function doSetLoggedIn(
-    credentials: IMatrixClientCreds,
-    clearStorageEnabled: boolean,
-    secrets?: QRSecretsBundle,
-): Promise<MatrixClient> {
+async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnabled: boolean): Promise<MatrixClient> {
     checkSessionLock();
     credentials.guest = Boolean(credentials.guest);
 
@@ -873,7 +869,7 @@ async function doSetLoggedIn(
     checkSessionLock();
 
     dis.fire(Action.OnLoggedIn);
-    await startMatrixClient(client, /*startSyncing=*/ !softLogout, secrets);
+    await startMatrixClient(client, /*startSyncing=*/ !softLogout, credentials.secrets);
 
     return client;
 }

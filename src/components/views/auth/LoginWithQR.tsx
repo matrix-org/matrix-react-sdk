@@ -27,7 +27,7 @@ import type { MSC4108SignInWithQR } from "matrix-js-sdk/src/rendezvous";
 import LoginWithQRFlow from "./LoginWithQRFlow";
 import { getOidcClientId } from "../../../utils/oidc/registerClient";
 import SdkConfig from "../../../SdkConfig";
-import { completeDeviceAuthorizationGrant, completeLoginWithQr } from "../../../Lifecycle";
+import { completeDeviceAuthorizationGrant } from "../../../Lifecycle";
 
 /**
  * The intention of this enum is to have a mode that scans a QR code instead of generating one.
@@ -284,10 +284,8 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 // wait for secrets:
                 const { secrets } = await rendezvous.loginStep5(credentials.deviceId);
 
-                await completeLoginWithQr(credentials, secrets);
-
                 // done
-                this.props.onFinished(credentials);
+                this.props.onFinished({ ...credentials, secrets });
             } else {
                 // MSC4108-Flow: ExistingScanned
                 const homeserverBaseUrl = homeserverBaseUrlFromStep1;
@@ -354,10 +352,8 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             // wait for secrets
             const { secrets } = await this.state.rendezvous.loginStep5(credentials.deviceId);
 
-            await completeLoginWithQr(credentials, secrets);
-
             // done
-            this.props.onFinished(credentials);
+            this.props.onFinished({ ...credentials, secrets });
         }
     };
 

@@ -66,6 +66,7 @@ export interface IMatrixClientCreds {
     guest?: boolean;
     pickleKey?: string;
     freshLogin?: boolean;
+    secrets?: QRSecretsBundle;
 }
 
 /**
