@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/matrix";
+import { JoinRule, Room } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { EventEmitter } from "events";
@@ -577,7 +577,7 @@ export class Algorithm extends EventEmitter {
                 tags = [DefaultTagID.DM];
             }
         }
-        if (room.isCallRoom() && room.getJoinRule() === "public") {
+        if (room.isCallRoom() && (room.getJoinRule() === JoinRule.Public || room.getJoinRule() === JoinRule.Knock)) {
             tags.push(DefaultTagID.Conference);
         }
 
