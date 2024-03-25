@@ -19,6 +19,7 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import * as utils from "matrix-js-sdk/src/utils";
 import { MatrixError, JoinRule, Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
 import { JoinedRoom as JoinedRoomEvent } from "@matrix-org/analytics-events/types/typescript/JoinedRoom";
@@ -62,6 +63,7 @@ import { ActionPayload } from "../dispatcher/payloads";
 import { CancelAskToJoinPayload } from "../dispatcher/payloads/CancelAskToJoinPayload";
 import { SubmitAskToJoinPayload } from "../dispatcher/payloads/SubmitAskToJoinPayload";
 import { ModuleRunner } from "../modules/ModuleRunner";
+import { setMarkedUnreadState } from "../utils/notifications";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -497,6 +499,8 @@ export class RoomViewStore extends EventEmitter {
             if (room) {
                 pauseNonLiveBroadcastFromOtherRoom(room, this.stores.voiceBroadcastPlaybacksStore);
                 this.doMaybeSetCurrentVoiceBroadcastPlayback(room);
+
+                await setMarkedUnreadState(room, MatrixClientPeg.safeGet(), false);
             }
         } else if (payload.room_alias) {
             // Try the room alias to room ID navigation cache first to avoid
@@ -607,7 +611,7 @@ export class RoomViewStore extends EventEmitter {
     private getInvitingUserId(roomId: string): string | undefined {
         const cli = MatrixClientPeg.safeGet();
         const room = cli.getRoom(roomId);
-        if (room?.getMyMembership() === "invite") {
+        if (room?.getMyMembership() === KnownMembership.Invite) {
             const myMember = room.getMember(cli.getSafeUserId());
             const inviteEvent = myMember ? myMember.events.member : null;
             return inviteEvent?.getSender();

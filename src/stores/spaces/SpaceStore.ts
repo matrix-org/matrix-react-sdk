@@ -26,6 +26,7 @@ import {
     ClientEvent,
     ISendEventResponse,
 } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -261,8 +262,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             // else view space home or home depending on what is being clicked on
             if (
                 roomId &&
-                cliSpace?.getMyMembership() !== "invite" &&
-                this.matrixClient.getRoom(roomId)?.getMyMembership() === "join" &&
+                cliSpace?.getMyMembership() !== KnownMembership.Invite &&
+                this.matrixClient.getRoom(roomId)?.getMyMembership() === KnownMembership.Join &&
                 this.isRoomInSpace(space, roomId)
             ) {
                 defaultDispatcher.dispatch<ViewRoomPayload>({
@@ -331,7 +332,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 .filter((roomInfo) => {
                     return (
                         roomInfo.room_type !== RoomType.Space &&
-                        this.matrixClient?.getRoom(roomInfo.room_id)?.getMyMembership() !== "join"
+                        this.matrixClient?.getRoom(roomInfo.room_id)?.getMyMembership() !== KnownMembership.Join
                     );
                 })
                 .map((roomInfo) => ({
@@ -374,7 +375,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     return history[history.length - 1];
                 })
                 .filter((room) => {
-                    return room?.getMyMembership() === "join" || room?.getMyMembership() === "invite";
+                    return (
+                        room?.getMyMembership() === KnownMembership.Join ||
+                        room?.getMyMembership() === KnownMembership.Invite
+                    );
                 }) || []
         );
     }
@@ -385,7 +389,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     public getChildSpaces(spaceId: string): Room[] {
         // don't show invited subspaces as they surface at the top level for better visibility
-        return this.getChildren(spaceId).filter((r) => r.isSpaceRoom() && r.getMyMembership() === "join");
+        return this.getChildren(spaceId).filter((r) => r.isSpaceRoom() && r.getMyMembership() === KnownMembership.Join);
     }
 
     public getParents(roomId: string, canonicalOnly = false): Room[] {
@@ -601,7 +605,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private rebuildParentMap = (): void => {
         if (!this.matrixClient) return;
         const joinedSpaces = this.matrixClient.getVisibleRooms(this._msc3946ProcessDynamicPredecessor).filter((r) => {
-            return r.isSpaceRoom() && r.getMyMembership() === "join";
+            return r.isSpaceRoom() && r.getMyMembership() === KnownMembership.Join;
         });
 
         this.parentMap = new EnhancedMap<string, Set<string>>();
@@ -725,12 +729,12 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         return (
             !this.parentMap.get(room.roomId)?.size || // put all orphaned rooms in the Home Space
             !!DMRoomMap.shared().getUserIdForRoomId(room.roomId) || // put all DMs in the Home Space
-            room.getMyMembership() === "invite"
+            room.getMyMembership() === KnownMembership.Invite
         ); // put all invites in the Home Space
     };
 
     private static isInSpace(member?: RoomMember | null): boolean {
-        return member?.membership === "join" || member?.membership === "invite";
+        return member?.membership === KnownMembership.Join || member?.membership === KnownMembership.Invite;
     }
 
     // Method for resolving the impact of a single user's membership change in the given Space and its hierarchy
@@ -774,7 +778,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         const hiddenChildren = new EnhancedMap<string, Set<string>>();
         visibleRooms.forEach((room) => {
-            if (!["join", "invite"].includes(room.getMyMembership())) return;
+            if (!([KnownMembership.Join, KnownMembership.Invite] as Array<string>).includes(room.getMyMembership()))
+                return;
             this.getParents(room.roomId).forEach((parent) => {
                 hiddenChildren.getOrCreate(parent.roomId, new Set()).add(room.roomId);
             });
@@ -804,7 +809,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     space
                         ?.getMembers()
                         .filter((m) => {
-                            return m.membership === "join" || m.membership === "invite";
+                            return m.membership === KnownMembership.Join || m.membership === KnownMembership.Invite;
                         })
                         .map((m) => m.userId),
                 );
@@ -932,7 +937,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (!room.isSpaceRoom()) {
             this.onRoomsUpdate();
 
-            if (membership === "join") {
+            if (membership === KnownMembership.Join) {
                 // the user just joined a room, remove it from the suggested list if it was there
                 const numSuggestedRooms = this._suggestedRooms.length;
                 this._suggestedRooms = this._suggestedRooms.filter((r) => r.room_id !== room.roomId);
@@ -943,7 +948,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 }
 
                 // if the room currently being viewed was just joined then switch to its related space
-                if (newMembership === "join" && room.roomId === SdkContextClass.instance.roomViewStore.getRoomId()) {
+                if (
+                    newMembership === KnownMembership.Join &&
+                    room.roomId === SdkContextClass.instance.roomViewStore.getRoomId()
+                ) {
                     this.switchSpaceIfNeeded(room.roomId);
                 }
             }
@@ -951,13 +959,13 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
 
         // Space
-        if (membership === "invite") {
+        if (membership === KnownMembership.Invite) {
             const len = this._invitedSpaces.size;
             this._invitedSpaces.add(room);
             if (len !== this._invitedSpaces.size) {
                 this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
             }
-        } else if (oldMembership === "invite" && membership !== "join") {
+        } else if (oldMembership === KnownMembership.Invite && membership !== KnownMembership.Join) {
             if (this._invitedSpaces.delete(room)) {
                 this.emit(UPDATE_INVITED_SPACES, this.invitedSpaces);
             }
@@ -970,10 +978,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.emit(room.roomId);
         }
 
-        if (membership === "join" && room.roomId === SdkContextClass.instance.roomViewStore.getRoomId()) {
+        if (membership === KnownMembership.Join && room.roomId === SdkContextClass.instance.roomViewStore.getRoomId()) {
             // if the user was looking at the space and then joined: select that space
             this.setActiveSpace(room.roomId, false);
-        } else if (membership === "leave" && room.roomId === this.activeSpace) {
+        } else if (membership === KnownMembership.Leave && room.roomId === this.activeSpace) {
             // user's active space has gone away, go back to home
             this.goToFirstSpace(true);
         }
@@ -1008,7 +1016,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
                 if (
                     room.roomId === this.activeSpace && // current space
-                    target?.getMyMembership() !== "join" && // target not joined
+                    target?.getMyMembership() !== KnownMembership.Join && // target not joined
                     ev.getPrevContent().suggested !== ev.getContent().suggested // suggested flag changed
                 ) {
                     this.loadSuggestedRooms(room);

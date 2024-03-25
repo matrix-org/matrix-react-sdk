@@ -29,6 +29,7 @@ import {
     DeviceVerificationStatus,
     Device,
 } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import {
     Phase,
     VerificationRequest,
@@ -932,19 +933,14 @@ describe("<PowerLevelEditor />", () => {
         // firing the event will raise a dialog warning about self demotion, wait for this to appear then click on it
         await userEvent.click(await screen.findByText("Demote", { exact: true }));
         expect(mockClient.setPowerLevel).toHaveBeenCalledTimes(1);
-        expect(mockClient.setPowerLevel).toHaveBeenCalledWith(
-            mockRoom.roomId,
-            defaultMember.userId,
-            changedPowerLevel,
-            powerLevelEvent,
-        );
+        expect(mockClient.setPowerLevel).toHaveBeenCalledWith(mockRoom.roomId, defaultMember.userId, changedPowerLevel);
     });
 });
 
 describe("<RoomKickButton />", () => {
     const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
-    const memberWithInviteMembership = { ...defaultMember, membership: "invite" };
-    const memberWithJoinMembership = { ...defaultMember, membership: "join" };
+    const memberWithInviteMembership = { ...defaultMember, membership: KnownMembership.Invite };
+    const memberWithJoinMembership = { ...defaultMember, membership: KnownMembership.Join };
 
     let defaultProps: Parameters<typeof RoomKickButton>[0];
     beforeEach(() => {
@@ -1031,7 +1027,7 @@ describe("<RoomKickButton />", () => {
         // null vs their member followed by
         // my member vs their member
         const mockMyMember = { powerLevel: 1 };
-        const mockTheirMember = { membership: "invite", powerLevel: 0 };
+        const mockTheirMember = { membership: KnownMembership.Invite, powerLevel: 0 };
 
         const mockRoom = {
             getMember: jest
@@ -1052,7 +1048,7 @@ describe("<RoomKickButton />", () => {
 
 describe("<BanToggleButton />", () => {
     const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
-    const memberWithBanMembership = { ...defaultMember, membership: "ban" };
+    const memberWithBanMembership = { ...defaultMember, membership: KnownMembership.Ban };
     let defaultProps: Parameters<typeof BanToggleButton>[0];
     beforeEach(() => {
         defaultProps = {
@@ -1161,7 +1157,7 @@ describe("<BanToggleButton />", () => {
         // null vs their member followed by
         // my member vs their member
         const mockMyMember = { powerLevel: 1 };
-        const mockTheirMember = { membership: "ban", powerLevel: 0 };
+        const mockTheirMember = { membership: KnownMembership.Ban, powerLevel: 0 };
 
         const mockRoom = {
             getMember: jest
@@ -1182,7 +1178,7 @@ describe("<BanToggleButton />", () => {
 
 describe("<RoomAdminToolsContainer />", () => {
     const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
-    defaultMember.membership = "invite";
+    defaultMember.membership = KnownMembership.Invite;
 
     let defaultProps: Parameters<typeof RoomAdminToolsContainer>[0];
     beforeEach(() => {
@@ -1245,7 +1241,11 @@ describe("<RoomAdminToolsContainer />", () => {
         mockMeMember.powerLevel = 51; // defaults to 50
         mockRoom.getMember.mockReturnValueOnce(mockMeMember);
 
-        const defaultMemberWithPowerLevelAndJoinMembership = { ...defaultMember, powerLevel: 0, membership: "join" };
+        const defaultMemberWithPowerLevelAndJoinMembership = {
+            ...defaultMember,
+            powerLevel: 0,
+            membership: KnownMembership.Join,
+        };
 
         renderComponent({
             member: defaultMemberWithPowerLevelAndJoinMembership,
@@ -1263,7 +1263,11 @@ describe("<RoomAdminToolsContainer />", () => {
         mockMeMember.powerLevel = 51; // defaults to 50
         mockRoom.getMember.mockReturnValueOnce(mockMeMember);
 
-        const defaultMemberWithPowerLevelAndJoinMembership = { ...defaultMember, powerLevel: 0, membership: "join" };
+        const defaultMemberWithPowerLevelAndJoinMembership = {
+            ...defaultMember,
+            powerLevel: 0,
+            membership: KnownMembership.Join,
+        };
 
         renderComponent({
             member: defaultMemberWithPowerLevelAndJoinMembership,
