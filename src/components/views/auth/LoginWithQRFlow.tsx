@@ -25,7 +25,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import QRCode from "../elements/QRCode";
 import Spinner from "../elements/Spinner";
 import { Icon as CheckmarkIcon } from "../../../../res/img/element-icons/check.svg";
-import { Click, FailureReason, LoginWithQRFailureReason, Phase } from "./LoginWithQR";
+import { Click, Phase } from "./LoginWithQR";
 import SdkConfig from "../../../SdkConfig";
 
 interface IProps {
