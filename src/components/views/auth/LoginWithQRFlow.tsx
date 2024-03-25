@@ -17,7 +17,6 @@ limitations under the License.
 import React from "react";
 import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
 import { Icon as ChevronLeftIcon } from "@vector-im/compound-design-tokens/icons/chevron-left.svg";
-import { QrReader, OnResultFunction } from "react-qr-reader";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -33,7 +32,6 @@ interface IProps {
     code?: Uint8Array;
     onClick(type: Click): Promise<void>;
     failureReason?: RendezvousFailureReason;
-    onScannedQRCode?: OnResultFunction;
     userCode?: string;
 }
 
@@ -70,17 +68,6 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
             </div>
         );
     };
-
-    private viewFinder(): JSX.Element {
-        return (
-            <svg viewBox="0 0 100 100" className="mx_QRViewFinder">
-                <path fill="none" d="M10,0 L0,0 L0,10" />
-                <path fill="none" d="M0,90 L0,100 L10,100" />
-                <path fill="none" d="M90,100 L100,100 L100,90" />
-                <path fill="none" d="M100,10 L100,0 L90,0" />
-            </svg>
-        );
-    }
 
     public render(): React.ReactNode {
         logger.info(`LoginWithQRFlow render: phase=${this.props.phase}`);
@@ -262,15 +249,6 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                             </ol>
                         </>
                     );
-                    buttons = (
-                        <AccessibleButton
-                            data-testid="decline-login-button"
-                            kind="primary_outline"
-                            onClick={this.handleClick(Click.ScanQr)}
-                        >
-                            Scan QR code instead
-                        </AccessibleButton>
-                    );
                 } else {
                     main = this.simpleSpinner();
                     buttons = this.cancelButton();
@@ -301,28 +279,6 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
             case Phase.Verifying:
                 centreTitle = true;
                 main = this.simpleSpinner(_t("auth|qr_code_login|completing_setup"));
-                break;
-            case Phase.ScanningQR:
-                main = (
-                    <>
-                        <p>Line up the QR code in the square below:</p>
-                        <QrReader
-                            className="mx_LoginWithQR_QRScanner"
-                            constraints={{}}
-                            onResult={this.props.onScannedQRCode}
-                            ViewFinder={this.viewFinder}
-                        />
-                    </>
-                );
-                buttons = (
-                    <AccessibleButton
-                        data-testid="decline-login-button"
-                        kind="primary_outline"
-                        onClick={this.handleClick(Click.ShowQr)}
-                    >
-                        Show QR code instead
-                    </AccessibleButton>
-                );
                 break;
         }
 

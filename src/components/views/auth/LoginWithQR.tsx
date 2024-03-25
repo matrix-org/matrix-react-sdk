@@ -19,14 +19,9 @@ import React, { lazy, Suspense } from "react";
 import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous/RendezvousFailureReason";
 import { RendezvousIntent } from "matrix-js-sdk/src/rendezvous/RendezvousIntent";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient, discoverAndValidateOIDCIssuerWellKnown, generateScope } from "matrix-js-sdk/src/matrix";
-import { OnResultFunction } from "react-qr-reader";
-import { OidcClient } from "oidc-client-ts";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import type { MSC4108SignInWithQR } from "matrix-js-sdk/src/rendezvous";
-import { getOidcClientId } from "../../../utils/oidc/registerClient";
-import SdkConfig from "../../../SdkConfig";
-import { completeDeviceAuthorizationGrant } from "../../../Lifecycle";
 import Spinner from "../elements/Spinner";
 
 // We import `LoginWithQRFlow` asynchronously to avoid importing the entire Rust Crypto WASM into the main bundle.
@@ -40,12 +35,12 @@ export enum Mode {
      * A QR code with be generated and shown
      */
     Show = "show",
-    Scan = "scan",
+    // Scan = "scan",
 }
 
 export enum Phase {
     Loading = "loading",
-    ScanningQR = "scanningQR",
+    // ScanningQR = "scanningQR",
     ShowingQR = "showingQR",
     Connecting = "connecting",
     OutOfBandConfirmation = "outOfBandConfirmation",
@@ -62,7 +57,7 @@ export enum Click {
     Approve,
     TryAgain,
     Back,
-    ScanQr,
+    // ScanQr,
     ShowQr,
 }
 
@@ -130,9 +125,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
         if (mode === Mode.Show) {
             await this.generateAndShowCode();
-        } else {
-            await this.requestMediaPermissions();
-            this.setState({ phase: Phase.ScanningQR });
         }
     }
 
@@ -144,28 +136,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             this.state.rendezvous.cancel(RendezvousFailureReason.UserCancelled).then(() => {});
         }
     }
-
-    private getOidcClient = async (homeserverBaseUrl: string): Promise<OidcClient> => {
-        // oidc discovery
-        const tempClient = new MatrixClient({ baseUrl: homeserverBaseUrl });
-        // this should fall back to the well-known
-        const { issuer } = await tempClient.getAuthIssuer();
-        // AutoDiscovery;
-        const metadata = await discoverAndValidateOIDCIssuerWellKnown(issuer);
-        // oidc registration
-        const clientId = await getOidcClientId(metadata, SdkConfig.get().oidc_static_clients);
-
-        const scope = generateScope();
-        const oidcClient = new OidcClient({
-            ...metadata,
-            client_id: clientId,
-            redirect_uri: window.location.href,
-            authority: issuer,
-            scope,
-        });
-
-        return oidcClient;
-    };
 
     private generateAndShowCode = async (): Promise<void> => {
         let rendezvous: MSC4108SignInWithQR;
@@ -232,82 +202,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
     };
 
-    private processScannedCode = async (scannedCode: Buffer): Promise<void> => {
-        logger.info(scannedCode.toString());
-        try {
-            const Rendezvous = await import("matrix-js-sdk/src/rendezvous");
-            if (this.state.lastScannedCode?.equals(scannedCode)) {
-                return; // suppress duplicate scans
-            }
-            if (this.state.rendezvous) {
-                await this.state.rendezvous.cancel(RendezvousFailureReason.UserCancelled);
-                this.reset();
-            }
-
-            const { signin: rendezvous, homeserverBaseUrl: homeserverBaseUrlFromCode } =
-                await Rendezvous.buildLoginFromScannedCode(this.props.client, scannedCode, this.onFailure);
-
-            this.setState({
-                phase: Phase.Connecting,
-                lastScannedCode: scannedCode,
-                rendezvous,
-                failureReason: undefined,
-            });
-
-            const { homeserverBaseUrl: homeserverBaseUrlFromStep1 } = await rendezvous.loginStep1();
-
-            if (this.state.ourIntent === RendezvousIntent.LOGIN_ON_NEW_DEVICE) {
-                // MSC4108-Flow: NewScanned
-                const homeserverBaseUrl = homeserverBaseUrlFromCode;
-
-                if (!homeserverBaseUrl) {
-                    throw new Error("We don't know the homeserver");
-                }
-                const oidcClient = await this.getOidcClient(homeserverBaseUrl);
-                const { userCode } = await rendezvous.loginStep2And3(oidcClient);
-                this.setState({
-                    phase: Phase.ShowChannelSecure,
-                    userCode,
-                });
-
-                // wait  for grant:
-                const tokenResponse = await rendezvous.loginStep4();
-
-                const { credentials } = await completeDeviceAuthorizationGrant(
-                    oidcClient,
-                    tokenResponse,
-                    homeserverBaseUrl,
-                    undefined,
-                );
-
-                if (!credentials) {
-                    throw new Error("Failed to complete device authorization grant");
-                }
-
-                // wait for secrets:
-                const { secrets } = await rendezvous.loginStep5(credentials.deviceId);
-
-                // done
-                this.props.onFinished({ ...credentials, secrets });
-            } else {
-                // MSC4108-Flow: ExistingScanned
-                const homeserverBaseUrl = homeserverBaseUrlFromStep1;
-                this.setState({
-                    phase: Phase.ShowChannelSecure,
-                });
-                const { verificationUri } = await rendezvous.loginStep2And3();
-                this.setState({
-                    phase: Phase.Continue,
-                    verificationUri,
-                    homeserverBaseUrl,
-                });
-            }
-        } catch (e) {
-            alert(e);
-            throw e;
-        }
-    };
-
     private approveLoginAfterShowingCode = async (): Promise<void> => {
         if (!this.state.rendezvous) {
             throw new Error("Rendezvous not found");
@@ -329,34 +223,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             // done
             this.props.onFinished(true);
         } else {
-            // MSC4108-Flow: ExistingScanned
-            const { homeserverBaseUrl } = this.state;
-            if (!homeserverBaseUrl) {
-                throw new Error("We don't know the homeserver");
-            }
-            const oidcClient = await this.getOidcClient(homeserverBaseUrl);
-            const { userCode } = await this.state.rendezvous.loginStep2And3(oidcClient);
-            this.setState({ phase: Phase.WaitingForDevice, userCode });
-
-            // wait for grant:
-            const tokenResponse = await this.state.rendezvous.loginStep4();
-
-            const { credentials } = await completeDeviceAuthorizationGrant(
-                oidcClient,
-                tokenResponse,
-                homeserverBaseUrl,
-                undefined,
-            );
-
-            if (!credentials) {
-                throw new Error("Failed to complete device authorization grant");
-            }
-
-            // wait for secrets
-            const { secrets } = await this.state.rendezvous.loginStep5(credentials.deviceId);
-
-            // done
-            this.props.onFinished({ ...credentials, secrets });
+            throw new Error("New device flows around OIDC are not yet implemented");
         }
     };
 
@@ -400,27 +267,9 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 await this.state.rendezvous?.cancel(RendezvousFailureReason.UserCancelled);
                 this.props.onFinished(false);
                 break;
-            case Click.ScanQr:
-                await this.updateMode(Mode.Scan);
-                break;
             case Click.ShowQr:
                 await this.updateMode(Mode.Show);
                 break;
-        }
-    };
-
-    private onScannedQRCode: OnResultFunction = (result, error): void => {
-        if (result) {
-            void this.processScannedCode(Buffer.from((result.getResultMetadata().get(2) as [Uint8Array])[0]));
-        }
-    };
-
-    private requestMediaPermissions = async (): Promise<void> => {
-        try {
-            await navigator.mediaDevices.getUserMedia({ video: true });
-            this.setState({ mediaPermissionError: false });
-        } catch (err) {
-            this.setState({ mediaPermissionError: true });
         }
     };
 
@@ -433,7 +282,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     phase={this.state.phase}
                     code={this.state.phase === Phase.ShowingQR ? this.state.rendezvous?.code : undefined}
                     failureReason={this.state.phase === Phase.Error ? this.state.failureReason : undefined}
-                    onScannedQRCode={this.onScannedQRCode}
                     userCode={this.state.userCode}
                 />
             </Suspense>

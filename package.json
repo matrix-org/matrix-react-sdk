@@ -112,7 +112,7 @@
         "matrix-widget-api": "^1.5.0",
         "memoize-one": "^6.0.0",
         "minimist": "^1.2.5",
-        "oidc-client-ts": "github:hughns/oidc-client-ts#hughns/device-flow",
+        "oidc-client-ts": "^3.0.1",
         "opus-recorder": "^8.0.3",
         "pako": "^2.0.3",
         "png-chunks-extract": "^1.0.0",
@@ -132,8 +132,7 @@
         "tar-js": "^0.3.0",
         "ua-parser-js": "^1.0.2",
         "uuid": "^9.0.0",
-        "what-input": "^5.2.10",
-        "react-qr-reader": "^3.0.0-beta-1"
+        "what-input": "^5.2.10"
     },
     "devDependencies": {
         "@action-validator/cli": "^0.6.0",
