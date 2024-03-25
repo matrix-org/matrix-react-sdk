@@ -707,12 +707,6 @@ export async function setLoggedIn(credentials: IMatrixClientCreds): Promise<Matr
     return doSetLoggedIn(Object.assign({}, credentials, { pickleKey }), true);
 }
 
-export async function completeLoginWithQr(
-    credentials: IMatrixClientCreds,
-    secrets?: QRSecretsBundle,
-): Promise<MatrixClient> {
-    return doSetLoggedIn(credentials, false, secrets);
-}
 /**
  * Hydrates an existing session by using the credentials provided. This will
  * not clear any local storage, unlike setLoggedIn().
