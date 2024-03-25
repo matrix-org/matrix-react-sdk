@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { mkDecryptionFailureMatrixEvent } from "matrix-js-sdk/src/testing";
+import { decryptExistingEvent, mkDecryptionFailureMatrixEvent } from "matrix-js-sdk/src/testing";
 
 import { DecryptionFailureTracker } from "../src/DecryptionFailureTracker";
 
@@ -145,8 +145,11 @@ describe("DecryptionFailureTracker", function () {
         const err = new MockDecryptionError();
         tracker.eventDecrypted(decryptedEvent, err);
 
-        // Indicate successful decryption: clear data can be anything where the msgtype is not m.bad.encrypted
-        decryptedEvent.setClearData({});
+        // Indicate successful decryption.
+        await decryptExistingEvent(decryptedEvent, {
+            plainType: "m.room.message",
+            plainContent: { body: "success" },
+        });
         tracker.eventDecrypted(decryptedEvent, null);
 
         // Pretend "now" is Infinity
@@ -171,8 +174,11 @@ describe("DecryptionFailureTracker", function () {
             const err = new MockDecryptionError();
             tracker.eventDecrypted(decryptedEvent, err);
 
-            // Indicate successful decryption: clear data can be anything where the msgtype is not m.bad.encrypted
-            decryptedEvent.setClearData({});
+            // Indicate successful decryption.
+            await decryptExistingEvent(decryptedEvent, {
+                plainType: "m.room.message",
+                plainContent: { body: "success" },
+            });
             tracker.eventDecrypted(decryptedEvent, null);
 
             tracker.addVisibleEvent(decryptedEvent);
