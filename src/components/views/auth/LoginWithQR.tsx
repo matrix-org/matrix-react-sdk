@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { lazy, Suspense } from "react";
 // We import "matrix-js-sdk/src/rendezvous" asynchronously to avoid importing the entire Rust Crypto WASM into the main bundle.
 import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous/RendezvousFailureReason";
 import { RendezvousIntent } from "matrix-js-sdk/src/rendezvous/RendezvousIntent";
@@ -24,10 +24,13 @@ import { OnResultFunction } from "react-qr-reader";
 import { OidcClient } from "oidc-client-ts";
 
 import type { MSC4108SignInWithQR } from "matrix-js-sdk/src/rendezvous";
-import LoginWithQRFlow from "./LoginWithQRFlow";
 import { getOidcClientId } from "../../../utils/oidc/registerClient";
 import SdkConfig from "../../../SdkConfig";
 import { completeDeviceAuthorizationGrant } from "../../../Lifecycle";
+import Spinner from "../elements/Spinner";
+
+// We import `LoginWithQRFlow` asynchronously to avoid importing the entire Rust Crypto WASM into the main bundle.
+const LoginWithQRFlow = lazy(() => import("./LoginWithQRFlow"));
 
 /**
  * The intention of this enum is to have a mode that scans a QR code instead of generating one.
@@ -424,14 +427,16 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     public render(): React.ReactNode {
         logger.info("LoginWithQR render");
         return (
-            <LoginWithQRFlow
-                onClick={this.onClick}
-                phase={this.state.phase}
-                code={this.state.phase === Phase.ShowingQR ? this.state.rendezvous?.code : undefined}
-                failureReason={this.state.phase === Phase.Error ? this.state.failureReason : undefined}
-                onScannedQRCode={this.onScannedQRCode}
-                userCode={this.state.userCode}
-            />
+            <Suspense fallback={<Spinner />}>
+                <LoginWithQRFlow
+                    onClick={this.onClick}
+                    phase={this.state.phase}
+                    code={this.state.phase === Phase.ShowingQR ? this.state.rendezvous?.code : undefined}
+                    failureReason={this.state.phase === Phase.Error ? this.state.failureReason : undefined}
+                    onScannedQRCode={this.onScannedQRCode}
+                    userCode={this.state.userCode}
+                />
+            </Suspense>
         );
     }
 }
