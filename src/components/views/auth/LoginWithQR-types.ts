@@ -22,23 +22,21 @@ export enum Mode {
      * A QR code with be generated and shown
      */
     Show = "show",
-    // Scan = "scan",
 }
 
 export enum Phase {
     Loading,
     ShowingQR,
     Connecting,
+    // The following are specific to MSC4108
+    OutOfBandConfirmation,
+    WaitingForDevice,
+    Verifying,
+    Error,
     /**
      * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108.
      */
-    Connected,
-    OutOfBandConfirmation,
-    ShowChannelSecure,
-    WaitingForDevice,
-    Verifying,
-    Continue,
-    Error,
+    LegacyConnected,
 }
 
 /**
@@ -48,7 +46,7 @@ export type LegacyPhase =
     | Phase.Loading
     | Phase.ShowingQR
     | Phase.Connecting
-    | Phase.Connected
+    | Phase.LegacyConnected
     | Phase.WaitingForDevice
     | Phase.Verifying
     | Phase.Error;
@@ -59,6 +57,5 @@ export enum Click {
     Approve,
     TryAgain,
     Back,
-    // ScanQr,
     ShowQr,
 }
