@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { RefObject, createRef } from "react";
 import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
 import { Icon as ChevronLeftIcon } from "@vector-im/compound-design-tokens/icons/chevron-left.svg";
 
@@ -40,9 +40,10 @@ interface MSC3906Props extends Pick<Props, "phase" | "onClick" | "failureReason"
 interface Props {
     phase: Phase;
     code?: Uint8Array;
-    onClick(type: Click): Promise<void>;
+    onClick(type: Click, checkCodeEntered?: string): Promise<void>;
     failureReason?: FailureReason;
     userCode?: string;
+    checkCode?: string;
 }
 
 /**
@@ -51,6 +52,8 @@ interface Props {
  * This supports the unstable features of MSC3906 and MSC4108
  */
 export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906Props>> {
+    private checkCodeInput = createRef<HTMLInputElement>(null);
+
     public constructor(props: XOR<Props, MSC3906Props>) {
         super(props);
     }
@@ -58,7 +61,7 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
     private handleClick = (type: Click): ((e: React.FormEvent) => Promise<void>) => {
         return async (e: React.FormEvent): Promise<void> => {
             e.preventDefault();
-            await this.props.onClick(type);
+            await this.props.onClick(type, type === Click.Approve ? this.checkCodeInput.current?.value : undefined);
         };
     };
 
@@ -177,8 +180,52 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
                 backButton = false;
                 main = (
                     <>
-                        <h1>{_t("auth|qr_code_login|confirm_green_checkmark_title")}</h1>
-                        <p>{_t("auth|qr_code_login|confirm_green_checkmark")}</p>
+                        <p>
+                            To verify that the connection is secure, please enter the code shown on your other device:
+                        </p>
+                        <p>
+                            <input ref={this.checkCodeInput} type="text" autoFocus={true} placeholder="Code" />
+                        </p>
+                        <div className="mx_LoginWithQR_confirmationAlert">
+                            <div>
+                                <CheckmarkIcon />
+                            </div>
+                        </div>
+                        {this.props.userCode ? (
+                            <div>
+                                <p>Security code</p>
+                                <p>If asked, enter the code below on your other device.</p>
+                                <p>{this.props.userCode}</p>
+                            </div>
+                        ) : null}
+                    </>
+                );
+
+                buttons = (
+                    <>
+                        <AccessibleButton
+                            data-testid="approve-login-button"
+                            kind="primary"
+                            onClick={this.handleClick(Click.Approve)}
+                        >
+                            Continue
+                        </AccessibleButton>
+                        <AccessibleButton
+                            data-testid="decline-login-button"
+                            kind="primary_outline"
+                            onClick={this.handleClick(Click.Decline)}
+                        >
+                            No code shown
+                        </AccessibleButton>
+                    </>
+                );
+                break;
+            case Phase.ShowChannelSecure:
+                backButton = false;
+                main = (
+                    <>
+                        <p>You’ll be asked to enter the following code on your other device:</p>
+                        <p>{this.props.checkCode}</p>
                         <div className="mx_LoginWithQR_confirmationAlert">
                             <div>
                                 <CheckmarkIcon />

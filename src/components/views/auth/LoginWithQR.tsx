@@ -245,9 +245,19 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
     };
 
-    private approveLoginAfterShowingCode = async (): Promise<void> => {
+    private approveLoginAfterShowingCode = async (checkCode: string | undefined): Promise<void> => {
         if (!(this.state.rendezvous instanceof MSC4108SignInWithQR)) {
             throw new Error("Rendezvous not found");
+        }
+
+        if (!checkCode) {
+            throw new Error("No check code");
+        }
+
+        if (this.state.rendezvous?.checkCode !== checkCode) {
+            // PROTOTYPE: this doesn't actually show in the UI sensibly
+            // should we prompt to re-enter?
+            throw new Error("Check code mismatch");
         }
 
         if (this.state.ourIntent === RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE) {
@@ -288,7 +298,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         });
     }
 
-    private onClick = async (type: Click): Promise<void> => {
+    private onClick = async (type: Click, checkCode?: string): Promise<void> => {
         switch (type) {
             case Click.Cancel:
                 await this.state.rendezvous?.cancel(RendezvousFailureReason.UserCancelled);
@@ -296,7 +306,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 this.props.onFinished(false);
                 break;
             case Click.Approve:
-                await (this.props.legacy ? this.legacyApproveLogin() : this.approveLoginAfterShowingCode());
+                await (this.props.legacy ? this.legacyApproveLogin() : this.approveLoginAfterShowingCode(checkCode));
                 break;
             case Click.Decline:
                 await this.state.rendezvous?.declineLoginOnExistingDevice();
@@ -339,6 +349,9 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 code={this.state.phase === Phase.ShowingQR ? this.state.rendezvous?.code : undefined}
                 failureReason={this.state.phase === Phase.Error ? this.state.failureReason : undefined}
                 userCode={this.state.userCode}
+                checkCode={
+                    this.state.phase === Phase.ShowChannelSecure ? this.state.rendezvous?.checkCode : undefined
+                }
             />
         );
     }
