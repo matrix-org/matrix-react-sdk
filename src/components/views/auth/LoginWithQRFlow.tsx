@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { RefObject, createRef } from "react";
 import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
 import { Icon as ChevronLeftIcon } from "@vector-im/compound-design-tokens/icons/chevron-left.svg";
 import { QrReader, OnResultFunction } from "react-qr-reader";
@@ -31,10 +31,11 @@ import SdkConfig from "../../../SdkConfig";
 interface IProps {
     phase: Phase;
     code?: Uint8Array;
-    onClick(type: Click): Promise<void>;
+    onClick(type: Click, checkCodeEntered?: string): Promise<void>;
     failureReason?: RendezvousFailureReason;
     onScannedQRCode?: OnResultFunction;
     userCode?: string;
+    checkCode?: string;
 }
 
 /**
@@ -43,6 +44,8 @@ interface IProps {
  * This uses the unstable feature of MSC3906: https://github.com/matrix-org/matrix-spec-proposals/pull/3906
  */
 export default class LoginWithQRFlow extends React.Component<IProps> {
+    private checkCodeInput: RefObject<HTMLInputElement> = createRef();
+
     public constructor(props: IProps) {
         super(props);
     }
@@ -50,7 +53,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
     private handleClick = (type: Click): ((e: React.FormEvent) => Promise<void>) => {
         return async (e: React.FormEvent): Promise<void> => {
             e.preventDefault();
-            await this.props.onClick(type);
+            await this.props.onClick(type, type === Click.Approve ? this.checkCodeInput.current?.value : undefined);
         };
     };
 
@@ -145,8 +148,10 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                 main = (
                     <>
                         <p>
-                            Confirm that you see a green checkmark on both devices to to verify that the connection is
-                            secure.
+                            To verify that the connection is secure, please enter the code shown on your other device:
+                        </p>
+                        <p>
+                            <input ref={this.checkCodeInput} type="text" autoFocus={true} placeholder="Code" />
                         </p>
                         <div className="mx_LoginWithQR_confirmationAlert">
                             <div>
@@ -170,14 +175,14 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                             kind="primary"
                             onClick={this.handleClick(Click.Approve)}
                         >
-                            Yes, I do
+                            Continue
                         </AccessibleButton>
                         <AccessibleButton
                             data-testid="decline-login-button"
                             kind="primary_outline"
                             onClick={this.handleClick(Click.Decline)}
                         >
-                            No, I don't
+                            No code shown
                         </AccessibleButton>
                     </>
                 );
@@ -219,7 +224,8 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                 backButton = false;
                 main = (
                     <>
-                        <p>You’ll be asked to confirm that you can see a green checkmark on this device..</p>
+                        <p>You’ll be asked to enter the following code on your other device:</p>
+                        <p>{this.props.checkCode}</p>
                         <div className="mx_LoginWithQR_confirmationAlert">
                             <div>
                                 <CheckmarkIcon />
