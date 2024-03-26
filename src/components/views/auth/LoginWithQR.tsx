@@ -14,67 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { lazy, Suspense } from "react";
-// We import "matrix-js-sdk/src/rendezvous" asynchronously to avoid importing the entire Rust Crypto WASM into the main bundle.
-import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous/RendezvousFailureReason";
-import { RendezvousIntent } from "matrix-js-sdk/src/rendezvous/RendezvousIntent";
+import React from "react";
+import {
+    RendezvousFailureReason,
+    RendezvousIntent,
+    MSC4108SignInWithQR,
+    MSC4108SecureChannel,
+    MSC4108RendezvousSession,
+} from "matrix-js-sdk/src/rendezvous";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import type { MSC4108SignInWithQR } from "matrix-js-sdk/src/rendezvous";
-import Spinner from "../elements/Spinner";
-
-// We import `LoginWithQRFlow` asynchronously to avoid importing the entire Rust Crypto WASM into the main bundle.
-const LoginWithQRFlow = lazy(() => import("./LoginWithQRFlow"));
-
-/**
- * The intention of this enum is to have a mode that scans a QR code instead of generating one.
- */
-export enum Mode {
-    /**
-     * A QR code with be generated and shown
-     */
-    Show = "show",
-    // Scan = "scan",
-}
-
-export enum Phase {
-    Loading,
-    ShowingQR,
-    Connecting,
-    /**
-     * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108.
-     */
-    Connected,
-    OutOfBandConfirmation,
-    ShowChannelSecure,
-    WaitingForDevice,
-    Verifying,
-    Continue,
-    Error,
-}
-
-/**
- * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108.
- */
-export type LegacyPhase =
-    | Phase.Loading
-    | Phase.ShowingQR
-    | Phase.Connecting
-    | Phase.Connected
-    | Phase.WaitingForDevice
-    | Phase.Verifying
-    | Phase.Error;
-
-export enum Click {
-    Cancel,
-    Decline,
-    Approve,
-    TryAgain,
-    Back,
-    // ScanQr,
-    ShowQr,
-}
+import { Mode, Phase, Click } from "./LoginWithQR-types";
+import LoginWithQRFlow from "./LoginWithQRFlow";
 
 interface IProps {
     client?: MatrixClient;
@@ -161,21 +113,19 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     private generateAndShowCode = async (): Promise<void> => {
         let rendezvous: MSC4108SignInWithQR;
         try {
-            const Rendezvous = await import("matrix-js-sdk/src/rendezvous");
-
             const fallbackRzServer =
                 this.props.client?.getClientWellKnown()?.["io.element.rendezvous"]?.server ??
                 "https://rendezvous.lab.element.dev";
-            const transport = new Rendezvous.MSC4108RendezvousSession({
+            const transport = new MSC4108RendezvousSession({
                 onFailure: this.onFailure,
                 client: this.props.client,
                 fallbackRzServer,
             });
             await transport.send("");
 
-            const channel = new Rendezvous.MSC4108SecureChannel(transport, undefined, this.onFailure);
+            const channel = new MSC4108SecureChannel(transport, undefined, this.onFailure);
 
-            rendezvous = new Rendezvous.MSC4108SignInWithQR(channel, false, this.props.client, this.onFailure);
+            rendezvous = new MSC4108SignInWithQR(channel, false, this.props.client, this.onFailure);
 
             await rendezvous.generateCode();
             this.setState({
@@ -297,15 +247,13 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     public render(): React.ReactNode {
         logger.info("LoginWithQR render");
         return (
-            <Suspense fallback={<Spinner />}>
-                <LoginWithQRFlow
-                    onClick={this.onClick}
-                    phase={this.state.phase}
-                    code={this.state.phase === Phase.ShowingQR ? this.state.rendezvous?.code : undefined}
-                    failureReason={this.state.phase === Phase.Error ? this.state.failureReason : undefined}
-                    userCode={this.state.userCode}
-                />
-            </Suspense>
+            <LoginWithQRFlow
+                onClick={this.onClick}
+                phase={this.state.phase}
+                code={this.state.phase === Phase.ShowingQR ? this.state.rendezvous?.code : undefined}
+                failureReason={this.state.phase === Phase.Error ? this.state.failureReason : undefined}
+                userCode={this.state.userCode}
+            />
         );
     }
 }

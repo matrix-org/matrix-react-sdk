@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { lazy, Suspense, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { discoverAndValidateOIDCIssuerWellKnown, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -32,7 +32,7 @@ import { ExtendedDevice } from "../../devices/types";
 import { deleteDevicesWithInteractiveAuth } from "../../devices/deleteDevices";
 import SettingsTab from "../SettingsTab";
 import LoginWithQRSection from "../../devices/LoginWithQRSection";
-import LoginWithQR, { Mode } from "../../../auth/LoginWithQR";
+import { Mode } from "../../../auth/LoginWithQR-types";
 import { useAsyncMemo } from "../../../../../hooks/useAsyncMemo";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
 import { FilterVariation } from "../../devices/filter";
@@ -40,6 +40,10 @@ import { OtherSessionsSectionHeading } from "../../devices/OtherSessionsSectionH
 import { SettingsSection } from "../../shared/SettingsSection";
 import { OidcLogoutDialog } from "../../../dialogs/oidc/OidcLogoutDialog";
 import { SDKContext } from "../../../../../contexts/SDKContext";
+import Spinner from "../../../elements/Spinner";
+
+// We import `LoginWithQR` asynchronously to avoid importing the entire Rust Crypto WASM into the main bundle.
+const LoginWithQR = lazy(() => import("../../../auth/LoginWithQR"));
 
 const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
     const { finished } = Modal.createDialog(QuestionDialog, {
@@ -280,7 +284,11 @@ const SessionManagerTab: React.FC = () => {
     }, [setSignInWithQrMode]);
 
     if (signInWithQrMode) {
-        return <LoginWithQR mode={signInWithQrMode} onFinished={onQrFinish} client={matrixClient} />;
+        return (
+            <Suspense fallback={<Spinner />}>
+                <LoginWithQR mode={signInWithQrMode} onFinished={onQrFinish} client={matrixClient} />
+            </Suspense>
+        );
     }
 
     return (
