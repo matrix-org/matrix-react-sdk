@@ -126,7 +126,9 @@ export const ThreadPanelHeader: React.FC<{
         // know about yet) and send threaded receipts for all of them... or implement a
         // specific API for it. In practice, the user will have to be viewing the room to
         // see this button, so will have marked the room itself read anyway.
-        clearRoomNotification(roomContext.room, mxClient);
+        clearRoomNotification(roomContext.room, mxClient).catch((e) => {
+            logger.error("Failed to mark all threads read", e);
+        });
     }, [roomContext.room, mxClient]);
 
     return (
