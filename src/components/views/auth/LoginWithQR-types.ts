@@ -39,18 +39,6 @@ export enum Phase {
     LegacyConnected,
 }
 
-/**
- * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108.
- */
-export type LegacyPhase =
-    | Phase.Loading
-    | Phase.ShowingQR
-    | Phase.Connecting
-    | Phase.LegacyConnected
-    | Phase.WaitingForDevice
-    | Phase.Verifying
-    | Phase.Error;
-
 export enum Click {
     Cancel,
     Decline,

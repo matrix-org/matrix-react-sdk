@@ -54,6 +54,9 @@ export default class LoginWithQRSection extends React.Component<IProps> {
         const msc3886Supported =
             !!this.props.versions?.unstable_features?.["org.matrix.msc3886"] ||
             !!this.props.wellKnown?.["io.element.rendezvous"]?.server;
+        const msc4108Supported =
+            !!this.props.versions?.unstable_features?.["org.matrix.msc4108"] ||
+            !!this.props.wellKnown?.["io.element.rendezvous"]?.server;
 
         const deviceAuthorizationGrantSupported =
             this.props.oidcClientConfig &&
@@ -62,12 +65,11 @@ export default class LoginWithQRSection extends React.Component<IProps> {
                 "urn:ietf:params:oauth:grant-type:device_code",
             );
 
-        logger.info(
+        logger.debug(
             `getLoginTokenSupported: ${getLoginTokenSupported} msc3886Supported: ${msc3886Supported} deviceAuthorizationGrantSupported: ${deviceAuthorizationGrantSupported}`,
         );
-        // PROTOTYPE: we hard code this to always show:
-        // We aren't checking for MSC4108 support
-        const offerShowQr = true || ((getLoginTokenSupported || deviceAuthorizationGrantSupported) && msc3886Supported);
+        const offerShowQr =
+            (getLoginTokenSupported || deviceAuthorizationGrantSupported) && (msc3886Supported || msc4108Supported);
 
         // don't show anything if no method is available
         if (!offerShowQr) {

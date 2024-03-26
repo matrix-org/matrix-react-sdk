@@ -286,7 +286,12 @@ const SessionManagerTab: React.FC = () => {
     if (signInWithQrMode) {
         return (
             <Suspense fallback={<Spinner />}>
-                <LoginWithQR mode={signInWithQrMode} onFinished={onQrFinish} client={matrixClient} />
+                <LoginWithQR
+                    mode={signInWithQrMode}
+                    onFinished={onQrFinish}
+                    client={matrixClient}
+                    legacy={!oidcClientConfig}
+                />
             </Suspense>
         );
     }
