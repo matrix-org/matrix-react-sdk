@@ -247,10 +247,7 @@
         "qr_code_login": {
             "approve_access_warning": "By approving access for this device, it will have full access to your account.",
             "completing_setup": "Completing set up of your new device",
-            "confirm_action": "Yes, I do",
             "confirm_code_match": "Check that the code below matches with your other device:",
-            "confirm_green_checkmark": "Confirm that you see a green checkmark on both devices to to verify that the connection is secure.",
-            "confirm_green_checkmark_title": "Do you see a green checkmark on your other device?",
             "connecting": "Connecting…",
             "error_device_already_signed_in": "The other device is already signed in.",
             "error_device_not_signed_in": "The other device isn't signed in.",
@@ -265,14 +262,17 @@
             "follow_remaining_instructions": "Follow the remaining instructions to verify your other device",
             "open_element_other_device": "Open %(brand)s on your other device",
             "point_the_camera": "Point the camera at the QR code shown here",
-            "reject_action": "No, I don't",
             "scan_code_instruction": "Scan the QR code with another device",
             "scan_qr_code": "Scan QR code",
-            "security_code": "Security code",
-            "security_code_prompt": "If asked, enter the code below on your other device.",
             "select_qr_code": "Select \"%(scanQRCode)s\"",
             "sign_in_new_device": "Sign in new device",
-            "waiting_for_device": "Waiting for device to sign in"
+            "waiting_for_device": "Waiting for device to sign in",
+            "security_code_prompt": "If asked, enter the code below on your other device.",
+            "security_code": "Security code",
+            "reject_action": "No, I don't",
+            "confirm_green_checkmark_title": "Do you see a green checkmark on your other device?",
+            "confirm_green_checkmark": "Confirm that you see a green checkmark on both devices to to verify that the connection is secure.",
+            "confirm_action": "Yes, I do"
         },
         "register_action": "Create Account",
         "registration": {
@@ -2860,7 +2860,10 @@
             "metaspaces_people_description": "Group all your people in one place.",
             "metaspaces_subsection": "Spaces to show",
             "spaces_explainer": "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.",
-            "title": "Sidebar"
+            "title": "Sidebar",
+            "metaspaces_video_rooms_description_invite_extension": "In conferences you can invite people outside of matrix.",
+            "metaspaces_video_rooms_description": "Group all private video rooms and conferences.",
+            "metaspaces_video_rooms": "Video rooms and conferences"
         },
         "start_automatically": "Start automatically after system login",
         "use_12_hour_format": "Show timestamps in 12 hour format (e.g. 2:30pm)",
@@ -3892,7 +3895,10 @@
         "video_call_started": "Video call started",
         "video_call_using": "Video call using:",
         "voice_call": "Voice call",
-        "you_are_presenting": "You are presenting"
+        "you_are_presenting": "You are presenting",
+        "metaspace_video_rooms": {
+            "conference_room_section": "Conferences"
+        }
     },
     "widget": {
         "added_by": "Widget added by",
