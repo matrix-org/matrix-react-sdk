@@ -107,7 +107,9 @@ const QuickSettingsButton: React.FC<{
                     onChange={onMetaSpaceChangeFactory(MetaSpace.People, "WebQuickSettingsPinToSidebarCheckbox")}
                 >
                     <MembersIcon className="mx_QuickSettingsButton_icon" />
-                    {_t("common|people")}
+                    {/* TCHAP: change label {_t("common|people")} */}
+                    {_t("Direct Messages")}
+                    {/* end TCHAP */}
                 </StyledCheckbox>
                 <AccessibleButton
                     className="mx_QuickSettingsButton_moreOptionsButton"

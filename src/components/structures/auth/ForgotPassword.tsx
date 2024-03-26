@@ -42,6 +42,8 @@ import { VerifyEmailModal } from "./forgot-password/VerifyEmailModal";
 import Spinner from "../../views/elements/Spinner";
 import { formatSeconds } from "../../../DateUtils";
 import AutoDiscoveryUtils from "../../../utils/AutoDiscoveryUtils";
+import TchapUtils from "../../../../../../src/tchap/util/TchapUtils"; // :TCHAP:
+import Tchapi18nUtils from "../../../../../../src/tchap/i18n/Tchapi18nUtils";
 
 const emailCheckInterval = 2000;
 
@@ -61,7 +63,7 @@ enum Phase {
 }
 
 interface Props {
-    serverConfig: ValidatedServerConfig;
+    // :TCHAP: we get serverConfig when user enters email, so remove it from props - serverConfig: ValidatedServerConfig;
     onLoginClick: () => void;
     onComplete: () => void;
 }
@@ -104,10 +106,13 @@ export default class ForgotPassword extends React.Component<Props, State> {
             serverDeadError: "",
             logoutDevices: false,
         };
-        this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
+        // :TCHAP: no known server yet, this.reset stays undefined - this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
     }
 
+    // todo remove checkServerCapabilities in componentDidMount -> gone ?
+
     public componentDidUpdate(prevProps: Readonly<Props>): void {
+        /* :TCHAP: we ignore serverConfig passed in props. So no use checking the server here.
         if (
             prevProps.serverConfig.hsUrl !== this.props.serverConfig.hsUrl ||
             prevProps.serverConfig.isUrl !== this.props.serverConfig.isUrl
@@ -115,6 +120,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
             // Do a liveliness check on the new URLs
             this.checkServerLiveliness(this.props.serverConfig);
         }
+        end :TCHAP: */
     }
 
     private async checkServerLiveliness(serverConfig: ValidatedServerConfig): Promise<void> {
@@ -136,8 +142,37 @@ export default class ForgotPassword extends React.Component<Props, State> {
         }
     }
 
+    // :TCHAP:
+    private useNewServerConfig =  async (serverConfig) => {
+        console.log('Using serverConfig corresponding to this email :', serverConfig);
+
+        this.reset = new PasswordReset(serverConfig.hsUrl, serverConfig.isUrl);
+        // Note : this.reset is not a react state variable. It doesn't seem necessary to make it one, it seems to work this way.
+        // Note : we do not shut down or close the previous this.reset object in any way. Existing sessions just stay there. There doesn't
+        // seem to be an API for revoking tokens.
+
+        // If the server is not available, this displays "Server unavailable, overloaded, or something else went wrong."
+        await this.checkServerLiveliness(serverConfig);
+        //await this.checkServerCapabilities(serverConfig); // todo
+    }
+    // end :TCHAP:
+
     private async onPhaseEmailInputSubmit(): Promise<void> {
         this.phase = Phase.SendingEmail;
+
+        // :TCHAP: find the server corresponding to the email.
+        const serverResult = await TchapUtils.fetchHomeserverForEmail(this.state.email);
+        if (!serverResult) {
+            this.setState({
+                serverIsAlive: false,
+                errorText: Tchapi18nUtils.getServerDownMessage(),
+                phase: Phase.EnterEmail, // return to original phase, to remove the loding spinner from the submit button.
+            });
+            return;
+        }
+        const serverConfig = TchapUtils.makeValidatedServerConfig(serverResult);
+        await this.useNewServerConfig(serverConfig);
+        // end :TCHAP:
 
         if (await this.sendVerificationMail()) {
             this.phase = Phase.EmailSent;
@@ -300,8 +335,10 @@ export default class ForgotPassword extends React.Component<Props, State> {
             errorText: "",
         });
 
+        /* :TCHAP: at this point we may not know the serverConfig to use yet. So don't check.
         // Refresh the server errors. Just in case the server came back online of went offline.
         await this.checkServerLiveliness(this.props.serverConfig);
+        end :TCHAP: */
 
         // Server error
         if (!this.state.serverIsAlive) return;
@@ -335,7 +372,7 @@ export default class ForgotPassword extends React.Component<Props, State> {
             <EnterEmail
                 email={this.state.email}
                 errorText={this.state.errorText}
-                homeserver={this.props.serverConfig.hsName}
+                homeserver={ null /* :TCHAP: - no known homeserver yet - this.props.serverConfig.hsName */}
                 loading={this.state.phase === Phase.SendingEmail}
                 onInputChanged={this.onInputChanged}
                 onLoginClick={this.props.onLoginClick!} // set by default props

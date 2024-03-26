@@ -120,7 +120,7 @@ const SidebarUserSettingsTab: React.FC = () => {
                     >
                         <SettingsSubsectionText>
                             <MembersIcon />
-                            {_t("common|people")}
+                            {_t("Direct Messages") /* TCHAP: change label _t("common|people") */}
                         </SettingsSubsectionText>
                         <SettingsSubsectionText>
                             {_t("settings|sidebar|metaspaces_people_description")}

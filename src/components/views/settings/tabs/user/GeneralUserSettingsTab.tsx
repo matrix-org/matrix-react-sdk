@@ -58,6 +58,7 @@ import Heading from "../../../typography/Heading";
 import InlineSpinner from "../../../elements/InlineSpinner";
 import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
 import { SDKContext } from "../../../../../contexts/SDKContext";
+import TchapUIFeature from '../../../../../../../../src/tchap/util/TchapUIFeature'; // :TCHAP:
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -325,7 +326,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private renderAccountSection(): JSX.Element {
         let threepidSection: ReactNode = null;
 
-        if (SettingsStore.getValue(UIFeature.ThirdPartyID)) {
+        // :TCHAP: no need for users to view/edit their email or phone (TchapUIFeature.showEmailPhoneDiscoverySettings)
+        if (TchapUIFeature.showEmailPhoneDiscoverySettings &&
+            SettingsStore.getValue(UIFeature.ThirdPartyID)) {
             const emails = this.state.loading3pids ? (
                 <InlineSpinner />
             ) : (
@@ -533,7 +536,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         }
 
         let discoverySection;
-        if (SettingsStore.getValue(UIFeature.IdentityServer)) {
+        // :TCHAP: no need for users to edit the discovery section (TchapUIFeature.showEmailPhoneDiscoverySettings)
+        if (TchapUIFeature.showEmailPhoneDiscoverySettings && SettingsStore.getValue(UIFeature.IdentityServer)) {
             const discoWarning = this.state.requiredPolicyInfo.hasTerms ? (
                 <WarningIcon
                     className="mx_GeneralUserSettingsTab_warningIcon"

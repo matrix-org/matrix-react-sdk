@@ -85,7 +85,7 @@ type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> &
     /**
      * Event handler for button activation. Should be implemented exactly like a normal `onClick` handler.
      */
-    onClick: ((e: ButtonEvent) => void | Promise<void>) | null;
+    onClick?: ((e: ButtonEvent) => void | Promise<void>) | null;
 };
 
 /**

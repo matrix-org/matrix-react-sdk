@@ -40,6 +40,8 @@ import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import { filterBoolean } from "../../../utils/arrays";
 import { Features } from "../../../settings/Settings";
 import { startOidcLogin } from "../../../utils/oidc/authorize";
+import TchapUtils from '../../../../../../src/tchap/util/TchapUtils'; // :TCHAP:
+import Tchapi18nUtils from '../../../../../../src/tchap/i18n/Tchapi18nUtils'; // :TCHAP:
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -164,12 +166,22 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
 
     public isBusy = (): boolean => !!this.state.busy || !!this.props.busy;
 
+    tchap_setServerInMemory = async (serverConfig) => {
+        const validatedServerConf = TchapUtils.makeValidatedServerConfig(serverConfig);
+
+        // Simulate the end of the serverPicker component flow.
+        this.props.onServerConfigChange(validatedServerConf);
+
+        await this.initLoginLogic(validatedServerConf);
+    };
+
     public onPasswordLogin: OnPasswordLogin = async (
         username: string | undefined,
         phoneCountry: string | undefined,
         phoneNumber: string | undefined,
         password: string,
     ): Promise<void> => {
+        /* :TCHAP: remove alive check, we don't know which server to call yet.
         if (!this.state.serverIsAlive) {
             this.setState({ busy: true });
             // Do a quick liveliness check on the URLs
@@ -195,6 +207,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 return;
             }
         }
+        end :TCHAP: */
 
         this.setState({
             busy: true,
@@ -202,6 +215,23 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             errorText: null,
             loginIncorrect: false,
         });
+
+        /* :TCHAP: fetch homeserver corresponding to email */
+        const serverResult = await TchapUtils.fetchHomeserverForEmail(username);
+
+        if (!serverResult) {
+            this.setState({
+                busy: false,
+                busyLoggingIn: false,
+                //errorText: _t('Server unavailable, overloaded, or something else went wrong.'), // reuse existing string
+                errorText: Tchapi18nUtils.getServerDownMessage("(err-03)"),
+                loginIncorrect: false,
+            });
+            return;
+        }
+
+        await this.tchap_setServerInMemory(serverResult);
+        /** end :TCHAP: */
 
         this.loginLogic.loginViaPassword(username, phoneCountry, phoneNumber, password).then(
             (data) => {
@@ -555,10 +585,12 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     </h1>
                     {errorTextSection}
                     {serverDeadSection}
+                    { /* :TCHAP: remove server picker, we don't allow user to chose, server is assigned to each email.
                     <ServerPicker
                         serverConfig={this.props.serverConfig}
                         onServerConfigChange={this.props.onServerConfigChange}
                     />
+                    end :TCHAP :*/}
                     {this.renderLoginComponentForFlows()}
                     {footer}
                 </AuthBody>

@@ -50,10 +50,14 @@ import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
 import { AuthHeaderDisplay } from "./header/AuthHeaderDisplay";
 import { AuthHeaderProvider } from "./header/AuthHeaderProvider";
+import { AuthHeaderModifier } from './header/AuthHeaderModifier'; // :TCHAP:
 import SettingsStore from "../../../settings/SettingsStore";
 import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import { Features } from "../../../settings/Settings";
 import { startOidcLogin } from "../../../utils/oidc/authorize";
+
+import TchapUtils from '../../../../../../src/tchap/util/TchapUtils'; // :TCHAP:
+import TchapUrls from "../../../../../../src/tchap/util/TchapUrls";
 
 const debuglog = (...args: any[]): void => {
     if (SettingsStore.getValue("debug_registration")) {
@@ -308,11 +312,24 @@ export default class Registration extends React.Component<IProps, IState> {
     }
 
     private onFormSubmit = async (formVals: Record<string, string>): Promise<void> => {
+        // :TCHAP: find the server corresponding to the entered email
+        const server = await TchapUtils.fetchHomeserverForEmail(formVals.email);
+        const validatedServerConfig = TchapUtils.makeValidatedServerConfig(server);
+        // Note : onServerConfigChange triggers a state change at the matrixChat level. All the children are rerendered.
+        this.props.onServerConfigChange(validatedServerConfig);
+        // end :TCHAP:
+
         this.setState({
             errorText: "",
             busy: true,
             formVals,
             doingUIAuth: true,
+            // :TCHAP: pass a new temporary client so that InteractiveAuth is set up with the right serverconfig.
+            matrixClient: createClient({
+                baseUrl: validatedServerConfig.hsUrl,
+                idBaseUrl: validatedServerConfig.isUrl,
+            }),
+            // end :TCHAP:
         });
     };
 
@@ -360,6 +377,10 @@ export default class Registration extends React.Component<IProps, IState> {
                 errorText = _t("auth|username_in_use");
             } else if (response instanceof MatrixError && response.errcode === "M_THREEPID_IN_USE") {
                 errorText = _t("auth|3pid_in_use");
+            // :TCHAP: add error message for common case
+            } else if (response instanceof MatrixError && response.errcode === "M_THREEPID_DENIED") {
+                errorText = _t("That email is not allowed on Tchap", {}, {a: (sub)=><a href={TchapUrls.requestDomainUrl}>{sub}</a>});
+            // end :TCHAP:
             }
 
             this.setState({
@@ -491,6 +512,11 @@ export default class Registration extends React.Component<IProps, IState> {
             inhibit_login: undefined,
         };
         if (auth) registerParams.auth = auth;
+        //:tchap: do not send username as tchap workflow does not use username
+        // https://github.com/tchapgouv/tchap-web-v4/issues/281
+        registerParams.username = undefined;
+        //:tchap end
+
         debuglog("Registration: sending registration request:", auth);
         return this.state.matrixClient.registerRequest(registerParams);
     };
@@ -740,6 +766,12 @@ export default class Registration extends React.Component<IProps, IState> {
                             {errorText}
                             {serverDeadSection}
                         </AuthHeaderDisplay>
+                        { /* :TCHAP: remove the serverpicker, using AuthHeaderModifier. Inspired by InteractiveAuthEntryComponents. */}
+                        <AuthHeaderModifier
+                            title={_t("auth|register_action") /* we actually don't want to set this. */}
+                            hideServerPicker={true}
+                        />
+                        { /* end :TCHAP: */}
                         {this.renderRegisterComponent()}
                     </div>
                     <div className="mx_Register_footerActions">

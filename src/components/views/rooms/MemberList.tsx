@@ -55,6 +55,7 @@ import { canInviteTo } from "../../../utils/room/canInviteTo";
 import { inviteToRoom } from "../../../utils/room/inviteToRoom";
 import { Action } from "../../../dispatcher/actions";
 import { SpaceScopeHeader } from "./SpaceScopeHeader";
+import TchapExportMembersButton from "../../../../../../src/tchap/components/views/rooms/TchapExportMembersButton"; // TCHAP
 
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 const INITIAL_LOAD_NUM_INVITED = 5;
@@ -420,6 +421,12 @@ export default class MemberList extends React.Component<IProps, IState> {
                 onClose={this.props.onClose}
             >
                 {inviteButton}
+                {/** TCHAP */}
+                <TchapExportMembersButton
+                    room={room}
+                    roomMembersIds={this.state.filteredJoinedMembers.map(roomMember => roomMember.userId)}>
+                </TchapExportMembersButton>
+                {/** end TCHAP */}
                 <div className="mx_MemberList_wrapper">
                     <TruncatedList
                         className="mx_MemberList_section mx_MemberList_joined"

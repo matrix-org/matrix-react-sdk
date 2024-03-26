@@ -23,7 +23,7 @@ import InlineSpinner from "../elements/InlineSpinner";
 import { _t } from "../../../languageHandler";
 import AudioPlayer from "../audio_messages/AudioPlayer";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
-import MFileBody from "./MFileBody";
+import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
 import { IBodyProps } from "./IBodyProps";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
 import { isVoiceMessage } from "../../../utils/EventUtils";

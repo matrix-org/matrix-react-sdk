@@ -275,11 +275,20 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
     }
 
     public render(): React.ReactNode {
+        // :TCHAP: we're moving this subsection out, so it's now a section
+        const secureBackup = (
+            <SettingsSection heading={_t("common|secure_backup")}>
+                <SecureBackupPanel />
+            </SettingsSection>
+        );
+        /*
         const secureBackup = (
             <SettingsSubsection heading={_t("common|secure_backup")}>
                 <SecureBackupPanel />
             </SettingsSubsection>
         );
+        */
+        // end :TCHAP:
 
         const eventIndex = (
             <SettingsSubsection heading={_t("settings|security|message_search_section")}>
@@ -354,13 +363,14 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         return (
             <SettingsTab>
                 {warning}
+                { /* :TCHAP: move secureBackup and privacySection, and remove eventIndex */ }
+                {secureBackup}
                 <SettingsSection heading={_t("settings|security|encryption_section")}>
-                    {secureBackup}
-                    {eventIndex}
                     {crossSigning}
                     <CryptographyPanel />
+                    {privacySection}
                 </SettingsSection>
-                {privacySection}
+                { /* end :TCHAP: */ }
                 {advancedSection}
             </SettingsTab>
         );

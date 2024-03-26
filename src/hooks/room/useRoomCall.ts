@@ -231,8 +231,12 @@ export const useRoomCall = (
     let videoCallDisabledReason: string | null;
     switch (state) {
         case State.NoPermission:
-            voiceCallDisabledReason = _t("voip|disabled_no_perms_start_voice_call");
-            videoCallDisabledReason = _t("voip|disabled_no_perms_start_video_call");
+            // :tchap: disable noPermission
+            // voiceCallDisabledReason = _t("voip|disabled_no_perms_start_voice_call");
+            // videoCallDisabledReason = _t("voip|disabled_no_perms_start_video_call");
+            voiceCallDisabledReason = null;
+            videoCallDisabledReason = null;
+            // end :TCHAP:
             break;
         case State.Ongoing:
             voiceCallDisabledReason = _t("voip|disabled_ongoing_call");

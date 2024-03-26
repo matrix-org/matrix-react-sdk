@@ -32,6 +32,7 @@ import DialogButtons from "../elements/DialogButtons";
 import { sendSentryReport } from "../../../sentry";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
+import TchapUtils from "../../../../../../src/tchap/util/TchapUtils"; // :TCHAP:
 
 interface IProps {
     onFinished: (success: boolean) => void;
@@ -96,12 +97,21 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
     };
 
     private onSubmit = (): void => {
+        /* :TCHAP: do not ask for a github issue
         if ((!this.state.text || !this.state.text.trim()) && (!this.state.issueUrl || !this.state.issueUrl.trim())) {
             this.setState({
                 err: _t("bug_reporting|error_empty"),
             });
             return;
         }
+        */
+        if ((!this.state.text || !this.state.text.trim())) {
+            this.setState({
+                err: _t("Please tell us what went wrong in the \"Notes\" field."),
+            });
+            return;
+        }
+        // end :TCHAP:
 
         const userText =
             (this.state.text.length > 0 ? this.state.text + "\n\n" : "") +
@@ -111,11 +121,28 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         this.setState({ busy: true, progress: null, err: null });
         this.sendProgressCallback(_t("bug_reporting|preparing_logs"));
 
-        sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
-            userText,
-            sendLogs: true,
-            progressCallback: this.sendProgressCallback,
-            labels: this.props.label ? [this.props.label] : [],
+        // :TCHAP: add custom fields if it's a voip report
+        Promise.resolve().then(() => {
+            if (this.props.label === "voip-feedback") {
+                const customFields = {};
+                customFields.context = "voip";
+
+                return TchapUtils.isCurrentlyUsingBluetooth().then(isCurrentlyUsingBluetooth => {
+                    customFields.audio_input = isCurrentlyUsingBluetooth ? "headset_bluetooth" : "device";
+                    return customFields;
+                });
+            } else {
+                return {};
+            }
+        }).then(customFields => {
+            return sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
+                userText,
+                sendLogs: true,
+                progressCallback: this.sendProgressCallback,
+                labels: this.props.label ? [this.props.label] : [],
+                customFields: customFields,
+            });
+            // end :TCHAP:
         }).then(
             () => {
                 if (!this.unmounted) {
@@ -214,6 +241,53 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             );
         }
 
+        { /** :TCHAP: replace with our own dialog */}
+        return (
+            <BaseDialog
+            className="mx_BugReportDialog"
+            onFinished={this.onCancel}
+            title={_t('Submit debug logs to Tchap support team')}
+            contentId="mx_Dialog_content"
+        >
+            <div className="mx_Dialog_content" id="mx_Dialog_content">
+                {warning}
+                <p>{_t("bug_reporting|description")}</p>
+                <Field
+                    className="mx_BugReportDialog_field_input"
+                    element="textarea"
+                    label={_t("bug_reporting|textarea_label")}
+                    rows={5}
+                    onChange={this.onTextChange}
+                    value={this.state.text}
+                    placeholder={_t("bug_reporting|additional_context")}
+                />
+                {progress}
+                {error}
+                <DialogButtons
+                    primaryButton={_t("bug_reporting|send_logs")}
+                    onPrimaryButtonClick={this.onSubmit}
+                    focus={true}
+                    hasCancel={false}
+                    disabled={this.state.busy}
+                />
+
+                <div className="mx_BugReportDialog_download">
+                    <p>
+                        { _t("Just want to get your own logs, without sharing them with the Tchap team?") }
+                    </p>
+                    <DialogButtons
+                        primaryButton={_t("bug_reporting|download_logs")}
+                        onPrimaryButtonClick={this.onDownload}
+                        focus={true}
+                        hasCancel={false}
+                        disabled={this.state.downloadBusy}
+                    />
+                    {this.state.downloadProgress && <span>{this.state.downloadProgress} ...</span>}
+                </div>
+            </div>
+        </BaseDialog>
+        );
+        {/*
         return (
             <BaseDialog
                 className="mx_BugReportDialog"
@@ -281,5 +355,6 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                 />
             </BaseDialog>
         );
+        end :TCHAP: */}
     }
 }

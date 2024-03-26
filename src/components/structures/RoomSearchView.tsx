@@ -36,6 +36,7 @@ import ResizeNotifier from "../../utils/ResizeNotifier";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import RoomContext from "../../contexts/RoomContext";
+import Tchapi18nUtils from "../../../../../src/tchap/i18n/Tchapi18nUtils";
 
 const DEBUG = false;
 let debuglog = function (msg: string): void {};
@@ -136,7 +137,8 @@ export const RoomSearchView = forwardRef<ScrollPanel, Props>(
                             logger.error("Search failed", error);
                             Modal.createDialog(ErrorDialog, {
                                 title: _t("error_dialog|search_failed|title"),
-                                description: error?.message ?? _t("error_dialog|search_failed|server_unavailable"),
+                                // :TCHAP: description: error?.message ?? _t("error_dialog|search_failed|server_unavailable"),
+                                description: error?.message ?? Tchapi18nUtils.getServerDownMessage(),
                             });
                             return false;
                         },

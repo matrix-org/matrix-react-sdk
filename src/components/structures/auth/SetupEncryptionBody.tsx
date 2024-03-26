@@ -28,6 +28,10 @@ import { SetupEncryptionStore, Phase } from "../../../stores/SetupEncryptionStor
 import EncryptionPanel from "../../views/right_panel/EncryptionPanel";
 import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
 import Spinner from "../../views/elements/Spinner";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "matrix-react-sdk/src/dispatcher/actions";
+import { UserTab } from "matrix-react-sdk/src/components/views/dialogs/UserTab";
+import { OpenToTabPayload } from "matrix-react-sdk/src/dispatcher/payloads/OpenToTabPayload";
 
 function keyHasPassphrase(keyInfo: ISecretStorageKeyInfo): boolean {
     return Boolean(keyInfo.passphrase && keyInfo.passphrase.salt && keyInfo.passphrase.iterations);
@@ -159,11 +163,22 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
             if (lostKeys) {
                 return (
                     <div>
-                        <p>{_t("encryption|verification|no_key_or_device")}</p>
+                        { /*:TCHAP: change <p>{_t("encryption|verification|no_key_or_device")}</p> */ }
+                        <p>
+                            {_t(
+                                "<p>The Tchap team is working on the deployment of a new feature to "+
+                                "prevent encryption key loss.</p>"+
+                                "<p> You can access it in the section :</p><p>Security and privacy > Secure Backup</p>",
+                                 {}, { 'p': (sub) => <p>{sub}</p>}
+                            )}
+                        </p>
+                        {/* end :TCHAP: */}
 
                         <div className="mx_CompleteSecurity_actionRow">
                             <AccessibleButton kind="primary" onClick={this.onResetConfirmClick}>
-                                {_t("encryption|verification|reset_proceed_prompt")}
+                                {/* :TCHAP: _t("encryption|verification|reset_proceed_prompt") */}
+                                {_t("Set up")}
+                                {/* end :TCHAP: */}
                             </AccessibleButton>
                         </div>
                     </div>

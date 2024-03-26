@@ -48,6 +48,7 @@ interface IProps {
 }
 
 interface IState {
+    displayPassword: boolean;
     recoveryKey: string;
     recoveryKeyValid: boolean | null;
     recoveryKeyCorrect: boolean | null;
@@ -69,6 +70,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         super(props);
 
         this.state = {
+            displayPassword: false,
             recoveryKey: "",
             recoveryKeyValid: null,
             recoveryKeyCorrect: null,
@@ -79,6 +81,16 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
             resetting: false,
         };
     }
+
+    // :TCHAP: add functionality that displays the Recovery Code for 2mn when clicking on the input eye icon 
+    private setDisplayPassword = (): void => {
+        this.setState({ displayPassword: true });
+    
+        setTimeout(() => {
+          this.setState({ displayPassword: false });
+        }, 120 * 1000);
+    };
+    // end :TCHAP:
 
     private onCancel = (): void => {
         if (this.state.resetting) {
@@ -395,7 +407,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                         <div className="mx_AccessSecretStorageDialog_recoveryKeyEntry">
                             <div className="mx_AccessSecretStorageDialog_recoveryKeyEntry_textInput">
                                 <Field
-                                    type="password"
+                                    type={this.state.displayPassword ? "text": "password"}
                                     id="mx_securityKey"
                                     label={_t("encryption|access_secret_storage_dialog|security_key_title")}
                                     value={this.state.recoveryKey}
@@ -403,15 +415,30 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                     autoFocus={true}
                                     forceValidity={this.state.recoveryKeyCorrect ?? undefined}
                                     autoComplete="off"
+                                    postfixComponent={(
+                                        <div
+                                            className="tc_textInput_postfixComponent"
+                                            onClick={() => this.setDisplayPassword()}
+                                        >
+                                            <img
+                                                src={require("../../../../../../../res/img/grey-eye.svg").default}
+                                                width="24"
+                                                height="24"
+                                                alt={_t("Eye")}
+                                            />
+                                        </div>
+                                    )}
                                 />
                             </div>
+                            {/*
+                             :TCHAP: hide for csss feature
                             <span className="mx_AccessSecretStorageDialog_recoveryKeyEntry_entryControlSeparatorText">
                                 {_t("encryption|access_secret_storage_dialog|separator", {
                                     recoveryFile: "",
                                     securityKey: "",
                                 })}
                             </span>
-                            <div>
+                             <div>
                                 <input
                                     type="file"
                                     className="mx_AccessSecretStorageDialog_recoveryKeyEntry_fileInput"
@@ -422,7 +449,8 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                                 <AccessibleButton kind="primary" onClick={this.onRecoveryKeyFileUploadClick}>
                                     {_t("action|upload")}
                                 </AccessibleButton>
-                            </div>
+                            :end TCHAP
+                            </div> */}
                         </div>
                         {recoveryKeyFeedback}
                         <DialogButtons

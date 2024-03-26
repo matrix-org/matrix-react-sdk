@@ -23,7 +23,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
 import { Tooltip } from "@vector-im/compound-web";
 
-import MFileBody from "./MFileBody";
+import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
 import Modal from "../../../Modal";
 import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";

@@ -379,7 +379,7 @@ const TAG_AESTHETICS: TagAestheticsMap = {
         defaultHidden: false,
     },
     [DefaultTagID.DM]: {
-        sectionLabel: _td("common|people"),
+        sectionLabel: _td("Direct Messages"), /* TCHAP: change label _td("common|people"), */
         isInvite: false,
         defaultHidden: false,
         AuxButtonComponent: DmAuxButton,

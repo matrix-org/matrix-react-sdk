@@ -20,6 +20,11 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import Modal from "./Modal";
 import TermsDialog from "./components/views/dialogs/TermsDialog";
+import {
+    doesAccountDataHaveIdentityServer,
+    setToDefaultIdentityServer,
+} from './utils/IdentityServerUtils';
+import TchapUIFeature from "../../../src/tchap/util/TchapUIFeature";
 
 export class TermsNotSignedError extends Error {}
 
@@ -83,6 +88,15 @@ export async function startTermsFlow(
     services: Service[],
     interactionCallback: TermsInteractionCallback = dialogTermsInteractionCallback,
 ): Promise<void> {
+    // :TCHAP: no need to go through Terms flow as we trust our backend servers
+    if (TchapUIFeature.autoAcceptTermsAndConditions){
+        if (!doesAccountDataHaveIdentityServer(client)) {
+            setToDefaultIdentityServer(client);
+        }
+        return;
+    }
+    // end :TCHAP:
+
     const termsPromises = services.map((s) => client.getTerms(s.serviceType, s.baseUrl));
 
     /*

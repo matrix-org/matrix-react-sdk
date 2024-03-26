@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 
-import MImageBody from "./MImageBody";
+import MImageBody from "../../../../../../src/tchap/components/views/messages/OriginalImageBody";
 import { ImageContent } from "../../../customisations/models/IMediaEventContent";
 
 const FORCED_IMAGE_HEIGHT = 44;

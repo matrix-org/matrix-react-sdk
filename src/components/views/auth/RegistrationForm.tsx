@@ -267,7 +267,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     };
 
     private validateEmailRules = withValidation({
-        description: () => _t("auth|reset_password_email_field_description"),
+        // :TCHAP: this is confusing because email=username in the Tchap case. //description: () => _t("auth|reset_password_email_field_description"),
         hideDescriptionIfValid: true,
         rules: [
             {
@@ -275,7 +275,10 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
                 test(this: RegistrationForm, { value, allowEmpty }) {
                     return allowEmpty || !this.authStepIsRequired("m.login.email.identity") || !!value;
                 },
-                invalid: () => _t("auth|reset_password_email_field_required_invalid"),
+                // :TCHAP: don't mention homeserver, Tchap hides the concept from users.
+                //invalid: () => _t("auth|reset_password_email_field_required_invalid"),
+                invalid: () => _t("auth|email_field_label_required"),
+                // end :TCHAP:
             },
             {
                 key: "email",
@@ -568,16 +571,23 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
-                    <div className="mx_AuthBody_fieldRow">{this.renderUsername()}</div>
+                    { /* :TCHAP: remove username field, the server will generate it from email.
                     <div className="mx_AuthBody_fieldRow">
-                        {this.renderPassword()}
-                        {this.renderPasswordConfirm()}
+                        { this.renderUsername() }
+                    </div>
+                    end :TCHAP: */}
+
+                    { /** :TCHAP: switch fields : email first, password under */}
+                    <div className="mx_AuthBody_fieldRow">
+                        { this.renderEmail() }
+                        { this.renderPhoneNumber() }
                     </div>
                     <div className="mx_AuthBody_fieldRow">
-                        {this.renderEmail()}
-                        {this.renderPhoneNumber()}
+                        { this.renderPassword() }
+                        { this.renderPasswordConfirm() }
                     </div>
-                    {emailHelperText}
+                    { /* end :TCHAP: */}
+                    { /** :TCHAP: remove helper text, adds confusion since email=username in tchap. // emailHelperText */ }
                     {registerButton}
                 </form>
             </div>

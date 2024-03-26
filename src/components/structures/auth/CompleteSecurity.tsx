@@ -66,7 +66,9 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
             return null;
         } else if (phase === Phase.Intro) {
             if (lostKeys) {
+                /* :tchap: hide anxious icon of warning
                 icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
+                end :tchap: */
                 title = _t("encryption|verification|after_new_login|unable_to_verify");
             } else {
                 icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
@@ -92,9 +94,16 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
 
         let skipButton;
         if (phase === Phase.Intro || phase === Phase.ConfirmReset) {
+            // :Tchap: Condition to skip Phase.ConfirmSkip and its "Are you sure" modal after login for csss
+            const tchapOnSkipClick = phase === Phase.Intro ? this.props.onFinished : this.onSkipClick;
+            // end :Tchap:
+
             skipButton = (
                 <AccessibleButton
-                    onClick={this.onSkipClick}
+                    // :tchap: remove onClick={this.onSkipClick}
+                    // add instead
+                    onClick={tchapOnSkipClick}
+                    // end :tchap:
                     className="mx_CompleteSecurity_skip"
                     aria-label={_t("encryption|verification|after_new_login|skip_verification")}
                 />

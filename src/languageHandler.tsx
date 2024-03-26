@@ -520,7 +520,9 @@ type Language = {
 };
 
 export async function getAllLanguagesFromJson(): Promise<string[]> {
-    return Object.keys(await getLangsJson());
+    // :TCHAP: only en and fr
+    // return Object.keys(await getLangsJson());
+    return ["en", "fr"];
 }
 
 export async function getAllLanguagesWithLabels(): Promise<Language[]> {

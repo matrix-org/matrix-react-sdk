@@ -266,12 +266,23 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
             } else {
                 statusDescription = (
                     <>
+                        {/* TCHAP add Tchap text */}
+                        <SettingsSubsectionText>
+                                {_t(
+                                    "settings|security|key_backup_inactive_warning",
+                                    {},
+                                    { b: (sub) => <b>{sub}</b> },
+                                )}
+                        </SettingsSubsectionText>
+                        {/* end TCHAP */}
+                        {/* :TCHAP remove element text
                         <SettingsSubsectionText>
                             {_t("settings|security|key_backup_inactive", {}, { b: (sub) => <b>{sub}</b> })}
                         </SettingsSubsectionText>
                         <SettingsSubsectionText>
                             {_t("settings|security|key_backup_connect_prompt")}
                         </SettingsSubsectionText>
+                        end :TCHAP: */}
                     </>
                 );
                 restoreButtonCaption = _t("settings|security|key_backup_connect");
@@ -333,6 +344,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 </AccessibleButton>,
             );
 
+            /* :TCHAP: hide
             if (!isSecureBackupRequired(MatrixClientPeg.safeGet())) {
                 actions.push(
                     <AccessibleButton key="delete" kind="danger" onClick={this.deleteBackup}>
@@ -340,13 +352,16 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                     </AccessibleButton>,
                 );
             }
+            end :TCHAP: */
         } else {
             statusDescription = (
                 <>
                     <SettingsSubsectionText>
                         {_t("settings|security|key_backup_inactive_warning", {}, { b: (sub) => <b>{sub}</b> })}
                     </SettingsSubsectionText>
+                    {/* :TCHAP: remove
                     <SettingsSubsectionText>{_t("encryption|setup_secure_backup|explainer")}</SettingsSubsectionText>
+                    end :TCHAP: */}
                 </>
             );
             actions.push(
@@ -359,7 +374,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         if (secretStorageKeyInAccount) {
             actions.push(
                 <AccessibleButton key="reset" kind="danger" onClick={this.resetSecretStorage}>
-                    {_t("action|reset")}
+                    {/* :TCHAP: _t("action|reset") */}
+                    {_t("Generate a new code")}
+                    {/* end :TCHAP: */}
                 </AccessibleButton>,
             );
         }

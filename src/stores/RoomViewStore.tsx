@@ -619,6 +619,12 @@ export class RoomViewStore extends EventEmitter {
         let description: ReactNode = err.message ? err.message : JSON.stringify(err);
         logger.log("Failed to join room:", description);
 
+        /* :TCHAP: add this for a translation */
+        if (typeof description === 'string' && description.includes('You are not invited to this room')) {
+            description = _t("Access possible only by invitation of a member of the room.");
+        }
+        /* end :TCHAP: */
+
         if (err.name === "ConnectionError") {
             description = _t("room|error_join_connection");
         } else if (err.errcode === "M_INCOMPATIBLE_ROOM_VERSION") {

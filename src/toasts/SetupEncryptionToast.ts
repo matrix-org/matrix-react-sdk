@@ -50,7 +50,11 @@ const getIcon = (kind: Kind): string => {
 const getSetupCaption = (kind: Kind): string => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
+            /* :TCHAP:
             return _t("action|continue");
+            */
+            return _t("action|enable");
+            // end :TCHAP:
         case Kind.UPGRADE_ENCRYPTION:
             return _t("action|upgrade");
         case Kind.VERIFY_THIS_SESSION:

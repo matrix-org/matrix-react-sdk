@@ -61,6 +61,7 @@ import { ShowThreadPayload } from "../../../dispatcher/payloads/ShowThreadPayloa
 import { GetRelationsForEvent, IEventTileType } from "../rooms/EventTile";
 import { VoiceBroadcastInfoEventType } from "../../../voice-broadcast/types";
 import { ButtonEvent } from "../elements/AccessibleButton";
+import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -345,7 +346,10 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             !M_BEACON_INFO.matches(this.props.mxEvent.getType()) &&
             !(this.props.mxEvent.getType() === VoiceBroadcastInfoEventType);
 
-        return inNotThreadTimeline && isAllowedMessageType;
+        //:TCHAP: activate Thread based on homeserver feature flag
+        //return inNotThreadTimeline && isAllowedMessageType;
+        return TchapUIFeature.isFeatureActiveForHomeserver("feature_thread") && inNotThreadTimeline && isAllowedMessageType;
+        //:TCHAP: end
     }
 
     /**

@@ -19,11 +19,25 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { IBodyProps } from "./IBodyProps";
+import TchapUrls from "../../../../../../src/tchap/util/TchapUrls"; // :TCHAP:
+import ExternalLink from "../elements/ExternalLink"; // :TCHAP:
 
 function getErrorMessage(mxEvent?: MatrixEvent): string {
     return mxEvent?.isEncryptedDisabledForUnverifiedDevices
         ? _t("timeline|decryption_failure_blocked")
-        : _t("threads|unable_to_decrypt");
+        // :TCHAP: : _t("threads|unable_to_decrypt");
+        : _t(
+            "threads|unable_to_decrypt_with_info_message",
+            {},
+            {
+                a: (sub) => (
+                    <ExternalLink href={TchapUrls.lockedMessagesPage}>
+                        {sub}
+                    </ExternalLink>
+                ),
+            },
+        );
+    // end :TCHAP:
 }
 
 // A placeholder element for messages that could not be decrypted

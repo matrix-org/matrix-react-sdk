@@ -55,6 +55,10 @@ import { RoomKnocksBar } from "./RoomKnocksBar";
 import { isVideoRoom } from "../../../utils/video-rooms";
 import { notificationLevelToIndicator } from "../../../utils/notifications";
 
+import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
+import TchapExternalRoomHeader from "../../../../../../src/tchap/components/views/rooms/TchapExternalRoomHeader";
+import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar"; // :TCHAP:
+
 export default function RoomHeader({
     room,
     additionalButtons,
@@ -218,7 +222,14 @@ export default function RoomHeader({
                     }}
                     className="mx_RoomHeader_infoWrapper"
                 >
+                    {/* :TCHAP: RoomAvatar -> DecoratedRoomAvatar
                     <RoomAvatar room={room} size="40px" />
+                    */}
+                    <DecoratedRoomAvatar room={room} size="40px" />
+                    {/* end :TCHAP: */}
+                    {/* :tchap: Add external caption when room is open to external */}
+                    <TchapExternalRoomHeader room={room}></TchapExternalRoomHeader>
+                    {/* :tchap: end */}
                     <Box flex="1" className="mx_RoomHeader_info">
                         <BodyText
                             as="div"
@@ -231,6 +242,7 @@ export default function RoomHeader({
                         >
                             <span className="mx_RoomHeader_truncated mx_lineClamp">{roomName}</span>
 
+                            {/* :tchap: remove public forum icon
                             {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
                                 <Tooltip label={_t("common|public_room")} side="right">
                                     <PublicIcon
@@ -241,7 +253,9 @@ export default function RoomHeader({
                                     />
                                 </Tooltip>
                             )}
+                            */}
 
+                            {/* :tchap: do not show e2eStatus
                             {isDirectMessage && e2eStatus === E2EStatus.Verified && (
                                 <Tooltip label={_t("common|verified")} side="right">
                                     <VerifiedIcon
@@ -252,7 +266,9 @@ export default function RoomHeader({
                                     />
                                 </Tooltip>
                             )}
+                            */}
 
+                            {/* :tchap: do not show E2EStatus.Warning
                             {isDirectMessage && e2eStatus === E2EStatus.Warning && (
                                 <Tooltip label={_t("room|header_untrusted_label")} side="right">
                                     <ErrorIcon
@@ -263,6 +279,7 @@ export default function RoomHeader({
                                     />
                                 </Tooltip>
                             )}
+                            */}
                         </BodyText>
                         {roomTopic && (
                             <BodyText
@@ -300,8 +317,19 @@ export default function RoomHeader({
                         joinCallButton
                     ) : (
                         <>
+                            { /* :TCHAP: activate video call only if directmessage and if feature is activated on homeserver }
                             {!isVideoRoom(room) && videoCallButton}
+                            */ }
+                            {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_video_call") &&
+                              !isVideoRoom(room) && videoCallButton}
+                            {/* end :TCHAP: */}
+
+                            { /* :TCHAP: activate audio call only if directmessage and if feature is activated on homeserver
                             {!useElementCallExclusively && !isVideoRoom(room) && voiceCallButton}
+                            */ }
+                            {isDirectMessage && TchapUIFeature.isFeatureActiveForHomeserver("feature_audio_call") &&
+                              !useElementCallExclusively && !isVideoRoom(room) && voiceCallButton}
+                            {/* end :TCHAP: */}
                         </>
                     )}
 

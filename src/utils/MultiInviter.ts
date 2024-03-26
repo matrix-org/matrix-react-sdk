@@ -244,6 +244,14 @@ export default class MultiInviter {
                         return;
                     }
 
+                    //:tchap: as per endpoint spec https://matrix.org/docs/spec/r0.0.0/client_server.html#post-matrix-client-r0-rooms-roomid-invite
+                    // when user is already in the room, we receive a M_FORBIDDEN code instead of a USER_ALREADY_JOINED
+                    // based on err message, the errcode can be fixed
+                    if(err.message.includes("is already in the room")){
+                        err.errcode = USER_ALREADY_JOINED;
+                    }
+                    //:tchap: end
+
                     logger.error(err);
 
                     const room = this.roomId ? this.matrixClient.getRoom(this.roomId) : null;

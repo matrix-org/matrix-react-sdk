@@ -28,6 +28,10 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { formatPreciseDuration } from "../../../DateUtils";
 import Clock from "../audio_messages/Clock";
 
+import Modal from "matrix-react-sdk/src/Modal"; // :TCHAP:
+import BugReportDialog from "matrix-react-sdk/src/components/views/dialogs/BugReportDialog"; // :TCHAP:
+import "../../../../../../res/css/views/messages/TchapLegacyCallEvent.pcss"; // :TCHAP:
+
 const MAX_NON_NARROW_WIDTH = (450 / 70) * 100;
 
 interface IProps {
@@ -192,6 +196,7 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                 return (
                     <div className="mx_LegacyCallEvent_content">
                         {text}
+                        {this.renderBugReportButton()}
                         {this.props.timestamp}
                     </div>
                 );
@@ -261,6 +266,25 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
                 {_t("timeline|m.call.invite|unknown_state")}
                 {this.props.timestamp}
             </div>
+        );
+    }
+
+    private onReportBugClick = (): void => {
+        Modal.createDialog(BugReportDialog, {
+            initialText: _t("tchap_voip_bug_report_prefill"),
+            label: "voip-feedback",
+        });
+    };
+
+    private renderBugReportButton(): JSX.Element {
+        return (
+            <AccessibleButton
+                className="mx_LegacyCallEvent_content_button mx_LegacyCallEvent_content_button_reportBug"
+                onClick={this.onReportBugClick}
+                kind="primary"
+            >
+                <span> {_t("Report a problem")} </span>
+            </AccessibleButton>
         );
     }
 

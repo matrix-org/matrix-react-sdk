@@ -148,6 +148,7 @@ import { checkSessionLockFree, getSessionLock } from "../../utils/SessionLock";
 import { SessionLockStolenView } from "./auth/SessionLockStolenView";
 import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView";
 import { LoginSplashView } from "./auth/LoginSplashView";
+import TchapUrls from "../../../../../src/tchap/util/TchapUrls"; // :TCHAP:
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -1769,6 +1770,15 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             dis.dispatch({ action: Action.ViewHomePage });
             return;
         }
+
+        //:tchap: add a screen to open user tab security
+        if (screen === TchapUrls.secureBackupFragment) {
+            //open the security tab
+            //there is no anchor to sauvegarde-automatique subection
+            const payload: OpenToTabPayload = { action: Action.ViewUserSettings, initialTabId: UserTab.Security };
+            dis.dispatch(payload);
+        } else
+        //:tchap: end
 
         if (screen === "register") {
             dis.dispatch({

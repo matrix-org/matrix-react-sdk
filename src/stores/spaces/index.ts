@@ -41,7 +41,10 @@ export const getMetaSpaceName = (spaceKey: MetaSpace, allRoomsInHome = false): s
         case MetaSpace.Favourites:
             return _t("common|favourites");
         case MetaSpace.People:
-            return _t("common|people");
+            // TCHAP:
+            // return _t("common|people")
+            return _t("Direct Messages");
+            // end TCHAP
         case MetaSpace.Orphans:
             return _t("common|orphan_rooms");
     }

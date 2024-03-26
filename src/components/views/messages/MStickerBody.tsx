@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ComponentProps, ReactNode } from "react";
 import { Tooltip } from "@vector-im/compound-web";
 
-import MImageBody from "./MImageBody";
+import MImageBody from "../../../../../../src/tchap/components/views/messages/OriginalImageBody";
 import { BLURHASH_FIELD } from "../../../utils/image-media";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 

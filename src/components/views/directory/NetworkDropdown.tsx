@@ -30,6 +30,7 @@ import { GenericDropdownMenu, GenericDropdownMenuItem } from "../../structures/G
 import TextInputDialog from "../dialogs/TextInputDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import withValidation from "../elements/Validation";
+import TchapUtils from "../../../../../../src/tchap/util/TchapUtils";
 
 const SETTING_NAME = "room_directory_servers";
 
@@ -156,7 +157,8 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
         options: [
             {
                 key: { roomServer, instanceId: undefined },
-                label: _t("common|matrix"),
+                // :TCHAP: remove > label: _t("common|matrix"),
+                label: TchapUtils.toFriendlyServerName(roomServer)
             },
             ...(roomServer === homeServer && protocols
                 ? Object.values(protocols)
@@ -237,7 +239,11 @@ export const NetworkDropdown: React.FC<IProps> = ({ protocols, config, setConfig
             selectedLabel={(option) =>
                 option?.key
                     ? _t("spotlight|public_rooms|network_dropdown_selected_label_instance", {
-                          server: option.key.roomServer,
+                        /* :TCHAP:
+                        server: option.key.roomServer,
+                        */
+                        server: TchapUtils.toFriendlyServerName(option.key.roomServer),
+                        // end :TCHAP:
                           instance: option.key.instanceId ? option.label : "Matrix",
                       })
                     : _t("spotlight|public_rooms|network_dropdown_selected_label")

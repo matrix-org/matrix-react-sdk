@@ -66,7 +66,17 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true): Promise<Form
 
     const body = new FormData();
     body.append("text", opts.userText || "User did not supply any additional text.");
+    /* :TCHAP: rename app and add email - for bugreport reageshakes
     body.append("app", opts.customApp || "element-web");
+    */
+    body.append("app", "tchap-web");
+    if(client) {
+        const result = await client.getThreePids();//it generates a API calls which is acceptable because feedbacks submit are not so frequent (unfortunately)
+        result.threepids.forEach(threepid => {
+            body.append(threepid.medium, threepid.address);
+        });
+    }
+    // end :TCHAP:
     body.append("version", version ?? "UNKNOWN");
     body.append("user_agent", userAgent);
     body.append("installed_pwa", installedPWA);
@@ -339,7 +349,18 @@ export async function submitFeedback(
     body.append("text", comment);
     body.append("can_contact", canContact ? "yes" : "no");
 
+    /* :TCHAP: rename app and add email - for feedback rageshakes
     body.append("app", "element-web");
+    */
+    body.append("app", "tchap-web");
+    const client = MatrixClientPeg.get();
+    if(client) {
+        const result = await client.getThreePids();//it generates a API calls which is acceptable because feedbacks submit are not so frequent (unfortunately)
+        result.threepids.forEach(threepid => {
+            body.append(threepid.medium, threepid.address);
+        });
+    }
+    // end :TCHAP:
     body.append("version", version || "UNKNOWN");
     body.append("platform", PlatformPeg.get()?.getHumanReadableName() ?? "n/a");
     body.append("user_id", MatrixClientPeg.get()?.getUserId() ?? "n/a");

@@ -40,6 +40,7 @@ import { SummarizedNotificationState } from "../../../stores/notifications/Summa
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import { doesRoomOrThreadHaveUnreadMessages } from "../../../Unread";
+import TchapUIFeature from "../../../../../../src/tchap/util/TchapUIFeature";
 
 const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,
@@ -273,6 +274,8 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
                 onClick={this.onTimelineCardClicked}
             />,
         );
+        //:tchap: activate Thread based on homeserver feature flag
+        if(TchapUIFeature.isFeatureActiveForHomeserver("feature_thread")){
         rightPanelPhaseButtons.set(
             RightPanelPhases.ThreadPanel,
             <HeaderButton
@@ -287,6 +290,8 @@ export default class LegacyRoomHeaderButtons extends HeaderButtons<IProps> {
                 <UnreadIndicator color={this.state.threadNotificationLevel} />
             </HeaderButton>,
         );
+        } //close bracket :tchap: end
+
         if (this.state.notificationsEnabled) {
             rightPanelPhaseButtons.set(
                 RightPanelPhases.NotificationPanel,

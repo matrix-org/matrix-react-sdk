@@ -19,8 +19,8 @@ import React from "react";
 import InlineSpinner from "../elements/InlineSpinner";
 import { _t } from "../../../languageHandler";
 import RecordingPlayback from "../audio_messages/RecordingPlayback";
-import MAudioBody from "./MAudioBody";
-import MFileBody from "./MFileBody";
+import MAudioBody from "../../../../../../src/tchap/components/views/messages/OriginalAudioBody";
+import MFileBody from "../../../../../../src/tchap/components/views/messages/OriginalFileBody";
 import MediaProcessingError from "./shared/MediaProcessingError";
 
 export default class MVoiceMessageBody extends MAudioBody {

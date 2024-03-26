@@ -23,6 +23,7 @@ import withValidation, { IFieldState, IValidationResult } from "../elements/Vali
 import { _t, _td, TranslationKey } from "../../../languageHandler";
 import Field, { IInputProps } from "../elements/Field";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import TchapStrongPassword from "../../../../../../src/tchap/util/TchapStrongPassword";
 
 interface IProps extends Omit<IInputProps, "onValidate" | "element"> {
     autoFocus?: boolean;
@@ -99,7 +100,10 @@ class PassphraseField extends PureComponent<IProps> {
     });
 
     public onValidate = async (fieldState: IFieldState): Promise<IValidationResult> => {
-        const result = await this.validate(fieldState);
+        // :TCHAP: use home-made validation
+        // const result = await this.validate(fieldState);
+        const result = await TchapStrongPassword.validate(fieldState);
+        // end :TCHAP:
         if (this.props.onValidate) {
             this.props.onValidate(result);
         }

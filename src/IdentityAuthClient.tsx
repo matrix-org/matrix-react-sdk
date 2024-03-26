@@ -29,6 +29,7 @@ import {
 } from "./utils/IdentityServerUtils";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import { abbreviateUrl } from "./utils/UrlUtils";
+import TchapUIFeature from "../../../src/tchap/util/TchapUIFeature";
 
 export class AbortedIdentityActionError extends Error {}
 
@@ -134,6 +135,18 @@ export default class IdentityAuthClient {
             }
             throw e;
         }
+
+        // :TCHAP: no need confirmation of Terms and Conditions to set a default identity server as we trust our backend servers 
+        if (TchapUIFeature.autoAcceptTermsAndConditions){
+            if (
+                !this.tempClient &&
+                !doesAccountDataHaveIdentityServer(this.matrixClient) 
+            ) {
+                setToDefaultIdentityServer(this.matrixClient);
+            }
+            return;
+        }
+        // end :TCHAP:
 
         if (
             !this.tempClient &&
