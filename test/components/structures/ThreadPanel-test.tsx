@@ -141,6 +141,25 @@ describe("ThreadPanel", () => {
                 expect(mockClient.sendReadReceipt).toHaveBeenCalledWith(mockEvent, expect.anything(), true),
             );
         });
+
+        it("doesn't send a receipt if no room is in context", async () => {
+            const mockClient = {
+                sendReadReceipt: jest.fn(),
+            } as unknown as MatrixClient;
+            const { container } = render(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <TooltipProvider>
+                        <ThreadPanelHeader
+                            empty={false}
+                            filterOption={ThreadFilterType.All}
+                            setFilterOption={() => undefined}
+                        />
+                    </TooltipProvider>
+                </MatrixClientContext.Provider>,
+            );
+            fireEvent.click(getByRole(container, "button", { name: "Mark all as read" }));
+            await waitFor(() => expect(mockClient.sendReadReceipt).not.toHaveBeenCalled());
+        });
     });
 
     describe("Filtering", () => {
