@@ -182,6 +182,7 @@ describe("<SessionManagerTab />", () => {
             getPushers: jest.fn(),
             setPusher: jest.fn(),
             setLocalNotificationSettings: jest.fn(),
+            getAuthIssuer: jest.fn().mockReturnValue(new Promise(() => {})),
         });
         jest.clearAllMocks();
         jest.spyOn(logger, "error").mockRestore();
@@ -1539,13 +1540,13 @@ describe("<SessionManagerTab />", () => {
         });
 
         it("enters qr code login section when show QR code button clicked", async () => {
-            const { getByText, getByTestId } = render(getComponent());
+            const { getByText, findByTestId } = render(getComponent());
             // wait for versions call to settle
             await flushPromises();
 
             fireEvent.click(getByText("Show QR code"));
 
-            expect(getByTestId("login-with-qr")).toBeTruthy();
+            await expect(findByTestId("login-with-qr")).resolves.toBeTruthy();
         });
     });
 });
