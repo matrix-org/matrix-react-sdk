@@ -26,6 +26,7 @@ import {
     RelationType,
     TypedEventEmitter,
 } from "matrix-js-sdk/src/matrix";
+import { AudioContent, EncryptedFile } from "matrix-js-sdk/src/types";
 
 import {
     ChunkRecordedPayload,
@@ -38,7 +39,6 @@ import {
     VoiceBroadcastRecorderEvent,
 } from "..";
 import { uploadFile } from "../../ContentMessages";
-import { EncryptedFile } from "../../customisations/models/IMediaEventContent";
 import { createVoiceMessageContent } from "../../utils/createVoiceMessageContent";
 import { IDestroyable } from "../../utils/IDestroyable";
 import dis from "../../dispatcher/dispatcher";
@@ -387,7 +387,7 @@ export class VoiceBroadcastRecording
                 rel_type: RelationType.Reference,
                 event_id: this.infoEventId,
             };
-            content["io.element.voice_broadcast_chunk"] = {
+            (<AudioContent>content)["io.element.voice_broadcast_chunk"] = {
                 sequence,
             };
 

@@ -22,8 +22,8 @@ import type {
     Verifier,
     EmojiMapping,
     VerifierEvent,
-} from "matrix-js-sdk/src/crypto-api/verification";
-import type { ISasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
+    ShowSasCallbacks,
+} from "matrix-js-sdk/src/crypto-api";
 import { Credentials, HomeserverInstance } from "../../plugins/homeserver";
 import { Client } from "../../pages/client";
 import { ElementAppPage } from "../../pages/ElementAppPage";
@@ -36,9 +36,7 @@ import { ElementAppPage } from "../../pages/ElementAppPage";
 export async function waitForVerificationRequest(client: Client): Promise<JSHandle<VerificationRequest>> {
     return client.evaluateHandle((cli) => {
         return new Promise<VerificationRequest>((resolve) => {
-            console.log("~~");
             const onVerificationRequestEvent = async (request: VerificationRequest) => {
-                console.log("@@", request);
                 await request.accept();
                 resolve(request);
             };
@@ -65,7 +63,7 @@ export function handleSasVerification(verifier: JSHandle<Verifier>): Promise<Emo
         if (event) return event.sas.emoji;
 
         return new Promise<EmojiMapping[]>((resolve) => {
-            const onShowSas = (event: ISasEvent) => {
+            const onShowSas = (event: ShowSasCallbacks) => {
                 verifier.off("show_sas" as VerifierEvent, onShowSas);
                 event.confirm();
                 resolve(event.sas.emoji);

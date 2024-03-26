@@ -159,8 +159,9 @@ $roomheader-addroom-fg-color: #5c6470;
 
 /* Rich-text-editor */
 /* ******************** */
-$pill-bg-color: #aaa;
-$pill-hover-bg-color: #ccc;
+$pill-bg-color: var(--cpd-color-bg-action-primary-rest);
+$pill-hover-bg-color: var(--cpd-color-bg-action-primary-hovered);
+$pill-press-bg-color: var(--cpd-color-bg-action-primary-pressed);
 $rte-bg-color: #e9e9e9;
 $rte-code-bg-color: rgba(0, 0, 0, 0.04);
 /* ******************** */
@@ -189,10 +190,9 @@ $input-placeholder: var(--cpd-color-text-placeholder);
 /* Dialog */
 /* ******************** */
 $dialog-title-fg-color: var(--cpd-color-text-primary);
-$dialog-backdrop-color: rgba(46, 48, 51, 0.38);
+$dialog-backdrop-color: #030c1b4d;
 $dialog-close-fg-color: $icon-button-color;
 $dialog-close-external-color: $background;
-$dialog-shadow-color: rgba(0, 0, 0, 0.48);
 /* ******************** */
 
 /* ImageBody */
@@ -206,21 +206,21 @@ $imagebody-giflabel-color: $accent-fg-color;
 /* ******************** */
 $roomlist-bg-color: rgba(245, 245, 245, 0.9);
 $roomsublist-skeleton-ui-bg: linear-gradient(180deg, $background 0%, #ffffff00 100%);
-$roomtile-default-badge-bg-color: $muted-fg-color;
+$roomtile-default-badge-bg-color: var(--cpd-color-icon-secondary);
 /* ******************** */
 
 /* e2e */
 /* ******************** */
-$e2e-verified-color: var(--cpd-color-green-900);
-$e2e-warning-color: var(--cpd-color-red-900);
+$e2e-verified-color: var(--cpd-color-icon-success-primary);
+$e2e-warning-color: var(--cpd-color-icon-critical-primary);
 $e2e-verified-color-light: var(--cpd-color-green-300);
 $e2e-warning-color-light: var(--cpd-color-red-300);
 /* ******************** */
 
 /* Tabbed views */
 /* ******************** */
-$tab-label-fg-color: $dialog-title-fg-color;
-$tab-label-active-fg-color: $background;
+$tab-label-fg-color: $secondary-content;
+$tab-label-active-fg-color: $primary-content;
 /* ******************** */
 
 /* Buttons */
@@ -275,10 +275,9 @@ $voice-record-icon-color: $tertiary-content;
 
 /* Bubble tiles */
 /* ******************** */
-$eventbubble-self-bg: #e7f8f3;
-$eventbubble-others-bg: #e8edf4;
-$eventbubble-bg-hover: #f6f7f8;
-$eventbubble-reply-color: $quaternary-content;
+$eventbubble-self-bg: var(--cpd-color-green-300);
+$eventbubble-others-bg: var(--cpd-color-gray-300);
+$eventbubble-bg-hover: var(--cpd-color-bg-subtle-secondary);
 /* ******************** */
 
 /* Lightbox */
@@ -316,8 +315,6 @@ $progressbar-bg-color: var(--cpd-color-gray-200);
 $kbd-border-color: $strong-input-border-color;
 $visual-bell-bg-color: #faa;
 $event-timestamp-color: #acacac;
-$slider-background-color: $togglesw-off-color;
-$appearance-tab-border-color: $input-darker-bg-color;
 $composer-shadow-color: rgba(0, 0, 0, 0.04);
 $breadcrumb-placeholder-bg-color: #e8eef5;
 $theme-button-bg-color: $quinary-content;

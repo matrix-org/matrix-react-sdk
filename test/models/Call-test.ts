@@ -17,7 +17,16 @@ limitations under the License.
 import EventEmitter from "events";
 import { mocked } from "jest-mock";
 import { waitFor } from "@testing-library/react";
-import { RoomType, Room, RoomEvent, MatrixEvent, RoomStateEvent, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
+import {
+    RoomType,
+    Room,
+    RoomEvent,
+    MatrixEvent,
+    RoomStateEvent,
+    PendingEventOrdering,
+    IContent,
+} from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { Widget } from "matrix-widget-api";
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
@@ -95,7 +104,7 @@ const setUpClientRoomAndStores = (): {
         }
     });
 
-    jest.spyOn(room, "getMyMembership").mockReturnValue("join");
+    jest.spyOn(room, "getMyMembership").mockReturnValue(KnownMembership.Join);
 
     client.getRoom.mockImplementation((roomId) => (roomId === room.roomId ? room : null));
     client.getRoom.mockImplementation((roomId) => (roomId === room.roomId ? room : null));
@@ -116,7 +125,7 @@ const setUpClientRoomAndStores = (): {
             room: roomId,
             user: alice.userId,
             skey: stateKey,
-            content,
+            content: content as IContent,
         });
         room.addLiveEvents([event]);
         return { event_id: event.getId()! };
@@ -380,7 +389,7 @@ describe("JitsiCall", () => {
         it("disconnects when we leave the room", async () => {
             await call.start();
             expect(call.connectionState).toBe(ConnectionState.Connected);
-            room.emit(RoomEvent.MyMembership, room, "leave");
+            room.emit(RoomEvent.MyMembership, room, KnownMembership.Leave);
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
@@ -395,7 +404,7 @@ describe("JitsiCall", () => {
         it("remains connected if we stay in the room", async () => {
             await call.start();
             expect(call.connectionState).toBe(ConnectionState.Connected);
-            room.emit(RoomEvent.MyMembership, room, "join");
+            room.emit(RoomEvent.MyMembership, room, KnownMembership.Join);
             expect(call.connectionState).toBe(ConnectionState.Connected);
         });
 
@@ -710,8 +719,8 @@ describe("ElementCall", () => {
             const originalGetValue = SettingsStore.getValue;
             SettingsStore.getValue = <T>(name: string, roomId?: string, excludeDefault?: boolean) => {
                 switch (name) {
-                    case "baseFontSizeV2":
-                        return 12 as T;
+                    case "fontSizeDelta":
+                        return 4 as T;
                     case "useSystemFont":
                         return true as T;
                     case "systemFont":
@@ -720,13 +729,14 @@ describe("ElementCall", () => {
                         return originalGetValue<T>(name, roomId, excludeDefault);
                 }
             };
+            document.documentElement.style.fontSize = "12px";
 
             await ElementCall.create(room);
             const call = Call.get(room);
             if (!(call instanceof ElementCall)) throw new Error("Failed to create call");
 
             const urlParams = new URLSearchParams(new URL(call.widget.url).hash.slice(1));
-            expect(urlParams.get("fontScale")).toBe("0.75");
+            expect(urlParams.get("fontScale")).toBe("1.5");
             expect(urlParams.getAll("font")).toEqual(["OpenDyslexic", "DejaVu Sans"]);
 
             SettingsStore.getValue = originalGetValue;
@@ -910,14 +920,14 @@ describe("ElementCall", () => {
         it("disconnects when we leave the room", async () => {
             await callConnectProcedure(call);
             expect(call.connectionState).toBe(ConnectionState.Connected);
-            room.emit(RoomEvent.MyMembership, room, "leave");
+            room.emit(RoomEvent.MyMembership, room, KnownMembership.Leave);
             expect(call.connectionState).toBe(ConnectionState.Disconnected);
         });
 
         it("remains connected if we stay in the room", async () => {
             await callConnectProcedure(call);
             expect(call.connectionState).toBe(ConnectionState.Connected);
-            room.emit(RoomEvent.MyMembership, room, "join");
+            room.emit(RoomEvent.MyMembership, room, KnownMembership.Join);
             expect(call.connectionState).toBe(ConnectionState.Connected);
         });
 

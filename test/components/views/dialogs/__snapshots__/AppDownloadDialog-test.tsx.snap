@@ -14,21 +14,21 @@ exports[`AppDownloadDialog should allow disabling desktop build 1`] = `
     role="dialog"
   >
     <div
-      class="mx_Dialog_header mx_Dialog_headerWithCancel"
+      class="mx_Dialog_header"
     >
-      <h2
+      <h1
         class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         Download Element
-      </h2>
-      <div
-        aria-label="Close dialog"
-        class="mx_AccessibleButton mx_Dialog_cancelButton"
-        role="button"
-        tabindex="0"
-      />
+      </h1>
     </div>
+    <div
+      aria-label="Close dialog"
+      class="mx_AccessibleButton mx_Dialog_cancelButton"
+      role="button"
+      tabindex="0"
+    />
     <div
       class="mx_AppDownloadDialog_mobile"
     >
@@ -162,21 +162,21 @@ exports[`AppDownloadDialog should allow disabling fdroid build 1`] = `
     role="dialog"
   >
     <div
-      class="mx_Dialog_header mx_Dialog_headerWithCancel"
+      class="mx_Dialog_header"
     >
-      <h2
+      <h1
         class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         Download Element
-      </h2>
-      <div
-        aria-label="Close dialog"
-        class="mx_AccessibleButton mx_Dialog_cancelButton"
-        role="button"
-        tabindex="0"
-      />
+      </h1>
     </div>
+    <div
+      aria-label="Close dialog"
+      class="mx_AccessibleButton mx_Dialog_cancelButton"
+      role="button"
+      tabindex="0"
+    />
     <div
       class="mx_AppDownloadDialog_desktop"
     >
@@ -318,21 +318,21 @@ exports[`AppDownloadDialog should allow disabling mobile builds 1`] = `
     role="dialog"
   >
     <div
-      class="mx_Dialog_header mx_Dialog_headerWithCancel"
+      class="mx_Dialog_header"
     >
-      <h2
+      <h1
         class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         Download Element
-      </h2>
-      <div
-        aria-label="Close dialog"
-        class="mx_AccessibleButton mx_Dialog_cancelButton"
-        role="button"
-        tabindex="0"
-      />
+      </h1>
     </div>
+    <div
+      aria-label="Close dialog"
+      class="mx_AccessibleButton mx_Dialog_cancelButton"
+      role="button"
+      tabindex="0"
+    />
     <div
       class="mx_AppDownloadDialog_desktop"
     >
@@ -387,21 +387,21 @@ exports[`AppDownloadDialog should render with desktop, ios, android, fdroid butt
     role="dialog"
   >
     <div
-      class="mx_Dialog_header mx_Dialog_headerWithCancel"
+      class="mx_Dialog_header"
     >
-      <h2
+      <h1
         class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         Download Element
-      </h2>
-      <div
-        aria-label="Close dialog"
-        class="mx_AccessibleButton mx_Dialog_cancelButton"
-        role="button"
-        tabindex="0"
-      />
+      </h1>
     </div>
+    <div
+      aria-label="Close dialog"
+      class="mx_AccessibleButton mx_Dialog_cancelButton"
+      role="button"
+      tabindex="0"
+    />
     <div
       class="mx_AppDownloadDialog_desktop"
     >

@@ -24,6 +24,7 @@ import {
     Room,
     RoomMember,
 } from "matrix-js-sdk/src/matrix";
+import { KnownMembership, Membership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 import { randomString } from "matrix-js-sdk/src/randomstring";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
@@ -52,11 +53,12 @@ import WidgetStore from "../stores/WidgetStore";
 import { WidgetMessagingStore, WidgetMessagingStoreEvent } from "../stores/widgets/WidgetMessagingStore";
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "../stores/ActiveWidgetStore";
 import { getCurrentLanguage } from "../languageHandler";
-import { FontWatcher } from "../settings/watchers/FontWatcher";
 import { PosthogAnalytics } from "../PosthogAnalytics";
 import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { getJoinedNonFunctionalMembers } from "../utils/room/getJoinedNonFunctionalMembers";
 import { isVideoRoom } from "../utils/video-rooms";
+import { FontWatcher } from "../settings/watchers/FontWatcher";
+import { JitsiCallMemberContent, JitsiCallMemberEventType } from "../call-types";
 
 const TIMEOUT_MS = 16000;
 
@@ -307,8 +309,8 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
         this.emit(CallEvent.Destroy);
     }
 
-    private onMyMembership = async (_room: Room, membership: string): Promise<void> => {
-        if (membership !== "join") this.setDisconnected();
+    private onMyMembership = async (_room: Room, membership: Membership): Promise<void> => {
+        if (membership !== KnownMembership.Join) this.setDisconnected();
     };
 
     private onStopMessaging = (uid: string): void => {
@@ -321,18 +323,13 @@ export abstract class Call extends TypedEventEmitter<CallEvent, CallEventHandler
     private beforeUnload = (): void => this.setDisconnected();
 }
 
-export interface JitsiCallMemberContent {
-    // Connected device IDs
-    devices: string[];
-    // Time at which this state event should be considered stale
-    expires_ts: number;
-}
+export type { JitsiCallMemberContent };
 
 /**
  * A group call using Jitsi as a backend.
  */
 export class JitsiCall extends Call {
-    public static readonly MEMBER_EVENT_TYPE = "io.element.video.member";
+    public static readonly MEMBER_EVENT_TYPE = JitsiCallMemberEventType;
     public readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
     private resendDevicesTimer: number | null = null;
@@ -386,7 +383,7 @@ export class JitsiCall extends Call {
                 devices = devices.filter((d) => d !== this.client.getDeviceId());
             }
             // Must have a connected device and still be joined to the room
-            if (devices.length > 0 && member?.membership === "join") {
+            if (devices.length > 0 && member?.membership === KnownMembership.Join) {
                 participants.set(member, new Set(devices));
                 if (expiresAt < allExpireAt) allExpireAt = expiresAt;
             }
@@ -416,7 +413,7 @@ export class JitsiCall extends Call {
      *     returns null, the update is skipped.
      */
     private async updateDevices(fn: (devices: string[]) => string[] | null): Promise<void> {
-        if (this.room.getMyMembership() !== "join") return;
+        if (this.room.getMyMembership() !== KnownMembership.Join) return;
 
         const event = this.room.currentState.getStateEvents(JitsiCall.MEMBER_EVENT_TYPE, this.client.getUserId()!);
         const content = event?.getContent<JitsiCallMemberContent>();
@@ -687,7 +684,8 @@ export class ElementCall extends Call {
             roomId: roomId,
             baseUrl: client.baseUrl,
             lang: getCurrentLanguage().replace("_", "-"),
-            fontScale: `${(SettingsStore.getValue("baseFontSizeV2") ?? 16) / FontWatcher.DEFAULT_SIZE}`,
+            fontScale: (FontWatcher.getRootFontSize() / FontWatcher.getBrowserDefaultFontSize()).toString(),
+            theme: "$org.matrix.msc2873.client_theme",
             analyticsID,
         });
 
@@ -757,7 +755,7 @@ export class ElementCall extends Call {
                 name: "Element Call",
                 type: WidgetType.CALL.preferred,
                 url: url.toString(),
-                // waitForIframeLoad: false,
+                waitForIframeLoad: false,
                 data: ElementCall.getWidgetData(
                     client,
                     roomId,

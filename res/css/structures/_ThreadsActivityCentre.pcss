@@ -16,23 +16,42 @@
  * /
  */
 
-.mx_ThreadsActivityCentreButton {
-    color: $secondary-content;
-    height: 32px;
-    min-width: 32px;
+.mx_ThreadsActivityCentre_container {
     display: flex;
-    align-items: center;
-    justify-content: center;
+}
+
+.mx_ThreadsActivityCentreButton {
     border-radius: 8px;
-    margin: auto;
+    margin: 18px auto auto auto;
 
     &.expanded {
-        /* align with settings icon */
-        margin-left: 25px;
+        /**
+         * override compound default background color when hovered
+         * should disappear when the space panel will be migrated to compound
+         */
+        background-color: transparent !important;
 
-        & > .mx_ThreadsActivityCentreButton_IndicatorIcon {
+        /* align with settings icon */
+        margin-left: 21px;
+
+        /**
+         * modify internal css of the compound component
+         * dirty but we need to add the `Threads` label into the indicator icon button
+         **/
+        & > div {
+            display: flex;
+            align-items: center;
+        }
+
+        & .mx_ThreadsActivityCentreButton_Icon {
             /* align with settings label */
             margin-right: 14px;
+            /* required to set the icon width when into a flex container */
+            min-width: 24px;
+        }
+
+        & .mx_ThreadsActivityCentreButton_Text {
+            color: $secondary-content;
         }
     }
 
@@ -49,12 +68,12 @@
     }
 }
 
-.mx_ThreadsActivity_rows {
+.mx_ThreadsActivityCentre_rows {
     overflow-y: scroll;
     /* Let some space at the top and the bottom of the pop-up */
     max-height: calc(100vh - 200px);
 
-    .mx_ThreadsActivityRow {
+    .mx_ThreadsActivityCentreRow {
         height: 48px;
 
         /* Make the label of the MenuItem stay on one line and truncate with ellipsis if needed */
@@ -63,7 +82,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
             /* Arbitrary size, keep the TAC as the wanted width */
-            width: 194px;
+            width: 202px;
         }
     }
 }

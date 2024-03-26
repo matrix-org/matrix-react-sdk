@@ -16,7 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Visibility } from "matrix-js-sdk/src/matrix";
+import { type Visibility } from "matrix-js-sdk/src/matrix";
+
 import { test, expect } from "../../element-web-test";
 import { waitForRoom } from "../utils";
 import { Filter } from "../../pages/Spotlight";
@@ -227,8 +228,8 @@ test.describe("Knock Into Room", () => {
         await expect(roomPreviewBar.getByRole("button", { name: "Request access" })).toBeVisible();
 
         await expect(
-            page.getByRole("group", { name: "Historical" }).getByRole("treeitem", { name: "Cybersecurity" }),
-        ).toBeVisible();
+            page.getByRole("group", { name: "Rooms" }).getByRole("treeitem", { name: "Cybersecurity" }),
+        ).not.toBeVisible();
     });
 
     test("should knock into the room then knock is cancelled by another user and room is forgotten", async ({

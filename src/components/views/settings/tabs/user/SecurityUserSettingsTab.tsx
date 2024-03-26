@@ -17,6 +17,7 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership, Membership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
@@ -139,12 +140,12 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         MatrixClientPeg.safeGet().removeListener(RoomEvent.MyMembership, this.onMyMembership);
     }
 
-    private onMyMembership = (room: Room, membership: string): void => {
+    private onMyMembership = (room: Room, membership: Membership): void => {
         if (room.isSpaceRoom()) {
             return;
         }
 
-        if (membership === "invite") {
+        if (membership === KnownMembership.Invite) {
             this.addInvitedRoom(room);
         } else if (this.state.invitedRoomIds.has(room.roomId)) {
             // The user isn't invited anymore
@@ -185,7 +186,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         return MatrixClientPeg.safeGet()
             .getRooms()
             .filter((r) => {
-                return r.hasMembershipState(MatrixClientPeg.safeGet().getUserId()!, "invite");
+                return r.hasMembershipState(MatrixClientPeg.safeGet().getUserId()!, KnownMembership.Invite);
             });
     };
 
@@ -274,14 +275,14 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                 <div className="mx_SecurityUserSettingsTab_bulkOptions">
                     <AccessibleButton
                         onClick={this.onAcceptAllInvitesClicked}
-                        kind="primary"
+                        kind="primary_outline"
                         disabled={this.state.managingInvites}
                     >
                         {_t("settings|security|bulk_options_accept_all_invites", { invitedRooms: invitedRoomIds.size })}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.onRejectAllInvitesClicked}
-                        kind="danger"
+                        kind="danger_outline"
                         disabled={this.state.managingInvites}
                     >
                         {_t("settings|security|bulk_options_reject_all_invites", { invitedRooms: invitedRoomIds.size })}
