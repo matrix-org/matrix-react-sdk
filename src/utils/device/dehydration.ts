@@ -33,7 +33,6 @@ export async function deviceDehydrationEnabled(): Promise<boolean> {
     if (await crypto.isDehydrationKeyStored()) {
         return true;
     }
-    return true;
     const wellknown = await MatrixClientPeg.safeGet().waitForClientWellKnown();
     return !!wellknown?.["org.matrix.msc3814"];
 }
