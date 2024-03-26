@@ -98,5 +98,5 @@ background_updates:
     sleep_duration_ms: 100000
 
 experimental_features:
-  msc2697_enabled: false
-  msc3814_enabled: true
+    msc2697_enabled: false
+    msc3814_enabled: true

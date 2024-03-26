@@ -14,15 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Locator, type Page } from "@playwright/test";
+
 import { test as base, expect } from "../../element-web-test";
 import { viewRoomSummaryByName } from "../right-panel/utils";
 import { isDendrite } from "../../plugins/homeserver/dendrite";
 
 const test = base.extend({
+    // eslint-disable-next-line no-empty-pattern
     startHomeserverOpts: async ({}, use) => {
         await use("dehydration");
     },
-    config: async ({ homeserver, context}, use) => {
+    config: async ({ homeserver, context }, use) => {
         const wellKnown = {
             "m.homeserver": {
                 base_url: homeserver.config.baseUrl,
@@ -54,7 +57,7 @@ test.describe("Dehydration", () => {
         displayName: NAME,
     });
 
-    test("Create dehydrated device", async ({ page, user, app}, workerInfo) => {
+    test("Create dehydrated device", async ({ page, user, app }, workerInfo) => {
         test.skip(workerInfo.project.name === "Legacy Crypto", "This test only works with Rust crypto.");
 
         // Create a backup (which will create SSSS, and dehydrated device)
@@ -72,8 +75,6 @@ test.describe("Dehydration", () => {
         await currentDialogLocator.getByRole("button", { name: "Continue", exact: true }).click();
         await expect(currentDialogLocator.getByRole("heading", { name: "Save your Security Key" })).toBeVisible();
         await currentDialogLocator.getByRole("button", { name: "Copy", exact: true }).click();
-        // copy the recovery key to use it later
-        const securityKey = await app.getClipboard();
         await currentDialogLocator.getByRole("button", { name: "Continue", exact: true }).click();
 
         await expect(currentDialogLocator.getByRole("heading", { name: "Secure Backup successful" })).toBeVisible();
@@ -110,4 +111,4 @@ test.describe("Dehydration", () => {
         await expect(page.locator(".mx_UserInfo_devices").getByText("Offline device enabled")).toBeVisible();
         await expect(page.locator(".mx_UserInfo_devices").getByText("Dehydrated device")).not.toBeVisible();
     });
-})
+});
