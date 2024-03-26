@@ -24,7 +24,9 @@ import {
     RoomStateEvent,
     PendingEventOrdering,
     ISearchResults,
+    IContent,
 } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
 import EventEmitter from "events";
@@ -111,7 +113,7 @@ describe("LegacyRoomHeader", () => {
                 room: roomId,
                 user: alice.userId,
                 skey: stateKey,
-                content,
+                content: content as IContent,
             });
             room.addLiveEvents([event]);
             return { event_id: event.getId()! };
@@ -906,7 +908,7 @@ function mkJoinEvent(roomId: string, userId: string) {
         room: roomId,
         user: userId,
         content: {
-            membership: "join",
+            membership: KnownMembership.Join,
             avatar_url: "mxc://example.org/" + userId,
         },
     });
