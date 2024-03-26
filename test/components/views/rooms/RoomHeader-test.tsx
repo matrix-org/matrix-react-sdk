@@ -584,6 +584,7 @@ describe("RoomHeader", () => {
             });
             expect(arg1.target.toString()).toEqual(target);
         });
+
         it("share dialog has correct link in an unencrypted room", () => {
             jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Public);
             jest.spyOn(room, "hasEncryptionStateEvent").mockReturnValue(false);
