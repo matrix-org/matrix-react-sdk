@@ -17,7 +17,7 @@ limitations under the License.
 import { Optional } from "matrix-events-sdk";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { EventTimelineSet, Room, Thread } from "matrix-js-sdk/src/matrix";
-import { IconButton, Tooltip } from "@vector-im/compound-web";
+import { IconButton, Tooltip, TooltipProvider } from "@vector-im/compound-web";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { Icon as MarkAllThreadsReadIcon } from "../../../res/img/element-icons/check-all.svg";
@@ -130,37 +130,39 @@ export const ThreadPanelHeader: React.FC<{
     }, [roomContext.room, mxClient]);
 
     return (
-        <div className="mx_BaseCard_header_title">
-            <Heading size="4" className="mx_BaseCard_header_title_heading">
-                {_t("common|threads")}
-            </Heading>
-            {!empty && (
-                <>
-                    <Tooltip label={_t("threads|mark_all_read")}>
-                        <IconButton
-                            onClick={onMarkAllThreadsReadClick}
-                            aria-label={_t("threads|mark_all_read")}
-                            size="24px"
+        <TooltipProvider>
+            <div className="mx_BaseCard_header_title">
+                <Heading size="4" className="mx_BaseCard_header_title_heading">
+                    {_t("common|threads")}
+                </Heading>
+                {!empty && (
+                    <>
+                        <Tooltip label={_t("threads|mark_all_read")}>
+                            <IconButton
+                                onClick={onMarkAllThreadsReadClick}
+                                aria-label={_t("threads|mark_all_read")}
+                                size="24px"
+                            >
+                                <MarkAllThreadsReadIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <div className="mx_ThreadPanel_vertical_separator" />
+                        <ContextMenuButton
+                            className="mx_ThreadPanel_dropdown"
+                            ref={button}
+                            isExpanded={menuDisplayed}
+                            onClick={(ev: ButtonEvent) => {
+                                openMenu();
+                                PosthogTrackers.trackInteraction("WebRightPanelThreadPanelFilterDropdown", ev);
+                            }}
                         >
-                            <MarkAllThreadsReadIcon />
-                        </IconButton>
-                    </Tooltip>
-                    <div className="mx_ThreadPanel_vertical_separator" />
-                    <ContextMenuButton
-                        className="mx_ThreadPanel_dropdown"
-                        ref={button}
-                        isExpanded={menuDisplayed}
-                        onClick={(ev: ButtonEvent) => {
-                            openMenu();
-                            PosthogTrackers.trackInteraction("WebRightPanelThreadPanelFilterDropdown", ev);
-                        }}
-                    >
-                        {`${_t("threads|show_thread_filter")} ${value?.label}`}
-                    </ContextMenuButton>
-                    {contextMenu}
-                </>
-            )}
-        </div>
+                            {`${_t("threads|show_thread_filter")} ${value?.label}`}
+                        </ContextMenuButton>
+                        {contextMenu}
+                    </>
+                )}
+            </div>
+        </TooltipProvider>
     );
 };
 
