@@ -48,6 +48,7 @@ describe("ThreadPanel", () => {
                     filterOption={ThreadFilterType.All}
                     setFilterOption={() => undefined}
                 />,
+                { wrapper: TooltipProvider },
             );
             expect(asFragment()).toMatchSnapshot();
         });
