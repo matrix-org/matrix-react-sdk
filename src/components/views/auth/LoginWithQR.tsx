@@ -39,17 +39,32 @@ export enum Mode {
 }
 
 export enum Phase {
-    Loading = "loading",
-    // ScanningQR = "scanningQR",
-    ShowingQR = "showingQR",
-    Connecting = "connecting",
-    OutOfBandConfirmation = "outOfBandConfirmation",
-    ShowChannelSecure = "showChannelSecure",
-    WaitingForDevice = "waitingForDevice",
-    Verifying = "verifying",
-    Continue = "continue",
-    Error = "error",
+    Loading,
+    ShowingQR,
+    Connecting,
+    /**
+     * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108.
+     */
+    Connected,
+    OutOfBandConfirmation,
+    ShowChannelSecure,
+    WaitingForDevice,
+    Verifying,
+    Continue,
+    Error,
 }
+
+/**
+ * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108.
+ */
+export type LegacyPhase =
+    | Phase.Loading
+    | Phase.ShowingQR
+    | Phase.Connecting
+    | Phase.Connected
+    | Phase.WaitingForDevice
+    | Phase.Verifying
+    | Phase.Error;
 
 export enum Click {
     Cancel,
@@ -79,10 +94,16 @@ interface IState {
     homeserverBaseUrl?: string;
 }
 
+/**
+ * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108.
+ */
 export enum LoginWithQRFailureReason {
     RateLimited = "rate_limited",
 }
 
+/**
+ * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108. See {@see RendezvousFailureReason}.
+ */
 export type FailureReason = RendezvousFailureReason | LoginWithQRFailureReason;
 
 /**

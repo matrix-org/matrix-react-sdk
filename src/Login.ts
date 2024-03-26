@@ -123,7 +123,7 @@ export default class Login {
                     SdkConfig.get().oidc_static_clients,
                     isRegistration,
                 );
-                return [oidcFlow, { type: "loginWithQR" }]; // PROTOTYPE: this should probably be behind a feature flag
+                return [oidcFlow];
             } catch (error) {
                 logger.error(error);
             }
@@ -138,7 +138,6 @@ export default class Login {
             (f) => f.type === "m.login.sso" && DELEGATED_OIDC_COMPATIBILITY.findIn(f),
         );
         this.flows = oidcCompatibilityFlow ? [oidcCompatibilityFlow] : flows;
-        this.flows.push({ type: "loginWithQR" }); // PROTOTYPE: this should probably be behind a feature flag
         return this.flows;
     }
 
