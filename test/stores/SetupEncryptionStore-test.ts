@@ -22,11 +22,15 @@ import { IDehydratedDevice } from "matrix-js-sdk/src/crypto/dehydration";
 
 import { SdkContextClass } from "../../src/contexts/SDKContext";
 import { accessSecretStorage } from "../../src/SecurityManager";
-import { SetupEncryptionStore } from "../../src/stores/SetupEncryptionStore";
+import { SetupEncryptionStore, Phase } from "../../src/stores/SetupEncryptionStore";
 import { emitPromise, stubClient } from "../test-utils";
+import SettingsStore from "../../src/settings/SettingsStore";
+import { SettingLevel } from "../../src/settings/SettingLevel";
+import * as keyPersistenceUtils from "../../src/utils/KeyPersistenceUtils";
 
 jest.mock("../../src/SecurityManager", () => ({
     accessSecretStorage: jest.fn(),
+    AccessCancelledError: jest.fn(),
 }));
 
 describe("SetupEncryptionStore", () => {
@@ -153,6 +157,74 @@ describe("SetupEncryptionStore", () => {
             password: cachedPassword,
             type: "m.login.password",
             user: "@userId:matrix.org",
+        });
+    });
+
+    describe("when persist ssss key feature is enabled", () => {
+        let usePassPhraseSpy: jest.SpyInstance;
+        let getKeySpy: jest.SpyInstance;
+
+        beforeEach(async () => {
+            await SettingsStore.setValue("feature_persist_ssss_key", null, SettingLevel.DEVICE, true);
+
+            const fakeDevice = new Device({ deviceId: "deviceId", userId: "", algorithms: [], keys: new Map() });
+            mockCrypto.getUserDeviceInfo.mockResolvedValue(
+                new Map([[client.getSafeUserId(), new Map([[fakeDevice.deviceId, fakeDevice]])]]),
+            );
+            usePassPhraseSpy = jest.spyOn(setupEncryptionStore, "usePassPhrase");
+            getKeySpy = jest.spyOn(keyPersistenceUtils, "getSSSSKeyFromPlatformSecret");
+
+            mocked(accessSecretStorage).mockImplementation(async (func?: () => Promise<void>) => {
+                await func!();
+            });
+        });
+
+        describe("when secret storage is set up", () => {
+            beforeEach(() => {
+                mockSecretStorage.isStored.mockResolvedValue({ sskeyid: {} as SecretStorageKeyDescriptionAesV1 });
+            });
+
+            it("should skip to key option if the correct key is available as secret", async () => {
+                getKeySpy.mockResolvedValue(new Uint8Array());
+
+                setupEncryptionStore.start();
+                await emitPromise(setupEncryptionStore, "update");
+
+                expect(usePassPhraseSpy).toHaveBeenCalled();
+            });
+
+            it("should skip to key option if the correct key is not available", async () => {
+                getKeySpy.mockResolvedValue(null);
+
+                setupEncryptionStore.start();
+                await emitPromise(setupEncryptionStore, "update");
+
+                expect(usePassPhraseSpy).not.toHaveBeenCalled();
+            });
+        });
+
+        describe("when secret storage is not set up", () => {
+            beforeEach(() => {
+                mockSecretStorage.isStored.mockResolvedValue(null);
+            });
+
+            it("should ask for method if no key is available", async () => {
+                getKeySpy.mockResolvedValue(new Uint8Array());
+                setupEncryptionStore.start();
+                await emitPromise(setupEncryptionStore, "update");
+
+                expect(setupEncryptionStore.phase).toEqual(Phase.Intro);
+                expect(usePassPhraseSpy).not.toHaveBeenCalled();
+            });
+
+            it("should ask for method even if a key is available", async () => {
+                getKeySpy.mockResolvedValue(null);
+                setupEncryptionStore.start();
+                await emitPromise(setupEncryptionStore, "update");
+
+                expect(setupEncryptionStore.phase).toEqual(Phase.Intro);
+                expect(usePassPhraseSpy).not.toHaveBeenCalled();
+            });
         });
     });
 });
