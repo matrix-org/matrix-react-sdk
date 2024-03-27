@@ -273,7 +273,8 @@ export default class AppTile extends React.Component<IProps, IState> {
                 !newProps.userWidget,
                 newProps.onDeleteClick,
             ),
-            widgetUrl: this.sgWidget?.embedUrl,
+            // Explicitly do not set until startWidget() has run
+            widgetUrl: undefined,
         };
     }
 
@@ -391,10 +392,11 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private startWidget(): void {
-        this.sgWidget?.prepare().then(() => {
+        const widget = this.sgWidget;
+        widget?.prepare().then(() => {
             if (this.unmounted) return;
             if (!this.state.initialising) return;
-            this.setState({ initialising: false });
+            this.setState({ initialising: false, widgetUrl: widget.embedUrl });
         });
     }
 
