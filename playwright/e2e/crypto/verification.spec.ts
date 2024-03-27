@@ -36,6 +36,9 @@ test.describe("Device verification", () => {
     /** The backup version that was set up by the bot client. */
     let expectedBackupVersion: string;
 
+    /** The cross-signing master key ID that was set up by the bot client. */
+    let expectedMasterKey: string;
+
     test.beforeEach(async ({ page, homeserver, credentials }) => {
         // Visit the login page of the app, to load the matrix sdk
         await page.goto("/#/login");
@@ -59,6 +62,10 @@ test.describe("Device verification", () => {
         expectedBackupVersion = await mxClientHandle.evaluate(async (mxClient) => {
             return await mxClient.getCrypto()!.getActiveSessionBackupVersion();
         });
+
+        expectedMasterKey = await mxClientHandle.evaluate(async (mxClient) => {
+            return await mxClient.getCrypto()!.getCrossSigningKeyId();
+        });
     });
 
     // Click the "Verify with another device" button, and have the bot client auto-accept it.
@@ -73,7 +80,7 @@ test.describe("Device verification", () => {
         return promiseVerificationRequest;
     }
 
-    test("Verify device with SAS during login", async ({ page, app, credentials, homeserver }) => {
+    test("Verify device with SAS during login", async ({ page, app, credentials, homeserver }, workerInfo) => {
         await logIntoElement(page, homeserver, credentials);
 
         // Launch the verification request between alice and the bot
@@ -91,15 +98,15 @@ test.describe("Device verification", () => {
         await infoDialog.getByRole("button", { name: "Got it" }).click();
 
         // Check that our device is now cross-signed
-        await checkDeviceIsCrossSigned(app);
+        await checkDeviceIsCrossSigned(app, expectedMasterKey);
 
         // Check that the current device is connected to key backup
-        // For now we don't check that the backup key is in cache because it's a bit flaky,
-        // as we need to wait for the secret gossiping to happen and the settings dialog doesn't refresh automatically.
-        await checkDeviceIsConnectedKeyBackup(page, expectedBackupVersion, false);
+        // For now we don't check that the backup key is in cache for legacy because it's a bit flaky,
+        // as the settings dialog doesn't refresh automatically in legacy.
+        await checkDeviceIsConnectedKeyBackup(page, expectedBackupVersion, workerInfo.project.name === "Rust Crypto");
     });
 
-    test("Verify device with QR code during login", async ({ page, app, credentials, homeserver }) => {
+    test("Verify device with QR code during login", async ({ page, app, credentials, homeserver }, workerInfo) => {
         // A mode 0x02 verification: "self-verifying in which the current device does not yet trust the master key"
         await logIntoElement(page, homeserver, credentials);
 
@@ -136,12 +143,12 @@ test.describe("Device verification", () => {
         }, aliceBotClient.credentials);
 
         // Check that our device is now cross-signed
-        await checkDeviceIsCrossSigned(app);
+        await checkDeviceIsCrossSigned(app, expectedMasterKey);
 
         // Check that the current device is connected to key backup
-        // For now we don't check that the backup key is in cache because it's a bit flaky,
-        // as we need to wait for the secret gossiping to happen and the settings dialog doesn't refresh automatically.
-        await checkDeviceIsConnectedKeyBackup(page, expectedBackupVersion, false);
+        // For now we don't check that the backup key is in cache for legacy because it's a bit flaky,
+        // as the settings dialog doesn't refresh automatically in legacy.
+        await checkDeviceIsConnectedKeyBackup(page, expectedBackupVersion, workerInfo.project.name === "Rust Crypto");
     });
 
     test("Verify device with Security Phrase during login", async ({ page, app, credentials, homeserver }) => {
@@ -158,7 +165,7 @@ test.describe("Device verification", () => {
         await page.locator(".mx_AuthPage").getByRole("button", { name: "Done" }).click();
 
         // Check that our device is now cross-signed
-        await checkDeviceIsCrossSigned(app);
+        await checkDeviceIsCrossSigned(app, expectedMasterKey);
 
         // Check that the current device is connected to key backup
         // The backup decryption key should be in cache also, as we got it directly from the 4S
@@ -181,7 +188,7 @@ test.describe("Device verification", () => {
         await page.locator(".mx_AuthPage").getByRole("button", { name: "Done" }).click();
 
         // Check that our device is now cross-signed
-        await checkDeviceIsCrossSigned(app);
+        await checkDeviceIsCrossSigned(app, expectedMasterKey);
 
         // Check that the current device is connected to key backup
         // The backup decryption key should be in cache also, as we got it directly from the 4S

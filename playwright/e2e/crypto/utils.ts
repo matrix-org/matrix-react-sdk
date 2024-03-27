@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { type Page, expect, JSHandle } from "@playwright/test";
+import { expect, JSHandle, type Page } from "@playwright/test";
 
-import type { CryptoEvent, ICreateRoomOpts, MatrixClient } from "matrix-js-sdk/src/matrix";
+import type { ICreateRoomOpts, MatrixClient } from "matrix-js-sdk/src/matrix";
 import type {
+    EmojiMapping,
     VerificationRequest,
     Verifier,
-    EmojiMapping,
     VerifierEvent,
     ShowSasCallbacks,
 } from "matrix-js-sdk/src/crypto-api";
@@ -77,10 +77,25 @@ export function handleSasVerification(verifier: JSHandle<Verifier>): Promise<Emo
 /**
  * Check that the user has published cross-signing keys, and that the user's device has been cross-signed.
  */
-export async function checkDeviceIsCrossSigned(app: ElementAppPage): Promise<void> {
+export async function checkDeviceIsCrossSigned(app: ElementAppPage, expectedMasterKey: string): Promise<void> {
     const { userId, deviceId, keys } = await app.client.evaluate(async (cli: MatrixClient) => {
         const deviceId = cli.getDeviceId();
         const userId = cli.getUserId();
+
+        const verificationStatus = await cli.getCrypto().getUserVerificationStatus(userId);
+        if (!verificationStatus.isCrossSigningVerified()) {
+            // wait for the device to be cross-signed
+            await new Promise<void>((resolve) => {
+                const onUserTrustStatusChanged = (trustUserId: string, trustStatus: any) => {
+                    if (userId === trustUserId && trustStatus.isCrossSigningVerified()) {
+                        resolve();
+                    }
+                };
+                // @ts-ignore
+                cli.on("userTrustStatusChanged", onUserTrustStatusChanged);
+            });
+        }
+
         const keys = await cli.downloadKeysForUsers([userId]);
 
         return { userId, deviceId, keys };
@@ -93,11 +108,14 @@ export async function checkDeviceIsCrossSigned(app: ElementAppPage): Promise<voi
 
     // and the device should be signed by the self-signing key
     const selfSigningKeyId = Object.keys(keys.self_signing_keys[userId].keys)[0];
+    const masterKeyId = Object.keys(keys.master_keys[userId].keys)[0];
 
     expect(keys.device_keys[userId][deviceId]).toBeDefined();
 
     const myDeviceSignatures = keys.device_keys[userId][deviceId].signatures[userId];
     expect(myDeviceSignatures[selfSigningKeyId]).toBeDefined();
+
+    expect(masterKeyId).toEqual(`ed25519:${expectedMasterKey}`);
 }
 
 /**
@@ -120,6 +138,7 @@ export async function checkDeviceIsConnectedKeyBackup(
     // expand the advanced section to see the active version in the reports
     await page.locator(".mx_SecureBackupPanel_advanced").locator("..").click();
 
+    // await page.pause();
     if (checkBackupKeyInCache) {
         const cacheDecryptionKeyStatusElement = page.locator(".mx_SecureBackupPanel_statusList tr:nth-child(2) td");
         await expect(cacheDecryptionKeyStatusElement).toHaveText("cached locally, well formed");
