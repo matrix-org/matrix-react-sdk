@@ -285,7 +285,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 }
 
                 // wait for secrets:
-                const { secrets } = await rendezvous.loginStep5(credentials.deviceId);
+                const { secrets } = await rendezvous.loginStep5();
 
                 // done
                 this.props.onFinished({ ...credentials, secrets });
@@ -363,7 +363,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             }
 
             // wait for secrets
-            const { secrets } = await this.state.rendezvous.loginStep5(credentials.deviceId);
+            const { secrets } = await this.state.rendezvous.loginStep5();
 
             // done
             this.props.onFinished({ ...credentials, secrets });
