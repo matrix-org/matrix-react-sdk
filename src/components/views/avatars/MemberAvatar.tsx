@@ -86,6 +86,7 @@ function MemberAvatar(
     return (
         <BaseAvatar
             {...props}
+            tabIndex={-1}
             size={size}
             name={name ?? ""}
             title={hideTitle ? undefined : title}
@@ -102,6 +103,7 @@ function MemberAvatar(
                       }
                     : props.onClick
             }
+            aria-label={name ? name + ". " : ""} // Full stop adds a pause between the name and the appended message.
             altText={_t("common|user_avatar")}
             ref={ref}
         />
