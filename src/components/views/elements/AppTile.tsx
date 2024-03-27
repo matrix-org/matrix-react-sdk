@@ -365,6 +365,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.sgWidget?.on("error:preparing", this.updateRequiresClient);
         // emits when the capabilities have been set up or changed
         this.sgWidget?.on("capabilitiesNotified", this.updateRequiresClient);
+        this.sgWidget?.on("urlChanged", this.updateWidgetUrl);
     }
 
     private stopSgListeners(): void {
@@ -374,6 +375,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.sgWidget?.off("ready", this.onWidgetReady);
         this.sgWidget.off("error:preparing", this.updateRequiresClient);
         this.sgWidget.off("capabilitiesNotified", this.updateRequiresClient);
+        this.sgWidget?.off("urlChanged", this.updateWidgetUrl);
     }
 
     private resetWidget(newProps: IProps): void {
@@ -477,6 +479,12 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         // TODO: This is a stop gap solution to responsively update the theme of the widget.
         // A new action should be introduced and the widget driver should be called here, so it informs the widget. (or connect to this by itself)
+    };
+
+    private updateWidgetUrl = (): void => {
+        this.setState({
+            widgetUrl: this.sgWidget?.embedUrl,
+        });
     };
 
     private onAction = (payload: ActionPayload): void => {
