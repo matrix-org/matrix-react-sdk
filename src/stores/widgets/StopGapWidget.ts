@@ -445,8 +445,6 @@ export class StopGapWidget extends EventEmitter {
                     if (defaultManager && WidgetUtils.isScalarUrl(defaultManager.apiUrl)) {
                         const scalar = defaultManager.getScalarClient();
                         this.scalarToken = await scalar.getScalarToken();
-                        // The URL will have changed as a result of this.
-                        this.emit('urlChanged');
                     }
                 }
             }
