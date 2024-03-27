@@ -1082,6 +1082,10 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: [SettingLevel.ROOM_ACCOUNT],
         default: true,
     },
+    "Spaces.showIndirectRoomsInSpace": {
+        supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
+        default: true,
+    },
     "developerMode": {
         displayName: _td("devtools|developer_mode"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,

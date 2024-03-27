@@ -70,11 +70,30 @@ describe("SpaceFilterCondition", () => {
 
     describe("isVisible", () => {
         const room1 = { roomId: room1Id } as unknown as Room;
-        it("calls isRoomInSpace correctly", () => {
+        it("calls isRoomInSpace correctly when showIndirectRoomsInSpace is true", () => {
+            // init filter with setting true for space1
+            SettingsStoreMock.getValue.mockImplementation(
+                makeMockGetValue({
+                    ["Spaces.showIndirectRoomsInSpace"]: { [space1]: true },
+                }),
+            );
             const filter = initFilter(space1);
 
             expect(filter.isVisible(room1)).toEqual(true);
-            expect(SpaceStoreInstanceMock.isRoomInSpace).toHaveBeenCalledWith(space1, room1Id);
+            expect(SpaceStoreInstanceMock.isRoomInSpace).toHaveBeenCalledWith(space1, room1Id, true);
+        });
+
+        it("calls isRoomInSpace correctly when showIndirectRoomsInSpace is false", () => {
+            // init filter with setting true for space1
+            SettingsStoreMock.getValue.mockImplementation(
+                makeMockGetValue({
+                    ["Spaces.showIndirectRoomsInSpace"]: { [space1]: false },
+                }),
+            );
+            const filter = initFilter(space1);
+
+            expect(filter.isVisible(room1)).toEqual(true);
+            expect(SpaceStoreInstanceMock.isRoomInSpace).toHaveBeenCalledWith(space1, room1Id, false);
         });
     });
 
@@ -120,6 +139,29 @@ describe("SpaceFilterCondition", () => {
                 const emitSpy = jest.spyOn(filter, "emit");
 
                 filter.updateSpace(MetaSpace.Home);
+                jest.runOnlyPendingTimers();
+                expect(emitSpy).toHaveBeenCalledWith(FILTER_CHANGED);
+            });
+        });
+
+        describe("showIndirectRoomsInSpace setting", () => {
+            it("emits filter changed event when setting changes", async () => {
+                // init filter with setting true for space1
+                SettingsStoreMock.getValue.mockImplementation(
+                    makeMockGetValue({
+                        ["Spaces.showIndirectRoomsInSpace"]: { [space1]: true },
+                    }),
+                );
+                const filter = initFilter(space1);
+                const emitSpy = jest.spyOn(filter, "emit");
+
+                SettingsStoreMock.getValue.mockClear().mockImplementation(
+                    makeMockGetValue({
+                        ["Spaces.showIndirectRoomsInSpace"]: { [space1]: false },
+                    }),
+                );
+
+                SpaceStoreInstanceMock.emit(space1);
                 jest.runOnlyPendingTimers();
                 expect(emitSpy).toHaveBeenCalledWith(FILTER_CHANGED);
             });
