@@ -309,6 +309,18 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             return;
         }
         const replyingToThread = this.props.relation?.key === THREAD_RELATION_TYPE.name;
+        const navAction = getKeyBindingsManager().getNavigationAction(event);
+        switch (navAction) {
+            case KeyBindingAction.SelectPrevMessage:
+                (
+                    document.querySelector<HTMLElement>(".mx_EventTile_selected") ||
+                    document.querySelector<HTMLElement>(".mx_EventTile_last")
+                )?.focus();
+                event.preventDefault();
+                event.stopPropagation();
+                return;
+        }
+
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
             case KeyBindingAction.SendMessage:
