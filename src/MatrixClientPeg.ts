@@ -32,6 +32,7 @@ import {
 import { VerificationMethod } from "matrix-js-sdk/src/types";
 import * as utils from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
+import { QRSecretsBundle } from "matrix-js-sdk/src/crypto-api";
 
 import createMatrixClient from "./utils/createMatrixClient";
 import SettingsStore from "./settings/SettingsStore";
@@ -64,6 +65,7 @@ export interface IMatrixClientCreds {
     guest?: boolean;
     pickleKey?: string;
     freshLogin?: boolean;
+    secrets?: QRSecretsBundle;
 }
 
 /**
@@ -87,8 +89,8 @@ export interface IMatrixClientPeg {
     get(): MatrixClient | null;
     safeGet(): MatrixClient;
     unset(): void;
-    assign(): Promise<any>;
-    start(): Promise<any>;
+    assign(secrets?: QRSecretsBundle): Promise<any>;
+    start(secrets?: QRSecretsBundle): Promise<any>;
 
     /**
      * If we've registered a user ID we set this to the ID of the
@@ -235,7 +237,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         PlatformPeg.get()?.reload();
     };
 
-    public async assign(): Promise<any> {
+    public async assign(secrets?: QRSecretsBundle): Promise<any> {
         if (!this.matrixClient) {
             throw new Error("createClient must be called first");
         }
@@ -262,7 +264,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
         // try to initialise e2e on the new client
         if (!SettingsStore.getValue("lowBandwidth")) {
-            await this.initClientCrypto();
+            await this.initClientCrypto(secrets);
         }
 
         const opts = utils.deepCopy(this.opts);
@@ -297,7 +299,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     /**
      * Attempt to initialize the crypto layer on a newly-created MatrixClient
      */
-    private async initClientCrypto(): Promise<void> {
+    private async initClientCrypto(secrets?: QRSecretsBundle): Promise<void> {
         if (!this.matrixClient) {
             throw new Error("createClient must be called first");
         }
@@ -335,6 +337,16 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         if (useRustCrypto) {
             await this.matrixClient.initRustCrypto();
 
+            if (secrets) {
+                this.matrixClient.getCrypto()?.importSecretsForQRLogin(secrets);
+                if (secrets.backup) {
+                    const backupInfo = await this.matrixClient.getKeyBackupVersion();
+                    if (backupInfo) {
+                        await this.matrixClient.restoreKeyBackupWithCache(undefined, undefined, backupInfo, {});
+                    }
+                }
+            }
+
             StorageManager.setCryptoInitialised(true);
             // TODO: device dehydration and whathaveyou
             return;
@@ -362,8 +374,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
     }
 
-    public async start(): Promise<any> {
-        const opts = await this.assign();
+    public async start(secrets?: QRSecretsBundle): Promise<any> {
+        const opts = await this.assign(secrets);
 
         logger.log(`MatrixClientPeg: really starting MatrixClient`);
         await this.matrixClient!.startClient(opts);

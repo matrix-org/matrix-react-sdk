@@ -22,6 +22,7 @@ import { createClient, MatrixClient, SSOAction, OidcTokenRefresher } from "matri
 import { IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
+import { QRSecretsBundle } from "matrix-js-sdk/src/crypto-api";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
@@ -820,7 +821,7 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     checkSessionLock();
 
     dis.fire(Action.OnLoggedIn);
-    await startMatrixClient(client, /*startSyncing=*/ !softLogout);
+    await startMatrixClient(client, /*startSyncing=*/ !softLogout, credentials.secrets);
 
     return client;
 }
@@ -958,7 +959,7 @@ export function isLoggingOut(): boolean {
  * @param {boolean} startSyncing True (default) to actually start
  * syncing the client.
  */
-async function startMatrixClient(client: MatrixClient, startSyncing = true): Promise<void> {
+async function startMatrixClient(client: MatrixClient, startSyncing = true, secrets?: QRSecretsBundle): Promise<void> {
     logger.log(`Lifecycle: Starting MatrixClient`);
 
     // dispatch this before starting the matrix client: it's used
@@ -989,10 +990,10 @@ async function startMatrixClient(client: MatrixClient, startSyncing = true): Pro
         // index (e.g. the FilePanel), therefore initialize the event index
         // before the client.
         await EventIndexPeg.init();
-        await MatrixClientPeg.start();
+        await MatrixClientPeg.start(secrets);
     } else {
         logger.warn("Caller requested only auxiliary services be started");
-        await MatrixClientPeg.assign();
+        await MatrixClientPeg.assign(secrets);
     }
 
     checkSessionLock();

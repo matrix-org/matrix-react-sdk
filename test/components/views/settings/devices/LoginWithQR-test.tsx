@@ -20,7 +20,8 @@ import React from "react";
 import { MSC3906Rendezvous, RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
 import { HTTPError, LoginTokenPostResponse } from "matrix-js-sdk/src/matrix";
 
-import LoginWithQR, { Click, Mode, Phase } from "../../../../../src/components/views/auth/LoginWithQR";
+import LoginWithQR from "../../../../../src/components/views/auth/LoginWithQR";
+import { Click, Mode, Phase } from "../../../../../src/components/views/auth/LoginWithQR-types";
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 jest.mock("matrix-js-sdk/src/rendezvous");
@@ -64,6 +65,7 @@ function unresolvedPromise<T>(): Promise<T> {
 describe("<LoginWithQR />", () => {
     let client!: MockedObject<MatrixClient>;
     const defaultProps = {
+        legacy: true,
         mode: Mode.Show,
         onFinished: jest.fn(),
     };
@@ -215,12 +217,12 @@ describe("<LoginWithQR />", () => {
         await waitFor(() =>
             expect(mockedFlow).toHaveBeenLastCalledWith(
                 expect.objectContaining({
-                    phase: Phase.Connected,
+                    phase: Phase.LegacyConnected,
                 }),
             ),
         );
         expect(mockedFlow).toHaveBeenLastCalledWith({
-            phase: Phase.Connected,
+            phase: Phase.LegacyConnected,
             confirmationDigits: mockConfirmationDigits,
             onClick: expect.any(Function),
         });
@@ -245,12 +247,12 @@ describe("<LoginWithQR />", () => {
         await waitFor(() =>
             expect(mockedFlow).toHaveBeenLastCalledWith(
                 expect.objectContaining({
-                    phase: Phase.Connected,
+                    phase: Phase.LegacyConnected,
                 }),
             ),
         );
         expect(mockedFlow).toHaveBeenLastCalledWith({
-            phase: Phase.Connected,
+            phase: Phase.LegacyConnected,
             confirmationDigits: mockConfirmationDigits,
             onClick: expect.any(Function),
         });
@@ -285,12 +287,12 @@ describe("<LoginWithQR />", () => {
         await waitFor(() =>
             expect(mockedFlow).toHaveBeenLastCalledWith(
                 expect.objectContaining({
-                    phase: Phase.Connected,
+                    phase: Phase.LegacyConnected,
                 }),
             ),
         );
         expect(mockedFlow).toHaveBeenLastCalledWith({
-            phase: Phase.Connected,
+            phase: Phase.LegacyConnected,
             confirmationDigits: mockConfirmationDigits,
             onClick: expect.any(Function),
         });
@@ -322,12 +324,12 @@ describe("<LoginWithQR />", () => {
         await waitFor(() =>
             expect(mockedFlow).toHaveBeenLastCalledWith(
                 expect.objectContaining({
-                    phase: Phase.Connected,
+                    phase: Phase.LegacyConnected,
                 }),
             ),
         );
         expect(mockedFlow).toHaveBeenLastCalledWith({
-            phase: Phase.Connected,
+            phase: Phase.LegacyConnected,
             confirmationDigits: mockConfirmationDigits,
             onClick: expect.any(Function),
         });
@@ -352,12 +354,12 @@ describe("<LoginWithQR />", () => {
         await waitFor(() =>
             expect(mockedFlow).toHaveBeenLastCalledWith(
                 expect.objectContaining({
-                    phase: Phase.Connected,
+                    phase: Phase.LegacyConnected,
                 }),
             ),
         );
         expect(mockedFlow).toHaveBeenLastCalledWith({
-            phase: Phase.Connected,
+            phase: Phase.LegacyConnected,
             confirmationDigits: mockConfirmationDigits,
             onClick: expect.any(Function),
         });

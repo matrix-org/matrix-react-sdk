@@ -19,12 +19,8 @@ import React from "react";
 import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
 
 import LoginWithQRFlow from "../../../../../src/components/views/auth/LoginWithQRFlow";
-import {
-    Click,
-    Phase,
-    LoginWithQRFailureReason,
-    FailureReason,
-} from "../../../../../src/components/views/auth/LoginWithQR";
+import { LoginWithQRFailureReason, FailureReason } from "../../../../../src/components/views/auth/LoginWithQR";
+import { Click, Phase } from "../../../../../src/components/views/auth/LoginWithQR-types";
 
 describe("<LoginWithQRFlow />", () => {
     const onClick = jest.fn();
@@ -77,7 +73,7 @@ describe("<LoginWithQRFlow />", () => {
     });
 
     it("renders code when connected", async () => {
-        const { container } = render(getComponent({ phase: Phase.Connected, confirmationDigits: "mock-digits" }));
+        const { container } = render(getComponent({ phase: Phase.LegacyConnected, confirmationDigits: "mock-digits" }));
         expect(screen.getAllByText("mock-digits")).toHaveLength(1);
         expect(screen.getAllByTestId("decline-login-button")).toHaveLength(1);
         expect(screen.getAllByTestId("approve-login-button")).toHaveLength(1);

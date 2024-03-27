@@ -23,24 +23,35 @@ import AccessibleButton from "../elements/AccessibleButton";
 import QRCode from "../elements/QRCode";
 import Spinner from "../elements/Spinner";
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/i.svg";
-import { Click, FailureReason, LoginWithQRFailureReason, Phase } from "./LoginWithQR";
+import { Icon as CheckmarkIcon } from "../../../../res/img/element-icons/check.svg";
+import { Click, Phase } from "./LoginWithQR-types";
 import SdkConfig from "../../../SdkConfig";
+import { FailureReason, LoginWithQRFailureReason } from "./LoginWithQR";
+import { XOR } from "../../../@types/common";
 
-interface IProps {
-    phase: Phase;
+/**
+ * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108.
+ */
+interface MSC3906Props extends Pick<Props, "phase" | "onClick" | "failureReason"> {
     code?: string;
+    confirmationDigits?: string;
+}
+
+interface Props {
+    phase: Phase;
+    code?: Uint8Array;
     onClick(type: Click): Promise<void>;
     failureReason?: FailureReason;
-    confirmationDigits?: string;
+    userCode?: string;
 }
 
 /**
  * A component that implements the UI for sign in and E2EE set up with a QR code.
  *
- * This uses the unstable feature of MSC3906: https://github.com/matrix-org/matrix-spec-proposals/pull/3906
+ * This supports the unstable features of MSC3906 and MSC4108
  */
-export default class LoginWithQRFlow extends React.Component<IProps> {
-    public constructor(props: IProps) {
+export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906Props>> {
+    public constructor(props: XOR<Props, MSC3906Props>) {
         super(props);
     }
 
@@ -128,7 +139,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                     </>
                 );
                 break;
-            case Phase.Connected:
+            case Phase.LegacyConnected:
                 backButton = false;
                 main = (
                     <>
@@ -162,14 +173,54 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                     </>
                 );
                 break;
+            case Phase.OutOfBandConfirmation:
+                backButton = false;
+                main = (
+                    <>
+                        <h1>{_t("auth|qr_code_login|confirm_green_checkmark_title")}</h1>
+                        <p>{_t("auth|qr_code_login|confirm_green_checkmark")}</p>
+                        <div className="mx_LoginWithQR_confirmationAlert">
+                            <div>
+                                <CheckmarkIcon />
+                            </div>
+                        </div>
+                        {this.props.userCode ? (
+                            <div>
+                                <p>{_t("auth|qr_code_login|security_code")}</p>
+                                <p>{_t("auth|qr_code_login|security_code_prompt")}</p>
+                                <p>{this.props.userCode}</p>
+                            </div>
+                        ) : null}
+                    </>
+                );
+
+                buttons = (
+                    <>
+                        <AccessibleButton
+                            data-testid="decline-login-button"
+                            kind="primary_outline"
+                            onClick={this.handleClick(Click.Decline)}
+                        >
+                            {_t("auth|qr_code_login|reject_action")}
+                        </AccessibleButton>
+                        <AccessibleButton
+                            data-testid="approve-login-button"
+                            kind="primary"
+                            onClick={this.handleClick(Click.Approve)}
+                        >
+                            {_t("auth|qr_code_login|confirm_action")}
+                        </AccessibleButton>
+                    </>
+                );
+                break;
             case Phase.ShowingQR:
                 if (this.props.code) {
+                    const data =
+                        typeof this.props.code !== "string" ? this.props.code : Buffer.from(this.props.code ?? "");
+
                     const code = (
                         <div className="mx_LoginWithQR_qrWrapper">
-                            <QRCode
-                                data={[{ data: Buffer.from(this.props.code ?? ""), mode: "byte" }]}
-                                className="mx_QRCode"
-                            />
+                            <QRCode data={[{ data, mode: "byte" }]} className="mx_QRCode" />
                         </div>
                     );
                     main = (
@@ -205,7 +256,18 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                 buttons = this.cancelButton();
                 break;
             case Phase.WaitingForDevice:
-                main = this.simpleSpinner(_t("auth|qr_code_login|waiting_for_device"));
+                main = (
+                    <>
+                        {this.simpleSpinner(_t("auth|qr_code_login|waiting_for_device"))}
+                        {this.props.userCode ? (
+                            <div>
+                                <p>{_t("auth|qr_code_login|security_code")}</p>
+                                <p>{_t("auth|qr_code_login|security_code_prompt")}</p>
+                                <p>{this.props.userCode}</p>
+                            </div>
+                        ) : null}
+                    </>
+                );
                 buttons = this.cancelButton();
                 break;
             case Phase.Verifying:

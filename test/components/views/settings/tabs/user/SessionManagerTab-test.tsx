@@ -36,6 +36,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { mocked, MockedObject } from "jest-mock";
 import { TooltipProvider } from "@vector-im/compound-web";
+import fetchMock from "fetch-mock-jest";
 
 import {
     clearAllModals,
@@ -55,6 +56,7 @@ import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import { getClientInformationEventType } from "../../../../../../src/utils/device/clientInformation";
 import { SDKContext, SdkContextClass } from "../../../../../../src/contexts/SDKContext";
 import { OidcClientStore } from "../../../../../../src/stores/oidc/OidcClientStore";
+import { mockOpenIdConfiguration } from "../../../../../test-utils/oidc";
 
 mockPlatformPeg();
 
@@ -182,6 +184,7 @@ describe("<SessionManagerTab />", () => {
             getPushers: jest.fn(),
             setPusher: jest.fn(),
             setLocalNotificationSettings: jest.fn(),
+            getAuthIssuer: jest.fn().mockReturnValue(new Promise(() => {})),
         });
         jest.clearAllMocks();
         jest.spyOn(logger, "error").mockRestore();
@@ -1509,7 +1512,7 @@ describe("<SessionManagerTab />", () => {
         expect(checkbox.getAttribute("aria-checked")).toEqual("false");
     });
 
-    describe("QR code login", () => {
+    describe("MSC3906 QR code login", () => {
         const settingsValueSpy = jest.spyOn(SettingsStore, "getValue");
 
         beforeEach(() => {
@@ -1539,13 +1542,70 @@ describe("<SessionManagerTab />", () => {
         });
 
         it("enters qr code login section when show QR code button clicked", async () => {
-            const { getByText, getByTestId } = render(getComponent());
+            const { getByText, findByTestId } = render(getComponent());
             // wait for versions call to settle
             await flushPromises();
 
             fireEvent.click(getByText("Show QR code"));
 
-            expect(getByTestId("login-with-qr")).toBeTruthy();
+            await expect(findByTestId("login-with-qr")).resolves.toBeTruthy();
+        });
+    });
+
+    describe("MSC4108 QR code login", () => {
+        const settingsValueSpy = jest.spyOn(SettingsStore, "getValue");
+        const issuer = "https://issuer.org";
+        const openIdConfiguration = mockOpenIdConfiguration(issuer);
+
+        beforeEach(() => {
+            settingsValueSpy.mockClear().mockReturnValue(false);
+            // enable server support for qr login
+            mockClient.getVersions.mockResolvedValue({
+                versions: [],
+                unstable_features: {
+                    "org.matrix.msc4108": true,
+                },
+            });
+            mockClient.getCapabilities.mockResolvedValue({
+                [GET_LOGIN_TOKEN_CAPABILITY.name]: {
+                    enabled: true,
+                },
+            });
+            mockClient.getAuthIssuer.mockResolvedValue({ issuer });
+            fetchMock.mock(`${issuer}/.well-known/openid-configuration`, {
+                ...openIdConfiguration,
+                grant_types_supported: [
+                    ...openIdConfiguration.grant_types_supported,
+                    "urn:ietf:params:oauth:grant-type:device_code",
+                ],
+            });
+            fetchMock.mock(openIdConfiguration.jwks_uri!, {
+                status: 200,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                keys: [],
+            });
+        });
+
+        it("renders qr code login section", async () => {
+            const { getByText } = render(getComponent());
+
+            // wait for versions call to settle
+            await flushPromises();
+
+            expect(getByText("Link new device")).toBeTruthy();
+            expect(getByText("Show QR code")).toBeTruthy();
+        });
+
+        it("enters qr code login section when show QR code button clicked", async () => {
+            const { getByText, findByTestId } = render(getComponent());
+            // wait for versions call to settle
+            await flushPromises();
+
+            fireEvent.click(getByText("Show QR code"));
+
+            await expect(findByTestId("login-with-qr")).resolves.toBeTruthy();
         });
     });
 });
