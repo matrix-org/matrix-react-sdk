@@ -30,7 +30,7 @@ interface ReleaseAnnouncementProps
 /**
  * Display a release announcement component around the children
  * Wrapper gluing the release announcement compound and the ReleaseAnnouncementStore
- * @param feature - the feature to announce
+ * @param feature - the feature to announce, should be listed in {@link Features}
  * @param children
  * @param props
  * @constructor
