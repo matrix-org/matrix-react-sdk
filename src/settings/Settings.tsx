@@ -1145,6 +1145,13 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: false,
         isFeature: true,
     },
+    /**
+     * Managed by the {@link ReleaseAnnouncementStore}
+     */
+    "releaseAnnouncement": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {},
+    },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
