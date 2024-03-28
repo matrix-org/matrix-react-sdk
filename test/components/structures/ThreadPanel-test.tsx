@@ -34,7 +34,7 @@ import { _t } from "../../../src/languageHandler";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { RoomPermalinkCreator } from "../../../src/utils/permalinks/Permalinks";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
-import { createTestClient, getRoomContext, mockPlatformPeg, stubClient } from "../../test-utils";
+import { createTestClient, getRoomContext, mkRoom, mockPlatformPeg, stubClient } from "../../test-utils";
 import { mkThread } from "../../test-utils/threads";
 import { IRoomState } from "../../../src/components/structures/RoomView";
 
@@ -116,8 +116,8 @@ describe("ThreadPanel", () => {
         it("sends an unthreaded read receipt when the Mark All Threads Read button is clicked", async () => {
             const mockClient = createTestClient();
             const mockEvent = {} as MatrixEvent;
-            const mockRoom = new Room("!roomId:example.org", mockClient, "", {});
-            mockRoom.getLastLiveEvent = jest.fn().mockReturnValue(mockEvent);
+            const mockRoom = mkRoom(mockClient, "!roomId:example.org");
+            mockRoom.getLastLiveEvent.mockReturnValue(mockEvent);
             const roomContextObject = {
                 room: mockRoom,
             } as unknown as IRoomState;
