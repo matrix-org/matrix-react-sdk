@@ -379,6 +379,13 @@ export class Helpers {
     expandSpacePanel() {
         return this.page.getByRole("button", { name: "Expand" }).click();
     }
+
+    /**
+     * Clicks the button to mark all threads as read in the current room
+     */
+    clickMarkAllThreadsRead() {
+        return this.page.getByLabel("Mark all as read").click();
+    }
 }
 
 export { expect };
