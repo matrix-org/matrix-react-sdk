@@ -75,7 +75,7 @@ export const ThreadPanelHeader: React.FC<{
     setFilterOption: (filterOption: ThreadFilterType) => void;
     empty: boolean;
 }> = ({ filterOption, setFilterOption, empty }) => {
-    const mxClient = useContext(MatrixClientContext);
+    const mxClient = useMatrixClientContext();
     const roomContext = useContext(RoomContext);
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu<HTMLElement>();
     const options: readonly ThreadPanelHeaderOption[] = [
