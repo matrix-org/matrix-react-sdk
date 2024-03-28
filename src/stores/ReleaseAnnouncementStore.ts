@@ -17,6 +17,7 @@
  */
 
 import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from "../settings/SettingsStore";
 import { SettingLevel } from "../settings/SettingLevel";
@@ -128,7 +129,16 @@ export class ReleaseAnnouncementStore extends TypedEventEmitter<ReleaseAnnouncem
 
         const canSetValue = SettingsStore.canSetValue("releaseAnnouncement", null, SettingLevel.ACCOUNT);
         if (canSetValue) {
-            await SettingsStore.setValue("releaseAnnouncement", null, SettingLevel.ACCOUNT, viewedReleaseAnnouncements);
+            try {
+                await SettingsStore.setValue(
+                    "releaseAnnouncement",
+                    null,
+                    SettingLevel.ACCOUNT,
+                    viewedReleaseAnnouncements,
+                );
+            } catch (e) {
+                logger.log("Failed to set release announcement settings", e);
+            }
         }
     }
 
