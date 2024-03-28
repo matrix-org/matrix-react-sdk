@@ -536,6 +536,19 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             }
         }
 
+        const navAction = getKeyBindingsManager().getNavigationAction(event);
+        switch (navAction) {
+            case KeyBindingAction.PreviousLandmark:
+                // The previous landmark is the selected room (we know a room is selected because we're in its message composer).
+                document.querySelector<HTMLElement>(".mx_RoomTile_selected")?.focus();
+                handled = true;
+                break;
+            case KeyBindingAction.NextLandmark:
+                // The next landmark completes the cycle, back to the active space button.
+                document.querySelector<HTMLElement>(".mx_SpaceButton_active")?.focus();
+                handled = true;
+                break;
+        }
         const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
         const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(event);
         if (model.autoComplete?.hasCompletions()) {

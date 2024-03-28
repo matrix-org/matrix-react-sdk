@@ -309,6 +309,24 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 }
                 break;
         }
+        const navAction = getKeyBindingsManager().getNavigationAction(ev);
+        switch (navAction) {
+            case KeyBindingAction.NextLandmark:
+                ev.stopPropagation();
+                ev.preventDefault();
+                // The next landmark is the selected room or the room first room, if none selected.
+                (
+                    document.querySelector<HTMLElement>(".mx_RoomTile_selected") ||
+                    document.querySelector<HTMLElement>(".mx_RoomTile")
+                )?.focus();
+                break;
+            case KeyBindingAction.PreviousLandmark:
+                ev.stopPropagation();
+                ev.preventDefault();
+                // The previous landmark is the active space button.
+                document.querySelector<HTMLElement>(".mx_SpaceButton_active")?.focus();
+                break;
+        }
     };
 
     private renderBreadcrumbs(): React.ReactNode {

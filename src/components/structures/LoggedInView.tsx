@@ -472,6 +472,11 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         const navAction = getKeyBindingsManager().getNavigationAction(ev);
         switch (navAction) {
+            case KeyBindingAction.NextLandmark:
+                // This is reached when no landmark area is selected, so we start at the first landmark.
+                document.querySelector<HTMLElement>(".mx_SpaceButton_active")?.focus();
+                handled = true;
+                break;
             case KeyBindingAction.FilterRooms:
                 dis.dispatch({
                     action: "focus_room_filter",
