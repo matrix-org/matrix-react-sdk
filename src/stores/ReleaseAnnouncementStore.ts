@@ -78,6 +78,9 @@ export class ReleaseAnnouncementStore extends TypedEventEmitter<ReleaseAnnouncem
      */
     private constructor() {
         super();
+        SettingsStore.watchSetting("releaseAnnouncement", null, () =>
+            this.emit("releaseAnnouncementChanged", this.getReleaseAnnouncement()),
+        );
     }
 
     /**
