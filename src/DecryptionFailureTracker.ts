@@ -17,6 +17,7 @@ limitations under the License.
 import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Error as ErrorEvent } from "@matrix-org/analytics-events/types/typescript/Error";
+import { DecryptionFailureCode } from "matrix-js-sdk/src/crypto-api";
 
 import { PosthogAnalytics } from "./PosthogAnalytics";
 
@@ -25,7 +26,7 @@ export class DecryptionFailure {
 
     public constructor(
         public readonly failedEventId: string,
-        public readonly errorCode: string,
+        public readonly errorCode: DecryptionFailureCode,
     ) {
         this.ts = Date.now();
     }
@@ -35,7 +36,7 @@ type ErrorCode = "OlmKeysNotSentError" | "OlmIndexError" | "UnknownError" | "Olm
 
 type TrackingFn = (count: number, trackedErrCode: ErrorCode, rawError: string) => void;
 
-export type ErrCodeMapFn = (errcode: string) => ErrorCode;
+export type ErrCodeMapFn = (errcode: DecryptionFailureCode) => ErrorCode;
 
 export class DecryptionFailureTracker {
     private static internalInstance = new DecryptionFailureTracker(
@@ -52,12 +53,10 @@ export class DecryptionFailureTracker {
         (errorCode) => {
             // Map JS-SDK error codes to tracker codes for aggregation
             switch (errorCode) {
-                case "MEGOLM_UNKNOWN_INBOUND_SESSION_ID":
+                case DecryptionFailureCode.MEGOLM_UNKNOWN_INBOUND_SESSION_ID:
                     return "OlmKeysNotSentError";
-                case "OLM_UNKNOWN_MESSAGE_INDEX":
+                case DecryptionFailureCode.OLM_UNKNOWN_MESSAGE_INDEX:
                     return "OlmIndexError";
-                case undefined:
-                    return "OlmUnspecifiedError";
                 default:
                     return "UnknownError";
             }
@@ -76,11 +75,11 @@ export class DecryptionFailureTracker {
     // accumulated in `failureCounts`.
     public visibleFailures: Map<string, DecryptionFailure> = new Map();
 
-    // A histogram of the number of failures that will be tracked at the next tracking
-    // interval, split by failure error code.
-    public failureCounts: Record<string, number> = {
-        // [errorCode]: 42
-    };
+    /**
+     * A histogram of the number of failures that will be tracked at the next tracking
+     * interval, split by failure error code.
+     */
+    private failureCounts: Map<DecryptionFailureCode, number> = new Map();
 
     // Event IDs of failures that were tracked previously
     public trackedEvents: Set<string> = new Set();
@@ -205,7 +204,7 @@ export class DecryptionFailureTracker {
         this.failures = new Map();
         this.visibleEvents = new Set();
         this.visibleFailures = new Map();
-        this.failureCounts = {};
+        this.failureCounts = new Map();
     }
 
     /**
@@ -236,7 +235,7 @@ export class DecryptionFailureTracker {
     private aggregateFailures(failures: Set<DecryptionFailure>): void {
         for (const failure of failures) {
             const errorCode = failure.errorCode;
-            this.failureCounts[errorCode] = (this.failureCounts[errorCode] || 0) + 1;
+            this.failureCounts.set(errorCode, (this.failureCounts.get(errorCode) ?? 0) + 1);
         }
     }
 
@@ -245,12 +244,12 @@ export class DecryptionFailureTracker {
      * function with the number of failures that should be tracked.
      */
     public trackFailures(): void {
-        for (const errorCode of Object.keys(this.failureCounts)) {
-            if (this.failureCounts[errorCode] > 0) {
+        for (const [errorCode, count] of this.failureCounts.entries()) {
+            if (count > 0) {
                 const trackedErrorCode = this.errorCodeMapFn(errorCode);
 
-                this.fn(this.failureCounts[errorCode], trackedErrorCode, errorCode);
-                this.failureCounts[errorCode] = 0;
+                this.fn(count, trackedErrorCode, errorCode);
+                this.failureCounts.set(errorCode, 0);
             }
         }
     }
