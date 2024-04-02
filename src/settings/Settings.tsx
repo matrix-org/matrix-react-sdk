@@ -89,6 +89,7 @@ export enum LabGroup {
     Encryption,
     Experimental,
     Developer,
+    Ui,
 }
 
 export enum Features {
@@ -115,6 +116,7 @@ export const labGroupNames: Record<LabGroup, TranslationKey> = {
     [LabGroup.Encryption]: _td("labs|group_encryption"),
     [LabGroup.Experimental]: _td("labs|group_experimental"),
     [LabGroup.Developer]: _td("labs|group_developer"),
+    [LabGroup.Ui]: _td("labs|group_ui"),
 };
 
 export type SettingValueType =
@@ -1150,8 +1152,11 @@ export const SETTINGS: { [setting: string]: ISetting } = {
      * Enable or disable the release announcement feature
      */
     [Features.ReleaseAnnouncement]: {
+        isFeature: true,
+        labsGroup: LabGroup.Ui,
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: true,
+        displayName: _td("labs|release_announcement"),
     },
     /**
      * Managed by the {@link ReleaseAnnouncementStore}
