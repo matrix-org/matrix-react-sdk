@@ -52,6 +52,7 @@ interface IState {
     // MSC4108
     verificationUri?: string;
     userCode?: string;
+    checkCode?: string;
     failureReason?: FailureReason;
     lastScannedCode?: Buffer;
     ourIntent: RendezvousIntent;
@@ -245,19 +246,21 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
     };
 
-    private approveLoginAfterShowingCode = async (checkCode: string | undefined): Promise<void> => {
+    private approveLogin = async (checkCode: string | undefined): Promise<void> => {
         if (!(this.state.rendezvous instanceof MSC4108SignInWithQR)) {
             throw new Error("Rendezvous not found");
         }
 
-        if (!checkCode) {
-            throw new Error("No check code");
-        }
+        if (!this.state.lastScannedCode) {
+            if (!checkCode) {
+                throw new Error("No check code");
+            }
 
-        if (this.state.rendezvous?.checkCode !== checkCode) {
-            // PROTOTYPE: this doesn't actually show in the UI sensibly
-            // should we prompt to re-enter?
-            throw new Error("Check code mismatch");
+            if (this.state.rendezvous?.checkCode !== checkCode) {
+                // PROTOTYPE: this doesn't actually show in the UI sensibly
+                // should we prompt to re-enter?
+                throw new Error("Check code mismatch");
+            }
         }
 
         if (this.state.ourIntent === RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE) {
@@ -292,6 +295,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             verificationUri: undefined,
             failureReason: undefined,
             userCode: undefined,
+            checkCode: undefined,
             homeserverBaseUrl: undefined,
             lastScannedCode: undefined,
             mediaPermissionError: false,
@@ -306,7 +310,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 this.props.onFinished(false);
                 break;
             case Click.Approve:
-                await (this.props.legacy ? this.legacyApproveLogin() : this.approveLoginAfterShowingCode(checkCode));
+                await (this.props.legacy ? this.legacyApproveLogin() : this.approveLogin(checkCode));
                 break;
             case Click.Decline:
                 await this.state.rendezvous?.declineLoginOnExistingDevice();
@@ -350,7 +354,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 failureReason={this.state.phase === Phase.Error ? this.state.failureReason : undefined}
                 userCode={this.state.userCode}
                 checkCode={
-                    this.state.phase === Phase.ShowChannelSecure ? this.state.rendezvous?.checkCode : undefined
+                    this.state.checkCode
                 }
             />
         );

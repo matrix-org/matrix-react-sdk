@@ -224,13 +224,23 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
                 backButton = false;
                 main = (
                     <>
-                        <p>You’ll be asked to enter the following code on your other device:</p>
-                        <p>{this.props.checkCode}</p>
                         <div className="mx_LoginWithQR_confirmationAlert">
                             <div>
                                 <CheckmarkIcon />
                             </div>
                         </div>
+                        <p>Go to your other device</p>
+                        <p>You’ll be asked to enter the following code:</p>
+                        <p>{this.props.checkCode}</p>
+                    </>
+                );
+                break;
+            case Phase.ShowUserCode:
+                backButton = false;
+                main = (
+                    <>
+                        <p>Go back to your other device to finish signing in</p>
+                        <hr />
                         {this.props.userCode ? (
                             <div>
                                 <p>{_t("auth|qr_code_login|security_code")}</p>
@@ -260,7 +270,7 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
                     </>
                 );
                 break;
-            case Phase.ShowingQR:
+                case Phase.ShowingQR:
                 if (this.props.code) {
                     const data =
                         typeof this.props.code !== "string" ? this.props.code : Buffer.from(this.props.code ?? "");
