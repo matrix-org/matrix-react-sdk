@@ -98,6 +98,7 @@ export enum Features {
     OidcNativeFlow = "feature_oidc_native_flow",
     // If true, every new login will use the new rust crypto implementation
     RustCrypto = "feature_rust_crypto",
+    ReleaseAnnouncement = "feature_release_announcement",
 }
 
 export const labGroupNames: Record<LabGroup, TranslationKey> = {
@@ -1146,9 +1147,17 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
     },
     /**
-     * Managed by the {@link ReleaseAnnouncementStore}
+     * Enable or disable the release announcement feature
      */
-    "releaseAnnouncement": {
+    [Features.ReleaseAnnouncement]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        default: true,
+    },
+    /**
+     * Managed by the {@link ReleaseAnnouncementStore}
+     * Store the release announcement data
+     */
+    "releaseAnnouncementData": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: {},
     },

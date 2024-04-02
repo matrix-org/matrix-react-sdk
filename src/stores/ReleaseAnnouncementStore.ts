@@ -21,6 +21,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from "../settings/SettingsStore";
 import { SettingLevel } from "../settings/SettingLevel";
+import { Features as SettingFeatures } from "../settings/Settings";
 
 /**
  * The features are shown in the array order.
@@ -78,7 +79,7 @@ export class ReleaseAnnouncementStore extends TypedEventEmitter<ReleaseAnnouncem
      */
     private constructor() {
         super();
-        SettingsStore.watchSetting("releaseAnnouncement", null, () =>
+        SettingsStore.watchSetting("releaseAnnouncementData", null, () =>
             this.emit("releaseAnnouncementChanged", this.getReleaseAnnouncement()),
         );
     }
@@ -88,7 +89,15 @@ export class ReleaseAnnouncementStore extends TypedEventEmitter<ReleaseAnnouncem
      * @private
      */
     private getViewedReleaseAnnouncements(): StoredSettings {
-        return SettingsStore.getValue<StoredSettings>("releaseAnnouncement", null);
+        return SettingsStore.getValue<StoredSettings>("releaseAnnouncementData");
+    }
+
+    /**
+     * Check if the release announcement is enabled.
+     * @private
+     */
+    private isReleaseAnnouncementEnabled(): boolean {
+        return SettingsStore.getValue<boolean>(SettingFeatures.ReleaseAnnouncement);
     }
 
     /**
@@ -96,6 +105,10 @@ export class ReleaseAnnouncementStore extends TypedEventEmitter<ReleaseAnnouncem
      * @returns The feature to announce or null if there is no feature to announce
      */
     public getReleaseAnnouncement(): Features | null {
+        // Do nothing if the release announcement is disabled
+        const isReleaseAnnouncementEnabled = this.isReleaseAnnouncementEnabled();
+        if (!isReleaseAnnouncementEnabled) return null;
+
         const viewedReleaseAnnouncements = this.getViewedReleaseAnnouncements();
 
         // Find the first feature that has not been viewed
@@ -130,11 +143,11 @@ export class ReleaseAnnouncementStore extends TypedEventEmitter<ReleaseAnnouncem
         const isSupported = SettingsStore.isLevelSupported(SettingLevel.ACCOUNT);
         if (!isSupported) return;
 
-        const canSetValue = SettingsStore.canSetValue("releaseAnnouncement", null, SettingLevel.ACCOUNT);
+        const canSetValue = SettingsStore.canSetValue("releaseAnnouncementData", null, SettingLevel.ACCOUNT);
         if (canSetValue) {
             try {
                 await SettingsStore.setValue(
-                    "releaseAnnouncement",
+                    "releaseAnnouncementData",
                     null,
                     SettingLevel.ACCOUNT,
                     viewedReleaseAnnouncements,
