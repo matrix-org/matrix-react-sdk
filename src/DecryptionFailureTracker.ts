@@ -31,10 +31,8 @@ export class DecryptionFailure {
     }
 }
 
-type ErrorCode = "OlmKeysNotSentError" | "OlmIndexError" | "UnknownError" | "OlmUnspecifiedError";
-
+type ErrorCode = ErrorEvent["name"];
 type TrackingFn = (count: number, trackedErrCode: ErrorCode, rawError: string) => void;
-
 export type ErrCodeMapFn = (errcode: DecryptionFailureCode) => ErrorCode;
 
 export class DecryptionFailureTracker {
@@ -56,6 +54,8 @@ export class DecryptionFailureTracker {
                     return "OlmKeysNotSentError";
                 case DecryptionFailureCode.OLM_UNKNOWN_MESSAGE_INDEX:
                     return "OlmIndexError";
+                case DecryptionFailureCode.HISTORICAL_MESSAGE:
+                    return "HistoricalMessage";
                 default:
                     return "UnknownError";
             }
