@@ -50,6 +50,7 @@ export enum Phase {
     Connecting = "connecting",
     OutOfBandConfirmation = "outOfBandConfirmation",
     ShowChannelSecure = "showChannelSecure",
+    ShowUserCode = "showUserCode",
     WaitingForDevice = "waitingForDevice",
     Verifying = "verifying",
     Continue = "continue",
@@ -77,6 +78,7 @@ interface IState {
     rendezvous?: MSC4108SignInWithQR;
     verificationUri?: string;
     userCode?: string;
+    checkCode?: string;
     failureReason?: RendezvousFailureReason;
     mediaPermissionError?: boolean;
     lastScannedCode?: Buffer;
@@ -131,6 +133,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         if (mode === Mode.Show) {
             await this.generateAndShowCode();
         } else {
+            this.setState({ lastScannedCode: undefined});
             await this.requestMediaPermissions();
             this.setState({ phase: Phase.ScanningQR });
         }
@@ -267,11 +270,19 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 const { userCode } = await rendezvous.loginStep2And3(oidcClient);
                 this.setState({
                     phase: Phase.ShowChannelSecure,
+                    checkCode: rendezvous.checkCode,
                     userCode,
                 });
 
+                // wait for protocol acceptance
+                await rendezvous.loginStep4a();
+
+                this.setState({
+                    phase: Phase.ShowUserCode,
+                });
+
                 // wait  for grant:
-                const tokenResponse = await rendezvous.loginStep4();
+                const tokenResponse = await rendezvous.loginStep4b();
 
                 const { credentials } = await completeDeviceAuthorizationGrant(
                     oidcClient,
@@ -284,6 +295,8 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     throw new Error("Failed to complete device authorization grant");
                 }
 
+                this.setState({ phase: Phase.Verifying });
+
                 // wait for secrets:
                 const { secrets } = await rendezvous.loginStep5();
 
@@ -294,6 +307,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 const homeserverBaseUrl = homeserverBaseUrlFromStep1;
                 this.setState({
                     phase: Phase.ShowChannelSecure,
+                    checkCode: rendezvous.checkCode,
                 });
                 const { verificationUri } = await rendezvous.loginStep2And3();
                 this.setState({
@@ -308,19 +322,21 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
     };
 
-    private approveLoginAfterShowingCode = async (checkCode: string | undefined): Promise<void> => {
+    private approveLogin = async (checkCode: string | undefined): Promise<void> => {
         if (!this.state.rendezvous) {
             throw new Error("Rendezvous not found");
         }
 
-        if (!checkCode) {
-            throw new Error("No check code");
-        }
+        if (!this.state.lastScannedCode) {
+            if (!checkCode) {
+                throw new Error("No check code");
+            }
 
-        if (this.state.rendezvous?.checkCode !== checkCode) {
-            // PROTOTYPE: this doesn't actually show in the UI sensibly
-            // should we prompt to re-enter?
-            throw new Error("Check code mismatch");
+            if (this.state.rendezvous?.checkCode !== checkCode) {
+                // PROTOTYPE: this doesn't actually show in the UI sensibly
+                // should we prompt to re-enter?
+                throw new Error("Check code mismatch");
+            }
         }
 
         if (this.state.ourIntent === RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE) {
@@ -346,10 +362,14 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             }
             const oidcClient = await this.getOidcClient(homeserverBaseUrl);
             const { userCode } = await this.state.rendezvous.loginStep2And3(oidcClient);
-            this.setState({ phase: Phase.WaitingForDevice, userCode });
+            this.setState({ phase: Phase.ShowUserCode, userCode });
+
+            // wait for protocol acceptance:
+            await this.state.rendezvous.loginStep4a();
+            // n.b. as we showed the code we don't need to display the checkCode
 
             // wait for grant:
-            const tokenResponse = await this.state.rendezvous.loginStep4();
+            const tokenResponse = await this.state.rendezvous.loginStep4b();
 
             const { credentials } = await completeDeviceAuthorizationGrant(
                 oidcClient,
@@ -362,6 +382,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 throw new Error("Failed to complete device authorization grant");
             }
 
+            this.setState({ phase: Phase.Verifying });
             // wait for secrets
             const { secrets } = await this.state.rendezvous.loginStep5();
 
@@ -381,6 +402,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             verificationUri: undefined,
             failureReason: undefined,
             userCode: undefined,
+            checkCode: undefined,
             homeserverBaseUrl: undefined,
             lastScannedCode: undefined,
             mediaPermissionError: false,
@@ -395,7 +417,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 this.props.onFinished(false);
                 break;
             case Click.Approve:
-                await this.approveLoginAfterShowingCode(checkCode);
+                await this.approveLogin(checkCode);
                 break;
             case Click.Decline:
                 await this.state.rendezvous?.declineLoginOnExistingDevice();
@@ -445,9 +467,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     failureReason={this.state.phase === Phase.Error ? this.state.failureReason : undefined}
                     onScannedQRCode={this.onScannedQRCode}
                     userCode={this.state.userCode}
-                    checkCode={
-                        this.state.phase === Phase.ShowChannelSecure ? this.state.rendezvous?.checkCode : undefined
-                    }
+                    checkCode={this.state.checkCode}
                 />
             </Suspense>
         );
