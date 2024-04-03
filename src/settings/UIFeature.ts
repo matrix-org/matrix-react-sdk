@@ -33,6 +33,8 @@ export const enum UIFeature {
     RoomHistorySettings = "UIFeature.roomHistorySettings",
     TimelineEnableRelativeDates = "UIFeature.timelineEnableRelativeDates",
     BulkUnverifiedSessionsReminder = "UIFeature.BulkUnverifiedSessionsReminder",
+    PR_Test1 = "UIFeature.PR_Test1",
+    PR_Test2 = "UIFeature.PR_Test2",
 }
 
 export enum UIComponent {
