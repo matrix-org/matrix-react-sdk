@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { JoinRule, Room } from "matrix-js-sdk/src/matrix";
+import { Room } from "matrix-js-sdk/src/matrix";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
-import { logger } from "matrix-js-sdk/src/logger";
 
 import { useFeatureEnabled } from "../useSettings";
 import SdkConfig from "../../SdkConfig";
@@ -40,7 +39,6 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../dispatcher/actions";
 import { CallStore, CallStoreEvent } from "../../stores/CallStore";
-import { calculateRoomVia } from "../../utils/permalinks/Permalinks";
 import { isVideoRoom } from "../../utils/video-rooms";
 
 export enum PlatformCallType {
@@ -81,8 +79,6 @@ export const useRoomCall = (
     videoCallClick(evt: React.MouseEvent | undefined, selectedType: PlatformCallType): void;
     toggleCallMaximized: () => void;
     isViewingCall: boolean;
-    generateCallLink: () => URL;
-    canGenerateCallLink: boolean;
     isConnectedToCall: boolean;
     hasActiveCallSession: boolean;
     callOptions: PlatformCallType[];
@@ -91,10 +87,6 @@ export const useRoomCall = (
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
     const useElementCallExclusively = useMemo(() => {
         return SdkConfig.get("element_call").use_exclusively;
-    }, []);
-
-    const guestSpaUrl = useMemo(() => {
-        return SdkConfig.get("element_call").guest_spa_url;
     }, []);
 
     const hasLegacyCall = useEventEmitterState(
@@ -123,11 +115,9 @@ export const useRoomCall = (
     // room
     const memberCount = useRoomMemberCount(room);
 
-    const [mayEditWidgets, mayCreateElementCalls, canJoinWithoutInvite] = useRoomState(room, () => [
+    const [mayEditWidgets, mayCreateElementCalls] = useRoomState(room, () => [
         room.currentState.mayClientSendStateEvent("im.vector.modular.widgets", room.client),
         room.currentState.mayClientSendStateEvent(ElementCall.MEMBER_EVENT_TYPE.name, room.client),
-        room.getJoinRule() === "public" || room.getJoinRule() === JoinRule.Knock,
-        /*|| room.getJoinRule() === JoinRule.Restricted <- rule for joining via token?*/
     ]);
 
     // The options provided to the RoomHeader.
@@ -278,26 +268,6 @@ export const useRoomCall = (
         });
     }, [isViewingCall, room.roomId]);
 
-    const generateCallLink = useCallback(() => {
-        if (!canJoinWithoutInvite)
-            throw new Error("Cannot create link for room that users can not join without invite.");
-        if (!guestSpaUrl) throw new Error("No guest SPA url for external links provided.");
-        const url = new URL(guestSpaUrl);
-        url.pathname = "/room/";
-        // Set params for the sharable url
-        url.searchParams.set("roomId", room.roomId);
-        if (room.hasEncryptionStateEvent()) url.searchParams.set("perParticipantE2EE", "true");
-        for (const server of calculateRoomVia(room)) {
-            url.searchParams.set("viaServers", server);
-        }
-
-        // Move params into hash
-        url.hash = "/" + room.name + url.search;
-        url.search = "";
-
-        logger.info("Generated element call external url:", url);
-        return url;
-    }, [canJoinWithoutInvite, guestSpaUrl, room]);
     /**
      * We've gone through all the steps
      */
@@ -308,8 +278,6 @@ export const useRoomCall = (
         videoCallClick,
         toggleCallMaximized: toggleCallMaximized,
         isViewingCall: isViewingCall,
-        generateCallLink,
-        canGenerateCallLink: guestSpaUrl !== undefined && canJoinWithoutInvite,
         isConnectedToCall: isConnectedToCall,
         hasActiveCallSession: hasActiveCallSession,
         callOptions,
