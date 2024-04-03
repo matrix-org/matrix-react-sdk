@@ -44,7 +44,7 @@ type ReleaseAnnouncementStoreEvents = "releaseAnnouncementChanged";
  * The handlers for the ReleaseAnnouncementStore events.
  */
 type HandlerMap = {
-    releaseAnnouncementChanged: (newName: Features | null) => void;
+    releaseAnnouncementChanged: (newFeature: Features | null) => void;
 };
 
 /**

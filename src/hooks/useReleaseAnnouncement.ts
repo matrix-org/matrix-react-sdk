@@ -27,6 +27,6 @@ export function useIsReleaseAnnouncementEnabled(feature: Features): boolean {
     return useTypedEventEmitterState(
         ReleaseAnnouncementStore.instance,
         "releaseAnnouncementChanged",
-        (newName) => ReleaseAnnouncementStore.instance.getReleaseAnnouncement() === feature,
+        () => ReleaseAnnouncementStore.instance.getReleaseAnnouncement() === feature,
     );
 }
