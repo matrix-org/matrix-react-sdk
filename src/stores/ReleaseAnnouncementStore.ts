@@ -74,14 +74,14 @@ export class ReleaseAnnouncementStore extends TypedEventEmitter<ReleaseAnnouncem
     }
 
     /**
-     * The constructor is private to prevent multiple instances.
-     * @private
+     * Should be used only for testing purposes.
+     * @internal
      */
-    private constructor() {
+    public constructor() {
         super();
-        SettingsStore.watchSetting("releaseAnnouncementData", null, () =>
-            this.emit("releaseAnnouncementChanged", this.getReleaseAnnouncement()),
-        );
+        SettingsStore.watchSetting("releaseAnnouncementData", null, () => {
+            this.emit("releaseAnnouncementChanged", this.getReleaseAnnouncement());
+        });
     }
 
     /**
@@ -129,6 +129,10 @@ export class ReleaseAnnouncementStore extends TypedEventEmitter<ReleaseAnnouncem
      * @private
      */
     private async markReleaseAnnouncementAsViewed(): Promise<void> {
+        // Do nothing if the release announcement is disabled
+        const isReleaseAnnouncementEnabled = this.isReleaseAnnouncementEnabled();
+        if (!isReleaseAnnouncementEnabled) return;
+
         const viewedReleaseAnnouncements = this.getViewedReleaseAnnouncements();
 
         // If the index is out of bounds, do nothing
@@ -138,6 +142,7 @@ export class ReleaseAnnouncementStore extends TypedEventEmitter<ReleaseAnnouncem
 
         // Mark the feature as viewed
         viewedReleaseAnnouncements[FEATURES[this.index]] = true;
+        this.index++;
 
         // Do sanity check id we can store the new value in the settings
         const isSupported = SettingsStore.isLevelSupported(SettingLevel.ACCOUNT);
@@ -165,7 +170,6 @@ export class ReleaseAnnouncementStore extends TypedEventEmitter<ReleaseAnnouncem
     public async nextReleaseAnnouncement(): Promise<void> {
         await this.markReleaseAnnouncementAsViewed();
 
-        this.index++;
         this.emit("releaseAnnouncementChanged", this.getReleaseAnnouncement());
     }
 }
