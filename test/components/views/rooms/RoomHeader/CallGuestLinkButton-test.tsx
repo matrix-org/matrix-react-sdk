@@ -219,8 +219,6 @@ describe("<CallGuestLinkButton />", () => {
 
     describe("<JoinRuleDialog />", () => {
         const onFinished = jest.fn();
-        // feature_ask_to_join enabled
-        jest.spyOn(SettingsStore, "getValue").mockReturnValue(true);
 
         const getComponent = (room: Room) =>
             render(<JoinRuleDialog room={room} onFinished={onFinished} />, {
@@ -230,6 +228,11 @@ describe("<CallGuestLinkButton />", () => {
                     </SDKContext.Provider>
                 ),
             });
+
+        beforeEach(() => {
+            // feature_ask_to_join enabled
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(true);
+        });
 
         it("shows ask to join if feature is enabled", () => {
             const { container } = getComponent(room);
@@ -243,7 +246,6 @@ describe("<CallGuestLinkButton />", () => {
 
         it("sends correct state event on click", async () => {
             const sendStateSpy = jest.spyOn(sdkContext.client!, "sendStateEvent");
-            jest.spyOn(SettingsStore, "getValue").mockReturnValue(true);
             let container;
             container = getComponent(room).container;
             fireEvent.click(getByText(container, "Ask to join"));
