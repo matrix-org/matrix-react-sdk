@@ -202,7 +202,10 @@ export default function RoomHeader({
     const voiceCallButton = (
         <Tooltip label={voiceCallDisabledReason ?? _t("voip|voice_call")}>
             <IconButton
-                disabled={!!voiceCallDisabledReason}
+                // We need both: isViewingCall and isConnectedToCall
+                //  - in the we are viewing a call but are not connected to it.
+                //  - in pip view we are connected to the call but not viewing it.
+                disabled={!!voiceCallDisabledReason || isViewingCall || isConnectedToCall}
                 aria-label={voiceCallDisabledReason ?? _t("voip|voice_call")}
                 onClick={(ev) => voiceCallClick(ev, callOptions[0])}
             >
