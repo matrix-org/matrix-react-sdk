@@ -123,12 +123,16 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
         </>
     );
 };
-interface JoinRuleDialogProps {
+
+/**
+ * A dialog to change the join rule of a room to public or knock.
+ * @param room The room to change the join rule of.
+ * @param onFinished Callback that is getting called if the dialog wants to close.
+ */
+export const JoinRuleDialog: React.FC<{
     onFinished(): void;
     room: Room;
-}
-
-export function JoinRuleDialog({ room, onFinished }: JoinRuleDialogProps): JSX.Element {
+}> = ({ room, onFinished }) => {
     const askToJoinEnabled = SettingsStore.getValue("feature_ask_to_join");
     const [isUpdating, setIsUpdating] = React.useState<undefined | JoinRule>(undefined);
     const changeJoinRule = useCallback(
@@ -182,4 +186,4 @@ export function JoinRuleDialog({ room, onFinished }: JoinRuleDialogProps): JSX.E
             </div>
         </BaseDialog>
     );
-}
+};

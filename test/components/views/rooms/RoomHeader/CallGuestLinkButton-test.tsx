@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { TooltipProvider } from "@vector-im/compound-web";
-import { fireEvent, getByLabelText, render, screen } from "@testing-library/react";
+import { fireEvent, getByLabelText, getByText, render, screen, waitFor } from "@testing-library/react";
 import { EventTimeline, JoinRule, Room } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 
@@ -30,6 +30,7 @@ import Modal from "../../../../../src/Modal";
 import SdkConfig from "../../../../../src/SdkConfig";
 import ShareDialog from "../../../../../src/components/views/dialogs/ShareDialog";
 import { _t } from "../../../../../src/languageHandler";
+import SettingsStore from "../../../../../src/settings/SettingsStore";
 
 describe("<CallGuestLinkButton />", () => {
     const roomId = "!room:server.org";
@@ -110,7 +111,6 @@ describe("<CallGuestLinkButton />", () => {
     });
 
     it("shows the JoinRuleDialog on click with private join rules", async () => {
-        // const sendStateSpy = jest.spyOn(sdkContext.client!, "sendStateEvent");
         getComponent(room);
         fireEvent.click(screen.getByLabelText("Share call link"));
         expect(modalSpy).toHaveBeenCalledWith(JoinRuleDialog, { room });
@@ -123,7 +123,6 @@ describe("<CallGuestLinkButton />", () => {
         expect(callParams[1].target.toString()).toEqual(expectedShareDialogProps.target);
         expect(callParams[1].subtitle).toEqual(expectedShareDialogProps.subtitle);
         expect(callParams[1].customTitle).toEqual(expectedShareDialogProps.customTitle);
-        // expect(sendStateSpy).toHaveBeenCalledWith({ join_rule: JoinRule.Public }, "m.room.join_rules", "", {});
     });
 
     it("shows the ShareDialog on click with public join rules", () => {
@@ -216,5 +215,67 @@ describe("<CallGuestLinkButton />", () => {
         fireEvent.click(getByLabelText(container, _t("voip|get_call_link")));
         const arg1 = modalSpy.mock.calls[0][1] as any;
         expect(arg1.target.toString()).toEqual(targetUnencrypted);
+    });
+
+    describe("<JoinRuleDialog />", () => {
+        const onFinished = jest.fn();
+        // feature_ask_to_join enabled
+        jest.spyOn(SettingsStore, "getValue").mockReturnValue(true);
+
+        const getComponent = (room: Room) =>
+            render(<JoinRuleDialog room={room} onFinished={onFinished} />, {
+                wrapper: ({ children }) => (
+                    <SDKContext.Provider value={sdkContext}>
+                        <TooltipProvider>{children}</TooltipProvider>
+                    </SDKContext.Provider>
+                ),
+            });
+
+        it("shows ask to join if feature is enabled", () => {
+            const { container } = getComponent(room);
+            expect(getByText(container, "Ask to join")).toBeInTheDocument();
+        });
+        it("doesn't show ask to join if feature is disabled", () => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+            getComponent(room);
+            expect(screen.queryByText("Ask to join")).not.toBeInTheDocument();
+        });
+
+        it("sends correct state event on click", async () => {
+            const sendStateSpy = jest.spyOn(sdkContext.client!, "sendStateEvent");
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(true);
+            let container;
+            container = getComponent(room).container;
+            fireEvent.click(getByText(container, "Ask to join"));
+            expect(sendStateSpy).toHaveBeenCalledWith(
+                "!room:server.org",
+                "m.room.join_rules",
+                { join_rule: "knock" },
+                "",
+            );
+            expect(sendStateSpy).toHaveBeenCalledTimes(1);
+            await waitFor(() => expect(onFinished).toHaveBeenCalledTimes(1));
+            onFinished.mockClear();
+            sendStateSpy.mockClear();
+
+            container = getComponent(room).container;
+            fireEvent.click(getByText(container, "Public"));
+            expect(sendStateSpy).toHaveBeenLastCalledWith(
+                "!room:server.org",
+                "m.room.join_rules",
+                { join_rule: "public" },
+                "",
+            );
+            expect(sendStateSpy).toHaveBeenCalledTimes(1);
+            container = getComponent(room).container;
+            await waitFor(() => expect(onFinished).toHaveBeenCalledTimes(1));
+            onFinished.mockClear();
+            sendStateSpy.mockClear();
+
+            fireEvent.click(getByText(container, _t("update_room_access_modal|no_change")));
+            await waitFor(() => expect(onFinished).toHaveBeenCalledTimes(1));
+            // Don't call sendStateEvent if no change is clicked.
+            expect(sendStateSpy).toHaveBeenCalledTimes(0);
+        });
     });
 });
