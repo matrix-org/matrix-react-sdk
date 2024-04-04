@@ -16,7 +16,7 @@
  * /
  */
 
-import { test } from "./";
+import { test, expect } from "./";
 
 test.describe("Release announcement", () => {
     test.use({
@@ -35,8 +35,10 @@ test.describe("Release announcement", () => {
         await util.markReleaseAnnouncementAsRead("Threads Activity Centre");
         await util.assertReleaseAnnouncementIsNotVisible("Threads Activity Centre");
 
-        // Check that once the release announcement has been marked as viewed, it does not appear again
         await page.reload();
+        // Wait for EW to load
+        await expect(page.getByRole("navigation", { name: "Spaces" })).toBeVisible();
+        // Check that once the release announcement has been marked as viewed, it does not appear again
         await util.assertReleaseAnnouncementIsNotVisible("Threads Activity Centre");
     });
 });
