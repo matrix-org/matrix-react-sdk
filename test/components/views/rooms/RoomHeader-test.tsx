@@ -61,8 +61,7 @@ import { _t } from "../../../../src/languageHandler";
 import * as UseCall from "../../../../src/hooks/useCall";
 import { SdkContextClass } from "../../../../src/contexts/SDKContext";
 import WidgetStore, { IApp } from "../../../../src/stores/WidgetStore";
-import ShareDialog from "../../../../src/components/views/dialogs/ShareDialog";
-import Modal from "../../../../src/Modal";
+
 jest.mock("../../../../src/utils/ShieldUtils");
 
 function getWrapper(): RenderOptions {
@@ -516,39 +515,12 @@ describe("RoomHeader", () => {
             const { container } = render(<RoomHeader room={room} />, getWrapper());
             getByLabelText(container, "Close lobby");
         });
-    });
-
-    describe("External conference", () => {
-        const oldGet = SdkConfig.get;
-        beforeEach(() => {
-            jest.spyOn(SdkConfig, "get").mockImplementation((key) => {
-                if (key === "element_call") {
-                    return { guest_spa_url: "https://guest_spa_url.com", url: "https://spa_url.com" };
-                }
-                return oldGet(key);
-            });
-            mockRoomMembers(room, 3);
-            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(true);
-        });
-
-        it("shows the external conference if the room has public join rules", () => {
-            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Public);
-
-            const { container } = render(<RoomHeader room={room} />, getWrapper());
-            expect(getByLabelText(container, _t("voip|get_call_link"))).toBeInTheDocument();
-        });
-
-        it("shows the external conference if the room has Knock join rules", () => {
-            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
-
-            const { container } = render(<RoomHeader room={room} />, getWrapper());
-            expect(getByLabelText(container, _t("voip|get_call_link"))).toBeInTheDocument();
-        });
 
         it("don't show external conference button if the call is not shown", () => {
-            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Public);
             jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(false);
-
+            jest.spyOn(SdkConfig, "get").mockImplementation((key) => {
+                return { guest_spa_url: "https://guest_spa_url.com", url: "https://spa_url.com" };
+            });
             let { container } = render(<RoomHeader room={room} />, getWrapper());
             expect(screen.queryByLabelText(_t("voip|get_call_link"))).not.toBeInTheDocument();
 
@@ -557,69 +529,6 @@ describe("RoomHeader", () => {
             container = render(<RoomHeader room={room} />, getWrapper()).container;
 
             expect(getByLabelText(container, _t("voip|get_call_link"))).toBeInTheDocument();
-        });
-
-        it("don't show external conference button if now guest spa link is configured", () => {
-            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Public);
-            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(true);
-
-            jest.spyOn(SdkConfig, "get").mockImplementation((key) => {
-                if (key === "element_call") {
-                    return { url: "https://example2.com" };
-                }
-                return oldGet(key);
-            });
-
-            render(<RoomHeader room={room} />, getWrapper());
-
-            // We only change the SdkConfig and show that this everything else is
-            // configured so that the call link button is shown.
-
-            jest.spyOn(SdkConfig, "get").mockImplementation((key) => {
-                if (key === "element_call") {
-                    return { guest_spa_url: "https://guest_spa_url.com", url: "https://example2.com" };
-                }
-                return oldGet(key);
-            });
-
-            expect(screen.queryByLabelText(_t("voip|get_call_link"))).not.toBeInTheDocument();
-            const { container } = render(<RoomHeader room={room} />, getWrapper());
-            expect(getByLabelText(container, _t("voip|get_call_link"))).toBeInTheDocument();
-        });
-        it("opens the share dialog with the correct share link in an encrypted room", () => {
-            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Public);
-            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(true);
-            jest.spyOn(room, "hasEncryptionStateEvent").mockReturnValue(true);
-
-            const { container } = render(<RoomHeader room={room} />, getWrapper());
-            const modalSpy = jest.spyOn(Modal, "createDialog");
-            fireEvent.click(getByLabelText(container, _t("voip|get_call_link")));
-            const target =
-                "https://guest_spa_url.com/room/#/!1:example.org?roomId=%211%3Aexample.org&perParticipantE2EE=true&viaServers=example.org";
-            expect(modalSpy).toHaveBeenCalled();
-            const arg0 = modalSpy.mock.calls[0][0];
-            const arg1 = modalSpy.mock.calls[0][1] as any;
-            expect(arg0).toEqual(ShareDialog);
-            const { customTitle, subtitle } = arg1;
-            expect({ customTitle, subtitle }).toEqual({
-                customTitle: "Conference invite link",
-                subtitle: _t("share|share_call_subtitle"),
-            });
-            expect(arg1.target.toString()).toEqual(target);
-        });
-
-        it("share dialog has correct link in an unencrypted room", () => {
-            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Public);
-            jest.spyOn(room, "hasEncryptionStateEvent").mockReturnValue(false);
-            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(true);
-
-            const { container } = render(<RoomHeader room={room} />, getWrapper());
-            const modalSpy = jest.spyOn(Modal, "createDialog");
-            fireEvent.click(getByLabelText(container, _t("voip|get_call_link")));
-            const target =
-                "https://guest_spa_url.com/room/#/!1:example.org?roomId=%211%3Aexample.org&viaServers=example.org";
-            const arg1 = modalSpy.mock.calls[0][1] as any;
-            expect(arg1.target.toString()).toEqual(target);
         });
     });
 

@@ -54,7 +54,7 @@ import { VideoRoomChatButton } from "./RoomHeader/VideoRoomChatButton";
 import { RoomKnocksBar } from "./RoomKnocksBar";
 import { isVideoRoom } from "../../../utils/video-rooms";
 import { notificationLevelToIndicator } from "../../../utils/notifications";
-import ExternalLinkButton from "./RoomHeader/ExternalLinkButton";
+import { CallGuestLinkButton } from "./RoomHeader/CallGuestLinkButton";
 
 export default function RoomHeader({
     room,
@@ -314,7 +314,7 @@ export default function RoomHeader({
                         );
                     })}
 
-                    {isViewingCall && <ExternalLinkButton room={room} />}
+                    {isViewingCall && <CallGuestLinkButton room={room} />}
                     {((isConnectedToCall && isViewingCall) || isVideoRoom(room)) && <VideoRoomChatButton room={room} />}
 
                     {hasActiveCallSession && !isConnectedToCall && !isViewingCall ? (

@@ -35,25 +35,23 @@ import { calculateRoomVia } from "../../../../utils/permalinks/Permalinks";
 import { useEventEmitterState } from "../../../../hooks/useEventEmitter";
 import BaseDialog from "../../dialogs/BaseDialog";
 
-interface Props {
-    room: Room;
-}
-
-export default function ExternalLinkButton({ room }: Props): JSX.Element {
+/**
+ * Display a button to open a dialog to share a link to the call using a element call guest spa url (`element_call:guest_spa_url` in the EW config).
+ * @param room
+ * @returns Nothing if there is not the option to share a link (No guest_spa_url is set) or a button to open a dialog to share the link.
+ */
+export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
     const guestSpaUrl = useMemo(() => {
         return SdkConfig.get("element_call").guest_spa_url;
     }, []);
 
+    // We use the direct function only in functions triggered by user interaction to avoid computation on every render.
     const isRoomJoinable = useCallback(
         () => room.getJoinRule() === JoinRule.Public || room.getJoinRule() === JoinRule.Knock,
         [room],
     );
 
-    const isRoomJoinableVar = useEventEmitterState(
-        room,
-        RoomStateEvent.Events,
-        () => room.getJoinRule() === JoinRule.Public || room.getJoinRule() === JoinRule.Knock,
-    );
+    const isRoomJoinableState = useEventEmitterState(room, RoomStateEvent.Events, isRoomJoinable);
 
     const canChangeJoinRule = useEventEmitterState(
         room,
@@ -72,7 +70,7 @@ export default function ExternalLinkButton({ room }: Props): JSX.Element {
         url.pathname = "/room/";
         // Set params for the sharable url
         url.searchParams.set("roomId", room.roomId);
-        url.searchParams.set("perParticipantE2EE", "true");
+        if (room.hasEncryptionStateEvent()) url.searchParams.set("perParticipantE2EE", "true");
         for (const server of calculateRoomVia(room)) {
             url.searchParams.set("viaServers", server);
         }
@@ -87,7 +85,7 @@ export default function ExternalLinkButton({ room }: Props): JSX.Element {
 
     const showLinkModal = useCallback(() => {
         try {
-            // generateCallLink throws if the permissions are not met
+            // generateCallLink throws if the invite rules are not met
             const target = generateCallLink();
             Modal.createDialog(ShareDialog, {
                 target,
@@ -107,14 +105,15 @@ export default function ExternalLinkButton({ room }: Props): JSX.Element {
             Modal.createDialog(JoinRuleDialog, {
                 room,
             }).finished.then(() => {
+                // we need to use the function here because the callback got called before the state was updated.
                 if (isRoomJoinable()) showLinkModal();
             });
         }
-    }, [room, isRoomJoinable, showLinkModal]);
+    }, [showLinkModal, room, isRoomJoinable]);
 
     return (
         <>
-            {(canChangeJoinRule || isRoomJoinableVar) && (
+            {(canChangeJoinRule || isRoomJoinableState) && guestSpaUrl && (
                 <Tooltip label={_t("voip|get_call_link")}>
                     <IconButton onClick={shareClick} aria-label={_t("voip|get_call_link")}>
                         <ExternalLinkIcon />
@@ -123,13 +122,13 @@ export default function ExternalLinkButton({ room }: Props): JSX.Element {
             )}
         </>
     );
-}
+};
 interface JoinRuleDialogProps {
     onFinished(): void;
     room: Room;
 }
 
-function JoinRuleDialog({ room, onFinished }: JoinRuleDialogProps): JSX.Element {
+export function JoinRuleDialog({ room, onFinished }: JoinRuleDialogProps): JSX.Element {
     const askToJoinEnabled = SettingsStore.getValue("feature_ask_to_join");
     const [isUpdating, setIsUpdating] = React.useState<undefined | JoinRule>(undefined);
     const changeJoinRule = useCallback(
@@ -144,6 +143,7 @@ function JoinRuleDialog({ room, onFinished }: JoinRuleDialogProps): JSX.Element 
                 } as IJoinRuleEventContent,
                 "",
             );
+            // Show the dialog for a bit to give the user feedback
             setTimeout(() => onFinished(), 500);
         },
         [isUpdating, onFinished, room.client, room.roomId],
@@ -152,14 +152,22 @@ function JoinRuleDialog({ room, onFinished }: JoinRuleDialogProps): JSX.Element 
         <BaseDialog title={_t("update_room_access_modal|title")} onFinished={onFinished}>
             <div>
                 <p>{_t("update_room_access_modal|description")}</p>
-                <Button disabled={isUpdating === JoinRule.Public} onClick={() => changeJoinRule(JoinRule.Public)}>
-                    {_t("common|public")}
-                </Button>
                 {askToJoinEnabled && (
                     <Button disabled={isUpdating === JoinRule.Knock} onClick={() => changeJoinRule(JoinRule.Knock)}>
                         {_t("action|ask_to_join")}
                     </Button>
                 )}
+                <Button
+                    // manually add destructive styles because they otherwise get overwritten by .mx_Dialog
+                    style={{
+                        borderColor: "var(--cpd-color-border-critical-subtle)",
+                        color: "var(--cpd-color-text-critical-primary)",
+                    }}
+                    disabled={isUpdating === JoinRule.Public}
+                    onClick={() => changeJoinRule(JoinRule.Public)}
+                >
+                    {_t("common|public")}
+                </Button>
                 <br />
                 <p>{_t("update_room_access_modal|dont_change_description")}</p>
                 <Button
