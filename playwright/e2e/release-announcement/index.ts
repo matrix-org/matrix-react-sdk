@@ -19,15 +19,9 @@
 import { Page } from "@playwright/test";
 
 import { test as base, expect } from "../../element-web-test";
-import { ElementAppPage } from "../../pages/ElementAppPage";
-import { Bot } from "../../pages/bot";
 
 /**
- * Set up for a read receipt test:
- * - Create a user with the supplied name
- * - As that user, create two rooms with the supplied names
- * - Create a bot with the supplied name
- * - Invite the bot to both rooms and ensure that it has joined
+ * Set up for release announcement tests.
  */
 export const test = base.extend<{
     util: Helpers;
@@ -36,16 +30,12 @@ export const test = base.extend<{
     botCreateOpts: { displayName: "Other User" },
 
     util: async ({ page, app, bot }, use) => {
-        await use(new Helpers(page, app, bot));
+        await use(new Helpers(page));
     },
 });
 
 export class Helpers {
-    constructor(
-        private page: Page,
-        private app: ElementAppPage,
-        private bot: Bot,
-    ) {}
+    constructor(private page: Page) {}
 
     /**
      * Get the release announcement with the given name.
