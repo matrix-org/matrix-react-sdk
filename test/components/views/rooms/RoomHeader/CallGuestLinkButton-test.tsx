@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import { TooltipProvider } from "@vector-im/compound-web";
 import { fireEvent, getByLabelText, render, screen } from "@testing-library/react";
-import { JoinRule, Room } from "matrix-js-sdk/src/matrix";
+import { EventTimeline, JoinRule, Room } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import { SDKContext, SdkContextClass } from "../../../../../src/contexts/SDKContext";
@@ -136,6 +136,7 @@ describe("<CallGuestLinkButton />", () => {
         expect(callParams[1].subtitle).toEqual(expectedShareDialogProps.subtitle);
         expect(callParams[1].customTitle).toEqual(expectedShareDialogProps.customTitle);
     });
+
     it("shows the ShareDialog on click with knock join rules", () => {
         jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
         getComponent(room);
@@ -145,6 +146,16 @@ describe("<CallGuestLinkButton />", () => {
         expect(callParams[1].target.toString()).toEqual(expectedShareDialogProps.target);
         expect(callParams[1].subtitle).toEqual(expectedShareDialogProps.subtitle);
         expect(callParams[1].customTitle).toEqual(expectedShareDialogProps.customTitle);
+    });
+
+    it("don't show external conference button if room not public nor knock and the user cannot change join rules", () => {
+        jest.spyOn(room, "getLiveTimeline").mockReturnValue({
+            getState: jest.fn().mockReturnValue({
+                maySendStateEvent: jest.fn().mockReturnValue(false),
+            }),
+        } as unknown as EventTimeline);
+        getComponent(room);
+        expect(screen.queryByLabelText("Share call link")).not.toBeInTheDocument();
     });
 
     it("don't show external conference button if now guest spa link is configured", () => {
