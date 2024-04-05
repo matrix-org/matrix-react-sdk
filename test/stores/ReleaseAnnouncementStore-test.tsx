@@ -104,10 +104,11 @@ describe("ReleaseAnnouncementStore", () => {
         // Currently there is only one feature, so the next feature should be null
         expect(await promise).toBeNull();
         expect(releaseAnnouncementStore.getReleaseAnnouncement()).toBeNull();
+
+        const secondStore = new ReleaseAnnouncementStore();
         // The TAC release announcement has been viewed, so it should be updated in the store account
-        expect(SettingsStore.getValue<Record<Feature, boolean>>("releaseAnnouncementData").threadsActivityCentre).toBe(
-            true,
-        );
+        // The release announcement viewing states should be share among all instances (devices in the same account)
+        expect(secondStore.getReleaseAnnouncement()).toBeNull();
     });
 
     it("should listen to release announcement data changes in the store", async () => {
