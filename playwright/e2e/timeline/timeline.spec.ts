@@ -1039,6 +1039,7 @@ test.describe("Timeline", () => {
             // Note that we set it here as the test was failing on CI (but not locally!) if the name
             // was changed afterwards. This is quite concerning, but maybe better than just disabling the
             // whole test?
+            // https://github.com/element-hq/element-web/issues/27109
             await app.client.setDisplayName(newDisplayName);
 
             // Create a bot with a long display name
