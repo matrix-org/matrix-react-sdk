@@ -153,30 +153,34 @@ export const JoinRuleDialog: React.FC<{
         [isUpdating, onFinished, room.client, room.roomId],
     );
     return (
-        <BaseDialog title={_t("update_room_access_modal|title")} onFinished={onFinished}>
-            <div>
-                <p>{_t("update_room_access_modal|description")}</p>
+        <BaseDialog title={_t("update_room_access_modal|title")} onFinished={onFinished} className="mx_JoinRuleDialog">
+            <p>{_t("update_room_access_modal|description")}</p>
+            <div className="mx_JoinRuleDialogButtons">
                 {askToJoinEnabled && (
-                    <Button disabled={isUpdating === JoinRule.Knock} onClick={() => changeJoinRule(JoinRule.Knock)}>
+                    <Button
+                        kind="secondary"
+                        className="mx_Dialog_nonDialogButton"
+                        disabled={isUpdating === JoinRule.Knock}
+                        onClick={() => changeJoinRule(JoinRule.Knock)}
+                    >
                         {_t("action|ask_to_join")}
                     </Button>
                 )}
                 <Button
                     // manually add destructive styles because they otherwise get overwritten by .mx_Dialog
-                    style={{
-                        borderColor: "var(--cpd-color-border-critical-subtle)",
-                        color: "var(--cpd-color-text-critical-primary)",
-                    }}
+                    className="mx_Dialog_nonDialogButton"
+                    kind="destructive"
                     disabled={isUpdating === JoinRule.Public}
                     onClick={() => changeJoinRule(JoinRule.Public)}
                 >
                     {_t("common|public")}
                 </Button>
-                <br />
-                <p>{_t("update_room_access_modal|dont_change_description")}</p>
+            </div>
+            <p>{_t("update_room_access_modal|dont_change_description")}</p>
+            <div className="mx_JoinRuleDialogButtons">
                 <Button
                     kind="tertiary"
-                    style={{ border: "none", paddingLeft: 0, paddingRight: 0 }}
+                    className="mx_Dialog_nonDialogButton"
                     onClick={() => {
                         if (isUpdating === undefined) onFinished();
                     }}

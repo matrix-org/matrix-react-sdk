@@ -203,7 +203,7 @@ export default function RoomHeader({
         <Tooltip label={voiceCallDisabledReason ?? _t("voip|voice_call")}>
             <IconButton
                 // We need both: isViewingCall and isConnectedToCall
-                //  - in the we are viewing a call but are not connected to it.
+                //  - in the Lobby we are viewing a call but are not connected to it.
                 //  - in pip view we are connected to the call but not viewing it.
                 disabled={!!voiceCallDisabledReason || isViewingCall || isConnectedToCall}
                 aria-label={voiceCallDisabledReason ?? _t("voip|voice_call")}
