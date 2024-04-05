@@ -18,8 +18,8 @@ import { safeSet } from "matrix-js-sdk/src/utils";
 import { TranslationStringsObject } from "@matrix-org/react-sdk-module-api/lib/types/translations";
 import { AnyLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/types";
 import { AllExtensions } from "@matrix-org/react-sdk-module-api/lib/types/extensions";
-import { DefaultCryptoSetupExtensions } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
-import { DefaultExperimentalExtensions } from "@matrix-org/react-sdk-module-api/lib/lifecycles/ExperimentalExtensions";
+import { DefaultCryptoSetupExtensions, ProvideCryptoSetupExtensions } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
+import { DefaultExperimentalExtensions, ProvideExperimentalExtensions } from "@matrix-org/react-sdk-module-api/lib/lifecycles/ExperimentalExtensions";
 import { RuntimeModule } from "@matrix-org/react-sdk-module-api";
 
 import { AppModule } from "./AppModule";
@@ -35,7 +35,7 @@ export class ModuleRunner {
 
     public className: string = ModuleRunner.name;
 
-    public extensions: AllExtensions = {
+    private extensions: AllExtensions = {
         cryptoSetup: new DefaultCryptoSetupExtensions(),
         experimental: new DefaultExperimentalExtensions(),
     };
@@ -44,6 +44,14 @@ export class ModuleRunner {
 
     private constructor() {
         // we only want one instance
+    }
+
+    public get cryptoSetupExtension(): ProvideCryptoSetupExtensions | undefined  {
+        return this.extensions.cryptoSetup;
+    }
+
+    public get experimentalExtension(): ProvideExperimentalExtensions | undefined  {
+        return this.extensions.experimental;
     }
 
     /**
