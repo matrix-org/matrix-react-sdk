@@ -1036,6 +1036,9 @@ test.describe("Timeline", () => {
 
             // Set the display name to "LONG_STRING 2" in order to avoid screenshot tests from failing
             // due to the generated random mxid being displayed inside the GELS summary.
+            // Note that we set it here as the test was failing on CI (but not locally!) if the name
+            // was changed afterwards. This is quite concerning, but maybe better than just disabling the
+            // whole test?
             await app.client.setDisplayName(newDisplayName);
 
             // Create a bot with a long display name
