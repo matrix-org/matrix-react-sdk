@@ -24,7 +24,6 @@ import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import QRCode from "../elements/QRCode";
 import Spinner from "../elements/Spinner";
-import { Icon as CheckmarkIcon } from "../../../../res/img/element-icons/check.svg";
 import { Click, Phase } from "./LoginWithQR";
 import SdkConfig from "../../../SdkConfig";
 
@@ -153,11 +152,6 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                         <p>
                             <input ref={this.checkCodeInput} type="text" autoFocus={true} placeholder="Code" />
                         </p>
-                        <div className="mx_LoginWithQR_confirmationAlert">
-                            <div>
-                                <CheckmarkIcon />
-                            </div>
-                        </div>
                         {this.props.userCode ? (
                             <div>
                                 <p>Security code</p>
@@ -200,11 +194,6 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                             app like Element X then the OIDC Provider consent screen could be opened automatically.
                             Also, we don't plan to offer the ability to scan from a web browser so this is a non-issue.
                         </p>
-                        <div className="mx_LoginWithQR_confirmationAlert">
-                            <div>
-                                <CheckmarkIcon />
-                            </div>
-                        </div>
                     </>
                 );
 
@@ -224,11 +213,6 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                 backButton = false;
                 main = (
                     <>
-                        <div className="mx_LoginWithQR_confirmationAlert">
-                            <div>
-                                <CheckmarkIcon />
-                            </div>
-                        </div>
                         <p>Go to your other device</p>
                         <p>You’ll be asked to enter the following code:</p>
                         <p>{this.props.checkCode}</p>
