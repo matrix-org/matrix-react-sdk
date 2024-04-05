@@ -35,7 +35,7 @@ import PosthogTrackers from "../../../../PosthogTrackers";
 import { getKeyBindingsManager } from "../../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
 import { ReleaseAnnouncement } from "../../../structures/ReleaseAnnouncement";
-import { useIsReleaseAnnouncementEnabled } from "../../../../hooks/useReleaseAnnouncement";
+import { useIsReleaseAnnouncementOpen } from "../../../../hooks/useIsReleaseAnnouncementOpen";
 
 interface ThreadsActivityCentreProps {
     /**
@@ -51,7 +51,7 @@ interface ThreadsActivityCentreProps {
 export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCentreProps): JSX.Element {
     const [open, setOpen] = useState(false);
     const roomsAndNotifications = useUnreadThreadRooms(open);
-    const releaseAnnouncementEnabled = useIsReleaseAnnouncementEnabled("threadsActivityCentre");
+    const isReleaseAnnouncementOpen = useIsReleaseAnnouncementOpen("threadsActivityCentre");
 
     return (
         <div
@@ -68,7 +68,7 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
                 }
             }}
         >
-            {releaseAnnouncementEnabled ? (
+            {isReleaseAnnouncementOpen ? (
                 <ReleaseAnnouncement
                     feature="threadsActivityCentre"
                     header={_t("threads_activity_centre|release_announcement_header")}

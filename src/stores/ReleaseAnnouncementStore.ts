@@ -21,7 +21,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from "../settings/SettingsStore";
 import { SettingLevel } from "../settings/SettingLevel";
-import { Features as SettingFeatures } from "../settings/Settings";
+import { Features } from "../settings/Settings";
 
 /**
  * The features are shown in the array order.
@@ -30,11 +30,12 @@ const FEATURES = ["threadsActivityCentre"] as const;
 /**
  * All the features that can be shown in the release announcements.
  */
-export type Features = (typeof FEATURES)[number];
+export type Feature = (typeof FEATURES)[number];
 /**
  * The stored settings for the release announcements.
+ * The boolean is at true when the user has viewed the feature
  */
-type StoredSettings = Record<Features, boolean>;
+type StoredSettings = Record<Feature, boolean>;
 
 /**
  * The events emitted by the ReleaseAnnouncementStore.
@@ -44,7 +45,7 @@ type ReleaseAnnouncementStoreEvents = "releaseAnnouncementChanged";
  * The handlers for the ReleaseAnnouncementStore events.
  */
 type HandlerMap = {
-    releaseAnnouncementChanged: (newFeature: Features | null) => void;
+    releaseAnnouncementChanged: (newFeature: Feature | null) => void;
 };
 
 /**
@@ -97,14 +98,14 @@ export class ReleaseAnnouncementStore extends TypedEventEmitter<ReleaseAnnouncem
      * @private
      */
     private isReleaseAnnouncementEnabled(): boolean {
-        return SettingsStore.getValue<boolean>(SettingFeatures.ReleaseAnnouncement);
+        return SettingsStore.getValue<boolean>(Features.ReleaseAnnouncement);
     }
 
     /**
      * Get the release announcement that should be displayed
      * @returns The feature to announce or null if there is no feature to announce
      */
-    public getReleaseAnnouncement(): Features | null {
+    public getReleaseAnnouncement(): Feature | null {
         // Do nothing if the release announcement is disabled
         const isReleaseAnnouncementEnabled = this.isReleaseAnnouncementEnabled();
         if (!isReleaseAnnouncementEnabled) return null;
@@ -144,7 +145,7 @@ export class ReleaseAnnouncementStore extends TypedEventEmitter<ReleaseAnnouncem
         viewedReleaseAnnouncements[FEATURES[this.index]] = true;
         this.index++;
 
-        // Do sanity check id we can store the new value in the settings
+        // Do sanity check if we can store the new value in the settings
         const isSupported = SettingsStore.isLevelSupported(SettingLevel.ACCOUNT);
         if (!isSupported) return;
 

@@ -35,7 +35,7 @@ describe("ReleaseAnnouncement", () => {
         );
     }
 
-    test("todo", async () => {
+    test("render the release announcement and close it", async () => {
         renderReleaseAnnouncement();
 
         // The release announcement is displayed

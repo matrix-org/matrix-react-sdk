@@ -17,13 +17,13 @@
  */
 
 import { useTypedEventEmitterState } from "./useEventEmitter";
-import { Features, ReleaseAnnouncementStore } from "../stores/ReleaseAnnouncementStore";
+import { Feature, ReleaseAnnouncementStore } from "../stores/ReleaseAnnouncementStore";
 
 /**
  * Return true if the release announcement of the given feature is enabled
  * @param feature
  */
-export function useIsReleaseAnnouncementEnabled(feature: Features): boolean {
+export function useIsReleaseAnnouncementOpen(feature: Feature): boolean {
     return useTypedEventEmitterState(
         ReleaseAnnouncementStore.instance,
         "releaseAnnouncementChanged",

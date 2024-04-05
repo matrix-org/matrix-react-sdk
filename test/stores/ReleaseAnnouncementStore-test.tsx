@@ -19,7 +19,7 @@
 import { mocked } from "jest-mock";
 
 import SettingsStore, { CallbackFn } from "../../src/settings/SettingsStore";
-import { Features, ReleaseAnnouncementStore } from "../../src/stores/ReleaseAnnouncementStore";
+import { Feature, ReleaseAnnouncementStore } from "../../src/stores/ReleaseAnnouncementStore";
 import { SettingLevel } from "../../src/settings/SettingLevel";
 
 jest.mock("../../src/settings/SettingsStore");
@@ -72,7 +72,7 @@ describe("ReleaseAnnouncementStore", () => {
      * Listens to the next release announcement change event.
      */
     function listenReleaseAnnouncementChanged() {
-        return new Promise<Features | null>((resolve) =>
+        return new Promise<Feature | null>((resolve) =>
             releaseAnnouncementStore.once("releaseAnnouncementChanged", resolve),
         );
     }
@@ -105,7 +105,7 @@ describe("ReleaseAnnouncementStore", () => {
         expect(await promise).toBeNull();
         expect(releaseAnnouncementStore.getReleaseAnnouncement()).toBeNull();
         // The TAC release announcement has been viewed, so it should be updated in the store account
-        expect(SettingsStore.getValue<Record<Features, boolean>>("releaseAnnouncementData").threadsActivityCentre).toBe(
+        expect(SettingsStore.getValue<Record<Feature, boolean>>("releaseAnnouncementData").threadsActivityCentre).toBe(
             true,
         );
     });

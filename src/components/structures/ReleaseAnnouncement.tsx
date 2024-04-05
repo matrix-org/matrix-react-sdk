@@ -19,18 +19,18 @@
 import React, { ComponentProps, JSX, PropsWithChildren } from "react";
 import { ReleaseAnnouncement as ReleaseAnnouncementCompound } from "@vector-im/compound-web";
 
-import { ReleaseAnnouncementStore, Features } from "../../stores/ReleaseAnnouncementStore";
-import { useIsReleaseAnnouncementEnabled } from "../../hooks/useReleaseAnnouncement";
+import { ReleaseAnnouncementStore, Feature } from "../../stores/ReleaseAnnouncementStore";
+import { useIsReleaseAnnouncementOpen } from "../../hooks/useIsReleaseAnnouncementOpen";
 
 interface ReleaseAnnouncementProps
     extends Omit<ComponentProps<typeof ReleaseAnnouncementCompound>, "open" | "onClick"> {
-    feature: Features;
+    feature: Feature;
 }
 
 /**
  * Display a release announcement component around the children
  * Wrapper gluing the release announcement compound and the ReleaseAnnouncementStore
- * @param feature - the feature to announce, should be listed in {@link Features}
+ * @param feature - the feature to announce, should be listed in {@link Feature}
  * @param children
  * @param props
  * @constructor
@@ -40,7 +40,7 @@ export function ReleaseAnnouncement({
     children,
     ...props
 }: PropsWithChildren<ReleaseAnnouncementProps>): JSX.Element {
-    const enabled = useIsReleaseAnnouncementEnabled(feature);
+    const enabled = useIsReleaseAnnouncementOpen(feature);
 
     return (
         <ReleaseAnnouncementCompound
