@@ -1032,6 +1032,12 @@ test.describe("Timeline", () => {
                 "et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " +
                 "aliquip";
 
+            const newDisplayName = `${LONG_STRING} 2`;
+
+            // Set the display name to "LONG_STRING 2" in order to avoid screenshot tests from failing
+            // due to the generated random mxid being displayed inside the GELS summary.
+            await app.client.setDisplayName(newDisplayName);
+
             // Create a bot with a long display name
             const bot = new Bot(page, homeserver, {
                 displayName: LONG_STRING,
@@ -1049,12 +1055,8 @@ test.describe("Timeline", () => {
             await expect(
                 page
                     .locator(".mx_GenericEventListSummary_summary")
-                    .getByText(OLD_NAME + " created and configured the room."),
+                    .getByText(newDisplayName + " created and configured the room."),
             ).toBeVisible();
-
-            // Set the display name to "LONG_STRING 2" in order to avoid screenshot tests from failing
-            // due to the generated random mxid being displayed inside the GELS summary.
-            await app.client.setDisplayName(`${LONG_STRING} 2`);
 
             // Have the bot send a long message
             await bot.sendMessage(testRoomId, {
