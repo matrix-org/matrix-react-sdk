@@ -177,7 +177,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
             const fallbackRzServer =
                 this.props.client?.getClientWellKnown()?.["io.element.rendezvous"]?.server ??
-                "https://rendezvous.lab.element.dev";
+                "https://rz-msc4108.lab.element.dev";
             const transport = new Rendezvous.MSC4108RendezvousSession({
                 onFailure: this.onFailure,
                 client: this.props.client,
