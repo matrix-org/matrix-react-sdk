@@ -35,9 +35,13 @@ export class ModuleRunner {
 
     public className: string = ModuleRunner.name;
 
-    private extensions: AllExtensions = {
-        cryptoSetup: new DefaultCryptoSetupExtensions(),
-        experimental: new DefaultExperimentalExtensions(),
+    private _extensions: AllExtensions = {
+            cryptoSetup: new DefaultCryptoSetupExtensions(),
+            experimental: new DefaultExperimentalExtensions(),
+    };
+
+    public get extensions(): AllExtensions {
+        return this._extensions;
     };
 
     private modules: AppModule[] = [];
@@ -46,13 +50,13 @@ export class ModuleRunner {
         // we only want one instance
     }
 
-    public get cryptoSetupExtension(): ProvideCryptoSetupExtensions | undefined  {
-        return this.extensions.cryptoSetup;
-    }
+    // public get cryptoSetupExtension(): ProvideCryptoSetupExtensions | undefined  {
+    //     return this.extensions.cryptoSetup;
+    // }
 
-    public get experimentalExtension(): ProvideExperimentalExtensions | undefined  {
-        return this.extensions.experimental;
-    }
+    // public get experimentalExtension(): ProvideExperimentalExtensions | undefined  {
+    //     return this.extensions.experimental;
+    // }
 
     /**
      * Resets the runner, clearing all known modules.
@@ -62,7 +66,7 @@ export class ModuleRunner {
     public reset(): void {
         this.modules = [];
 
-        this.extensions = {
+        this._extensions = {
             cryptoSetup: new DefaultCryptoSetupExtensions(),
             experimental: new DefaultExperimentalExtensions(),
         };
@@ -103,7 +107,7 @@ export class ModuleRunner {
                 cryptoSetupExtensions.push(m.module);
             }
 
-            /* Record the experimantal extensions if any */
+            /* Record the experimental extensions if any */
             if (m.module.extensions?.experimental) {
                 experimentalExtensions.push(m.module);
             }
