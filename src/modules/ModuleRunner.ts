@@ -17,15 +17,75 @@ limitations under the License.
 import { safeSet } from "matrix-js-sdk/src/utils";
 import { TranslationStringsObject } from "@matrix-org/react-sdk-module-api/lib/types/translations";
 import { AnyLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/types";
-import { AllExtensions } from "@matrix-org/react-sdk-module-api/lib/types/extensions";
 import { DefaultCryptoSetupExtensions, ProvideCryptoSetupExtensions } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
 import { DefaultExperimentalExtensions, ProvideExperimentalExtensions } from "@matrix-org/react-sdk-module-api/lib/lifecycles/ExperimentalExtensions";
-import { RuntimeModule } from "@matrix-org/react-sdk-module-api";
 
 import { AppModule } from "./AppModule";
 import { ModuleFactory } from "./ModuleFactory";
 
 import "./ModuleComponents";
+
+
+
+class ExtensionImplementationMap {
+    public hasDefaultCryptoSetupExtension: boolean = true;
+    public hasDefaultExperimentalExtension: boolean = true;
+}
+
+class ModuleRunnerExtensions {
+
+    private _cryptoSetup: ProvideCryptoSetupExtensions;
+    private _experimental: ProvideExperimentalExtensions;
+    private _implementionMap: ExtensionImplementationMap = new ExtensionImplementationMap();
+
+    constructor() {
+        // Set up defaults 
+        this._cryptoSetup = new DefaultCryptoSetupExtensions();
+        this._experimental = new DefaultExperimentalExtensions();
+    }
+
+    public get cryptoSetup(): ProvideCryptoSetupExtensions{
+        return this._cryptoSetup; 
+    }
+
+    public get experimental(): ProvideExperimentalExtensions{
+        return this._experimental; 
+    }
+
+    /**
+     * Ensure we register extensions provided by the module
+     */
+    public addExtensions(module: AppModule): void {
+
+        var runtimeModule = module.module;
+
+        /* Record the cryptoSetup extensions if any */
+        if (runtimeModule.extensions?.cryptoSetup) {
+            if(this._implementionMap.hasDefaultCryptoSetupExtension){
+                this._cryptoSetup = runtimeModule.extensions?.cryptoSetup;
+                this._implementionMap.hasDefaultCryptoSetupExtension = false;
+            }
+            else {
+                throw new Error(
+                    `adding cryptoSetup extension implementation from module ${runtimeModule.moduleName} but an implementation was already provided`,
+                );
+            }
+        }
+
+        if (runtimeModule.extensions?.experimental) {
+            if(this._implementionMap.hasDefaultExperimentalExtension){
+                this._experimental = runtimeModule.extensions?.experimental;
+                this._implementionMap.hasDefaultExperimentalExtension = false;
+            }
+            else {
+                throw new Error(
+                    `adding experimental extension implementation from module ${runtimeModule.moduleName} but an implementation was already provided`,
+                );
+            }
+        }
+    }    
+}
+
 
 /**
  * Handles and coordinates the operation of modules.
@@ -35,12 +95,14 @@ export class ModuleRunner {
 
     public className: string = ModuleRunner.name;
 
-    private _extensions: AllExtensions = {
-            cryptoSetup: new DefaultCryptoSetupExtensions(),
-            experimental: new DefaultExperimentalExtensions(),
-    };
+    // private _extensions: AllExtensions = {
+    //         cryptoSetup: new DefaultCryptoSetupExtensions(),
+    //         experimental: new DefaultExperimentalExtensions(),
+    // };
 
-    public get extensions(): AllExtensions {
+    private _extensions = new ModuleRunnerExtensions();
+
+    public get extensions(): ModuleRunnerExtensions {
         return this._extensions;
     };
 
@@ -50,14 +112,6 @@ export class ModuleRunner {
         // we only want one instance
     }
 
-    // public get cryptoSetupExtension(): ProvideCryptoSetupExtensions | undefined  {
-    //     return this.extensions.cryptoSetup;
-    // }
-
-    // public get experimentalExtension(): ProvideExperimentalExtensions | undefined  {
-    //     return this.extensions.experimental;
-    // }
-
     /**
      * Resets the runner, clearing all known modules.
      *
@@ -65,11 +119,7 @@ export class ModuleRunner {
      */
     public reset(): void {
         this.modules = [];
-
-        this._extensions = {
-            cryptoSetup: new DefaultCryptoSetupExtensions(),
-            experimental: new DefaultExperimentalExtensions(),
-        };
+        this._extensions = new ModuleRunnerExtensions();
     }
 
     /**
@@ -94,50 +144,6 @@ export class ModuleRunner {
         return merged;
     }
 
-    /**
-     * Ensure we register extensions provided by the modules
-     */
-    private updateExtensions(): void {
-        const cryptoSetupExtensions: Array<RuntimeModule> = [];
-        const experimentalExtensions: Array<RuntimeModule> = [];
-
-        this.modules.forEach((m) => {
-            /* Record the cryptoSetup extensions if any */
-            if (m.module.extensions?.cryptoSetup) {
-                cryptoSetupExtensions.push(m.module);
-            }
-
-            /* Record the experimental extensions if any */
-            if (m.module.extensions?.experimental) {
-                experimentalExtensions.push(m.module);
-            }
-        });
-
-        /* Enforce rule that only a single module may provide a given extension */
-        if (cryptoSetupExtensions.length > 1) {
-            throw new Error(
-                `cryptoSetup extension is provided by modules ${cryptoSetupExtensions
-                    .map((m) => m.moduleName)
-                    .join(", ")}, but can only be provided by a single module`,
-            );
-        }
-        if (experimentalExtensions.length > 1) {
-            throw new Error(
-                `experimental extension is provided by modules ${experimentalExtensions
-                    .map((m) => m.moduleName)
-                    .join(", ")}, but can only be provided by a single module`,
-            );
-        }
-
-        /* Override the default extension if extension was provided by a module */
-        if (cryptoSetupExtensions.length == 1) {
-            this.extensions.cryptoSetup = cryptoSetupExtensions[0].extensions?.cryptoSetup;
-        }
-
-        if (experimentalExtensions.length == 1) {
-            this.extensions.experimental = cryptoSetupExtensions[0].extensions?.experimental;
-        }
-    }
 
     /**
      * Registers a factory which creates a module for later loading. The factory
@@ -145,7 +151,10 @@ export class ModuleRunner {
      * @param factory The module factory.
      */
     public registerModule(factory: ModuleFactory): void {
-        this.modules.push(new AppModule(factory));
+
+        var appModule = new AppModule(factory)
+
+        this.modules.push(appModule);
 
         /**
          * Check if the new module provides any extensions, and also ensure a given extension is only provided by a single runtime module
@@ -154,7 +163,7 @@ export class ModuleRunner {
          * Also note that this will break if the current behavior of calling the factory immediately changes. 
          */
 
-        this.updateExtensions();
+        this._extensions.addExtensions(appModule);
     }
 
     /**
