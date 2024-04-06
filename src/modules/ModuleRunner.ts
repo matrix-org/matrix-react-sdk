@@ -150,8 +150,8 @@ export class ModuleRunner {
         /**
          * Check if the new module provides any extensions, and also ensure a given extension is only provided by a single runtime module
          * Slightly inefficient to do this on each registration, but avoids changes to element-web installer code
-         * Also note that this require that the statement in the comment above, about immediately calling the factory, is in fact true
-         * (otherwise wrapped RuntimeModules will not be available)
+         * 
+         * Also note that this will break if the current behavior of calling the factory immediately changes. 
          */
 
         this.updateExtensions();
