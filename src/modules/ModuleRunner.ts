@@ -32,7 +32,10 @@ class ExtensionImplementationMap {
     public hasDefaultExperimentalExtension: boolean = true;
 }
 
-class ModuleRunnerExtensions {
+/**
+ * Handles and manages any extensions provided by modules
+ */
+class ExtensionsManager {
 
     private _cryptoSetup: ProvideCryptoSetupExtensions;
     private _experimental: ProvideExperimentalExtensions;
@@ -44,16 +47,46 @@ class ModuleRunnerExtensions {
         this._experimental = new DefaultExperimentalExtensions();
     }
 
+     /**
+     * Provides a crypto setup extension. 
+     *
+     * @returns The registered extension. If no module provides this extension, a default implementation is returned 
+     */
     public get cryptoSetup(): ProvideCryptoSetupExtensions{
         return this._cryptoSetup; 
     }
 
-    public get experimental(): ProvideExperimentalExtensions{
+     /**
+     * Provides a n experimental extension. 
+     *
+     * @remarks
+     * This method extension is provided to simplify experimentaion an development, and is not intended for production code
+     *
+     * @returns The registered extension. If no module provides this extension, a default implementation is returned 
+     */
+     public get experimental(): ProvideExperimentalExtensions{
         return this._experimental; 
     }
 
     /**
-     * Ensure we register extensions provided by the module
+     * Resets the extension to defaults
+     *
+     * Intended for test usage only.
+     */
+    public reset(): void {
+        this._implementionMap = new ExtensionImplementationMap();
+        this._cryptoSetup = new DefaultCryptoSetupExtensions();
+        this._experimental = new DefaultExperimentalExtensions();
+    }
+
+
+    /**
+     * Add any extensions provided by the module
+     *
+     * @param module - The module.
+     *
+     * @throws if an extension is provided by more than one module
+     *
      */
     public addExtensions(module: AppModule): void {
 
@@ -72,6 +105,7 @@ class ModuleRunnerExtensions {
             }
         }
 
+        /* Record the experimental extensions if any */
         if (runtimeModule.extensions?.experimental) {
             if(this._implementionMap.hasDefaultExperimentalExtension){
                 this._experimental = runtimeModule.extensions?.experimental;
@@ -95,16 +129,7 @@ export class ModuleRunner {
 
     public className: string = ModuleRunner.name;
 
-    // private _extensions: AllExtensions = {
-    //         cryptoSetup: new DefaultCryptoSetupExtensions(),
-    //         experimental: new DefaultExperimentalExtensions(),
-    // };
-
-    private _extensions = new ModuleRunnerExtensions();
-
-    public get extensions(): ModuleRunnerExtensions {
-        return this._extensions;
-    };
+    private _extensions = new ExtensionsManager();
 
     private modules: AppModule[] = [];
 
@@ -113,13 +138,22 @@ export class ModuleRunner {
     }
 
     /**
+     * Exposes all extensions which may be overridden/provided by modules 
+     *
+     * @returns En extensionsmanager which exposes the extensions 
+     */
+    public get extensions(): ExtensionsManager {
+        return this._extensions;
+    };
+
+    /**
      * Resets the runner, clearing all known modules.
      *
      * Intended for test usage only.
      */
     public reset(): void {
         this.modules = [];
-        this._extensions = new ModuleRunnerExtensions();
+        this._extensions.reset();
     }
 
     /**
@@ -157,14 +191,12 @@ export class ModuleRunner {
         this.modules.push(appModule);
 
         /**
-         * Check if the new module provides any extensions, and also ensure a given extension is only provided by a single runtime module
-         * Slightly inefficient to do this on each registration, but avoids changes to element-web installer code
-         * 
-         * Also note that this will break if the current behavior of calling the factory immediately changes. 
+         * Check if the new module provides any extensions, and also ensure a given extension is only provided by a single runtime module         * 
+         * @param appModule The app module to inspect for extensions.
          */
-
         this._extensions.addExtensions(appModule);
     }
+
 
     /**
      * Invokes a lifecycle event, notifying registered modules.
