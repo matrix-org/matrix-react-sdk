@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { JoinRule, Room } from "matrix-js-sdk/src/matrix";
+import { Room } from "matrix-js-sdk/src/matrix";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
@@ -26,7 +26,7 @@ import { useWidgets } from "../../components/views/right_panel/RoomSummaryCard";
 import { WidgetType } from "../../widgets/WidgetType";
 import { useCall, useConnectionState, useParticipantCount } from "../useCall";
 import { useRoomMemberCount } from "../useRoomMembers";
-import { Call, ConnectionState, ElementCall } from "../../models/Call";
+import { ConnectionState, ElementCall } from "../../models/Call";
 import { placeCall } from "../../utils/room/placeCall";
 import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutStore";
 import { useRoomState } from "../useRoomState";
@@ -40,6 +40,7 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../dispatcher/actions";
 import { CallStore, CallStoreEvent } from "../../stores/CallStore";
 import { isVideoRoom } from "../../utils/video-rooms";
+import { useGuestAccessInformation } from "./useGuestAccessInformation";
 
 export enum PlatformCallType {
     ElementCall,
@@ -170,17 +171,17 @@ export const useRoomCall = (
     useEffect(() => {
         updateWidgetState();
     }, [room, jitsiWidget, groupCall, updateWidgetState]);
-    const [activeCalls, setActiveCalls] = useState<Call[]>(Array.from(CallStore.instance.activeCalls));
-    useEventEmitter(CallStore.instance, CallStoreEvent.ActiveCalls, () => {
-        setActiveCalls(Array.from(CallStore.instance.activeCalls));
-    });
     const [canPinWidget, setCanPinWidget] = useState(false);
     const [widgetPinned, setWidgetPinned] = useState(false);
     // We only want to prompt to pin the widget if it's not element call based.
     const isECWidget = WidgetType.CALL.matches(widget?.type ?? "");
     const promptPinWidget = !isECWidget && canPinWidget && !widgetPinned;
-    const userId = room.client.getUserId();
-    const canInviteToRoom = userId ? room.canInvite(userId) : false;
+    const activeCalls = useEventEmitterState(CallStore.instance, CallStoreEvent.ActiveCalls, () =>
+        Array.from(CallStore.instance.activeCalls),
+    );
+    const { canChangeJoinRule, roomIsJoinableState } = useGuestAccessInformation(room);
+    const canCallAlone = canChangeJoinRule || roomIsJoinableState;
+
     const state = useMemo((): State => {
         if (activeCalls.find((call) => call.roomId != room.roomId)) {
             return State.Ongoing;
@@ -191,8 +192,6 @@ export const useRoomCall = (
         if (hasLegacyCall) {
             return State.Ongoing;
         }
-        const canCallAlone =
-            canInviteToRoom && (room.getJoinRule() === "public" || room.getJoinRule() === JoinRule.Knock);
         if (!(memberCount > 1 || canCallAlone)) {
             return State.NoOneHere;
         }
@@ -203,7 +202,7 @@ export const useRoomCall = (
         return State.NoCall;
     }, [
         activeCalls,
-        canInviteToRoom,
+        canCallAlone,
         hasGroupCall,
         hasJitsiWidget,
         hasLegacyCall,
@@ -212,7 +211,7 @@ export const useRoomCall = (
         mayEditWidgets,
         memberCount,
         promptPinWidget,
-        room,
+        room.roomId,
     ]);
 
     const voiceCallClick = useCallback(

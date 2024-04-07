@@ -220,8 +220,8 @@ describe("<CallGuestLinkButton />", () => {
     describe("<JoinRuleDialog />", () => {
         const onFinished = jest.fn();
 
-        const getComponent = (room: Room) =>
-            render(<JoinRuleDialog room={room} onFinished={onFinished} />, {
+        const getComponent = (room: Room, canInvite: boolean = true) =>
+            render(<JoinRuleDialog room={room} canInvite={canInvite} onFinished={onFinished} />, {
                 wrapper: ({ children }) => (
                     <SDKContext.Provider value={sdkContext}>
                         <TooltipProvider>{children}</TooltipProvider>
@@ -237,6 +237,10 @@ describe("<CallGuestLinkButton />", () => {
         it("shows ask to join if feature is enabled", () => {
             const { container } = getComponent(room);
             expect(getByText(container, "Ask to join")).toBeInTheDocument();
+        });
+        it("font show ask to join if feature is enabled but cannot invite", () => {
+            getComponent(room, false);
+            expect(screen.queryByText("Ask to join")).not.toBeInTheDocument();
         });
         it("doesn't show ask to join if feature is disabled", () => {
             jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);

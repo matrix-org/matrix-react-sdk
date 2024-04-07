@@ -17,14 +17,7 @@ import { Icon as ExternalLinkIcon } from "@vector-im/compound-design-tokens/icon
 import { Button, IconButton, Tooltip } from "@vector-im/compound-web";
 import React, { useCallback, useMemo } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import {
-    EventTimeline,
-    EventType,
-    IJoinRuleEventContent,
-    JoinRule,
-    Room,
-    RoomStateEvent,
-} from "matrix-js-sdk/src/matrix";
+import { EventType, IJoinRuleEventContent, JoinRule, Room } from "matrix-js-sdk/src/matrix";
 
 import Modal from "../../../../Modal";
 import ShareDialog from "../../dialogs/ShareDialog";
@@ -32,8 +25,8 @@ import { _t } from "../../../../languageHandler";
 import SettingsStore from "../../../../settings/SettingsStore";
 import SdkConfig from "../../../../SdkConfig";
 import { calculateRoomVia } from "../../../../utils/permalinks/Permalinks";
-import { useEventEmitterState } from "../../../../hooks/useEventEmitter";
 import BaseDialog from "../../dialogs/BaseDialog";
+import { useGuestAccessInformation } from "../../../../hooks/room/useGuestAccessInformation";
 
 /**
  * Display a button to open a dialog to share a link to the call using a element call guest spa url (`element_call:guest_spa_url` in the EW config).
@@ -45,23 +38,7 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
         return SdkConfig.get("element_call").guest_spa_url;
     }, []);
 
-    // We use the direct function only in functions triggered by user interaction to avoid computation on every render.
-    const isRoomJoinable = useCallback(
-        () => room.getJoinRule() === JoinRule.Public || room.getJoinRule() === JoinRule.Knock,
-        [room],
-    );
-
-    const isRoomJoinableState = useEventEmitterState(room, RoomStateEvent.Events, isRoomJoinable);
-
-    const canChangeJoinRule = useEventEmitterState(
-        room,
-        RoomStateEvent.Events,
-        () =>
-            room
-                .getLiveTimeline()
-                ?.getState(EventTimeline.FORWARDS)
-                ?.maySendStateEvent(EventType.RoomJoinRules, room.myUserId) ?? false,
-    );
+    const { canChangeJoinRule, roomIsJoinableState, isRoomJoinable, canInvite } = useGuestAccessInformation(room);
 
     const generateCallLink = useCallback(() => {
         if (!isRoomJoinable()) throw new Error("Cannot create link for room that users can not join without invite.");
@@ -104,16 +81,17 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
             // the room needs to be set to public or knock to generate a link
             Modal.createDialog(JoinRuleDialog, {
                 room,
+                canInvite,
             }).finished.then(() => {
                 // we need to use the function here because the callback got called before the state was updated.
                 if (isRoomJoinable()) showLinkModal();
             });
         }
-    }, [showLinkModal, room, isRoomJoinable]);
+    }, [isRoomJoinable, showLinkModal, room, canInvite]);
 
     return (
         <>
-            {(canChangeJoinRule || isRoomJoinableState) && guestSpaUrl && (
+            {(canChangeJoinRule || roomIsJoinableState) && guestSpaUrl && (
                 <Tooltip label={_t("voip|get_call_link")}>
                     <IconButton onClick={shareClick} aria-label={_t("voip|get_call_link")}>
                         <ExternalLinkIcon />
@@ -132,7 +110,8 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
 export const JoinRuleDialog: React.FC<{
     onFinished(): void;
     room: Room;
-}> = ({ room, onFinished }) => {
+    canInvite: boolean;
+}> = ({ onFinished, room, canInvite }) => {
     const askToJoinEnabled = SettingsStore.getValue("feature_ask_to_join");
     const [isUpdating, setIsUpdating] = React.useState<undefined | JoinRule>(undefined);
     const changeJoinRule = useCallback(
@@ -156,7 +135,7 @@ export const JoinRuleDialog: React.FC<{
         <BaseDialog title={_t("update_room_access_modal|title")} onFinished={onFinished} className="mx_JoinRuleDialog">
             <p>{_t("update_room_access_modal|description")}</p>
             <div className="mx_JoinRuleDialogButtons">
-                {askToJoinEnabled && (
+                {askToJoinEnabled && canInvite && (
                     <Button
                         kind="secondary"
                         className="mx_Dialog_nonDialogButton"
