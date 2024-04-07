@@ -3664,7 +3664,7 @@
     },
     "update_room_access_modal": {
         "description": "To create a share link, you need to allow guests to join this room. This may make the room less secure. When you're done with the call, you can make the room private again.",
-        "dont_change_description": "Alternatively a different or new room can be used for the conference share link.",
+        "dont_change_description": "Alternatively, you can hold the call in a separate room.",
         "no_change": "I don't want to change the access level.",
         "title": "Change the room access level"
     },
