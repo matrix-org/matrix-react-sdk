@@ -69,7 +69,7 @@ class ExtensionsManager {
     }
 
     /**
-     * Resets the extension to defaults
+     * Resets the extension to the defaults
      *
      * Intended for test usage only.
      */
@@ -83,7 +83,7 @@ class ExtensionsManager {
     /**
      * Add any extensions provided by the module
      *
-     * @param module - The module.
+     * @param module - The appModule to check for extensions
      *
      * @throws if an extension is provided by more than one module
      *
@@ -127,8 +127,6 @@ class ExtensionsManager {
 export class ModuleRunner {
     public static readonly instance = new ModuleRunner();
 
-    public className: string = ModuleRunner.name;
-
     private _extensions = new ExtensionsManager();
 
     private modules: AppModule[] = [];
@@ -147,7 +145,7 @@ export class ModuleRunner {
     };
 
     /**
-     * Resets the runner, clearing all known modules.
+     * Resets the runner, clearing all known modules, and all extensions
      *
      * Intended for test usage only.
      */
@@ -191,8 +189,7 @@ export class ModuleRunner {
         this.modules.push(appModule);
 
         /**
-         * Check if the new module provides any extensions, and also ensure a given extension is only provided by a single runtime module         * 
-         * @param appModule The app module to inspect for extensions.
+         * Check if the new module provides any extensions, and also ensure a given extension is only provided by a single runtime module        
          */
         this._extensions.addExtensions(appModule);
     }
