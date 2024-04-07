@@ -17,12 +17,7 @@ limitations under the License.
 import { RuntimeModule } from "@matrix-org/react-sdk-module-api/lib/RuntimeModule";
 import { ModuleApi } from "@matrix-org/react-sdk-module-api/lib/ModuleApi";
 import { AllExtensions } from "@matrix-org/react-sdk-module-api/lib/types/extensions";
-import {
-    CryptoSetupExtensionsBase,
-    ExtendedMatrixClientCreds,
-    SecretStorageKeyDescriptionAesV1,
-    CryptoSetupArgs,
-} from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
+import { CryptoSetupExtensionsBase, } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
 
 import { ModuleRunner } from "../../src/modules/ModuleRunner";
 
@@ -61,33 +56,13 @@ export class MockModuleWithCryptoSetupExtension extends RuntimeModule {
     extensions: AllExtensions = {
         cryptoSetup: new (class extends CryptoSetupExtensionsBase {
             SHOW_ENCRYPTION_SETUP_UI = true;
-
-            examineLoginResponse(response: any, credentials: ExtendedMatrixClientCreds): void {
-                throw new Error("Method not implemented.");
-            }
-            persistCredentials(credentials: ExtendedMatrixClientCreds): void {
-                throw new Error("Method not implemented.");
-            }
-            getSecretStorageKey(): Uint8Array | null {
-                return Uint8Array.from([0x11, 0x22, 0x99]);
-            }
-            createSecretStorageKey(): Uint8Array | null {
-                throw new Error("Method not implemented.");
-            }
-            catchAccessSecretStorageError(e: Error): void {
-                throw new Error("Method not implemented.");
-            }
-            setupEncryptionNeeded(args: CryptoSetupArgs): boolean {
-                throw new Error("Method not implemented.");
-            }
-            getDehydrationKeyCallback():
-                | ((
-                      keyInfo: SecretStorageKeyDescriptionAesV1,
-                      checkFunc: (key: Uint8Array) => void,
-                  ) => Promise<Uint8Array>)
-                | null {
-                throw new Error("Method not implemented.");
-            }
+            examineLoginResponse = jest.fn();
+            persistCredentials = jest.fn();            
+            getSecretStorageKey = jest.fn().mockReturnValue(Uint8Array.from([0x11, 0x22, 0x99])); 
+            createSecretStorageKey = jest.fn()
+            catchAccessSecretStorageError = jest.fn()
+            setupEncryptionNeeded = jest.fn()
+            getDehydrationKeyCallback = jest.fn();
         })(),
     };
 

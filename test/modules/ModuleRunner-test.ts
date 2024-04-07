@@ -72,7 +72,8 @@ describe("ModuleRunner", () => {
         it("must not allow multiple modules to provide a given extension", async () => {
             registerMockModuleWithCryptoSetupExtension();
             const t = () => registerMockModuleWithCryptoSetupExtension();
-            expect(t).toThrow(Error);
+            expect(t).toThrow(Error)
+            expect(t).toThrow("adding cryptoSetup extension implementation from module MockModuleWithCryptoSetupExtension but an implementation was already provided");
         });
     });
 });
