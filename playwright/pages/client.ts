@@ -31,7 +31,10 @@ import type {
     Visibility,
     UploadOpts,
     Upload,
+    StateEvents,
+    TimelineEvents,
 } from "matrix-js-sdk/src/matrix";
+import type { RoomMessageEventContent } from "matrix-js-sdk/src/types";
 import { Credentials } from "../plugins/homeserver";
 
 export class Client {
@@ -97,7 +100,12 @@ export class Client {
         const client = await this.prepareClient();
         return client.evaluate(
             async (client, { roomId, threadId, eventType, content }) => {
-                return client.sendEvent(roomId, threadId, eventType, content);
+                return client.sendEvent(
+                    roomId,
+                    threadId,
+                    eventType as keyof TimelineEvents,
+                    content as TimelineEvents[keyof TimelineEvents],
+                );
             },
             { roomId, threadId, eventType, content },
         );
@@ -124,7 +132,7 @@ export class Client {
         const client = await this.prepareClient();
         return client.evaluate(
             (client, { roomId, content, threadId }) => {
-                return client.sendMessage(roomId, threadId, content);
+                return client.sendMessage(roomId, threadId, content as RoomMessageEventContent);
             },
             {
                 roomId,
@@ -407,7 +415,7 @@ export class Client {
         const client = await this.prepareClient();
         return client.evaluate(
             async (client, { roomId, eventType, content, stateKey }) => {
-                return client.sendStateEvent(roomId, eventType, content, stateKey);
+                return client.sendStateEvent(roomId, eventType as keyof StateEvents, content, stateKey);
             },
             { roomId, eventType, content, stateKey },
         );
