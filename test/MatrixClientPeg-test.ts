@@ -116,6 +116,30 @@ describe("MatrixClientPeg", () => {
                 });
                 expect(mockCryptoSetup.getDehydrationKeyCallback).toHaveBeenCalledTimes(1);
             });
+            it("should fallback to default when cryptoSetup.getDehydrationKeyCallback return null", async () => {
+                const mockCryptoSetup = new (class extends CryptoSetupExtensionsBase {
+                    SHOW_ENCRYPTION_SETUP_UI = true; 
+                    examineLoginResponse = jest.fn();
+                    persistCredentials = jest.fn();
+                    getSecretStorageKey = jest.fn().mockReturnValue(null);
+                    createSecretStorageKey = jest.fn();
+                    catchAccessSecretStorageError = jest.fn();
+                    setupEncryptionNeeded = jest.fn();
+                    getDehydrationKeyCallback = jest.fn();
+                })() as ProvideCryptoSetupExtensions;
+
+                // Ensure we have an instance before we set up spies
+                const instance = ModuleRunner.instance;
+                jest.spyOn(instance.extensions, "cryptoSetup", "get").mockReturnValue(mockCryptoSetup);
+
+                testPeg.replaceUsingCreds({
+                    accessToken: "SEKRET",
+                    homeserverUrl: "http://example.com",
+                    userId: "@user:example.com",
+                    deviceId: "TEST_DEVICE_ID",
+                });
+                expect(mockCryptoSetup.getDehydrationKeyCallback).toHaveBeenCalledTimes(1);
+            });
         });
     });
 
