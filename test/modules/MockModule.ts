@@ -20,6 +20,7 @@ import { AllExtensions } from "@matrix-org/react-sdk-module-api/lib/types/extens
 import { CryptoSetupExtensionsBase } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
 
 import { ModuleRunner } from "../../src/modules/ModuleRunner";
+import { ExperimentalExtensionsBase } from "@matrix-org/react-sdk-module-api/lib/lifecycles/ExperimentalExtensions";
 
 export class MockModule extends RuntimeModule {
     public get apiInstance(): ModuleApi {
@@ -71,6 +72,24 @@ export class MockModuleWithCryptoSetupExtension extends RuntimeModule {
     }
 }
 
+export class MockModuleWithExperimentalExtension extends RuntimeModule {
+    public get apiInstance(): ModuleApi {
+        return this.moduleApi;
+    }
+
+    moduleName: string = MockModuleWithExperimentalExtension.name;
+
+    extensions: AllExtensions = {
+        experimental: new (class extends ExperimentalExtensionsBase {
+            experimentalMethod  = jest.fn().mockReturnValue(Uint8Array.from([0x22, 0x44, 0x88]));
+        })(),
+    };
+
+    public constructor(moduleApi: ModuleApi) {
+        super(moduleApi);
+    }
+}
+
 export function registerMockModuleWithCryptoSetupExtension(): MockModuleWithCryptoSetupExtension {
     let module: MockModuleWithCryptoSetupExtension | undefined;
 
@@ -79,6 +98,22 @@ export function registerMockModuleWithCryptoSetupExtension(): MockModuleWithCryp
             throw new Error("State machine error: ModuleRunner created the module twice");
         }
         module = new MockModuleWithCryptoSetupExtension(api);
+        return module;
+    });
+    if (!module) {
+        throw new Error("State machine error: ModuleRunner did not create module");
+    }
+    return module;
+}
+
+export function registerMockModuleWithExperimentalExtension(): MockModuleWithExperimentalExtension {
+    let module: MockModuleWithExperimentalExtension | undefined;
+
+    ModuleRunner.instance.registerModule((api) => {
+        if (module) {
+            throw new Error("State machine error: ModuleRunner created the module twice");
+        }
+        module = new MockModuleWithExperimentalExtension(api);
         return module;
     });
     if (!module) {
