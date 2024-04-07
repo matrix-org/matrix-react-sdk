@@ -80,12 +80,21 @@ describe("ModuleRunner", () => {
             expect(result).toEqual(Uint8Array.from([0x22, 0x44, 0x88]));
         });
 
-        it("must not allow multiple modules to provide a given extension", async () => {
+        it("must not allow multiple modules to provide cryptoSetup extension", async () => {
             registerMockModuleWithCryptoSetupExtension();
             const t = () => registerMockModuleWithCryptoSetupExtension();
             expect(t).toThrow(Error);
             expect(t).toThrow(
                 "adding cryptoSetup extension implementation from module MockModuleWithCryptoSetupExtension but an implementation was already provided",
+            );
+        });
+
+        it("must not allow multiple modules to provide experimental extension", async () => {
+            registerMockModuleWithExperimentalExtension();
+            const t = () => registerMockModuleWithExperimentalExtension();
+            expect(t).toThrow(Error);
+            expect(t).toThrow(
+                "adding experimental extension implementation from module MockModuleWithExperimentalExtension but an implementation was already provided",
             );
         });
     });
