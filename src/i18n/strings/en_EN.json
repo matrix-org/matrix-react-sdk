@@ -3663,7 +3663,7 @@
         "unavailable": "Unavailable"
     },
     "update_room_access_modal": {
-        "description": "To create a share link, you need to update the room access settings. This can impact the security level of the room. It is recommended to set it back to private if the link is not needed anymore.",
+        "description": "To create a share link, you need to allow guests to join this room. This may make the room less secure. When you're done with the call, you can make the room private again.",
         "dont_change_description": "Alternatively a different or new room can be used for the conference share link.",
         "no_change": "I don't want to change the access level.",
         "title": "Change the room access level"
