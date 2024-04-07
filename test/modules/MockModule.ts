@@ -18,9 +18,9 @@ import { RuntimeModule } from "@matrix-org/react-sdk-module-api/lib/RuntimeModul
 import { ModuleApi } from "@matrix-org/react-sdk-module-api/lib/ModuleApi";
 import { AllExtensions } from "@matrix-org/react-sdk-module-api/lib/types/extensions";
 import { CryptoSetupExtensionsBase } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
+import { ExperimentalExtensionsBase } from "@matrix-org/react-sdk-module-api/lib/lifecycles/ExperimentalExtensions";
 
 import { ModuleRunner } from "../../src/modules/ModuleRunner";
-import { ExperimentalExtensionsBase } from "@matrix-org/react-sdk-module-api/lib/lifecycles/ExperimentalExtensions";
 
 export class MockModule extends RuntimeModule {
     public get apiInstance(): ModuleApi {
@@ -81,7 +81,7 @@ export class MockModuleWithExperimentalExtension extends RuntimeModule {
 
     extensions: AllExtensions = {
         experimental: new (class extends ExperimentalExtensionsBase {
-            experimentalMethod  = jest.fn().mockReturnValue(Uint8Array.from([0x22, 0x44, 0x88]));
+            experimentalMethod = jest.fn().mockReturnValue(Uint8Array.from([0x22, 0x44, 0x88]));
         })(),
     };
 

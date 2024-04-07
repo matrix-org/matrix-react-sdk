@@ -16,7 +16,12 @@ limitations under the License.
 
 import { RoomPreviewOpts, RoomViewLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
-import { MockModule, registerMockModule, registerMockModuleWithCryptoSetupExtension, registerMockModuleWithExperimentalExtension } from "./MockModule";
+import {
+    MockModule,
+    registerMockModule,
+    registerMockModuleWithCryptoSetupExtension,
+    registerMockModuleWithExperimentalExtension,
+} from "./MockModule";
 import { ModuleRunner } from "../../src/modules/ModuleRunner";
 
 describe("ModuleRunner", () => {
