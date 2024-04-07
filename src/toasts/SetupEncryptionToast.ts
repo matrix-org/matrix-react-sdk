@@ -80,7 +80,6 @@ const onReject = (): void => {
 };
 
 export const showToast = (kind: Kind): void => {
-
     if (
         ModuleRunner.instance.extensions.cryptoSetup?.setupEncryptionNeeded({
             kind: kind as any,

@@ -17,7 +17,7 @@ limitations under the License.
 import { RuntimeModule } from "@matrix-org/react-sdk-module-api/lib/RuntimeModule";
 import { ModuleApi } from "@matrix-org/react-sdk-module-api/lib/ModuleApi";
 import { AllExtensions } from "@matrix-org/react-sdk-module-api/lib/types/extensions";
-import { CryptoSetupExtensionsBase, } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
+import { CryptoSetupExtensionsBase } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
 
 import { ModuleRunner } from "../../src/modules/ModuleRunner";
 
@@ -57,11 +57,11 @@ export class MockModuleWithCryptoSetupExtension extends RuntimeModule {
         cryptoSetup: new (class extends CryptoSetupExtensionsBase {
             SHOW_ENCRYPTION_SETUP_UI = true;
             examineLoginResponse = jest.fn();
-            persistCredentials = jest.fn();            
-            getSecretStorageKey = jest.fn().mockReturnValue(Uint8Array.from([0x11, 0x22, 0x99])); 
-            createSecretStorageKey = jest.fn()
-            catchAccessSecretStorageError = jest.fn()
-            setupEncryptionNeeded = jest.fn()
+            persistCredentials = jest.fn();
+            getSecretStorageKey = jest.fn().mockReturnValue(Uint8Array.from([0x11, 0x22, 0x99]));
+            createSecretStorageKey = jest.fn();
+            catchAccessSecretStorageError = jest.fn();
+            setupEncryptionNeeded = jest.fn();
             getDehydrationKeyCallback = jest.fn();
         })(),
     };
