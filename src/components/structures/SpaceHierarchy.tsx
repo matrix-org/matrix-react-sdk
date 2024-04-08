@@ -41,6 +41,7 @@ import {
     HistoryVisibility,
     HierarchyRelation,
     HierarchyRoom,
+    JoinRule,
 } from "matrix-js-sdk/src/matrix";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
 import classNames from "classnames";
@@ -157,7 +158,8 @@ const Tile: React.FC<ITileProps> = ({
                 <Spinner w={24} h={24} />
             </AccessibleTooltipButton>
         );
-    } else if (joinedRoom) {
+    } else if (joinedRoom || room.join_rule === JoinRule.Knock) {
+        // We use the view flow for knock rooms as it allows us to reuse the request to join UX in RoomView
         button = (
             <AccessibleButton
                 onClick={onPreviewClick}
