@@ -118,7 +118,7 @@ describe("MatrixClientPeg", () => {
             });
             it("should call overridden cryptoSetup.getDehydrationKeyCallback", async () => {
                 const mockCryptoSetup = new (class extends CryptoSetupExtensionsBase {
-                    SHOW_ENCRYPTION_SETUP_UI = true; 
+                    SHOW_ENCRYPTION_SETUP_UI = true;
                     examineLoginResponse = jest.fn();
                     persistCredentials = jest.fn();
                     getSecretStorageKey = jest.fn();
