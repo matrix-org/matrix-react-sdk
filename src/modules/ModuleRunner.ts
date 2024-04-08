@@ -91,7 +91,6 @@ class ExtensionsManager {
      * @param module - The appModule to check for extensions
      *
      * @throws if an extension is provided by more than one module
-     *
      */
     public addExtensions(module: AppModule): void {
         const runtimeModule = module.module;
