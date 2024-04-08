@@ -73,8 +73,12 @@ export default class SlidingSyncController extends SettingController {
             signal: controller.signal,
         });
         clearTimeout(id);
-        logger.info("slidingSyncHealthCheck: sliding sync endpoint is up");
-        return (res.status === 200)
+        if (res.status === 200) {
+            logger.info("slidingSyncHealthCheck: sliding sync endpoint is up");
+            return true;
+        }
+
+        return false;
     }
 
     public async beforeChange(level: SettingLevel, roomId: string, newValue: any): Promise<boolean> {
