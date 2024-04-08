@@ -94,7 +94,7 @@ describe("MatrixClientPeg", () => {
 
         describe("cryptoSetup extension", () => {
             it("should call default cryptoSetup.getDehydrationKeyCallback", async () => {
-                const mockCryptoSetup = new (class extends CryptoSetupExtensionsBase {
+                const mockCryptoSetup = {
                     SHOW_ENCRYPTION_SETUP_UI = true;
                     examineLoginResponse = jest.fn();
                     persistCredentials = jest.fn();
@@ -103,7 +103,7 @@ describe("MatrixClientPeg", () => {
                     catchAccessSecretStorageError = jest.fn();
                     setupEncryptionNeeded = jest.fn();
                     getDehydrationKeyCallback = jest.fn().mockReturnValue(null);
-                })() as ProvideCryptoSetupExtensions;
+                } as ProvideCryptoSetupExtensions;
 
                 // Ensure we have an instance before we set up spies
                 const instance = ModuleRunner.instance;
