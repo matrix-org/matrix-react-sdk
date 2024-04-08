@@ -139,7 +139,7 @@ export class ModuleRunner {
     /**
      * Exposes all extensions which may be overridden/provided by modules
      *
-     * @returns En extensionsmanager which exposes the extensions
+     * @returns An `ExtensionsManager` which exposes the extensions.
      */
     public get extensions(): ExtensionsManager {
         return this._extensions;
