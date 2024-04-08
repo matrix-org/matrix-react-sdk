@@ -17,11 +17,13 @@ limitations under the License.
 import { useMemo } from "react";
 import { EventType, JoinRule, Room } from "matrix-js-sdk/src/matrix";
 
+import SdkConfig from "../../SdkConfig";
 import { useRoomState } from "../useRoomState";
 
 interface GuestAccessInformation {
-    canChangeJoinRule: boolean;
+    canInviteGuests: boolean;
     isRoomJoinable: boolean;
+    guestSpaUrl?: string;
     isRoomJoinableFunction: () => boolean;
     canInvite: boolean;
 }
@@ -32,9 +34,13 @@ interface GuestAccessInformation {
  * @returns The GuestAccessInformation which helps decide what options the user should be given.
  */
 export const useGuestAccessInformation = (room: Room): GuestAccessInformation => {
+    const guestSpaUrl = useMemo(() => {
+        return SdkConfig.get("element_call").guest_spa_url;
+    }, []);
+
     // We use the direct function only in functions triggered by user interaction to avoid computation on every render.
     const { joinRule, canInvite, canChangeJoinRule } = useRoomState(room, (roomState) => ({
-        joinRule: roomState.getJoinRule(),
+        joinRule: room.getJoinRule(),
         canInvite: room.canInvite(room.myUserId),
         canChangeJoinRule: roomState.maySendStateEvent(EventType.RoomJoinRules, room.myUserId),
     }));
@@ -45,6 +51,10 @@ export const useGuestAccessInformation = (room: Room): GuestAccessInformation =>
         () => joinRule === JoinRule.Public || (joinRule === JoinRule.Knock && canInvite),
         [canInvite, joinRule],
     );
+    const canInviteGuests = useMemo(
+        () => (canChangeJoinRule || isRoomJoinable) && guestSpaUrl !== undefined,
+        [canChangeJoinRule, isRoomJoinable, guestSpaUrl],
+    );
 
-    return { canChangeJoinRule, isRoomJoinable, isRoomJoinableFunction, canInvite };
+    return { canInviteGuests, guestSpaUrl, isRoomJoinable, isRoomJoinableFunction, canInvite };
 };

@@ -15,7 +15,7 @@ limitations under the License.
 */
 import { Icon as ExternalLinkIcon } from "@vector-im/compound-design-tokens/icons/link.svg";
 import { Button, IconButton, Tooltip } from "@vector-im/compound-web";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventType, IJoinRuleEventContent, JoinRule, Room } from "matrix-js-sdk/src/matrix";
 
@@ -23,7 +23,6 @@ import Modal from "../../../../Modal";
 import ShareDialog from "../../dialogs/ShareDialog";
 import { _t } from "../../../../languageHandler";
 import SettingsStore from "../../../../settings/SettingsStore";
-import SdkConfig from "../../../../SdkConfig";
 import { calculateRoomVia } from "../../../../utils/permalinks/Permalinks";
 import BaseDialog from "../../dialogs/BaseDialog";
 import { useGuestAccessInformation } from "../../../../hooks/room/useGuestAccessInformation";
@@ -34,11 +33,8 @@ import { useGuestAccessInformation } from "../../../../hooks/room/useGuestAccess
  * @returns Nothing if there is not the option to share a link (No guest_spa_url is set) or a button to open a dialog to share the link.
  */
 export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
-    const guestSpaUrl = useMemo(() => {
-        return SdkConfig.get("element_call").guest_spa_url;
-    }, []);
-
-    const { canChangeJoinRule, isRoomJoinable, isRoomJoinableFunction, canInvite } = useGuestAccessInformation(room);
+    const { canInviteGuests, guestSpaUrl, isRoomJoinable, canInvite, isRoomJoinableFunction } =
+        useGuestAccessInformation(room);
 
     const generateCallLink = useCallback(() => {
         if (!isRoomJoinableFunction())
@@ -82,6 +78,7 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
             // the room needs to be set to public or knock to generate a link
             Modal.createDialog(JoinRuleDialog, {
                 room,
+                // If the user cannot invite the Knocking is not given as an option.
                 canInvite,
             }).finished.then(() => {
                 // we need to use the function here because the callback got called before the state was updated.
@@ -92,7 +89,7 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
 
     return (
         <>
-            {(canChangeJoinRule || isRoomJoinable) && guestSpaUrl && (
+            {canInviteGuests && (
                 <Tooltip label={_t("voip|get_call_link")}>
                     <IconButton onClick={shareClick} aria-label={_t("voip|get_call_link")}>
                         <ExternalLinkIcon />

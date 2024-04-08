@@ -179,8 +179,7 @@ export const useRoomCall = (
     const activeCalls = useEventEmitterState(CallStore.instance, CallStoreEvent.ActiveCalls, () =>
         Array.from(CallStore.instance.activeCalls),
     );
-    const { canChangeJoinRule, isRoomJoinable } = useGuestAccessInformation(room);
-    const canCallAlone = canChangeJoinRule || isRoomJoinable;
+    const { canInviteGuests } = useGuestAccessInformation(room);
 
     const state = useMemo((): State => {
         if (activeCalls.find((call) => call.roomId != room.roomId)) {
@@ -192,7 +191,7 @@ export const useRoomCall = (
         if (hasLegacyCall) {
             return State.Ongoing;
         }
-        if (!(memberCount > 1 || canCallAlone)) {
+        if (memberCount <= 1 && !canInviteGuests) {
             return State.NoOneHere;
         }
 
@@ -202,7 +201,7 @@ export const useRoomCall = (
         return State.NoCall;
     }, [
         activeCalls,
-        canCallAlone,
+        canInviteGuests,
         hasGroupCall,
         hasJitsiWidget,
         hasLegacyCall,

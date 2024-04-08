@@ -381,10 +381,33 @@ describe("RoomHeader", () => {
         it("can call if you have no friends but can invite friends", () => {
             mockRoomMembers(room, 1);
             // go through all the different `canInvite` and `getJoinRule` combinations
+
+            // check where we cant do anything but can updrade
+            jest.spyOn(room.currentState, "maySendStateEvent").mockReturnValue(true);
             jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Invite);
             jest.spyOn(room, "canInvite").mockReturnValue(false);
+            const guestSpaUrlMock = jest.spyOn(SdkConfig, "get").mockImplementation((key) => {
+                return { guest_spa_url: "https://guest_spa_url.com", url: "https://spa_url.com" };
+            });
+            const { container: containerNoInviteNotPublicCanUpgradeAccess } = render(
+                <RoomHeader room={room} />,
+                getWrapper(),
+            );
+            expect(
+                queryAllByLabelText(containerNoInviteNotPublicCanUpgradeAccess, "There's no one here to call"),
+            ).toHaveLength(0);
+
+            // dont allow upgrading anymore and go through the other combinations
+            jest.spyOn(room.currentState, "maySendStateEvent").mockReturnValue(false);
+            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Invite);
+            jest.spyOn(room, "canInvite").mockReturnValue(false);
+            jest.spyOn(SdkConfig, "get").mockImplementation((key) => {
+                return { guest_spa_url: "https://guest_spa_url.com", url: "https://spa_url.com" };
+            });
             const { container: containerNoInviteNotPublic } = render(<RoomHeader room={room} />, getWrapper());
+            // expect(getAllByLabelText(containerNoInviteNotPublic, "There's no one here to call")).toBeInTheDocument();
             expect(queryAllByLabelText(containerNoInviteNotPublic, "There's no one here to call")).toHaveLength(2);
+
             jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
             jest.spyOn(room, "canInvite").mockReturnValue(false);
             const { container: containerNoInvitePublic } = render(<RoomHeader room={room} />, getWrapper());
@@ -399,6 +422,13 @@ describe("RoomHeader", () => {
             jest.spyOn(room, "canInvite").mockReturnValue(true);
             const { container: containerInvitePublic } = render(<RoomHeader room={room} />, getWrapper());
             expect(queryAllByLabelText(containerInvitePublic, "There's no one here to call")).toHaveLength(0);
+
+            // last we can allow everything but without guest_spa_url nothing will work
+            guestSpaUrlMock.mockRestore();
+            const { container: containerAllAllowedButNoGuestSpaUrl } = render(<RoomHeader room={room} />, getWrapper());
+            expect(
+                queryAllByLabelText(containerAllAllowedButNoGuestSpaUrl, "There's no one here to call"),
+            ).toHaveLength(2);
         });
 
         it("calls using legacy or jitsi", async () => {
