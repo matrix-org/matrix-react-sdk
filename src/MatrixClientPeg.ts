@@ -274,6 +274,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.threadSupport = true;
 
         if (SettingsStore.getValue("feature_sliding_sync")) {
+            const baseUrl = this.matrixClient.baseUrl;
             const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
             const wellKnownProxyUrl = this.safeGet().getClientWellKnown()?.["org.matrix.msc3575.proxy"]?.url;
             if (proxyUrl) {
@@ -281,11 +282,11 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             } else if (wellKnownProxyUrl) {
                 logger.log("Activating sliding sync using proxy at ", wellKnownProxyUrl);
             } else {
-                logger.log("Activating sliding sync");
+                logger.log("Activating sliding sync using the HS base url at ", baseUrl);
             }
             opts.slidingSync = SlidingSyncManager.instance.configure(
                 this.matrixClient,
-                proxyUrl || wellKnownProxyUrl || this.matrixClient.baseUrl,
+                proxyUrl || wellKnownProxyUrl || baseUrl,
             );
             SlidingSyncManager.instance.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
         }
