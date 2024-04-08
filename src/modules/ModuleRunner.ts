@@ -63,7 +63,7 @@ class ExtensionsManager {
     }
 
     /**
-     * Provides a n experimental extension.
+     * Provides an experimental extension.
      *
      * @remarks
      * This method extension is provided to simplify experimentaion an development, and is not intended for production code
