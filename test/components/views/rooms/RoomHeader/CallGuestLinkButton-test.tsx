@@ -113,7 +113,7 @@ describe("<CallGuestLinkButton />", () => {
     it("shows the JoinRuleDialog on click with private join rules", async () => {
         getComponent(room);
         fireEvent.click(screen.getByLabelText("Share call link"));
-        expect(modalSpy).toHaveBeenCalledWith(JoinRuleDialog, { room });
+        expect(modalSpy).toHaveBeenCalledWith(JoinRuleDialog, { room, canInvite: false });
         // pretend public was selected
         jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Public);
         modalResolve([]);
@@ -138,6 +138,7 @@ describe("<CallGuestLinkButton />", () => {
 
     it("shows the ShareDialog on click with knock join rules", () => {
         jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
+        jest.spyOn(room, "canInvite").mockReturnValue(true);
         getComponent(room);
         fireEvent.click(screen.getByLabelText("Share call link"));
         const callParams = modalSpy.mock.calls[0];
@@ -148,11 +149,13 @@ describe("<CallGuestLinkButton />", () => {
     });
 
     it("don't show external conference button if room not public nor knock and the user cannot change join rules", () => {
+        // preparation for if we refactor the related code to not use currentState.
         jest.spyOn(room, "getLiveTimeline").mockReturnValue({
             getState: jest.fn().mockReturnValue({
                 maySendStateEvent: jest.fn().mockReturnValue(false),
             }),
         } as unknown as EventTimeline);
+        jest.spyOn(room.currentState, "maySendStateEvent").mockReturnValue(false);
         getComponent(room);
         expect(screen.queryByLabelText("Share call link")).not.toBeInTheDocument();
     });
