@@ -32,7 +32,7 @@ import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock-s
 import { Icon as LockOffIcon } from "@vector-im/compound-design-tokens/icons/lock-off.svg";
 import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
 import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
-import { EventType, JoinRule, Room, RoomMemberEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { EventType, JoinRule, Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
