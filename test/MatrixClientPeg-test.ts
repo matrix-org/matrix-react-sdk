@@ -18,7 +18,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import fetchMockJest from "fetch-mock-jest";
 import EventEmitter from "events";
 import {
-    CryptoSetupExtensionsBase,
     ProvideCryptoSetupExtensions,
     SecretStorageKeyDescription,
 } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
@@ -94,13 +93,12 @@ describe("MatrixClientPeg", () => {
 
         describe("cryptoSetup extension", () => {
             it("should call default cryptoSetup.getDehydrationKeyCallback", async () => {
-
                 const mockCryptoSetup = {
                     SHOW_ENCRYPTION_SETUP_UI: true,
                     examineLoginResponse: jest.fn(),
                     persistCredentials: jest.fn(),
                     getSecretStorageKey: jest.fn(),
-                    createSecretStorageKey:  jest.fn(),
+                    createSecretStorageKey: jest.fn(),
                     catchAccessSecretStorageError: jest.fn(),
                     setupEncryptionNeeded: jest.fn(),
                     getDehydrationKeyCallback: jest.fn().mockReturnValue(null),
@@ -120,19 +118,18 @@ describe("MatrixClientPeg", () => {
                 expect(mockCryptoSetup.getDehydrationKeyCallback).toHaveBeenCalledTimes(1);
             });
 
-            it("should call overridden cryptoSetup.getDehydrationKeyCallback", async () => {   
-                             
+            it("should call overridden cryptoSetup.getDehydrationKeyCallback", async () => {
                 const mockDehydrationKeyCallback = () => Uint8Array.from([0x11, 0x22, 0x33]);
 
-                const mockCryptoSetup =  {
+                const mockCryptoSetup = {
                     SHOW_ENCRYPTION_SETUP_UI: true,
                     examineLoginResponse: jest.fn(),
                     persistCredentials: jest.fn(),
                     getSecretStorageKey: jest.fn(),
-                    createSecretStorageKey:  jest.fn(),
+                    createSecretStorageKey: jest.fn(),
                     catchAccessSecretStorageError: jest.fn(),
                     setupEncryptionNeeded: jest.fn(),
-                    getDehydrationKeyCallback: jest.fn().mockReturnValue(mockDehydrationKeyCallback);
+                    getDehydrationKeyCallback: jest.fn().mockReturnValue(mockDehydrationKeyCallback),
                 } as ProvideCryptoSetupExtensions;
 
                 // Ensure we have an instance before we set up spies
