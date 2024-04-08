@@ -152,7 +152,7 @@ export class ModuleRunner {
      */
     public reset(): void {
         this.modules = [];
-        this._extensions.reset();
+        this._extensions = new ExtensionsManager();
     }
 
     /**
