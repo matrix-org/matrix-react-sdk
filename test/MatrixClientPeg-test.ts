@@ -20,6 +20,7 @@ import EventEmitter from "events";
 import {
     CryptoSetupExtensionsBase,
     ProvideCryptoSetupExtensions,
+    SecretStorageKeyDescription,
 } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
 
 import { advanceDateAndTime, stubClient } from "./test-utils";
@@ -101,7 +102,7 @@ describe("MatrixClientPeg", () => {
                     createSecretStorageKey = jest.fn();
                     catchAccessSecretStorageError = jest.fn();
                     setupEncryptionNeeded = jest.fn();
-                    getDehydrationKeyCallback = jest.fn();
+                    getDehydrationKeyCallback = jest.fn().mockReturnValue(null);
                 })() as ProvideCryptoSetupExtensions;
 
                 // Ensure we have an instance before we set up spies
@@ -114,9 +115,13 @@ describe("MatrixClientPeg", () => {
                     userId: "@user:example.com",
                     deviceId: "TEST_DEVICE_ID",
                 });
+
                 expect(mockCryptoSetup.getDehydrationKeyCallback).toHaveBeenCalledTimes(1);
             });
+
             it("should call overridden cryptoSetup.getDehydrationKeyCallback", async () => {
+                const mockDehydrationKeyCallback = () => Uint8Array.from([0x11, 0x22, 0x33]);
+
                 const mockCryptoSetup = new (class extends CryptoSetupExtensionsBase {
                     SHOW_ENCRYPTION_SETUP_UI = true;
                     examineLoginResponse = jest.fn();
@@ -125,7 +130,7 @@ describe("MatrixClientPeg", () => {
                     createSecretStorageKey = jest.fn();
                     catchAccessSecretStorageError = jest.fn();
                     setupEncryptionNeeded = jest.fn();
-                    getDehydrationKeyCallback = jest.fn().mockReturnValue(() => Uint8Array.from([0x11, 0x22, 0x33]));
+                    getDehydrationKeyCallback = jest.fn().mockReturnValue(mockDehydrationKeyCallback);
                 })() as ProvideCryptoSetupExtensions;
 
                 // Ensure we have an instance before we set up spies
@@ -139,6 +144,13 @@ describe("MatrixClientPeg", () => {
                     deviceId: "TEST_DEVICE_ID",
                 });
                 expect(mockCryptoSetup.getDehydrationKeyCallback).toHaveBeenCalledTimes(1);
+
+                const client = testPeg.get();
+                const dehydrationKey = await client?.cryptoCallbacks.getDehydrationKey!(
+                    {} as SecretStorageKeyDescription,
+                    (key: Uint8Array) => true,
+                );
+                expect(dehydrationKey).toEqual(Uint8Array.from([0x11, 0x22, 0x33]));
             });
         });
     });
