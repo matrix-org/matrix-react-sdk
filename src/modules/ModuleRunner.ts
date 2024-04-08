@@ -187,9 +187,7 @@ export class ModuleRunner {
 
         this.modules.push(appModule);
 
-        /**
-         * Check if the new module provides any extensions, and also ensure a given extension is only provided by a single runtime module
-         */
+        // Check if the new module provides any extensions, and also ensure a given extension is only provided by a single runtime module.
         this._extensions.addExtensions(appModule);
     }
 
