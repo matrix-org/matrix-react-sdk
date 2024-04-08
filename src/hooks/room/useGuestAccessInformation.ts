@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useCallback } from "react";
-import { EventTimeline, EventType, JoinRule, Room, RoomMemberEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { useMemo } from "react";
+import { EventType, JoinRule, Room } from "matrix-js-sdk/src/matrix";
 
-import { useEventEmitterState } from "../useEventEmitter";
+import { useRoomState } from "../useRoomState";
 
 interface GuestAccessInformation {
     canChangeJoinRule: boolean;
-    roomIsJoinableState: boolean;
-    isRoomJoinable: () => boolean;
+    isRoomJoinable: boolean;
+    isRoomJoinableFunction: () => boolean;
     canInvite: boolean;
 }
 
@@ -33,24 +33,18 @@ interface GuestAccessInformation {
  */
 export const useGuestAccessInformation = (room: Room): GuestAccessInformation => {
     // We use the direct function only in functions triggered by user interaction to avoid computation on every render.
-    const isRoomJoinable = useCallback(
-        () =>
-            room.getJoinRule() === JoinRule.Public ||
-            (room.getJoinRule() === JoinRule.Knock && room.canInvite(room.myUserId)),
-        [room],
+    const { joinRule, canInvite, canChangeJoinRule } = useRoomState(room, (roomState) => ({
+        joinRule: roomState.getJoinRule(),
+        canInvite: room.canInvite(room.myUserId),
+        canChangeJoinRule: roomState.maySendStateEvent(EventType.RoomJoinRules, room.myUserId),
+    }));
+    const isRoomJoinableFunction = (): boolean =>
+        room.getJoinRule() === JoinRule.Public || (joinRule === JoinRule.Knock && room.canInvite(room.myUserId));
+
+    const isRoomJoinable = useMemo(
+        () => joinRule === JoinRule.Public || (joinRule === JoinRule.Knock && canInvite),
+        [canInvite, joinRule],
     );
 
-    const roomIsJoinableState = useEventEmitterState(room, RoomStateEvent.Update, isRoomJoinable);
-    const canInvite = useEventEmitterState(room, RoomStateEvent.Update, () => room.canInvite(room.myUserId));
-
-    const canChangeJoinRule = useEventEmitterState(
-        room.client,
-        RoomMemberEvent.PowerLevel,
-        () =>
-            room
-                .getLiveTimeline()
-                ?.getState(EventTimeline.FORWARDS)
-                ?.maySendStateEvent(EventType.RoomJoinRules, room.myUserId) ?? false,
-    );
-    return { canChangeJoinRule, roomIsJoinableState, isRoomJoinable, canInvite };
+    return { canChangeJoinRule, isRoomJoinable, isRoomJoinableFunction, canInvite };
 };

@@ -38,10 +38,11 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
         return SdkConfig.get("element_call").guest_spa_url;
     }, []);
 
-    const { canChangeJoinRule, roomIsJoinableState, isRoomJoinable, canInvite } = useGuestAccessInformation(room);
+    const { canChangeJoinRule, isRoomJoinable, isRoomJoinableFunction, canInvite } = useGuestAccessInformation(room);
 
     const generateCallLink = useCallback(() => {
-        if (!isRoomJoinable()) throw new Error("Cannot create link for room that users can not join without invite.");
+        if (!isRoomJoinableFunction())
+            throw new Error("Cannot create link for room that users can not join without invite.");
         if (!guestSpaUrl) throw new Error("No guest SPA url for external links provided.");
         const url = new URL(guestSpaUrl);
         url.pathname = "/room/";
@@ -58,7 +59,7 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
 
         logger.info("Generated element call external url:", url);
         return url;
-    }, [guestSpaUrl, isRoomJoinable, room]);
+    }, [guestSpaUrl, isRoomJoinableFunction, room]);
 
     const showLinkModal = useCallback(() => {
         try {
@@ -75,7 +76,7 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
     }, [generateCallLink]);
 
     const shareClick = useCallback(() => {
-        if (isRoomJoinable()) {
+        if (isRoomJoinable) {
             showLinkModal();
         } else {
             // the room needs to be set to public or knock to generate a link
@@ -84,14 +85,14 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
                 canInvite,
             }).finished.then(() => {
                 // we need to use the function here because the callback got called before the state was updated.
-                if (isRoomJoinable()) showLinkModal();
+                if (isRoomJoinableFunction()) showLinkModal();
             });
         }
-    }, [isRoomJoinable, showLinkModal, room, canInvite]);
+    }, [isRoomJoinable, showLinkModal, room, canInvite, isRoomJoinableFunction]);
 
     return (
         <>
-            {(canChangeJoinRule || roomIsJoinableState) && guestSpaUrl && (
+            {(canChangeJoinRule || isRoomJoinable) && guestSpaUrl && (
                 <Tooltip label={_t("voip|get_call_link")}>
                     <IconButton onClick={shareClick} aria-label={_t("voip|get_call_link")}>
                         <ExternalLinkIcon />

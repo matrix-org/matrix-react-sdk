@@ -179,8 +179,8 @@ export const useRoomCall = (
     const activeCalls = useEventEmitterState(CallStore.instance, CallStoreEvent.ActiveCalls, () =>
         Array.from(CallStore.instance.activeCalls),
     );
-    const { canChangeJoinRule, roomIsJoinableState } = useGuestAccessInformation(room);
-    const canCallAlone = canChangeJoinRule || roomIsJoinableState;
+    const { canChangeJoinRule, isRoomJoinable } = useGuestAccessInformation(room);
+    const canCallAlone = canChangeJoinRule || isRoomJoinable;
 
     const state = useMemo((): State => {
         if (activeCalls.find((call) => call.roomId != room.roomId)) {
