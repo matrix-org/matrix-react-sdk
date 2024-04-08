@@ -92,12 +92,12 @@ describe("MatrixClientPeg", () => {
         });
 
         describe("cryptoSetup extension", () => {
-            it("should call cryptoSetup.getDehydrationKeyCallback", async () => {
+            it("should call default cryptoSetup.getDehydrationKeyCallback", async () => {
                 const mockCryptoSetup = new (class extends CryptoSetupExtensionsBase {
                     SHOW_ENCRYPTION_SETUP_UI = true;
                     examineLoginResponse = jest.fn();
                     persistCredentials = jest.fn();
-                    getSecretStorageKey = jest.fn().mockReturnValue(Uint8Array.from([0x11, 0x22, 0x33]));
+                    getSecretStorageKey = jest.fn();
                     createSecretStorageKey = jest.fn();
                     catchAccessSecretStorageError = jest.fn();
                     setupEncryptionNeeded = jest.fn();
@@ -116,16 +116,16 @@ describe("MatrixClientPeg", () => {
                 });
                 expect(mockCryptoSetup.getDehydrationKeyCallback).toHaveBeenCalledTimes(1);
             });
-            it("should fallback to default when cryptoSetup.getDehydrationKeyCallback return null", async () => {
+            it("should call overridden cryptoSetup.getDehydrationKeyCallback", async () => {
                 const mockCryptoSetup = new (class extends CryptoSetupExtensionsBase {
                     SHOW_ENCRYPTION_SETUP_UI = true; 
                     examineLoginResponse = jest.fn();
                     persistCredentials = jest.fn();
-                    getSecretStorageKey = jest.fn().mockReturnValue(null);
+                    getSecretStorageKey = jest.fn();
                     createSecretStorageKey = jest.fn();
                     catchAccessSecretStorageError = jest.fn();
                     setupEncryptionNeeded = jest.fn();
-                    getDehydrationKeyCallback = jest.fn();
+                    getDehydrationKeyCallback = jest.fn().mockReturnValue(() => Uint8Array.from([0x11, 0x22, 0x33]));
                 })() as ProvideCryptoSetupExtensions;
 
                 // Ensure we have an instance before we set up spies
