@@ -66,7 +66,7 @@ class ExtensionsManager {
      * Provides an experimental extension.
      *
      * @remarks
-     * This method extension is provided to simplify experimentaion an development, and is not intended for production code
+     * This method extension is provided to simplify experimentation and development, and is not intended for production code.
      *
      * @returns The registered extension. If no module provides this extension, a default implementation is returned
      */
