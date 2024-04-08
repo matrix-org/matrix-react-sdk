@@ -31,21 +31,22 @@ import { ModuleFactory } from "./ModuleFactory";
 
 import "./ModuleComponents";
 
-class ExtensionImplementationMap {
-    public hasDefaultCryptoSetupExtension: boolean = true;
-    public hasDefaultExperimentalExtension: boolean = true;
-}
-
 /**
- * Handles and manages any extensions provided by modules
+ * Handles and manages extensions provided by modules.
  */
-class ExtensionsManager {
+export class ExtensionsManager {
+    // Private backing fields for extensions
     private _cryptoSetup: ProvideCryptoSetupExtensions;
     private _experimental: ProvideExperimentalExtensions;
-    private _implementionMap: ExtensionImplementationMap = new ExtensionImplementationMap();
+
+    // Map to keep track of which extensions has been provided by modules.
+    private implementionMap = {
+        hasDefaultCryptoSetupExtension: true,
+        hasDefaultExperimentalExtension: true,
+    };
 
     /**
-     * Create a new instance
+     * Create a new instance.
      */
     public constructor() {
         // Set up defaults
@@ -56,7 +57,7 @@ class ExtensionsManager {
     /**
      * Provides a crypto setup extension.
      *
-     * @returns The registered extension. If no module provides this extension, a default implementation is returned
+     * @returns The registered extension. If no module provides this extension, a default implementation is returned.
      */
     public get cryptoSetup(): ProvideCryptoSetupExtensions {
         return this._cryptoSetup;
@@ -68,53 +69,42 @@ class ExtensionsManager {
      * @remarks
      * This method extension is provided to simplify experimentation and development, and is not intended for production code.
      *
-     * @returns The registered extension. If no module provides this extension, a default implementation is returned
+     * @returns The registered extension. If no module provides this extension, a default implementation is returned.
      */
     public get experimental(): ProvideExperimentalExtensions {
         return this._experimental;
     }
 
     /**
-     * Resets the extension to the defaults
+     * Add any extensions provided by the module.
      *
-     * Intended for test usage only.
-     */
-    public reset(): void {
-        this._implementionMap = new ExtensionImplementationMap();
-        this._cryptoSetup = new DefaultCryptoSetupExtensions();
-        this._experimental = new DefaultExperimentalExtensions();
-    }
-
-    /**
-     * Add any extensions provided by the module
+     * @param module - The appModule to check for extensions.
      *
-     * @param module - The appModule to check for extensions
-     *
-     * @throws if an extension is provided by more than one module
+     * @throws if an extension is provided by more than one module.
      */
     public addExtensions(module: AppModule): void {
         const runtimeModule = module.module;
 
         /* Record the cryptoSetup extensions if any */
         if (runtimeModule.extensions?.cryptoSetup) {
-            if (this._implementionMap.hasDefaultCryptoSetupExtension) {
+            if (this.implementionMap.hasDefaultCryptoSetupExtension) {
                 this._cryptoSetup = runtimeModule.extensions?.cryptoSetup;
-                this._implementionMap.hasDefaultCryptoSetupExtension = false;
+                this.implementionMap.hasDefaultCryptoSetupExtension = false;
             } else {
                 throw new Error(
-                    `adding cryptoSetup extension implementation from module ${runtimeModule.moduleName} but an implementation was already provided`,
+                    `adding cryptoSetup extension implementation from module ${runtimeModule.moduleName} but an implementation was already provided.`,
                 );
             }
         }
 
         /* Record the experimental extensions if any */
         if (runtimeModule.extensions?.experimental) {
-            if (this._implementionMap.hasDefaultExperimentalExtension) {
+            if (this.implementionMap.hasDefaultExperimentalExtension) {
                 this._experimental = runtimeModule.extensions?.experimental;
-                this._implementionMap.hasDefaultExperimentalExtension = false;
+                this.implementionMap.hasDefaultExperimentalExtension = false;
             } else {
                 throw new Error(
-                    `adding experimental extension implementation from module ${runtimeModule.moduleName} but an implementation was already provided`,
+                    `adding experimental extension implementation from module ${runtimeModule.moduleName} but an implementation was already provided.`,
                 );
             }
         }
@@ -136,7 +126,7 @@ export class ModuleRunner {
     }
 
     /**
-     * Exposes all extensions which may be overridden/provided by modules
+     * Exposes all extensions which may be overridden/provided by modules.
      *
      * @returns An `ExtensionsManager` which exposes the extensions.
      */
