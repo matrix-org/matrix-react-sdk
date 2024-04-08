@@ -27,8 +27,7 @@ import { MatrixClientPeg } from "../../MatrixClientPeg";
 
 export default class SlidingSyncController extends SettingController {
     /**
-     * Check if the server declares support for sliding sync via a proxy in its client
-     * `.well-known`, and check that the endpoint is, in fact, a sliding sync endpoint.
+     * Check if the server declares support for sliding sync via a proxy in its client `.well-known`.
      * @return {boolean} Whether the client well-known contains working proxy url
      */
     private async proxySlidingSyncSupport(): Promise<boolean> {
