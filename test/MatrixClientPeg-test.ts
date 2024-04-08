@@ -94,15 +94,16 @@ describe("MatrixClientPeg", () => {
 
         describe("cryptoSetup extension", () => {
             it("should call default cryptoSetup.getDehydrationKeyCallback", async () => {
+
                 const mockCryptoSetup = {
-                    SHOW_ENCRYPTION_SETUP_UI = true;
-                    examineLoginResponse = jest.fn();
-                    persistCredentials = jest.fn();
-                    getSecretStorageKey = jest.fn();
-                    createSecretStorageKey = jest.fn();
-                    catchAccessSecretStorageError = jest.fn();
-                    setupEncryptionNeeded = jest.fn();
-                    getDehydrationKeyCallback = jest.fn().mockReturnValue(null);
+                    SHOW_ENCRYPTION_SETUP_UI: true,
+                    examineLoginResponse: jest.fn(),
+                    persistCredentials: jest.fn(),
+                    getSecretStorageKey: jest.fn(),
+                    createSecretStorageKey:  jest.fn(),
+                    catchAccessSecretStorageError: jest.fn(),
+                    setupEncryptionNeeded: jest.fn(),
+                    getDehydrationKeyCallback: jest.fn().mockReturnValue(null),
                 } as ProvideCryptoSetupExtensions;
 
                 // Ensure we have an instance before we set up spies
@@ -119,19 +120,20 @@ describe("MatrixClientPeg", () => {
                 expect(mockCryptoSetup.getDehydrationKeyCallback).toHaveBeenCalledTimes(1);
             });
 
-            it("should call overridden cryptoSetup.getDehydrationKeyCallback", async () => {
+            it("should call overridden cryptoSetup.getDehydrationKeyCallback", async () => {   
+                             
                 const mockDehydrationKeyCallback = () => Uint8Array.from([0x11, 0x22, 0x33]);
 
-                const mockCryptoSetup = new (class extends CryptoSetupExtensionsBase {
-                    SHOW_ENCRYPTION_SETUP_UI = true;
-                    examineLoginResponse = jest.fn();
-                    persistCredentials = jest.fn();
-                    getSecretStorageKey = jest.fn();
-                    createSecretStorageKey = jest.fn();
-                    catchAccessSecretStorageError = jest.fn();
-                    setupEncryptionNeeded = jest.fn();
-                    getDehydrationKeyCallback = jest.fn().mockReturnValue(mockDehydrationKeyCallback);
-                })() as ProvideCryptoSetupExtensions;
+                const mockCryptoSetup =  {
+                    SHOW_ENCRYPTION_SETUP_UI: true,
+                    examineLoginResponse: jest.fn(),
+                    persistCredentials: jest.fn(),
+                    getSecretStorageKey: jest.fn(),
+                    createSecretStorageKey:  jest.fn(),
+                    catchAccessSecretStorageError: jest.fn(),
+                    setupEncryptionNeeded: jest.fn(),
+                    getDehydrationKeyCallback: jest.fn().mockReturnValue(mockDehydrationKeyCallback);
+                } as ProvideCryptoSetupExtensions;
 
                 // Ensure we have an instance before we set up spies
                 const instance = ModuleRunner.instance;
