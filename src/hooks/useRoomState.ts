@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Room, RoomState, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { EventTimeline, Room, RoomState, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
 import { useTypedEventEmitter } from "./useEventEmitter";
 
@@ -28,6 +28,9 @@ export const useRoomState = <T extends any = RoomState>(
     room?: Room,
     mapper: Mapper<T> = defaultMapper as Mapper<T>,
 ): T => {
+    function getCurrentState(room: Room | undefined): RoomState | undefined {
+        return room?.getLiveTimeline().getState(EventTimeline.FORWARDS);
+    }
     // Create a ref that stores mapper
     const savedMapper = useRef(mapper);
 
@@ -36,18 +39,23 @@ export const useRoomState = <T extends any = RoomState>(
         savedMapper.current = mapper;
     }, [mapper]);
 
-    const [value, setValue] = useState<T>(room ? mapper(room.currentState) : (undefined as T));
+    const [value, setValue] = useState<T>(() => {
+        const roomState = getCurrentState(room);
+        return roomState ? mapper(roomState) : (undefined as T);
+    });
 
     const update = useCallback(() => {
-        if (!room) return;
-        setValue(savedMapper.current(room.currentState));
+        const roomState = getCurrentState(room);
+        if (!roomState) return;
+        setValue(savedMapper.current(roomState));
     }, [room]);
 
-    useTypedEventEmitter(room?.currentState, RoomStateEvent.Update, update);
+    useTypedEventEmitter(room, RoomStateEvent.Update, update);
     useEffect(() => {
         update();
         return () => {
-            setValue(room ? savedMapper.current(room.currentState) : (undefined as T));
+            const roomState = getCurrentState(room);
+            setValue(roomState ? savedMapper.current(roomState) : (undefined as T));
         };
     }, [room, update]);
     return value;
