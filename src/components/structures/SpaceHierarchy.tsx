@@ -159,7 +159,8 @@ const Tile: React.FC<ITileProps> = ({
             </AccessibleTooltipButton>
         );
     } else if (joinedRoom || room.join_rule === JoinRule.Knock) {
-        // We use the view flow for knock rooms as it allows us to reuse the request to join UX in RoomView
+        // If the room is knockable, show the "View" button even if we are not a member; that
+        // allows us to reuse the "request to join" UX in RoomView.
         button = (
             <AccessibleButton
                 onClick={onPreviewClick}
