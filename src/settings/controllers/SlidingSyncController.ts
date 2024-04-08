@@ -37,8 +37,7 @@ export default class SlidingSyncController extends SettingController {
     }
 
     /**
-     * Check if the server "natively" supports sliding sync (at the unstable endpoint),
-     * and check that the endpoint is, in fact, a sliding sync endpoint.
+     * Check if the server declares "natively" supports sliding sync (at the unstable endpoint)
      * @return {boolean} Whether the "native" (unstable) endpoint is up
      */
     private async nativeSlidingSyncSupport(): Promise<boolean> {
