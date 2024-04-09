@@ -246,14 +246,14 @@
         "phone_optional_label": "Phone (optional)",
         "qr_code_login": {
             "approve_access_warning": "By approving access for this device, it will have full access to your account.",
+            "check_code_explainer": "This will verify that the connection to your other device is secure.",
+            "check_code_heading": "Enter the number shown on your other device",
+            "check_code_input_label": "2-digit code",
+            "check_code_mismatch": "The numbers don't match",
             "completing_setup": "Completing set up of your new device",
             "confirm_code_match": "Check that the code below matches with your other device:",
-            "connecting": "Connecting…",
-            "error_device_already_signed_in": "The other device is already signed in.",
-            "error_device_not_signed_in": "The other device isn't signed in.",
             "error_device_unsupported": "Linking with this device is not supported.",
             "error_homeserver_lacks_support": "The homeserver doesn't support signing in another device.",
-            "error_invalid_scanned_code": "The scanned code is invalid.",
             "error_linking_incomplete": "The linking wasn't completed in the required time.",
             "error_rate_limited": "Too many attempts in a short time. Wait some time before trying again.",
             "error_request_cancelled": "The request was cancelled.",
@@ -263,16 +263,12 @@
             "open_element_other_device": "Open %(brand)s on your other device",
             "point_the_camera": "Point the camera at the QR code shown here",
             "scan_code_instruction": "Scan the QR code with another device",
-            "scan_qr_code": "Scan QR code",
+            "scan_qr_code": "Sign in with QR code",
+            "security_code": "Security code",
+            "security_code_prompt": "If asked, enter the code below on your other device.",
             "select_qr_code": "Select \"%(scanQRCode)s\"",
             "sign_in_new_device": "Sign in new device",
-            "waiting_for_device": "Waiting for device to sign in",
-            "security_code_prompt": "If asked, enter the code below on your other device.",
-            "security_code": "Security code",
-            "reject_action": "No, I don't",
-            "confirm_green_checkmark_title": "Do you see a green checkmark on your other device?",
-            "confirm_green_checkmark": "Confirm that you see a green checkmark on both devices to to verify that the connection is secure.",
-            "confirm_action": "Yes, I do"
+            "waiting_for_device": "Waiting for device to sign in"
         },
         "register_action": "Create Account",
         "registration": {
@@ -1423,6 +1419,7 @@
         "group_spaces": "Spaces",
         "group_themes": "Themes",
         "group_threads": "Threads",
+        "group_ui": "User interface",
         "group_voip": "Voice & Video",
         "group_widgets": "Widgets",
         "hidebold": "Hide notification dot (only display counters badges)",
@@ -1446,6 +1443,7 @@
         "oidc_native_flow": "OIDC native authentication",
         "oidc_native_flow_description": "⚠ WARNING: Experimental. Use OIDC native authentication when supported by the server.",
         "pinning": "Message Pinning",
+        "release_announcement": "Release announcement",
         "render_reaction_images": "Render custom images in reactions",
         "render_reaction_images_description": "Sometimes referred to as \"custom emojis\".",
         "report_to_moderators": "Report to moderators",
@@ -1481,9 +1479,7 @@
         "video_rooms_feedbackSubheading": "Thank you for trying the beta, please go into as much detail as you can so we can improve it.",
         "voice_broadcast": "Voice broadcast",
         "voice_broadcast_force_small_chunks": "Force 15s voice broadcast chunk length",
-        "wysiwyg_composer": "Rich text editor",
-        "release_announcement": "Release announcement",
-        "group_ui": "User interface"
+        "wysiwyg_composer": "Rich text editor"
     },
     "labs_mjolnir": {
         "advanced_warning": "⚠ These settings are meant for advanced users.",
@@ -3170,8 +3166,8 @@
     "threads_activity_centre": {
         "header": "Threads activity",
         "no_rooms_with_unreads_threads": "You don't have rooms with unread threads yet.",
-        "release_announcement_header": "Threads Activity Centre",
-        "release_announcement_description": "Threads notifications have moved, find them here from now on."
+        "release_announcement_description": "Threads notifications have moved, find them here from now on.",
+        "release_announcement_header": "Threads Activity Centre"
     },
     "time": {
         "about_day_ago": "about a day ago",

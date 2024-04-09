@@ -14,20 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { RefObject, createRef } from "react";
+import React, { createRef } from "react";
 import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
 import { Icon as ChevronLeftIcon } from "@vector-im/compound-design-tokens/icons/chevron-left.svg";
+import { Heading, MFAInput, Text } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import QRCode from "../elements/QRCode";
 import Spinner from "../elements/Spinner";
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/i.svg";
-import { Icon as CheckmarkIcon } from "../../../../res/img/element-icons/check.svg";
 import { Click, Phase } from "./LoginWithQR-types";
 import SdkConfig from "../../../SdkConfig";
 import { FailureReason, LoginWithQRFailureReason } from "./LoginWithQR";
 import { XOR } from "../../../@types/common";
+import { ErrorMessage } from "../../structures/ErrorMessage";
 
 /**
  * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108.
@@ -52,7 +53,7 @@ interface Props {
  * This supports the unstable features of MSC3906 and MSC4108
  */
 export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906Props>> {
-    private checkCodeInput = createRef<HTMLInputElement>(null);
+    private checkCodeInput = createRef<HTMLInputElement>();
 
     public constructor(props: XOR<Props, MSC3906Props>) {
         super(props);
@@ -95,20 +96,11 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
                     case RendezvousFailureReason.Expired:
                         cancellationMessage = _t("auth|qr_code_login|error_linking_incomplete");
                         break;
-                    case RendezvousFailureReason.InvalidCode:
-                        cancellationMessage = _t("auth|qr_code_login|error_invalid_scanned_code");
-                        break;
                     case RendezvousFailureReason.UnsupportedAlgorithm:
                         cancellationMessage = _t("auth|qr_code_login|error_device_unsupported");
                         break;
                     case RendezvousFailureReason.UserDeclined:
                         cancellationMessage = _t("auth|qr_code_login|error_request_declined");
-                        break;
-                    case RendezvousFailureReason.OtherDeviceAlreadySignedIn:
-                        cancellationMessage = _t("auth|qr_code_login|error_device_already_signed_in");
-                        break;
-                    case RendezvousFailureReason.OtherDeviceNotSignedIn:
-                        cancellationMessage = _t("auth|qr_code_login|error_device_not_signed_in");
                         break;
                     case RendezvousFailureReason.UserCancelled:
                         cancellationMessage = _t("auth|qr_code_login|error_request_cancelled");
@@ -180,74 +172,32 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
                 backButton = false;
                 main = (
                     <>
-                        <p>
-                            To verify that the connection is secure, please enter the code shown on your other device:
-                        </p>
-                        <p>
-                            <input ref={this.checkCodeInput} type="text" autoFocus={true} placeholder="Code" />
-                        </p>
-                        <div className="mx_LoginWithQR_confirmationAlert">
-                            <div>
-                                <CheckmarkIcon />
-                            </div>
-                        </div>
-                        {this.props.userCode ? (
-                            <div>
-                                <p>Security code</p>
-                                <p>If asked, enter the code below on your other device.</p>
-                                <p>{this.props.userCode}</p>
-                            </div>
-                        ) : null}
-                    </>
-                );
-
-                buttons = (
-                    <>
-                        <AccessibleButton
-                            data-testid="approve-login-button"
-                            kind="primary"
-                            onClick={this.handleClick(Click.Approve)}
-                        >
-                            Continue
-                        </AccessibleButton>
-                        <AccessibleButton
-                            data-testid="decline-login-button"
-                            kind="primary_outline"
-                            onClick={this.handleClick(Click.Decline)}
-                        >
-                            No code shown
-                        </AccessibleButton>
-                    </>
-                );
-                break;
-            case Phase.ShowChannelSecure:
-                backButton = false;
-                main = (
-                    <>
-                        <div className="mx_LoginWithQR_confirmationAlert">
-                            <div>
-                                <CheckmarkIcon />
-                            </div>
-                        </div>
-                        <p>Go to your other device</p>
-                        <p>You’ll be asked to enter the following code:</p>
-                        <p>{this.props.checkCode}</p>
-                    </>
-                );
-                break;
-            case Phase.ShowUserCode:
-                backButton = false;
-                main = (
-                    <>
-                        <p>Go back to your other device to finish signing in</p>
-                        <hr />
-                        {this.props.userCode ? (
-                            <div>
-                                <p>{_t("auth|qr_code_login|security_code")}</p>
-                                <p>{_t("auth|qr_code_login|security_code_prompt")}</p>
-                                <p>{this.props.userCode}</p>
-                            </div>
-                        ) : null}
+                        <Heading as="h1" size="sm" weight="semibold">
+                            {_t("auth|qr_code_login|check_code_heading")}
+                        </Heading>
+                        <Text size="md">{_t("auth|qr_code_login|check_code_explainer")}</Text>
+                        <label htmlFor="mx_LoginWithQR_checkCode">
+                            {_t("auth|qr_code_login|check_code_input_label")}
+                        </label>
+                        <MFAInput
+                            className="mx_LoginWithQR_checkCode_input mx_no_textinput"
+                            ref={this.checkCodeInput}
+                            length={2}
+                            autoFocus
+                            id="mx_LoginWithQR_checkCode"
+                            data-invalid={
+                                this.props.failureReason === LoginWithQRFailureReason.CheckCodeMismatch
+                                    ? true
+                                    : undefined
+                            }
+                        />
+                        <ErrorMessage
+                            message={
+                                this.props.failureReason === LoginWithQRFailureReason.CheckCodeMismatch
+                                    ? _t("auth|qr_code_login|check_code_mismatch")
+                                    : null
+                            }
+                        />
                     </>
                 );
 
@@ -258,32 +208,31 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
                             kind="primary_outline"
                             onClick={this.handleClick(Click.Decline)}
                         >
-                            {_t("auth|qr_code_login|reject_action")}
+                            {_t("action|cancel")}
                         </AccessibleButton>
                         <AccessibleButton
                             data-testid="approve-login-button"
                             kind="primary"
                             onClick={this.handleClick(Click.Approve)}
                         >
-                            {_t("auth|qr_code_login|confirm_action")}
+                            {_t("action|continue")}
                         </AccessibleButton>
                     </>
                 );
                 break;
-                case Phase.ShowingQR:
+            case Phase.ShowingQR:
                 if (this.props.code) {
                     const data =
                         typeof this.props.code !== "string" ? this.props.code : Buffer.from(this.props.code ?? "");
 
-                    const code = (
-                        <div className="mx_LoginWithQR_qrWrapper">
-                            <QRCode data={[{ data, mode: "byte" }]} className="mx_QRCode" />
-                        </div>
-                    );
                     main = (
                         <>
-                            <h1>{_t("auth|qr_code_login|scan_code_instruction")}</h1>
-                            {code}
+                            <Heading as="h1" size="sm" weight="semibold">
+                                {_t("auth|qr_code_login|scan_code_instruction")}
+                            </Heading>
+                            <div className="mx_LoginWithQR_qrWrapper">
+                                <QRCode data={[{ data, mode: "byte" }]} className="mx_QRCode" />
+                            </div>
                             <ol>
                                 <li>
                                     {_t("auth|qr_code_login|open_element_other_device", {
@@ -307,10 +256,6 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
                 break;
             case Phase.Loading:
                 main = this.simpleSpinner();
-                break;
-            case Phase.Connecting:
-                main = this.simpleSpinner(_t("auth|qr_code_login|connecting"));
-                buttons = this.cancelButton();
                 break;
             case Phase.WaitingForDevice:
                 main = (

@@ -16,20 +16,20 @@ limitations under the License.
 
 import React from "react";
 import {
+    MSC3886SimpleHttpRendezvousTransport,
+    MSC3903ECDHPayload,
+    MSC3903ECDHv2RendezvousChannel,
+    MSC3906Rendezvous,
+    MSC4108RendezvousSession,
+    MSC4108SecureChannel,
+    MSC4108SignInWithQR,
     RendezvousFailureReason,
     RendezvousIntent,
-    MSC4108SignInWithQR,
-    MSC4108SecureChannel,
-    MSC4108RendezvousSession,
-    MSC3906Rendezvous,
-    MSC3886SimpleHttpRendezvousTransport,
-    MSC3903ECDHv2RendezvousChannel,
-    MSC3903ECDHPayload,
 } from "matrix-js-sdk/src/rendezvous";
 import { logger } from "matrix-js-sdk/src/logger";
 import { HTTPError, MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { Mode, Phase, Click } from "./LoginWithQR-types";
+import { Click, Mode, Phase } from "./LoginWithQR-types";
 import LoginWithQRFlow from "./LoginWithQRFlow";
 import { wrapRequestWithDialog } from "../../../utils/UserInteractiveAuth";
 import { _t } from "../../../languageHandler";
@@ -59,16 +59,14 @@ interface IState {
     homeserverBaseUrl?: string;
 }
 
-/**
- * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108.
- */
 export enum LoginWithQRFailureReason {
+    /**
+     * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108.
+     */
     RateLimited = "rate_limited",
+    CheckCodeMismatch = "check_code_mismatch",
 }
 
-/**
- * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108. See {@see RendezvousFailureReason}.
- */
 export type FailureReason = RendezvousFailureReason | LoginWithQRFailureReason;
 
 /**
@@ -248,19 +246,13 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
     private approveLogin = async (checkCode: string | undefined): Promise<void> => {
         if (!(this.state.rendezvous instanceof MSC4108SignInWithQR)) {
+            this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
             throw new Error("Rendezvous not found");
         }
 
-        if (!this.state.lastScannedCode) {
-            if (!checkCode) {
-                throw new Error("No check code");
-            }
-
-            if (this.state.rendezvous?.checkCode !== checkCode) {
-                // PROTOTYPE: this doesn't actually show in the UI sensibly
-                // should we prompt to re-enter?
-                throw new Error("Check code mismatch");
-            }
+        if (!this.state.lastScannedCode && this.state.rendezvous?.checkCode !== checkCode) {
+            this.setState({ failureReason: LoginWithQRFailureReason.CheckCodeMismatch });
+            return;
         }
 
         if (this.state.ourIntent === RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE) {
@@ -279,6 +271,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             // done
             this.props.onFinished(true);
         } else {
+            this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
             throw new Error("New device flows around OIDC are not yet implemented");
         }
     };
@@ -341,7 +334,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     confirmationDigits={
                         this.state.phase === Phase.LegacyConnected ? this.state.confirmationDigits : undefined
                     }
-                    failureReason={this.state.phase === Phase.Error ? this.state.failureReason : undefined}
+                    failureReason={this.state.failureReason}
                 />
             );
         }
@@ -351,11 +344,9 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 onClick={this.onClick}
                 phase={this.state.phase}
                 code={this.state.phase === Phase.ShowingQR ? this.state.rendezvous?.code : undefined}
-                failureReason={this.state.phase === Phase.Error ? this.state.failureReason : undefined}
+                failureReason={this.state.failureReason}
                 userCode={this.state.userCode}
-                checkCode={
-                    this.state.checkCode
-                }
+                checkCode={this.state.checkCode}
             />
         );
     }
