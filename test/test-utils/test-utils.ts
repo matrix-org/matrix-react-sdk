@@ -598,6 +598,7 @@ export function mkStubRoom(
         getJoinedMemberCount: jest.fn().mockReturnValue(1),
         getJoinedMembers: jest.fn().mockReturnValue([]),
         getLiveTimeline: jest.fn().mockReturnValue(stubTimeline),
+        getLastLiveEvent: jest.fn().mockReturnValue(undefined),
         getMember: jest.fn().mockReturnValue({
             userId: "@member:domain.bla",
             name: "Member",
@@ -624,6 +625,7 @@ export function mkStubRoom(
         isElementVideoRoom: jest.fn().mockReturnValue(false),
         isSpaceRoom: jest.fn().mockReturnValue(false),
         isCallRoom: jest.fn().mockReturnValue(false),
+        hasEncryptionStateEvent: jest.fn().mockReturnValue(false),
         loadMembersIfNeeded: jest.fn(),
         maySendMessage: jest.fn().mockReturnValue(true),
         myUserId: client?.getUserId(),
