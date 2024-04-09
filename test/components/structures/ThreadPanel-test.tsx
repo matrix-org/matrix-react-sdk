@@ -37,6 +37,9 @@ import ResizeNotifier from "../../../src/utils/ResizeNotifier";
 import { createTestClient, getRoomContext, mkRoom, mockPlatformPeg, stubClient } from "../../test-utils";
 import { mkThread } from "../../test-utils/threads";
 import { IRoomState } from "../../../src/components/structures/RoomView";
+import defaultDispatcher from "../../../src/dispatcher/dispatcher";
+import { Action } from "../../../src/dispatcher/actions";
+import BaseCard from "../../../src/components/views/right_panel/BaseCard";
 
 jest.mock("../../../src/utils/Feedback");
 
@@ -155,6 +158,30 @@ describe("ThreadPanel", () => {
             );
             fireEvent.click(getByRole(container, "button", { name: "Mark all as read" }));
             await waitFor(() => expect(mockClient.sendReadReceipt).not.toHaveBeenCalled());
+        });
+
+        it("focuses the close button on FocusThreadsPanel dispatch", async () => {
+            render(
+                <TooltipProvider>
+                    <BaseCard
+                        onClose={() => undefined}
+                        header={
+                            <ThreadPanelHeader
+                                empty={false}
+                                filterOption={ThreadFilterType.All}
+                                setFilterOption={() => undefined}
+                            />
+                        }
+                    >
+                        <div>Test</div>
+                    </BaseCard>
+                </TooltipProvider>,
+            );
+
+            defaultDispatcher.dispatch({ action: Action.FocusThreadsPanel });
+            waitFor(() => {
+                expect(screen.getByTestId("base-card-close-button")).toHaveFocus();
+            });
         });
     });
 
