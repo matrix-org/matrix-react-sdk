@@ -17,8 +17,8 @@ limitations under the License.
 import { RuntimeModule } from "@matrix-org/react-sdk-module-api/lib/RuntimeModule";
 import { ModuleApi } from "@matrix-org/react-sdk-module-api/lib/ModuleApi";
 import { AllExtensions } from "@matrix-org/react-sdk-module-api/lib/types/extensions";
-import { CryptoSetupExtensionsBase } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
-import { ExperimentalExtensionsBase } from "@matrix-org/react-sdk-module-api/lib/lifecycles/ExperimentalExtensions";
+import { ProvideCryptoSetupExtensions } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
+import { ProvideExperimentalExtensions } from "@matrix-org/react-sdk-module-api/lib/lifecycles/ExperimentalExtensions";
 
 import { ModuleRunner } from "../../src/modules/ModuleRunner";
 
@@ -32,6 +32,11 @@ export class MockModule extends RuntimeModule {
     }
 }
 
+/**
+ * Register a mock module
+ *
+ * @returns The registered module.
+ */
 export function registerMockModule(): MockModule {
     let module: MockModule | undefined;
     ModuleRunner.instance.registerModule((api) => {
@@ -47,7 +52,7 @@ export function registerMockModule(): MockModule {
     return module;
 }
 
-export class MockModuleWithCryptoSetupExtension extends RuntimeModule {
+class MockModuleWithCryptoSetupExtension extends RuntimeModule {
     public get apiInstance(): ModuleApi {
         return this.moduleApi;
     }
@@ -55,16 +60,16 @@ export class MockModuleWithCryptoSetupExtension extends RuntimeModule {
     moduleName: string = MockModuleWithCryptoSetupExtension.name;
 
     extensions: AllExtensions = {
-        cryptoSetup: new (class extends CryptoSetupExtensionsBase {
-            SHOW_ENCRYPTION_SETUP_UI = true;
-            examineLoginResponse = jest.fn();
-            persistCredentials = jest.fn();
-            getSecretStorageKey = jest.fn().mockReturnValue(Uint8Array.from([0x11, 0x22, 0x99]));
-            createSecretStorageKey = jest.fn();
-            catchAccessSecretStorageError = jest.fn();
-            setupEncryptionNeeded = jest.fn();
-            getDehydrationKeyCallback = jest.fn();
-        })(),
+        cryptoSetup: {
+            SHOW_ENCRYPTION_SETUP_UI: true,
+            examineLoginResponse: jest.fn(),
+            persistCredentials: jest.fn(),
+            getSecretStorageKey: jest.fn().mockReturnValue(Uint8Array.from([0x11, 0x22, 0x99])),
+            createSecretStorageKey: jest.fn(),
+            catchAccessSecretStorageError: jest.fn(),
+            setupEncryptionNeeded: jest.fn(),
+            getDehydrationKeyCallback: jest.fn(),
+        } as ProvideCryptoSetupExtensions,
     };
 
     public constructor(moduleApi: ModuleApi) {
@@ -72,7 +77,7 @@ export class MockModuleWithCryptoSetupExtension extends RuntimeModule {
     }
 }
 
-export class MockModuleWithExperimentalExtension extends RuntimeModule {
+class MockModuleWithExperimentalExtension extends RuntimeModule {
     public get apiInstance(): ModuleApi {
         return this.moduleApi;
     }
@@ -80,9 +85,9 @@ export class MockModuleWithExperimentalExtension extends RuntimeModule {
     moduleName: string = MockModuleWithExperimentalExtension.name;
 
     extensions: AllExtensions = {
-        experimental: new (class extends ExperimentalExtensionsBase {
-            experimentalMethod = jest.fn().mockReturnValue(Uint8Array.from([0x22, 0x44, 0x88]));
-        })(),
+        experimental: {
+            experimentalMethod: jest.fn().mockReturnValue(Uint8Array.from([0x22, 0x44, 0x88])),
+        } as ProvideExperimentalExtensions,
     };
 
     public constructor(moduleApi: ModuleApi) {
@@ -90,6 +95,11 @@ export class MockModuleWithExperimentalExtension extends RuntimeModule {
     }
 }
 
+/**
+ * Register a mock module which implements the cryptoSetup extension.
+ *
+ * @returns The registered module.
+ */
 export function registerMockModuleWithCryptoSetupExtension(): MockModuleWithCryptoSetupExtension {
     let module: MockModuleWithCryptoSetupExtension | undefined;
 
@@ -106,6 +116,11 @@ export function registerMockModuleWithCryptoSetupExtension(): MockModuleWithCryp
     return module;
 }
 
+/**
+ * Register a mock module which implements the experimental extension.
+ *
+ * @returns The registered module.
+ */
 export function registerMockModuleWithExperimentalExtension(): MockModuleWithExperimentalExtension {
     let module: MockModuleWithExperimentalExtension | undefined;
 

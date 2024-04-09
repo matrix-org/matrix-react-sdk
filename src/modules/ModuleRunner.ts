@@ -34,10 +34,10 @@ import "./ModuleComponents";
 /**
  * Handles and manages extensions provided by modules.
  */
-export class ExtensionsManager {
+class ExtensionsManager {
     // Private backing fields for extensions
-    private _cryptoSetup: ProvideCryptoSetupExtensions;
-    private _experimental: ProvideExperimentalExtensions;
+    private cryptoSetupExtension: ProvideCryptoSetupExtensions;
+    private experimentalExtension: ProvideExperimentalExtensions;
 
     // Map to keep track of which extensions has been provided by modules.
     private implementionMap = {
@@ -50,8 +50,8 @@ export class ExtensionsManager {
      */
     public constructor() {
         // Set up defaults
-        this._cryptoSetup = new DefaultCryptoSetupExtensions();
-        this._experimental = new DefaultExperimentalExtensions();
+        this.cryptoSetupExtension = new DefaultCryptoSetupExtensions();
+        this.experimentalExtension = new DefaultExperimentalExtensions();
     }
 
     /**
@@ -60,7 +60,7 @@ export class ExtensionsManager {
      * @returns The registered extension. If no module provides this extension, a default implementation is returned.
      */
     public get cryptoSetup(): ProvideCryptoSetupExtensions {
-        return this._cryptoSetup;
+        return this.cryptoSetupExtension;
     }
 
     /**
@@ -72,7 +72,7 @@ export class ExtensionsManager {
      * @returns The registered extension. If no module provides this extension, a default implementation is returned.
      */
     public get experimental(): ProvideExperimentalExtensions {
-        return this._experimental;
+        return this.experimentalExtension;
     }
 
     /**
@@ -85,10 +85,10 @@ export class ExtensionsManager {
     public addExtensions(module: AppModule): void {
         const runtimeModule = module.module;
 
-        /* Record the cryptoSetup extensions if any */
+        /* Record the cryptoSetup extension if any */
         if (runtimeModule.extensions?.cryptoSetup) {
             if (this.implementionMap.hasDefaultCryptoSetupExtension) {
-                this._cryptoSetup = runtimeModule.extensions?.cryptoSetup;
+                this.cryptoSetupExtension = runtimeModule.extensions?.cryptoSetup;
                 this.implementionMap.hasDefaultCryptoSetupExtension = false;
             } else {
                 throw new Error(
@@ -97,10 +97,10 @@ export class ExtensionsManager {
             }
         }
 
-        /* Record the experimental extensions if any */
+        /* Record the experimental extension if any */
         if (runtimeModule.extensions?.experimental) {
             if (this.implementionMap.hasDefaultExperimentalExtension) {
-                this._experimental = runtimeModule.extensions?.experimental;
+                this.experimentalExtension = runtimeModule.extensions?.experimental;
                 this.implementionMap.hasDefaultExperimentalExtension = false;
             } else {
                 throw new Error(
@@ -117,7 +117,7 @@ export class ExtensionsManager {
 export class ModuleRunner {
     public static readonly instance = new ModuleRunner();
 
-    private _extensions = new ExtensionsManager();
+    private extensionsManager = new ExtensionsManager();
 
     private modules: AppModule[] = [];
 
@@ -131,7 +131,7 @@ export class ModuleRunner {
      * @returns An `ExtensionsManager` which exposes the extensions.
      */
     public get extensions(): ExtensionsManager {
-        return this._extensions;
+        return this.extensionsManager;
     }
 
     /**
@@ -141,7 +141,7 @@ export class ModuleRunner {
      */
     public reset(): void {
         this.modules = [];
-        this._extensions = new ExtensionsManager();
+        this.extensionsManager = new ExtensionsManager();
     }
 
     /**
@@ -177,7 +177,7 @@ export class ModuleRunner {
         this.modules.push(appModule);
 
         // Check if the new module provides any extensions, and also ensure a given extension is only provided by a single runtime module.
-        this._extensions.addExtensions(appModule);
+        this.extensionsManager.addExtensions(appModule);
     }
 
     /**

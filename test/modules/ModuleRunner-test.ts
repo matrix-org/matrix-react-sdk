@@ -58,25 +58,25 @@ describe("ModuleRunner", () => {
     describe("extensions", () => {
         it("should return default values when no crypto-setup extensions are provided by a registered module", async () => {
             registerMockModule();
-            const result = ModuleRunner.instance.extensions.cryptoSetup?.getSecretStorageKey();
+            const result = ModuleRunner.instance.extensions.cryptoSetup.getSecretStorageKey();
             expect(result).toBeNull();
         });
 
         it("should return default values when no experimental extensions are provided by a registered module", async () => {
             registerMockModule();
-            const result = ModuleRunner.instance.extensions?.experimental?.experimentalMethod();
+            const result = ModuleRunner.instance.extensions?.experimental.experimentalMethod();
             expect(result).toBeNull();
         });
 
         it("should return value from crypto-setup-extensions provided by a registered module", async () => {
             registerMockModuleWithCryptoSetupExtension();
-            const result = ModuleRunner.instance.extensions.cryptoSetup?.getSecretStorageKey();
+            const result = ModuleRunner.instance.extensions.cryptoSetup.getSecretStorageKey();
             expect(result).toEqual(Uint8Array.from([0x11, 0x22, 0x99]));
         });
 
         it("should return value from experimental-extensions provided by a registered module", async () => {
             registerMockModuleWithExperimentalExtension();
-            const result = ModuleRunner.instance.extensions.experimental?.experimentalMethod();
+            const result = ModuleRunner.instance.extensions.experimental.experimentalMethod();
             expect(result).toEqual(Uint8Array.from([0x22, 0x44, 0x88]));
         });
 
