@@ -59,6 +59,7 @@ import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY } from "../../../src/Base
 import SettingsStore from "../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { MatrixClientPeg as peg } from "../../../src/MatrixClientPeg";
+import DMRoomMap from "../../../src/utils/DMRoomMap";
 
 jest.mock("matrix-js-sdk/src/oidc/authorize", () => ({
     completeAuthorizationCodeGrant: jest.fn(),
@@ -222,12 +223,16 @@ describe("<MatrixChat />", () => {
         jest.spyOn(defaultDispatcher, "dispatch").mockClear();
         jest.spyOn(defaultDispatcher, "fire").mockClear();
 
+        DMRoomMap.makeShared(mockClient);
+
         await clearAllModals();
     });
 
     resetJsDomAfterEach();
 
     afterEach(() => {
+        DMRoomMap.setShared(null);
+
         jest.restoreAllMocks();
 
         // emit a loggedOut event so that all of the Store singletons forget about their references to the mock client
@@ -243,7 +248,7 @@ describe("<MatrixChat />", () => {
     it("should fire to focus the message composer", async () => {
         getComponent();
         defaultDispatcher.dispatch({ action: Action.ViewRoom, room_id: "!room:server.org", focusNext: "composer" });
-        waitFor(() => {
+        await waitFor(() => {
             expect(defaultDispatcher.fire).toHaveBeenCalledWith(Action.FocusSendMessageComposer);
         });
     });
@@ -251,7 +256,7 @@ describe("<MatrixChat />", () => {
     it("should fire to focus the threads panel", async () => {
         getComponent();
         defaultDispatcher.dispatch({ action: Action.ViewRoom, room_id: "!room:server.org", focusNext: "threadsPanel" });
-        waitFor(() => {
+        await waitFor(() => {
             expect(defaultDispatcher.fire).toHaveBeenCalledWith(Action.FocusThreadsPanel);
         });
     });
