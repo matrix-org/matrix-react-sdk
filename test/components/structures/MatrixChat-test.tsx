@@ -231,6 +231,7 @@ describe("<MatrixChat />", () => {
     resetJsDomAfterEach();
 
     afterEach(() => {
+        // @ts-ignore
         DMRoomMap.setShared(null);
 
         jest.restoreAllMocks();
