@@ -299,7 +299,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             const partCreator = new CommandPartCreator(this.props.room, this.props.mxClient);
             const parts = this.restoreStoredEditorState(partCreator) || [];
             this.model.reset(parts);
-            this.editorRef.current?.focus();
+            this.focusComposer();
         }
     }
 
@@ -399,7 +399,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         });
         if (parts) {
             this.model.reset(parts);
-            this.editorRef.current?.focus();
+            this.focusComposer();
         }
         return true;
     }
@@ -588,7 +588,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         // clear composer
         model.reset([]);
         this.editorRef.current?.clearUndoHistory();
-        this.editorRef.current?.focus();
+        this.focusComposer();
         this.clearStoredEditorState();
         if (shouldSend && SettingsStore.getValue("scrollToBottomOnMessageSent")) {
             dis.dispatch({
@@ -666,7 +666,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             case "reply_to_event":
             case Action.FocusSendMessageComposer:
                 if ((payload.context ?? TimelineRenderingType.Room) === this.context.timelineRenderingType) {
-                    this.editorRef.current?.focus();
+                    this.focusComposer();
                 }
                 break;
             case Action.ComposerInsert:
