@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ComponentProps } from "react";
-import { fireEvent, render, RenderResult, screen, within } from "@testing-library/react";
+import { fireEvent, render, RenderResult, screen, waitFor, within } from "@testing-library/react";
 import fetchMock from "fetch-mock-jest";
 import { Mocked, mocked } from "jest-mock";
 import { ClientEvent, MatrixClient, MatrixEvent, Room, SyncState } from "matrix-js-sdk/src/matrix";
@@ -220,6 +220,7 @@ describe("<MatrixChat />", () => {
         jest.spyOn(StorageManager, "idbLoad").mockReset();
         jest.spyOn(StorageManager, "idbSave").mockResolvedValue(undefined);
         jest.spyOn(defaultDispatcher, "dispatch").mockClear();
+        jest.spyOn(defaultDispatcher, "fire").mockClear();
 
         await clearAllModals();
     });
@@ -237,6 +238,22 @@ describe("<MatrixChat />", () => {
         const { container } = getComponent();
 
         expect(container).toMatchSnapshot();
+    });
+
+    it("should fire to focus the message composer", async () => {
+        getComponent();
+        defaultDispatcher.dispatch({ action: Action.ViewRoom, room_id: "!room:server.org", focusNext: "composer" });
+        waitFor(() => {
+            expect(defaultDispatcher.fire).toHaveBeenCalledWith(Action.FocusSendMessageComposer);
+        });
+    });
+
+    it("should fire to focus the threads panel", async () => {
+        getComponent();
+        defaultDispatcher.dispatch({ action: Action.ViewRoom, room_id: "!room:server.org", focusNext: "threadsPanel" });
+        waitFor(() => {
+            expect(defaultDispatcher.fire).toHaveBeenCalledWith(Action.FocusThreadsPanel);
+        });
     });
 
     describe("when query params have a OIDC params", () => {
