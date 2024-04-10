@@ -33,12 +33,10 @@ import { useGuestAccessInformation } from "../../../../hooks/room/useGuestAccess
  * @returns Nothing if there is not the option to share a link (No guest_spa_url is set) or a button to open a dialog to share the link.
  */
 export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
-    const { canInviteGuests, guestSpaUrl, isRoomJoinable, canInvite, isRoomJoinableFunction } =
-        useGuestAccessInformation(room);
+    const { canInviteGuests, guestSpaUrl, isRoomJoinable, canInvite } = useGuestAccessInformation(room);
 
     const generateCallLink = useCallback(() => {
-        if (!isRoomJoinableFunction())
-            throw new Error("Cannot create link for room that users can not join without invite.");
+        if (!isRoomJoinable()) throw new Error("Cannot create link for room that users can not join without invite.");
         if (!guestSpaUrl) throw new Error("No guest SPA url for external links provided.");
         const url = new URL(guestSpaUrl);
         url.pathname = "/room/";
@@ -55,7 +53,7 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
 
         logger.info("Generated element call external url:", url);
         return url;
-    }, [guestSpaUrl, isRoomJoinableFunction, room]);
+    }, [guestSpaUrl, isRoomJoinable, room]);
 
     const showLinkModal = useCallback(() => {
         try {
@@ -72,7 +70,7 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
     }, [generateCallLink]);
 
     const shareClick = useCallback(() => {
-        if (isRoomJoinable) {
+        if (isRoomJoinable()) {
             showLinkModal();
         } else {
             // the room needs to be set to public or knock to generate a link
@@ -82,10 +80,10 @@ export const CallGuestLinkButton: React.FC<{ room: Room }> = ({ room }) => {
                 canInvite,
             }).finished.then(() => {
                 // we need to use the function here because the callback got called before the state was updated.
-                if (isRoomJoinableFunction()) showLinkModal();
+                if (isRoomJoinable()) showLinkModal();
             });
         }
-    }, [isRoomJoinable, showLinkModal, room, canInvite, isRoomJoinableFunction]);
+    }, [isRoomJoinable, showLinkModal, room, canInvite]);
 
     return (
         <>
@@ -144,7 +142,6 @@ export const JoinRuleDialog: React.FC<{
                     </Button>
                 )}
                 <Button
-                    // manually add destructive styles because they otherwise get overwritten by .mx_Dialog
                     className="mx_Dialog_nonDialogButton"
                     kind="destructive"
                     disabled={isUpdating === JoinRule.Public}

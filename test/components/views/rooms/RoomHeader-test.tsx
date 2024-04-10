@@ -382,7 +382,7 @@ describe("RoomHeader", () => {
             mockRoomMembers(room, 1);
             // go through all the different `canInvite` and `getJoinRule` combinations
 
-            // check where we cant do anything but can updrade
+            // check where we can't do anything but can upgrade
             jest.spyOn(room.currentState, "maySendStateEvent").mockReturnValue(true);
             jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Invite);
             jest.spyOn(room, "canInvite").mockReturnValue(false);
@@ -405,7 +405,6 @@ describe("RoomHeader", () => {
                 return { guest_spa_url: "https://guest_spa_url.com", url: "https://spa_url.com" };
             });
             const { container: containerNoInviteNotPublic } = render(<RoomHeader room={room} />, getWrapper());
-            // expect(getAllByLabelText(containerNoInviteNotPublic, "There's no one here to call")).toBeInTheDocument();
             expect(queryAllByLabelText(containerNoInviteNotPublic, "There's no one here to call")).toHaveLength(2);
 
             jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);

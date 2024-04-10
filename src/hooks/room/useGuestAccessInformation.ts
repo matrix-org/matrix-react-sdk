@@ -22,9 +22,8 @@ import { useRoomState } from "../useRoomState";
 
 interface GuestAccessInformation {
     canInviteGuests: boolean;
-    isRoomJoinable: boolean;
     guestSpaUrl?: string;
-    isRoomJoinableFunction: () => boolean;
+    isRoomJoinable: () => boolean;
     canInvite: boolean;
 }
 
@@ -44,9 +43,6 @@ export const useGuestAccessInformation = (room: Room): GuestAccessInformation =>
         canInvite: room.canInvite(room.myUserId),
         canChangeJoinRule: roomState.maySendStateEvent(EventType.RoomJoinRules, room.myUserId),
     }));
-    const isRoomJoinableFunction = (): boolean =>
-        room.getJoinRule() === JoinRule.Public || (joinRule === JoinRule.Knock && room.canInvite(room.myUserId));
-
     const isRoomJoinable = useMemo(
         () => joinRule === JoinRule.Public || (joinRule === JoinRule.Knock && canInvite),
         [canInvite, joinRule],
@@ -56,5 +52,7 @@ export const useGuestAccessInformation = (room: Room): GuestAccessInformation =>
         [canChangeJoinRule, isRoomJoinable, guestSpaUrl],
     );
 
-    return { canInviteGuests, guestSpaUrl, isRoomJoinable, isRoomJoinableFunction, canInvite };
+    const isRoomJoinableFunction = (): boolean =>
+        room.getJoinRule() === JoinRule.Public || (joinRule === JoinRule.Knock && room.canInvite(room.myUserId));
+    return { canInviteGuests, guestSpaUrl, isRoomJoinable: isRoomJoinableFunction, canInvite };
 };
