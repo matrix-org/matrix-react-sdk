@@ -276,8 +276,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         if (SettingsStore.getValue("feature_sliding_sync")) {
             const baseUrl = this.matrixClient.baseUrl;
             const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
-            const wellKnown = AutoDiscovery.findClientConfig(baseUrl); // the client isn't init'd yet
-            const wellKnownProxyUrl = (await wellKnown)?.["org.matrix.msc3575.proxy"]?.url;
+            const wellKnown = await AutoDiscovery.findClientConfig(baseUrl); // the client isn't init'd yet
+            const wellKnownProxyUrl = wellKnown?.["org.matrix.msc3575.proxy"]?.url;
             if (proxyUrl) {
                 logger.log("Activating sliding sync using manually added proxy at ", proxyUrl);
             } else if (wellKnownProxyUrl) {
