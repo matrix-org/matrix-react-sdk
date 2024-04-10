@@ -138,7 +138,6 @@ export const useOwnDevices = (): DevicesState => {
             const dehydratedDeviceIds: string[] = [];
             for (const device of userDevices?.values() ?? []) {
                 if (device.dehydrated) {
-                    logger.debug("Found dehydrated device", device.deviceId);
                     dehydratedDeviceIds.push(device.deviceId);
                 }
             }
