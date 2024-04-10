@@ -20,7 +20,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingController from "./SettingController";
 import PlatformPeg from "../../PlatformPeg";
-import { SettingLevel } from "../SettingLevel";
 import SettingsStore from "../SettingsStore";
 import { _t } from "../../languageHandler";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -79,11 +78,6 @@ export default class SlidingSyncController extends SettingController {
         }
 
         return false;
-    }
-
-    public async beforeChange(level: SettingLevel, roomId: string, newValue: any): Promise<boolean> {
-        const value = await this.slidingSyncHealthCheck();
-        return newValue === value; // abort the operation if we're already in the state the user chose via modal
     }
 
     public async onChange(): Promise<void> {
