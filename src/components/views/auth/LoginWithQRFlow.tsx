@@ -123,7 +123,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                     case RendezvousFailureReason.HomeserverLacksSupport:
                         cancellationMessage = _t("auth|qr_code_login|error_homeserver_lacks_support");
                         break;
-                    case RendezvousFailureReason.DataMismatch:
+                    case RendezvousFailureReason.InsecureChannelDetected:
                         cancellationMessage = _t("auth|qr_code_login|error_insecure_connection");
                         break;
                     case RendezvousFailureReason.UnexpectedMessage:
