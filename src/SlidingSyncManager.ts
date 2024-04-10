@@ -127,7 +127,7 @@ export class SlidingSyncManager {
         return SlidingSyncManager.internalInstance;
     }
 
-    public configure(client: MatrixClient, proxyUrl: string): SlidingSync {
+    private configure(client: MatrixClient, proxyUrl: string): SlidingSync {
         this.client = client;
         // by default use the encrypted subscription as that gets everything, which is a safer
         // default than potentially missing member events.
