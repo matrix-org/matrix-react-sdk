@@ -330,7 +330,7 @@ export class SlidingSyncManager {
      * Set up the Sliding Sync instance. If the user has enabled sliding sync in Labs, it configures the end point and starts spidering.
      * The sliding sync endpoint is derived the following way:
      *   1. The user-defined sliding sync proxy URL (legacy, for backwards compatibility)
-     *   2. The client `well-known` sliding sync proxy URL unstable prefix (https://github.com/matrix-org/matrix-spec-proposals/blob/kegan/sync-v3/proposals/3575-sync.md#unstable-prefix)
+     *   2. The client `well-known` sliding sync proxy URL [declared at the unstable prefix](https://github.com/matrix-org/matrix-spec-proposals/blob/kegan/sync-v3/proposals/3575-sync.md#unstable-prefix)
      *   3. The homeserver base url (for native server support)
      * @param client Matrix Client
      */
