@@ -89,7 +89,7 @@ export default class SlidingSyncController extends SettingController {
         }
         const supportsSlidingSync = this.slidingSyncHealthCheck().then();
         if (!supportsSlidingSync) {
-            return _t("labs|sliding_sync_disabled_notice");
+            return _t("labs|sliding_sync_server_no_support");
         }
 
         return false;
