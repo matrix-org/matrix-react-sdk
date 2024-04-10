@@ -398,7 +398,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     },
                 });
             }
-            initializeDehydration(true);
+            await initializeDehydration(true);
 
             this.setState({
                 phase: Phase.Stored,

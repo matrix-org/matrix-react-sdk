@@ -112,11 +112,12 @@ export class SetupEncryptionStore extends EventEmitter {
         const userDevices: Iterable<Device> =
             (await crypto.getUserDeviceInfo([ownUserId])).get(ownUserId)?.values() ?? [];
         this.hasDevicesToVerifyAgainst = await asyncSome(userDevices, async (device) => {
-            // ignore the dehydrated device
+            // Ignore dehydrated devices.  `dehydratedDevice` is set by the
+            // implementation of MSC2697, whereas MSC3814 proposes that devices
+            // should set a `dehydrated` flag in the device key.  We ignore
+            // both types of dehydrated devices.
             if (dehydratedDevice && device.deviceId == dehydratedDevice?.device_id) return false;
-            if (device.dehydrated) {
-                return false;
-            }
+            if (device.dehydrated) return false;
 
             // ignore devices without an identity key
             if (!device.getIdentityKey()) return false;

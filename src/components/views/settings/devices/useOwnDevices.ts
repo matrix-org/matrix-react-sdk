@@ -142,6 +142,11 @@ export const useOwnDevices = (): DevicesState => {
                     dehydratedDeviceIds.push(device.deviceId);
                 }
             }
+            // If the user has exactly one device marked as dehydrated, we consider
+            // that as the dehydrated device, and hide it as a normal device (but
+            // indicate that the user is using a dehydrated device).  If the user has
+            // more than one, that is anomalous, and we show all the devices so that
+            // nothing is hidden.
             setDehydratedDeviceId(dehydratedDeviceIds.length == 1 ? dehydratedDeviceIds[0] : undefined);
 
             setIsLoadingDeviceList(false);
