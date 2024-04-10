@@ -22,6 +22,9 @@ import { _t, getUserLanguage } from "../../../languageHandler";
 
 interface ExistingSpellCheckLanguageIProps {
     language: string;
+    /**
+     * The label to render on the component. If not provided, the language code will be used.
+     */
     label?: string;
     onRemoved(language: string): void;
 }
