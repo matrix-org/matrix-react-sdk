@@ -44,7 +44,7 @@ limitations under the License.
  *                      list ops)
  */
 
-import { MatrixClient, EventType } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, EventType, AutoDiscovery } from "matrix-js-sdk/src/matrix";
 import {
     MSC3575Filter,
     MSC3575List,
@@ -55,6 +55,8 @@ import {
 } from "matrix-js-sdk/src/sliding-sync";
 import { logger } from "matrix-js-sdk/src/logger";
 import { defer, sleep } from "matrix-js-sdk/src/utils";
+
+import SettingsStore from "./settings/SettingsStore";
 
 // how long to long poll for
 const SLIDING_SYNC_TIMEOUT_MS = 20 * 1000;
@@ -322,5 +324,36 @@ export class SlidingSyncManager {
             startIndex += batchSize;
             firstTime = false;
         }
+    }
+
+    /**
+     * Set up the Sliding Sync instance. If the user has enabled sliding sync in Labs, it configures the end point and starts spidering.
+     * The sliding sync endpoint is derived the following way:
+     *   1. The user-defined sliding sync proxy URL (legacy, for backwards compatibility)
+     *   2. The client `well-known` sliding sync proxy URL unstable prefix (https://github.com/matrix-org/matrix-spec-proposals/blob/kegan/sync-v3/proposals/3575-sync.md#unstable-prefix)
+     *   3. The homeserver base url (for native server support)
+     * @param client Matrix Client
+     */
+    public async setup(client: MatrixClient): Promise<SlidingSync | undefined> {
+        if (SettingsStore.getValue("feature_sliding_sync")) {
+            const baseUrl = client.baseUrl;
+            const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
+            const wellKnown = await AutoDiscovery.findClientConfig(baseUrl); // the client isn't init'd yet
+            const wellKnownProxyUrl = wellKnown?.["org.matrix.msc3575.proxy"]?.url;
+            if (proxyUrl) {
+                logger.log("Activating sliding sync using manually added proxy at ", proxyUrl);
+            } else if (wellKnownProxyUrl) {
+                logger.log("Activating sliding sync using well-known proxy at ", wellKnownProxyUrl);
+            } else {
+                logger.log("Activating sliding sync using the HS base url at ", baseUrl);
+            }
+            this.configure(
+                client,
+                proxyUrl || wellKnownProxyUrl || baseUrl,
+            );
+            this.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
+        }
+
+        return this.slidingSync;
     }
 }

@@ -273,24 +273,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.clientWellKnownPollPeriod = 2 * 60 * 60; // 2 hours
         opts.threadSupport = true;
 
-        if (SettingsStore.getValue("feature_sliding_sync")) {
-            const baseUrl = this.matrixClient.baseUrl;
-            const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
-            const wellKnown = await AutoDiscovery.findClientConfig(baseUrl); // the client isn't init'd yet
-            const wellKnownProxyUrl = wellKnown?.["org.matrix.msc3575.proxy"]?.url;
-            if (proxyUrl) {
-                logger.log("Activating sliding sync using manually added proxy at ", proxyUrl);
-            } else if (wellKnownProxyUrl) {
-                logger.log("Activating sliding sync using well-known proxy at ", wellKnownProxyUrl);
-            } else {
-                logger.log("Activating sliding sync using the HS base url at ", baseUrl);
-            }
-            opts.slidingSync = SlidingSyncManager.instance.configure(
-                this.matrixClient,
-                proxyUrl || wellKnownProxyUrl || baseUrl,
-            );
-            SlidingSyncManager.instance.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
-        }
+        opts.slidingSync = await SlidingSyncManager.instance.setup(this.matrixClient)
 
         // Connect the matrix client to the dispatcher and setting handlers
         MatrixActionCreators.start(this.matrixClient);
