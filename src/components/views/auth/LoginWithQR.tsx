@@ -235,12 +235,9 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             }
 
             // we ask the user to confirm that the channel is secure
-        } catch (e) {
-            logger.error("Error whilst doing QR login", e);
-            // only set to error phase if it hasn't already been set by onFailure or similar
-            if (this.state.phase !== Phase.Error) {
-                this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
-            }
+        } catch (e: RendezvousError | unknown) {
+            logger.error("Error whilst generating QR", e);
+            await this.state.rendezvous?.cancel(e instanceof RendezvousError ? e.code : RendezvousFailureReason.Unknown);
         }
     };
 
@@ -255,18 +252,19 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             return;
         }
 
-        if (this.state.ourIntent === RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE) {
-            // MSC4108-Flow: NewScanned
-            this.setState({ phase: Phase.Loading });
+        try {
+            if (this.state.ourIntent === RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE) {
+                // MSC4108-Flow: NewScanned
+                this.setState({ phase: Phase.Loading });
 
-            if (this.state.verificationUri) {
-                window.open(this.state.verificationUri, "_blank");
-            }
+                if (this.state.verificationUri) {
+                    window.open(this.state.verificationUri, "_blank");
+                }
 
-            this.setState({ phase: Phase.WaitingForDevice });
+                this.setState({ phase: Phase.WaitingForDevice });
 
-            // send secrets
-            await this.state.rendezvous.loginStep5();
+                // send secrets
+                await this.state.rendezvous.loginStep5();
 
             // done
             this.props.onFinished(true);

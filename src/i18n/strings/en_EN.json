@@ -245,15 +245,12 @@
         "phone_label": "Phone",
         "phone_optional_label": "Phone (optional)",
         "qr_code_login": {
-            "approve_access_warning": "By approving access for this device, it will have full access to your account.",
             "completing_setup": "Completing set up of your new device",
-            "confirm_code_match": "Check that the code below matches with your other device:",
             "error_device_unsupported": "Linking with this device is not supported.",
             "error_homeserver_lacks_support": "The homeserver doesn't support signing in another device.",
             "error_linking_incomplete": "The linking wasn't completed in the required time.",
-            "error_rate_limited": "Too many attempts in a short time. Wait some time before trying again.",
             "error_request_cancelled": "The request was cancelled.",
-            "error_request_declined": "The request was declined on the other device.",
+            "error_request_declined": "The request was declined.",
             "error_unexpected": "An unexpected error occurred.",
             "follow_remaining_instructions": "Follow the remaining instructions to verify your other device",
             "open_element_other_device": "Open %(brand)s on your other device",
@@ -261,14 +258,21 @@
             "scan_code_instruction": "Scan the QR code with another device",
             "scan_qr_code": "Sign in with QR code",
             "select_qr_code": "Select \"%(scanQRCode)s\"",
-            "sign_in_new_device": "Sign in new device",
             "waiting_for_device": "Waiting for device to sign in",
+            "sign_in_new_device": "Sign in new device",
             "security_code_prompt": "If asked, enter the code below on your other device.",
             "security_code": "Security code",
+            "error_unexpected_message": "An unexpected message was received from the other device.",
+            "error_rate_limited": "Too many attempts in a short time. Wait some time before trying again.",
+            "error_insecure_connection": "Connection not secure.",
+            "error_device_not_found": "The new device does not appear to have signed in.",
+            "error_device_already_exists": "The specified device is already signed in.",
+            "confirm_code_match": "Check that the code below matches with your other device:",
             "check_code_mismatch": "The numbers don't match",
             "check_code_input_label": "2-digit code",
             "check_code_heading": "Enter the number shown on your other device",
-            "check_code_explainer": "This will verify that the connection to your other device is secure."
+            "check_code_explainer": "This will verify that the connection to your other device is secure.",
+            "approve_access_warning": "By approving access for this device, it will have full access to your account."
         },
         "register_action": "Create Account",
         "registration": {
@@ -1419,7 +1423,6 @@
         "group_spaces": "Spaces",
         "group_themes": "Themes",
         "group_threads": "Threads",
-        "group_ui": "User interface",
         "group_voip": "Voice & Video",
         "group_widgets": "Widgets",
         "hidebold": "Hide notification dot (only display counters badges)",
@@ -1443,7 +1446,6 @@
         "oidc_native_flow": "OIDC native authentication",
         "oidc_native_flow_description": "⚠ WARNING: Experimental. Use OIDC native authentication when supported by the server.",
         "pinning": "Message Pinning",
-        "release_announcement": "Release announcement",
         "render_reaction_images": "Render custom images in reactions",
         "render_reaction_images_description": "Sometimes referred to as \"custom emojis\".",
         "report_to_moderators": "Report to moderators",
@@ -1479,7 +1481,9 @@
         "video_rooms_feedbackSubheading": "Thank you for trying the beta, please go into as much detail as you can so we can improve it.",
         "voice_broadcast": "Voice broadcast",
         "voice_broadcast_force_small_chunks": "Force 15s voice broadcast chunk length",
-        "wysiwyg_composer": "Rich text editor"
+        "wysiwyg_composer": "Rich text editor",
+        "release_announcement": "Release announcement",
+        "group_ui": "User interface"
     },
     "labs_mjolnir": {
         "advanced_warning": "⚠ These settings are meant for advanced users.",
@@ -2857,11 +2861,11 @@
             "metaspaces_orphans_description": "Group all your rooms that aren't part of a space in one place.",
             "metaspaces_people_description": "Group all your people in one place.",
             "metaspaces_subsection": "Spaces to show",
-            "metaspaces_video_rooms": "Video rooms and conferences",
-            "metaspaces_video_rooms_description": "Group all private video rooms and conferences.",
-            "metaspaces_video_rooms_description_invite_extension": "In conferences you can invite people outside of matrix.",
             "spaces_explainer": "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.",
-            "title": "Sidebar"
+            "title": "Sidebar",
+            "metaspaces_video_rooms_description_invite_extension": "In conferences you can invite people outside of matrix.",
+            "metaspaces_video_rooms_description": "Group all private video rooms and conferences.",
+            "metaspaces_video_rooms": "Video rooms and conferences"
         },
         "start_automatically": "Start automatically after system login",
         "use_12_hour_format": "Show timestamps in 12 hour format (e.g. 2:30pm)",
@@ -3155,19 +3159,19 @@
         "empty_heading": "Keep discussions organised with threads",
         "empty_tip": "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.",
         "error_start_thread_existing_relation": "Can't create a thread from an event with an existing relation",
-        "mark_all_read": "Mark all as read",
         "my_threads": "My threads",
         "my_threads_description": "Shows all threads you've participated in",
         "open_thread": "Open thread",
         "show_all_threads": "Show all threads",
         "show_thread_filter": "Show:",
-        "unable_to_decrypt": "Unable to decrypt message"
+        "unable_to_decrypt": "Unable to decrypt message",
+        "mark_all_read": "Mark all as read"
     },
     "threads_activity_centre": {
         "header": "Threads activity",
         "no_rooms_with_unreads_threads": "You don't have rooms with unread threads yet.",
-        "release_announcement_description": "Threads notifications have moved, find them here from now on.",
-        "release_announcement_header": "Threads Activity Centre"
+        "release_announcement_header": "Threads Activity Centre",
+        "release_announcement_description": "Threads notifications have moved, find them here from now on."
     },
     "time": {
         "about_day_ago": "about a day ago",
@@ -3846,9 +3850,6 @@
         "legacy_call": "Legacy Call",
         "maximise": "Fill screen",
         "maximise_call": "Maximise call",
-        "metaspace_video_rooms": {
-            "conference_room_section": "Conferences"
-        },
         "minimise_call": "Minimise call",
         "misconfigured_server": "Call failed due to misconfigured server",
         "misconfigured_server_description": "Please ask the administrator of your homeserver (<code>%(homeserverDomain)s</code>) to configure a TURN server in order for calls to work reliably.",
@@ -3899,7 +3900,10 @@
         "video_call_started": "Video call started",
         "video_call_using": "Video call using:",
         "voice_call": "Voice call",
-        "you_are_presenting": "You are presenting"
+        "you_are_presenting": "You are presenting",
+        "metaspace_video_rooms": {
+            "conference_room_section": "Conferences"
+        }
     },
     "widget": {
         "added_by": "Widget added by",
