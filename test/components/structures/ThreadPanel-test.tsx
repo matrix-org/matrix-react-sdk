@@ -39,7 +39,6 @@ import { mkThread } from "../../test-utils/threads";
 import { IRoomState } from "../../../src/components/structures/RoomView";
 import defaultDispatcher from "../../../src/dispatcher/dispatcher";
 import { Action } from "../../../src/dispatcher/actions";
-import BaseCard from "../../../src/components/views/right_panel/BaseCard";
 
 jest.mock("../../../src/utils/Feedback");
 
@@ -160,28 +159,41 @@ describe("ThreadPanel", () => {
             await waitFor(() => expect(mockClient.sendReadReceipt).not.toHaveBeenCalled());
         });
 
-        it("focuses the close button on FocusThreadsPanel dispatch", async () => {
+        it("focuses the close button on FocusThreadsPanel dispatch", () => {
+            const ROOM_ID = "!roomId:example.org";
+
+            stubClient();
+            mockPlatformPeg();
+            const mockClient = mocked(MatrixClientPeg.safeGet());
+
+            const room = new Room(ROOM_ID, mockClient, mockClient.getUserId() ?? "", {
+                pendingEventOrdering: PendingEventOrdering.Detached,
+            });
+
             render(
-                <TooltipProvider>
-                    <BaseCard
-                        onClose={() => undefined}
-                        header={
-                            <ThreadPanelHeader
-                                empty={false}
-                                filterOption={ThreadFilterType.All}
-                                setFilterOption={() => undefined}
-                            />
-                        }
+                <MatrixClientContext.Provider value={mockClient}>
+                    <RoomContext.Provider
+                        value={getRoomContext(room, {
+                            canSendMessages: true,
+                        })}
                     >
-                        <div>Test</div>
-                    </BaseCard>
-                </TooltipProvider>,
+                        <ThreadPanel
+                            roomId={ROOM_ID}
+                            onClose={jest.fn()}
+                            resizeNotifier={new ResizeNotifier()}
+                            permalinkCreator={new RoomPermalinkCreator(room)}
+                        />
+                    </RoomContext.Provider>
+                </MatrixClientContext.Provider>,
             );
 
-            defaultDispatcher.dispatch({ action: Action.FocusThreadsPanel });
-            waitFor(() => {
-                expect(screen.getByTestId("base-card-close-button")).toHaveFocus();
-            });
+            // Unfocus it first so we know it's not just focused by coincidence
+            screen.getByTestId("base-card-close-button").blur();
+            expect(screen.getByTestId("base-card-close-button")).not.toHaveFocus();
+
+            defaultDispatcher.dispatch({ action: Action.FocusThreadsPanel }, true);
+
+            expect(screen.getByTestId("base-card-close-button")).toHaveFocus();
         });
     });
 
