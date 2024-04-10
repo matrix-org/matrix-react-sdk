@@ -36,15 +36,23 @@ export default class SlidingSyncController extends SettingController {
     }
 
     /**
-     * Check if the server declares "natively" supports sliding sync (at the unstable endpoint)
+     * Check if the server "natively" supports sliding sync (at the unstable endpoint).
      * @return Whether the "native" (unstable) endpoint is up
      */
     private async nativeSlidingSyncSupport(): Promise<boolean> {
         const cli = MatrixClientPeg.safeGet();
-        return cli.http.authedRequest(Method.Post, "/sync", undefined, undefined, {
-            localTimeoutMs: 10 * 1000, // 10s
-            prefix: "/_matrix/client/unstable/org.matrix.msc3575",
-        });
+        try {
+            await cli.http.authedRequest<void>(Method.Post, "/sync", undefined, undefined, {
+                localTimeoutMs: 10 * 1000, // 10s
+                prefix: "/_matrix/client/unstable/org.matrix.msc3575",
+            })
+        }
+        catch (e) {
+            return false; // 404, M_UNRECOGNIZED
+        }
+
+        logger.info("nativeSlidingSyncSupport: sliding sync endpoint is up");
+        return true; // 200, OK
     }
 
     /**
