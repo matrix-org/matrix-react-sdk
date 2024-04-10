@@ -299,8 +299,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.themeWatcher.start();
         this.fontWatcher.start();
 
-        this.focusNext;
-
         // object field used for tracking the status info appended to the title tag.
         // we don't do it as react state as i'm scared about triggering needless react refreshes.
         this.subTitleStatus = "";
