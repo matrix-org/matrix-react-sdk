@@ -101,6 +101,7 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                     case RendezvousFailureReason.InvalidCode:
                         cancellationMessage = _t("auth|qr_code_login|error_invalid_scanned_code");
                         break;
+                    case RendezvousFailureReason.UnsupportedTransport:
                     case RendezvousFailureReason.UnsupportedAlgorithm:
                         cancellationMessage = _t("auth|qr_code_login|error_device_unsupported");
                         break;
@@ -122,8 +123,20 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
                     case RendezvousFailureReason.HomeserverLacksSupport:
                         cancellationMessage = _t("auth|qr_code_login|error_homeserver_lacks_support");
                         break;
+                    case RendezvousFailureReason.DataMismatch:
+                        cancellationMessage = _t("auth|qr_code_login|error_insecure_connection");
+                        break;
+                    case RendezvousFailureReason.UnexpectedMessage:
+                        cancellationMessage = _t("auth|qr_code_login|error_unexpected_message");
+                        break;
+                    case RendezvousFailureReason.DeviceAlreadyExists:
+                        cancellationMessage = _t("auth|qr_code_login|error_device_already_exists");
+                        break;
+                    case RendezvousFailureReason.DeviceNotFound:
+                        cancellationMessage = _t("auth|qr_code_login|error_device_not_found");
+                        break;
                     default:
-                        cancellationMessage = _t("auth|qr_code_login|error_request_cancelled");
+                        cancellationMessage = _t("auth|qr_code_login|error_unexpected");
                         break;
                 }
                 centreTitle = true;

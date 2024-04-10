@@ -23,7 +23,7 @@ import { MatrixClient, discoverAndValidateOIDCIssuerWellKnown, generateScope } f
 import { OnResultFunction } from "react-qr-reader";
 import { OidcClient } from "oidc-client-ts";
 
-import type { MSC4108SignInWithQR } from "matrix-js-sdk/src/rendezvous";
+import { RendezvousError, type MSC4108SignInWithQR } from "matrix-js-sdk/src/rendezvous";
 import { getOidcClientId } from "../../../utils/oidc/registerClient";
 import SdkConfig from "../../../SdkConfig";
 import { completeDeviceAuthorizationGrant } from "../../../Lifecycle";
@@ -226,17 +226,13 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             }
 
             // we ask the user to confirm that the channel is secure
-        } catch (e) {
-            logger.error("Error whilst doing QR login", e);
-            // only set to error phase if it hasn't already been set by onFailure or similar
-            if (this.state.phase !== Phase.Error) {
-                this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
-            }
+        } catch (e: RendezvousError | unknown) {
+            logger.error("Error whilst generating QR", e);
+            await this.state.rendezvous?.cancel(e instanceof RendezvousError ? e.code : RendezvousFailureReason.Unknown);
         }
     };
 
     private processScannedCode = async (scannedCode: Buffer): Promise<void> => {
-        logger.info(scannedCode.toString());
         try {
             const Rendezvous = await import("matrix-js-sdk/src/rendezvous");
             if (this.state.lastScannedCode?.equals(scannedCode)) {
@@ -316,9 +312,9 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     homeserverBaseUrl,
                 });
             }
-        } catch (e) {
-            alert(e);
-            throw e;
+        } catch (e: RendezvousError | unknown) {
+            logger.error("Error whilst scanning QR", e);
+            await this.state.rendezvous?.cancel(e instanceof RendezvousError ? e.code : RendezvousFailureReason.Unknown);
         }
     };
 
@@ -339,55 +335,60 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             }
         }
 
-        if (this.state.ourIntent === RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE) {
-            // MSC4108-Flow: NewScanned
-            this.setState({ phase: Phase.Loading });
+        try {
+            if (this.state.ourIntent === RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE) {
+                // MSC4108-Flow: NewScanned
+                this.setState({ phase: Phase.Loading });
 
-            if (this.state.verificationUri) {
-                window.open(this.state.verificationUri, "_blank");
+                if (this.state.verificationUri) {
+                    window.open(this.state.verificationUri, "_blank");
+                }
+
+                this.setState({ phase: Phase.WaitingForDevice });
+
+                // send secrets
+                await this.state.rendezvous.loginStep5();
+
+                // done
+                this.props.onFinished(true);
+            } else {
+                // MSC4108-Flow: ExistingScanned
+                const { homeserverBaseUrl } = this.state;
+                if (!homeserverBaseUrl) {
+                    throw new Error("We don't know the homeserver");
+                }
+                const oidcClient = await this.getOidcClient(homeserverBaseUrl);
+                const { userCode } = await this.state.rendezvous.loginStep2And3(oidcClient);
+                this.setState({ phase: Phase.ShowUserCode, userCode });
+
+                // wait for protocol acceptance:
+                await this.state.rendezvous.loginStep4a();
+                // n.b. as we showed the code we don't need to display the checkCode
+
+                // wait for grant:
+                const tokenResponse = await this.state.rendezvous.loginStep4b();
+
+                const { credentials } = await completeDeviceAuthorizationGrant(
+                    oidcClient,
+                    tokenResponse,
+                    homeserverBaseUrl,
+                    undefined,
+                );
+
+                if (!credentials) {
+                    throw new Error("Failed to complete device authorization grant");
+                }
+
+                this.setState({ phase: Phase.Verifying });
+                // wait for secrets
+                const { secrets } = await this.state.rendezvous.loginStep5();
+
+                // done
+                this.props.onFinished({ ...credentials, secrets });
             }
-
-            this.setState({ phase: Phase.WaitingForDevice });
-
-            // send secrets
-            await this.state.rendezvous.loginStep5();
-
-            // done
-            this.props.onFinished(true);
-        } else {
-            // MSC4108-Flow: ExistingScanned
-            const { homeserverBaseUrl } = this.state;
-            if (!homeserverBaseUrl) {
-                throw new Error("We don't know the homeserver");
-            }
-            const oidcClient = await this.getOidcClient(homeserverBaseUrl);
-            const { userCode } = await this.state.rendezvous.loginStep2And3(oidcClient);
-            this.setState({ phase: Phase.ShowUserCode, userCode });
-
-            // wait for protocol acceptance:
-            await this.state.rendezvous.loginStep4a();
-            // n.b. as we showed the code we don't need to display the checkCode
-
-            // wait for grant:
-            const tokenResponse = await this.state.rendezvous.loginStep4b();
-
-            const { credentials } = await completeDeviceAuthorizationGrant(
-                oidcClient,
-                tokenResponse,
-                homeserverBaseUrl,
-                undefined,
-            );
-
-            if (!credentials) {
-                throw new Error("Failed to complete device authorization grant");
-            }
-
-            this.setState({ phase: Phase.Verifying });
-            // wait for secrets
-            const { secrets } = await this.state.rendezvous.loginStep5();
-
-            // done
-            this.props.onFinished({ ...credentials, secrets });
+        } catch (e: RendezvousError | unknown) {
+            logger.error("Error whilst approving login", e);
+            await this.state.rendezvous?.cancel(e instanceof RendezvousError ? e.code : RendezvousFailureReason.Unknown);
         }
     };
 
