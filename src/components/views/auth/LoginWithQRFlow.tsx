@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { RefObject, createRef } from "react";
-import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
+import { MSC4108FailureReason, ClientRendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
 import { Icon as ChevronLeftIcon } from "@vector-im/compound-design-tokens/icons/chevron-left.svg";
 import { QrReader, OnResultFunction } from "react-qr-reader";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -95,44 +95,43 @@ export default class LoginWithQRFlow extends React.Component<IProps> {
         switch (this.props.phase) {
             case Phase.Error:
                 switch (this.props.failureReason) {
-                    case RendezvousFailureReason.Expired:
+                    case ClientRendezvousFailureReason.Expired:
                         cancellationMessage = _t("auth|qr_code_login|error_linking_incomplete");
                         break;
-                    case RendezvousFailureReason.InvalidCode:
+                    case ClientRendezvousFailureReason.InvalidCode:
                         cancellationMessage = _t("auth|qr_code_login|error_invalid_scanned_code");
                         break;
-                    case RendezvousFailureReason.UnsupportedTransport:
-                    case RendezvousFailureReason.UnsupportedAlgorithm:
+                    case MSC4108FailureReason.UnsupportedProtocol:
                         cancellationMessage = _t("auth|qr_code_login|error_device_unsupported");
                         break;
-                    case RendezvousFailureReason.UserDeclined:
+                    case ClientRendezvousFailureReason.UserDeclined:
                         cancellationMessage = _t("auth|qr_code_login|error_request_declined");
                         break;
-                    case RendezvousFailureReason.OtherDeviceAlreadySignedIn:
+                    case ClientRendezvousFailureReason.OtherDeviceAlreadySignedIn:
                         cancellationMessage = _t("auth|qr_code_login|error_device_already_signed_in");
                         break;
-                    case RendezvousFailureReason.OtherDeviceNotSignedIn:
+                    case ClientRendezvousFailureReason.OtherDeviceNotSignedIn:
                         cancellationMessage = _t("auth|qr_code_login|error_device_not_signed_in");
                         break;
-                    case RendezvousFailureReason.UserCancelled:
+                    case MSC4108FailureReason.UserCancelled:
                         cancellationMessage = _t("auth|qr_code_login|error_request_cancelled");
                         break;
-                    case RendezvousFailureReason.Unknown:
+                    case ClientRendezvousFailureReason.Unknown:
                         cancellationMessage = _t("auth|qr_code_login|error_unexpected");
                         break;
-                    case RendezvousFailureReason.HomeserverLacksSupport:
+                    case ClientRendezvousFailureReason.HomeserverLacksSupport:
                         cancellationMessage = _t("auth|qr_code_login|error_homeserver_lacks_support");
                         break;
-                    case RendezvousFailureReason.InsecureChannelDetected:
+                    case ClientRendezvousFailureReason.InsecureChannelDetected:
                         cancellationMessage = _t("auth|qr_code_login|error_insecure_connection");
                         break;
-                    case RendezvousFailureReason.UnexpectedMessage:
+                    case MSC4108FailureReason.UnexpectedMessageReceived:
                         cancellationMessage = _t("auth|qr_code_login|error_unexpected_message");
                         break;
-                    case RendezvousFailureReason.DeviceAlreadyExists:
+                    case MSC4108FailureReason.DeviceAlreadyExists:
                         cancellationMessage = _t("auth|qr_code_login|error_device_already_exists");
                         break;
-                    case RendezvousFailureReason.DeviceNotFound:
+                    case MSC4108FailureReason.DeviceNotFound:
                         cancellationMessage = _t("auth|qr_code_login|error_device_not_found");
                         break;
                     default:
