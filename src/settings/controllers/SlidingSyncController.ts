@@ -53,26 +53,23 @@ export default class SlidingSyncController extends SettingController {
      * @return Whether the server has a working sliding sync implementation
      */
     private async slidingSyncHealthCheck(): Promise<boolean> {
-        let baseUrl: String
-        const client = MatrixClientPeg.safeGet();
-        if (await this.proxySlidingSyncSupport()) {
-            const wellKnown = await client.waitForClientWellKnown();
-            baseUrl = wellKnown?.["org.matrix.msc3575.proxy"]!.url;
-        }
-        else if (await this.nativeSlidingSyncSupport()) {
-            baseUrl = client.getHomeserverUrl();
-        }
-        else {
-            return false;
+        if (await this.nativeSlidingSyncSupport()) {
+            return true; // Short-circuit, we've checked it's an auth'd endpoint
         }
 
-        const response = await fetch(baseUrl + "/client/server.json", {
-            method: Method.Get,
-            signal: timeoutSignal(10000), // 10s
-        });
-        if (response.status === 200) {
-            logger.info("slidingSyncHealthCheck: sliding sync endpoint is up");
-            return true;
+        if (await this.proxySlidingSyncSupport()) {
+            const wellKnown = await MatrixClientPeg.safeGet().waitForClientWellKnown();
+            const slidingSyncProxy = wellKnown?.["org.matrix.msc3575.proxy"]!.url;
+            if (slidingSyncProxy) {
+                const response = await fetch(slidingSyncProxy + "/client/server.json", {
+                    method: Method.Get,
+                    signal: timeoutSignal(10 * 1000), // 10s
+                });
+                if (response.status === 200) {
+                    logger.info("slidingSyncHealthCheck: sliding sync endpoint is up");
+                    return true;
+                }
+            }
         }
 
         return false;
