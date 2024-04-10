@@ -55,11 +55,13 @@ export default class SlidingSyncController extends SettingController {
      */
     private async slidingSyncHealthCheck(): Promise<boolean> {
         let baseUrl: String
+        const client = MatrixClientPeg.safeGet();
         if (await this.proxySlidingSyncSupport()) {
-            baseUrl = MatrixClientPeg.safeGet().getClientWellKnown()?.["org.matrix.msc3575.proxy"]!.url;
+            const wellKnown = await client.waitForClientWellKnown();
+            baseUrl = wellKnown?.["org.matrix.msc3575.proxy"]!.url;
         }
         else if (await this.nativeSlidingSyncSupport()) {
-            baseUrl = MatrixClientPeg.safeGet().getHomeserverUrl();
+            baseUrl = client.getHomeserverUrl();
         }
         else {
             return false;
