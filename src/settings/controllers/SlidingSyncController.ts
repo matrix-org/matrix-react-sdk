@@ -31,7 +31,7 @@ export default class SlidingSyncController extends SettingController {
      * @return Whether the client well-known contains a proxy url
      */
     private async proxySlidingSyncSupport(): Promise<boolean> {
-        const clientWellKnown = MatrixClientPeg.safeGet().getClientWellKnown();
+        const clientWellKnown = await MatrixClientPeg.safeGet().waitForClientWellKnown();
         const proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
         return proxyUrl != undefined;
     }
