@@ -18,11 +18,15 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 
-// the interval between creating dehydrated devices
-const DEHYDRATION_INTERVAL = 7 * 24 * 60 * 60 * 1000;
-
-// check if device dehydration is enabled
-export async function deviceDehydrationEnabled(): Promise<boolean> {
+/**
+ * Check if device dehydration is enabled.
+ *
+ * Dehydration can only be enabled if encryption is available, and the crypto
+ * backend supports dehydration.
+ *
+ * Dehydration can currently only enabled by setting a flag in the .well-known file.
+ */
+async function deviceDehydrationEnabled(): Promise<boolean> {
     const crypto = MatrixClientPeg.safeGet().getCrypto();
     if (!crypto) {
         return false;
@@ -30,28 +34,21 @@ export async function deviceDehydrationEnabled(): Promise<boolean> {
     if (!(await crypto.isDehydrationSupported())) {
         return false;
     }
-    if (await crypto.isDehydrationKeyStored()) {
-        return true;
-    }
     const wellknown = await MatrixClientPeg.safeGet().waitForClientWellKnown();
     return !!wellknown?.["org.matrix.msc3814"];
 }
 
-// if dehydration is enabled, rehydrate a device (if available) and create
-// a new dehydrated device
-export async function initializeDehydration(reset?: boolean): Promise<void> {
+/**
+ * If dehydration is enabled, rehydrate a device (if available) and create
+ * a new dehydrated device.
+ *
+ * @param createNewKey: force a new dehydration key to be created, even if one
+ *   already exists.  This is used when we reset secret storage.
+ */
+export async function initializeDehydration(createNewKey: boolean = false): Promise<void> {
     const crypto = MatrixClientPeg.safeGet().getCrypto();
     if (crypto && (await deviceDehydrationEnabled())) {
         logger.log("Device dehydration enabled");
-        if (reset) {
-            await crypto.resetDehydrationKey();
-        } else {
-            try {
-                await crypto.rehydrateDeviceIfAvailable();
-            } catch (e) {
-                logger.error("Error rehydrating device:", e);
-            }
-        }
-        await crypto.scheduleDeviceDehydration(DEHYDRATION_INTERVAL);
+        await crypto.startDehydration(createNewKey);
     }
 }
