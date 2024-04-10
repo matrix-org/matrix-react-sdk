@@ -28,7 +28,7 @@ import { MatrixClientPeg } from "../../MatrixClientPeg";
 export default class SlidingSyncController extends SettingController {
     /**
      * Check if the server declares support for sliding sync via a proxy in its client `.well-known`.
-     * @return {boolean} Whether the client well-known contains a proxy url
+     * @return Whether the client well-known contains a proxy url
      */
     private async proxySlidingSyncSupport(): Promise<boolean> {
         const clientWellKnown = MatrixClientPeg.safeGet().getClientWellKnown();
@@ -38,7 +38,7 @@ export default class SlidingSyncController extends SettingController {
 
     /**
      * Check if the server declares "natively" supports sliding sync (at the unstable endpoint)
-     * @return {boolean} Whether the "native" (unstable) endpoint is up
+     * @return Whether the "native" (unstable) endpoint is up
      */
     private async nativeSlidingSyncSupport(): Promise<boolean> {
         const cli = MatrixClientPeg.safeGet();
@@ -51,7 +51,7 @@ export default class SlidingSyncController extends SettingController {
     /**
      * Check whether our homeserver has sliding sync support, that the endpoint is up, and
      * is a sliding sync endpoint.
-     * @return {boolean} Whether the server has a working sliding sync implementation
+     * @return Whether the server has a working sliding sync implementation
      */
     private async slidingSyncHealthCheck(): Promise<boolean> {
         let baseUrl: String
