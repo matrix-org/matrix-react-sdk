@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Method } from "matrix-js-sdk/src/matrix";
+import { Method, timeoutSignal } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingController from "./SettingController";
@@ -66,13 +66,11 @@ export default class SlidingSyncController extends SettingController {
             return false;
         }
 
-        const controller = new AbortController();
-        const id = window.setTimeout(() => controller.abort(), 10 * 1000); // 10s
-        const res = await fetch(baseUrl + "/client/server.json", {
-            signal: controller.signal,
+        const response = await fetch(baseUrl + "/client/server.json", {
+            method: Method.Get,
+            signal: timeoutSignal(10000), // 10s
         });
-        clearTimeout(id);
-        if (res.status === 200) {
+        if (response.status === 200) {
             logger.info("slidingSyncHealthCheck: sliding sync endpoint is up");
             return true;
         }
