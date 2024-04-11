@@ -21,8 +21,10 @@ import { MatrixClientPeg } from "../../MatrixClientPeg";
 /**
  * Check if device dehydration is enabled.
  *
- * Dehydration can only be enabled if encryption is available, and the crypto
- * backend supports dehydration.
+ * Note that this doesn't necessarily mean that device dehydration has been initialised
+ * (yet) on this client; rather, it means that the server supports it, the crypto backend
+ * supports it, and the application configuration suggests that it *should* be
+ * initialised on this device.
  *
  * Dehydration can currently only enabled by setting a flag in the .well-known file.
  */
@@ -39,13 +41,14 @@ async function deviceDehydrationEnabled(): Promise<boolean> {
 }
 
 /**
- * If dehydration is enabled, rehydrate a device (if available) and create
+ * If dehydration is enabled (i.e., it is supported by the server and enabled in
+ * the configuration), rehydrate a device (if available) and create
  * a new dehydrated device.
  *
  * @param createNewKey: force a new dehydration key to be created, even if one
  *   already exists.  This is used when we reset secret storage.
  */
-export async function initializeDehydration(createNewKey: boolean = false): Promise<void> {
+export async function initialiseDehydration(createNewKey: boolean = false): Promise<void> {
     const crypto = MatrixClientPeg.safeGet().getCrypto();
     if (crypto && (await deviceDehydrationEnabled())) {
         logger.log("Device dehydration enabled");

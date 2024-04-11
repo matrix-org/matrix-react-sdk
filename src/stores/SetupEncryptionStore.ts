@@ -28,7 +28,7 @@ import InteractiveAuthDialog from "../components/views/dialogs/InteractiveAuthDi
 import { _t } from "../languageHandler";
 import { SdkContextClass } from "../contexts/SDKContext";
 import { asyncSome } from "../utils/arrays";
-import { initializeDehydration } from "../utils/device/dehydration";
+import { initialiseDehydration } from "../utils/device/dehydration";
 
 export enum Phase {
     Loading = 0,
@@ -157,7 +157,7 @@ export class SetupEncryptionStore extends EventEmitter {
                         await cli.restoreKeyBackupWithSecretStorage(backupInfo);
                     }
 
-                    await initializeDehydration();
+                    await initialiseDehydration();
                 }).catch(reject);
             });
 
@@ -263,7 +263,7 @@ export class SetupEncryptionStore extends EventEmitter {
                     setupNewCrossSigning: true,
                 });
 
-                await initializeDehydration(true);
+                await initialiseDehydration(true);
 
                 this.phase = Phase.Finished;
             }, true);
