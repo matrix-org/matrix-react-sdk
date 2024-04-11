@@ -1029,9 +1029,9 @@ async function startMatrixClient(client: MatrixClient, startSyncing = true): Pro
  */
 export async function onLoggedOut(): Promise<void> {
     // Update the service worker with nullified credentials
-    const {hsUrl} = await getStoredSessionVars();
+    const { hsUrl } = await getStoredSessionVars();
     if (hsUrl) {
-        await tryUpdateServiceWorker({homeserverUrl: hsUrl, accessToken: null});
+        await tryUpdateServiceWorker({ homeserverUrl: hsUrl, accessToken: null });
     }
 
     // Ensure that we dispatch a view change **before** stopping the client,
@@ -1153,7 +1153,10 @@ window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string): Prom
     );
 };
 
-async function tryUpdateServiceWorker(credentials: {homeserverUrl: string, accessToken: string|null}): Promise<void> {
+async function tryUpdateServiceWorker(credentials: {
+    homeserverUrl: string;
+    accessToken: string | null;
+}): Promise<void> {
     if ("serviceWorker" in navigator) {
         const registration = await navigator.serviceWorker.ready;
         registration.active?.postMessage({
