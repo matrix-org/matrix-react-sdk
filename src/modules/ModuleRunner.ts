@@ -39,12 +39,11 @@ class ExtensionsManager {
     private cryptoSetupExtension: ProvideCryptoSetupExtensions;
     private experimentalExtension: ProvideExperimentalExtensions;
 
-    // Map to keep track of which extensions has been provided by modules.
-    private implementionMap = {
-        hasDefaultCryptoSetupExtension: true,
-        hasDefaultExperimentalExtension: true,
-    };
+    /** `true` if `cryptoSetupExtension` is the default implementation; `false` if it is implemented by a module. */
+    private hasDefaultCryptoSetupExtension = true;
 
+    /** `true` if `experimentalExtension` is the default implementation; `false` if it is implemented by a module. */    
+    private hasDefaultExperimentalExtension: true,
     /**
      * Create a new instance.
      */
