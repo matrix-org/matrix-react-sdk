@@ -18,7 +18,6 @@ limitations under the License.
 */
 
 import {
-    AutoDiscovery,
     EventTimeline,
     EventTimelineSet,
     ICreateClientOpts,
