@@ -707,6 +707,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             newState.initialEventPixelOffset = undefined;
 
             const thread = initialEvent?.getThread();
+            // Handle the use case of a link to a thread message
+            // ie: #/room/roomId/eventId (eventId of a thread message)
             if (thread?.rootEvent && !initialEvent?.isThreadRoot) {
                 dis.dispatch<ShowThreadPayload>({
                     action: Action.ShowThread,
