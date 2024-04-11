@@ -273,7 +273,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.clientWellKnownPollPeriod = 2 * 60 * 60; // 2 hours
         opts.threadSupport = true;
 
-        opts.slidingSync = await SlidingSyncManager.instance.setup(this.matrixClient)
+        if (SettingsStore.getValue("feature_sliding_sync")) {
+            opts.slidingSync = await SlidingSyncManager.instance.setup(this.matrixClient)
+        }
 
         // Connect the matrix client to the dispatcher and setting handlers
         MatrixActionCreators.start(this.matrixClient);

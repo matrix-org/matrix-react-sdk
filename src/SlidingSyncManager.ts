@@ -327,7 +327,7 @@ export class SlidingSyncManager {
     }
 
     /**
-     * Set up the Sliding Sync instance. If the user has enabled sliding sync in Labs, it configures the end point and starts spidering.
+     * Set up the Sliding Sync instance; configures the end point and starts spidering.
      * The sliding sync endpoint is derived the following way:
      *   1. The user-defined sliding sync proxy URL (legacy, for backwards compatibility)
      *   2. The client `well-known` sliding sync proxy URL [declared at the unstable prefix](https://github.com/matrix-org/matrix-spec-proposals/blob/kegan/sync-v3/proposals/3575-sync.md#unstable-prefix)
@@ -335,24 +335,22 @@ export class SlidingSyncManager {
      * @param client Matrix Client
      */
     public async setup(client: MatrixClient): Promise<SlidingSync | undefined> {
-        if (SettingsStore.getValue("feature_sliding_sync")) {
-            const baseUrl = client.baseUrl;
-            const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
-            const wellKnown = await AutoDiscovery.findClientConfig(baseUrl); // the client isn't init'd yet
-            const wellKnownProxyUrl = wellKnown?.["org.matrix.msc3575.proxy"]?.url;
-            if (proxyUrl) {
-                logger.log("Activating sliding sync using manually added proxy at ", proxyUrl);
-            } else if (wellKnownProxyUrl) {
-                logger.log("Activating sliding sync using well-known proxy at ", wellKnownProxyUrl);
-            } else {
-                logger.log("Activating sliding sync using the HS base url at ", baseUrl);
-            }
-            this.configure(
-                client,
-                proxyUrl || wellKnownProxyUrl || baseUrl,
-            );
-            this.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
+        const baseUrl = client.baseUrl;
+        const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
+        const wellKnown = await AutoDiscovery.findClientConfig(baseUrl); // the client isn't init'd yet
+        const wellKnownProxyUrl = wellKnown?.["org.matrix.msc3575.proxy"]?.url;
+        if (proxyUrl) {
+            logger.log("Activating sliding sync using manually added proxy at ", proxyUrl);
+        } else if (wellKnownProxyUrl) {
+            logger.log("Activating sliding sync using well-known proxy at ", wellKnownProxyUrl);
+        } else {
+            logger.log("Activating sliding sync using the HS base url at ", baseUrl);
         }
+        this.configure(
+            client,
+            proxyUrl || wellKnownProxyUrl || baseUrl,
+        );
+        this.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
 
         return this.slidingSync;
     }
