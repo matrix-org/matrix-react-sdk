@@ -30,7 +30,6 @@ import { stubClient } from "../../../test-utils";
 import { populateThread } from "../../../test-utils/threads";
 import { NotificationLevel } from "../../../../src/stores/notifications/NotificationLevel";
 import { useUnreadThreadRooms } from "../../../../src/components/views/spaces/threads-activity-centre/useUnreadThreadRooms";
-import { SettingLevel } from "../../../../src/settings/SettingLevel";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 
 describe("useUnreadThreadRooms", () => {
@@ -43,6 +42,10 @@ describe("useUnreadThreadRooms", () => {
         room = new Room("!room1:example.org", client, "@fee:bar", {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it("has no notifications with no rooms", async () => {
@@ -76,7 +79,8 @@ describe("useUnreadThreadRooms", () => {
     });
 
     it("an activity notification is displayed with the setting enabled", async () => {
-        await SettingsStore.setValue("Notifications.hidebold_tac", null, SettingLevel.DEVICE, false);
+        jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+
         const notifThreadInfo = await populateThread({
             room: room,
             client: client,
