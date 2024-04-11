@@ -30,6 +30,8 @@ import { stubClient } from "../../../test-utils";
 import { populateThread } from "../../../test-utils/threads";
 import { NotificationLevel } from "../../../../src/stores/notifications/NotificationLevel";
 import { useUnreadThreadRooms } from "../../../../src/components/views/spaces/threads-activity-centre/useUnreadThreadRooms";
+import { SettingLevel } from "../../../../src/settings/SettingLevel";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 describe("useUnreadThreadRooms", () => {
     let client: MatrixClient;
@@ -51,7 +53,7 @@ describe("useUnreadThreadRooms", () => {
         expect(rooms.length).toEqual(0);
     });
 
-    it("an activity notification is ignored", async () => {
+    it("an activity notification is ignored by default", async () => {
         const notifThreadInfo = await populateThread({
             room: room,
             client: client,
@@ -71,6 +73,29 @@ describe("useUnreadThreadRooms", () => {
 
         expect(greatestNotificationLevel).toBe(NotificationLevel.None);
         expect(rooms.length).toEqual(0);
+    });
+
+    it("an activity notification is displayed with the setting enabled", async () => {
+        await SettingsStore.setValue("Notifications.hidebold_tac", null, SettingLevel.DEVICE, false);
+        const notifThreadInfo = await populateThread({
+            room: room,
+            client: client,
+            authorId: "@foo:bar",
+            participantUserIds: ["@fee:bar"],
+        });
+        room.setThreadUnreadNotificationCount(notifThreadInfo.thread.id, NotificationCountType.Total, 0);
+
+        client.getVisibleRooms = jest.fn().mockReturnValue([room]);
+
+        const wrapper = ({ children }: { children: React.ReactNode }) => (
+            <MatrixClientContext.Provider value={client}>{children}</MatrixClientContext.Provider>
+        );
+
+        const { result } = renderHook(() => useUnreadThreadRooms(true), { wrapper });
+        const { greatestNotificationLevel, rooms } = result.current;
+
+        expect(greatestNotificationLevel).toBe(NotificationLevel.Activity);
+        expect(rooms.length).toEqual(1);
     });
 
     it("a notification and a highlight summarise to a highlight", async () => {
