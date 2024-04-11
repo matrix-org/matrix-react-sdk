@@ -836,6 +836,9 @@ async function showStorageEvictedDialog(): Promise<boolean> {
 class AbortLoginAndRebuildStorage extends Error {}
 
 async function persistCredentials(credentials: IMatrixClientCreds): Promise<void> {
+    // Update the service worker before doing much else.
+    await tryUpdateServiceWorker(credentials);
+
     localStorage.setItem(HOMESERVER_URL_KEY, credentials.homeserverUrl);
     if (credentials.identityServerUrl) {
         localStorage.setItem(ID_SERVER_URL_KEY, credentials.identityServerUrl);
@@ -1025,6 +1028,12 @@ async function startMatrixClient(client: MatrixClient, startSyncing = true): Pro
  * storage. Used after a session has been logged out.
  */
 export async function onLoggedOut(): Promise<void> {
+    // Update the service worker with nullified credentials
+    const {hsUrl} = await getStoredSessionVars();
+    if (hsUrl) {
+        await tryUpdateServiceWorker({homeserverUrl: hsUrl, accessToken: null});
+    }
+
     // Ensure that we dispatch a view change **before** stopping the client,
     // that React components unmount first. This avoids React soft crashes
     // that can occur when components try to use a null client.
@@ -1143,3 +1152,14 @@ window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string): Prom
         true,
     );
 };
+
+async function tryUpdateServiceWorker(credentials: {homeserverUrl: string, accessToken: string|null}): Promise<void> {
+    if ("serviceWorker" in navigator) {
+        const registration = await navigator.serviceWorker.ready;
+        registration.active?.postMessage({
+            type: "credentials",
+            homeserverUrl: credentials.homeserverUrl,
+            accessToken: credentials.accessToken,
+        });
+    }
+}
