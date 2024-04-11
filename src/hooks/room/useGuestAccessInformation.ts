@@ -52,7 +52,10 @@ export const useGuestAccessInformation = (room: Room): GuestAccessInformation =>
         [canChangeJoinRule, isRoomJoinable, guestSpaUrl],
     );
 
-    const isRoomJoinableFunction = (): boolean =>
-        room.getJoinRule() === JoinRule.Public || (joinRule === JoinRule.Knock && room.canInvite(room.myUserId));
+    const isRoomJoinableFunction = (): boolean => {
+        const joinRule = room.getJoinRule();
+        return joinRule === JoinRule.Public || (joinRule === JoinRule.Knock && room.canInvite(room.myUserId));
+    };
+
     return { canInviteGuests, guestSpaUrl, isRoomJoinable: isRoomJoinableFunction, canInvite };
 };
