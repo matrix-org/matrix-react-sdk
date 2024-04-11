@@ -67,16 +67,14 @@ export default class SlidingSyncController extends SettingController {
 
         if (await this.proxySlidingSyncSupport()) {
             const wellKnown = await MatrixClientPeg.safeGet().waitForClientWellKnown();
-            const slidingSyncProxy = wellKnown?.["org.matrix.msc3575.proxy"]!.url;
-            if (slidingSyncProxy) {
-                const response = await fetch(slidingSyncProxy + "/client/server.json", {
-                    method: Method.Get,
-                    signal: timeoutSignal(10 * 1000), // 10s
-                });
-                if (response.status === 200) {
-                    logger.info("slidingSyncHealthCheck: sliding sync endpoint is up");
-                    return true;
-                }
+            const slidingSyncProxy = wellKnown!["org.matrix.msc3575.proxy"]!.url; // We check it's there in the if
+            const response = await fetch(slidingSyncProxy + "/client/server.json", {
+                method: Method.Get,
+                signal: timeoutSignal(10 * 1000), // 10s
+            });
+            if (response.status === 200) {
+                logger.info("slidingSyncHealthCheck: sliding sync endpoint is up");
+                return true;
             }
         }
 
