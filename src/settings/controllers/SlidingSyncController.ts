@@ -78,7 +78,7 @@ export default class SlidingSyncController extends SettingController {
                 signal: timeoutSignal(10 * 1000), // 10s
             });
             if (response.status === 200) {
-                logger.info("slidingSyncHealthCheck: sliding sync endpoint is up");
+                logger.info("slidingSyncHealthCheck: sliding sync proxy is up");
                 return true;
             }
         }
