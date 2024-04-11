@@ -42,8 +42,8 @@ class ExtensionsManager {
     /** `true` if `cryptoSetupExtension` is the default implementation; `false` if it is implemented by a module. */
     private hasDefaultCryptoSetupExtension = true;
 
-    /** `true` if `experimentalExtension` is the default implementation; `false` if it is implemented by a module. */    
-    private hasDefaultExperimentalExtension: true,
+    /** `true` if `experimentalExtension` is the default implementation; `false` if it is implemented by a module. */
+    private hasDefaultExperimentalExtension = true;
     /**
      * Create a new instance.
      */
@@ -84,11 +84,11 @@ class ExtensionsManager {
     public addExtensions(module: AppModule): void {
         const runtimeModule = module.module;
 
-        /* Record the cryptoSetup extension if any */
+        /* Add the cryptoSetup extension if any */
         if (runtimeModule.extensions?.cryptoSetup) {
-            if (this.implementionMap.hasDefaultCryptoSetupExtension) {
+            if (this.hasDefaultCryptoSetupExtension) {
                 this.cryptoSetupExtension = runtimeModule.extensions?.cryptoSetup;
-                this.implementionMap.hasDefaultCryptoSetupExtension = false;
+                this.hasDefaultCryptoSetupExtension = false;
             } else {
                 throw new Error(
                     `adding cryptoSetup extension implementation from module ${runtimeModule.moduleName} but an implementation was already provided.`,
@@ -96,11 +96,11 @@ class ExtensionsManager {
             }
         }
 
-        /* Record the experimental extension if any */
+        /* Add the experimental extension if any */
         if (runtimeModule.extensions?.experimental) {
-            if (this.implementionMap.hasDefaultExperimentalExtension) {
+            if (this.hasDefaultExperimentalExtension) {
                 this.experimentalExtension = runtimeModule.extensions?.experimental;
-                this.implementionMap.hasDefaultExperimentalExtension = false;
+                this.hasDefaultExperimentalExtension = false;
             } else {
                 throw new Error(
                     `adding experimental extension implementation from module ${runtimeModule.moduleName} but an implementation was already provided.`,
