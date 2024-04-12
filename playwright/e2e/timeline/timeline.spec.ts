@@ -70,6 +70,22 @@ const sendEvent = async (client: Client, roomId: string, html = false): Promise<
     return client.sendEvent(roomId, null, "m.room.message" as EventType, content);
 };
 
+const sendImage = async (
+    client: Client,
+    roomId: string,
+    pngBytes: Buffer,
+    additionalContent?: any,
+): Promise<ISendEventResponse> => {
+    const upload = await client.uploadContent(pngBytes, { name: "image.png", type: "image/png" });
+    return client.sendEvent(roomId, null, "m.room.message" as EventType, {
+        ...(additionalContent ?? {}),
+
+        msgtype: "m.image" as MsgType,
+        body: "image.png",
+        url: upload.content_uri,
+    });
+};
+
 test.describe("Timeline", () => {
     test.use({
         displayName: OLD_NAME,
@@ -1135,6 +1151,83 @@ test.describe("Timeline", () => {
                 "long-strings-with-reply-bubble-layout.png",
                 screenshotOptions,
             );
+        });
+
+        test("should render images in the timeline", async ({ page, app, room }) => {
+            await page.goto(`/#/room/${room.roomId}`);
+            await sendImage(app.client, room.roomId, NEW_AVATAR);
+            await expect(page.locator(".mx_MImageBody").first()).toBeVisible();
+
+            // Exclude timestamp and read marker from snapshot
+            const screenshotOptions = {
+                mask: [page.locator(".mx_MessageTimestamp")],
+                css: `
+                    .mx_TopUnreadMessagesBar, .mx_MessagePanel_myReadMarker {
+                        display: none !important;
+                    }
+                `,
+            };
+
+            await expect(page.locator(".mx_ScrollPanel")).toMatchScreenshot(
+                "image-in-timeline-default-layout.png",
+                screenshotOptions,
+            );
+        });
+
+        test.describe("MSC3916 - Authenticated Media", () => {
+            test("should render authenticated images in the timeline", async ({ page, app, room }) => {
+                page.on("request", (request) => console.log(">>", request.method(), request.url()));
+                page.on("response", (response) => console.log("<<", response.status(), response.url()));
+
+                // Install our mocks and preventative measures
+                await page.route("*/**/_matrix/client/versions", async (route) => {
+                    const json = await (await route.fetch()).json();
+                    if (!json["unstable_features"]) json["unstable_features"] = {};
+                    json["unstable_features"]["org.matrix.msc3916"] = true;
+                    await route.fulfill({ json });
+                });
+                await page.route("*/**/_matrix/media/v3/download/**/*", async (route) => {
+                    await route.abort(); // should not be called
+                });
+                await page.route("*/**/_matrix/media/v3/thumbnail/**/*", async (route) => {
+                    await route.abort(); // should not be called
+                });
+                await page.route("*/**/_matrix/client/unstable/org.matrix.msc3916/download/**/*", async (route) => {
+                    expect(route.request().headers()["Authorization"]).toBeDefined();
+                    // we can't use route.continue() because no configured homeserver supports MSC3916 yet
+                    await route.fulfill({
+                        body: NEW_AVATAR,
+                    });
+                });
+                await page.route("*/**/_matrix/client/unstable/org.matrix.msc3916/thumbnail/**/*", async (route) => {
+                    expect(route.request().headers()["Authorization"]).toBeDefined();
+                    // we can't use route.continue() because no configured homeserver supports MSC3916 yet
+                    await route.fulfill({
+                        body: NEW_AVATAR,
+                    });
+                });
+
+                await page.goto(`/#/room/${room.roomId}`);
+                await sendImage(app.client, room.roomId, NEW_AVATAR);
+                await expect(page.locator(".mx_MImageBody").first()).toBeVisible();
+
+                // Exclude timestamp and read marker from snapshot
+                const screenshotOptions = {
+                    mask: [page.locator(".mx_MessageTimestamp")],
+                    css: `
+                    .mx_TopUnreadMessagesBar, .mx_MessagePanel_myReadMarker {
+                        display: none !important;
+                    }
+                `,
+                };
+
+                await expect(page.locator(".mx_ScrollPanel")).toMatchScreenshot(
+                    // Yes, this is the same screenshot as the simple image render above: the user should
+                    // not see a difference.
+                    "image-in-timeline-default-layout.png",
+                    screenshotOptions,
+                );
+            });
         });
     });
 });
