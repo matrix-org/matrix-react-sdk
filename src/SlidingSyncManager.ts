@@ -341,11 +341,11 @@ export class SlidingSyncManager {
         const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
         const wellKnownProxyUrl = await this.getProxyFromWellKnown();
         if (proxyUrl) {
-            logger.log("Activating sliding sync using manually added proxy at ", proxyUrl);
+            logger.info("Activating sliding sync using manually added proxy at", proxyUrl);
         } else if (wellKnownProxyUrl) {
-            logger.log("Activating sliding sync using well-known proxy at ", wellKnownProxyUrl);
+            logger.info("Activating sliding sync using well-known proxy at", wellKnownProxyUrl);
         } else {
-            logger.log("Activating sliding sync using the HS base url at ", baseUrl);
+            logger.info("Activating sliding sync using the HS base url at", baseUrl);
         }
         this.configure(
             client,
