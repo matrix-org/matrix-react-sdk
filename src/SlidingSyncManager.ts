@@ -44,7 +44,7 @@ limitations under the License.
  *                      list ops)
  */
 
-import { MatrixClient, EventType, AutoDiscovery } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, EventType, AutoDiscovery, Method, timeoutSignal } from "matrix-js-sdk/src/matrix";
 import {
     MSC3575Filter,
     MSC3575List,
@@ -57,6 +57,8 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { defer, sleep } from "matrix-js-sdk/src/utils";
 
 import SettingsStore from "./settings/SettingsStore";
+import SlidingSyncController from "./settings/controllers/SlidingSyncController";
+import { MatrixClientPeg } from "./MatrixClientPeg";
 
 // how long to long poll for
 const SLIDING_SYNC_TIMEOUT_MS = 20 * 1000;
@@ -337,8 +339,7 @@ export class SlidingSyncManager {
     public async setup(client: MatrixClient): Promise<SlidingSync | undefined> {
         const baseUrl = client.baseUrl;
         const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
-        const wellKnown = await AutoDiscovery.findClientConfig(baseUrl); // the client isn't init'd yet
-        const wellKnownProxyUrl = wellKnown?.["org.matrix.msc3575.proxy"]?.url;
+        const wellKnownProxyUrl = await this.getProxyFromWellKnown();
         if (proxyUrl) {
             logger.log("Activating sliding sync using manually added proxy at ", proxyUrl);
         } else if (wellKnownProxyUrl) {
@@ -353,5 +354,66 @@ export class SlidingSyncManager {
         this.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
 
         return this.slidingSync;
+    }
+
+    /**
+     * Get the sliding sync proxy URL from the client well known
+     * @return The proxy url
+     */
+    private async getProxyFromWellKnown(): Promise<string | undefined> {
+        const client = MatrixClientPeg.safeGet();
+        const clientWellKnown = await AutoDiscovery.findClientConfig(client.baseUrl);
+        const proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
+        if (proxyUrl != undefined) {
+            logger.info("getProxyFromWellKnown: client well-known declares sliding sync proxy at ", proxyUrl);
+        }
+
+        return proxyUrl;
+    }
+
+    /**
+     * Check if the server "natively" supports sliding sync (at the unstable endpoint).
+     * @return Whether the "native" (unstable) endpoint is up
+     */
+    private async nativeSlidingSyncSupport(): Promise<boolean> {
+        const cli = MatrixClientPeg.safeGet();
+        try {
+            await cli.http.authedRequest<void>(Method.Post, "/sync", undefined, undefined, {
+                localTimeoutMs: 10 * 1000, // 10s
+                prefix: "/_matrix/client/unstable/org.matrix.msc3575",
+            })
+        }
+        catch (e) {
+            return false; // 404, M_UNRECOGNIZED
+        }
+
+        logger.info("nativeSlidingSyncSupport: sliding sync endpoint is up");
+        return true; // 200, OK
+    }
+
+    /**
+     * Check whether our homeserver has sliding sync support, that the endpoint is up, and
+     * is a sliding sync endpoint.
+     *
+     * Sets static member `SlidingSyncController.serverSupportsSlidingSync`
+     */
+    public async checkSupport(): Promise<void> {
+        if (await this.nativeSlidingSyncSupport()) {
+            SlidingSyncController.serverSupportsSlidingSync = true; // Short-circuit, we've checked it's an auth'd endpoint
+        }
+
+        const proxyUrl = await this.getProxyFromWellKnown();
+        if (proxyUrl != undefined) {
+            const response = await fetch(proxyUrl + "/client/server.json", {
+                method: Method.Get,
+                signal: timeoutSignal(10 * 1000), // 10s
+            });
+            if (response.status === 200) {
+                logger.info("slidingSyncHealthCheck: sliding sync proxy is up");
+                SlidingSyncController.serverSupportsSlidingSync = true;
+            }
+        }
+
+        SlidingSyncController.serverSupportsSlidingSync = false;
     }
 }
