@@ -43,14 +43,14 @@ type Result = {
  */
 export function useUnreadThreadRooms(forceComputation: boolean): Result {
     const msc3946ProcessDynamicPredecessor = useSettingValue<boolean>("feature_dynamic_room_predecessors");
-    const settingHisdeboldTAC = useSettingValue<boolean>("Notifications.tac_only_notifications");
+    const settingTACOnlyNotifs = useSettingValue<boolean>("Notifications.tac_only_notifications");
     const mxClient = useMatrixClientContext();
 
     const [result, setResult] = useState<Result>({ greatestNotificationLevel: NotificationLevel.None, rooms: [] });
 
     const doUpdate = useCallback(() => {
-        setResult(computeUnreadThreadRooms(mxClient, msc3946ProcessDynamicPredecessor, settingHisdeboldTAC));
-    }, [mxClient, msc3946ProcessDynamicPredecessor, settingHisdeboldTAC]);
+        setResult(computeUnreadThreadRooms(mxClient, msc3946ProcessDynamicPredecessor, settingTACOnlyNotifs));
+    }, [mxClient, msc3946ProcessDynamicPredecessor, settingTACOnlyNotifs]);
 
     // The exhautive deps lint rule can't compute dependencies here since it's not a plain inline func.
     // We make this as simple as possible so its only dep is doUpdate itself.
@@ -87,7 +87,7 @@ export function useUnreadThreadRooms(forceComputation: boolean): Result {
 function computeUnreadThreadRooms(
     mxClient: MatrixClient,
     msc3946ProcessDynamicPredecessor: boolean,
-    settingHisdeboldTAC: boolean,
+    settingTACOnlyNotifs: boolean,
 ): Result {
     // Only count visible rooms to not torment the user with notification counts in rooms they can't see.
     // This will include highlights from the previous version of the room internally
@@ -103,7 +103,7 @@ function computeUnreadThreadRooms(
             const notificationLevel = getThreadNotificationLevel(room);
 
             // If the room has an activity notification or less, we ignore it
-            if (settingHisdeboldTAC && notificationLevel <= NotificationLevel.Activity) {
+            if (settingTACOnlyNotifs && notificationLevel <= NotificationLevel.Activity) {
                 continue;
             }
 
