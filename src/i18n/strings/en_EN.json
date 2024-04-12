@@ -1457,7 +1457,7 @@
         "sliding_sync_description": "Under active development, cannot be disabled.",
         "sliding_sync_disable_warning": "To disable you will need to log out and back in, use with caution!",
         "sliding_sync_disabled_notice": "Log out and back in to disable",
-        "sliding_sync_proxy_url_label": "Proxy URL",
+        "sliding_sync_server_no_support": "Your server lacks support",
         "sliding_sync_proxy_url_optional_label": "Proxy URL (optional)",
         "sliding_sync_server_no_support": "Your server lacks native support",
         "sliding_sync_server_specify_proxy": "Your server lacks native support, you must specify a proxy",
