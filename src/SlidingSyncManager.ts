@@ -340,14 +340,9 @@ export class SlidingSyncManager {
         const baseUrl = client.baseUrl;
         const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
         const wellKnownProxyUrl = await this.getProxyFromWellKnown();
-        if (proxyUrl) {
-            logger.info("Activating sliding sync using manually added proxy at", proxyUrl);
-        } else if (wellKnownProxyUrl) {
-            logger.info("Activating sliding sync using well-known proxy at", wellKnownProxyUrl);
-        } else {
-            logger.info("Activating sliding sync using the HS base url at", baseUrl);
-        }
+
         this.configure(client, proxyUrl || wellKnownProxyUrl || baseUrl);
+        logger.info("Sliding sync activated");
         this.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
 
         return this.slidingSync;
