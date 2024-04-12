@@ -1595,7 +1595,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         // When logging out, stop tracking failures and destroy state
         cli.on(HttpApiEvent.SessionLoggedOut, () => dft.stop());
-        cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
+        cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError, Date.now()));
 
         cli.on(ClientEvent.Room, (room) => {
             if (cli.isCryptoEnabled()) {

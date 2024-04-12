@@ -21,33 +21,40 @@ import { Error as ErrorEvent } from "@matrix-org/analytics-events/types/typescri
 import { PosthogAnalytics } from "./PosthogAnalytics";
 
 export class DecryptionFailure {
-    public readonly ts: number;
+    // the time between our failure to decrypt and our successful decryption
+    // (if we managed to decrypt)
+    public timeToDecryptMillis?: number;
 
     public constructor(
         public readonly failedEventId: string,
         public readonly errorCode: string,
-    ) {
-        this.ts = Date.now();
-    }
+        // the time that we failed to decrypt the event
+        public readonly ts: number,
+    ) {}
 }
 
 type ErrorCode = "OlmKeysNotSentError" | "OlmIndexError" | "UnknownError" | "OlmUnspecifiedError";
 
-type TrackingFn = (count: number, trackedErrCode: ErrorCode, rawError: string) => void;
+export type ErrorProperties = Omit<ErrorEvent, "eventName" | "domain" | "name" | "context">;
+
+type TrackingFn = (trackedErrCode: ErrorCode, rawError: string, properties: ErrorProperties) => void;
 
 export type ErrCodeMapFn = (errcode: string) => ErrorCode;
 
 export class DecryptionFailureTracker {
     private static internalInstance = new DecryptionFailureTracker(
-        (total, errorCode, rawError) => {
-            for (let i = 0; i < total; i++) {
-                PosthogAnalytics.instance.trackEvent<ErrorEvent>({
-                    eventName: "Error",
-                    domain: "E2EE",
-                    name: errorCode,
-                    context: `mxc_crypto_error_type_${rawError}`,
-                });
+        (errorCode, rawError, properties) => {
+            const event: ErrorEvent = {
+                eventName: "Error",
+                domain: "E2EE",
+                name: errorCode,
+                context: `mxc_crypto_error_type_${rawError}`,
+            };
+            for (const [name, value] of Object.entries(properties)) {
+                // @ts-ignore can't index with string
+                event[name] = value;
             }
+            PosthogAnalytics.instance.trackEvent<ErrorEvent>(event);
         },
         (errorCode) => {
             // Map JS-SDK error codes to tracker codes for aggregation
@@ -73,14 +80,13 @@ export class DecryptionFailureTracker {
     // Map of visible event IDs to `DecryptionFailure`s. Every
     // `CHECK_INTERVAL_MS`, this map is checked for failures that
     // happened > `GRACE_PERIOD_MS` ago. Those that did are
-    // accumulated in `failureCounts`.
+    // accumulated in `failuresToReport`.
     public visibleFailures: Map<string, DecryptionFailure> = new Map();
 
-    // A histogram of the number of failures that will be tracked at the next tracking
-    // interval, split by failure error code.
-    public failureCounts: Record<string, number> = {
-        // [errorCode]: 42
-    };
+    // The failures that will be reported at the next tracking interval.
+    public failuresToReport: Set<DecryptionFailure> = new Set();
+
+    public lateDecryptions: Map<string, DecryptionFailure> = new Map();
 
     // Event IDs of failures that were tracked previously
     public trackedEvents: Set<string> = new Set();
@@ -96,13 +102,16 @@ export class DecryptionFailureTracker {
     public static CHECK_INTERVAL_MS = 40000;
 
     // Give events a chance to be decrypted by waiting `GRACE_PERIOD_MS` before counting
-    // the failure in `failureCounts`.
+    // the failure in `failuresToReport`.
     public static GRACE_PERIOD_MS = 30000;
+
+    // Maximum time for an event to be decrypted to be considered a late decryption
+    public static MAXIMUM_LATE_DECRYPTION_PERIOD = 60000;
 
     /**
      * Create a new DecryptionFailureTracker.
      *
-     * Call `eventDecrypted(event, err)` on this instance when an event is decrypted.
+     * Call `eventDecrypted(event, err, nowTs)` on this instance when an event is decrypted.
      *
      * Call `start()` to start the tracker, and `stop()` to stop tracking.
      *
@@ -138,16 +147,16 @@ export class DecryptionFailureTracker {
     //     localStorage.setItem('mx-decryption-failure-event-ids', JSON.stringify([...this.trackedEvents]));
     // }
 
-    public eventDecrypted(e: MatrixEvent, err: DecryptionError): void {
+    public eventDecrypted(e: MatrixEvent, err: DecryptionError, nowTs: number): void {
         // for now we only track megolm decrytion failures
         if (e.getWireContent().algorithm != "m.megolm.v1.aes-sha2") {
             return;
         }
         if (err) {
-            this.addDecryptionFailure(new DecryptionFailure(e.getId()!, err.code));
+            this.addDecryptionFailure(new DecryptionFailure(e.getId()!, err.code, nowTs));
         } else {
             // Could be an event in the failures, remove it
-            this.removeDecryptionFailuresForEvent(e);
+            this.removeDecryptionFailuresForEvent(e, nowTs);
         }
     }
 
@@ -177,10 +186,26 @@ export class DecryptionFailureTracker {
         }
     }
 
-    public removeDecryptionFailuresForEvent(e: MatrixEvent): void {
+    public removeDecryptionFailuresForEvent(e: MatrixEvent, nowTs: number): void {
         const eventId = e.getId()!;
-        this.failures.delete(eventId);
-        this.visibleFailures.delete(eventId);
+        const failure = this.failures.get(eventId);
+        if (failure) {
+            this.failures.delete(eventId);
+            this.visibleFailures.delete(eventId);
+
+            const timeToDecryptMillis = nowTs - failure.ts;
+            if (timeToDecryptMillis < DecryptionFailureTracker.GRACE_PERIOD_MS) {
+                // the event decrypted on time, so we don't need to report it
+                return;
+            } else if (timeToDecryptMillis <= DecryptionFailureTracker.MAXIMUM_LATE_DECRYPTION_PERIOD) {
+                // The event is a late decryption, so store the time it took.
+                // If the time to decrypt is longer than
+                // MAXIMUM_LATE_DECRYPTION_PERIOD, we consider the event as
+                // undecryptable, and leave timeToDecryptMillis undefined
+                failure.timeToDecryptMillis = timeToDecryptMillis;
+            }
+            this.failuresToReport.add(failure);
+        }
     }
 
     /**
@@ -205,22 +230,30 @@ export class DecryptionFailureTracker {
         this.failures = new Map();
         this.visibleEvents = new Set();
         this.visibleFailures = new Map();
-        this.failureCounts = {};
+        this.failuresToReport = new Set();
     }
 
     /**
-     * Mark failures that occurred before nowTs - GRACE_PERIOD_MS as failures that should be
-     * tracked. Only mark one failure per event ID.
+     * Mark failures as undecryptable or late. Only mark one failure per event ID.
+     *
      * @param {number} nowTs the timestamp that represents the time now.
      */
     public checkFailures(nowTs: number): void {
-        const failuresGivenGrace: Set<DecryptionFailure> = new Set();
+        const failures: Set<DecryptionFailure> = new Set();
         const failuresNotReady: Map<string, DecryptionFailure> = new Map();
         for (const [eventId, failure] of this.visibleFailures) {
-            if (nowTs > failure.ts + DecryptionFailureTracker.GRACE_PERIOD_MS) {
-                failuresGivenGrace.add(failure);
+            if (failure.timeToDecryptMillis) {
+                // if `timeToDecryptMillis` is set, we successfully decrypted the
+                // event, but we got the key late
+                failures.add(failure);
+            } else if (nowTs > failure.ts + DecryptionFailureTracker.MAXIMUM_LATE_DECRYPTION_PERIOD) {
+                // we haven't decrypted yet and it's past the time for it to be
+                // considered a "late" decryption, so we count it as
+                // undecryptable
+                failures.add(failure);
                 this.trackedEvents.add(eventId);
             } else {
+                // the event isn't old enough, so keep track of it
                 failuresNotReady.set(eventId, failure);
             }
         }
@@ -230,13 +263,12 @@ export class DecryptionFailureTracker {
         // this in localStorage
         // this.saveTrackedEvents();
 
-        this.aggregateFailures(failuresGivenGrace);
+        this.addFailures(failures);
     }
 
-    private aggregateFailures(failures: Set<DecryptionFailure>): void {
+    private addFailures(failures: Set<DecryptionFailure>): void {
         for (const failure of failures) {
-            const errorCode = failure.errorCode;
-            this.failureCounts[errorCode] = (this.failureCounts[errorCode] || 0) + 1;
+            this.failuresToReport.add(failure);
         }
     }
 
@@ -245,13 +277,14 @@ export class DecryptionFailureTracker {
      * function with the number of failures that should be tracked.
      */
     public trackFailures(): void {
-        for (const errorCode of Object.keys(this.failureCounts)) {
-            if (this.failureCounts[errorCode] > 0) {
-                const trackedErrorCode = this.errorCodeMapFn(errorCode);
-
-                this.fn(this.failureCounts[errorCode], trackedErrorCode, errorCode);
-                this.failureCounts[errorCode] = 0;
-            }
+        for (const failure of this.failuresToReport) {
+            const errorCode = failure.errorCode;
+            const trackedErrorCode = this.errorCodeMapFn(errorCode);
+            const properties: ErrorProperties = {
+                timeToDecryptMillis: failure.timeToDecryptMillis ?? -1,
+            };
+            this.fn(trackedErrorCode, errorCode, properties);
         }
+        this.failuresToReport = new Set();
     }
 }

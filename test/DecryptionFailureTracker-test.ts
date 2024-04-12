@@ -17,7 +17,7 @@ limitations under the License.
 import { decryptExistingEvent, mkDecryptionFailureMatrixEvent } from "matrix-js-sdk/src/testing";
 import { DecryptionFailureCode } from "matrix-js-sdk/src/crypto-api";
 
-import { DecryptionFailureTracker } from "../src/DecryptionFailureTracker";
+import { DecryptionFailureTracker, ErrorProperties } from "../src/DecryptionFailureTracker";
 
 class MockDecryptionError extends Error {
     public readonly code: string;
@@ -45,14 +45,14 @@ describe("DecryptionFailureTracker", function () {
         let count = 0;
         // @ts-ignore access to private constructor
         const tracker = new DecryptionFailureTracker(
-            (total: number) => (count += total),
+            () => count++,
             () => "UnknownError",
         );
 
         tracker.addVisibleEvent(failedDecryptionEvent);
 
         const err = new MockDecryptionError();
-        tracker.eventDecrypted(failedDecryptionEvent, err);
+        tracker.eventDecrypted(failedDecryptionEvent, err, Date.now());
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -71,8 +71,8 @@ describe("DecryptionFailureTracker", function () {
         let reportedRawCode = "";
         // @ts-ignore access to private constructor
         const tracker = new DecryptionFailureTracker(
-            (total: number, _errCode: string, rawCode: string) => {
-                count += total;
+            (_errCode: string, rawCode: string) => {
+                count++;
                 reportedRawCode = rawCode;
             },
             () => "UnknownError",
@@ -81,7 +81,7 @@ describe("DecryptionFailureTracker", function () {
         tracker.addVisibleEvent(failedDecryptionEvent);
 
         const err = new MockDecryptionError("INBOUND_SESSION_MISMATCH_ROOM_ID");
-        tracker.eventDecrypted(failedDecryptionEvent, err);
+        tracker.eventDecrypted(failedDecryptionEvent, err, Date.now());
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -102,12 +102,12 @@ describe("DecryptionFailureTracker", function () {
         let count = 0;
         // @ts-ignore access to private constructor
         const tracker = new DecryptionFailureTracker(
-            (total: number) => (count += total),
+            () => count++,
             () => "UnknownError",
         );
 
         const err = new MockDecryptionError();
-        tracker.eventDecrypted(failedDecryptionEvent, err);
+        tracker.eventDecrypted(failedDecryptionEvent, err, Date.now());
 
         tracker.addVisibleEvent(failedDecryptionEvent);
 
@@ -127,12 +127,12 @@ describe("DecryptionFailureTracker", function () {
         let count = 0;
         // @ts-ignore access to private constructor
         const tracker = new DecryptionFailureTracker(
-            (total: number) => (count += total),
+            () => count++,
             () => "UnknownError",
         );
 
         const err = new MockDecryptionError();
-        tracker.eventDecrypted(failedDecryptionEvent, err);
+        tracker.eventDecrypted(failedDecryptionEvent, err, Date.now());
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -148,7 +148,7 @@ describe("DecryptionFailureTracker", function () {
         const decryptedEvent = await createFailedDecryptionEvent();
         // @ts-ignore access to private constructor
         const tracker = new DecryptionFailureTracker(
-            (_total: number) => {
+            () => {
                 // should not track an event that has since been decrypted correctly
                 expect(true).toBe(false);
             },
@@ -158,14 +158,14 @@ describe("DecryptionFailureTracker", function () {
         tracker.addVisibleEvent(decryptedEvent);
 
         const err = new MockDecryptionError();
-        tracker.eventDecrypted(decryptedEvent, err);
+        tracker.eventDecrypted(decryptedEvent, err, Date.now());
 
         // Indicate successful decryption.
         await decryptExistingEvent(decryptedEvent, {
             plainType: "m.room.message",
             plainContent: { body: "success" },
         });
-        tracker.eventDecrypted(decryptedEvent, null);
+        tracker.eventDecrypted(decryptedEvent, null, Date.now());
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -181,7 +181,7 @@ describe("DecryptionFailureTracker", function () {
             const decryptedEvent = await createFailedDecryptionEvent();
             // @ts-ignore access to private constructor
             const tracker = new DecryptionFailureTracker(
-                (_total: number) => {
+                () => {
                     // should not track an event that has since been decrypted correctly
                     expect(true).toBe(false);
                 },
@@ -189,14 +189,14 @@ describe("DecryptionFailureTracker", function () {
             );
 
             const err = new MockDecryptionError();
-            tracker.eventDecrypted(decryptedEvent, err);
+            tracker.eventDecrypted(decryptedEvent, err, Date.now());
 
             // Indicate successful decryption.
             await decryptExistingEvent(decryptedEvent, {
                 plainType: "m.room.message",
                 plainContent: { body: "success" },
             });
-            tracker.eventDecrypted(decryptedEvent, null);
+            tracker.eventDecrypted(decryptedEvent, null, Date.now());
 
             tracker.addVisibleEvent(decryptedEvent);
 
@@ -215,7 +215,7 @@ describe("DecryptionFailureTracker", function () {
         let count = 0;
         // @ts-ignore access to private constructor
         const tracker = new DecryptionFailureTracker(
-            (total: number) => (count += total),
+            () => count++,
             () => "UnknownError",
         );
 
@@ -223,15 +223,16 @@ describe("DecryptionFailureTracker", function () {
 
         // Arbitrary number of failed decryptions for both events
         const err = new MockDecryptionError();
-        tracker.eventDecrypted(decryptedEvent, err);
-        tracker.eventDecrypted(decryptedEvent, err);
-        tracker.eventDecrypted(decryptedEvent, err);
-        tracker.eventDecrypted(decryptedEvent, err);
-        tracker.eventDecrypted(decryptedEvent, err);
-        tracker.eventDecrypted(decryptedEvent2, err);
-        tracker.eventDecrypted(decryptedEvent2, err);
+        const now = Date.now();
+        tracker.eventDecrypted(decryptedEvent, err, now);
+        tracker.eventDecrypted(decryptedEvent, err, now);
+        tracker.eventDecrypted(decryptedEvent, err, now);
+        tracker.eventDecrypted(decryptedEvent, err, now);
+        tracker.eventDecrypted(decryptedEvent, err, now);
+        tracker.eventDecrypted(decryptedEvent2, err, now);
+        tracker.eventDecrypted(decryptedEvent2, err, now);
         tracker.addVisibleEvent(decryptedEvent2);
-        tracker.eventDecrypted(decryptedEvent2, err);
+        tracker.eventDecrypted(decryptedEvent2, err, now);
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -252,7 +253,7 @@ describe("DecryptionFailureTracker", function () {
         let count = 0;
         // @ts-ignore access to private constructor
         const tracker = new DecryptionFailureTracker(
-            (total: number) => (count += total),
+            () => count++,
             () => "UnknownError",
         );
 
@@ -260,7 +261,7 @@ describe("DecryptionFailureTracker", function () {
 
         // Indicate decryption
         const err = new MockDecryptionError();
-        tracker.eventDecrypted(decryptedEvent, err);
+        tracker.eventDecrypted(decryptedEvent, err, Date.now());
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -268,7 +269,7 @@ describe("DecryptionFailureTracker", function () {
         tracker.trackFailures();
 
         // Indicate a second decryption, after having tracked the failure
-        tracker.eventDecrypted(decryptedEvent, err);
+        tracker.eventDecrypted(decryptedEvent, err, Date.now());
 
         tracker.trackFailures();
 
@@ -285,7 +286,7 @@ describe("DecryptionFailureTracker", function () {
         let count = 0;
         // @ts-ignore access to private constructor
         const tracker = new DecryptionFailureTracker(
-            (total: number) => (count += total),
+            () => count++,
             () => "UnknownError",
         );
 
@@ -293,7 +294,7 @@ describe("DecryptionFailureTracker", function () {
 
         // Indicate decryption
         const err = new MockDecryptionError();
-        tracker.eventDecrypted(decryptedEvent, err);
+        tracker.eventDecrypted(decryptedEvent, err, Date.now());
 
         // Pretend "now" is Infinity
         // NB: This saves to localStorage specific to DFT
@@ -312,7 +313,7 @@ describe("DecryptionFailureTracker", function () {
 
         //secondTracker.loadTrackedEvents();
 
-        secondTracker.eventDecrypted(decryptedEvent, err);
+        secondTracker.eventDecrypted(decryptedEvent, err, Date.now());
         secondTracker.checkFailures(Infinity);
         secondTracker.trackFailures();
 
@@ -325,7 +326,7 @@ describe("DecryptionFailureTracker", function () {
 
         // @ts-ignore access to private constructor
         const tracker = new DecryptionFailureTracker(
-            (total: number, errorCode: string) => (counts[errorCode] = (counts[errorCode] || 0) + total),
+            (errorCode: string) => (counts[errorCode] = (counts[errorCode] || 0) + 1),
             (error: string) => (error === "UnknownError" ? "UnknownError" : "OlmKeysNotSentError"),
         );
 
@@ -341,10 +342,11 @@ describe("DecryptionFailureTracker", function () {
         tracker.addVisibleEvent(decryptedEvent3);
 
         // One failure of ERROR_CODE_1, and effectively two for ERROR_CODE_2
-        tracker.eventDecrypted(decryptedEvent1, error1);
-        tracker.eventDecrypted(decryptedEvent2, error2);
-        tracker.eventDecrypted(decryptedEvent2, error2);
-        tracker.eventDecrypted(decryptedEvent3, error2);
+        const now = Date.now();
+        tracker.eventDecrypted(decryptedEvent1, error1, now);
+        tracker.eventDecrypted(decryptedEvent2, error2, now);
+        tracker.eventDecrypted(decryptedEvent2, error2, now);
+        tracker.eventDecrypted(decryptedEvent3, error2, now);
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -360,7 +362,7 @@ describe("DecryptionFailureTracker", function () {
 
         // @ts-ignore access to private constructor
         const tracker = new DecryptionFailureTracker(
-            (total: number, errorCode: string) => (counts[errorCode] = (counts[errorCode] || 0) + total),
+            (errorCode: string) => (counts[errorCode] = (counts[errorCode] || 0) + 1),
             (_errorCode: string) => "OlmUnspecifiedError",
         );
 
@@ -376,9 +378,10 @@ describe("DecryptionFailureTracker", function () {
         tracker.addVisibleEvent(decryptedEvent2);
         tracker.addVisibleEvent(decryptedEvent3);
 
-        tracker.eventDecrypted(decryptedEvent1, error1);
-        tracker.eventDecrypted(decryptedEvent2, error2);
-        tracker.eventDecrypted(decryptedEvent3, error3);
+        const now = Date.now();
+        tracker.eventDecrypted(decryptedEvent1, error1, now);
+        tracker.eventDecrypted(decryptedEvent2, error2, now);
+        tracker.eventDecrypted(decryptedEvent3, error3, now);
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -393,7 +396,7 @@ describe("DecryptionFailureTracker", function () {
 
         // @ts-ignore access to private constructor
         const tracker = new DecryptionFailureTracker(
-            (total: number, errorCode: string) => (counts[errorCode] = (counts[errorCode] || 0) + total),
+            (errorCode: string) => (counts[errorCode] = (counts[errorCode] || 0) + 1),
             (errorCode: string) => Array.from(errorCode).reverse().join(""),
         );
 
@@ -403,7 +406,7 @@ describe("DecryptionFailureTracker", function () {
 
         tracker.addVisibleEvent(decryptedEvent);
 
-        tracker.eventDecrypted(decryptedEvent, error);
+        tracker.eventDecrypted(decryptedEvent, error, Date.now());
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -412,5 +415,56 @@ describe("DecryptionFailureTracker", function () {
 
         // should track remapped error code
         expect(counts["1_EDOC_RORRE"]).toBe(1);
+    });
+
+    it("tracks late decryptions vs. undecryptable", async () => {
+        const propertiesByErrorCode: Record<string, ErrorProperties> = {};
+        // @ts-ignore access to private constructor
+        const tracker = new DecryptionFailureTracker(
+            (errorCode: string, rawError: string, properties: ErrorProperties) => {
+                propertiesByErrorCode[errorCode] = properties;
+            },
+            (error: string) => error,
+        );
+
+        // event that will be slow to decrypt
+        const lateDecryption = await createFailedDecryptionEvent();
+        // event that will be so slow to decrypt, it gets counted as undecryptable
+        const veryLateDecryption = await createFailedDecryptionEvent();
+        // event that never gets decrypted
+        const neverDecrypted = await createFailedDecryptionEvent();
+
+        const error1 = new MockDecryptionError("ERROR_CODE_1");
+        const error2 = new MockDecryptionError("ERROR_CODE_2");
+        const error3 = new MockDecryptionError("ERROR_CODE_3");
+
+        tracker.addVisibleEvent(lateDecryption);
+        tracker.addVisibleEvent(veryLateDecryption);
+        tracker.addVisibleEvent(neverDecrypted);
+
+        const now = Date.now();
+        tracker.eventDecrypted(lateDecryption, error1, now);
+        tracker.eventDecrypted(veryLateDecryption, error2, now);
+        tracker.eventDecrypted(neverDecrypted, error3, now);
+
+        await decryptExistingEvent(lateDecryption, {
+            plainType: "m.room.message",
+            plainContent: { body: "success" },
+        });
+        await decryptExistingEvent(veryLateDecryption, {
+            plainType: "m.room.message",
+            plainContent: { body: "success" },
+        });
+        tracker.eventDecrypted(lateDecryption, null, now + 40000);
+        tracker.eventDecrypted(veryLateDecryption, null, now + 100000);
+
+        // Pretend "now" is Infinity
+        tracker.checkFailures(Infinity);
+
+        tracker.trackFailures();
+
+        expect(propertiesByErrorCode["ERROR_CODE_1"].timeToDecryptMillis).toEqual(40000);
+        expect(propertiesByErrorCode["ERROR_CODE_2"].timeToDecryptMillis).toEqual(-1);
+        expect(propertiesByErrorCode["ERROR_CODE_3"].timeToDecryptMillis).toEqual(-1);
     });
 });
