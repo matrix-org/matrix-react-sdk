@@ -409,7 +409,7 @@ export class SlidingSyncManager {
                 signal: timeoutSignal(10 * 1000), // 10s
             });
             if (response.status === 200) {
-                logger.log("slidingSyncHealthCheck: sliding sync proxy is up");
+                logger.log("checkSupport: sliding sync proxy is up");
                 SlidingSyncController.serverSupportsSlidingSync = true;
             }
         }
