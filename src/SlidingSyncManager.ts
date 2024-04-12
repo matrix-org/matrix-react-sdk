@@ -365,7 +365,7 @@ export class SlidingSyncManager {
         const clientWellKnown = await AutoDiscovery.findClientConfig(client.baseUrl);
         const proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
         if (proxyUrl != undefined) {
-            logger.info("getProxyFromWellKnown: client well-known declares sliding sync proxy at ", proxyUrl);
+            logger.log("getProxyFromWellKnown: client well-known declares sliding sync proxy at", proxyUrl);
         }
 
         return proxyUrl;
@@ -387,7 +387,7 @@ export class SlidingSyncManager {
             return false; // 404, M_UNRECOGNIZED
         }
 
-        logger.info("nativeSlidingSyncSupport: sliding sync endpoint is up");
+        logger.log("nativeSlidingSyncSupport: sliding sync endpoint is up");
         return true; // 200, OK
     }
 
@@ -409,7 +409,7 @@ export class SlidingSyncManager {
                 signal: timeoutSignal(10 * 1000), // 10s
             });
             if (response.status === 200) {
-                logger.info("slidingSyncHealthCheck: sliding sync proxy is up");
+                logger.log("slidingSyncHealthCheck: sliding sync proxy is up");
                 SlidingSyncController.serverSupportsSlidingSync = true;
             }
         }
