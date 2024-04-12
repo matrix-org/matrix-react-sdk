@@ -201,6 +201,15 @@ const maximumVectorState = (
     return vectorState;
 };
 
+const NotificationActivitySettings = (): JSX.Element => {
+    return (
+        <div>
+            <SettingsFlag name="Notifications.showbold" level={SettingLevel.DEVICE} />
+            <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} />
+        </div>
+    );
+};
+
 /**
  * The old, deprecated notifications tab view, only displayed if the user has the labs flag disabled.
  */
@@ -840,15 +849,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         );
     }
 
-    private renderActivitySettings(): ReactNode {
-        return (
-            <div>
-                <SettingsFlag name="Notifications.showbold" level={SettingLevel.DEVICE} />
-                <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} />
-            </div>
-        );
-    }
-
     public render(): React.ReactNode {
         if (this.state.phase === Phase.Loading) {
             // Ends up default centered
@@ -883,7 +883,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 {this.renderCategory(RuleClass.VectorMentions)}
                 {this.renderCategory(RuleClass.VectorOther)}
                 {this.renderTargets()}
-                {this.renderActivitySettings()}
+                <NotificationActivitySettings />
                 {clearNotifsButton}
             </>
         );
