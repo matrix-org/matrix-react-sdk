@@ -347,10 +347,7 @@ export class SlidingSyncManager {
         } else {
             logger.info("Activating sliding sync using the HS base url at", baseUrl);
         }
-        this.configure(
-            client,
-            proxyUrl || wellKnownProxyUrl || baseUrl,
-        );
+        this.configure(client, proxyUrl || wellKnownProxyUrl || baseUrl);
         this.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
 
         return this.slidingSync;
@@ -381,9 +378,8 @@ export class SlidingSyncManager {
             await cli.http.authedRequest<void>(Method.Post, "/sync", undefined, undefined, {
                 localTimeoutMs: 10 * 1000, // 10s
                 prefix: "/_matrix/client/unstable/org.matrix.msc3575",
-            })
-        }
-        catch (e) {
+            });
+        } catch (e) {
             return false; // 404, M_UNRECOGNIZED
         }
 
