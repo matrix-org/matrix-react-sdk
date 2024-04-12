@@ -598,9 +598,9 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: false,
         invertedSettingName: "feature_hidebold",
     },
-    "Notifications.hidebold_tac": {
+    "Notifications.tac_only_notifications": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td("settings|hidebold_tac"),
+        displayName: _td("settings|tac_only_notifications"),
         default: true,
     },
     "feature_ask_to_join": {

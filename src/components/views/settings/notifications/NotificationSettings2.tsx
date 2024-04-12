@@ -358,7 +358,7 @@ export default function NotificationSettings2(): JSX.Element {
                     />
 
                     <SettingsFlag name="Notifications.showbold" level={SettingLevel.DEVICE} />
-                    <SettingsFlag name="Notifications.hidebold_tac" level={SettingLevel.DEVICE} />
+                    <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} />
                 </SettingsSubsection>
                 <NotificationPusherSettings />
                 <SettingsSubsection heading={_t("settings|notifications|quick_actions_section")}>

@@ -844,7 +844,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         return (
             <div>
                 <SettingsFlag name="Notifications.showbold" level={SettingLevel.DEVICE} />
-                <SettingsFlag name="Notifications.hidebold_tac" level={SettingLevel.DEVICE} />
+                <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} />
             </div>
         );
     }
