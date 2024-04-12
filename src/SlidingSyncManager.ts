@@ -399,7 +399,7 @@ export class SlidingSyncManager {
      */
     public async checkSupport(): Promise<void> {
         if (await this.nativeSlidingSyncSupport()) {
-            SlidingSyncController.serverSupportsSlidingSync = true; // Short-circuit, we've checked it's an auth'd endpoint
+            SlidingSyncController.serverSupportsSlidingSync = true;
         }
 
         const proxyUrl = await this.getProxyFromWellKnown();
