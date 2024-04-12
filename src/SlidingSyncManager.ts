@@ -413,7 +413,5 @@ export class SlidingSyncManager {
                 SlidingSyncController.serverSupportsSlidingSync = true;
             }
         }
-
-        SlidingSyncController.serverSupportsSlidingSync = false;
     }
 }
