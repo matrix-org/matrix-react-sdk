@@ -246,10 +246,6 @@
         "phone_optional_label": "Phone (optional)",
         "qr_code_login": {
             "approve_access_warning": "By approving access for this device, it will have full access to your account.",
-            "check_code_explainer": "This will verify that the connection to your other device is secure.",
-            "check_code_heading": "Enter the number shown on your other device",
-            "check_code_input_label": "2-digit code",
-            "check_code_mismatch": "The numbers don't match",
             "completing_setup": "Completing set up of your new device",
             "confirm_code_match": "Check that the code below matches with your other device:",
             "error_device_unsupported": "Linking with this device is not supported.",
@@ -264,11 +260,15 @@
             "point_the_camera": "Point the camera at the QR code shown here",
             "scan_code_instruction": "Scan the QR code with another device",
             "scan_qr_code": "Sign in with QR code",
-            "security_code": "Security code",
-            "security_code_prompt": "If asked, enter the code below on your other device.",
             "select_qr_code": "Select \"%(scanQRCode)s\"",
             "sign_in_new_device": "Sign in new device",
-            "waiting_for_device": "Waiting for device to sign in"
+            "waiting_for_device": "Waiting for device to sign in",
+            "security_code_prompt": "If asked, enter the code below on your other device.",
+            "security_code": "Security code",
+            "check_code_mismatch": "The numbers don't match",
+            "check_code_input_label": "2-digit code",
+            "check_code_heading": "Enter the number shown on your other device",
+            "check_code_explainer": "This will verify that the connection to your other device is secure."
         },
         "register_action": "Create Account",
         "registration": {
@@ -4055,5 +4055,11 @@
             "userInputs": "There should not be any personal or page related data.",
             "wordByItself": "A word by itself is easy to guess"
         }
+    },
+    "update_room_access_modal": {
+        "description": "To create a share link, you need to allow guests to join this room. This may make the room less secure. When you're done with the call, you can make the room private again.",
+        "dont_change_description": "Alternatively, you can hold the call in a separate room.",
+        "no_change": "I don't want to change the access level.",
+        "title": "Change the room access level"
     }
 }
