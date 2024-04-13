@@ -149,15 +149,19 @@ export class SetupEncryptionStore extends EventEmitter {
             await new Promise((resolve: (value?: unknown) => void, reject: (reason?: any) => void) => {
                 accessSecretStorage(async (): Promise<void> => {
                     await cli.checkOwnCrossSigningTrust();
+
+                    // The remaining tasks (device dehydration and restoring
+                    // key backup) may take some time due to processing many
+                    // to-device messages in the case of device dehydration, or
+                    // having many keys to restore in the case of key backups,
+                    // so we allow the dialog to advance before this.
                     resolve();
-                    if (backupInfo) {
-                        // A complete restore can take many minutes for large
-                        // accounts / slow servers, so we allow the dialog
-                        // to advance before this.
-                        await cli.restoreKeyBackupWithSecretStorage(backupInfo);
-                    }
 
                     await initialiseDehydration();
+
+                    if (backupInfo) {
+                        await cli.restoreKeyBackupWithSecretStorage(backupInfo);
+                    }
                 }).catch(reject);
             });
 

@@ -209,7 +209,7 @@ const SessionManagerTab: React.FC = () => {
     };
 
     const { [currentDeviceId]: currentDevice, ...otherDevices } = devices;
-    if (dehydratedDeviceId) {
+    if (dehydratedDeviceId && otherDevices[dehydratedDeviceId]?.isVerified) {
         delete otherDevices[dehydratedDeviceId];
     }
     const otherSessionsCount = Object.keys(otherDevices).length;

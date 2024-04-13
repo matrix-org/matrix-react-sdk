@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
+import { CryptoApi } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 
@@ -28,8 +29,7 @@ import { MatrixClientPeg } from "../../MatrixClientPeg";
  *
  * Dehydration can currently only enabled by setting a flag in the .well-known file.
  */
-async function deviceDehydrationEnabled(): Promise<boolean> {
-    const crypto = MatrixClientPeg.safeGet().getCrypto();
+async function deviceDehydrationEnabled(crypto: CryptoApi | undefined): Promise<boolean> {
     if (!crypto) {
         return false;
     }
@@ -50,8 +50,8 @@ async function deviceDehydrationEnabled(): Promise<boolean> {
  */
 export async function initialiseDehydration(createNewKey: boolean = false): Promise<void> {
     const crypto = MatrixClientPeg.safeGet().getCrypto();
-    if (crypto && (await deviceDehydrationEnabled())) {
+    if (await deviceDehydrationEnabled(crypto)) {
         logger.log("Device dehydration enabled");
-        await crypto.startDehydration(createNewKey);
+        await crypto!.startDehydration(createNewKey);
     }
 }

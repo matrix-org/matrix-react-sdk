@@ -333,6 +333,7 @@ function DevicesSection({
     } else {
         if (dehydratedDeviceId) {
             devices = devices.filter((device) => device.deviceId !== dehydratedDeviceId);
+            dehydratedDeviceInExpandSection = true;
         }
         expandSectionDevices = devices;
         expandCountCaption = _t("user_info|count_of_sessions", { count: devices.length });
