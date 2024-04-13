@@ -391,6 +391,7 @@ export class SlidingSyncManager {
     public async checkSupport(): Promise<void> {
         if (await this.nativeSlidingSyncSupport()) {
             SlidingSyncController.serverSupportsSlidingSync = true;
+            return;
         }
 
         const proxyUrl = await this.getProxyFromWellKnown();
