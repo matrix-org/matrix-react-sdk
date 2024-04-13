@@ -341,8 +341,10 @@ export class SlidingSyncManager {
         const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
         const wellKnownProxyUrl = await this.getProxyFromWellKnown();
 
-        this.configure(client, proxyUrl || wellKnownProxyUrl || baseUrl);
-        logger.info("Sliding sync activated");
+        const slidingSyncEndpoint = proxyUrl || wellKnownProxyUrl || baseUrl;
+
+        this.configure(client, slidingSyncEndpoint);
+        logger.info("Sliding sync activated at", slidingSyncEndpoint);
         this.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
 
         return this.slidingSync;
