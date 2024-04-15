@@ -20,11 +20,12 @@ import PosthogTrackers, { InteractionName } from "../../PosthogTrackers";
 
 /**
  * Controller that sends events to analytics when a setting is changed.
- * Obviously, this will only trigger events when the setting is changed,
- * (and the value isn't reported: only the fact that 's been toggled)
- * so won't be useful for tracking what percentage of a userbase has a given setting
+ * Since it will only trigger events when the setting is changed,
+ * (and the value isn't reported: only the fact that it's been toggled)
+ * it won't be useful for tracking what percentage of a userbase has a given setting
  * enabled, but many of our settings can be set per device and Posthog only supports
- * per-user properties. It's only for seeing how often people interact with the settings.
+ * per-user properties, so this isn't straightforward. This is only for seeing how
+ * often people interact with the settings.
  */
 export default class AnalyticsController extends SettingController {
     /**
