@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { PropsWithChildren, useEffect, useState } from "react";
 import { CryptoEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -86,16 +86,13 @@ function useLocalVerificationState(client: MatrixClient): boolean {
 interface Props {
     /** Matrix client, which is exposed to all child components via {@link MatrixClientContext}. */
     client: MatrixClient;
-
-    /** Child components which will receive the contexts */
-    children: ReactNode;
 }
 
 /**
  * A React component which exposes a {@link MatrixClientContext} and a {@link LocalDeviceVerificationStateContext}
  * to its children.
  */
-export function MatrixClientContextProvider(props: Props): React.JSX.Element {
+export function MatrixClientContextProvider(props: PropsWithChildren<Props>): React.JSX.Element {
     const verificationState = useLocalVerificationState(props.client);
     return (
         <MatrixClientContext.Provider value={props.client}>
