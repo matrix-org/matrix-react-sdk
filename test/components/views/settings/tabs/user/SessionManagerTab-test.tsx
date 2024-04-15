@@ -69,8 +69,8 @@ function deviceToDeviceObj(userId: string, device: IMyDevice, opts: Partial<Devi
         algorithms: [],
         displayName: device.display_name,
         keys: new Map(),
+        ...opts,
     };
-    Object.assign(deviceOpts, opts);
     return new Device(deviceOpts);
 }
 
