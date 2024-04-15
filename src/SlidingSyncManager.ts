@@ -356,7 +356,11 @@ export class SlidingSyncManager {
      */
     private async getProxyFromWellKnown(): Promise<string | undefined> {
         const client = MatrixClientPeg.safeGet();
-        const clientWellKnown = await AutoDiscovery.findClientConfig(client.baseUrl);
+        try {
+            const clientWellKnown = await AutoDiscovery.findClientConfig(client.baseUrl);
+        } catch (e) {
+            return undefined;
+        }
         const proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
         if (proxyUrl != undefined) {
             logger.log("getProxyFromWellKnown: client well-known declares sliding sync proxy at", proxyUrl);
