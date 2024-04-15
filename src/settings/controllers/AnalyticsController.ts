@@ -35,7 +35,7 @@ export default class AnalyticsController extends SettingController {
         super();
     }
 
-    public onChange(_level: SettingLevel, _roomId: string, _newValue: any): void {
+    public onChange(_level: SettingLevel, _roomId: string | null, _newValue: any): void {
         PosthogTrackers.trackInteraction(this.interactionName);
     }
 }
