@@ -28,6 +28,7 @@ export enum Phase {
     Loading,
     ShowingQR,
     // The following are specific to MSC4108
+    Connecting,
     OutOfBandConfirmation,
     WaitingForDevice,
     Verifying,

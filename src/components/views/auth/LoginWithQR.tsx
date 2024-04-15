@@ -16,13 +16,17 @@ limitations under the License.
 
 import React from "react";
 import {
+    ClientRendezvousFailureReason,
+    LegacyRendezvousFailureReason,
     MSC3886SimpleHttpRendezvousTransport,
     MSC3903ECDHPayload,
     MSC3903ECDHv2RendezvousChannel,
     MSC3906Rendezvous,
+    MSC4108FailureReason,
     MSC4108RendezvousSession,
     MSC4108SecureChannel,
     MSC4108SignInWithQR,
+    RendezvousError,
     RendezvousFailureReason,
     RendezvousIntent,
 } from "matrix-js-sdk/src/rendezvous";
@@ -104,7 +108,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             const rendezvous = this.state.rendezvous;
             rendezvous.onFailure = undefined;
             if (this.props.legacy) {
-                await rendezvous.cancel(RendezvousFailureReason.UserCancelled);
+                await rendezvous.cancel(LegacyRendezvousFailureReason.UserCancelled);
             }
             this.setState({ rendezvous: undefined });
         }
@@ -118,7 +122,11 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             // eslint-disable-next-line react/no-direct-mutation-state
             this.state.rendezvous.onFailure = undefined;
             // calling cancel will call close() as well to clean up the resources
-            this.state.rendezvous.cancel(MSC4108FailureReason.UserCancelled).then(() => {});
+            if (this.state.rendezvous instanceof MSC3906Rendezvous) {
+                this.state.rendezvous.cancel(LegacyRendezvousFailureReason.UserCancelled);
+            } else {
+                this.state.rendezvous.cancel(MSC4108FailureReason.UserCancelled);
+            }
         }
     }
 
@@ -167,7 +175,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 this.setState({ phase: Phase.Error, failureReason: LoginWithQRFailureReason.RateLimited });
                 return;
             }
-            this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
+            this.setState({ phase: Phase.Error, failureReason: ClientRendezvousFailureReason.Unknown });
         }
     }
 
@@ -236,14 +244,16 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
             // we ask the user to confirm that the channel is secure
         } catch (e: RendezvousError | unknown) {
-            logger.error("Error whilst generating QR", e);
-            await this.state.rendezvous?.cancel(e instanceof RendezvousError ? e.code : ClientRendezvousFailureReason.Unknown);
+            logger.error("Error whilst approving login", e);
+            await this.state.rendezvous?.cancel(
+                e instanceof RendezvousError ? e.code : ClientRendezvousFailureReason.Unknown,
+            );
         }
     };
 
     private approveLogin = async (checkCode: string | undefined): Promise<void> => {
         if (!(this.state.rendezvous instanceof MSC4108SignInWithQR)) {
-            this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
+            this.setState({ phase: Phase.Error, failureReason: ClientRendezvousFailureReason.Unknown });
             throw new Error("Rendezvous not found");
         }
 
@@ -266,11 +276,15 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 // send secrets
                 await this.state.rendezvous.loginStep5();
 
-            // done
-            this.props.onFinished(true);
-        } else {
-            this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
-            throw new Error("New device flows around OIDC are not yet implemented");
+                // done
+                this.props.onFinished(true);
+            } else {
+                this.setState({ phase: Phase.Error, failureReason: ClientRendezvousFailureReason.Unknown });
+                throw new Error("New device flows around OIDC are not yet implemented");
+            }
+        } catch (e: RendezvousError | unknown) {
+            logger.error("Error whilst approving sign in", e);
+            this.setState({ phase: Phase.Error, failureReason: ClientRendezvousFailureReason.Unknown });
         }
     };
 
@@ -296,7 +310,11 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     private onClick = async (type: Click, checkCode?: string): Promise<void> => {
         switch (type) {
             case Click.Cancel:
-                await this.state.rendezvous?.cancel(MSC4108FailureReason.UserCancelled);
+                if (this.state.rendezvous instanceof MSC3906Rendezvous) {
+                    await this.state.rendezvous?.cancel(LegacyRendezvousFailureReason.UserCancelled);
+                } else {
+                    await this.state.rendezvous?.cancel(MSC4108FailureReason.UserCancelled);
+                }
                 this.reset();
                 this.props.onFinished(false);
                 break;
@@ -313,7 +331,11 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 await this.updateMode(this.props.mode);
                 break;
             case Click.Back:
-                await this.state.rendezvous?.cancel(MSC4108FailureReason.UserCancelled);
+                if (this.state.rendezvous instanceof MSC3906Rendezvous) {
+                    await this.state.rendezvous?.cancel(LegacyRendezvousFailureReason.UserCancelled);
+                } else {
+                    await this.state.rendezvous?.cancel(MSC4108FailureReason.UserCancelled);
+                }
                 this.props.onFinished(false);
                 break;
             case Click.ShowQr:

@@ -17,7 +17,11 @@ limitations under the License.
 import { cleanup, render, waitFor } from "@testing-library/react";
 import { MockedObject, mocked } from "jest-mock";
 import React from "react";
-import { MSC3906Rendezvous, RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
+import {
+    MSC3906Rendezvous,
+    LegacyRendezvousFailureReason,
+    ClientRendezvousFailureReason,
+} from "matrix-js-sdk/src/rendezvous";
 import { HTTPError, LoginTokenPostResponse } from "matrix-js-sdk/src/matrix";
 
 import LoginWithQR from "../../../../../src/components/views/auth/LoginWithQR";
@@ -112,7 +116,7 @@ describe("<LoginWithQR />", () => {
         await waitFor(() =>
             expect(mockedFlow).toHaveBeenLastCalledWith({
                 phase: Phase.Error,
-                failureReason: RendezvousFailureReason.HomeserverLacksSupport,
+                failureReason: LegacyRendezvousFailureReason.HomeserverLacksSupport,
                 onClick: expect.any(Function),
             }),
         );
@@ -126,7 +130,7 @@ describe("<LoginWithQR />", () => {
         await waitFor(() =>
             expect(mockedFlow).toHaveBeenLastCalledWith({
                 phase: Phase.Error,
-                failureReason: RendezvousFailureReason.Unknown,
+                failureReason: ClientRendezvousFailureReason.Unknown,
                 onClick: expect.any(Function),
             }),
         );
@@ -161,7 +165,7 @@ describe("<LoginWithQR />", () => {
         const onClick = mockedFlow.mock.calls[0][0].onClick;
         await onClick(Click.Cancel);
         expect(onFinished).toHaveBeenCalledWith(false);
-        expect(rendezvous.cancel).toHaveBeenCalledWith(RendezvousFailureReason.UserCancelled);
+        expect(rendezvous.cancel).toHaveBeenCalledWith(LegacyRendezvousFailureReason.UserCancelled);
 
         // try again
         onClick(Click.TryAgain);
@@ -206,7 +210,7 @@ describe("<LoginWithQR />", () => {
         const onClick = mockedFlow.mock.calls[0][0].onClick;
         await onClick(Click.Back);
         expect(onFinished).toHaveBeenCalledWith(false);
-        expect(rendezvous.cancel).toHaveBeenCalledWith(RendezvousFailureReason.UserCancelled);
+        expect(rendezvous.cancel).toHaveBeenCalledWith(LegacyRendezvousFailureReason.UserCancelled);
     });
 
     test("render QR then decline", async () => {
