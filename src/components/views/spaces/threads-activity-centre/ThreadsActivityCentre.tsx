@@ -16,7 +16,7 @@
  * /
  */
 
-import React, { JSX, useState } from "react";
+import React, { JSX, useCallback, useState } from "react";
 import { Menu, MenuItem } from "@vector-im/compound-web";
 import { Room } from "matrix-js-sdk/src/matrix";
 
@@ -36,6 +36,7 @@ import { getKeyBindingsManager } from "../../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
 import { ReleaseAnnouncement } from "../../../structures/ReleaseAnnouncement";
 import { useIsReleaseAnnouncementOpen } from "../../../../hooks/useIsReleaseAnnouncementOpen";
+import { useSettingValue } from "../../../../hooks/useSettings";
 
 interface ThreadsActivityCentreProps {
     /**
@@ -52,6 +53,15 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
     const [open, setOpen] = useState(false);
     const roomsAndNotifications = useUnreadThreadRooms(open);
     const isReleaseAnnouncementOpen = useIsReleaseAnnouncementOpen("threadsActivityCentre");
+    const settingTACOnlyNotifs = useSettingValue<boolean>("Notifications.tac_only_notifications");
+
+    const emptyCaption = useCallback((): string => {
+        if (settingTACOnlyNotifs) {
+            return _t("threads_activity_centre|no_rooms_with_threads_notifs");
+        } else {
+            return _t("threads_activity_centre|no_rooms_with_unread_threads");
+        }
+    }, [settingTACOnlyNotifs]);
 
     return (
         <div
@@ -110,9 +120,7 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
                             />
                         ))}
                         {roomsAndNotifications.rooms.length === 0 && (
-                            <div className="mx_ThreadsActivityCentre_emptyCaption">
-                                {_t("threads_activity_centre|no_rooms_with_unreads_threads")}
-                            </div>
+                            <div className="mx_ThreadsActivityCentre_emptyCaption">{emptyCaption()}</div>
                         )}
                     </div>
                 </Menu>
