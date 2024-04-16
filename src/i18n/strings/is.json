@@ -219,7 +219,6 @@
         "phone_optional_label": "Sími (valfrjálst)",
         "qr_code_login": {
             "error_invalid_scanned_code": "Skannaði kóðinn er ógildur.",
-            "review_and_approve": "Yfirfarðu og samþykktu innskráninguna",
             "sign_in_new_device": "Skrá inn nýtt tæki",
             "waiting_for_device": "Bíð eftir að tækið skráist inn"
         },
@@ -414,10 +413,6 @@
         "mute": "Þagga niður",
         "n_members": {
             "one": "%(count)s þátttakandi",
-            "other": "%(count)s þátttakendur"
-        },
-        "n_participants": {
-            "one": "1 þáttakandi",
             "other": "%(count)s þátttakendur"
         },
         "n_rooms": {
@@ -634,14 +629,12 @@
         "methods": "Aðferðir",
         "no_verification_requests_found": "Engar staðfestingarbeiðnir fundust",
         "number_of_users": "Fjöldi notenda",
-        "observe_only": "Aðeins fylgjast með",
         "phase": "Fasi",
         "phase_cancelled": "Hætt við",
         "phase_ready": "Tilbúið",
         "phase_requested": "Umbeðið",
         "phase_started": "Hafið",
         "phase_transaction": "Færsluaðgerð",
-        "requester": "Beiðandi",
         "room_id": "Auðkenni spjallrásar: %(roomId)s",
         "save_setting_values": "Vista gildi valkosta",
         "send_custom_state_event": "Senda sérsniðinn stöðuatburð",
@@ -1158,6 +1151,7 @@
         "group_rooms": "Spjallrásir",
         "group_spaces": "Svæði",
         "group_themes": "Þemu",
+        "group_threads": "Spjallþræðir",
         "group_voip": "Tal og myndmerki",
         "group_widgets": "Viðmótshlutar",
         "html_topic": "Birta HTML-framsetningu umfjöllunarefnis spjallrása",
@@ -1216,11 +1210,6 @@
         "view_rules": "Skoða reglur"
     },
     "language_dropdown_label": "Fellilisti tungumála",
-    "lazy_loading": {
-        "disabled_action": "Hreinsa skyndiminni og endursamstilla",
-        "disabled_title": "Ósamhæft staðvært skyndiminni",
-        "resync_title": "Uppfæri %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "Þú ert eini eintaklingurinn hérna. Ef þú ferð út, mun enginn framar geta tekið þátt, að þér meðtöldum.",
         "leave_room_question": "Ertu viss um að þú viljir yfirgefa spjallrásina '%(roomName)s'?",
@@ -1294,9 +1283,6 @@
         "all_messages_description": "Fáðu tilkynningu fyrir öll skilaboð",
         "class_global": "Víðvært",
         "class_other": "Annað",
-        "colour_bold": "Feitletrað",
-        "colour_none": "Ekkert",
-        "colour_unsent": "Ósent",
         "default": "Sjálfgefið",
         "enable_prompt_toast_description": "Virkja tilkynningar á skjáborði",
         "enable_prompt_toast_title": "Tilkynningar",
@@ -1304,6 +1290,9 @@
         "error_change_title": "Breytta tilkynningastillingum",
         "keyword": "Stikkorð",
         "keyword_new": "Nýtt stikkorð",
+        "level_activity": "Virkni",
+        "level_none": "Ekkert",
+        "level_unsent": "Ósent",
         "mark_all_read": "Merkja allt sem lesið",
         "mentions_and_keywords": "@minnst á og stikkorð",
         "mentions_keywords": "Tilvísanir og stikkorð",
@@ -1919,10 +1908,8 @@
         "help_about": {
             "access_token_detail": "Aðgangsteiknið þitt gefur fullan aðgang að notandaaðgangnum þínum. Ekki deila því með neinum.",
             "brand_version": "Útgáfa %(brand)s:",
-            "chat_bot": "Spjalla við %(brand)s vélmenni",
             "clear_cache_reload": "Hreinsa skyndiminni og endurhlaða",
             "help_link": "Til að fá aðstoð við að nota %(brand)s, smelltu <a>hér</a>.",
-            "help_link_chat_bot": "Til að fá aðstoð við að nota %(brand)s, smelltu <a>hér</a> eða byrjaðu að spjalla við vélmennið okkar með hnappnum hér fyrir neðan.",
             "title": "Hjálp og um hugbúnaðinn",
             "versions": "Útgáfur"
         }
@@ -1942,9 +1929,6 @@
             "custom_theme_success": "Þema bætt við!",
             "custom_theme_url": "Slóð á sérsniðið þema",
             "font_size": "Leturstærð",
-            "font_size_limit": "Sérsniðin stærð á letri getur aðeins verið á milli %(min)s pt og %(max)s pt",
-            "font_size_nan": "Stærð verður að vera tala",
-            "font_size_valid": "Nota á milli %(min)s pt og %(max)s pt",
             "heading": "Sérsníddu útlitið þitt",
             "image_size_default": "Sjálfgefið",
             "image_size_large": "Stórt",
@@ -3103,7 +3087,6 @@
         "already_in_call_person": "Þú ert nú þegar í símtali við þennan aðila.",
         "answered_elsewhere": "Svarað annars staðar",
         "answered_elsewhere_description": "Símtalinu var svarað á öðru tæki.",
-        "audio_devices": "Hljóðtæki",
         "call_failed": "Símtal mistókst",
         "call_failed_description": "Ekki tókst að koma símtalinu á",
         "call_failed_media": "Símtal mistókst þar sem ekki tókst að fá aðgang að vefmyndavél eða hljóðnema. Athugaðu þetta:",
@@ -3186,7 +3169,6 @@
         "user_is_presenting": "%(sharerName)s er að kynna",
         "video_call": "Myndsímtal",
         "video_call_started": "Myndsímtal er byrjað",
-        "video_devices": "Myndmerkistæki",
         "voice_call": "Raddsímtal",
         "you_are_presenting": "Þú ert að kynna"
     },

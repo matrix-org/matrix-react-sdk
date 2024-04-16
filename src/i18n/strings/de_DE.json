@@ -1,5 +1,6 @@
 {
     "a11y": {
+        "emoji_picker": "Emoji-Auswahl",
         "jump_first_invite": "Zur ersten Einladung springen.",
         "n_unread_messages": {
             "other": "%(count)s ungelesene Nachrichten.",
@@ -229,6 +230,7 @@
         "no_hs_url_provided": "Keine Heim-Server-URL angegeben",
         "oidc": {
             "error_title": "Wir konnten dich nicht anmelden",
+            "generic_auth_error": "Etwas ist während der Authentifizierung schiefgelaufen. Geh zurück zur Anmeldeseite und probiere es erneut.",
             "logout_redirect_warning": "Sie werden zum Server Authentifizierungsanbieter weitergeleitet, um die Abmeldung abzuschließen.",
             "missing_or_invalid_stored_state": "Wir haben deinen Browser gebeten, sich zu merken, bei welchem Heim-Server du dich anmeldest, aber dein Browser hat dies leider vergessen. Gehe zur Anmeldeseite und versuche es erneut."
         },
@@ -243,22 +245,20 @@
             "completing_setup": "Schließe Anmeldung deines neuen Gerätes ab",
             "confirm_code_match": "Überprüfe, dass der unten angezeigte Code mit deinem anderen Gerät übereinstimmt:",
             "connecting": "Verbinde …",
-            "devices_connected": "Geräte verbunden",
             "error_device_already_signed_in": "Das andere Gerät ist bereits angemeldet.",
             "error_device_not_signed_in": "Das andere Gerät ist nicht angemeldet.",
             "error_device_unsupported": "Die Verbindung mit diesem Gerät wird nicht unterstützt.",
             "error_homeserver_lacks_support": "Der Heim-Server unterstützt die Anmeldung eines anderen Gerätes nicht.",
             "error_invalid_scanned_code": "Der gescannte Code ist ungültig.",
             "error_linking_incomplete": "Die Verbindung konnte nicht in der erforderlichen Zeit hergestellt werden.",
+            "error_rate_limited": "Zu viele Versuche in zu kurzer Zeit. Warte ein wenig, bevor du es erneut versuchst.",
             "error_request_cancelled": "Die Anfrage wurde abgebrochen.",
             "error_request_declined": "Die Anfrage wurde auf dem anderen Gerät abgelehnt.",
             "error_unexpected": "Ein unerwarteter Fehler ist aufgetreten.",
-            "review_and_approve": "Überprüfe und genehmige die Anmeldung",
             "scan_code_instruction": "Lese den folgenden QR-Code mit deinem nicht angemeldeten Gerät ein.",
             "scan_qr_code": "QR-Code einlesen",
             "select_qr_code": "Wähle „%(scanQRCode)s“",
             "sign_in_new_device": "Neues Gerät anmelden",
-            "start_at_sign_in_screen": "Beginne auf dem Anmeldebildschirm",
             "waiting_for_device": "Warte auf Anmeldung des Gerätes"
         },
         "register_action": "Konto erstellen",
@@ -485,10 +485,6 @@
             "other": "%(count)s Mitglieder",
             "one": "%(count)s Mitglied"
         },
-        "n_participants": {
-            "one": "1 Teilnehmer",
-            "other": "%(count)s Teilnehmer"
-        },
         "n_rooms": {
             "one": "%(count)s Raum",
             "other": "%(count)s Räume"
@@ -532,6 +528,7 @@
         "show_more": "Mehr zeigen",
         "someone": "Jemand",
         "space": "Raum",
+        "spaces": "Räume",
         "sticker": "Sticker",
         "stickerpack": "Sticker-Paket",
         "success": "Erfolg",
@@ -593,6 +590,7 @@
         "formatting_toolbar_label": "Formatierung",
         "link_modal": {
             "link_field_label": "Link",
+            "text_field_label": "Text",
             "title_create": "Link erstellen",
             "title_edit": "Link bearbeiten"
         },
@@ -678,6 +676,7 @@
         "private_space_description": "Ein privater Space für dich und deine Kollegen",
         "public_description": "Öffne den Space für alle - am besten für Communities",
         "public_heading": "Dein öffentlicher Space",
+        "search_public_button": "Öffentliche Spaces suchen",
         "setup_rooms_community_description": "Lass uns für jedes einen Raum erstellen.",
         "setup_rooms_community_heading": "Welche Themen willst du in %(spaceName)s besprechen?",
         "setup_rooms_description": "Du kannst später weitere hinzufügen, auch bereits bestehende.",
@@ -735,7 +734,6 @@
         "notification_state": "Benachrichtigungsstand ist <strong>%(notificationState)s</strong>",
         "notifications_debug": "Debug-Modus für Benachrichtigungen",
         "number_of_users": "Benutzeranzahl",
-        "observe_only": "Nur beobachten",
         "original_event_source": "Ursprüngliche Rohdaten",
         "phase": "Phase",
         "phase_cancelled": "Abgebrochen",
@@ -743,7 +741,6 @@
         "phase_requested": "Angefragt",
         "phase_started": "Gestartet",
         "phase_transaction": "Transaktion",
-        "requester": "Anforderer",
         "room_encrypted": "Raum ist <strong>verschlüsselt ✅</strong>",
         "room_id": "Raum-ID: %(roomId)s",
         "room_not_encrypted": "Raum ist <strong>nicht verschlüsselt 🚨</strong>",
@@ -755,7 +752,6 @@
         "room_notifications_total": "Insgesamt: ",
         "room_notifications_type": "Typ: ",
         "room_status": "Raumstatus",
-        "room_unread_status": "Ungelesen-Status im Raum: <strong>%(status)s</strong>",
         "room_unread_status_count": {
             "other": "Ungelesen-Status im Raum: <strong>%(status)s</strong>, Anzahl: <strong>%(count)s</strong>"
         },
@@ -1007,7 +1003,7 @@
             "verify_emoji_prompt": "Durch den Vergleich einzigartiger Emojis verifizieren.",
             "verify_emoji_prompt_qr": "Wenn du obigen Code nicht erfassen kannst, verifiziere stattdessen durch den Vergleich von Emojis.",
             "verify_later": "Später verifizieren",
-            "verify_reset_warning_1": "Das Zurücksetzen deiner Sicherheitsschlüssel kann nicht rückgängig gemacht werden. Nach dem Zurücksetzen wirst du alte Nachrichten nicht mehr lesen können un Freunde, die dich vorher verifiziert haben werden Sicherheitswarnungen bekommen, bis du dich erneut mit ihnen verifizierst.",
+            "verify_reset_warning_1": "Das Zurücksetzen deiner Sicherheitsschlüssel kann nicht rückgängig gemacht werden. Nach dem Zurücksetzen wirst du alte Nachrichten nicht mehr lesen können und Freunde, die dich vorher verifiziert haben werden Sicherheitswarnungen bekommen, bis du dich erneut mit ihnen verifizierst.",
             "verify_reset_warning_2": "Bitte fahre nur fort, wenn du sicher bist, dass du alle anderen Geräte und deinen Sicherheitsschlüssel verloren hast.",
             "verify_using_device": "Mit anderem Gerät verifizieren",
             "verify_using_key": "Mit Sicherheitsschlüssel verifizieren",
@@ -1052,7 +1048,10 @@
         "unknown_error_code": "Unbekannter Fehlercode",
         "update_power_level": "Ändern der Berechtigungsstufe fehlgeschlagen"
     },
-    "error_database_closed_title": "Datenbank unerwartet geschlossen",
+    "error_app_open_in_another_tab": "Wechsle zu einem anderen Tab um mit %(brand)s zu verbinden. Dieser Tab kann jetzt geschlossen werden.",
+    "error_app_open_in_another_tab_title": "%(brand)s läuft bereits in einem anderen Tab.",
+    "error_app_opened_in_another_window": "%(brand)s läuft bereit in einem anderen Fenster. Klicke \"%(label)s um %(brand)s hier zu nutzen und beende das andere Fenster.",
+    "error_database_closed_title": "%(brand)s funktioniert nicht mehr",
     "error_dialog": {
         "copy_room_link_failed": {
             "description": "Der Link zum Raum konnte nicht kopiert werden.",
@@ -1214,6 +1213,7 @@
         "one": "Im Space %(spaceName)s und %(count)s weiteren Spaces.",
         "other": "In %(spaceName)s und %(count)s weiteren Spaces."
     },
+    "info_tooltip_title": "Information",
     "integration_manager": {
         "connecting": "Verbinde mit Integrationsassistent …",
         "error_connecting": "Der Integrationsassistent ist außer Betrieb oder kann deinen Heim-Server nicht erreichen.",
@@ -1251,6 +1251,8 @@
         "error_permissions_space": "Du hast keine Berechtigung, Personen in diesen Space einzuladen.",
         "error_profile_undisclosed": "Diese Person existiert möglicherweise nicht",
         "error_transfer_multiple_target": "Ein Anruf kann nur auf einen einzelnen Nutzer übertragen werden.",
+        "error_unfederated_room": "Dieser Raum förderiert nicht. Du kannst keine Personen von externen Servern einladen.",
+        "error_unfederated_space": "Dieser Space förderiert nicht. Du kannst keine Personen von externen Servern einladen.",
         "error_unknown": "Unbekannter Server-Fehler",
         "error_user_not_found": "Diese Person existiert nicht",
         "error_version_unsupported_room": "Die Raumversion wird vom Heim-Server des Benutzers nicht unterstützt.",
@@ -1303,6 +1305,7 @@
         "cancel_reply": "Nachricht beantworten abbrechen",
         "category_autocomplete": "Autovervollständigung",
         "category_calls": "Anrufe",
+        "category_navigation": "Navigation",
         "category_room_list": "Raumliste",
         "close_dialog_menu": "Dialog oder Kontextmenü schließen",
         "composer_jump_end": "Zum Ende des Eingabefelds springen",
@@ -1320,6 +1323,8 @@
         "control": "Strg",
         "dismiss_read_marker_and_jump_bottom": "Entferne Lesemarker und springe nach unten",
         "end": "Ende",
+        "enter": "Enter",
+        "escape": "Esc",
         "go_home_view": "Zur Startseite gehen",
         "home": "Startseite",
         "jump_first_message": "Zur ersten Nachricht springen",
@@ -1350,7 +1355,7 @@
         "send_sticker": "Sticker senden",
         "shift": "Umschalt",
         "space": "Leertaste",
-        "switch_to_space": "Mit Nummer zu Space springen",
+        "switch_to_space": "Mit Nummer zu Leerzeichen springen",
         "toggle_hidden_events": "Sichtbarkeit versteckter Ereignisse umschalten",
         "toggle_microphone_mute": "Mikrofon an-/ausschalten",
         "toggle_right_panel": "Rechtes Panel ein-/ausblenden",
@@ -1384,16 +1389,21 @@
         "element_call_video_rooms": "Element Call-Videoräume",
         "experimental_description": "Experimentierfreudig? Probiere unsere neuesten, sich in Entwicklung befindlichen Ideen aus. Diese Funktionen sind nicht final; Sie könnten instabil sein, sich verändern oder sogar ganz entfernt werden. <a>Erfahre mehr</a>.",
         "experimental_section": "Frühe Vorschauen",
+        "feature_disable_call_per_sender_encryption": "Verschlüsselung per-sender für Element Anruf abschalten",
         "feature_wysiwyg_composer_description": "Verwende Textverarbeitung (Rich-Text) statt Markdown im Eingabefeld.",
         "group_calls": "Neue Gruppenanruf-Erfahrung",
         "group_developer": "Entwickler",
         "group_encryption": "Verschlüsselung",
         "group_experimental": "Experimentell",
         "group_messaging": "Kommunikation",
+        "group_moderation": "Moderation",
         "group_profile": "Profil",
         "group_rooms": "Räume",
+        "group_spaces": "Räume",
         "group_themes": "Themen",
+        "group_threads": "Themen",
         "group_voip": "Anrufe",
+        "group_widgets": "Widgets",
         "hidebold": "Benachrichtigungspunkt ausblenden (nur Zähler zeigen)",
         "html_topic": "Zeige die HTML-Darstellung von Raumthemen",
         "join_beta": "Beta beitreten",
@@ -1409,13 +1419,17 @@
         "msc3531_hide_messages_pending_moderation": "Erlaube Moderatoren, noch nicht moderierte Nachrichten auszublenden.",
         "new_room_decoration_ui": "In aktiver Entwicklung, neue Raumkopfzeile & Detailoberfläche",
         "notification_settings": "Neue Benachrichtigungseinstellungen",
+        "notification_settings_beta_caption": "Einen einfacheren Weg um die Einstellungen für Benachrichtigungen zu ändern vorstellen. Passe Deine %(brand)s so an wie Du willst.",
         "notification_settings_beta_title": "Benachrichtigungseinstellungen",
-        "oidc_native_flow": "Neue native OIDC-Verfahren aktivieren (in aktiver Entwicklung)",
+        "notifications": "Benachrichtigungen in der Kopfleiste des Raums anschalten",
+        "oidc_native_flow": "Native OIDC Authentifizierung",
+        "oidc_native_flow_description": "⚠ Warnung: Experimentell. Nutze OIDC native Authentifizierung wenn dies vom Server unterstützt wird.",
         "pinning": "Nachrichten anheften",
+        "render_reaction_images": "Benutzerdefinierte Bilder in Reaktionen anzeigen",
+        "render_reaction_images_description": "Werden manchmal auch als „benutzerdefinierte Emojis“ bezeichnet.",
         "report_to_moderators": "An Raummoderation melden",
         "report_to_moderators_description": "In Räumen, die Moderation unterstützen, lässt dich die Schaltfläche „Melden“ missbräuchliche Verwendung an die Raummoderation melden.",
         "rust_crypto": "Rust-Verschlüsselungsumsetzung",
-        "rust_crypto_disabled_notice": "Dies kann aktuell nur per config.json aktiviert werden",
         "sliding_sync": "Sliding-Sync-Modus",
         "sliding_sync_checking": "Überprüfe …",
         "sliding_sync_configuration": "Sliding-Sync-Konfiguration",
@@ -1428,6 +1442,7 @@
         "sliding_sync_server_specify_proxy": "Dein Server unterstützt dies nicht nativ, du musst einen Proxy angeben",
         "sliding_sync_server_support": "Dein Server unterstützt dies nativ",
         "under_active_development": "In aktiver Entwicklung.",
+        "unrealiable_e2e": "Nicht zuverlässig in verschlüsselten Räumen",
         "video_rooms": "Videoräume",
         "video_rooms_a_new_way_to_chat": "Eine neue Möglichkeit in %(brand)s über Audio und Video zu kommunizieren.",
         "video_rooms_always_on_voip_channels": "Videoräume sind dauerhaft aktive VoIP-Kanäle, die in einem Raum in %(brand)s eingebettet sind.",
@@ -1436,6 +1451,7 @@
         "video_rooms_faq1_question": "Wie kann ich einen Videoraum erstellen?",
         "video_rooms_faq2_answer": "Ja, der Verlauf wird neben dem Videoanruf angezeigt.",
         "video_rooms_faq2_question": "Kann ich während Videoanrufen auch Textnachrichten verschicken?",
+        "video_rooms_feedbackSubheading": "Danke, dass Du die Beta ausprobierst. Bitte gehe soweit wie Du kannst ins Detail damit wird genau überprüfen können.",
         "voice_broadcast": "Sprachübertragung",
         "voice_broadcast_force_small_chunks": "Die Chunk-Länge der Sprachübertragungen auf 15 Sekunden erzwingen",
         "wysiwyg_composer": "Textverarbeitungs-Editor"
@@ -1474,14 +1490,6 @@
         "view_rules": "Regeln öffnen"
     },
     "language_dropdown_label": "Sprachauswahl",
-    "lazy_loading": {
-        "disabled_action": "Zwischenspeicher löschen und erneut synchronisieren",
-        "disabled_description1": "Du hast zuvor %(brand)s auf %(host)s ohne das verzögerte Laden von Mitgliedern genutzt. In dieser Version war das verzögerte Laden deaktiviert. Da die lokal zwischengespeicherten Daten zwischen diesen Einstellungen nicht kompatibel sind, muss %(brand)s dein Konto neu synchronisieren.",
-        "disabled_description2": "Wenn %(brand)s mit der alten Version in einem anderen Tab geöffnet ist, schließe dies bitte, da das parallele Nutzen von %(brand)s auf demselben Host mit aktivierten und deaktivierten verzögertem Laden, Probleme verursachen wird.",
-        "disabled_title": "Inkompatibler lokaler Zwischenspeicher",
-        "resync_description": "%(brand)s benutzt nun 3 bis 5 Mal weniger Arbeitsspeicher, indem Informationen über andere Nutzer erst bei Bedarf geladen werden. Bitte warte, während die Daten erneut mit dem Server abgeglichen werden!",
-        "resync_title": "Aktualisiere %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "Du bist die einzige Person im Raum. Sobald du ihn verlässt, wird niemand mehr hineingelangen, auch du nicht.",
         "leave_room_question": "Bist du sicher, dass du den Raum „%(roomName)s“ verlassen möchtest?",
@@ -1569,12 +1577,6 @@
         "all_messages_description": "Bei jeder Nachricht benachrichtigen",
         "class_global": "Global",
         "class_other": "Sonstiges",
-        "colour_bold": "Fett",
-        "colour_grey": "Grau",
-        "colour_muted": "Stumm",
-        "colour_none": "Nichts",
-        "colour_red": "Rot",
-        "colour_unsent": "Nicht gesendet",
         "default": "Standard",
         "email_pusher_app_display_name": "E-Mail-Benachrichtigungen",
         "enable_prompt_toast_description": "Aktiviere Desktopbenachrichtigungen",
@@ -1583,6 +1585,10 @@
         "error_change_title": "Benachrichtigungseinstellungen ändern",
         "keyword": "Schlüsselwort",
         "keyword_new": "Neues Schlüsselwort",
+        "level_activity": "Aktivität",
+        "level_muted": "Stumm",
+        "level_none": "Nichts",
+        "level_unsent": "Nicht gesendet",
         "mark_all_read": "Alle als gelesen markieren",
         "mentions_and_keywords": "@Erwähnungen und Schlüsselwörter",
         "mentions_and_keywords_description": "Nur bei Erwähnungen und Schlüsselwörtern benachrichtigen, die du in den <a>Einstellungen</a> konfigurieren kannst",
@@ -1715,7 +1721,8 @@
         "online": "Online",
         "online_for": "Online seit %(duration)s",
         "unknown": "Unbekannt",
-        "unknown_for": "Unbekannt seit %(duration)s"
+        "unknown_for": "Unbekannt seit %(duration)s",
+        "unreachable": "Server des Benutzers nicht erreichbar"
     },
     "quick_settings": {
         "all_settings": "Alle Einstellungen",
@@ -1743,6 +1750,7 @@
     "report_content": {
         "description": "Wenn du diese Nachricht meldest, wird die eindeutige Ereignis-ID an die Administration deines Heim-Servers übermittelt. Wenn die Nachrichten in diesem Raum verschlüsselt sind, wird deine Heim-Server-Administration nicht in der Lage sein, Nachrichten zu lesen oder Medien einzusehen.",
         "disagree": "Ablehnen",
+        "error_create_room_moderation_bot": "Erstellen des Raums mit Moderations-Bot nicht möglich",
         "hide_messages_from_user": "Prüfe, ob du alle aktuellen und zukünftigen Nachrichten dieses Nutzers verstecken willst.",
         "ignore_user": "Nutzer ignorieren",
         "illegal_content": "Illegale Inhalte",
@@ -1750,6 +1758,8 @@
         "nature": "Bitte wähle eine Kategorie aus und beschreibe, was die Nachricht missbräuchlich macht.",
         "nature_disagreement": "Die Person verbreitet Falschinformation.\nDies wird an die Raummoderation gemeldet.",
         "nature_illegal": "Diese Person verhält sich illegal, beispielsweise durch das Veröffentlichen persönlicher Daten oder Gewaltdrohungen.\nDies wird an die Raummoderation gemeldet, welche dies an die Behörden weitergeben kann.",
+        "nature_nonstandard_admin": "Dieser Raum wurde wegen illegalem oder toxischem Inhalt oder fehlender Moderation an den Administrator von %(homeserver)s gemeldet. ",
+        "nature_nonstandard_admin_encrypted": "Dieser Raum wurde wegen illegalem oder toxischem Inhalt oder fehlender Moderation an den Administrator von %(homeserver)s gemeldet. Der Administrator wird KEINE verschlüsselten Inhalte in diesem Raum lesen können.",
         "nature_other": "Anderer Grund. Bitte beschreibe das Problem.\nDies wird an die Raummoderation gemeldet.",
         "nature_spam": "Dieser Benutzer spammt den Raum mit Werbung, Links zu Werbung oder Propaganda.\nDies wird an die Raummoderation gemeldet.",
         "nature_toxic": "Dieser Benutzer zeigt toxisches Verhalten, etwa durch Beleidigen anderer Personen, Teilen von Erwachseneninhalten in familienfreundlichen Räumen oder anderweitiges Missachten von Raumregeln.\nDies wird an die Raummoderatoren gemeldet.",
@@ -1829,7 +1839,8 @@
         },
         "video_room_chat": {
             "title": "Unterhaltung"
-        }
+        },
+        "widgets_section": "Widgets"
     },
     "room": {
         "3pid_invite_email_not_found_account": "Diese Einladung wurde an die E-Mail-Adresse %(email)s gesendet, die nicht zu deinem Konto gehört",
@@ -2282,7 +2293,7 @@
             "join_rule_upgrade_upgrading_room": "Raum wird aktualisiert",
             "public_without_alias_warning": "Um den Raum zu verlinken, füge bitte eine Adresse hinzu.",
             "publish_room": "Diesen Raum im Raumverzeichnis veröffentlichen.",
-            "publish_space": "Diesen Space im Raumerzeichnis veröffentlichen.",
+            "publish_space": "Diesen Space im Raumverzeichnis veröffentlichen.",
             "strict_encryption": "Niemals verschlüsselte Nachrichten von dieser Sitzung zu unverifizierten Sitzungen in diesem Raum senden",
             "title": "Sicherheit"
         },
@@ -2352,10 +2363,9 @@
         "help_about": {
             "access_token_detail": "Dein Zugriffstoken gibt vollen Zugriff auf dein Konto. Teile ihn niemals mit anderen.",
             "brand_version": "Version von %(brand)s:",
-            "chat_bot": "Unterhalte dich mit dem %(brand)s-Bot",
             "clear_cache_reload": "Zwischenspeicher löschen und neu laden",
+            "crypto_version": "Krypto-Version:",
             "help_link": "<a>Um Hilfe zur Benutzung von %(brand)s zu erhalten, klicke hier</a>.",
-            "help_link_chat_bot": "Um Hilfe zur Benutzung von %(brand)s zu erhalten, klicke <a>hier</a> oder beginne eine Unterhaltung mit unserem Bot mittels nachfolgender Schaltfläche.",
             "homeserver": "Heim-Server ist <code>%(homeserverUrl)s</code>",
             "identity_server": "Identitäts-Server ist <code>%(identityServerUrl)s</code>",
             "title": "Hilfe und Info",
@@ -2377,9 +2387,6 @@
             "custom_theme_success": "Design hinzugefügt!",
             "custom_theme_url": "URL des selbstdefinierten Designs",
             "font_size": "Schriftgröße",
-            "font_size_limit": "Eigene Schriftgröße kann nur eine Zahl zwischen %(min)s pt und %(max)s pt sein",
-            "font_size_nan": "Schriftgröße muss eine Zahl sein",
-            "font_size_valid": "Verwende eine Zahl zwischen %(min)s pt und %(max)s pt",
             "heading": "Verändere das Erscheinungsbild",
             "image_size_default": "Standard",
             "image_size_large": "Groß",
@@ -3049,6 +3056,7 @@
         },
         "create_new_room_button": "Neuer Raum",
         "failed_querying_public_rooms": "Abfrage öffentlicher Räume fehlgeschlagen",
+        "failed_querying_public_spaces": "Abfrage der öffentlichen Spaces fehlgeschlagen",
         "group_chat_section_title": "Andere Optionen",
         "heading_with_query": "Nutze \"%(query)s\" zum Suchen",
         "heading_without_query": "Suche nach",
@@ -3057,6 +3065,7 @@
         "message_search_section_title": "Andere Suchen",
         "other_rooms_in_space": "Andere Räume in %(spaceName)s",
         "public_rooms_label": "Öffentliche Räume",
+        "public_spaces_label": "Öffentliche Spaces",
         "recent_searches_section_title": "Kürzliche Gesucht",
         "recently_viewed_section_title": "Kürzlich besucht",
         "remove_filter": "Entferne Suchfilter für %(filter)s",
@@ -3172,6 +3181,7 @@
             "you": "Du hast eine <a>Sprachübertragung</a> beendet"
         },
         "io.element.widgets.layout": "%(senderName)s hat das Raumlayout geändert",
+        "late_event_separator": "Ursprünglich gesendet %(dateTime)s",
         "load_error": {
             "no_permission": "Dir fehlt die Berechtigung, diese alten Nachrichten zu lesen.",
             "title": "Laden der Verlaufsposition fehlgeschlagen",
@@ -3374,6 +3384,8 @@
             "label": "Nachrichtenaktionen",
             "view_in_room": "Im Raum anzeigen"
         },
+        "message_timestamp_received_at": "Empfangen am: %(dateTime)s",
+        "message_timestamp_sent_at": "Gesendet am: %(dateTime)s",
         "mjolnir": {
             "changed_rule_glob": "%(senderName)s aktualisierte eine Ausschlussregel von %(oldGlob)s nach %(newGlob)s wegen %(reason)s",
             "changed_rule_rooms": "%(senderName)s ändert eine Ausschlussregel für Räume von %(oldGlob)s nach %(newGlob)s, wegen %(reason)s",
@@ -3727,6 +3739,7 @@
         "failed_others_already_recording_description": "Jemand anderes nimmt bereits eine Sprachübertragung auf. Warte auf das Ende der Übertragung, bevor du eine neue startest.",
         "failed_others_already_recording_title": "Sprachübertragung kann nicht gestartet werden",
         "go_live": "Live schalten",
+        "live": "Live",
         "pause": "Sprachübertragung pausieren",
         "play": "Sprachübertragung wiedergeben",
         "resume": "Sprachübertragung fortsetzen"
@@ -3740,7 +3753,6 @@
         "already_in_call_person": "Du bist schon in einem Anruf mit dieser Person.",
         "answered_elsewhere": "Anderswo beantwortet",
         "answered_elsewhere_description": "Der Anruf wurde auf einem anderen Gerät angenommen.",
-        "audio_devices": "Audiogeräte",
         "call_failed": "Anruf fehlgeschlagen",
         "call_failed_description": "Der Anruf kann nicht getätigt werden",
         "call_failed_media": "Der Anruf ist fehlgeschlagen, weil nicht auf die Webcam oder der das Mikrofon zugegriffen werden konnte. Prüfe nach, ob:",
@@ -3827,7 +3839,6 @@
         "user_is_presenting": "%(sharerName)s präsentiert",
         "video_call": "Videoanruf",
         "video_call_started": "Videoanruf hat begonnen",
-        "video_devices": "Kameras",
         "voice_call": "Sprachanruf",
         "you_are_presenting": "Du präsentierst"
     },
@@ -3974,6 +3985,7 @@
             "extendedRepeat": "Wiederholungen wie \"abcabcabc\" sind fast so schnell zu erraten wie \"abc\"",
             "keyPattern": "Kurze Tastaturmuster sind einfach zu erraten",
             "namesByThemselves": "Namen und Familiennamen alleine sind einfach zu erraten",
+            "pwned": "Dein Passwort wurde durch eine Datenleck im Internet offengelegt.",
             "recentYears": "Kürzlich vergangene Jahre sind einfach zu raten",
             "sequences": "Sequenzen wie \"abc\" oder \"6543\" sind leicht zu raten",
             "similarToCommon": "Dies ist ähnlich zu einem oft genutzten Passwort",

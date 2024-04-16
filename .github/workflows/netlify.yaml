@@ -13,7 +13,7 @@ jobs:
         environment: Netlify
         steps:
             - name: 📝 Create Deployment
-              uses: bobheadxi/deployments@88ce5600046c82542f8246ac287d0a53c461bca3 # v1
+              uses: bobheadxi/deployments@648679e8e4915b27893bd7dbc35cb504dc915bc8 # v1
               id: deployment
               with:
                   step: start
@@ -24,12 +24,11 @@ jobs:
                       Do you trust the author of this PR? Maybe this build will steal your keys or give you malware.
                       Exercise caution. Use test accounts.
 
-            # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
-            # (https://github.com/actions/download-artifact/issues/60) so instead we get this mess:
             - name: 📥 Download artifact
-              uses: dawidd6/action-download-artifact@f29d1b6a8930683e80acedfbe6baa2930cd646b4 # v2
+              uses: actions/download-artifact@v4
               with:
-                  run_id: ${{ github.event.workflow_run.id }}
+                  github-token: ${{ secrets.ELEMENT_BOT_TOKEN }}
+                  run-id: ${{ github.event.workflow_run.id }}
                   name: previewbuild
                   path: webapp
 

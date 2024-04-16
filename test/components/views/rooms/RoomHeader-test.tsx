@@ -25,6 +25,7 @@ import {
     Room,
     RoomMember,
 } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import {
     createEvent,
     fireEvent,
@@ -32,6 +33,7 @@ import {
     getByLabelText,
     getByRole,
     getByText,
+    queryAllByLabelText,
     render,
     RenderOptions,
     screen,
@@ -55,6 +57,10 @@ import { Call, ElementCall } from "../../../../src/models/Call";
 import * as ShieldUtils from "../../../../src/utils/ShieldUtils";
 import { Container, WidgetLayoutStore } from "../../../../src/stores/widgets/WidgetLayoutStore";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
+import { _t } from "../../../../src/languageHandler";
+import * as UseCall from "../../../../src/hooks/useCall";
+import { SdkContextClass } from "../../../../src/contexts/SDKContext";
+import WidgetStore, { IApp } from "../../../../src/stores/WidgetStore";
 
 jest.mock("../../../../src/utils/ShieldUtils");
 
@@ -77,7 +83,6 @@ describe("RoomHeader", () => {
     );
 
     let room: Room;
-
     const ROOM_ID = "!1:example.org";
 
     let setCardSpy: jest.SpyInstance | undefined;
@@ -149,7 +154,7 @@ describe("RoomHeader", () => {
                 name: "Member",
                 rawDisplayName: "Member",
                 roomId: room.roomId,
-                membership: "join",
+                membership: KnownMembership.Join,
                 getAvatarUrl: () => "mxc://avatar.url/image.png",
                 getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
             },
@@ -167,7 +172,7 @@ describe("RoomHeader", () => {
                 name: "Member",
                 rawDisplayName: "Member",
                 roomId: room.roomId,
-                membership: "join",
+                membership: KnownMembership.Join,
                 getAvatarUrl: () => "mxc://avatar.url/image.png",
                 getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
             },
@@ -176,7 +181,7 @@ describe("RoomHeader", () => {
                 name: "Member",
                 rawDisplayName: "Member",
                 roomId: room.roomId,
-                membership: "join",
+                membership: KnownMembership.Join,
                 getAvatarUrl: () => "mxc://avatar.url/image.png",
                 getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
             },
@@ -185,7 +190,7 @@ describe("RoomHeader", () => {
                 name: "Member",
                 rawDisplayName: "Member",
                 roomId: room.roomId,
-                membership: "join",
+                membership: KnownMembership.Join,
                 getAvatarUrl: () => "mxc://avatar.url/image.png",
                 getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
             },
@@ -194,7 +199,7 @@ describe("RoomHeader", () => {
                 name: "Bot user",
                 rawDisplayName: "Bot user",
                 roomId: room.roomId,
-                membership: "join",
+                membership: KnownMembership.Join,
                 getAvatarUrl: () => "mxc://avatar.url/image.png",
                 getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
             },
@@ -322,22 +327,30 @@ describe("RoomHeader", () => {
             // allow element calls
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
             jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(true);
-
-            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({ widget: {} } as Call);
-
+            const widget = { type: "m.jitsi" } as IApp;
+            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({
+                widget,
+                on: () => {},
+            } as unknown as Call);
+            jest.spyOn(WidgetStore.instance, "getApps").mockReturnValue([widget]);
             const { container } = render(<RoomHeader room={room} />, getWrapper());
             expect(getByLabelText(container, "Ongoing call")).toHaveAttribute("aria-disabled", "true");
         });
 
         it("clicking on ongoing (unpinned) call re-pins it", () => {
-            jest.spyOn(SdkConfig, "get").mockReturnValue({ use_exclusively: true });
-            // allow element calls
+            mockRoomMembers(room, 3);
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+            // allow calls
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
             jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(false);
             const spy = jest.spyOn(WidgetLayoutStore.instance, "moveToContainer");
 
-            const widget = {};
-            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({ widget } as Call);
+            const widget = { type: "m.jitsi" } as IApp;
+            jest.spyOn(CallStore.instance, "getCall").mockReturnValue({
+                widget,
+                on: () => {},
+            } as unknown as Call);
+            jest.spyOn(WidgetStore.instance, "getApps").mockReturnValue([widget]);
 
             const { container } = render(<RoomHeader room={room} />, getWrapper());
             expect(getByLabelText(container, "Video call")).not.toHaveAttribute("aria-disabled", "true");
@@ -357,7 +370,7 @@ describe("RoomHeader", () => {
             }
         });
 
-        it("can't call if you have no friends", () => {
+        it("can't call if you have no friends and cannot invite friends", () => {
             mockRoomMembers(room, 1);
             const { container } = render(<RoomHeader room={room} />, getWrapper());
             for (const button of getAllByLabelText(container, "There's no one here to call")) {
@@ -365,8 +378,64 @@ describe("RoomHeader", () => {
             }
         });
 
+        it("can call if you have no friends but can invite friends", () => {
+            mockRoomMembers(room, 1);
+            // go through all the different `canInvite` and `getJoinRule` combinations
+
+            // check where we can't do anything but can upgrade
+            jest.spyOn(room.currentState, "maySendStateEvent").mockReturnValue(true);
+            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Invite);
+            jest.spyOn(room, "canInvite").mockReturnValue(false);
+            const guestSpaUrlMock = jest.spyOn(SdkConfig, "get").mockImplementation((key) => {
+                return { guest_spa_url: "https://guest_spa_url.com", url: "https://spa_url.com" };
+            });
+            const { container: containerNoInviteNotPublicCanUpgradeAccess } = render(
+                <RoomHeader room={room} />,
+                getWrapper(),
+            );
+            expect(
+                queryAllByLabelText(containerNoInviteNotPublicCanUpgradeAccess, "There's no one here to call"),
+            ).toHaveLength(0);
+
+            // dont allow upgrading anymore and go through the other combinations
+            jest.spyOn(room.currentState, "maySendStateEvent").mockReturnValue(false);
+            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Invite);
+            jest.spyOn(room, "canInvite").mockReturnValue(false);
+            jest.spyOn(SdkConfig, "get").mockImplementation((key) => {
+                return { guest_spa_url: "https://guest_spa_url.com", url: "https://spa_url.com" };
+            });
+            const { container: containerNoInviteNotPublic } = render(<RoomHeader room={room} />, getWrapper());
+            expect(queryAllByLabelText(containerNoInviteNotPublic, "There's no one here to call")).toHaveLength(2);
+
+            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
+            jest.spyOn(room, "canInvite").mockReturnValue(false);
+            const { container: containerNoInvitePublic } = render(<RoomHeader room={room} />, getWrapper());
+            expect(queryAllByLabelText(containerNoInvitePublic, "There's no one here to call")).toHaveLength(2);
+
+            jest.spyOn(room, "canInvite").mockReturnValue(true);
+            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Invite);
+            const { container: containerInviteNotPublic } = render(<RoomHeader room={room} />, getWrapper());
+            expect(queryAllByLabelText(containerInviteNotPublic, "There's no one here to call")).toHaveLength(2);
+
+            jest.spyOn(room, "getJoinRule").mockReturnValue(JoinRule.Knock);
+            jest.spyOn(room, "canInvite").mockReturnValue(true);
+            const { container: containerInvitePublic } = render(<RoomHeader room={room} />, getWrapper());
+            expect(queryAllByLabelText(containerInvitePublic, "There's no one here to call")).toHaveLength(0);
+
+            // last we can allow everything but without guest_spa_url nothing will work
+            guestSpaUrlMock.mockRestore();
+            const { container: containerAllAllowedButNoGuestSpaUrl } = render(<RoomHeader room={room} />, getWrapper());
+            expect(
+                queryAllByLabelText(containerAllAllowedButNoGuestSpaUrl, "There's no one here to call"),
+            ).toHaveLength(2);
+        });
+
         it("calls using legacy or jitsi", async () => {
             mockRoomMembers(room, 2);
+            jest.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
+                if (key === "im.vector.modular.widgets") return true;
+                return false;
+            });
             const { container } = render(<RoomHeader room={room} />, getWrapper());
 
             const voiceButton = getByLabelText(container, "Voice call");
@@ -405,12 +474,11 @@ describe("RoomHeader", () => {
             expect(placeCallSpy).toHaveBeenLastCalledWith(room.roomId, CallType.Video);
         });
 
-        it("calls using element calls for large rooms", async () => {
+        it("calls using element call for large rooms", async () => {
             mockRoomMembers(room, 3);
 
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockImplementation((key) => {
-                if (key === "im.vector.modular.widgets") return true;
-                if (key === ElementCall.CALL_EVENT_TYPE.name) return true;
+                if (key === ElementCall.MEMBER_EVENT_TYPE.name) return true;
                 return false;
             });
 
@@ -424,6 +492,72 @@ describe("RoomHeader", () => {
             const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
             fireEvent.click(videoButton);
             expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ view_call: true }));
+        });
+
+        it("buttons are disabled if there is an ongoing call", async () => {
+            mockRoomMembers(room, 3);
+
+            jest.spyOn(CallStore.prototype, "activeCalls", "get").mockReturnValue(
+                new Set([{ roomId: "some_other_room" } as Call]),
+            );
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+
+            const [videoButton, voiceButton] = getAllByLabelText(container, "Ongoing call");
+
+            expect(voiceButton).toHaveAttribute("aria-disabled", "true");
+            expect(videoButton).toHaveAttribute("aria-disabled", "true");
+        });
+
+        it("join button is shown if there is an ongoing call", async () => {
+            mockRoomMembers(room, 3);
+            jest.spyOn(UseCall, "useParticipantCount").mockReturnValue(3);
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            const joinButton = getByLabelText(container, "Join");
+            expect(joinButton).not.toHaveAttribute("aria-disabled", "true");
+        });
+
+        it("join button is disabled if there is an other ongoing call", async () => {
+            mockRoomMembers(room, 3);
+            jest.spyOn(UseCall, "useParticipantCount").mockReturnValue(3);
+            jest.spyOn(CallStore.prototype, "activeCalls", "get").mockReturnValue(
+                new Set([{ roomId: "some_other_room" } as Call]),
+            );
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            const joinButton = getByLabelText(container, "Ongoing call");
+
+            expect(joinButton).toHaveAttribute("aria-disabled", "true");
+        });
+
+        it("close lobby button is shown", async () => {
+            mockRoomMembers(room, 3);
+
+            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(true);
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            getByLabelText(container, "Close lobby");
+        });
+
+        it("close lobby button is shown if there is an ongoing call but we are viewing the lobby", async () => {
+            mockRoomMembers(room, 3);
+            jest.spyOn(UseCall, "useParticipantCount").mockReturnValue(3);
+            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(true);
+
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            getByLabelText(container, "Close lobby");
+        });
+
+        it("don't show external conference button if the call is not shown", () => {
+            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(false);
+            jest.spyOn(SdkConfig, "get").mockImplementation((key) => {
+                return { guest_spa_url: "https://guest_spa_url.com", url: "https://spa_url.com" };
+            });
+            let { container } = render(<RoomHeader room={room} />, getWrapper());
+            expect(screen.queryByLabelText(_t("voip|get_call_link"))).not.toBeInTheDocument();
+
+            jest.spyOn(SdkContextClass.instance.roomViewStore, "isViewingCall").mockReturnValue(true);
+
+            container = render(<RoomHeader room={room} />, getWrapper()).container;
+
+            expect(getByLabelText(container, _t("voip|get_call_link"))).toBeInTheDocument();
         });
     });
 
@@ -546,7 +680,7 @@ function mockRoomMembers(room: Room, count: number) {
             name: `Member ${index}`,
             rawDisplayName: `Member ${index}`,
             roomId: room.roomId,
-            membership: "join",
+            membership: KnownMembership.Join,
             getAvatarUrl: () => `mxc://avatar.url/user-${index}.png`,
             getMxcAvatarUrl: () => `mxc://avatar.url/user-${index}.png`,
         }));

@@ -342,10 +342,6 @@
             "one": "%(count)s narys",
             "other": "%(count)s nariai"
         },
-        "n_participants": {
-            "one": "1 dalyvis",
-            "other": "%(count)s dalyviai"
-        },
         "name": "Pavadinimas",
         "no_results": "Jokių rezultatų",
         "not_trusted": "Nepatikimas",
@@ -932,14 +928,6 @@
         "title": "Ignoruojami vartotojai",
         "view_rules": "Peržiūrėti taisykles"
     },
-    "lazy_loading": {
-        "disabled_action": "Išvalyti talpyklą ir sinchronizuoti iš naujo",
-        "disabled_description1": "Jūs anksčiau naudojote %(brand)s ant %(host)s įjungę tingų narių įkėlimą. Šioje versijoje tingus įkėlimas yra išjungtas. Kadangi vietinė talpykla nesuderinama tarp šių dviejų nustatymų, %(brand)s reikia iš naujo sinchronizuoti jūsų paskyrą.",
-        "disabled_description2": "Jei kita %(brand)s versija vis dar yra atidaryta kitame skirtuke, uždarykite jį, nes %(brand)s naudojimas tame pačiame serveryje, tuo pačiu metu įjungus ir išjungus tingų įkėlimą, sukelks problemų.",
-        "disabled_title": "Nesuderinamas vietinis podėlis",
-        "resync_description": "%(brand)s dabar naudoja 3-5 kartus mažiau atminties, įkeliant vartotojų informaciją tik prireikus. Palaukite, kol mes iš naujo sinchronizuosime su serveriu!",
-        "resync_title": "Atnaujinama %(brand)s"
-    },
     "leave_room_dialog": {
         "leave_room_question": "Ar tikrai norite išeiti iš kambario %(roomName)s?",
         "room_rejoin_warning": "Šis kambarys nėra viešas. Jūs negalėsite prisijungti iš naujo be pakvietimo."
@@ -965,8 +953,6 @@
         "all_messages_description": "Būkite pranešti apie kiekvieną žinutę",
         "class_global": "Globalus",
         "class_other": "Kitas",
-        "colour_bold": "Pusjuodis",
-        "colour_none": "Nė vienas",
         "default": "Numatytas",
         "enable_prompt_toast_description": "Įjungti darbalaukio pranešimus",
         "enable_prompt_toast_title": "Pranešimai",
@@ -974,6 +960,8 @@
         "error_change_title": "Keisti pranešimų nustatymus",
         "keyword": "Raktažodis",
         "keyword_new": "Naujas raktažodis",
+        "level_activity": "Aktyvumą",
+        "level_none": "Nė vienas",
         "mark_all_read": "Pažymėti viską kaip perskaitytą",
         "mentions_and_keywords": "@paminėjimai & raktažodžiai",
         "mentions_and_keywords_description": "Gaukite pranešimus tik apie paminėjimus ir raktinius žodžius, kaip nustatyta jūsų <a>nustatymuose</a>",
@@ -1513,10 +1501,8 @@
         "help_about": {
             "access_token_detail": "Jūsų prieigos žetonas suteikia visišką prieigą prie paskyros. Niekam jo neduokite.",
             "brand_version": "%(brand)s versija:",
-            "chat_bot": "Kalbėtis su %(brand)s Botu",
             "clear_cache_reload": "Išvalyti podėlį ir perkrauti",
             "help_link": "Norėdami gauti pagalbos naudojant %(brand)s, paspauskite <a>čia</a>.",
-            "help_link_chat_bot": "Norėdami gauti pagalbos naudojant %(brand)s, paspauskite <a>čia</a> arba pradėkite pokalbį su mūsų botu pasinaudoję žemiau esančiu mygtuku.",
             "title": "Pagalba ir Apie",
             "versions": "Versijos"
         }
@@ -1536,9 +1522,6 @@
             "custom_theme_success": "Tema pridėta!",
             "custom_theme_url": "Pasirinktinės temos URL",
             "font_size": "Šrifto dydis",
-            "font_size_limit": "Pasirinktinis šrifto dydis gali būti tik tarp %(min)s pt ir %(max)s pt",
-            "font_size_nan": "Dydis turi būti skaičius",
-            "font_size_valid": "Naudokite dydį tarp %(min)s pt ir %(max)s pt",
             "heading": "Tinkinti savo išvaizdą",
             "image_size_default": "Numatytas",
             "image_size_large": "Didelis",
@@ -2466,7 +2449,6 @@
         "already_in_call_person": "Jūs jau esate pokalbyje su šiuo asmeniu.",
         "answered_elsewhere": "Atsiliepta Kitur",
         "answered_elsewhere_description": "Į skambutį buvo atsiliepta kitame įrenginyje.",
-        "audio_devices": "Garso įrenginiai",
         "call_failed": "Skambutis Nepavyko",
         "call_failed_description": "Nepavyko pradėti skambučio",
         "call_failed_media": "Skambutis nepavyko, nes kamera arba mikrofonas negali būti pasiekta. Patikrinkite tai:",
@@ -2532,7 +2514,6 @@
         "user_busy_description": "Vartotojas kuriam skambinate yra užsiėmęs.",
         "user_is_presenting": "%(sharerName)s pristato",
         "video_call": "Vaizdo skambutis",
-        "video_devices": "Vaizdo įrenginiai",
         "voice_call": "Balso skambutis",
         "you_are_presenting": "Jūs pristatote"
     },

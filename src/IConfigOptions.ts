@@ -119,6 +119,7 @@ export interface IConfigOptions {
     };
     element_call: {
         url?: string;
+        guest_spa_url?: string;
         use_exclusively?: boolean;
         participant_limit?: number;
         brand?: string;
@@ -135,8 +136,6 @@ export interface IConfigOptions {
     report_event?: {
         admin_message_md: string; // message for how to contact the server owner when reporting an event
     };
-
-    welcome_user_id?: string;
 
     room_directory?: {
         servers: string[];

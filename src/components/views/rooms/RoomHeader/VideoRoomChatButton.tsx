@@ -19,11 +19,10 @@ import { Icon as ChatIcon } from "@vector-im/compound-design-tokens/icons/chat-s
 import { Room } from "matrix-js-sdk/src/matrix";
 import { IconButton, Tooltip } from "@vector-im/compound-web";
 
-import { isVideoRoom as calcIsVideoRoom } from "../../../../utils/video-rooms";
 import { _t } from "../../../../languageHandler";
 import { useEventEmitterState } from "../../../../hooks/useEventEmitter";
 import { NotificationStateEvents } from "../../../../stores/notifications/NotificationState";
-import { NotificationColor } from "../../../../stores/notifications/NotificationColor";
+import { NotificationLevel } from "../../../../stores/notifications/NotificationLevel";
 import { RightPanelPhases } from "../../../../stores/right-panel/RightPanelStorePhases";
 import { SDKContext } from "../../../../contexts/SDKContext";
 import { ButtonEvent } from "../../elements/AccessibleButton";
@@ -31,28 +30,23 @@ import { ButtonEvent } from "../../elements/AccessibleButton";
 /**
  * Display a button to toggle timeline for video rooms
  * @param room
- * @returns for a video room: a button to toggle timeline in the right panel
- *          otherwise null
+ * @returns A button to toggle timeline in the right panel.
  */
 export const VideoRoomChatButton: React.FC<{ room: Room }> = ({ room }) => {
     const sdkContext = useContext(SDKContext);
 
-    const isVideoRoom = calcIsVideoRoom(room);
-
-    const notificationState = isVideoRoom ? sdkContext.roomNotificationStateStore.getRoomState(room) : undefined;
+    const notificationState = sdkContext.roomNotificationStateStore.getRoomState(room);
     const notificationColor = useEventEmitterState(
         notificationState,
         NotificationStateEvents.Update,
-        () => notificationState?.color,
+        () => notificationState?.level,
     );
-
-    if (!isVideoRoom) {
-        return null;
-    }
 
     const displayUnreadIndicator =
         !!notificationColor &&
-        [NotificationColor.Bold, NotificationColor.Grey, NotificationColor.Red].includes(notificationColor);
+        [NotificationLevel.Activity, NotificationLevel.Notification, NotificationLevel.Highlight].includes(
+            notificationColor,
+        );
 
     const onClick = (event: ButtonEvent): void => {
         // stop event propagating up and triggering RoomHeader bar click

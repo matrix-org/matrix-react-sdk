@@ -17,6 +17,7 @@ limitations under the License.
 
 import React, { createRef } from "react";
 import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import classNames from "classnames";
 
 import type { Call } from "../../../models/Call";
@@ -124,7 +125,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
     private get showContextMenu(): boolean {
         return (
             this.props.tag !== DefaultTagID.Invite &&
-            this.props.room.getMyMembership() !== "knock" &&
+            this.props.room.getMyMembership() !== KnownMembership.Knock &&
             !isKnockDenied(this.props.room) &&
             shouldShowComponent(UIComponent.RoomOptionsMenu)
         );
@@ -362,6 +363,12 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
                         onPostLeaveClick={(ev: ButtonEvent) =>
                             PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuLeaveItem", ev)
                         }
+                        onPostMarkAsReadClick={(ev: ButtonEvent) =>
+                            PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuMarkRead", ev)
+                        }
+                        onPostMarkAsUnreadClick={(ev: ButtonEvent) =>
+                            PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuMarkUnread", ev)
+                        }
                     />
                 )}
             </React.Fragment>
@@ -387,7 +394,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
             mx_RoomTile: true,
             mx_RoomTile_sticky:
                 SettingsStore.getValue("feature_ask_to_join") &&
-                (this.props.room.getMyMembership() === "knock" || isKnockDenied(this.props.room)),
+                (this.props.room.getMyMembership() === KnownMembership.Knock || isKnockDenied(this.props.room)),
             mx_RoomTile_selected: this.state.selected,
             mx_RoomTile_hasMenuOpen: !!(this.state.generalMenuPosition || this.state.notificationsMenuPosition),
             mx_RoomTile_minimized: this.props.isMinimized,
@@ -402,11 +409,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
             // aria-hidden because we summarise the unread count/highlight status in a manual aria-label below
             badge = (
                 <div className="mx_RoomTile_badgeContainer" aria-hidden="true">
-                    <NotificationBadge
-                        notification={this.notificationState}
-                        forceCount={false}
-                        roomId={this.props.room.roomId}
-                    />
+                    <NotificationBadge notification={this.notificationState} roomId={this.props.room.roomId} />
                 </div>
             );
         }

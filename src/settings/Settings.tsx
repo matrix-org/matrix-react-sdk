@@ -1,6 +1,6 @@
 /*
 Copyright 2017 Travis Ralston
-Copyright 2018 - 2023 The Matrix.org Foundation C.I.C.
+Copyright 2018 - 2024 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -46,6 +46,7 @@ import RustCryptoSdkController from "./controllers/RustCryptoSdkController";
 import ServerSupportUnstableFeatureController from "./controllers/ServerSupportUnstableFeatureController";
 import { WatchManager } from "./WatchManager";
 import { CustomTheme } from "../theme";
+import SettingsStore from "./SettingsStore";
 
 export const defaultWatchManager = new WatchManager();
 
@@ -80,6 +81,7 @@ export enum LabGroup {
     Spaces,
     Widgets,
     Rooms,
+    Threads,
     VoiceAndVideo,
     Moderation,
     Analytics,
@@ -87,6 +89,7 @@ export enum LabGroup {
     Encryption,
     Experimental,
     Developer,
+    Ui,
 }
 
 export enum Features {
@@ -94,6 +97,9 @@ export enum Features {
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
     NotificationSettings2 = "feature_notification_settings2",
     OidcNativeFlow = "feature_oidc_native_flow",
+    // If true, every new login will use the new rust crypto implementation
+    RustCrypto = "feature_rust_crypto",
+    ReleaseAnnouncement = "feature_release_announcement",
 }
 
 export const labGroupNames: Record<LabGroup, TranslationKey> = {
@@ -102,6 +108,7 @@ export const labGroupNames: Record<LabGroup, TranslationKey> = {
     [LabGroup.Spaces]: _td("labs|group_spaces"),
     [LabGroup.Widgets]: _td("labs|group_widgets"),
     [LabGroup.Rooms]: _td("labs|group_rooms"),
+    [LabGroup.Threads]: _td("labs|group_threads"),
     [LabGroup.VoiceAndVideo]: _td("labs|group_voip"),
     [LabGroup.Moderation]: _td("labs|group_moderation"),
     [LabGroup.Analytics]: _td("common|analytics"),
@@ -109,6 +116,7 @@ export const labGroupNames: Record<LabGroup, TranslationKey> = {
     [LabGroup.Encryption]: _td("labs|group_encryption"),
     [LabGroup.Experimental]: _td("labs|group_experimental"),
     [LabGroup.Developer]: _td("labs|group_developer"),
+    [LabGroup.Ui]: _td("labs|group_ui"),
 };
 
 export type SettingValueType =
@@ -127,9 +135,9 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     /**
      * If true, then the presence of this setting in `config.json` will disable the option in the UI.
      *
-     * In other words, we prevent the user overriding the setting if an explicit value is given in `config.json`;
-     * though note that users who have already set a non-default value before `config.json` is update will continue
-     * to use that value (and, indeed, won't be able to change it!)
+     * In other words, we prevent the user overriding the setting if an explicit value is given in `config.json`.
+     * XXX:  note that users who have already set a non-default value before `config.json` is update will continue
+     * to use that value (and, indeed, won't be able to change it!): https://github.com/element-hq/element-web/issues/26877
      *
      * Obviously, this only really makes sense if `supportedLevels` includes {@link SettingLevel.CONFIG}.
      */
@@ -480,18 +488,35 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         description: _td("labs|oidc_native_flow_description"),
         default: false,
     },
-    "feature_rust_crypto": {
-        // use the rust matrix-sdk-crypto-js for crypto.
+    [Features.RustCrypto]: {
+        // use the rust matrix-sdk-crypto-wasm for crypto.
         isFeature: true,
         labsGroup: LabGroup.Developer,
-        configDisablesSetting: true,
+        // unlike most features, `configDisablesSetting` is false here.
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|rust_crypto"),
-        description: _td("labs|under_active_development"),
-        // shouldWarn: true,
-        default: false,
+        description: () => {
+            if (SettingsStore.getValueAt(SettingLevel.CONFIG, Features.RustCrypto)) {
+                // It's enabled in the config, so you can't get rid of it even by logging out.
+                return _t("labs|rust_crypto_in_config_description");
+            } else {
+                return _t("labs|rust_crypto_optin_warning");
+            }
+        },
+        shouldWarn: true,
+        default: true,
         controller: new RustCryptoSdkController(),
     },
+    // Must be set under `setting_defaults` in config.json.
+    // If set to 100 in conjunction with `feature_rust_crypto`, all existing users will migrate to the new crypto.
+    // Default is 0, meaning no existing users on legacy crypto will migrate.
+    "RustCrypto.staged_rollout_percent": {
+        supportedLevels: [SettingLevel.CONFIG],
+        default: 0,
+    },
+    /**
+     * @deprecated in favor of {@link fontSizeDelta}
+     */
     "baseFontSize": {
         displayName: _td("settings|appearance|font_size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -511,12 +536,22 @@ export const SETTINGS: { [setting: string]: ISetting } = {
      * With the transition to Compound we are moving to a base font size
      * of 16px. We're taking the opportunity to move away from the `baseFontSize`
      * setting that had a 5px offset.
-     *
+     * @deprecated in favor {@link fontSizeDelta}
      */
     "baseFontSizeV2": {
         displayName: _td("settings|appearance|font_size"),
         supportedLevels: [SettingLevel.DEVICE],
-        default: FontWatcher.DEFAULT_SIZE,
+        default: "",
+        controller: new FontSizeController(),
+    },
+    /**
+     * This delta is added to the browser default font size
+     * Moving from `baseFontSizeV2` to `fontSizeDelta` to replace the default 16px to --cpd-font-size-root (browser default font size) + fontSizeDelta
+     */
+    "fontSizeDelta": {
+        displayName: _td("settings|appearance|font_size"),
+        supportedLevels: [SettingLevel.DEVICE],
+        default: FontWatcher.DEFAULT_DELTA,
         controller: new FontSizeController(),
     },
     "useCustomFontSize": {
@@ -551,13 +586,22 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
         default: false,
     },
+    // Used to be a feature, name kept for backwards compat
     "feature_hidebold": {
-        isFeature: true,
-        labsGroup: LabGroup.Rooms,
-        configDisablesSetting: true,
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("labs|hidebold"),
         default: false,
+    },
+    "Notifications.showbold": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td("settings|showbold"),
+        default: false,
+        invertedSettingName: "feature_hidebold",
+    },
+    "Notifications.tac_only_notifications": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td("settings|tac_only_notifications"),
+        default: true,
     },
     "feature_ask_to_join": {
         isFeature: true,
@@ -1103,6 +1147,33 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "activeCallRoomIds": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: [],
+    },
+    "threadsActivityCentre": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        labsGroup: LabGroup.Threads,
+        controller: new ReloadOnChangeController(),
+        displayName: _td("labs|threads_activity_centre"),
+        description: () => _t("labs|threads_activity_centre_description", { brand: SdkConfig.get().brand }),
+        default: false,
+        isFeature: true,
+    },
+    /**
+     * Enable or disable the release announcement feature
+     */
+    [Features.ReleaseAnnouncement]: {
+        isFeature: true,
+        labsGroup: LabGroup.Ui,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        default: true,
+        displayName: _td("labs|release_announcement"),
+    },
+    /**
+     * Managed by the {@link ReleaseAnnouncementStore}
+     * Store the release announcement data
+     */
+    "releaseAnnouncementData": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        default: {},
     },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,

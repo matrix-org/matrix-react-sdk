@@ -436,10 +436,6 @@
             "one": "%(count)s thành viên",
             "other": "%(count)s thành viên"
         },
-        "n_participants": {
-            "one": "1 người tham gia",
-            "other": "%(count)s người tham gia"
-        },
         "n_rooms": {
             "one": "%(count)s phòng",
             "other": "%(count)s phòng"
@@ -1270,6 +1266,7 @@
         "group_rooms": "Phòng",
         "group_spaces": "Không gian",
         "group_themes": "Chủ đề",
+        "group_threads": "Chủ đề",
         "group_voip": "Âm thanh & Hình ảnh",
         "group_widgets": "Vật dụng",
         "hidebold": "Ẩn dấu chấm thông báo (chỉ hiển thị bộ đếm)",
@@ -1291,7 +1288,6 @@
         "report_to_moderators": "Báo cáo cho điều phối viên",
         "report_to_moderators_description": "Trong các phòng hỗ trợ điều phối, nút \"Báo cáo\" sẽ giúp bạn báo cáo lạm dụng cho điều phối viên của phòng.",
         "rust_crypto": "Mã hóa dựa trên Rust",
-        "rust_crypto_disabled_notice": "Hiện chỉ có thể bật bằng tập tin cấu hình config.json",
         "sliding_sync": "Chế độ đồng bộ tối ưu (Sync v3)",
         "sliding_sync_description": "Đang được phát triển tích cực, không thể vô hiệu.",
         "sliding_sync_disabled_notice": "Đăng xuất và đăng nhập lại để vô hiệu hóa",
@@ -1345,14 +1341,6 @@
         "view_rules": "Xem các quy tắc"
     },
     "language_dropdown_label": "Danh sách ngôn ngữ",
-    "lazy_loading": {
-        "disabled_action": "Xóa bộ nhớ cache và đồng bộ hóa lại",
-        "disabled_description1": "Trước đây, bạn đã sử dụng %(brand)s trên %(host)s khi đã bật tính năng tải chậm các thành viên. Trong phiên bản này, tính năng tải lười biếng bị vô hiệu hóa. Vì bộ nhớ cache cục bộ không tương thích giữa hai cài đặt này, %(brand)s cần phải đồng bộ hóa lại tài khoản của bạn.",
-        "disabled_description2": "Nếu phiên bản khác của %(brand)s vẫn đang mở trong một tab khác, vui lòng đóng nó lại vì việc sử dụng %(brand)s trên cùng một máy chủ với cả hai chế độ tải chậm được bật và tắt đồng thời sẽ gây ra sự cố.",
-        "disabled_title": "Bộ nhớ cache cục bộ không tương thích",
-        "resync_description": "%(brand)s hiện sử dụng bộ nhớ ít hơn 3-5 lần, bằng cách chỉ tải thông tin về những người dùng khác khi cần thiết. Vui lòng đợi trong khi chúng tôi đồng bộ hóa lại với máy chủ!",
-        "resync_title": "Đang cập nhật %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "Bạn là người duy nhất ở đây. Nếu bạn rời, không ai có thể tham gia trong tương lai, kể cả bạn.",
         "leave_room_question": "Bạn có chắc chắn muốn rời khỏi phòng '%(roomName)s' không?",
@@ -1409,11 +1397,6 @@
         "all_messages_description": "Nhận thông báo cho mọi tin nhắn",
         "class_global": "Toàn cầu",
         "class_other": "Khác",
-        "colour_bold": "In đậm",
-        "colour_grey": "Xám",
-        "colour_none": "Không có",
-        "colour_red": "Đỏ",
-        "colour_unsent": "Chưa gửi",
         "default": "Mặc định",
         "email_pusher_app_display_name": "Thông báo qua thư điện tử",
         "enable_prompt_toast_description": "Bật thông báo trên màn hình",
@@ -1422,6 +1405,9 @@
         "error_change_title": "Thay đổi cài đặt thông báo",
         "keyword": "Từ khóa",
         "keyword_new": "Từ khóa mới",
+        "level_activity": "Hoạt động",
+        "level_none": "Không có",
+        "level_unsent": "Chưa gửi",
         "mark_all_read": "Đánh dấu tất cả đã đọc",
         "mentions_and_keywords": "@đề cập & từ khóa",
         "mentions_and_keywords_description": "Chỉ nhận thông báo với các đề cập và từ khóa được thiết lập trong <a>cài đặt</a> của bạn",
@@ -2111,10 +2097,8 @@
         "help_about": {
             "access_token_detail": "Mã thông báo truy cập của bạn cấp quyền truy cập đầy đủ vào tài khoản của bạn. Không chia sẻ nó với bất kỳ ai.",
             "brand_version": "Phiên bản %(brand)s:",
-            "chat_bot": "Trò chuyện với Bot %(brand)s",
             "clear_cache_reload": "Xóa bộ nhớ cache và tải lại",
             "help_link": "Để được trợ giúp về cách sử dụng %(brand)s, hãy nhấp vào đây <a>here</a>.",
-            "help_link_chat_bot": "Để được trợ giúp về cách sử dụng %(brand)s, hãy nhấp vào đây <a>here</a> hoặc bắt đầu trò chuyện với bot của chúng tôi bằng nút bên dưới.",
             "homeserver": "Máy chủ nhà là <code>%(homeserverUrl)s</code>",
             "identity_server": "Máy chủ định danh là <code>%(identityServerUrl)s</code>",
             "title": "Trợ giúp & Giới thiệu",
@@ -2136,9 +2120,6 @@
             "custom_theme_success": "Đã thêm chủ đề!",
             "custom_theme_url": "URL chủ đề tùy chỉnh",
             "font_size": "Cỡ chữ",
-            "font_size_limit": "Kích thước phông chữ tùy chỉnh chỉ có thể nằm trong khoảng từ %(min)s pt đến %(max)s pt",
-            "font_size_nan": "Kích thước phải là một số",
-            "font_size_valid": "Sử dụng từ khoảng %(min)s pt đến %(max)s pt",
             "heading": "Tùy chỉnh diện mạo của bạn",
             "image_size_default": "Mặc định",
             "image_size_large": "Lớn",
@@ -3400,7 +3381,6 @@
         "already_in_call_person": "Bạn đang trong cuộc gọi với người này rồi.",
         "answered_elsewhere": "Đã trả lời ở nơi khác",
         "answered_elsewhere_description": "Cuộc gọi đã được trả lời trên một thiết bị khác.",
-        "audio_devices": "Thiết bị âm thanh",
         "call_failed": "Không gọi được",
         "call_failed_description": "Không thể khởi tạo cuộc gọi",
         "call_failed_media": "Thực hiện cuộc gọi thất bại vì không thể truy cập máy ảnh hoặc micrô. Kiểm tra xem:",
@@ -3487,7 +3467,6 @@
         "user_is_presenting": "%(sharerName)s đang trình bày",
         "video_call": "Gọi video",
         "video_call_started": "Cuộc gọi truyền hình đã bắt đầu",
-        "video_devices": "Thiết bị ghi hình",
         "voice_call": "Gọi thoại",
         "you_are_presenting": "Bạn đang trình bày"
     },

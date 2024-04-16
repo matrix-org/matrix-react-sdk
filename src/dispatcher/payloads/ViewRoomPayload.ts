@@ -24,6 +24,8 @@ import { IOpts } from "../../createRoom";
 import { JoinRoomPayload } from "./JoinRoomPayload";
 import { AtLeastOne } from "../../@types/common";
 
+export type FocusNextType = "composer" | "threadsPanel" | undefined;
+
 /* eslint-disable camelcase */
 interface BaseViewRoomPayload extends Pick<ActionPayload, "action"> {
     action: Action.ViewRoom;
@@ -44,6 +46,7 @@ interface BaseViewRoomPayload extends Pick<ActionPayload, "action"> {
     show_room_tile?: boolean; // Whether to ensure that the room tile is visible in the room list
     clear_search?: boolean; // Whether to clear the room list search
     view_call?: boolean; // Whether to view the call or call lobby for the room
+    skipLobby?: boolean; // Whether to skip the call lobby when showing the call (only supported for element calls)
     opts?: JoinRoomPayload["opts"];
 
     deferred_action?: ActionPayload; // Action to fire after MatrixChat handles this ViewRoom action
@@ -60,5 +63,6 @@ export type ViewRoomPayload = BaseViewRoomPayload &
         // the number of API calls required.
         room_id?: string;
         room_alias?: string;
+        focusNext: FocusNextType; // wat to focus after room switch. Defaults to 'composer' if undefined.
     }>;
 /* eslint-enable camelcase */

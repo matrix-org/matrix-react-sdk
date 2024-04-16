@@ -92,6 +92,11 @@ export enum Action {
     FocusAComposer = "focus_a_composer",
 
     /**
+     * Focuses the threads panel.
+     */
+    FocusThreadsPanel = "focus_threads_panel",
+
+    /**
      * Opens the user menu (previously known as the top left menu). No additional payload information required.
      */
     ToggleUserMenu = "toggle_user_menu",
@@ -107,9 +112,11 @@ export enum Action {
     MigrateBaseFontSize = "migrate_base_font_size",
 
     /**
-     * Sets the apps root font size. Should be used with UpdateFontSizePayload
+     * Sets the apps root font size delta. Should be used with UpdateFontSizeDeltaPayload
+     * It will add the delta to the current font size.
+     * The delta should be between {@link FontWatcher.MIN_DELTA} and {@link FontWatcher.MAX_DELTA}.
      */
-    UpdateFontSize = "update_font_size",
+    UpdateFontSizeDelta = "update_font_size_delta",
 
     /**
      * Sets a system font. Should be used with UpdateSystemFontPayload
@@ -371,6 +378,11 @@ export enum Action {
      * Fired when we want to open spotlight search. Use with a OpenSpotlightPayload.
      */
     OpenSpotlight = "open_spotlight",
+
+    /**
+     * Fired when the room loaded.
+     */
+    RoomLoaded = "room_loaded",
 
     /**
      * Opens right panel with 3pid invite information

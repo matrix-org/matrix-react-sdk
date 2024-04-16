@@ -410,10 +410,6 @@
             "one": "ສະມາຊິກ %(count)s",
             "other": "ສະມາຊິກ %(count)s"
         },
-        "n_participants": {
-            "one": "ຜູ້ເຂົ້າຮ່ວມ 1ຄົນ",
-            "other": "ຜູ້ເຂົ້າຮ່ວມ %(count)s ຄົນ"
-        },
         "n_rooms": {
             "one": "%(count)s ຫ້ອງ",
             "other": "%(count)s ຫ້ອງ"
@@ -620,7 +616,6 @@
         "methods": "ວິທີການ",
         "no_verification_requests_found": "ບໍ່ພົບການຮ້ອງຂໍການຢັ້ງຢືນ",
         "number_of_users": "ຈໍານວນຜູ້ໃຊ້",
-        "observe_only": "ສັງເກດເທົ່ານັ້ນ",
         "original_event_source": "ແຫຼ່ງຕົ້ນສະບັບ",
         "phase": "ໄລຍະ",
         "phase_cancelled": "ຍົກເລີກ",
@@ -628,7 +623,6 @@
         "phase_requested": "ຮ້ອງຂໍ",
         "phase_started": "ໄດ້ເລີ່ມແລ້ວ",
         "phase_transaction": "ທຸລະກໍາ",
-        "requester": "ຜູ້ຮ້ອງຂໍ",
         "room_id": "ID ຫ້ອງ: %(roomId)s",
         "save_setting_values": "ບັນທຶກຄ່າການຕັ້ງຄ່າ",
         "send_custom_account_data_event": "ສົ່ງຂໍ້ມູນບັນຊີແບບກຳນົດເອງທຸກເຫດການ",
@@ -1188,6 +1182,7 @@
         "group_rooms": "ຫ້ອງ",
         "group_spaces": "ພື້ນທີ່",
         "group_themes": "ຫົວຂໍ້",
+        "group_threads": "ກະທູ້",
         "group_voip": "ສຽງ & ວິດີໂອ",
         "group_widgets": "ວິດເຈັດ",
         "join_beta": "ເຂົ້າຮ່ວມເບຕ້າ",
@@ -1230,14 +1225,6 @@
         "view_rules": "ເບິ່ງກົດລະບຽບ"
     },
     "language_dropdown_label": "ເລື່ອນພາສາລົງ",
-    "lazy_loading": {
-        "disabled_action": "ລຶບ cache ແລະ resync",
-        "disabled_description1": "ກ່ອນໜ້ານີ້ທ່ານເຄີຍໃຊ້ %(brand)sກັບ %(host)s ດ້ວຍການເປີດໂຫຼດສະມາຊິກ. ໃນເວີຊັ້ນນີ້ ໄດ້ປິດການໃຊ້ງານ. ເນື່ອງຈາກ cache ໃນເຄື່ອງບໍ່ເຂົ້າກັນລະຫວ່າງສອງການຕັ້ງຄ່ານີ້, %(brand)s ຕ້ອງການ sync ບັນຊີຂອງທ່ານຄືນໃໝ່.",
-        "disabled_description2": "ຖ້າເວີຊັ້ນອື່ນຂອງ %(brand)s ເປີດຢູ່ໃນແຖບອື່ນ, ກະລຸນາປິດການໃຊ້ %(brand)s ຢູ່ໃນໂຮດດຽວກັນທັງການໂຫຼດແບບ lazy ເປີດໃຊ້ງານ ແລະປິດໃຊ້ງານພ້ອມກັນຈະເຮັດໃຫ້ເກີດບັນຫາ.",
-        "disabled_title": "ແຄດໃນເຄື່ອງບໍ່ເຂົ້າກັນໄດ້",
-        "resync_description": "ຕອນນີ້ %(brand)s ໃຊ້ຄວາມຈຳໜ້ອຍກວ່າ 3-5x, ໂດຍການໂຫຼດຂໍ້ມູນກ່ຽວກັບຜູ້ໃຊ້ອື່ນເມື່ອຕ້ອງການເທົ່ານັ້ນ. ກະລຸນາລໍຖ້າໃນຂະນະທີ່ພວກເຮົາ synchronise ກັບເຊີບເວີ!",
-        "resync_title": "ກຳລັງອັບເດດ %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "ເຈົ້າເປັນພຽງຄົນດຽວຢູ່ທີ່ນີ້. ຖ້າທ່ານອອກໄປ, ບໍ່ມີໃຜຈະສາມາດເຂົ້າຮ່ວມໃນອະນາຄົດໄດ້, ລວມທັງທ່ານ.",
         "leave_room_question": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການອອກຈາກຫ້ອງ '%(roomName)s'?",
@@ -1311,9 +1298,6 @@
         "all_messages_description": "ໄດ້ຮັບການແຈ້ງເຕືອນສໍາລັບທຸກໆຂໍ້ຄວາມ",
         "class_global": "ທົ່ວໂລກ",
         "class_other": "ອື່ນໆ",
-        "colour_bold": "ຕົວໜາ",
-        "colour_none": "ບໍ່ມີ",
-        "colour_unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
         "default": "ຄ່າເລີ່ມຕົ້ນ",
         "enable_prompt_toast_description": "ເປີດໃຊ້ການແຈ້ງເຕືອນເດັສທັອບ",
         "enable_prompt_toast_title": "ການແຈ້ງເຕືອນ",
@@ -1321,6 +1305,9 @@
         "error_change_title": "ປ່ຽນການຕັ້ງຄ່າການແຈ້ງເຕືອນ",
         "keyword": "ຄໍາສໍາຄັນ",
         "keyword_new": "ຄໍາສໍາຄັນໃຫມ່",
+        "level_activity": "ກິດຈະກໍາ",
+        "level_none": "ບໍ່ມີ",
+        "level_unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
         "mark_all_read": "ໝາຍທັງໝົດວ່າອ່ານແລ້ວ",
         "mentions_and_keywords": "@ກ່າວເຖິງ & ຄໍາສໍາຄັນ",
         "mentions_and_keywords_description": "ຮັບການແຈ້ງເຕືອນພຽງແຕ່ມີການກ່າວເຖິງ ແລະ ຄໍາທີ່ກຳນົດໄວ້ໃນ<a>settings</a>ຂອງທ່ານ",
@@ -1932,10 +1919,8 @@
         "help_about": {
             "access_token_detail": "ການເຂົ້າເຖິງໂທເຄັນຂອງທ່ານເປັນການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງເຕັມທີ່. ຢ່າແບ່ງປັນໃຫ້ຄົນອຶ່ນ.",
             "brand_version": "%(brand)sເວີຊັ້ນ:",
-            "chat_bot": "ສົນທະນາກັບ %(brand)s Bot",
             "clear_cache_reload": "ລຶບ cache ແລະ ໂຫຼດໃຫມ່",
             "help_link": "ສໍາລັບການຊ່ວຍເຫຼືອໃນການນໍາໃຊ້ %(brand)s, ກົດ <a>ທີ່ນີ້</a>.",
-            "help_link_chat_bot": "ສໍາລັບການຊ່ວຍເຫຼືອໃນການນໍາໃຊ້ %(brand)s, ກົດ <a>ທີ່ນີ້</a> ຫຼືເລີ່ມການສົນທະນາກັບ bot ຂອງພວກເຮົາໂດຍໃຊ້ປຸ່ມຂ້າງລຸ່ມນີ້.",
             "title": "ຊ່ວຍເຫຼືອ & ກ່ຽວກັບ",
             "versions": "ເວິຊັ້ນ"
         }
@@ -1955,9 +1940,6 @@
             "custom_theme_success": "ເພີ່ມຫົວຂໍ້!",
             "custom_theme_url": "ການ ກຳນົດເອງຫົວຂໍ້ URL",
             "font_size": "ຂະໜາດຕົວອັກສອນ",
-            "font_size_limit": "ຂະໜາດຕົວອັກສອນທີ່ກຳນົດເອງສາມາດຢູ່ໃນລະຫວ່າງ %(min)s pt ແລະ %(max)s pt",
-            "font_size_nan": "ຂະໜາດຕ້ອງເປັນຕົວເລກ",
-            "font_size_valid": "ໃຊ້ລະຫວ່າງ %(min)s pt ແລະ %(max)s pt",
             "heading": "ປັບແຕ່ງຮູບລັກສະນະຂອງທ່ານ",
             "image_size_default": "ຄ່າເລີ່ມຕົ້ນ",
             "image_size_large": "ຂະຫນາດໃຫຍ່",
@@ -3048,7 +3030,6 @@
         "already_in_call_person": "ທ່ານຢູ່ໃນການໂທກັບບຸກຄົນນີ້ແລ້ວ.",
         "answered_elsewhere": "ຕອບຢູ່ບ່ອນອື່ນແລ້ວ",
         "answered_elsewhere_description": "ການຮັບສາຍຢູ່ໃນອຸປະກອນອື່ນ.",
-        "audio_devices": "ອຸປະກອນສຽງ",
         "call_failed": "ໂທບໍ່ສຳເລັດ",
         "call_failed_description": "ບໍ່ສາມາດໂທຫາໄດ້",
         "call_failed_media": "ການໂທບໍ່ສຳເລັດ ເນື່ອງຈາກເວັບແຄມ ຫຼື ບໍ່ສາມາດເຂົ້າເຖິງ ໄມໂຄຣໂຟນໄດ້. ກະລຸນາກວດເບິ່ງ:",
@@ -3121,7 +3102,6 @@
         "user_busy_description": "ຜູ້ໃຊ້ທີ່ທ່ານໂທຫາຍັງບໍ່ຫວ່າງ.",
         "user_is_presenting": "%(sharerName)s ກຳລັງນຳສະເໜີ",
         "video_call": "ໂທດ້ວວິດີໂອ",
-        "video_devices": "ອຸປະກອນວິດີໂອ",
         "voice_call": "ໂທດ້ວຍສຽງ",
         "you_are_presenting": "ທ່ານກໍາລັງນໍາສະເຫນີ"
     },

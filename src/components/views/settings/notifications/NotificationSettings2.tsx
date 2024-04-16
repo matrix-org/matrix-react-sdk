@@ -28,7 +28,7 @@ import {
 import { RoomNotifState } from "../../../../RoomNotifs";
 import { SettingLevel } from "../../../../settings/SettingLevel";
 import SettingsStore from "../../../../settings/SettingsStore";
-import { NotificationColor } from "../../../../stores/notifications/NotificationColor";
+import { NotificationLevel } from "../../../../stores/notifications/NotificationLevel";
 import { clearAllNotifications } from "../../../../utils/notifications";
 import AccessibleButton from "../../elements/AccessibleButton";
 import ExternalLink from "../../elements/ExternalLink";
@@ -41,6 +41,7 @@ import { SettingsBanner } from "../shared/SettingsBanner";
 import { SettingsSection } from "../shared/SettingsSection";
 import SettingsSubsection from "../shared/SettingsSubsection";
 import { NotificationPusherSettings } from "./NotificationPusherSettings";
+import SettingsFlag from "../../elements/SettingsFlag";
 
 enum NotificationDefaultLevels {
     AllMessages = "all_messages",
@@ -71,6 +72,9 @@ function useHasUnreadNotifications(): boolean {
     return cli.getRooms().some((room) => room.getUnreadNotificationCount() > 0);
 }
 
+/**
+ * The new notification settings tab view, only displayed if the user has Features.NotificationSettings2 enabled
+ */
 export default function NotificationSettings2(): JSX.Element {
     const cli = useMatrixClientContext();
 
@@ -278,7 +282,13 @@ export default function NotificationSettings2(): JSX.Element {
                         "settings|notifications|keywords",
                         {},
                         {
-                            badge: <StatelessNotificationBadge symbol="1" count={1} color={NotificationColor.Grey} />,
+                            badge: (
+                                <StatelessNotificationBadge
+                                    symbol="1"
+                                    count={1}
+                                    level={NotificationLevel.Notification}
+                                />
+                            ),
                         },
                     )}
                 >
@@ -346,6 +356,9 @@ export default function NotificationSettings2(): JSX.Element {
                         label={_t("notifications|keyword")}
                         placeholder={_t("notifications|keyword_new")}
                     />
+
+                    <SettingsFlag name="Notifications.showbold" level={SettingLevel.DEVICE} />
+                    <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} />
                 </SettingsSubsection>
                 <NotificationPusherSettings />
                 <SettingsSubsection heading={_t("settings|notifications|quick_actions_section")}>

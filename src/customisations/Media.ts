@@ -15,10 +15,11 @@
  */
 
 import { MatrixClient, ResizeMethod } from "matrix-js-sdk/src/matrix";
+import { MediaEventContent } from "matrix-js-sdk/src/types";
 import { Optional } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
-import { IMediaEventContent, IPreparedMedia, prepEventContentAsMedia } from "./models/IMediaEventContent";
+import { IPreparedMedia, prepEventContentAsMedia } from "./models/IMediaEventContent";
 import { UserFriendlyError } from "../languageHandler";
 
 // Populate this class with the details of your customisations when copying it.
@@ -80,7 +81,7 @@ export class Media {
      */
     public get srcHttp(): string | null {
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.srcMxc) || null;
+        return this.client.mxcUrlToHttp(this.srcMxc, undefined, undefined, undefined, false, true) || null;
     }
 
     /**
@@ -90,7 +91,7 @@ export class Media {
     public get thumbnailHttp(): string | null {
         if (!this.hasThumbnail) return null;
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.thumbnailMxc!);
+        return this.client.mxcUrlToHttp(this.thumbnailMxc!, undefined, undefined, undefined, false, true);
     }
 
     /**
@@ -107,7 +108,7 @@ export class Media {
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.thumbnailMxc!, width, height, mode);
+        return this.client.mxcUrlToHttp(this.thumbnailMxc!, width, height, mode, false, true);
     }
 
     /**
@@ -122,7 +123,7 @@ export class Media {
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.srcMxc, width, height, mode);
+        return this.client.mxcUrlToHttp(this.srcMxc, width, height, mode, false, true);
     }
 
     /**
@@ -154,11 +155,11 @@ export class Media {
 
 /**
  * Creates a media object from event content.
- * @param {IMediaEventContent} content The event content.
+ * @param {MediaEventContent} content The event content.
  * @param {MatrixClient} client? Optional client to use.
  * @returns {Media} The media object.
  */
-export function mediaFromContent(content: Partial<IMediaEventContent>, client?: MatrixClient): Media {
+export function mediaFromContent(content: Partial<MediaEventContent>, client?: MatrixClient): Media {
     return new Media(prepEventContentAsMedia(content), client);
 }
 

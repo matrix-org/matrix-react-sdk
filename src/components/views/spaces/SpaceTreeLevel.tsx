@@ -25,6 +25,7 @@ import React, {
 } from "react";
 import classNames from "classnames";
 import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 
 import RoomAvatar from "../avatars/RoomAvatar";
@@ -40,7 +41,7 @@ import { toRightOf, useContextMenu } from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
-import { NotificationColor } from "../../../stores/notifications/NotificationColor";
+import { NotificationLevel } from "../../../stores/notifications/NotificationLevel";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
@@ -99,7 +100,7 @@ export const SpaceButton = <T extends keyof JSX.IntrinsicElements>({
     let notifBadge;
     if (spaceKey && notificationState) {
         let ariaLabel = _t("a11y_jump_first_unread_room");
-        if (space?.getMyMembership() === "invite") {
+        if (space?.getMyMembership() === KnownMembership.Invite) {
             ariaLabel = _t("a11y|jump_first_invite");
         }
 
@@ -113,7 +114,6 @@ export const SpaceButton = <T extends keyof JSX.IntrinsicElements>({
             <div className="mx_SpacePanel_badgeContainer">
                 <NotificationBadge
                     onClick={jumpToNotification}
-                    forceCount={false}
                     notification={notificationState}
                     aria-label={ariaLabel}
                     tabIndex={tabIndex}
@@ -326,10 +326,10 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
             hasSubSpaces: this.state.childSpaces?.length,
         });
 
-        const isInvite = space.getMyMembership() === "invite";
+        const isInvite = space.getMyMembership() === KnownMembership.Invite;
 
         const notificationState = isInvite
-            ? StaticNotificationState.forSymbol("!", NotificationColor.Red)
+            ? StaticNotificationState.forSymbol("!", NotificationLevel.Highlight)
             : SpaceStore.instance.getNotificationState(space.roomId);
 
         const hasChildren = this.state.childSpaces?.length;
@@ -379,7 +379,9 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                     isNarrow={isPanelCollapsed}
                     size={isNested ? "24px" : "32px"}
                     onKeyDown={this.onKeyDown}
-                    ContextMenuComponent={this.props.space.getMyMembership() === "join" ? SpaceContextMenu : undefined}
+                    ContextMenuComponent={
+                        this.props.space.getMyMembership() === KnownMembership.Join ? SpaceContextMenu : undefined
+                    }
                 >
                     {toggleCollapseButton}
                 </SpaceButton>

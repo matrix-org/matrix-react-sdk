@@ -97,7 +97,6 @@ $icon-button-color: var(--cpd-color-icon-tertiary);
 
 $dialog-title-fg-color: #45474a;
 $dialog-backdrop-color: rgba(46, 48, 51, 0.38);
-$dialog-shadow-color: rgba(0, 0, 0, 0.48);
 $dialog-close-fg-color: $icon-button-color;
 $dialog-close-external-color: $primary-bg-color;
 
@@ -124,8 +123,9 @@ $rte-code-bg-color: rgba(0, 0, 0, 0.04);
 
 $header-panel-text-primary-color: #91a1c0;
 
-$pill-bg-color: #aaa;
-$pill-hover-bg-color: #ccc;
+$pill-bg-color: var(--cpd-color-bg-action-primary-rest);
+$pill-hover-bg-color: var(--cpd-color-bg-action-primary-hovered);
+$pill-press-bg-color: var(--cpd-color-bg-action-primary-pressed);
 
 $topleftmenu-color: #212121;
 $roomheader-bg-color: $primary-bg-color;
@@ -190,14 +190,12 @@ $call-background: #15191e;
 $call-primary-content: #ffffff;
 $call-light-quaternary-content: #c1c6cd;
 
-$username-variant1-color: var(--cpd-color-blue-1200);
-$username-variant2-color: var(--cpd-color-fuchsia-1200);
-$username-variant3-color: var(--cpd-color-green-1200);
-$username-variant4-color: var(--cpd-color-pink-1200);
-$username-variant5-color: var(--cpd-color-orange-1200);
-$username-variant6-color: var(--cpd-color-cyan-1200);
-$username-variant7-color: var(--cpd-color-purple-1200);
-$username-variant8-color: var(--cpd-color-lime-1200);
+$username-variant1-color: var(--cpd-color-text-decorative-1);
+$username-variant2-color: var(--cpd-color-text-decorative-2);
+$username-variant3-color: var(--cpd-color-text-decorative-3);
+$username-variant4-color: var(--cpd-color-text-decorative-4);
+$username-variant5-color: var(--cpd-color-text-decorative-5);
+$username-variant6-color: var(--cpd-color-text-decorative-6);
 
 /**
  * Creating a `semantic` color scale. This will not be needed with the new
@@ -271,9 +269,6 @@ $visual-bell-bg-color: #faa;
 $togglesw-off-color: #c1c9d6;
 $togglesw-ball-color: var(--cpd-color-bg-action-primary-rest);
 
-/* Slider */
-$slider-background-color: #c1c9d6;
-
 $progressbar-bg-color: rgba(141, 151, 165, 0.2);
 
 $authpage-bg-color: #2e3649;
@@ -307,9 +302,6 @@ $voice-record-live-circle-color: #ff4b55;
 $voice-record-stop-border-color: #e3e8f0;
 $voice-record-icon-color: $tertiary-fg-color;
 
-/* FontSlider colors */
-$appearance-tab-border-color: $input-darker-bg-color;
-
 $composer-shadow-color: tranparent;
 
 $codeblock-background-color: $header-panel-bg-color;
@@ -320,7 +312,6 @@ $inlinecode-background-color: $header-panel-bg-color;
 $eventbubble-self-bg: #f0fbf8;
 $eventbubble-others-bg: $system;
 $eventbubble-bg-hover: #fafbfd;
-$eventbubble-reply-color: #c1c6cd;
 
 /* pinned events indicator */
 $pinned-color: $tertiary-content;

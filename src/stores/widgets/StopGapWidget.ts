@@ -15,6 +15,7 @@
  */
 
 import { Room, MatrixEvent, MatrixEventEvent, MatrixClient, ClientEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import {
     ClientWidgetApi,
     IModalWidgetOpenRequest,
@@ -75,6 +76,7 @@ interface IAppTileProps {
     waitForIframeLoad: boolean;
     whitelistCapabilities?: string[];
     userWidget: boolean;
+    stickyPromise?: () => Promise<void>;
 }
 
 // TODO: Don't use this because it's wrong
@@ -160,6 +162,7 @@ export class StopGapWidget extends EventEmitter {
     private kind: WidgetKind;
     private readonly virtual: boolean;
     private readUpToMap: { [roomId: string]: string } = {}; // room ID to event ID
+    private stickyPromise?: () => Promise<void>; // This promise will be called and needs to resolve before the widget will actually become sticky.
 
     public constructor(private appTileProps: IAppTileProps) {
         super();
@@ -176,6 +179,7 @@ export class StopGapWidget extends EventEmitter {
         this.roomId = appTileProps.room?.roomId;
         this.kind = appTileProps.userWidget ? WidgetKind.Account : WidgetKind.Room; // probably
         this.virtual = isAppWidget(app) && app.eventId === undefined;
+        this.stickyPromise = appTileProps.stickyPromise;
     }
 
     private get eventListenerRoomId(): Optional<string> {
@@ -338,15 +342,20 @@ export class StopGapWidget extends EventEmitter {
 
         this.messaging.on(
             `action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
-            (ev: CustomEvent<IStickyActionRequest>) => {
+            async (ev: CustomEvent<IStickyActionRequest>) => {
                 if (this.messaging?.hasCapability(MatrixCapabilities.AlwaysOnScreen)) {
+                    ev.preventDefault();
+                    this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{}); // ack
+                    if (ev.detail.data.value) {
+                        // If the widget wants to become sticky we wait for the stickyPromise to resolve
+                        if (this.stickyPromise) await this.stickyPromise();
+                    }
+                    // Stop being persistent can be done instantly
                     ActiveWidgetStore.instance.setWidgetPersistence(
                         this.mockWidget.id,
                         this.roomId ?? null,
                         ev.detail.data.value,
                     );
-                    ev.preventDefault();
-                    this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{}); // ack
                 }
             },
         );
@@ -487,6 +496,11 @@ export class StopGapWidget extends EventEmitter {
         //
         // This approach of "read up to" prevents widgets receiving decryption spam from startup or
         // receiving out-of-order events from backfill and such.
+        //
+        // Skip marker timeline check for events with relations to unknown parent because these
+        // events are not added to the timeline here and will be ignored otherwise:
+        // https://github.com/matrix-org/matrix-js-sdk/blob/d3dfcd924201d71b434af3d77343b5229b6ed75e/src/models/room.ts#L2207-L2213
+        let isRelationToUnknown: boolean | undefined = undefined;
         const upToEventId = this.readUpToMap[ev.getRoomId()!];
         if (upToEventId) {
             // Small optimization for exact match (prevent search)
@@ -494,7 +508,8 @@ export class StopGapWidget extends EventEmitter {
                 return;
             }
 
-            let isBeforeMark = true;
+            // should be true to forward the event to the widget
+            let shouldForward = false;
 
             const room = this.client.getRoom(ev.getRoomId()!);
             if (!room) return;
@@ -507,14 +522,19 @@ export class StopGapWidget extends EventEmitter {
                 if (timelineEvent.getId() === upToEventId) {
                     break;
                 } else if (timelineEvent.getId() === ev.getId()) {
-                    isBeforeMark = false;
+                    shouldForward = true;
                     break;
                 }
             }
 
-            if (isBeforeMark) {
-                // Ignore the event: it is before our interest.
-                return;
+            if (!shouldForward) {
+                // checks that the event has a relation to unknown event
+                isRelationToUnknown =
+                    !ev.replyEventId && !!ev.relationEventId && !room.findEventById(ev.relationEventId);
+                if (!isRelationToUnknown) {
+                    // Ignore the event: it is before our interest.
+                    return;
+                }
             }
         }
 
@@ -525,7 +545,7 @@ export class StopGapWidget extends EventEmitter {
         const evId = ev.getId();
         if (evRoomId && evId) {
             const room = this.client.getRoom(evRoomId);
-            if (room && room.getMyMembership() === "join") {
+            if (room && room.getMyMembership() === KnownMembership.Join && !isRelationToUnknown) {
                 this.readUpToMap[evRoomId] = evId;
             }
         }

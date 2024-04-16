@@ -15,12 +15,13 @@ limitations under the License.
 */
 
 import { RoomEvent } from "matrix-js-sdk/src/matrix";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import type { NotificationCount, Room } from "matrix-js-sdk/src/matrix";
 import { determineUnreadState } from "../RoomNotifs";
-import { NotificationColor } from "../stores/notifications/NotificationColor";
+import { NotificationLevel } from "../stores/notifications/NotificationLevel";
 import { useEventEmitter } from "./useEventEmitter";
+import SettingsStore from "../settings/SettingsStore";
 
 export const useUnreadNotifications = (
     room?: Room,
@@ -28,11 +29,13 @@ export const useUnreadNotifications = (
 ): {
     symbol: string | null;
     count: number;
-    color: NotificationColor;
+    level: NotificationLevel;
 } => {
+    const tacEnabled = useMemo(() => SettingsStore.getValue("threadsActivityCentre"), []);
+
     const [symbol, setSymbol] = useState<string | null>(null);
     const [count, setCount] = useState<number>(0);
-    const [color, setColor] = useState<NotificationColor>(NotificationColor.None);
+    const [level, setLevel] = useState<NotificationLevel>(NotificationLevel.None);
 
     useEventEmitter(
         room,
@@ -50,11 +53,11 @@ export const useUnreadNotifications = (
     useEventEmitter(room, RoomEvent.MyMembership, () => updateNotificationState());
 
     const updateNotificationState = useCallback(() => {
-        const { symbol, count, color } = determineUnreadState(room, threadId);
+        const { symbol, count, level } = determineUnreadState(room, threadId, !tacEnabled);
         setSymbol(symbol);
         setCount(count);
-        setColor(color);
-    }, [room, threadId]);
+        setLevel(level);
+    }, [room, threadId, tacEnabled]);
 
     useEffect(() => {
         updateNotificationState();
@@ -63,6 +66,6 @@ export const useUnreadNotifications = (
     return {
         symbol,
         count,
-        color,
+        level,
     };
 };

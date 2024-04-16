@@ -31,8 +31,8 @@ const AVATAR_SIZE = 30;
 const AVATAR_RESIZE_METHOD = "crop";
 
 const ROOM_NAME = "Test room";
-const OLD_AVATAR = fs.readFileSync("cypress/fixtures/riot.png");
-const NEW_AVATAR = fs.readFileSync("cypress/fixtures/element.png");
+const OLD_AVATAR = fs.readFileSync("playwright/sample-files/riot.png");
+const NEW_AVATAR = fs.readFileSync("playwright/sample-files/element.png");
 const OLD_NAME = "Alan";
 const NEW_NAME = "Alan (away)";
 
@@ -49,7 +49,7 @@ const expectAvatar = async (cli: Client, e: Locator, avatarUrl: string): Promise
     const url = await cli.evaluate(
         (client, { avatarUrl, size, resizeMethod }) => {
             // eslint-disable-next-line no-restricted-properties
-            return client.mxcUrlToHttp(avatarUrl, size, size, resizeMethod);
+            return client.mxcUrlToHttp(avatarUrl, size, size, resizeMethod, false, true);
         },
         { avatarUrl, size, resizeMethod: AVATAR_RESIZE_METHOD },
     );
@@ -139,7 +139,7 @@ test.describe("Timeline", () => {
                 ),
             ).toBeVisible();
 
-            // wait for the date separator to appear to have a stable percy snapshot
+            // wait for the date separator to appear to have a stable screenshot
             await expect(page.locator(".mx_TimelineSeparator")).toHaveText("today");
 
             await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("configured-room-irc-layout.png");
@@ -552,7 +552,11 @@ test.describe("Timeline", () => {
             );
         });
 
-        test("should set inline start padding to a hidden event line", async ({ page, app, room }) => {
+        test("should set inline start padding to a hidden event line", async ({ page, app, room, cryptoBackend }) => {
+            test.skip(
+                cryptoBackend === "rust",
+                "Disabled due to screenshot test being flaky - https://github.com/element-hq/element-web/issues/26890",
+            );
             await sendEvent(app.client, room.roomId);
             await page.goto(`/#/room/${room.roomId}`);
             await app.settings.setValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
@@ -684,7 +688,7 @@ test.describe("Timeline", () => {
             // Upload a file from the message composer
             await page
                 .locator(".mx_MessageComposer_actions input[type='file']")
-                .setInputFiles("cypress/fixtures/matrix-org-client-versions.json");
+                .setInputFiles("playwright/sample-files/matrix-org-client-versions.json");
 
             // Click "Upload" button
             await page.locator(".mx_Dialog").getByRole("button", { name: "Upload" }).click();
@@ -707,7 +711,7 @@ test.describe("Timeline", () => {
                 "**/_matrix/media/v3/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*",
                 async (route) => {
                     await route.fulfill({
-                        path: "cypress/fixtures/riot.png",
+                        path: "playwright/sample-files/riot.png",
                     });
                 },
             );
@@ -1028,6 +1032,16 @@ test.describe("Timeline", () => {
                 "et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " +
                 "aliquip";
 
+            const newDisplayName = `${LONG_STRING} 2`;
+
+            // Set the display name to "LONG_STRING 2" in order to avoid screenshot tests from failing
+            // due to the generated random mxid being displayed inside the GELS summary.
+            // Note that we set it here as the test was failing on CI (but not locally!) if the name
+            // was changed afterwards. This is quite concerning, but maybe better than just disabling the
+            // whole test?
+            // https://github.com/element-hq/element-web/issues/27109
+            await app.client.setDisplayName(newDisplayName);
+
             // Create a bot with a long display name
             const bot = new Bot(page, homeserver, {
                 displayName: LONG_STRING,
@@ -1045,12 +1059,8 @@ test.describe("Timeline", () => {
             await expect(
                 page
                     .locator(".mx_GenericEventListSummary_summary")
-                    .getByText(OLD_NAME + " created and configured the room."),
+                    .getByText(newDisplayName + " created and configured the room."),
             ).toBeVisible();
-
-            // Set the display name to "LONG_STRING 2" in order to avoid a warning in Percy tests from being triggered
-            // due to the generated random mxid being displayed inside the GELS summary.
-            await app.client.setDisplayName(`${LONG_STRING} 2`);
 
             // Have the bot send a long message
             await bot.sendMessage(testRoomId, {
@@ -1089,7 +1099,7 @@ test.describe("Timeline", () => {
 
             // Make sure the strings do not overflow on IRC layout
             await app.settings.setValue("layout", null, SettingLevel.DEVICE, Layout.IRC);
-            // Scroll to the bottom to have Percy take a snapshot of the whole viewport
+            // Scroll to the bottom to take a snapshot of the whole viewport
             await app.timeline.scrollToBottom();
             // Assert that both avatar in the introduction and the last message are visible at the same time
             await expect(page.locator(".mx_NewRoomIntro .mx_BaseAvatar")).toBeVisible();

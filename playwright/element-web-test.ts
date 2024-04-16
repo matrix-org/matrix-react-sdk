@@ -24,7 +24,7 @@ import type { IConfigOptions } from "../src/IConfigOptions";
 import { Credentials, Homeserver, HomeserverInstance, StartHomeserverOpts } from "./plugins/homeserver";
 import { Synapse } from "./plugins/homeserver/synapse";
 import { Dendrite, Pinecone } from "./plugins/homeserver/dendrite";
-import { Instance } from "./plugins/mailhog";
+import { Instance, MailHogServer } from "./plugins/mailhog";
 import { ElementAppPage } from "./pages/ElementAppPage";
 import { OAuthServer } from "./plugins/oauth_server";
 import { Crypto } from "./pages/crypto";
@@ -52,6 +52,11 @@ const CONFIG_JSON: Partial<IConfigOptions> = {
 
     // the location tests want a map style url.
     map_style_url: "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx",
+
+    features: {
+        // We don't want to go through the feature announcement during the e2e test
+        feature_release_announcement: false,
+    },
 };
 
 export type TestOptions = {
@@ -66,17 +71,58 @@ export const test = base.extend<
     TestOptions & {
         axe: AxeBuilder;
         checkA11y: () => Promise<void>;
-        // The contents of the config.json to send
+
+        /**
+         * The contents of the config.json to send when the client requests it.
+         */
         config: typeof CONFIG_JSON;
-        // The options with which to run the `homeserver` fixture
+
+        /**
+         * The options with which to run the {@link #homeserver} fixture.
+         */
         startHomeserverOpts: StartHomeserverOpts | string;
+
         homeserver: HomeserverInstance;
         oAuthServer: { port: number };
-        credentials: CredentialsWithDisplayName;
-        user: CredentialsWithDisplayName;
+
+        /**
+         * The displayname to use for the user registered in {@link #credentials}.
+         *
+         * To set it, call `test.use({ displayName: "myDisplayName" })` in the test file or `describe` block.
+         * See {@link https://playwright.dev/docs/api/class-test#test-use}.
+         */
         displayName?: string;
+
+        /**
+         * A test fixture which registers a test user on the {@link #homeserver} and supplies the details
+         * of the registered user.
+         */
+        credentials: CredentialsWithDisplayName;
+
+        /**
+         * The same as {@link https://playwright.dev/docs/api/class-fixtures#fixtures-page|`page`},
+         * but adds an initScript which will populate localStorage with the user's details from
+         * {@link #credentials} and {@link #homeserver}.
+         *
+         * Similar to {@link #user}, but doesn't load the app.
+         */
+        pageWithCredentials: Page;
+
+        /**
+         * A (rather poorly-named) test fixture which registers a user per {@link #credentials}, stores
+         * the credentials into localStorage per {@link #homeserver}, and then loads the front page of the
+         * app.
+         */
+        user: CredentialsWithDisplayName;
+
+        /**
+         * The same as {@link https://playwright.dev/docs/api/class-fixtures#fixtures-page|`page`},
+         * but wraps the returned `Page` in a class of utilities for interacting with the Element-Web UI,
+         * {@link ElementAppPage}.
+         */
         app: ElementAppPage;
-        mailhog?: { api: mailhog.API; instance: Instance };
+
+        mailhog: { api: mailhog.API; instance: Instance };
         crypto: Crypto;
         room?: { roomId: string };
         toasts: Toasts;
@@ -101,8 +147,9 @@ export const test = base.extend<
                     return obj;
                 }, {}),
             };
-            if (cryptoBackend === "rust") {
-                json.features.feature_rust_crypto = true;
+            // the default is to use rust now, so set to `false` if on legacy backend
+            if (cryptoBackend === "legacy") {
+                json.features.feature_rust_crypto = false;
             }
             await route.fulfill({ json });
         });
@@ -163,7 +210,8 @@ export const test = base.extend<
         });
     },
     labsFlags: [],
-    user: async ({ page, homeserver, credentials }, use) => {
+
+    pageWithCredentials: async ({ page, homeserver, credentials }, use) => {
         await page.addInitScript(
             ({ baseUrl, credentials }) => {
                 // Seed the localStorage with the required credentials
@@ -180,9 +228,12 @@ export const test = base.extend<
             },
             { baseUrl: homeserver.config.baseUrl, credentials },
         );
+        await use(page);
+    },
+
+    user: async ({ pageWithCredentials: page, credentials }, use) => {
         await page.goto("/");
         await page.waitForSelector(".mx_MatrixChat", { timeout: 30000 });
-
         await use(credentials);
     },
 
@@ -217,6 +268,14 @@ export const test = base.extend<
         const bot = new Bot(page, homeserver, botCreateOpts);
         await bot.prepareClient(); // eagerly register the bot
         await use(bot);
+    },
+
+    // eslint-disable-next-line no-empty-pattern
+    mailhog: async ({}, use) => {
+        const mailhog = new MailHogServer();
+        const instance = await mailhog.start();
+        await use(instance);
+        await mailhog.stop();
     },
 
     slidingSyncProxy: async ({ page, user, homeserver }, use) => {

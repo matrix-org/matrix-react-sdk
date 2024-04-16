@@ -84,10 +84,14 @@ export const TAG_ORDER: TagID[] = [
     DefaultTagID.Favourite,
     DefaultTagID.DM,
     DefaultTagID.Untagged,
+    DefaultTagID.Conference,
     DefaultTagID.LowPriority,
     DefaultTagID.ServerNotice,
     DefaultTagID.Suggested,
-    DefaultTagID.Archived,
+    // DefaultTagID.Archived isn't here any more: we don't show it at all.
+    // The section still exists in the code as a place for rooms that we know
+    // about but aren't joined. At some point it could be removed entirely
+    // but we'd have to make sure that rooms you weren't in were hidden.
 ];
 const ALWAYS_VISIBLE_TAGS: TagID[] = [DefaultTagID.DM, DefaultTagID.Untagged];
 
@@ -384,6 +388,11 @@ const TAG_AESTHETICS: TagAestheticsMap = {
         defaultHidden: false,
         AuxButtonComponent: DmAuxButton,
     },
+    [DefaultTagID.Conference]: {
+        sectionLabel: _td("voip|metaspace_video_rooms|conference_room_section"),
+        isInvite: false,
+        defaultHidden: false,
+    },
     [DefaultTagID.Untagged]: {
         sectionLabel: _td("common|rooms"),
         isInvite: false,
@@ -591,6 +600,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 (this.props.activeSpace === MetaSpace.Favourites && orderedTagId !== DefaultTagID.Favourite) ||
                 (this.props.activeSpace === MetaSpace.People && orderedTagId !== DefaultTagID.DM) ||
                 (this.props.activeSpace === MetaSpace.Orphans && orderedTagId === DefaultTagID.DM) ||
+                (this.props.activeSpace === MetaSpace.VideoRooms && orderedTagId === DefaultTagID.DM) ||
                 (!isMetaSpace(this.props.activeSpace) &&
                     orderedTagId === DefaultTagID.DM &&
                     !SettingsStore.getValue("Spaces.showPeopleInSpace", this.props.activeSpace))

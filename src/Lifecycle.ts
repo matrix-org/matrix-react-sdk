@@ -19,14 +19,12 @@ limitations under the License.
 
 import { ReactNode } from "react";
 import { createClient, MatrixClient, SSOAction, OidcTokenRefresher } from "matrix-js-sdk/src/matrix";
-import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MINIMUM_MATRIX_VERSION } from "matrix-js-sdk/src/version-support";
 
 import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
-import SecurityCustomisations from "./customisations/Security";
+import { ModuleRunner } from "./modules/ModuleRunner";
 import EventIndexPeg from "./indexing/EventIndexPeg";
 import createMatrixClient from "./utils/createMatrixClient";
 import Notifier from "./Notifier";
@@ -53,8 +51,6 @@ import LegacyCallHandler from "./LegacyCallHandler";
 import LifecycleCustomisations from "./customisations/Lifecycle";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import { _t } from "./languageHandler";
-import LazyLoadingResyncDialog from "./components/views/dialogs/LazyLoadingResyncDialog";
-import LazyLoadingDisabledDialog from "./components/views/dialogs/LazyLoadingDisabledDialog";
 import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestoreErrorDialog";
 import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
 import { setSentryUser } from "./sentry";
@@ -74,7 +70,6 @@ import {
     getStoredOidcTokenIssuer,
     persistOidcAuthenticatedSettings,
 } from "./utils/oidc/persistOidcSettings";
-import GenericToast from "./components/views/toasts/GenericToast";
 import {
     ACCESS_TOKEN_IV,
     ACCESS_TOKEN_STORAGE_KEY,
@@ -97,8 +92,20 @@ dis.register((payload) => {
         onLoggedOut();
     } else if (payload.action === Action.OverwriteLogin) {
         const typed = <OverwriteLoginPayload>payload;
-        // noinspection JSIgnoredPromiseFromCall - we don't care if it fails
-        doSetLoggedIn(typed.credentials, true);
+        // Stop the current client before overwriting the login.
+        // If not done it might be impossible to clear the storage, as the
+        // rust crypto backend might be holding an open connection to the indexeddb store.
+        // We also use the `unsetClient` flag to false, because at this point we are
+        // already in the logged in flows of the `MatrixChat` component, and it will
+        // always expect to have a client (calls to `MatrixClientPeg.safeGet()`).
+        // If we unset the client and the component is updated,  the render will fail and unmount everything.
+        // (The module dialog closes and fires a `aria_unhide_main_app` that will trigger a re-render)
+        stopMatrixClient(false);
+        doSetLoggedIn(typed.credentials, true).catch((e) => {
+            // XXX we might want to fire a new event here to let the app know that the login failed ?
+            // The module api could use it to display a message to the user.
+            logger.warn("Failed to overwrite login", e);
+        });
     }
 });
 
@@ -429,39 +436,6 @@ async function onFailedDelegatedAuthLogin(description: string | ReactNode, tryAg
     });
 }
 
-export function handleInvalidStoreError(e: InvalidStoreError): Promise<void> | void {
-    if (e.reason === InvalidStoreError.TOGGLED_LAZY_LOADING) {
-        return Promise.resolve()
-            .then(() => {
-                const lazyLoadEnabled = e.value;
-                if (lazyLoadEnabled) {
-                    return new Promise<void>((resolve) => {
-                        Modal.createDialog(LazyLoadingResyncDialog, {
-                            onFinished: resolve,
-                        });
-                    });
-                } else {
-                    // show warning about simultaneous use
-                    // between LL/non-LL version on same host.
-                    // as disabling LL when previously enabled
-                    // is a strong indicator of this (/develop & /app)
-                    return new Promise<void>((resolve) => {
-                        Modal.createDialog(LazyLoadingDisabledDialog, {
-                            onFinished: resolve,
-                            host: window.location.host,
-                        });
-                    });
-                }
-            })
-            .then(() => {
-                return MatrixClientPeg.safeGet().store.deleteAllData();
-            })
-            .then(() => {
-                PlatformPeg.get()?.reload();
-            });
-    }
-}
-
 function registerAsGuest(hsUrl: string, isUrl?: string, defaultDeviceDisplayName?: string): Promise<boolean> {
     logger.log(`Doing guest login on ${hsUrl}`);
 
@@ -635,38 +609,11 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
             },
             false,
         );
-        checkServerVersions();
         return true;
     } else {
         logger.log("No previous session found.");
         return false;
     }
-}
-
-async function checkServerVersions(): Promise<void> {
-    MatrixClientPeg.get()
-        ?.getVersions()
-        .then((response) => {
-            if (!response.versions.includes(MINIMUM_MATRIX_VERSION)) {
-                const toastKey = "LEGACY_SERVER";
-                ToastStore.sharedInstance().addOrReplaceToast({
-                    key: toastKey,
-                    title: _t("unsupported_server_title"),
-                    props: {
-                        description: _t("unsupported_server_description", {
-                            version: MINIMUM_MATRIX_VERSION,
-                            brand: SdkConfig.get().brand,
-                        }),
-                        acceptLabel: _t("action|ok"),
-                        onAccept: () => {
-                            ToastStore.sharedInstance().dismissToast(toastKey);
-                        },
-                    },
-                    component: GenericToast,
-                    priority: 98,
-                });
-            }
-        });
 }
 
 async function handleLoadSessionFailure(e: unknown): Promise<boolean> {
@@ -772,13 +719,13 @@ async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promis
     try {
         const clientId = getStoredOidcClientId();
         const idTokenClaims = getStoredOidcIdTokenClaims();
-        const redirectUri = window.location.origin;
+        const redirectUri = PlatformPeg.get()!.getSSOCallbackUrl().href;
         const deviceId = credentials.deviceId;
         if (!deviceId) {
             throw new Error("Expected deviceId in user credentials.");
         }
         const tokenRefresher = new TokenRefresher(
-            { issuer: tokenIssuer },
+            tokenIssuer,
             clientId,
             redirectUri,
             deviceId,
@@ -916,7 +863,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
         localStorage.setItem("mx_device_id", credentials.deviceId);
     }
 
-    SecurityCustomisations.persistCredentials?.(credentials);
+    ModuleRunner.instance.extensions.cryptoSetup?.persistCredentials(credentials);
 
     logger.log(`Session persisted for ${credentials.userId}`);
 }

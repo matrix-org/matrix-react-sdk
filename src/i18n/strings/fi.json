@@ -230,16 +230,15 @@
         "phone_optional_label": "Puhelin (valinnainen)",
         "qr_code_login": {
             "connecting": "Yhdistetään…",
-            "devices_connected": "Yhdistetyt laitteet",
             "error_device_already_signed_in": "Toinen laite on jo sisäänkirjautunut.",
             "error_device_not_signed_in": "Toinen laite ei ole sisäänkirjautunut.",
             "error_device_unsupported": "Tämän laitteen kanssa linkittäminen ei ole tuettu.",
             "error_invalid_scanned_code": "Skannattu koodi on virheellinen.",
             "error_linking_incomplete": "Linkitystä ei suoritettu vaaditussa ajassa.",
+            "error_rate_limited": "Liikaa yrityksiä lyhyessä ajassa. Odota hetki, ennen kuin yrität uudelleen.",
             "error_request_cancelled": "Pyyntö peruttiin.",
             "error_request_declined": "Pyyntö hylättiin toiselta laitteelta.",
             "error_unexpected": "Tapahtui odottamaton virhe.",
-            "review_and_approve": "Katselmoi ja hyväksy sisäänkirjautuminen",
             "sign_in_new_device": "Kirjaa sisään uusi laite",
             "waiting_for_device": "Odotetaan laitteen sisäänkirjautumista"
         },
@@ -448,10 +447,6 @@
         "n_members": {
             "one": "%(count)s jäsen",
             "other": "%(count)s jäsentä"
-        },
-        "n_participants": {
-            "one": "1 osallistuja",
-            "other": "%(count)s osallistujaa"
         },
         "n_rooms": {
             "one": "%(count)s huone",
@@ -682,7 +677,6 @@
         "no_receipt_found": "Kuittausta ei löytynyt",
         "no_verification_requests_found": "Vahvistuspyyntöjä ei löytynyt",
         "number_of_users": "Käyttäjämäärä",
-        "observe_only": "Tarkkaile ainoastaan",
         "original_event_source": "Alkuperäinen tapahtumalähde",
         "phase": "Vaihe",
         "phase_cancelled": "Peruttu",
@@ -690,7 +684,6 @@
         "phase_requested": "Pyydetty",
         "phase_started": "Käynnistetty",
         "phase_transaction": "Transaktio",
-        "requester": "Pyytäjä",
         "room_id": "Huoneen ID-tunniste: %(roomId)s",
         "room_notifications_sender": "Lähettäjä: ",
         "save_setting_values": "Tallenna asetusarvot",
@@ -1242,6 +1235,7 @@
         "group_rooms": "Huoneet",
         "group_spaces": "Avaruudet",
         "group_themes": "Teemat",
+        "group_threads": "Ketjut",
         "group_voip": "Ääni ja video",
         "group_widgets": "Sovelmat",
         "html_topic": "Näytä huoneiden aiheiden HTML-esitys",
@@ -1311,14 +1305,6 @@
         "view_rules": "Näytä säännöt"
     },
     "language_dropdown_label": "Kielipudotusvalikko",
-    "lazy_loading": {
-        "disabled_action": "Tyhjennä välimuisti ja hae tiedot uudelleen",
-        "disabled_description1": "Olet aikaisemmin käytttänyt %(brand)sia laitteella %(host)s, jossa oli jäsenten laiska lataus käytössä. Tässä versiossa laiska lataus on pois käytöstä. Koska paikallinen välimuisti ei ole yhteensopiva näiden kahden asetuksen välillä, %(brand)sin täytyy synkronoida tilisi tiedot uudelleen.",
-        "disabled_description2": "Jos sinulla on toinen %(brand)sin versio edelleen auki toisessa välilehdessä, suljethan sen, koska %(brand)sin käyttäminen samalla laitteella niin, että laiska lataus on toisessa välilehdessä käytössä ja toisessa ei, aiheuttaa ongelmia.",
-        "disabled_title": "Yhteensopimaton paikallinen välimuisti",
-        "resync_description": "%(brand)s käyttää nyt 3-5 kertaa vähemmän muistia, koska se lataa tietoa muista käyttäjistä vain tarvittaessa. Odotathan, kun haemme tarvittavat tiedot palvelimelta!",
-        "resync_title": "Päivitetään %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "Olet ainoa henkilö täällä. Jos lähdet, kukaan ei voi liittyä tulevaisuudessa, et myöskään sinä.",
         "leave_room_question": "Oletko varma että haluat poistua huoneesta '%(roomName)s'?",
@@ -1384,10 +1370,6 @@
         "all_messages_description": "Vastaanota ilmoitus joka viestistä",
         "class_global": "Yleiset",
         "class_other": "Muut",
-        "colour_bold": "Lihavoitu",
-        "colour_grey": "Harmaa",
-        "colour_none": "Ei mitään",
-        "colour_red": "Punainen",
         "default": "Oletus",
         "enable_prompt_toast_description": "Ota työpöytäilmoitukset käyttöön",
         "enable_prompt_toast_title": "Ilmoitukset",
@@ -1395,6 +1377,8 @@
         "error_change_title": "Muokkaa ilmoitusasetuksia",
         "keyword": "Avainsana",
         "keyword_new": "Uusi avainsana",
+        "level_activity": "Aktiivisuus",
+        "level_none": "Ei mitään",
         "mark_all_read": "Merkitse kaikki luetuiksi",
         "mentions_and_keywords": "@maininnat & asiasanat",
         "mentions_and_keywords_description": "Vastaanota ilmoitukset maininnoista ja asiasanoista <a>asetuksissa</a> määrittämälläsi tavalla",
@@ -2084,10 +2068,8 @@
         "help_about": {
             "access_token_detail": "Käyttöpolettisi (ns. token) antaa täyden pääsyn tilillesi. Älä jaa sitä kenenkään kanssa.",
             "brand_version": "%(brand)s-versio:",
-            "chat_bot": "Keskustele %(brand)s-botin kanssa",
             "clear_cache_reload": "Tyhjennä välimuisti ja lataa uudelleen",
             "help_link": "Saadaksesi apua %(brand)sin käyttämisessä, napsauta <a>tästä</a>.",
-            "help_link_chat_bot": "Saadaksesi apua %(brand)sin käytössä, napsauta <a>tästä</a> tai aloita keskustelu bottimme kanssa alla olevasta painikkeesta.",
             "homeserver": "Kotipalvelin on <code>%(homeserverUrl)s</code>",
             "identity_server": "Identiteettipalvelin on <code>%(identityServerUrl)s</code>",
             "title": "Ohje ja tietoja",
@@ -2109,9 +2091,6 @@
             "custom_theme_success": "Teema lisätty!",
             "custom_theme_url": "Mukautettu teeman osoite",
             "font_size": "Fontin koko",
-            "font_size_limit": "Mukautetun fonttikoon täytyy olla vähintään %(min)s pt ja enintään %(max)s pt",
-            "font_size_nan": "Koon täytyy olla luku",
-            "font_size_valid": "Käytä kokoa väliltä %(min)s pt ja %(max)s pt",
             "heading": "Mukauta ulkoasua",
             "image_size_default": "Oletus",
             "image_size_large": "Suuri",
@@ -3328,7 +3307,6 @@
         "already_in_call_person": "Olet jo puhelussa tämän henkilön kanssa.",
         "answered_elsewhere": "Vastattu muualla",
         "answered_elsewhere_description": "Puheluun vastattiin toisessa laitteessa.",
-        "audio_devices": "Äänilaitteet",
         "call_failed": "Puhelu epäonnistui",
         "call_failed_description": "Puhelua ei voitu muodostaa",
         "call_failed_media": "Puhelu epäonnistui, koska kameraa tai mikrofonia ei voitu käyttää. Tarkista että:",
@@ -3410,7 +3388,6 @@
         "user_is_presenting": "%(sharerName)s esittää",
         "video_call": "Videopuhelu",
         "video_call_started": "Videopuhelu aloitettu",
-        "video_devices": "Videolaitteet",
         "voice_call": "Äänipuhelu",
         "you_are_presenting": "Esität parhaillaan"
     },

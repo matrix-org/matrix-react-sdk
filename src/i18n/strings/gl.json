@@ -410,10 +410,6 @@
             "one": "%(count)s participante",
             "other": "%(count)s participantes"
         },
-        "n_participants": {
-            "one": "1 participante",
-            "other": "%(count)s participantes"
-        },
         "n_rooms": {
             "one": "%(count)s sala",
             "other": "%(count)s salas"
@@ -623,7 +619,6 @@
         "methods": "Métodos",
         "no_verification_requests_found": "Non se atopan solicitudes de verificación",
         "number_of_users": "Número de usuarias",
-        "observe_only": "Só observar",
         "original_event_source": "Fonte orixinal do evento",
         "phase": "Fase",
         "phase_cancelled": "Cancelado",
@@ -631,7 +626,6 @@
         "phase_requested": "Solicitado",
         "phase_started": "Iniciado",
         "phase_transaction": "Transacción",
-        "requester": "Solicitante",
         "room_id": "ID da sala: %(roomId)s",
         "save_setting_values": "Gardar valores configurados",
         "send_custom_account_data_event": "Enviar evento de datos da conta personalizado",
@@ -1206,6 +1200,7 @@
         "group_rooms": "Salas",
         "group_spaces": "Espazos",
         "group_themes": "Decorados",
+        "group_threads": "Conversas",
         "group_voip": "Voz e Vídeo",
         "html_topic": "Mostrar representación HTML dos temas da sala",
         "join_beta": "Unirse á beta",
@@ -1266,14 +1261,6 @@
         "view_rules": "Ver regras"
     },
     "language_dropdown_label": "Selector de idioma",
-    "lazy_loading": {
-        "disabled_action": "Baleirar caché e sincronizar",
-        "disabled_description1": "Anteriormente utilizaches %(brand)s en %(host)s con carga preguiceira de membros. Nesta versión a carga preguiceira está desactivada. Como a caché local non é compatible entre as dúas configuracións, %(brand)s precisa volver a sincronizar a conta.",
-        "disabled_description2": "Se a outra versión de %(brand)s aínda está aberta noutra lapela, péchaa xa que usar %(brand)s no mesmo servidor con carga preguiceira activada e desactivada ao mesmo tempo causará problemas.",
-        "disabled_title": "Caché local incompatible",
-        "resync_description": "%(brand)s utiliza agora entre 3 e 5 veces menos memoria, cargando só información sobre as usuarias cando é preciso. Agarda mentras se sincroniza co servidor!",
-        "resync_title": "Actualizando %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "Es a única persoa aquí. Se saes, ninguén poderá unirse no futuro, incluíndote a ti.",
         "leave_room_question": "Seguro que desexa saír da sala '%(roomName)s'?",
@@ -1355,9 +1342,6 @@
         "all_messages": "Todas as mensaxes",
         "all_messages_description": "Ter notificación de tódalas mensaxes",
         "class_other": "Outro",
-        "colour_bold": "Resaltado",
-        "colour_none": "Nada",
-        "colour_unsent": "Sen enviar",
         "default": "Por defecto",
         "enable_prompt_toast_description": "Activar notificacións de escritorio",
         "enable_prompt_toast_title": "Notificacións",
@@ -1365,6 +1349,9 @@
         "error_change_title": "Cambiar os axustes das notificacións",
         "keyword": "Palabra chave",
         "keyword_new": "Nova palabra chave",
+        "level_activity": "Actividade",
+        "level_none": "Nada",
+        "level_unsent": "Sen enviar",
         "mark_all_read": "Marcar todo como lido",
         "mentions_and_keywords": "@mencións & palabras chave",
         "mentions_and_keywords_description": "Ter notificacións só cando te mencionan e con palabras chave que indiques nos <a>axustes</a>",
@@ -2025,10 +2012,8 @@
         "help_about": {
             "access_token_detail": "O teu token de acceso da acceso completo á túa conta. Non o compartas con ninguén.",
             "brand_version": "versión %(brand)s:",
-            "chat_bot": "Chat co Bot %(brand)s",
             "clear_cache_reload": "Baleirar caché e recargar",
             "help_link": "Para ter axuda con %(brand)s, preme <a>aquí</a>.",
-            "help_link_chat_bot": "Se precisas axuda usando %(brand)s, preme <a>aquí</a> ou inicia unha conversa co noso bot usando o botón inferior.",
             "title": "Axuda & Acerca de",
             "versions": "Versións"
         }
@@ -2048,9 +2033,6 @@
             "custom_theme_success": "Decorado engadido!",
             "custom_theme_url": "URL do decorado personalizado",
             "font_size": "Tamaño da letra",
-            "font_size_limit": "O tamaño da fonte só pode estar entre %(min)s pt e %(max)s pt",
-            "font_size_nan": "O tamaño ten que ser un número",
-            "font_size_valid": "Usa entre %(min)s pt e %(max)s pt",
             "heading": "Personaliza o aspecto",
             "image_size_default": "Por defecto",
             "image_size_large": "Grande",
@@ -3206,7 +3188,6 @@
         "already_in_call_person": "Xa estás nunha conversa con esta persoa.",
         "answered_elsewhere": "Respondido noutro lugar",
         "answered_elsewhere_description": "A chamada foi respondida noutro dispositivo.",
-        "audio_devices": "Dispositivos de audio",
         "call_failed": "Fallou a chamada",
         "call_failed_description": "Non se puido establecer a chamada",
         "call_failed_media": "A chamada fallou porque non tiñas acceso á cámara ou ó micrófono. Comproba:",
@@ -3279,7 +3260,6 @@
         "user_busy_description": "A persoa á que chamas está ocupada.",
         "user_is_presenting": "%(sharerName)s estase presentando",
         "video_call": "Chamada de vídeo",
-        "video_devices": "Dispositivos de vídeo",
         "voice_call": "Chamada de voz",
         "you_are_presenting": "Estaste a presentar"
     },

@@ -17,6 +17,7 @@ limitations under the License.
 import React, { createRef, ReactNode, SyntheticEvent } from "react";
 import classNames from "classnames";
 import { RoomMember, Room, MatrixError, EventType } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
 import { uniqBy } from "lodash";
@@ -27,7 +28,6 @@ import { _t, _td } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { makeRoomPermalink, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import SdkConfig from "../../../SdkConfig";
 import * as Email from "../../../email";
 import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
 import { buildActivityScores, buildMemberScores, compareMembers } from "../../../utils/SortMembers";
@@ -369,17 +369,14 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         this.profilesStore = SdkContextClass.instance.userProfilesStore;
 
         const excludedIds = new Set([MatrixClientPeg.safeGet().getUserId()!]);
-        const welcomeUserId = SdkConfig.get("welcome_user_id");
-        if (welcomeUserId) excludedIds.add(welcomeUserId);
-
         if (isRoomInvite(props)) {
             const room = MatrixClientPeg.safeGet().getRoom(props.roomId);
             const isFederated = room?.currentState.getStateEvents(EventType.RoomCreate, "")?.getContent()["m.federate"];
             if (!room) throw new Error("Room ID given to InviteDialog does not look like a room");
-            room.getMembersWithMembership("invite").forEach((m) => excludedIds.add(m.userId));
-            room.getMembersWithMembership("join").forEach((m) => excludedIds.add(m.userId));
+            room.getMembersWithMembership(KnownMembership.Invite).forEach((m) => excludedIds.add(m.userId));
+            room.getMembersWithMembership(KnownMembership.Join).forEach((m) => excludedIds.add(m.userId));
             // add banned users, so we don't try to invite them
-            room.getMembersWithMembership("ban").forEach((m) => excludedIds.add(m.userId));
+            room.getMembersWithMembership(KnownMembership.Ban).forEach((m) => excludedIds.add(m.userId));
             if (isFederated === false) {
                 // exclude users from external servers
                 const homeserver = props.roomId.split(":")[1];

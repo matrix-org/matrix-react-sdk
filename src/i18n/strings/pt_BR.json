@@ -373,10 +373,6 @@
             "one": "%(count)s integrante",
             "other": "%(count)s integrantes"
         },
-        "n_participants": {
-            "other": "%(count)s participantes",
-            "one": "1 participante"
-        },
         "name": "Nome",
         "no_results": "Nenhum resultado",
         "not_trusted": "Não confiável",
@@ -1001,6 +997,7 @@
         "group_rooms": "Salas",
         "group_spaces": "Espaços",
         "group_themes": "Temas",
+        "group_threads": "Tópicos",
         "group_voip": "Voz e vídeo",
         "latex_maths": "Renderizar fórmulas matemáticas LaTeX em mensagens",
         "pinning": "Fixar mensagem",
@@ -1039,14 +1036,6 @@
         "view_rules": "Ver regras"
     },
     "language_dropdown_label": "Menu suspenso de idiomas",
-    "lazy_loading": {
-        "disabled_action": "Limpar cache e ressincronizar",
-        "disabled_description1": "Você já usou o %(brand)s em %(host)s com o carregamento Lazy de participantes ativado. Nesta versão, o carregamento Lazy está desativado. Como o cache local não é compatível entre essas duas configurações, o %(brand)s precisa ressincronizar sua conta.",
-        "disabled_description2": "Se a outra versão do %(brand)s ainda estiver aberta em outra aba, por favor, feche-a pois usar o %(brand)s no mesmo host com o carregamento Lazy ativado e desativado simultaneamente causará problemas.",
-        "disabled_title": "Cache local incompatível",
-        "resync_description": "%(brand)s agora usa de 3 a 5 vezes menos memória, pois carrega as informações dos outros usuários apenas quando for necessário. Por favor, aguarde enquanto ressincronizamos com o servidor!",
-        "resync_title": "Atualizando o %(brand)s"
-    },
     "leave_room_dialog": {
         "leave_room_question": "Tem certeza de que deseja sair da sala '%(roomName)s'?",
         "leave_space_question": "Tem certeza de que deseja sair desse espaço '%(spaceName)s'?",
@@ -1084,8 +1073,6 @@
         "all_messages": "Todas as mensagens novas",
         "all_messages_description": "Seja notificado para cada mensagem",
         "class_other": "Outros",
-        "colour_bold": "Negrito",
-        "colour_none": "Nenhuma",
         "default": "Padrão",
         "enable_prompt_toast_description": "Ativar notificações na área de trabalho",
         "enable_prompt_toast_title": "Notificações",
@@ -1093,6 +1080,8 @@
         "error_change_title": "Alterar configuração de notificações",
         "keyword": "Palavra-chave",
         "keyword_new": "Nova palavra-chave",
+        "level_activity": "Atividade recente",
+        "level_none": "Nenhuma",
         "mark_all_read": "Marcar tudo como lido",
         "mentions_and_keywords": "@menções e palavras-chave",
         "mentions_and_keywords_description": "Receba notificações apenas com menções e palavras-chave conforme definido em suas <a>configurações</a>",
@@ -1607,10 +1596,8 @@
         "help_about": {
             "access_token_detail": "Seu token de acesso dá acesso total à sua conta. Não o compartilhe com ninguém.",
             "brand_version": "versão do %(brand)s:",
-            "chat_bot": "Converse com o bot do %(brand)s",
             "clear_cache_reload": "Limpar cache e recarregar",
             "help_link": "Para obter ajuda com o uso do %(brand)s, clique <a>aqui</a>.",
-            "help_link_chat_bot": "Para obter ajuda com o uso do %(brand)s, clique <a>aqui</a> ou inicie um bate-papo com nosso bot usando o botão abaixo.",
             "title": "Ajuda e sobre",
             "versions": "Versões"
         }
@@ -1630,9 +1617,6 @@
             "custom_theme_success": "Tema adicionado!",
             "custom_theme_url": "Link do tema personalizado",
             "font_size": "Tamanho da fonte",
-            "font_size_limit": "O tamanho da fonte personalizada só pode estar entre %(min)s pt e %(max)s pt",
-            "font_size_nan": "O tamanho deve ser um número",
-            "font_size_valid": "Use entre %(min)s pt e %(max)s pt",
             "heading": "Personalize sua aparência",
             "image_size_default": "Padrão",
             "image_size_large": "Grande",
@@ -2621,7 +2605,6 @@
         "already_in_call_person": "Você já está em uma chamada com essa pessoa.",
         "answered_elsewhere": "Respondido em algum lugar",
         "answered_elsewhere_description": "A chamada foi atendida em outro aparelho.",
-        "audio_devices": "Dispositivos de áudio",
         "call_failed": "A chamada falhou",
         "call_failed_description": "Não foi possível iniciar a chamada",
         "call_failed_media": "A chamada falhou porque a câmera ou o microfone não puderam ser acessados. Verifique se:",
@@ -2694,7 +2677,6 @@
         "user_is_presenting": "%(sharerName)s está apresentando",
         "video_call": "Chamada de vídeo",
         "video_call_started": "Videochamada iniciada",
-        "video_devices": "Dispositivos de vídeo",
         "voice_call": "Chamada de voz",
         "you_are_presenting": "Você está apresentando"
     },
