@@ -190,7 +190,7 @@
         "axe-core": "4.9.0",
         "babel-jest": "^29.0.0",
         "blob-polyfill": "^7.0.0",
-        "eslint": "8.57.0",
+        "eslint": "9.0.0",
         "eslint-config-google": "^0.14.0",
         "eslint-config-prettier": "^9.0.0",
         "eslint-plugin-deprecate": "0.8.4",
