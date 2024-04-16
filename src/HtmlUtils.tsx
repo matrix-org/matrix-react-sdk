@@ -35,7 +35,7 @@ import { stripHTMLReply, stripPlainReply } from "./utils/Reply";
 import { PERMITTED_URL_SCHEMES } from "./utils/UrlUtils";
 import { sanitizeHtmlParams, transformTags } from "./Linkify";
 
-export { Linkify, linkifyString, linkifyElement, linkifyAndSanitizeHtml } from "./Linkify";
+export { Linkify, linkifyElement, linkifyAndSanitizeHtml } from "./Linkify";
 
 // Anything outside the basic multilingual plane will be a surrogate pair
 const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
