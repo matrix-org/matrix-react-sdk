@@ -16,7 +16,7 @@
  * /
  */
 
-import React, { JSX, useCallback, useState } from "react";
+import React, { JSX, useState } from "react";
 import { Menu, MenuItem } from "@vector-im/compound-web";
 import { Room } from "matrix-js-sdk/src/matrix";
 
@@ -55,13 +55,9 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
     const isReleaseAnnouncementOpen = useIsReleaseAnnouncementOpen("threadsActivityCentre");
     const settingTACOnlyNotifs = useSettingValue<boolean>("Notifications.tac_only_notifications");
 
-    const emptyCaption = useCallback((): string => {
-        if (settingTACOnlyNotifs) {
-            return _t("threads_activity_centre|no_rooms_with_threads_notifs");
-        } else {
-            return _t("threads_activity_centre|no_rooms_with_unread_threads");
-        }
-    }, [settingTACOnlyNotifs]);
+    const emptyCaption = settingTACOnlyNotifs
+        ? _t("threads_activity_centre|no_rooms_with_threads_notifs")
+        : _t("threads_activity_centre|no_rooms_with_unread_threads");
 
     return (
         <div
@@ -120,7 +116,7 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
                             />
                         ))}
                         {roomsAndNotifications.rooms.length === 0 && (
-                            <div className="mx_ThreadsActivityCentre_emptyCaption">{emptyCaption()}</div>
+                            <div className="mx_ThreadsActivityCentre_emptyCaption">{emptyCaption}</div>
                         )}
                     </div>
                 </Menu>
