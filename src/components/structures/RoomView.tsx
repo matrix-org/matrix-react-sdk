@@ -707,6 +707,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             newState.initialEventPixelOffset = undefined;
 
             const thread = initialEvent?.getThread();
+            // Handle the use case of a link to a thread message
+            // ie: #/room/roomId/eventId (eventId of a thread message)
             if (thread?.rootEvent && !initialEvent?.isThreadRoot) {
                 dis.dispatch<ShowThreadPayload>({
                     action: Action.ShowThread,
@@ -719,16 +721,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 newState.initialEventId = initialEventId;
                 newState.isInitialEventHighlighted = this.context.roomViewStore.isInitialEventHighlighted();
                 newState.initialEventScrollIntoView = this.context.roomViewStore.initialEventScrollIntoView();
-
-                if (thread?.rootEvent && initialEvent?.isThreadRoot) {
-                    dis.dispatch<ShowThreadPayload>({
-                        action: Action.ShowThread,
-                        rootEvent: thread.rootEvent,
-                        initialEvent,
-                        highlighted: this.context.roomViewStore.isInitialEventHighlighted(),
-                        scroll_into_view: this.context.roomViewStore.initialEventScrollIntoView(),
-                    });
-                }
             }
         }
 
@@ -1268,7 +1260,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             case Action.FocusAComposer: {
                 dis.dispatch<FocusComposerPayload>({
                     ...(payload as FocusComposerPayload),
-                    // re-dispatch to the correct composer
+                    // re-dispatch to the correct composer (the send message will still be on screen even when editing a message)
                     action: this.state.editState ? Action.FocusEditMessageComposer : Action.FocusSendMessageComposer,
                 });
                 break;
