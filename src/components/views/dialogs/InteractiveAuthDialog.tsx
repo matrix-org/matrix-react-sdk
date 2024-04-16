@@ -19,7 +19,6 @@ limitations under the License.
 import React from "react";
 import { MatrixClient, UIAResponse } from "matrix-js-sdk/src/matrix";
 import { AuthType } from "matrix-js-sdk/src/interactive-auth";
-import Linkify from "linkify-react";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -30,7 +29,7 @@ import InteractiveAuth, {
 } from "../../structures/InteractiveAuth";
 import { ContinueKind, SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
 import BaseDialog from "./BaseDialog";
-import { options as linkifyMatrixOptions } from "../../../linkify-matrix";
+import { Linkify } from "../../../HtmlUtils";
 
 type DialogAesthetics = Partial<{
     [x in AuthType]: {
@@ -170,7 +169,7 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
         if (this.state.authError) {
             content = (
                 <div id="mx_Dialog_content">
-                    <Linkify options={linkifyMatrixOptions}>
+                    <Linkify>
                         <div role="alert">{this.state.authError.message || this.state.authError.toString()}</div>
                     </Linkify>
                     <br />
