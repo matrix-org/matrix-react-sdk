@@ -32,6 +32,7 @@ import { UPDATE_EVENT } from "../AsyncStore";
 import { IPreview } from "./previews/IPreview";
 import { VoiceBroadcastInfoEventType } from "../../voice-broadcast";
 import { VoiceBroadcastPreview } from "./previews/VoiceBroadcastPreview";
+import shouldHideEvent from "../../shouldHideEvent";
 
 // Emitted event for when a room's preview has changed. First argument will the room for which
 // the change happened.
@@ -237,7 +238,8 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
             const event = events[i];
 
             await this.matrixClient?.decryptEventIfNeeded(event);
-
+            const shouldHide = shouldHideEvent(event);
+            if (shouldHide) continue;
             const previewDef = PREVIEWS[event.getType()];
             if (!previewDef) continue;
             if (previewDef.isState && isNullOrUndefined(event.getStateKey())) continue;
