@@ -155,7 +155,7 @@
         "@casualbot/jest-sonar-reporter": "2.2.7",
         "@peculiar/webcrypto": "^1.4.3",
         "@playwright/test": "^1.40.1",
-        "@testing-library/dom": "^9.0.0",
+        "@testing-library/dom": "^10.0.0",
         "@testing-library/jest-dom": "^6.0.0",
         "@testing-library/react": "^12.1.5",
         "@testing-library/user-event": "^14.4.3",
