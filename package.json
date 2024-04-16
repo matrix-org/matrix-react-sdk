@@ -157,7 +157,7 @@
         "@playwright/test": "^1.40.1",
         "@testing-library/dom": "^9.0.0",
         "@testing-library/jest-dom": "^6.0.0",
-        "@testing-library/react": "^12.1.5",
+        "@testing-library/react": "^15.0.0",
         "@testing-library/user-event": "^14.4.3",
         "@types/commonmark": "^0.27.4",
         "@types/content-type": "^1.1.5",
