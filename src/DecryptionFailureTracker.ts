@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Error as ErrorEvent } from "@matrix-org/analytics-events/types/typescript/Error";
 
+import { MatrixClientPeg } from "./MatrixClientPeg";
 import { PosthogAnalytics } from "./PosthogAnalytics";
 
 export class DecryptionFailure {
@@ -30,6 +31,7 @@ export class DecryptionFailure {
         public readonly errorCode: string,
         // the time that we failed to decrypt the event
         public readonly ts: number,
+        public readonly isFederated: boolean | undefined,
     ) {}
 }
 
@@ -49,11 +51,8 @@ export class DecryptionFailureTracker {
                 domain: "E2EE",
                 name: errorCode,
                 context: `mxc_crypto_error_type_${rawError}`,
+                ...properties,
             };
-            for (const [name, value] of Object.entries(properties)) {
-                // @ts-ignore can't index with string
-                event[name] = value;
-            }
             PosthogAnalytics.instance.trackEvent<ErrorEvent>(event);
         },
         (errorCode) => {
@@ -108,6 +107,13 @@ export class DecryptionFailureTracker {
     // Maximum time for an event to be decrypted to be considered a late decryption
     public static MAXIMUM_LATE_DECRYPTION_PERIOD = 60000;
 
+    // properties that will be added to reported events (mainly reporting
+    // information about the Matrix client)
+    private baseProperties?: ErrorProperties = {};
+
+    // the user's domain (homeserver name)
+    private userDomain?: string;
+
     /**
      * Create a new DecryptionFailureTracker.
      *
@@ -153,7 +159,13 @@ export class DecryptionFailureTracker {
             return;
         }
         if (err) {
-            this.addDecryptionFailure(new DecryptionFailure(e.getId()!, err.code, nowTs));
+            const sender = e.getSender();
+            const senderDomain = sender ? sender.split(":")[1] : undefined;
+            let isFederated: boolean | undefined;
+            if (this.userDomain !== undefined && senderDomain !== undefined) {
+                isFederated = this.userDomain !== senderDomain;
+            }
+            this.addDecryptionFailure(new DecryptionFailure(e.getId()!, err.code, nowTs, isFederated));
         } else {
             // Could be an event in the failures, remove it
             this.removeDecryptionFailuresForEvent(e, nowTs);
@@ -208,10 +220,34 @@ export class DecryptionFailureTracker {
         }
     }
 
+    private setClient(client: MatrixClient): void {
+        const baseProperties: ErrorProperties = {};
+        const crypto = client?.getCrypto();
+        if (client) {
+            this.userDomain = client.getDomain() ?? undefined;
+            if (this.userDomain === "matrix.org") {
+                baseProperties.isMatrixDotOrg = true;
+            } else if (this.userDomain !== undefined) {
+                baseProperties.isMatrixDotOrg = false;
+            }
+        }
+        if (crypto) {
+            const version = crypto.getVersion();
+            if (version.startsWith("Rust SDK")) {
+                baseProperties.cryptoSDK = "Rust";
+            } else {
+                baseProperties.cryptoSDK = "Legacy";
+            }
+        }
+
+        this.baseProperties = baseProperties;
+    }
+
     /**
      * Start checking for and tracking failures.
      */
     public start(): void {
+        this.setClient(MatrixClientPeg.safeGet());
         this.checkInterval = window.setInterval(
             () => this.checkFailures(Date.now()),
             DecryptionFailureTracker.CHECK_INTERVAL_MS,
@@ -283,6 +319,12 @@ export class DecryptionFailureTracker {
             const properties: ErrorProperties = {
                 timeToDecryptMillis: failure.timeToDecryptMillis ?? -1,
             };
+            if (failure.isFederated !== undefined) {
+                properties.isFederated = failure.isFederated;
+            }
+            if (this.baseProperties) {
+                Object.assign(properties, this.baseProperties);
+            }
             this.fn(trackedErrorCode, errorCode, properties);
         }
         this.failuresToReport = new Set();

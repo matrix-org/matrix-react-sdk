@@ -14,10 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { mocked, Mocked } from "jest-mock";
+import { CryptoApi } from "matrix-js-sdk/src/matrix";
 import { decryptExistingEvent, mkDecryptionFailureMatrixEvent } from "matrix-js-sdk/src/testing";
 import { DecryptionFailureCode } from "matrix-js-sdk/src/crypto-api";
 
 import { DecryptionFailureTracker, ErrorProperties } from "../src/DecryptionFailureTracker";
+import { stubClient } from "./test-utils";
 
 class MockDecryptionError extends Error {
     public readonly code: string;
@@ -29,10 +32,10 @@ class MockDecryptionError extends Error {
     }
 }
 
-async function createFailedDecryptionEvent() {
+async function createFailedDecryptionEvent(sender: string = "@alice:example.com") {
     return await mkDecryptionFailureMatrixEvent({
         roomId: "!room:id",
-        sender: "@alice:example.com",
+        sender: sender,
         code: DecryptionFailureCode.UNKNOWN_ERROR,
         msg: ":(",
     });
@@ -466,5 +469,51 @@ describe("DecryptionFailureTracker", function () {
         expect(propertiesByErrorCode["ERROR_CODE_1"].timeToDecryptMillis).toEqual(40000);
         expect(propertiesByErrorCode["ERROR_CODE_2"].timeToDecryptMillis).toEqual(-1);
         expect(propertiesByErrorCode["ERROR_CODE_3"].timeToDecryptMillis).toEqual(-1);
+    });
+
+    it("tracks client information", async () => {
+        const client = mocked(stubClient());
+        const mockCrypto = {
+            getVersion: jest.fn().mockReturnValue("Rust SDK 0.7.0 (61b175b), Vodozemac 0.5.1"),
+        } as unknown as Mocked<CryptoApi>;
+        client.getCrypto.mockReturnValue(mockCrypto);
+
+        const propertiesByErrorCode: Record<string, ErrorProperties> = {};
+        // @ts-ignore access to private constructor
+        const tracker = new DecryptionFailureTracker(
+            (errorCode: string, rawError: string, properties: ErrorProperties) => {
+                propertiesByErrorCode[errorCode] = properties;
+            },
+            (error: string) => error,
+        );
+
+        // @ts-ignore access to private method
+        tracker.setClient(client);
+
+        // event from a federated user (@alice:example.com)
+        const federatedDecryption = await createFailedDecryptionEvent();
+        // event from a local user
+        const localDecryption = await createFailedDecryptionEvent("@bob:matrix.org");
+
+        const error1 = new MockDecryptionError("ERROR_CODE_1");
+        const error2 = new MockDecryptionError("ERROR_CODE_2");
+
+        tracker.addVisibleEvent(federatedDecryption);
+        tracker.addVisibleEvent(localDecryption);
+
+        const now = Date.now();
+        tracker.eventDecrypted(federatedDecryption, error1, now);
+        tracker.eventDecrypted(localDecryption, error2, now);
+
+        // Pretend "now" is Infinity
+        tracker.checkFailures(Infinity);
+
+        tracker.trackFailures();
+
+        expect(propertiesByErrorCode["ERROR_CODE_1"].isMatrixDotOrg).toBe(true);
+        expect(propertiesByErrorCode["ERROR_CODE_1"].cryptoSDK).toEqual("Rust");
+
+        expect(propertiesByErrorCode["ERROR_CODE_1"].isFederated).toBe(true);
+        expect(propertiesByErrorCode["ERROR_CODE_2"].isFederated).toBe(false);
     });
 });
