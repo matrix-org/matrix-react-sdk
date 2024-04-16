@@ -29,7 +29,7 @@ import InteractiveAuth, {
 } from "../../structures/InteractiveAuth";
 import { ContinueKind, SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
 import BaseDialog from "./BaseDialog";
-import { Linkify } from "../../../HtmlUtils";
+import { Linkify } from "../../../Linkify";
 
 type DialogAesthetics = Partial<{
     [x in AuthType]: {
