@@ -54,7 +54,9 @@ export class DecryptionFailureTracker {
                     return "OlmKeysNotSentError";
                 case DecryptionFailureCode.OLM_UNKNOWN_MESSAGE_INDEX:
                     return "OlmIndexError";
-                case DecryptionFailureCode.HISTORICAL_MESSAGE:
+                case DecryptionFailureCode.HISTORICAL_MESSAGE_NO_KEY_BACKUP:
+                case DecryptionFailureCode.HISTORICAL_MESSAGE_BACKUP_UNCONFIGURED:
+                case DecryptionFailureCode.HISTORICAL_MESSAGE_WORKING_BACKUP:
                     return "HistoricalMessage";
                 default:
                     return "UnknownError";
