@@ -1417,6 +1417,7 @@
         "group_spaces": "Spaces",
         "group_themes": "Themes",
         "group_threads": "Threads",
+        "group_ui": "User interface",
         "group_voip": "Voice & Video",
         "group_widgets": "Widgets",
         "hidebold": "Hide notification dot (only display counters badges)",
@@ -1440,6 +1441,7 @@
         "oidc_native_flow": "OIDC native authentication",
         "oidc_native_flow_description": "⚠ WARNING: Experimental. Use OIDC native authentication when supported by the server.",
         "pinning": "Message Pinning",
+        "release_announcement": "Release announcement",
         "render_reaction_images": "Render custom images in reactions",
         "render_reaction_images_description": "Sometimes referred to as \"custom emojis\".",
         "report_to_moderators": "Report to moderators",
@@ -2682,6 +2684,8 @@
             "cross_signing_self_signing_private_key": "Self signing private key:",
             "cross_signing_user_signing_private_key": "User signing private key:",
             "cryptography_section": "Cryptography",
+            "dehydrated_device_description": "The offline device feature allows you to receive encrypted messages even when you are not logged in to any devices",
+            "dehydrated_device_enabled": "Offline device enabled",
             "delete_backup": "Delete Backup",
             "delete_backup_confirm_description": "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.",
             "e2ee_default_disabled_warning": "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
@@ -2844,6 +2848,7 @@
         "show_redaction_placeholder": "Show a placeholder for removed messages",
         "show_stickers_button": "Show stickers button",
         "show_typing_notifications": "Show typing notifications",
+        "showbold": "Show all activity in the room list (dots or number of unread messages)",
         "sidebar": {
             "metaspaces_favourites_description": "Group all your favourite rooms and people in one place.",
             "metaspaces_home_all_rooms": "Show all rooms",
@@ -2860,6 +2865,7 @@
             "title": "Sidebar"
         },
         "start_automatically": "Start automatically after system login",
+        "tac_only_notifications": "Only show notifications in the thread activity centre",
         "use_12_hour_format": "Show timestamps in 12 hour format (e.g. 2:30pm)",
         "use_command_enter_send_message": "Use Command + Enter to send a message",
         "use_command_f_search": "Use Command + F to search timeline",
@@ -3161,7 +3167,9 @@
     },
     "threads_activity_centre": {
         "header": "Threads activity",
-        "no_rooms_with_unreads_threads": "You don't have rooms with unread threads yet."
+        "no_rooms_with_unreads_threads": "You don't have rooms with unread threads yet.",
+        "release_announcement_description": "Threads notifications have moved, find them here from now on.",
+        "release_announcement_header": "Threads Activity Centre"
     },
     "time": {
         "about_day_ago": "about a day ago",
@@ -3658,6 +3666,12 @@
         "toast_title": "Update %(brand)s",
         "unavailable": "Unavailable"
     },
+    "update_room_access_modal": {
+        "description": "To create a share link, you need to allow guests to join this room. This may make the room less secure. When you're done with the call, you can make the room private again.",
+        "dont_change_description": "Alternatively, you can hold the call in a separate room.",
+        "no_change": "I don't want to change the access level.",
+        "title": "Change the room access level"
+    },
     "upload_failed_generic": "The file '%(fileName)s' failed to upload.",
     "upload_failed_size": "The file '%(fileName)s' exceeds this homeserver's size limit for uploads",
     "upload_failed_title": "Upload Failed",
@@ -3693,6 +3707,7 @@
         "deactivate_confirm_action": "Deactivate user",
         "deactivate_confirm_description": "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?",
         "deactivate_confirm_title": "Deactivate user?",
+        "dehydrated_device_enabled": "Offline device enabled",
         "demote_button": "Demote",
         "demote_self_confirm_description_space": "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.",
         "demote_self_confirm_room": "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.",
