@@ -235,7 +235,6 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
 
             const tagsToGenerate = Array.from(map.keys()).filter((t) => t !== TAG_ANY); // we did the any tag above
             for (const genTagId of tagsToGenerate) {
-
                 const realTagId = genTagId === TAG_ANY ? undefined : genTagId;
                 const preview = previewDef.previewer.getTextFor(event, realTagId);
 
