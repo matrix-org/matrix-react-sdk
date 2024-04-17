@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import { mocked, Mocked } from "jest-mock";
-import { CryptoApi } from "matrix-js-sdk/src/matrix";
+import { CryptoEvent } from "matrix-js-sdk/src/matrix";
 import { decryptExistingEvent, mkDecryptionFailureMatrixEvent } from "matrix-js-sdk/src/testing";
-import { DecryptionFailureCode } from "matrix-js-sdk/src/crypto-api";
+import { CryptoApi, DecryptionFailureCode, UserVerificationStatus } from "matrix-js-sdk/src/crypto-api";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 import { DecryptionFailureTracker, ErrorProperties } from "../src/DecryptionFailureTracker";
 import { stubClient } from "./test-utils";
@@ -492,6 +493,7 @@ describe("DecryptionFailureTracker", function () {
         const client = mocked(stubClient());
         const mockCrypto = {
             getVersion: jest.fn().mockReturnValue("Rust SDK 0.7.0 (61b175b), Vodozemac 0.5.1"),
+            getUserVerificationStatus: jest.fn().mockResolvedValue(new UserVerificationStatus(false, false, false)),
         } as unknown as Mocked<CryptoApi>;
         client.getCrypto.mockReturnValue(mockCrypto);
 
@@ -520,6 +522,10 @@ describe("DecryptionFailureTracker", function () {
 
         const now = Date.now();
         tracker.eventDecrypted(federatedDecryption, error1, now);
+
+        mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(true, true, false));
+        client.emit(CryptoEvent.KeysChanged, {});
+        await sleep(100);
         tracker.eventDecrypted(localDecryption, error2, now);
 
         // Pretend "now" is Infinity
@@ -531,7 +537,9 @@ describe("DecryptionFailureTracker", function () {
         expect(propertiesByErrorCode["ERROR_CODE_1"].cryptoSDK).toEqual("Rust");
 
         expect(propertiesByErrorCode["ERROR_CODE_1"].isFederated).toBe(true);
+        expect(propertiesByErrorCode["ERROR_CODE_1"].userTrustsOwnIdentity).toEqual(false);
         expect(propertiesByErrorCode["ERROR_CODE_2"].isFederated).toBe(false);
+        expect(propertiesByErrorCode["ERROR_CODE_2"].userTrustsOwnIdentity).toEqual(true);
 
         // change client params, and make sure the reports the right values
         client.getDomain.mockReturnValue("example.com");

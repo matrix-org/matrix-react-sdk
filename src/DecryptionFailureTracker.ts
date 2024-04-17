@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
-import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { CryptoEvent, MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Error as ErrorEvent } from "@matrix-org/analytics-events/types/typescript/Error";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -35,6 +35,8 @@ export class DecryptionFailure {
         public readonly isFederated: boolean | undefined,
         // was the failed event visible to the user
         public wasVisibleToUser: boolean,
+        // does the user currently trust their own identity
+        public userTrustsOwnIdentity: boolean | undefined,
     ) {}
 }
 
@@ -97,19 +99,36 @@ export class DecryptionFailureTracker {
     // Call `checkFailures` every `CHECK_INTERVAL_MS`.
     public static CHECK_INTERVAL_MS = 40000;
 
-    // Give events a chance to be decrypted by waiting `GRACE_PERIOD_MS` before counting
-    // the failure in `failuresToReport`.
-    public static GRACE_PERIOD_MS = 30000;
+    // If the event is successfully decrypted in less than 4s, we don't report.
+    public static GRACE_PERIOD_MS = 4000;
 
-    // Maximum time for an event to be decrypted to be considered a late decryption
+    // Maximum time for an event to be decrypted to be considered a late
+    // decryption.  If it takes longer, we consider it undecryptable.
     public static MAXIMUM_LATE_DECRYPTION_PERIOD = 60000;
 
-    // properties that will be added to reported events (mainly reporting
-    // information about the Matrix client)
+    // Properties that will be added to reported events (mainly reporting
+    // information about the Matrix client).
     private baseProperties?: ErrorProperties = {};
 
-    // the user's domain (homeserver name)
+    // The user's domain (homeserver name).
     private userDomain?: string;
+
+    // The Matrix client that is being used.
+    private client: MatrixClient | undefined = undefined;
+
+    // Whether the user currently trusts their own identity
+    private userTrustsOwnIdentity: boolean | undefined = undefined;
+
+    // The handler for the KeysChanged event.
+    private keysChangedHandler: (() => void) | undefined = undefined;
+
+    // Whether we are currently checking our own verification status
+    private checkingVerificationStatus: boolean = false;
+
+    // Whether we should retry checking our own verification status after we're
+    // done our current check. i.e. we got notified that our keys changed while
+    // we were already checking, so the result could be out of date
+    private retryVerificationStatus: boolean = false;
 
     /**
      * Create a new DecryptionFailureTracker.
@@ -166,7 +185,9 @@ export class DecryptionFailureTracker {
                 isFederated = this.userDomain !== senderDomain;
             }
             const wasVisibleToUser = this.visibleEvents.has(eventId);
-            this.addDecryptionFailure(new DecryptionFailure(eventId, err.code, ts, isFederated, wasVisibleToUser));
+            this.addDecryptionFailure(
+                new DecryptionFailure(eventId, err.code, ts, isFederated, wasVisibleToUser, this.userTrustsOwnIdentity),
+            );
         } else {
             // Could be an event in the failures, remove it
             this.removeDecryptionFailuresForEvent(e, nowTs);
@@ -222,17 +243,41 @@ export class DecryptionFailureTracker {
         }
     }
 
-    private setClient(client: MatrixClient): void {
-        const baseProperties: ErrorProperties = {};
-        const crypto = client?.getCrypto();
-        if (client) {
-            this.userDomain = client.getDomain() ?? undefined;
-            if (this.userDomain === "matrix.org") {
-                baseProperties.isMatrixDotOrg = true;
-            } else if (this.userDomain !== undefined) {
-                baseProperties.isMatrixDotOrg = false;
+    private async handleKeysChanged(client: MatrixClient): Promise<void> {
+        if (this.checkingVerificationStatus) {
+            this.retryVerificationStatus = true;
+        } else {
+            this.checkingVerificationStatus = true;
+            try {
+                do {
+                    this.retryVerificationStatus = false;
+                    this.userTrustsOwnIdentity = (
+                        await client.getCrypto()!.getUserVerificationStatus(client.getUserId()!)
+                    ).isCrossSigningVerified();
+                } while (this.retryVerificationStatus);
+            } finally {
+                this.checkingVerificationStatus = false;
             }
         }
+    }
+
+    private async setClient(client: MatrixClient): Promise<void> {
+        if (this.client && this.keysChangedHandler) {
+            this.client.removeListener(CryptoEvent.KeysChanged, this.keysChangedHandler);
+        }
+        this.keysChangedHandler = undefined;
+        this.client = client;
+
+        const baseProperties: ErrorProperties = {};
+
+        this.userDomain = client.getDomain() ?? undefined;
+        if (this.userDomain === "matrix.org") {
+            baseProperties.isMatrixDotOrg = true;
+        } else if (this.userDomain !== undefined) {
+            baseProperties.isMatrixDotOrg = false;
+        }
+
+        const crypto = client.getCrypto();
         if (crypto) {
             const version = crypto.getVersion();
             if (version.startsWith("Rust SDK")) {
@@ -240,6 +285,15 @@ export class DecryptionFailureTracker {
             } else {
                 baseProperties.cryptoSDK = "Legacy";
             }
+            this.userTrustsOwnIdentity = (
+                await crypto.getUserVerificationStatus(client.getUserId()!)
+            ).isCrossSigningVerified();
+            this.keysChangedHandler = () => {
+                this.handleKeysChanged(client).catch((e) => {
+                    console.log("Error handling KeysChanged event", e);
+                });
+            };
+            client.on(CryptoEvent.KeysChanged, this.keysChangedHandler);
         }
 
         this.baseProperties = baseProperties;
@@ -262,9 +316,16 @@ export class DecryptionFailureTracker {
      * Clear state and stop checking for and tracking failures.
      */
     public stop(): void {
+        if (this.client && this.keysChangedHandler) {
+            this.client.removeListener(CryptoEvent.KeysChanged, this.keysChangedHandler);
+        }
+        this.client = undefined;
+        this.keysChangedHandler = undefined;
+
         if (this.checkInterval) clearInterval(this.checkInterval);
         if (this.trackInterval) clearInterval(this.trackInterval);
 
+        this.userTrustsOwnIdentity = undefined;
         this.failures = new Map();
         this.visibleEvents = new Set();
         this.failuresToReport = new Set();
@@ -329,6 +390,9 @@ export class DecryptionFailureTracker {
             };
             if (failure.isFederated !== undefined) {
                 properties.isFederated = failure.isFederated;
+            }
+            if (failure.userTrustsOwnIdentity !== undefined) {
+                properties.userTrustsOwnIdentity = failure.userTrustsOwnIdentity;
             }
             if (this.baseProperties) {
                 Object.assign(properties, this.baseProperties);
