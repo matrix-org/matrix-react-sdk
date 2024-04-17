@@ -29,6 +29,8 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t } from "../../../../languageHandler";
 import AccessibleButton from "../../elements/AccessibleButton";
 import SettingsSubsection from "../shared/SettingsSubsection";
+import SettingsStore from "../../../../settings/SettingsStore";
+import { Features } from "../../../../settings/Settings";
 
 interface IProps {
     onShowQr: () => void;
@@ -69,7 +71,7 @@ export default class LoginWithQRSection extends React.Component<IProps> {
             deviceAuthorizationGrantSupported,
         });
         const offerShowQr = this.props.oidcClientConfig
-            ? deviceAuthorizationGrantSupported && msc4108Supported
+            ? deviceAuthorizationGrantSupported && msc4108Supported && SettingsStore.getValue(Features.OidcNativeFlow)
             : getLoginTokenSupported && msc3886Supported;
 
         // don't show anything if no method is available
