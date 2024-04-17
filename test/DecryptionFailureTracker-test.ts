@@ -32,11 +32,11 @@ class MockDecryptionError extends Error {
     }
 }
 
-async function createFailedDecryptionEvent(sender: string = "@alice:example.com") {
+async function createFailedDecryptionEvent(opts: { sender?: string; code?: DecryptionFailureCode } = {}) {
     return await mkDecryptionFailureMatrixEvent({
         roomId: "!room:id",
-        sender: sender,
-        code: DecryptionFailureCode.UNKNOWN_ERROR,
+        sender: opts.sender ?? "@alice:example.com",
+        code: opts.code ?? DecryptionFailureCode.UNKNOWN_ERROR,
         msg: ":(",
     });
 }
@@ -124,27 +124,44 @@ describe("DecryptionFailureTracker", function () {
         expect(count).not.toBe(0);
     });
 
-    it("does not track a failed decryption for an event that never becomes visible", async function () {
-        const failedDecryptionEvent = await createFailedDecryptionEvent();
-
-        let count = 0;
+    it("tracks visible vs. not visible events", async () => {
+        const propertiesByErrorCode: Record<string, ErrorProperties> = {};
         // @ts-ignore access to private constructor
         const tracker = new DecryptionFailureTracker(
-            () => count++,
-            () => "UnknownError",
+            (errorCode: string, rawError: string, properties: ErrorProperties) => {
+                propertiesByErrorCode[errorCode] = properties;
+            },
+            (error: string) => error,
         );
 
-        const err = new MockDecryptionError();
-        tracker.eventDecrypted(failedDecryptionEvent, err, Date.now());
+        // event that will be marked as visible before it's marked as undecryptable
+        const markedVisibleFirst = await createFailedDecryptionEvent();
+        // event that will be marked as undecryptable before it's marked as visible
+        const markedUndecryptableFirst = await createFailedDecryptionEvent();
+        // event that is never marked as visible
+        const neverVisible = await createFailedDecryptionEvent();
+
+        const error1 = new MockDecryptionError("ERROR_CODE_1");
+        const error2 = new MockDecryptionError("ERROR_CODE_2");
+        const error3 = new MockDecryptionError("ERROR_CODE_3");
+
+        tracker.addVisibleEvent(markedVisibleFirst);
+
+        const now = Date.now();
+        tracker.eventDecrypted(markedVisibleFirst, error1, now);
+        tracker.eventDecrypted(markedUndecryptableFirst, error2, now);
+        tracker.eventDecrypted(neverVisible, error3, now);
+
+        tracker.addVisibleEvent(markedUndecryptableFirst);
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
 
-        // Immediately track the newest failures
         tracker.trackFailures();
 
-        // should not track a failure for an event that never became visible
-        expect(count).toBe(0);
+        expect(propertiesByErrorCode["ERROR_CODE_1"].wasVisibleToUser).toBe(true);
+        expect(propertiesByErrorCode["ERROR_CODE_2"].wasVisibleToUser).toBe(true);
+        expect(propertiesByErrorCode["ERROR_CODE_3"].wasVisibleToUser).toBe(false);
     });
 
     it("does not track a failed decryption where the event is subsequently successfully decrypted", async () => {
@@ -493,7 +510,7 @@ describe("DecryptionFailureTracker", function () {
         // event from a federated user (@alice:example.com)
         const federatedDecryption = await createFailedDecryptionEvent();
         // event from a local user
-        const localDecryption = await createFailedDecryptionEvent("@bob:matrix.org");
+        const localDecryption = await createFailedDecryptionEvent({ sender: "@bob:matrix.org" });
 
         const error1 = new MockDecryptionError("ERROR_CODE_1");
         const error2 = new MockDecryptionError("ERROR_CODE_2");
@@ -515,5 +532,49 @@ describe("DecryptionFailureTracker", function () {
 
         expect(propertiesByErrorCode["ERROR_CODE_1"].isFederated).toBe(true);
         expect(propertiesByErrorCode["ERROR_CODE_2"].isFederated).toBe(false);
+
+        // change client params, and make sure the reports the right values
+        client.getDomain.mockReturnValue("example.com");
+        mockCrypto.getVersion.mockReturnValue("Olm 0.0.0");
+        // @ts-ignore access to private method
+        tracker.setClient(client);
+
+        const anotherFailure = await createFailedDecryptionEvent();
+        const error3 = new MockDecryptionError("ERROR_CODE_3");
+        tracker.addVisibleEvent(anotherFailure);
+        tracker.eventDecrypted(anotherFailure, error3, now);
+        tracker.checkFailures(Infinity);
+        tracker.trackFailures();
+        expect(propertiesByErrorCode["ERROR_CODE_3"].isMatrixDotOrg).toBe(false);
+        expect(propertiesByErrorCode["ERROR_CODE_3"].cryptoSDK).toEqual("Legacy");
+    });
+
+    it("keeps the original timestamp after repeated decryption failures", async () => {
+        const failedDecryptionEvent = await createFailedDecryptionEvent();
+
+        let failure: ErrorProperties | undefined;
+        // @ts-ignore access to private constructor
+        const tracker = new DecryptionFailureTracker(
+            (errorCode: string, rawError: string, properties: ErrorProperties) => {
+                failure = properties;
+            },
+            () => "UnknownError",
+        );
+
+        tracker.addVisibleEvent(failedDecryptionEvent);
+
+        const now = Date.now();
+        const err = new MockDecryptionError();
+        tracker.eventDecrypted(failedDecryptionEvent, err, now);
+        tracker.eventDecrypted(failedDecryptionEvent, err, now + 20000);
+        tracker.eventDecrypted(failedDecryptionEvent, null, now + 50000);
+
+        // Pretend "now" is Infinity
+        tracker.checkFailures(Infinity);
+        tracker.trackFailures();
+
+        // the time to decrypt should be relative to the first time we failed
+        // to decrypt, not the second
+        expect(failure?.timeToDecryptMillis).toEqual(50000);
     });
 });

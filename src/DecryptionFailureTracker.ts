@@ -22,8 +22,8 @@ import { MatrixClientPeg } from "./MatrixClientPeg";
 import { PosthogAnalytics } from "./PosthogAnalytics";
 
 export class DecryptionFailure {
-    // the time between our failure to decrypt and our successful decryption
-    // (if we managed to decrypt)
+    // the time between our initial failure to decrypt and our successful
+    // decryption (if we managed to decrypt)
     public timeToDecryptMillis?: number;
 
     public constructor(
@@ -31,7 +31,10 @@ export class DecryptionFailure {
         public readonly errorCode: string,
         // the time that we failed to decrypt the event
         public readonly ts: number,
+        // is the sender on a different server from us
         public readonly isFederated: boolean | undefined,
+        // was the failed event visible to the user
+        public wasVisibleToUser: boolean,
     ) {}
 }
 
@@ -75,12 +78,6 @@ export class DecryptionFailureTracker {
 
     // Set of event IDs that have been visible to the user.
     public visibleEvents: Set<string> = new Set();
-
-    // Map of visible event IDs to `DecryptionFailure`s. Every
-    // `CHECK_INTERVAL_MS`, this map is checked for failures that
-    // happened > `GRACE_PERIOD_MS` ago. Those that did are
-    // accumulated in `failuresToReport`.
-    public visibleFailures: Map<string, DecryptionFailure> = new Map();
 
     // The failures that will be reported at the next tracking interval.
     public failuresToReport: Set<DecryptionFailure> = new Set();
@@ -159,13 +156,17 @@ export class DecryptionFailureTracker {
             return;
         }
         if (err) {
+            const eventId = e.getId()!;
+            const failure = this.failures.get(eventId);
             const sender = e.getSender();
             const senderDomain = sender ? sender.split(":")[1] : undefined;
+            const ts = failure ? failure.ts : nowTs;
             let isFederated: boolean | undefined;
             if (this.userDomain !== undefined && senderDomain !== undefined) {
                 isFederated = this.userDomain !== senderDomain;
             }
-            this.addDecryptionFailure(new DecryptionFailure(e.getId()!, err.code, nowTs, isFederated));
+            const wasVisibleToUser = this.visibleEvents.has(eventId);
+            this.addDecryptionFailure(new DecryptionFailure(eventId, err.code, ts, isFederated, wasVisibleToUser));
         } else {
             // Could be an event in the failures, remove it
             this.removeDecryptionFailuresForEvent(e, nowTs);
@@ -175,14 +176,19 @@ export class DecryptionFailureTracker {
     public addVisibleEvent(e: MatrixEvent): void {
         const eventId = e.getId()!;
 
+        // if it's already reported, we don't need to do anything
         if (this.trackedEvents.has(eventId)) {
             return;
         }
 
-        this.visibleEvents.add(eventId);
-        if (this.failures.has(eventId) && !this.visibleFailures.has(eventId)) {
-            this.visibleFailures.set(eventId, this.failures.get(eventId)!);
+        // if we've already marked the event as a failure, mark it as visible
+        // in the failure object
+        const failure = this.failures.get(eventId);
+        if (failure) {
+            failure.wasVisibleToUser = true;
         }
+
+        this.visibleEvents.add(eventId);
     }
 
     public addDecryptionFailure(failure: DecryptionFailure): void {
@@ -193,9 +199,6 @@ export class DecryptionFailureTracker {
         }
 
         this.failures.set(eventId, failure);
-        if (this.visibleEvents.has(eventId) && !this.visibleFailures.has(eventId)) {
-            this.visibleFailures.set(eventId, failure);
-        }
     }
 
     public removeDecryptionFailuresForEvent(e: MatrixEvent, nowTs: number): void {
@@ -203,7 +206,6 @@ export class DecryptionFailureTracker {
         const failure = this.failures.get(eventId);
         if (failure) {
             this.failures.delete(eventId);
-            this.visibleFailures.delete(eventId);
 
             const timeToDecryptMillis = nowTs - failure.ts;
             if (timeToDecryptMillis < DecryptionFailureTracker.GRACE_PERIOD_MS) {
@@ -265,7 +267,6 @@ export class DecryptionFailureTracker {
 
         this.failures = new Map();
         this.visibleEvents = new Set();
-        this.visibleFailures = new Map();
         this.failuresToReport = new Set();
     }
 
@@ -277,23 +278,29 @@ export class DecryptionFailureTracker {
     public checkFailures(nowTs: number): void {
         const failures: Set<DecryptionFailure> = new Set();
         const failuresNotReady: Map<string, DecryptionFailure> = new Map();
-        for (const [eventId, failure] of this.visibleFailures) {
-            if (failure.timeToDecryptMillis) {
-                // if `timeToDecryptMillis` is set, we successfully decrypted the
-                // event, but we got the key late
-                failures.add(failure);
-            } else if (nowTs > failure.ts + DecryptionFailureTracker.MAXIMUM_LATE_DECRYPTION_PERIOD) {
-                // we haven't decrypted yet and it's past the time for it to be
-                // considered a "late" decryption, so we count it as
-                // undecryptable
+        for (const [eventId, failure] of this.failures) {
+            if (
+                failure.timeToDecryptMillis ||
+                nowTs > failure.ts + DecryptionFailureTracker.MAXIMUM_LATE_DECRYPTION_PERIOD
+            ) {
+                // we report failures under two conditions:
+                // - if `timeToDecryptMillis` is set, we successfully decrypted
+                //   the event, but we got the key late.  We report it so that we
+                //   have the late decrytion stats.
+                // - we haven't decrypted yet and it's past the time for it to be
+                //   considered a "late" decryption, so we count it as
+                //   undecryptable.
                 failures.add(failure);
                 this.trackedEvents.add(eventId);
+                // once we've added it to trackedEvents, we won't check
+                // visibleEvents for it any more
+                this.visibleEvents.delete(eventId);
             } else {
-                // the event isn't old enough, so keep track of it
+                // the event isn't old enough, so we still need to keep track of it
                 failuresNotReady.set(eventId, failure);
             }
         }
-        this.visibleFailures = failuresNotReady;
+        this.failures = failuresNotReady;
 
         // Commented out for now for expediency, we need to consider unbound nature of storing
         // this in localStorage
@@ -318,6 +325,7 @@ export class DecryptionFailureTracker {
             const trackedErrorCode = this.errorCodeMapFn(errorCode);
             const properties: ErrorProperties = {
                 timeToDecryptMillis: failure.timeToDecryptMillis ?? -1,
+                wasVisibleToUser: failure.wasVisibleToUser,
             };
             if (failure.isFederated !== undefined) {
                 properties.isFederated = failure.isFederated;
