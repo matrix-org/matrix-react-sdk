@@ -2872,7 +2872,8 @@
         "my_threads_description": "参加している全スレッドを表示",
         "open_thread": "スレッドを開く",
         "show_all_threads": "全てのスレッドを表示",
-        "show_thread_filter": "表示："
+        "show_thread_filter": "表示：",
+        "unable_to_decrypt": "メッセージを復号化できません"
     },
     "time": {
         "about_day_ago": "約1日前",
@@ -2915,9 +2916,6 @@
         },
         "creation_summary_dm": "%(creator)sがこのダイレクトメッセージを作成しました。",
         "creation_summary_room": "%(creator)sがルームを作成し設定しました。",
-        "decryption_failure": {
-            "unable_to_decrypt": "メッセージを復号化できません"
-        },
         "disambiguated_profile": "%(displayName)s（%(matrixId)s）",
         "download_action_decrypting": "復号化しています",
         "download_action_downloading": "ダウンロードしています",

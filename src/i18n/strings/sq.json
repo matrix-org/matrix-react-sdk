@@ -2939,7 +2939,8 @@
         "my_threads_description": "Shfaq krejt rrjedhat ku keni marrë pjesë",
         "open_thread": "Hape rrjedhën",
         "show_all_threads": "Shfaqi krejt rrjedhat",
-        "show_thread_filter": "Shfaq:"
+        "show_thread_filter": "Shfaq:",
+        "unable_to_decrypt": "S’arrihet të shfshehtëzohet mesazhi"
     },
     "time": {
         "about_day_ago": "rreth një ditë më parë",
@@ -2975,10 +2976,7 @@
         },
         "creation_summary_dm": "%(creator)s krijoi këtë DM.",
         "creation_summary_room": "%(creator)s krijoi dhe formësoi dhomën.",
-        "decryption_failure": {
-            "blocked": "Dërguesi ka bllokuar marrjen e këtij mesazhi nga ju",
-            "unable_to_decrypt": "S’arrihet të shfshehtëzohet mesazhi"
-        },
+        "decryption_failure_blocked": "Dërguesi ka bllokuar marrjen e këtij mesazhi nga ju",
         "download_action_decrypting": "Po shfshehtëzohet",
         "download_action_downloading": "Shkarkim",
         "edits": {

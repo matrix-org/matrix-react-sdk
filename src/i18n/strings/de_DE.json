@@ -3118,7 +3118,8 @@
         "my_threads_description": "Zeigt alle Threads, an denen du teilgenommen hast",
         "open_thread": "Thread anzeigen",
         "show_all_threads": "Alle Threads anzeigen",
-        "show_thread_filter": "Zeige:"
+        "show_thread_filter": "Zeige:",
+        "unable_to_decrypt": "Nachrichten-Entschlüsselung nicht möglich"
     },
     "time": {
         "about_day_ago": "vor etwa einem Tag",
@@ -3161,10 +3162,7 @@
         },
         "creation_summary_dm": "%(creator)s hat diese Direktnachricht erstellt.",
         "creation_summary_room": "%(creator)s hat den Raum erstellt und konfiguriert.",
-        "decryption_failure": {
-            "blocked": "Der Absender hat dich vom Erhalt dieser Nachricht ausgeschlossen",
-            "unable_to_decrypt": "Nachrichten-Entschlüsselung nicht möglich"
-        },
+        "decryption_failure_blocked": "Der Absender hat dich vom Erhalt dieser Nachricht ausgeschlossen",
         "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
         "download_action_decrypting": "Entschlüsseln",
         "download_action_downloading": "Herunterladen",

@@ -3054,7 +3054,8 @@
         "my_threads_description": "Показує всі гілки, де ви брали участь",
         "open_thread": "Відкрити гілку",
         "show_all_threads": "Показати всі гілки",
-        "show_thread_filter": "Показати:"
+        "show_thread_filter": "Показати:",
+        "unable_to_decrypt": "Не вдалося розшифрувати повідомлення"
     },
     "time": {
         "about_day_ago": "близько доби тому",
@@ -3097,10 +3098,7 @@
         },
         "creation_summary_dm": "%(creator)s створює цю приватну розмову.",
         "creation_summary_room": "%(creator)s створює й налаштовує кімнату.",
-        "decryption_failure": {
-            "blocked": "Відправник заблокував вам отримання цього повідомлення",
-            "unable_to_decrypt": "Не вдалося розшифрувати повідомлення"
-        },
+        "decryption_failure_blocked": "Відправник заблокував вам отримання цього повідомлення",
         "download_action_decrypting": "Розшифрування",
         "download_action_downloading": "Завантаження",
         "edits": {
