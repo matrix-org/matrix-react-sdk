@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
 import { CryptoEvent, MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Error as ErrorEvent } from "@matrix-org/analytics-events/types/typescript/Error";
+import { DecryptionFailureCode } from "matrix-js-sdk/src/crypto-api";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { PosthogAnalytics } from "./PosthogAnalytics";
@@ -28,7 +28,7 @@ export class DecryptionFailure {
 
     public constructor(
         public readonly failedEventId: string,
-        public readonly errorCode: string,
+        public readonly errorCode: DecryptionFailureCode,
         // the time that we failed to decrypt the event
         public readonly ts: number,
         // is the sender on a different server from us
@@ -40,13 +40,10 @@ export class DecryptionFailure {
     ) {}
 }
 
-type ErrorCode = "OlmKeysNotSentError" | "OlmIndexError" | "UnknownError" | "OlmUnspecifiedError";
-
+type ErrorCode = ErrorEvent["name"];
 export type ErrorProperties = Omit<ErrorEvent, "eventName" | "domain" | "name" | "context">;
-
 type TrackingFn = (trackedErrCode: ErrorCode, rawError: string, properties: ErrorProperties) => void;
-
-export type ErrCodeMapFn = (errcode: string) => ErrorCode;
+export type ErrCodeMapFn = (errcode: DecryptionFailureCode) => ErrorCode;
 
 export class DecryptionFailureTracker {
     private static internalInstance = new DecryptionFailureTracker(
@@ -63,12 +60,14 @@ export class DecryptionFailureTracker {
         (errorCode) => {
             // Map JS-SDK error codes to tracker codes for aggregation
             switch (errorCode) {
-                case "MEGOLM_UNKNOWN_INBOUND_SESSION_ID":
+                case DecryptionFailureCode.MEGOLM_UNKNOWN_INBOUND_SESSION_ID:
                     return "OlmKeysNotSentError";
-                case "OLM_UNKNOWN_MESSAGE_INDEX":
+                case DecryptionFailureCode.OLM_UNKNOWN_MESSAGE_INDEX:
                     return "OlmIndexError";
-                case undefined:
-                    return "OlmUnspecifiedError";
+                case DecryptionFailureCode.HISTORICAL_MESSAGE_NO_KEY_BACKUP:
+                case DecryptionFailureCode.HISTORICAL_MESSAGE_BACKUP_UNCONFIGURED:
+                case DecryptionFailureCode.HISTORICAL_MESSAGE_WORKING_BACKUP:
+                    return "HistoricalMessage";
                 default:
                     return "UnknownError";
             }
@@ -83,8 +82,6 @@ export class DecryptionFailureTracker {
 
     // The failures that will be reported at the next tracking interval.
     public failuresToReport: Set<DecryptionFailure> = new Set();
-
-    public lateDecryptions: Map<string, DecryptionFailure> = new Map();
 
     // Event IDs of failures that were tracked previously
     public trackedEvents: Set<string> = new Set();
@@ -139,10 +136,10 @@ export class DecryptionFailureTracker {
      *
      * @param {function} fn The tracking function, which will be called when failures
      * are tracked. The function should have a signature `(count, trackedErrorCode) => {...}`,
-     * where `count` is the number of failures and `errorCode` matches the `.code` of
-     * provided DecryptionError errors (by default, unless `errorCodeMapFn` is specified.
-     * @param {function?} errorCodeMapFn The function used to map error codes to the
-     * trackedErrorCode. If not provided, the `.code` of errors will be used.
+     * where `count` is the number of failures and `errorCode` matches the output of `errorCodeMapFn`.
+     *
+     * @param {function} errorCodeMapFn The function used to map decryption failure reason  codes to the
+     * `trackedErrorCode`.
      */
     private constructor(
         private readonly fn: TrackingFn,
@@ -169,12 +166,13 @@ export class DecryptionFailureTracker {
     //     localStorage.setItem('mx-decryption-failure-event-ids', JSON.stringify([...this.trackedEvents]));
     // }
 
-    public eventDecrypted(e: MatrixEvent, err: DecryptionError, nowTs: number): void {
+    public eventDecrypted(e: MatrixEvent, nowTs: number): void {
         // for now we only track megolm decrytion failures
         if (e.getWireContent().algorithm != "m.megolm.v1.aes-sha2") {
             return;
         }
-        if (err) {
+        const errCode = e.decryptionFailureReason;
+        if (errCode !== null) {
             const eventId = e.getId()!;
             const failure = this.failures.get(eventId);
             const sender = e.getSender();
@@ -186,7 +184,7 @@ export class DecryptionFailureTracker {
             }
             const wasVisibleToUser = this.visibleEvents.has(eventId);
             this.addDecryptionFailure(
-                new DecryptionFailure(eventId, err.code, ts, isFederated, wasVisibleToUser, this.userTrustsOwnIdentity),
+                new DecryptionFailure(eventId, errCode, ts, isFederated, wasVisibleToUser, this.userTrustsOwnIdentity),
             );
         } else {
             // Could be an event in the failures, remove it
