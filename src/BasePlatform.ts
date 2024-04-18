@@ -34,7 +34,7 @@ import { CheckUpdatesPayload } from "./dispatcher/payloads/CheckUpdatesPayload";
 import { Action } from "./dispatcher/actions";
 import { hideToast as hideUpdateToast } from "./toasts/UpdateToast";
 import { MatrixClientPeg } from "./MatrixClientPeg";
-import { idbLoad, idbSave, idbDelete } from "./utils/StorageManager";
+import { idbLoad, idbSave, idbDelete } from "./utils/StorageAccess";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 import { IConfigOptions } from "./IConfigOptions";
 import SdkConfig from "./SdkConfig";

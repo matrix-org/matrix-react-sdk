@@ -19,11 +19,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from "../settings/SettingsStore";
 import { Features } from "../settings/Settings";
-import { getIndexedDb, idbLoad as accessIdbLoad, idbSave as accessIdbSave, idbDelete as accessIdbDelete} from "./StorageAccess";
-
-export const idbLoad = accessIdbLoad;
-export const idbSave = accessIdbSave;
-export const idbDelete = accessIdbDelete;
+import { getIndexedDb } from "./StorageAccess";
 
 const localStorage = window.localStorage;
 

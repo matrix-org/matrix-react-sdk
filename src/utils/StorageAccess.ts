@@ -25,7 +25,6 @@ export function getIndexedDb(): IDBFactory | undefined {
     } catch (e) {}
 }
 
-
 /* Simple wrapper functions around IndexedDB.
  */
 
