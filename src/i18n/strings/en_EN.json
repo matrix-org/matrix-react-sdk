@@ -252,6 +252,7 @@
             "check_code_mismatch": "The numbers don't match",
             "completing_setup": "Completing set up of your new device",
             "confirm_code_match": "Check that the code below matches with your other device:",
+            "connecting": "Connecting…",
             "error_expired": "Sign in expired. Please try again.",
             "error_expired_title": "The sign in was not completed in time",
             "error_insecure_channel_detected": "A secure connection could not be made to the new device. Your existing devices are still safe and you don't need to worry about them.",

@@ -1716,7 +1716,7 @@ describe("<SessionManagerTab />", () => {
         const openIdConfiguration = mockOpenIdConfiguration(issuer);
 
         beforeEach(() => {
-            settingsValueSpy.mockClear().mockReturnValue(false);
+            settingsValueSpy.mockClear().mockReturnValue(true);
             // enable server support for qr login
             mockClient.getVersions.mockResolvedValue({
                 versions: [],

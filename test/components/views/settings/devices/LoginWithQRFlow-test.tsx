@@ -54,7 +54,7 @@ describe("<LoginWithQRFlow />", () => {
         expect(screen.getAllByTestId("cancel-button")).toHaveLength(1);
         expect(container).toMatchSnapshot();
         fireEvent.click(screen.getByTestId("cancel-button"));
-        expect(onClick).toHaveBeenCalledWith(Click.Cancel);
+        expect(onClick).toHaveBeenCalledWith(Click.Cancel, undefined);
     });
 
     it("renders QR code", async () => {
@@ -69,7 +69,7 @@ describe("<LoginWithQRFlow />", () => {
         expect(screen.getAllByTestId("cancel-button")).toHaveLength(1);
         expect(container).toMatchSnapshot();
         fireEvent.click(screen.getByTestId("cancel-button"));
-        expect(onClick).toHaveBeenCalledWith(Click.Cancel);
+        expect(onClick).toHaveBeenCalledWith(Click.Cancel, undefined);
     });
 
     it("renders code when connected", async () => {
@@ -79,9 +79,9 @@ describe("<LoginWithQRFlow />", () => {
         expect(screen.getAllByTestId("approve-login-button")).toHaveLength(1);
         expect(container).toMatchSnapshot();
         fireEvent.click(screen.getByTestId("decline-login-button"));
-        expect(onClick).toHaveBeenCalledWith(Click.Decline);
+        expect(onClick).toHaveBeenCalledWith(Click.Decline, undefined);
         fireEvent.click(screen.getByTestId("approve-login-button"));
-        expect(onClick).toHaveBeenCalledWith(Click.Approve);
+        expect(onClick).toHaveBeenCalledWith(Click.Approve, undefined);
     });
 
     it("renders spinner while signing in", async () => {
@@ -89,7 +89,7 @@ describe("<LoginWithQRFlow />", () => {
         expect(screen.getAllByTestId("cancel-button")).toHaveLength(1);
         expect(container).toMatchSnapshot();
         fireEvent.click(screen.getByTestId("cancel-button"));
-        expect(onClick).toHaveBeenCalledWith(Click.Cancel);
+        expect(onClick).toHaveBeenCalledWith(Click.Cancel, undefined);
     });
 
     it("renders spinner while verifying", async () => {
@@ -111,7 +111,6 @@ describe("<LoginWithQRFlow />", () => {
                     }),
                 );
                 expect(screen.getAllByTestId("cancellation-message")).toHaveLength(1);
-                expect(screen.getAllByTestId("try-again-button")).toHaveLength(1);
                 expect(container).toMatchSnapshot();
             });
         }
