@@ -1871,7 +1871,7 @@
     emojibase "^15.0.0"
     emojibase-data "^15.0.0"
 
-"@matrix-org/matrix-sdk-crypto-wasm@^4.9.0":
+"@matrix-org/matrix-sdk-crypto-wasm@^4.9.0", "@matrix-org/matrix-sdk-crypto-wasm@github:matrix-org/matrix-rust-sdk-crypto-wasm#poljar/qr-login":
   version "4.9.0"
   resolved "https://codeload.github.com/matrix-org/matrix-rust-sdk-crypto-wasm/tar.gz/78c5fb5cc29979d0bd188a8b0ec163dd30aa7936"
 
