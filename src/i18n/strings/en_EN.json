@@ -2697,6 +2697,8 @@
             "cross_signing_self_signing_private_key": "Self signing private key:",
             "cross_signing_user_signing_private_key": "User signing private key:",
             "cryptography_section": "Cryptography",
+            "dehydrated_device_description": "The offline device feature allows you to receive encrypted messages even when you are not logged in to any devices",
+            "dehydrated_device_enabled": "Offline device enabled",
             "delete_backup": "Delete Backup",
             "delete_backup_confirm_description": "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.",
             "e2ee_default_disabled_warning": "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
@@ -2747,9 +2749,7 @@
             "send_analytics": "Send analytics data",
             "session_id": "Session ID:",
             "session_key": "Session key:",
-            "strict_encryption": "Never send encrypted messages to unverified sessions from this session",
-            "dehydrated_device_enabled": "Offline device enabled",
-            "dehydrated_device_description": "The offline device feature allows you to receive encrypted messages even when you are not logged in to any devices"
+            "strict_encryption": "Never send encrypted messages to unverified sessions from this session"
         },
         "send_read_receipts": "Send read receipts",
         "send_read_receipts_unsupported": "Your server doesn't support disabling sending read receipts.",
@@ -2861,6 +2861,7 @@
         "show_redaction_placeholder": "Show a placeholder for removed messages",
         "show_stickers_button": "Show stickers button",
         "show_typing_notifications": "Show typing notifications",
+        "showbold": "Show all activity in the room list (dots or number of unread messages)",
         "sidebar": {
             "metaspaces_favourites_description": "Group all your favourite rooms and people in one place.",
             "metaspaces_home_all_rooms": "Show all rooms",
@@ -2877,6 +2878,7 @@
             "title": "Sidebar"
         },
         "start_automatically": "Start automatically after system login",
+        "tac_only_notifications": "Only show notifications in the thread activity centre",
         "use_12_hour_format": "Show timestamps in 12 hour format (e.g. 2:30pm)",
         "use_command_enter_send_message": "Use Command + Enter to send a message",
         "use_command_f_search": "Use Command + F to search timeline",
@@ -2905,9 +2907,7 @@
             "voice_section": "Voice settings"
         },
         "warn_quit": "Warn before quitting",
-        "warning": "<w>WARNING:</w> <description/>",
-        "tac_only_notifications": "Only show notifications in the thread activity centre",
-        "showbold": "Show all activity in the room list (dots or number of unread messages)"
+        "warning": "<w>WARNING:</w> <description/>"
     },
     "share": {
         "link_title": "Link to room",
@@ -3175,15 +3175,14 @@
         "my_threads_description": "Shows all threads you've participated in",
         "open_thread": "Open thread",
         "show_all_threads": "Show all threads",
-        "show_thread_filter": "Show:",
-        "unable_to_decrypt": "Unable to decrypt message"
+        "show_thread_filter": "Show:"
     },
     "threads_activity_centre": {
         "header": "Threads activity",
-        "release_announcement_description": "Threads notifications have moved, find them here from now on.",
-        "release_announcement_header": "Threads Activity Centre",
+        "no_rooms_with_threads_notifs": "You don't have rooms with thread notifications yet.",
         "no_rooms_with_unread_threads": "You don't have rooms with unread threads yet.",
-        "no_rooms_with_threads_notifs": "You don't have rooms with thread notifications yet."
+        "release_announcement_description": "Threads notifications have moved, find them here from now on.",
+        "release_announcement_header": "Threads Activity Centre"
     },
     "time": {
         "about_day_ago": "about a day ago",
@@ -3226,7 +3225,6 @@
         },
         "creation_summary_dm": "%(creator)s created this DM.",
         "creation_summary_room": "%(creator)s created and configured the room.",
-        "decryption_failure_blocked": "The sender has blocked you from receiving this message",
         "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
         "download_action_decrypting": "Decrypting",
         "download_action_downloading": "Downloading",
@@ -3658,6 +3656,10 @@
                 "one": "Show %(count)s other preview",
                 "other": "Show %(count)s other previews"
             }
+        },
+        "decryption_failure": {
+            "blocked": "The sender has blocked you from receiving this message",
+            "unable_to_decrypt": "Unable to decrypt message"
         }
     },
     "truncated_list_n_more": {
@@ -3721,6 +3723,7 @@
         "deactivate_confirm_action": "Deactivate user",
         "deactivate_confirm_description": "Deactivating this user will log them out and prevent them from logging back in. Additionally, they will leave all the rooms they are in. This action cannot be reversed. Are you sure you want to deactivate this user?",
         "deactivate_confirm_title": "Deactivate user?",
+        "dehydrated_device_enabled": "Offline device enabled",
         "demote_button": "Demote",
         "demote_self_confirm_description_space": "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.",
         "demote_self_confirm_room": "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.",
@@ -3779,8 +3782,7 @@
         "unban_space_specific": "Unban them from specific things I'm able to",
         "unban_space_warning": "They won't be able to access whatever you're not an admin of.",
         "verify_button": "Verify User",
-        "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices.",
-        "dehydrated_device_enabled": "Offline device enabled"
+        "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices."
     },
     "user_menu": {
         "settings": "All settings",
