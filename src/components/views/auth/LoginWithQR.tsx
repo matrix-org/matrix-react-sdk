@@ -245,14 +245,13 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             // we ask the user to confirm that the channel is secure
         } catch (e: RendezvousError | unknown) {
             logger.error("Error whilst approving login", e);
-            if (this.state.rendezvous instanceof MSC3906Rendezvous) {
-                await this.state.rendezvous?.cancel(
-                    e instanceof RendezvousError
-                        ? (e.code as LegacyRendezvousFailureReason)
-                        : LegacyRendezvousFailureReason.Unknown,
-                );
+            if (rendezvous instanceof MSC3906Rendezvous) {
+                // only set to error phase if it hasn't already been set by onFailure or similar
+                if (this.state.phase !== Phase.Error) {
+                    this.setState({ phase: Phase.Error, failureReason: LegacyRendezvousFailureReason.Unknown });
+                }
             } else {
-                await this.state.rendezvous?.cancel(
+                await rendezvous?.cancel(
                     e instanceof RendezvousError
                         ? (e.code as MSC4108FailureReason)
                         : ClientRendezvousFailureReason.Unknown,
