@@ -32,9 +32,7 @@ import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { DecryptionError } from "matrix-js-sdk/src/crypto/algorithms";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { TooltipProvider } from "@vector-im/compound-web";
 
 // what-input helps improve keyboard accessibility
 import "what-input";
@@ -1598,7 +1596,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         // When logging out, stop tracking failures and destroy state
         cli.on(HttpApiEvent.SessionLoggedOut, () => dft.stop());
-        cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as DecryptionError));
+        cli.on(MatrixEventEvent.Decrypted, (e) => dft.eventDecrypted(e));
 
         cli.on(ClientEvent.Room, (room) => {
             if (cli.isCryptoEnabled()) {
@@ -2138,9 +2136,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         return (
             <ErrorBoundary>
-                <SDKContext.Provider value={this.stores}>
-                    <TooltipProvider>{view}</TooltipProvider>
-                </SDKContext.Provider>
+                <SDKContext.Provider value={this.stores}>{view}</SDKContext.Provider>
             </ErrorBoundary>
         );
     }
