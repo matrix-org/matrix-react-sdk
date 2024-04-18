@@ -50,10 +50,10 @@ async function pickleKeyToAesKey(pickleKey: string): Promise<Uint8Array> {
     for (let i = 0; i < pickleKey.length; i++) {
         pickleKeyBuffer[i] = pickleKey.charCodeAt(i);
     }
-    const hkdfKey = await window.crypto.subtle.importKey("raw", pickleKeyBuffer, "HKDF", false, ["deriveBits"]);
+    const hkdfKey = await crypto.subtle.importKey("raw", pickleKeyBuffer, "HKDF", false, ["deriveBits"]);
     pickleKeyBuffer.fill(0);
     return new Uint8Array(
-        await window.crypto.subtle.deriveBits(
+        await crypto.subtle.deriveBits(
             {
                 name: "HKDF",
                 hash: "SHA-256",
