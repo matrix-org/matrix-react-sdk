@@ -61,6 +61,8 @@ import SettingsStore from "../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { MatrixClientPeg as peg } from "../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
+import { ReleaseAnnouncement } from "../../../src/components/structures/ReleaseAnnouncement";
+import { ReleaseAnnouncementStore } from "../../../src/stores/ReleaseAnnouncementStore";
 
 jest.mock("matrix-js-sdk/src/oidc/authorize", () => ({
     completeAuthorizationCodeGrant: jest.fn(),
@@ -627,6 +629,12 @@ describe("<MatrixChat />", () => {
                         (id) => [room, spaceRoom].find((room) => room.roomId === id) || null,
                     );
                     jest.spyOn(spaceRoom, "isSpaceRoom").mockReturnValue(true);
+
+                    jest.spyOn(ReleaseAnnouncementStore.instance, "getReleaseAnnouncement").mockReturnValue(null);
+                });
+
+                afterEach(() => {
+                    jest.restoreAllMocks();
                 });
 
                 describe("leave_room", () => {
@@ -676,7 +684,8 @@ describe("<MatrixChat />", () => {
                         it("should warn when room is not public", async () => {
                             jest.spyOn(room.currentState, "getStateEvents").mockReturnValue(inviteJoinRule);
                             dispatchAction();
-                            await screen.findByRole("dialog");
+                            const blerp = await screen.findByRole("dialog");
+                            console.log(blerp);
                             expect(
                                 screen.getByText(
                                     "This room is not public. You will not be able to rejoin without an invite.",
