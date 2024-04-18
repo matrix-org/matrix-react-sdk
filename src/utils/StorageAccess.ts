@@ -14,8 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// make this lazy in order to make testing easier
+
+/**
+ * Retrieves the IndexedDB factory object.
+ *
+ * @returns {IDBFactory | undefined} The IndexedDB factory object if available, or undefined if it is not supported.
+ */
 export function getIndexedDb(): IDBFactory | undefined {
+    // IndexedDB loading is lazy for easier testing.
+
     // just *accessing* _indexedDB throws an exception in firefox with
     // indexeddb disabled.
     try {
@@ -48,6 +55,13 @@ async function idbInit(): Promise<void> {
     });
 }
 
+/**
+ * Loads an item from an IndexedDB table.
+ *
+ * @param {string} table The name of the object store in IndexedDB.
+ * @param {string | string[]} key The key where the data is stored.
+ * @returns {Promise<any>} A promise that resolves with the retrieved item from the table.
+ */
 export async function idbLoad(table: string, key: string | string[]): Promise<any> {
     if (!idb) {
         await idbInit();
@@ -65,6 +79,14 @@ export async function idbLoad(table: string, key: string | string[]): Promise<an
     });
 }
 
+/**
+ * Saves data to an IndexedDB table.
+ *
+ * @param {string} table The name of the table in the IndexedDB.
+ * @param {string|string[]} key The key to use for storing the data.
+ * @param {*} data The data to be saved.
+ * @returns {Promise<void>} A promise that resolves when the data is saved successfully.
+ */
 export async function idbSave(table: string, key: string | string[], data: any): Promise<void> {
     if (!idb) {
         await idbInit();
@@ -82,6 +104,13 @@ export async function idbSave(table: string, key: string | string[], data: any):
     });
 }
 
+/**
+ * Deletes a record from an UndexedDB table.
+ *
+ * @param {string} table The name of the table where the record is stored.
+ * @param {string|string[]} key The key of the record to be deleted.
+ * @returns {Promise<void>} A Promise that resolves when the record(s) have been successfully deleted.
+ */
 export async function idbDelete(table: string, key: string | string[]): Promise<void> {
     if (!idb) {
         await idbInit();
