@@ -110,7 +110,6 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
                         break;
 
                     case MSC4108FailureReason.UserCancelled:
-                    case ClientRendezvousFailureReason.UserDeclined:
                     case LegacyRendezvousFailureReason.UserCancelled:
                         title = _t("auth|qr_code_login|error_user_cancelled_title");
                         message = _t("auth|qr_code_login|error_user_cancelled");
@@ -145,6 +144,11 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
                         success = true;
                         title = _t("auth|qr_code_login|error_other_device_already_signed_in_title");
                         message = _t("auth|qr_code_login|error_other_device_already_signed_in");
+                        break;
+
+                    case ClientRendezvousFailureReason.UserDeclined:
+                        title = _t("auth|qr_code_login|error_user_declined_title");
+                        message = _t("auth|qr_code_login|error_user_declined");
                         break;
 
                     case LoginWithQRFailureReason.RateLimited:
