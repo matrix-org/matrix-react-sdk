@@ -29,7 +29,7 @@ import { defer, sleep } from "matrix-js-sdk/src/utils";
 import { UserVerificationStatus } from "matrix-js-sdk/src/crypto-api";
 
 import MatrixChat from "../../../src/components/structures/MatrixChat";
-import * as StorageAccess from "../src/utils/StorageAccess";
+import * as StorageAccess from "../../../src/utils/StorageAccess";
 import defaultDispatcher from "../../../src/dispatcher/dispatcher";
 import { Action } from "../../../src/dispatcher/actions";
 import { UserTab } from "../../../src/components/views/dialogs/UserTab";
