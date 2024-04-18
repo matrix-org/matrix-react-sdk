@@ -96,6 +96,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
 
         MatrixClientPeg.safeGet().on(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
         MatrixClientPeg.safeGet().on(CryptoEvent.KeyBackupSessionsRemaining, this.onKeyBackupSessionsRemaining);
+        MatrixClientPeg.safeGet().on(CryptoEvent.KeyBackupDecryptionKeyCached, this.onKeyBackupDecryptionKeyCached);
     }
 
     public componentWillUnmount(): void {
@@ -107,6 +108,10 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
                 CryptoEvent.KeyBackupSessionsRemaining,
                 this.onKeyBackupSessionsRemaining,
             );
+            MatrixClientPeg.get()!.removeListener(
+                CryptoEvent.KeyBackupDecryptionKeyCached,
+                this.onKeyBackupDecryptionKeyCached,
+            );
         }
     }
 
@@ -114,6 +119,10 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         this.setState({
             sessionsRemaining,
         });
+    };
+
+    private onKeyBackupDecryptionKeyCached = (): void => {
+        this.getUpdatedDiagnostics();
     };
 
     private onKeyBackupStatus = (): void => {
