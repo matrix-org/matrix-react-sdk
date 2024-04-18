@@ -31,6 +31,7 @@ exports[`VoiceBroadcastRecordingBody when rendering a live broadcast should rend
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -84,6 +85,7 @@ exports[`VoiceBroadcastRecordingBody when rendering a paused broadcast should re
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"

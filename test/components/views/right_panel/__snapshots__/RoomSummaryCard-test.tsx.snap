@@ -30,6 +30,7 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
           data-testid="base-card-close-button"
           role="button"
           tabindex="0"
+          title="Close"
         />
       </header>
       <header

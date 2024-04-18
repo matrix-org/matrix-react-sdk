@@ -31,6 +31,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a buffering voice broadcast s
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -161,6 +162,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a pause/not-live broadcast sh
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -287,6 +289,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a playing broadcast in pip mo
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -401,6 +404,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a playing broadcast should re
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -515,6 +519,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a playing/live broadcast shou
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -637,6 +642,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering a stopped broadcast should re
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -731,6 +737,7 @@ exports[`VoiceBroadcastPlaybackBody when rendering an error broadcast should ren
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"

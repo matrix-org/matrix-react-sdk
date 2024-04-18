@@ -11,6 +11,7 @@ exports[`<ZoomButtons /> renders buttons 1`] = `
       data-testid="map-zoom-in-button"
       role="button"
       tabindex="0"
+      title="Zoom in"
     >
       <div
         class="mx_ZoomButtons_icon"
@@ -22,6 +23,7 @@ exports[`<ZoomButtons /> renders buttons 1`] = `
       data-testid="map-zoom-out-button"
       role="button"
       tabindex="0"
+      title="Zoom out"
     >
       <div
         class="mx_ZoomButtons_icon"

@@ -19,6 +19,7 @@ exports[`<DialogSidebar /> renders sidebar correctly with beacons 1`] = `
         data-testid="dialog-sidebar-close"
         role="button"
         tabindex="0"
+        title="Close sidebar"
       >
         <div
           class="mx_DialogSidebar_closeButtonIcon"
@@ -118,6 +119,7 @@ exports[`<DialogSidebar /> renders sidebar correctly without beacons 1`] = `
         data-testid="dialog-sidebar-close"
         role="button"
         tabindex="0"
+        title="Close sidebar"
       >
         <div
           class="mx_DialogSidebar_closeButtonIcon"

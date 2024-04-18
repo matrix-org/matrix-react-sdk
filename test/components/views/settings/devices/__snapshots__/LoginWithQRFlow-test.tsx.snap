@@ -522,6 +522,7 @@ exports[`<LoginWithQRFlow /> renders QR code 1`] = `
           data-testid="back-button"
           role="button"
           tabindex="0"
+          title="Back"
         >
           <div />
         </div>
@@ -654,6 +655,7 @@ exports[`<LoginWithQRFlow /> renders spinner while connecting 1`] = `
           data-testid="back-button"
           role="button"
           tabindex="0"
+          title="Back"
         >
           <div />
         </div>
@@ -724,6 +726,7 @@ exports[`<LoginWithQRFlow /> renders spinner while loading 1`] = `
           data-testid="back-button"
           role="button"
           tabindex="0"
+          title="Back"
         >
           <div />
         </div>
@@ -782,6 +785,7 @@ exports[`<LoginWithQRFlow /> renders spinner while signing in 1`] = `
           data-testid="back-button"
           role="button"
           tabindex="0"
+          title="Back"
         >
           <div />
         </div>
@@ -852,6 +856,7 @@ exports[`<LoginWithQRFlow /> renders spinner while verifying 1`] = `
           data-testid="back-button"
           role="button"
           tabindex="0"
+          title="Back"
         >
           <div />
         </div>
@@ -913,6 +918,7 @@ exports[`<LoginWithQRFlow /> renders spinner whilst QR generating 1`] = `
           data-testid="back-button"
           role="button"
           tabindex="0"
+          title="Back"
         >
           <div />
         </div>

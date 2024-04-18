@@ -73,6 +73,7 @@ exports[`PeopleRoomSettingsTab with requests to join renders requests fully 1`] 
         data-state="closed"
         role="button"
         tabindex="0"
+        title="Deny"
       >
         <div
           height="18"
@@ -85,6 +86,7 @@ exports[`PeopleRoomSettingsTab with requests to join renders requests fully 1`] 
         data-state="closed"
         role="button"
         tabindex="0"
+        title="Approve"
       >
         <div
           height="18"
@@ -142,6 +144,7 @@ exports[`PeopleRoomSettingsTab with requests to join renders requests reduced 1`
         data-state="closed"
         role="button"
         tabindex="0"
+        title="Deny"
       >
         <div
           height="18"
@@ -154,6 +157,7 @@ exports[`PeopleRoomSettingsTab with requests to join renders requests reduced 1`
         data-state="closed"
         role="button"
         tabindex="0"
+        title="Approve"
       >
         <div
           height="18"

@@ -7,6 +7,7 @@ exports[`<LeftPanelLiveShareWarning /> when user has live location monitor rende
     data-state="closed"
     role="button"
     tabindex="0"
+    title="You are sharing your live location"
   >
     <div
       height="10"

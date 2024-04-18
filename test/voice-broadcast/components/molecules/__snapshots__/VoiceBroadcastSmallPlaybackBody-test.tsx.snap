@@ -43,6 +43,7 @@ exports[`<VoiceBroadcastSmallPlaybackBody /> when rendering a { state: 'pause', 
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -119,6 +120,7 @@ exports[`<VoiceBroadcastSmallPlaybackBody /> when rendering a { state: 'playing'
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -214,6 +216,7 @@ exports[`<VoiceBroadcastSmallPlaybackBody /> when rendering a buffering broadcas
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -298,6 +301,7 @@ exports[`<VoiceBroadcastSmallPlaybackBody /> when rendering a playing broadcast 
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -374,6 +378,7 @@ exports[`<VoiceBroadcastSmallPlaybackBody /> when rendering a stopped broadcast 
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"

@@ -13,6 +13,7 @@ exports[`<UserMenu> <UserMenu> when video broadcast when rendered should render 
       data-state="closed"
       role="button"
       tabindex="0"
+      title="User menu"
     >
       <div
         class="mx_UserMenu_userAvatar"

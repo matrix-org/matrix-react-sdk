@@ -467,6 +467,7 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                 data-state="closed"
                 role="button"
                 tabindex="0"
+                title="Emoji"
               />
               <div
                 aria-label="Attachment"
@@ -474,6 +475,7 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
                 data-state="closed"
                 role="button"
                 tabindex="0"
+                title="Attachment"
               />
               <div
                 aria-label="More options"
@@ -716,6 +718,7 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                 data-state="closed"
                 role="button"
                 tabindex="0"
+                title="Emoji"
               />
               <div
                 aria-label="Attachment"
@@ -723,6 +726,7 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
                 data-state="closed"
                 role="button"
                 tabindex="0"
+                title="Attachment"
               />
               <div
                 aria-label="More options"

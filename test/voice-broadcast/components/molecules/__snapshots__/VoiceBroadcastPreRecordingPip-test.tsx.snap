@@ -43,6 +43,7 @@ exports[`VoiceBroadcastPreRecordingPip when rendered should match the snapshot 1
           data-state="closed"
           role="button"
           tabindex="0"
+          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
