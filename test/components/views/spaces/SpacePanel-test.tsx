@@ -17,8 +17,8 @@ limitations under the License.
 import React from "react";
 import { mocked } from "jest-mock";
 import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { render, screen, fireEvent, act, cleanup } from "@testing-library/react";
 
-import { render, screen, fireEvent, act, cleanup } from "../../..";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import { MetaSpace, SpaceKey } from "../../../../src/stores/spaces";
 import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";

@@ -17,8 +17,8 @@ limitations under the License.
 import React from "react";
 import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
+import { act, render, RenderResult, screen, waitFor } from "@testing-library/react";
 
-import { act, render, RenderResult, screen, waitFor } from "../..";
 import UnwrappedUserMenu from "../../../src/components/structures/UserMenu";
 import { stubClient, wrapInSdkContext } from "../../test-utils";
 import {

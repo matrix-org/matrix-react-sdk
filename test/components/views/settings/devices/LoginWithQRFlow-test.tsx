@@ -16,8 +16,8 @@ limitations under the License.
 
 import React from "react";
 import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 
-import { cleanup, fireEvent, render, screen, waitFor } from "../../../..";
 import LoginWithQRFlow from "../../../../../src/components/views/auth/LoginWithQRFlow";
 import {
     Click,

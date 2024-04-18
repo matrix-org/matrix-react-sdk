@@ -21,8 +21,8 @@ import { DELEGATED_OIDC_COMPATIBILITY, IdentityProviderBrand, OidcClientConfig }
 import { logger } from "matrix-js-sdk/src/logger";
 import * as Matrix from "matrix-js-sdk/src/matrix";
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
+import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
 
-import { fireEvent, render, screen, waitForElementToBeRemoved } from "../../..";
 import SdkConfig from "../../../../src/SdkConfig";
 import { mkServerConfig, mockPlatformPeg, unmockPlatformPeg } from "../../../test-utils";
 import Login from "../../../../src/components/structures/auth/Login";

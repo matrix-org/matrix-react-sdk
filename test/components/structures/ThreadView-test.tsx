@@ -27,8 +27,8 @@ import {
     THREAD_RELATION_TYPE,
 } from "matrix-js-sdk/src/matrix";
 import React, { useState } from "react";
+import { act, getByTestId, render, RenderResult, waitFor } from "@testing-library/react";
 
-import { act, getByTestId, render, RenderResult, waitFor } from "../..";
 import ThreadView from "../../../src/components/structures/ThreadView";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../src/contexts/RoomContext";

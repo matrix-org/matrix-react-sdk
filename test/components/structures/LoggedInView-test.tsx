@@ -19,7 +19,6 @@ import { render, RenderResult } from "@testing-library/react";
 import { ConditionKind, EventType, IPushRule, MatrixEvent, ClientEvent, PushRuleKind } from "matrix-js-sdk/src/matrix";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import { logger } from "matrix-js-sdk/src/logger";
-import { TooltipProvider } from "@vector-im/compound-web";
 
 import LoggedInView from "../../../src/components/structures/LoggedInView";
 import { SDKContext } from "../../../src/contexts/SDKContext";
@@ -60,11 +59,7 @@ describe("<LoggedInView />", () => {
 
     const getComponent = (props = {}): RenderResult =>
         render(<LoggedInView {...defaultProps} {...props} />, {
-            wrapper: ({ children }) => (
-                <TooltipProvider>
-                    <SDKContext.Provider value={mockSdkContext}>{children}</SDKContext.Provider>
-                </TooltipProvider>
-            ),
+            wrapper: ({ children }) => <SDKContext.Provider value={mockSdkContext}>{children}</SDKContext.Provider>,
         });
 
     beforeEach(() => {

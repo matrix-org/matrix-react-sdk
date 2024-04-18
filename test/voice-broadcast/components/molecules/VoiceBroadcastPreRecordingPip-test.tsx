@@ -18,8 +18,8 @@ import React from "react";
 import { mocked } from "jest-mock";
 import { MatrixClient, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
+import { act, render, RenderResult, screen } from "@testing-library/react";
 
-import { act, render, RenderResult, screen } from "../../..";
 import {
     VoiceBroadcastPlaybacksStore,
     VoiceBroadcastPreRecording,

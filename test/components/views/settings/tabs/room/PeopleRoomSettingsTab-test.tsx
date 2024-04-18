@@ -25,8 +25,8 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import React from "react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 
-import { act, fireEvent, render, screen, within } from "../../../../..";
 import ErrorDialog from "../../../../../../src/components/views/dialogs/ErrorDialog";
 import { PeopleRoomSettingsTab } from "../../../../../../src/components/views/settings/tabs/room/PeopleRoomSettingsTab";
 import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";

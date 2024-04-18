@@ -20,8 +20,8 @@ import userEvent from "@testing-library/user-event";
 import { MatrixClient, PendingEventOrdering, Room, MatrixEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { Widget, ClientWidgetApi } from "matrix-widget-api";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup/setup";
+import { screen, render, act, cleanup } from "@testing-library/react";
 
-import { screen, render, act, cleanup } from "../..";
 import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import {
     useMockedCalls,

@@ -18,8 +18,8 @@ import React from "react";
 import { MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
+import { act, render, RenderResult, screen } from "@testing-library/react";
 
-import { act, render, RenderResult, screen } from "../../..";
 import {
     VoiceBroadcastInfoState,
     VoiceBroadcastLiveness,

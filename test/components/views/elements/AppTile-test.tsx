@@ -26,8 +26,8 @@ import {
     WidgetInfo,
     WidgetLifecycle,
 } from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
+import { act, render, RenderResult } from "@testing-library/react";
 
-import { act, render, RenderResult } from "../../..";
 import RightPanel from "../../../../src/components/structures/RightPanel";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import ResizeNotifier from "../../../../src/utils/ResizeNotifier";

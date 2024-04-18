@@ -663,11 +663,7 @@ describe("<DeviceItem />", () => {
 
     const renderComponent = (props = {}) => {
         const Wrapper = (wrapperProps = {}) => {
-            return (
-                <TooltipProvider>
-                    <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />
-                </TooltipProvider>
-            );
+            return <MatrixClientContext.Provider value={mockClient} {...wrapperProps} />;
         };
 
         return render(<DeviceItem {...defaultProps} {...props} />, {
