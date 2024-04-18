@@ -61,7 +61,6 @@ import SettingsStore from "../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { MatrixClientPeg as peg } from "../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
-import { ReleaseAnnouncement } from "../../../src/components/structures/ReleaseAnnouncement";
 import { ReleaseAnnouncementStore } from "../../../src/stores/ReleaseAnnouncementStore";
 
 jest.mock("matrix-js-sdk/src/oidc/authorize", () => ({
