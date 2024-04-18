@@ -21,7 +21,7 @@ export function getIndexedDb(): IDBFactory | undefined {
     try {
         // `self` is preferred for service workers, which access this file's functions.
         // We check `self` first because `window` returns something which doesn't work for service workers.
-        return self.indexedDB ? self.indexedDB : window.indexedDB;
+        return self?.indexedDB ? self.indexedDB : window.indexedDB;
     } catch (e) {}
 }
 
