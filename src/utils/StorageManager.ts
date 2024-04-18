@@ -19,17 +19,13 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from "../settings/SettingsStore";
 import { Features } from "../settings/Settings";
+import { getIndexedDb, idbLoad as accessIdbLoad, idbSave as accessIdbSave, idbDelete as accessIdbDelete} from "./StorageAccess";
+
+export const idbLoad = accessIdbLoad;
+export const idbSave = accessIdbSave;
+export const idbDelete = accessIdbDelete;
 
 const localStorage = window.localStorage;
-
-// make this lazy in order to make testing easier
-function getIndexedDb(): IDBFactory | undefined {
-    // just *accessing* _indexedDB throws an exception in firefox with
-    // indexeddb disabled.
-    try {
-        return window.indexedDB;
-    } catch (e) {}
-}
 
 // The JS SDK will add a prefix of "matrix-js-sdk:" to the sync store name.
 const SYNC_STORE_NAME = "riot-web-sync";
@@ -213,78 +209,4 @@ async function checkCryptoStore(): Promise<StoreCheck> {
  */
 export function setCryptoInitialised(cryptoInited: boolean): void {
     localStorage.setItem("mx_crypto_initialised", String(cryptoInited));
-}
-
-/* Simple wrapper functions around IndexedDB.
- */
-
-let idb: IDBDatabase | null = null;
-
-async function idbInit(): Promise<void> {
-    if (!getIndexedDb()) {
-        throw new Error("IndexedDB not available");
-    }
-    idb = await new Promise((resolve, reject) => {
-        const request = getIndexedDb()!.open("matrix-react-sdk", 1);
-        request.onerror = reject;
-        request.onsuccess = (): void => {
-            resolve(request.result);
-        };
-        request.onupgradeneeded = (): void => {
-            const db = request.result;
-            db.createObjectStore("pickleKey");
-            db.createObjectStore("account");
-        };
-    });
-}
-
-export async function idbLoad(table: string, key: string | string[]): Promise<any> {
-    if (!idb) {
-        await idbInit();
-    }
-    return new Promise((resolve, reject) => {
-        const txn = idb!.transaction([table], "readonly");
-        txn.onerror = reject;
-
-        const objectStore = txn.objectStore(table);
-        const request = objectStore.get(key);
-        request.onerror = reject;
-        request.onsuccess = (event): void => {
-            resolve(request.result);
-        };
-    });
-}
-
-export async function idbSave(table: string, key: string | string[], data: any): Promise<void> {
-    if (!idb) {
-        await idbInit();
-    }
-    return new Promise((resolve, reject) => {
-        const txn = idb!.transaction([table], "readwrite");
-        txn.onerror = reject;
-
-        const objectStore = txn.objectStore(table);
-        const request = objectStore.put(data, key);
-        request.onerror = reject;
-        request.onsuccess = (event): void => {
-            resolve();
-        };
-    });
-}
-
-export async function idbDelete(table: string, key: string | string[]): Promise<void> {
-    if (!idb) {
-        await idbInit();
-    }
-    return new Promise((resolve, reject) => {
-        const txn = idb!.transaction([table], "readwrite");
-        txn.onerror = reject;
-
-        const objectStore = txn.objectStore(table);
-        const request = objectStore.delete(key);
-        request.onerror = reject;
-        request.onsuccess = (): void => {
-            resolve();
-        };
-    });
 }
