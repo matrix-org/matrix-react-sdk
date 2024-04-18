@@ -43,7 +43,6 @@ export enum Click {
     Cancel,
     Decline,
     Approve,
-    TryAgain,
     Back,
     ShowQr,
 }

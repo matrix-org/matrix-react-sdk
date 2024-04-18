@@ -336,10 +336,6 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 this.reset();
                 this.props.onFinished(false);
                 break;
-            case Click.TryAgain:
-                this.reset();
-                await this.updateMode(this.props.mode);
-                break;
             case Click.Back:
                 if (this.state.rendezvous instanceof MSC3906Rendezvous) {
                     await this.state.rendezvous?.cancel(LegacyRendezvousFailureReason.UserCancelled);

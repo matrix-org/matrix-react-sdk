@@ -139,51 +139,6 @@ describe("<LoginWithQR />", () => {
         expect(rendezvous.startAfterShowingCode).toHaveBeenCalled();
     });
 
-    test("render QR then cancel and try again", async () => {
-        const onFinished = jest.fn();
-        jest.spyOn(MSC3906Rendezvous.prototype, "startAfterShowingCode").mockImplementation(() => unresolvedPromise());
-        render(getComponent({ client, onFinished }));
-        const rendezvous = mocked(MSC3906Rendezvous).mock.instances[0];
-
-        await waitFor(() =>
-            expect(mockedFlow).toHaveBeenLastCalledWith(
-                expect.objectContaining({
-                    phase: Phase.ShowingQR,
-                }),
-            ),
-        );
-        // display QR code
-        expect(mockedFlow).toHaveBeenLastCalledWith({
-            phase: Phase.ShowingQR,
-            code: mockRendezvousCode,
-            onClick: expect.any(Function),
-        });
-        expect(rendezvous.generateCode).toHaveBeenCalled();
-        expect(rendezvous.startAfterShowingCode).toHaveBeenCalled();
-
-        // cancel
-        const onClick = mockedFlow.mock.calls[0][0].onClick;
-        await onClick(Click.Cancel);
-        expect(onFinished).toHaveBeenCalledWith(false);
-        expect(rendezvous.cancel).toHaveBeenCalledWith(LegacyRendezvousFailureReason.UserCancelled);
-
-        // try again
-        onClick(Click.TryAgain);
-        await waitFor(() =>
-            expect(mockedFlow).toHaveBeenLastCalledWith(
-                expect.objectContaining({
-                    phase: Phase.ShowingQR,
-                }),
-            ),
-        );
-        // display QR code
-        expect(mockedFlow).toHaveBeenLastCalledWith({
-            phase: Phase.ShowingQR,
-            code: mockRendezvousCode,
-            onClick: expect.any(Function),
-        });
-    });
-
     test("render QR then back", async () => {
         const onFinished = jest.fn();
         jest.spyOn(MSC3906Rendezvous.prototype, "startAfterShowingCode").mockReturnValue(unresolvedPromise());

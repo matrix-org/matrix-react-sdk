@@ -113,8 +113,6 @@ describe("<LoginWithQRFlow />", () => {
                 expect(screen.getAllByTestId("cancellation-message")).toHaveLength(1);
                 expect(screen.getAllByTestId("try-again-button")).toHaveLength(1);
                 expect(container).toMatchSnapshot();
-                fireEvent.click(screen.getByTestId("try-again-button"));
-                expect(onClick).toHaveBeenCalledWith(Click.TryAgain);
             });
         }
     });
