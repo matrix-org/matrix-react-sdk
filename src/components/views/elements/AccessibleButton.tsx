@@ -125,12 +125,13 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
         onKeyDown,
         onKeyUp,
         triggerOnMouseDown,
-        title,
         caption,
         ...restProps
     }: Props<T>,
     ref: Ref<HTMLElement>,
 ): JSX.Element {
+    const { title } = restProps;
+
     const newProps: RenderedElementProps = restProps;
     if (disabled) {
         newProps["aria-disabled"] = true;
