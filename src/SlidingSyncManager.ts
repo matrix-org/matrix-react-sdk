@@ -334,6 +334,7 @@ export class SlidingSyncManager {
      *   2. The client `well-known` sliding sync proxy URL [declared at the unstable prefix](https://github.com/matrix-org/matrix-spec-proposals/blob/kegan/sync-v3/proposals/3575-sync.md#unstable-prefix)
      *   3. The homeserver base url (for native server support)
      * @param client The MatrixClient to use
+     * @returns A working Sliding Sync or undefined
      */
     public async setup(client: MatrixClient): Promise<SlidingSync | undefined> {
         const baseUrl = client.baseUrl;
