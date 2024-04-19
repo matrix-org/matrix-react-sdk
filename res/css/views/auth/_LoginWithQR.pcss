@@ -114,6 +114,7 @@ limitations under the License.
             color: 1px solid $input-placeholder;
             margin-bottom: 16px;
             line-height: 20px;
+            text-align: initial;
         }
 
         /* Circled number list item marker */
@@ -161,7 +162,13 @@ limitations under the License.
 
     .mx_LoginWithQR_checkCode_input {
         margin-bottom: 4px;
-        text-align: unset;
+        text-align: initial;
+
+        input {
+            /* Workaround for one of the input rules in _common.pcss being not specific enough */
+            padding: 0;
+            padding-inline-start: calc(40px / 2 - (1ch / 2));
+        }
     }
 
     .mx_LoginWithQR_heading {
