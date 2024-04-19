@@ -114,11 +114,11 @@ class VoiceUserSettingsTab extends React.Component<MatrixClientProps, IState> {
     };
 
     private changeWebRtcMethod = (p2p: boolean): void => {
-        this.mxClient.setForceTURN(!p2p);
+        this.props.mxClient.setForceTURN(!p2p);
     };
 
     private changeFallbackICEServerAllowed = (allow: boolean): void => {
-        this.mxClient.setFallbackICEServerAllowed(allow);
+        this.props.mxClient.setFallbackICEServerAllowed(allow);
     };
 
     private renderDeviceOptions(devices: Array<MediaDeviceInfo>, category: MediaDeviceKindEnum): Array<JSX.Element> {

@@ -112,7 +112,7 @@ class NotificationsSettingsTab extends React.Component<IProps, IState> {
             type = "audio/ogg";
         }
 
-        const { content_uri: url } = await this.mxClient.uploadContent(this.state.uploadedFile, {
+        const { content_uri: url } = await this.props.mxClient.uploadContent(this.state.uploadedFile, {
             type,
         });
 
