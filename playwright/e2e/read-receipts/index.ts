@@ -398,6 +398,11 @@ class Helpers {
         await expect(this.page.locator(".mx_ThreadView_timelinePanelWrapper")).toBeVisible();
     }
 
+    async closeThread() {
+        await this.page.getByTitle("Threads").click();
+        await expect(this.page.locator(".mx_ThreadView_timelinePanelWrapper")).not.toBeVisible();
+    }
+
     /**
      * Close the threads panel. (Actually, close any right panel, but for these
      * tests we only open the threads panel.)
