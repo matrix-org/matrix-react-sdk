@@ -289,20 +289,22 @@ function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement | nu
 }
 
 function pollButton(room: Room, relation?: IEventRelation): ReactElement {
-    return <PollButton key="polls" room={room} relation={relation} />;
+    return (
+        <OverflowMenuContext.Consumer key="polls">
+            {(context) => <PollButton room={room} relation={relation} context={context} />}
+        </OverflowMenuContext.Consumer>
+    );
 }
 
 interface IPollButtonProps {
     room: Room;
     relation?: IEventRelation;
+    context: React.ContextType<typeof OverflowMenuContext>;
 }
 
 class PollButton extends React.PureComponent<IPollButtonProps> {
-    public static contextType = OverflowMenuContext;
-    public context!: React.ContextType<typeof OverflowMenuContext>;
-
     private onCreateClick = (): void => {
-        this.context?.(); // close overflow menu
+        this.props.context?.(); // close overflow menu
         const canSend = this.props.room.currentState.maySendEvent(
             M_POLL_START.name,
             MatrixClientPeg.safeGet().getSafeUserId(),
