@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, SyntheticEvent } from "react";
+import React, { ChangeEvent, forwardRef, SyntheticEvent } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
 import { LoginFlow, MatrixError, SSOAction, SSOFlow } from "matrix-js-sdk/src/matrix";
@@ -60,6 +60,7 @@ interface IProps {
 
     // Called when the SSO login completes
     onTokenLoginCompleted: () => void;
+    context: React.ContextType<typeof SDKContext>;
 }
 
 interface IState {
@@ -70,14 +71,9 @@ interface IState {
     flows: LoginFlow[];
 }
 
-export default class SoftLogout extends React.Component<IProps, IState> {
-    public static contextType = SDKContext;
-    public context!: React.ContextType<typeof SDKContext>;
-
-    public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
-        super(props, context);
-
-        this.context = context;
+class SoftLogout extends React.Component<IProps, IState> {
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
             loginView: LoginView.Loading,
@@ -104,7 +100,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                 if (!wipeData) return;
 
                 logger.log("Clearing data from soft-logged-out session");
-                Lifecycle.logout(this.context.oidcClientStore);
+                Lifecycle.logout(this.props.context.oidcClientStore);
             },
         });
     };
@@ -338,3 +334,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         );
     }
 }
+
+export default forwardRef<SoftLogout, Omit<IProps, "context">>((props, ref) => (
+    <SDKContext.Consumer>{(context) => <SoftLogout {...props} context={context} ref={ref} />}</SDKContext.Consumer>
+));

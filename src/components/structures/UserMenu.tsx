@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, ReactNode } from "react";
+import React, { createRef, forwardRef, ReactNode } from "react";
 import { Room } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -56,6 +56,7 @@ import { shouldShowFeedback } from "../../utils/Feedback";
 interface IProps {
     isPanelCollapsed: boolean;
     children?: ReactNode;
+    context: React.ContextType<typeof SDKContext>;
 }
 
 type PartialDOMRect = Pick<DOMRect, "width" | "left" | "top" | "height">;
@@ -84,25 +85,21 @@ const below = (rect: PartialDOMRect): MenuProps => {
     };
 };
 
-export default class UserMenu extends React.Component<IProps, IState> {
-    public static contextType = SDKContext;
-    public context!: React.ContextType<typeof SDKContext>;
-
+class UserMenu extends React.Component<IProps, IState> {
     private dispatcherRef?: string;
     private themeWatcherRef?: string;
     private readonly dndWatcherRef?: string;
     private buttonRef: React.RefObject<HTMLButtonElement> = createRef();
 
-    public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
-        this.context = context;
         this.state = {
             contextMenuPosition: null,
             isDarkTheme: this.isUserOnDarkTheme(),
             isHighContrast: this.isUserOnHighContrastTheme(),
             selectedSpace: SpaceStore.instance.activeSpaceRoom,
-            showLiveAvatarAddon: this.context.voiceBroadcastRecordingsStore.hasCurrent(),
+            showLiveAvatarAddon: this.props.context.voiceBroadcastRecordingsStore.hasCurrent(),
         };
 
         OwnProfileStore.instance.on(UPDATE_EVENT, this.onProfileUpdate);
@@ -110,7 +107,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
     }
 
     private get hasHomePage(): boolean {
-        return !!getHomePageUrl(SdkConfig.get(), this.context.client!);
+        return !!getHomePageUrl(SdkConfig.get(), this.props.context.client!);
     }
 
     private onCurrentVoiceBroadcastRecordingChanged = (recording: VoiceBroadcastRecording | null): void => {
@@ -120,7 +117,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
     };
 
     public componentDidMount(): void {
-        this.context.voiceBroadcastRecordingsStore.on(
+        this.props.context.voiceBroadcastRecordingsStore.on(
             VoiceBroadcastRecordingsStoreEvent.CurrentChanged,
             this.onCurrentVoiceBroadcastRecordingChanged,
         );
@@ -134,7 +131,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         OwnProfileStore.instance.off(UPDATE_EVENT, this.onProfileUpdate);
         SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
-        this.context.voiceBroadcastRecordingsStore.off(
+        this.props.context.voiceBroadcastRecordingsStore.off(
             VoiceBroadcastRecordingsStoreEvent.CurrentChanged,
             this.onCurrentVoiceBroadcastRecordingChanged,
         );
@@ -496,3 +493,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         );
     }
 }
+
+export default forwardRef<UserMenu, Omit<IProps, "context">>((props, ref) => (
+    <SDKContext.Consumer>{(context) => <UserMenu {...props} context={context} ref={ref} />}</SDKContext.Consumer>
+));

@@ -59,7 +59,7 @@ describe("MemberList", () => {
     let client: MatrixClient;
     let root: RenderResult;
     let memberListRoom: Room;
-    let memberList: MemberList;
+    let memberList: React.ComponentRef<typeof MemberList>;
 
     let adminUsers: RoomMember[] = [];
     let moderatorUsers: RoomMember[] = [];
@@ -214,7 +214,7 @@ describe("MemberList", () => {
             memberListRoom.currentState.members[member.userId] = member;
         }
 
-        const gatherWrappedRef = (r: MemberList) => {
+        const gatherWrappedRef = (r: React.ComponentRef<typeof MemberList>) => {
             memberList = r;
         };
         const context = new TestSdkContext();

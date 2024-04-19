@@ -58,7 +58,6 @@ import AudioFeedArrayForLegacyCall from "../views/voip/AudioFeedArrayForLegacyCa
 import { OwnProfileStore } from "../../stores/OwnProfileStore";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import RoomView from "./RoomView";
-import type { RoomView as RoomViewType } from "./RoomView";
 import ToastContainer from "./ToastContainer";
 import UserView from "./UserView";
 import BackdropPanel from "./BackdropPanel";
@@ -132,7 +131,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     public static displayName = "LoggedInView";
 
     protected readonly _matrixClient: MatrixClient;
-    protected readonly _roomView: React.RefObject<RoomViewType>;
+    protected readonly _roomView: React.RefObject<React.ComponentRef<typeof RoomView>>;
     protected readonly _resizeContainer: React.RefObject<HTMLDivElement>;
     protected readonly resizeHandler: React.RefObject<HTMLDivElement>;
     protected layoutWatcherRef?: string;

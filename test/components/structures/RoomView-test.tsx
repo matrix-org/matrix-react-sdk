@@ -53,7 +53,7 @@ import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { Action } from "../../../src/dispatcher/actions";
 import dis, { defaultDispatcher } from "../../../src/dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../src/dispatcher/payloads/ViewRoomPayload";
-import { RoomView as _RoomView } from "../../../src/components/structures/RoomView";
+import _RoomView from "../../../src/components/structures/RoomView";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
 import SettingsStore from "../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
@@ -112,7 +112,7 @@ describe("RoomView", () => {
         jest.clearAllMocks();
     });
 
-    const mountRoomView = async (ref?: RefObject<_RoomView>): Promise<RenderResult> => {
+    const mountRoomView = async (ref?: RefObject<React.ComponentRef<typeof _RoomView>>): Promise<RenderResult> => {
         if (stores.roomViewStore.getRoomId() !== room.roomId) {
             const switchedRoom = new Promise<void>((resolve) => {
                 const subFn = () => {
@@ -185,8 +185,8 @@ describe("RoomView", () => {
         await flushPromises();
         return roomView;
     };
-    const getRoomViewInstance = async (): Promise<_RoomView> => {
-        const ref = createRef<_RoomView>();
+    const getRoomViewInstance = async (): Promise<React.ComponentRef<typeof _RoomView>> => {
+        const ref = createRef<React.ComponentRef<typeof _RoomView>>();
         await mountRoomView(ref);
         return ref.current!;
     };
@@ -197,7 +197,7 @@ describe("RoomView", () => {
     });
 
     describe("when there is an old room", () => {
-        let instance: _RoomView;
+        let instance: React.ComponentRef<typeof _RoomView>;
         let oldRoom: Room;
 
         beforeEach(async () => {
@@ -596,7 +596,7 @@ describe("RoomView", () => {
 
         const eventMapper = (obj: Partial<IEvent>) => new MatrixEvent(obj);
 
-        const roomViewRef = createRef<_RoomView>();
+        const roomViewRef = createRef<React.ComponentRef<typeof _RoomView>>();
         const { container, getByText, findByLabelText } = await mountRoomView(roomViewRef);
         // @ts-ignore - triggering a search organically is a lot of work
         roomViewRef.current!.setState({
@@ -657,7 +657,7 @@ describe("RoomView", () => {
 
         const eventMapper = (obj: Partial<IEvent>) => new MatrixEvent(obj);
 
-        const roomViewRef = createRef<_RoomView>();
+        const roomViewRef = createRef<React.ComponentRef<typeof _RoomView>>();
         const { container, getByText, findByLabelText } = await mountRoomView(roomViewRef);
         // @ts-ignore - triggering a search organically is a lot of work
         roomViewRef.current!.setState({

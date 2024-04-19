@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { forwardRef } from "react";
 import {
     MatrixEvent,
     Room,
@@ -66,6 +66,7 @@ interface IProps {
     searchQuery: string;
     onClose(): void;
     onSearchQueryChanged: (query: string) => void;
+    context: React.ContextType<typeof SDKContext>;
 }
 
 interface IState {
@@ -77,18 +78,16 @@ interface IState {
     truncateAtInvited: number;
 }
 
-export default class MemberList extends React.Component<IProps, IState> {
+class MemberList extends React.Component<IProps, IState> {
     private readonly showPresence: boolean;
     private mounted = false;
 
-    public static contextType = SDKContext;
-    public context!: React.ContextType<typeof SDKContext>;
     private tiles: Map<string, MemberTile> = new Map();
 
-    public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
+    public constructor(props: IProps) {
         super(props);
         this.state = this.getMembersState([], []);
-        this.showPresence = context?.memberListStore.isPresenceEnabled() ?? true;
+        this.showPresence = props.context?.memberListStore.isPresenceEnabled() ?? true;
         this.mounted = true;
         this.listenForMembersChanges();
     }
@@ -218,7 +217,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         if (showLoadingSpinner) {
             this.setState({ loading: true });
         }
-        const { joined, invited } = await this.context.memberListStore.loadMemberList(
+        const { joined, invited } = await this.props.context.memberListStore.loadMemberList(
             this.props.roomId,
             this.props.searchQuery,
         );
@@ -449,3 +448,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         inviteToRoom(room);
     };
 }
+
+export default forwardRef<MemberList, Omit<IProps, "context">>((props, ref) => (
+    <SDKContext.Consumer>{(context) => <MemberList {...props} context={context} ref={ref} />}</SDKContext.Consumer>
+));

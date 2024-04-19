@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from "react";
+import React, { forwardRef, ReactNode } from "react";
 import { SERVICE_TYPES, HTTPError, IThreepid, ThreepidMedium } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -61,6 +61,7 @@ import { SDKContext } from "../../../../../contexts/SDKContext";
 
 interface IProps {
     closeSettingsFn: () => void;
+    context: React.ContextType<typeof SDKContext>;
 }
 
 interface IState {
@@ -92,17 +93,13 @@ interface IState {
     canMake3pidChanges: boolean;
 }
 
-export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
-    public static contextType = SDKContext;
-    public context!: React.ContextType<typeof SDKContext>;
-
+class GeneralUserSettingsTab extends React.Component<IProps, IState> {
     private readonly dispatcherRef: string;
 
-    public constructor(props: IProps, context: React.ContextType<typeof SDKContext>) {
+    public constructor(props: IProps) {
         super(props);
-        this.context = context;
 
-        const cli = this.context.client!;
+        const cli = this.props.context.client!;
 
         this.state = {
             language: languageHandler.getCurrentLanguage(),
@@ -151,7 +148,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
     private onAction = (payload: ActionPayload): void => {
         if (payload.action === "id_server_changed") {
-            this.setState({ haveIdServer: Boolean(this.context.client!.getIdentityServerUrl()) });
+            this.setState({ haveIdServer: Boolean(this.props.context.client!.getIdentityServerUrl()) });
             this.getThreepidState();
         }
     };
@@ -165,7 +162,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     };
 
     private async getCapabilities(): Promise<void> {
-        const cli = this.context.client!;
+        const cli = this.props.context.client!;
 
         const capabilities = await cli.getCapabilities(); // this is cached
         const changePasswordCap = capabilities["m.change_password"];
@@ -175,8 +172,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         // the enabled flag value.
         const canChangePassword = !changePasswordCap || changePasswordCap["enabled"] !== false;
 
-        await this.context.oidcClientStore.readyPromise; // wait for the store to be ready
-        const externalAccountManagementUrl = this.context.oidcClientStore.accountManagementEndpoint;
+        await this.props.context.oidcClientStore.readyPromise; // wait for the store to be ready
+        const externalAccountManagementUrl = this.props.context.oidcClientStore.accountManagementEndpoint;
         // https://spec.matrix.org/v1.7/client-server-api/#m3pid_changes-capability
         // We support as far back as v1.1 which doesn't have m.3pid_changes
         // so the behaviour for when it is missing has to be assume true
@@ -186,7 +183,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     }
 
     private async getThreepidState(): Promise<void> {
-        const cli = this.context.client!;
+        const cli = this.props.context.client!;
 
         // Check to see if terms need accepting
         this.checkTerms();
@@ -213,7 +210,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private async checkTerms(): Promise<void> {
         // By starting the terms flow we get the logic for checking which terms the user has signed
         // for free. So we might as well use that for our own purposes.
-        const idServerUrl = this.context.client!.getIdentityServerUrl();
+        const idServerUrl = this.props.context.client!.getIdentityServerUrl();
         if (!this.state.haveIdServer || !idServerUrl) {
             this.setState({ idServerHasUnsignedTerms: false });
             return;
@@ -223,7 +220,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         try {
             const idAccessToken = await authClient.getAccessToken({ check: false });
             await startTermsFlow(
-                this.context.client!,
+                this.props.context.client!,
                 [new Service(SERVICE_TYPES.IS, idServerUrl, idAccessToken!)],
                 (policiesAndServices, agreedUrls, extraClassNames) => {
                     return new Promise((resolve, reject) => {
@@ -573,3 +570,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         );
     }
 }
+
+export default forwardRef<GeneralUserSettingsTab, Omit<IProps, "context">>((props, ref) => (
+    <SDKContext.Consumer>
+        {(context) => <GeneralUserSettingsTab {...props} context={context} ref={ref} />}
+    </SDKContext.Consumer>
+));
