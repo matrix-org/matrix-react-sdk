@@ -995,8 +995,8 @@ export class TimelinePanel extends React.Component<IProps, IState> {
 
     private readMarkerTimeout(readMarkerPosition: number | null): number {
         return readMarkerPosition === 0
-            ? this.context?.readMarkerInViewThresholdMs ?? this.state.readMarkerInViewThresholdMs
-            : this.context?.readMarkerOutOfViewThresholdMs ?? this.state.readMarkerOutOfViewThresholdMs;
+            ? this.props.context?.readMarkerInViewThresholdMs ?? this.state.readMarkerInViewThresholdMs
+            : this.props.context?.readMarkerOutOfViewThresholdMs ?? this.state.readMarkerOutOfViewThresholdMs;
     }
 
     private async updateReadMarkerOnUserActivity(): Promise<void> {
@@ -1978,7 +1978,7 @@ export class TimelinePanel extends React.Component<IProps, IState> {
                 !!ev.status || // local echo
                 (ignoreOwn && ev.getSender() === myUserId); // own message
             const isWithoutTile =
-                !haveRendererForEvent(ev, MatrixClientPeg.safeGet(), this.context?.showHiddenEvents) ||
+                !haveRendererForEvent(ev, MatrixClientPeg.safeGet(), this.props.context?.showHiddenEvents) ||
                 shouldHideEvent(ev, this.context);
 
             if (isWithoutTile || !node) {
@@ -2144,10 +2144,10 @@ export class TimelinePanel extends React.Component<IProps, IState> {
                 onScroll={this.onMessageListScroll}
                 onFillRequest={this.onMessageListFillRequest}
                 onUnfillRequest={this.onMessageListUnfillRequest}
-                isTwelveHour={this.context?.showTwelveHourTimestamps ?? this.state.isTwelveHour}
+                isTwelveHour={this.props.context?.showTwelveHourTimestamps ?? this.state.isTwelveHour}
                 alwaysShowTimestamps={
                     this.props.alwaysShowTimestamps ??
-                    this.context?.alwaysShowTimestamps ??
+                    this.props.context?.alwaysShowTimestamps ??
                     this.state.alwaysShowTimestamps
                 }
                 className={this.props.className}

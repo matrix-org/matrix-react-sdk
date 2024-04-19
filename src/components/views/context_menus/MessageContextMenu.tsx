@@ -391,7 +391,7 @@ class MessageContextMenu extends React.Component<IProps, IState> {
         const permalink = this.props.permalinkCreator?.forEvent(this.props.mxEvent.getId()!);
         // status is SENT before remote-echo, null after
         const isSent = !eventStatus || eventStatus === EventStatus.SENT;
-        const { timelineRenderingType, canReact, canSendMessages } = this.context;
+        const { timelineRenderingType, canReact, canSendMessages } = this.props.context;
         const isThread =
             timelineRenderingType === TimelineRenderingType.Thread ||
             timelineRenderingType === TimelineRenderingType.ThreadsList;

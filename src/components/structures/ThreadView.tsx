@@ -429,7 +429,7 @@ class ThreadView extends React.Component<IProps, IState> {
         return (
             <RoomContext.Provider
                 value={{
-                    ...this.context,
+                    ...this.props.context,
                     timelineRenderingType: TimelineRenderingType.Thread,
                     threadId: this.state.thread?.id,
                     liveTimeline: this.state?.thread?.timelineSet?.getLiveTimeline(),

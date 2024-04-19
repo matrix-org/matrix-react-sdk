@@ -222,7 +222,7 @@ class TimelineCard extends React.Component<IProps, IState> {
         return (
             <RoomContext.Provider
                 value={{
-                    ...this.context,
+                    ...this.props.context,
                     timelineRenderingType: this.props.timelineRenderingType ?? this.props.context.timelineRenderingType,
                     liveTimeline: this.props.timelineSet?.getLiveTimeline(),
                     narrow: this.state.narrow,
