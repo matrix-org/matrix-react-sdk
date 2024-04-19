@@ -13,12 +13,12 @@ exports[`AppTile destroys non-persisted right panel widget on room change 1`] = 
         class="mx_BaseCard_header"
       >
         <div
+          aria-label="Close"
           class="mx_AccessibleButton mx_BaseCard_close"
           data-state="closed"
           data-testid="base-card-close-button"
           role="button"
           tabindex="0"
-          title="Close"
         />
         <div
           class="mx_BaseCard_headerProp"
@@ -39,7 +39,6 @@ exports[`AppTile destroys non-persisted right panel widget on room change 1`] = 
               data-state="closed"
               role="button"
               tabindex="0"
-              title="Options"
             />
           </div>
         </div>
@@ -140,6 +139,7 @@ exports[`AppTile for a pinned widget should render 1`] = `
         <div
           aria-label="Un-maximise"
           class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -150,6 +150,7 @@ exports[`AppTile for a pinned widget should render 1`] = `
         <div
           aria-label="Minimise"
           class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -165,7 +166,6 @@ exports[`AppTile for a pinned widget should render 1`] = `
           data-state="closed"
           role="button"
           tabindex="0"
-          title="Options"
         >
           <div
             class="mx_Icon mx_Icon_12"
@@ -228,6 +228,7 @@ exports[`AppTile for a pinned widget should render permission request 1`] = `
         <div
           aria-label="Un-maximise"
           class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -238,6 +239,7 @@ exports[`AppTile for a pinned widget should render permission request 1`] = `
         <div
           aria-label="Minimise"
           class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
+          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -253,7 +255,6 @@ exports[`AppTile for a pinned widget should render permission request 1`] = `
           data-state="closed"
           role="button"
           tabindex="0"
-          title="Options"
         >
           <div
             class="mx_Icon mx_Icon_12"
@@ -383,6 +384,7 @@ exports[`AppTile preserves non-persisted widget on container move 1`] = `
               <div
                 aria-label="Maximise"
                 class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
+                data-state="closed"
                 role="button"
                 tabindex="0"
               >
@@ -393,6 +395,7 @@ exports[`AppTile preserves non-persisted widget on container move 1`] = `
               <div
                 aria-label="Minimise"
                 class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
+                data-state="closed"
                 role="button"
                 tabindex="0"
               >
@@ -408,7 +411,6 @@ exports[`AppTile preserves non-persisted widget on container move 1`] = `
                 data-state="closed"
                 role="button"
                 tabindex="0"
-                title="Options"
               >
                 <div
                   class="mx_Icon mx_Icon_12"
