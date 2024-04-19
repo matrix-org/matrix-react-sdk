@@ -29,7 +29,7 @@ import { EnableLiveShare } from "./EnableLiveShare";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
 import { SettingLevel } from "../../../settings/SettingLevel";
 
-type Props = Omit<ILocationPickerProps, "onChoose" | "shareType"> & {
+type Props = Omit<ILocationPickerProps, "onChoose" | "shareType" | "mxClient"> & {
     onFinished: (ev?: SyntheticEvent) => void;
     menuPosition: MenuProps;
     openMenu: () => void;

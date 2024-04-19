@@ -33,7 +33,7 @@ import SdkConfig, { DEFAULTS } from "../../../../../SdkConfig";
 import { AddPrivilegedUsers } from "../../AddPrivilegedUsers";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../../../contexts/MatrixClientContext";
 import { PowerLevelSelector } from "../../PowerLevelSelector";
 
 interface IEventShowOpts {
@@ -80,19 +80,16 @@ function parseIntWithDefault(val: string, def: number): number {
     return isNaN(res) ? def : res;
 }
 
-interface IBannedUserProps {
+interface IBannedUserProps extends MatrixClientProps {
     canUnban?: boolean;
     member: RoomMember;
     by: string;
     reason?: string;
 }
 
-export class BannedUser extends React.Component<IBannedUserProps> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
+class BannedUser extends React.Component<IBannedUserProps> {
     private onUnbanClick = (): void => {
-        this.context.unban(this.props.member.roomId, this.props.member.userId).catch((err) => {
+        this.props.mxClient.unban(this.props.member.roomId, this.props.member.userId).catch((err: Error) => {
             logger.error("Failed to unban: " + err);
             Modal.createDialog(ErrorDialog, {
                 title: _t("common|error"),
@@ -131,20 +128,17 @@ export class BannedUser extends React.Component<IBannedUserProps> {
     }
 }
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     room: Room;
 }
 
-export default class RolesRoomSettingsTab extends React.Component<IProps> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
+class RolesRoomSettingsTab extends React.Component<IProps> {
     public componentDidMount(): void {
-        this.context.on(RoomStateEvent.Update, this.onRoomStateUpdate);
+        this.props.mxClient.on(RoomStateEvent.Update, this.onRoomStateUpdate);
     }
 
     public componentWillUnmount(): void {
-        const client = this.context;
+        const client = this.props.mxClient;
         if (client) {
             client.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
         }
@@ -176,7 +170,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
     }
 
     private onPowerLevelsChanged = async (value: number, powerLevelKey: string): Promise<void> => {
-        const client = this.context;
+        const client = this.props.mxClient;
         const room = this.props.room;
         const plEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
         let plContent = plEvent?.getContent<RoomPowerLevelsEventContent>() ?? {};
@@ -220,7 +214,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
     };
 
     private onUserPowerLevelChanged = async (value: number, powerLevelKey: string): Promise<void> => {
-        const client = this.context;
+        const client = this.props.mxClient;
         const room = this.props.room;
         const plEvent = room.currentState.getStateEvents(EventType.RoomPowerLevels, "");
         let plContent = plEvent?.getContent<RoomPowerLevelsEventContent>() ?? {};
@@ -245,7 +239,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
     };
 
     public render(): React.ReactNode {
-        const client = this.context;
+        const client = this.props.mxClient;
         const room = this.props.room;
         const isSpaceRoom = room.isSpaceRoom();
 
@@ -394,6 +388,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
                                     member={member}
                                     reason={banEvent?.reason}
                                     by={bannedBy!}
+                                    mxClient={this.props.mxClient}
                                 />
                             );
                         })}
@@ -484,3 +479,5 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
         );
     }
 }
+
+export default withMatrixClientHOC(RolesRoomSettingsTab);

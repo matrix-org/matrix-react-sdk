@@ -24,11 +24,11 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t, TranslationKey } from "../../languageHandler";
 import dis from "../../dispatcher/dispatcher";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import MatrixClientContext from "../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../contexts/MatrixClientContext";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { ActionPayload } from "../../dispatcher/payloads";
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     // URL to request embedded page content from
     url?: string;
     // Class name prefix to apply for a given instance
@@ -43,13 +43,12 @@ interface IState {
     page: string;
 }
 
-export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
-    public static contextType = MatrixClientContext;
+class EmbeddedPage extends React.PureComponent<IProps, IState> {
     private unmounted = false;
     private dispatcherRef: string | null = null;
 
-    public constructor(props: IProps, context: typeof MatrixClientContext) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
             page: "",
@@ -120,7 +119,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
 
     public render(): React.ReactNode {
         // HACK: Workaround for the context's MatrixClient not updating.
-        const client = this.context || MatrixClientPeg.get();
+        const client = this.props.mxClient || MatrixClientPeg.get();
         const isGuest = client ? client.isGuest() : true;
         const className = this.props.className;
         const classes = classnames(className, {
@@ -137,3 +136,5 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         }
     }
 }
+
+export default withMatrixClientHOC(EmbeddedPage);

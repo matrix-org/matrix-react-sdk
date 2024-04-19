@@ -32,7 +32,6 @@ import UnknownBody from "./UnknownBody";
 import { IMediaBody } from "./IMediaBody";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import { IBodyProps } from "./IBodyProps";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import TextualBody from "./TextualBody";
 import MImageBody from "./MImageBody";
 import MFileBody from "./MFileBody";
@@ -91,11 +90,8 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
     private bodyTypes = new Map<string, ComponentType>(baseBodyTypes.entries());
     private evTypes = new Map<string, ComponentType>(baseEvTypes.entries());
 
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
-    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         if (MediaEventHelper.isEligible(this.props.mxEvent)) {
             this.mediaHelper = new MediaEventHelper(this.props.mxEvent);

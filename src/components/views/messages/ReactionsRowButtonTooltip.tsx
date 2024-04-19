@@ -21,9 +21,10 @@ import { unicodeToShortcode } from "../../../HtmlUtils";
 import { _t } from "../../../languageHandler";
 import { formatList } from "../../../utils/FormattingUtils";
 import Tooltip from "../elements/Tooltip";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
 import { REACTION_SHORTCODE_KEY } from "./ReactionsRow";
-interface IProps {
+
+interface IProps extends MatrixClientProps {
     // The event we're displaying reactions for
     mxEvent: MatrixEvent;
     // The reaction content / key / emoji
@@ -35,14 +36,11 @@ interface IProps {
     customReactionImagesEnabled?: boolean;
 }
 
-export default class ReactionsRowButtonTooltip extends React.PureComponent<IProps> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
+class ReactionsRowButtonTooltip extends React.PureComponent<IProps> {
     public render(): React.ReactNode {
         const { content, reactionEvents, mxEvent, visible } = this.props;
 
-        const room = this.context.getRoom(mxEvent.getRoomId());
+        const room = this.props.mxClient.getRoom(mxEvent.getRoomId());
         let tooltipLabel: JSX.Element | undefined;
         if (room) {
             const senders: string[] = [];
@@ -88,3 +86,5 @@ export default class ReactionsRowButtonTooltip extends React.PureComponent<IProp
         return tooltip;
     }
 }
+
+export default withMatrixClientHOC(ReactionsRowButtonTooltip);

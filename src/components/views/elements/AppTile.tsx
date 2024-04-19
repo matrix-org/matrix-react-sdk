@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ContextType, createRef, CSSProperties, MutableRefObject, ReactNode } from "react";
+import React, { createRef, CSSProperties, MutableRefObject, ReactNode } from "react";
 import classNames from "classnames";
 import { IWidget, MatrixCapabilities } from "matrix-widget-api";
 import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
@@ -50,7 +50,7 @@ import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayo
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import WidgetUtils from "../../../utils/WidgetUtils";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { Action } from "../../../dispatcher/actions";
 import { ElementWidgetCapabilities } from "../../../stores/widgets/ElementWidgetCapabilities";
@@ -59,7 +59,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { ModuleRunner } from "../../../modules/ModuleRunner";
 import { parseUrl } from "../../../utils/UrlUtils";
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     app: IWidget | IApp;
     // If room is not specified then it is an account level widget
     // which bypasses permission prompts as it was added explicitly by that user
@@ -71,10 +71,10 @@ interface IProps {
     // Optional. If set, renders a smaller view of the widget
     miniMode?: boolean;
     // UserId of the current user
-    userId: string;
+    userId?: string;
     // UserId of the entity that added / modified the widget
-    creatorUserId: string;
-    waitForIframeLoad: boolean;
+    creatorUserId?: string;
+    waitForIframeLoad?: boolean;
     showMenubar?: boolean;
     // Optional onEditClickHandler (overrides default behaviour)
     onEditClick?: () => void;
@@ -87,7 +87,7 @@ interface IProps {
     // Optionally hide the popout widget icon
     showPopout?: boolean;
     // Is this an instance of a user widget
-    userWidget: boolean;
+    userWidget?: boolean;
     // sets the pointer-events property on the iframe
     pointerEvents?: CSSProperties["pointerEvents"];
     widgetPageTitle?: string;
@@ -118,10 +118,7 @@ interface IState {
     hasContextMenuOptions: boolean;
 }
 
-export default class AppTile extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: ContextType<typeof MatrixClientContext>;
-
+class AppTile extends React.Component<IProps, IState> {
     public static defaultProps: Partial<IProps> = {
         waitForIframeLoad: true,
         showMenubar: true,
@@ -142,9 +139,8 @@ export default class AppTile extends React.Component<IProps, IState> {
     private dispatcherRef?: string;
     private unmounted = false;
 
-    public constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
+    public constructor(props: IProps) {
         super(props);
-        this.context = context; // XXX: workaround for lack of `declare` support on `public context!:` definition
 
         // Tiles in miniMode are floating, and therefore not docked
         if (!this.props.miniMode) {
@@ -264,10 +260,10 @@ export default class AppTile extends React.Component<IProps, IState> {
             menuDisplayed: false,
             requiresClient: this.determineInitialRequiresClientState(),
             hasContextMenuOptions: showContextMenu(
-                this.context,
+                this.props.mxClient,
                 this.props.room,
                 newProps.app,
-                newProps.userWidget,
+                !!newProps.userWidget,
                 !newProps.userWidget,
                 newProps.onDeleteClick,
             ),
@@ -315,7 +311,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.watchUserReady();
 
         if (this.props.room) {
-            this.context.on(RoomEvent.MyMembership, this.onMyMembership);
+            this.props.mxClient.on(RoomEvent.MyMembership, this.onMyMembership);
         }
         this.allowedWidgetsWatchRef = SettingsStore.watchSetting("allowedWidgets", null, this.onAllowedWidgetsChange);
         // Widget action listeners
@@ -348,7 +344,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
 
         if (this.props.room) {
-            this.context.off(RoomEvent.MyMembership, this.onMyMembership);
+            this.props.mxClient.off(RoomEvent.MyMembership, this.onMyMembership);
         }
 
         if (this.allowedWidgetsWatchRef) SettingsStore.unwatchSetting(this.allowedWidgetsWatchRef);
@@ -646,7 +642,7 @@ export default class AppTile extends React.Component<IProps, IState> {
             );
         } else if (!this.state.hasPermissionToLoad && this.props.room) {
             // only possible for room widgets, can assert this.props.room here
-            const isEncrypted = this.context.isRoomEncrypted(this.props.room.roomId);
+            const isEncrypted = this.props.mxClient.isRoomEncrypted(this.props.room.roomId);
             appTileBody = (
                 <div className={appTileBodyClass} style={appTileBodyStyles}>
                     <AppPermission
@@ -819,3 +815,5 @@ export default class AppTile extends React.Component<IProps, IState> {
         );
     }
 }
+
+export default withMatrixClientHOC(AppTile);

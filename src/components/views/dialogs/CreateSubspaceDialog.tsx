@@ -24,7 +24,7 @@ import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { BetaPill } from "../beta/BetaCard";
 import Field from "../elements/Field";
-import RoomAliasField from "../elements/RoomAliasField";
+import { RoomAliasField } from "../elements/RoomAliasField";
 import { createSpace, SpaceCreateForm } from "../spaces/SpaceCreateMenu";
 import { SubspaceSelector } from "./AddExistingToSpaceDialog";
 import JoinRuleDropdown from "../elements/JoinRuleDropdown";

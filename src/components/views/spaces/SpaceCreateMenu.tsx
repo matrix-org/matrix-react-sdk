@@ -46,7 +46,7 @@ import SpaceBasicSettings, { SpaceAvatar } from "./SpaceBasicSettings";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import withValidation from "../elements/Validation";
-import RoomAliasField from "../elements/RoomAliasField";
+import RoomAliasField, { RoomAliasField as RoomAliasFieldClass } from "../elements/RoomAliasField";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -128,7 +128,7 @@ interface ISpaceCreateFormProps extends BProps {
     busy: boolean;
     alias: string;
     nameFieldRef: RefObject<Field>;
-    aliasFieldRef: RefObject<RoomAliasField>;
+    aliasFieldRef: RefObject<RoomAliasFieldClass>;
     showAliasField?: boolean;
     children?: ReactNode;
     onSubmit(e: SyntheticEvent): void;
@@ -225,7 +225,7 @@ const SpaceCreateMenu: React.FC<{
     const [name, setName] = useState("");
     const spaceNameField = useRef<Field>(null);
     const [alias, setAlias] = useState("");
-    const spaceAliasField = useRef<RoomAliasField>(null);
+    const spaceAliasField = useRef<RoomAliasFieldClass>(null);
     const [avatar, setAvatar] = useState<File | undefined>(undefined);
     const [topic, setTopic] = useState<string>("");
 

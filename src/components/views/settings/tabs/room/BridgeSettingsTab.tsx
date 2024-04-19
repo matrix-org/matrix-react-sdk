@@ -21,7 +21,7 @@ import { _t } from "../../../../../languageHandler";
 import BridgeTile from "../../BridgeTile";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../../../contexts/MatrixClientContext";
 
 const BRIDGE_EVENT_TYPES = [
     "uk.half-shot.bridge",
@@ -30,14 +30,11 @@ const BRIDGE_EVENT_TYPES = [
 
 const BRIDGES_LINK = "https://matrix.org/bridges/";
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     room: Room;
 }
 
-export default class BridgeSettingsTab extends React.Component<IProps> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
+class BridgeSettingsTab extends React.Component<IProps> {
     private renderBridgeCard(event: MatrixEvent, room: Room | null): ReactNode {
         const content = event.getContent();
         if (!room || !content?.channel || !content.protocol) return null;
@@ -54,7 +51,7 @@ export default class BridgeSettingsTab extends React.Component<IProps> {
     public render(): React.ReactNode {
         // This settings tab will only be invoked if the following function returns more
         // than 0 events, so no validation is needed at this stage.
-        const bridgeEvents = BridgeSettingsTab.getBridgeStateEvents(this.context, this.props.room.roomId);
+        const bridgeEvents = BridgeSettingsTab.getBridgeStateEvents(this.props.mxClient, this.props.room.roomId);
         const room = this.props.room;
 
         let content: JSX.Element;
@@ -108,3 +105,5 @@ export default class BridgeSettingsTab extends React.Component<IProps> {
         );
     }
 }
+
+export default withMatrixClientHOC(BridgeSettingsTab);

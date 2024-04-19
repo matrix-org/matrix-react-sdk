@@ -26,26 +26,25 @@ import {
     LocationShareError,
     isSelfLocation,
 } from "../../../utils/location";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
 import TooltipTarget from "../elements/TooltipTarget";
 import { Alignment } from "../elements/Tooltip";
 import { SmartMarker, Map, LocationViewDialog } from "../location";
 import { IBodyProps } from "./IBodyProps";
 import { createReconnectedListener } from "../../../utils/connection";
 
+interface Props extends IBodyProps, MatrixClientProps {}
+
 interface IState {
     error?: Error;
 }
 
-export default class MLocationBody extends React.Component<IBodyProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
+class MLocationBody extends React.Component<Props, IState> {
     private unmounted = false;
     private mapId: string;
     private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
 
-    public constructor(props: IBodyProps) {
+    public constructor(props: Props) {
         super(props);
 
         // multiple instances of same map might be in document
@@ -62,7 +61,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         Modal.createDialog(
             LocationViewDialog,
             {
-                matrixClient: this.context,
+                matrixClient: this.props.mxClient,
                 mxEvent: this.props.mxEvent,
             },
             "mx_LocationViewDialog_wrapper",
@@ -72,7 +71,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     };
 
     private clearError = (): void => {
-        this.context.off(ClientEvent.Sync, this.reconnectedListener);
+        this.props.mxClient.off(ClientEvent.Sync, this.reconnectedListener);
         this.setState({ error: undefined });
     };
 
@@ -80,13 +79,13 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         if (this.unmounted) return;
         this.setState({ error });
         // Unregister first in case we already had it registered
-        this.context.off(ClientEvent.Sync, this.reconnectedListener);
-        this.context.on(ClientEvent.Sync, this.reconnectedListener);
+        this.props.mxClient.off(ClientEvent.Sync, this.reconnectedListener);
+        this.props.mxClient.on(ClientEvent.Sync, this.reconnectedListener);
     };
 
     public componentWillUnmount(): void {
         this.unmounted = true;
-        this.context.off(ClientEvent.Sync, this.reconnectedListener);
+        this.props.mxClient.off(ClientEvent.Sync, this.reconnectedListener);
     }
 
     public render(): React.ReactElement<HTMLDivElement> {
@@ -103,6 +102,8 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
         );
     }
 }
+
+export default withMatrixClientHOC(MLocationBody);
 
 export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent; error: Error }> = ({ error, event }) => {
     const errorType = error?.message as LocationShareError;

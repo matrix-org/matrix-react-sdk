@@ -20,7 +20,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { RoomMember, ClientEvent, IClientWellKnown } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
 import Modal from "../../../Modal";
 import { tileServerFromWellKnown } from "../../../utils/WellKnownUtils";
 import { GenericPosition, genericPositionFromGeolocation, getGeoUri } from "../../../utils/beacon";
@@ -32,7 +32,7 @@ import LiveDurationDropdown, { DEFAULT_DURATION_MS } from "./LiveDurationDropdow
 import { LocationShareType, ShareLocationFn } from "./shareLocation";
 import Marker from "./Marker";
 
-export interface ILocationPickerProps {
+export interface ILocationPickerProps extends MatrixClientProps {
     sender: RoomMember;
     shareType: LocationShareType;
     onChoose: ShareLocationFn;
@@ -49,8 +49,6 @@ const isSharingOwnLocation = (shareType: LocationShareType): boolean =>
     shareType === LocationShareType.Own || shareType === LocationShareType.Live;
 
 class LocationPicker extends React.Component<ILocationPickerProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
     private map?: maplibregl.Map;
     private geolocate?: maplibregl.GeolocateControl;
     private marker?: maplibregl.Marker;
@@ -70,12 +68,12 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     };
 
     public componentDidMount(): void {
-        this.context.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
+        this.props.mxClient.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
 
         try {
             this.map = new maplibregl.Map({
                 container: "mx_LocationPicker_map",
-                style: findMapStyleUrl(this.context),
+                style: findMapStyleUrl(this.props.mxClient),
                 center: [0, 0],
                 zoom: 1,
             });
@@ -133,7 +131,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         this.geolocate?.off("error", this.onGeolocateError);
         this.geolocate?.off("geolocate", this.onGeolocate);
         this.map?.off("click", this.onClick);
-        this.context.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
+        this.props.mxClient.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
     }
 
     private addMarkerToMap = (): void => {
@@ -270,4 +268,4 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     }
 }
 
-export default LocationPicker;
+export default withMatrixClientHOC(LocationPicker);

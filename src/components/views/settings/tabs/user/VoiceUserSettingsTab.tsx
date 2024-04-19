@@ -30,7 +30,7 @@ import { requestMediaPermissions } from "../../../../../utils/media/requestMedia
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection from "../../shared/SettingsSubsection";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../../../contexts/MatrixClientContext";
 
 interface IState {
     mediaDevices: IMediaDevices | null;
@@ -57,11 +57,8 @@ const mapDeviceKindToHandlerValue = (deviceKind: MediaDeviceKindEnum): string | 
     }
 };
 
-export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
-    public constructor(props: {}) {
+class VoiceUserSettingsTab extends React.Component<MatrixClientProps, IState> {
+    public constructor(props: MatrixClientProps) {
         super(props);
 
         this.state = {
@@ -242,3 +239,5 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
         );
     }
 }
+
+export default withMatrixClientHOC(VoiceUserSettingsTab);

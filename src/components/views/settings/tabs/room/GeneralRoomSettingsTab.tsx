@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ContextType } from "react";
+import React from "react";
 import { Room } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 
@@ -22,7 +22,7 @@ import { _t } from "../../../../../languageHandler";
 import RoomProfileSettings from "../../../room_settings/RoomProfileSettings";
 import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import dis from "../../../../../dispatcher/dispatcher";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../../../contexts/MatrixClientContext";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import UrlPreviewSettings from "../../../room_settings/UrlPreviewSettings";
@@ -32,7 +32,7 @@ import SettingsSubsection from "../../shared/SettingsSubsection";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     room: Room;
 }
 
@@ -40,12 +40,9 @@ interface IState {
     isRoomPublished: boolean;
 }
 
-export default class GeneralRoomSettingsTab extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: ContextType<typeof MatrixClientContext>;
-
-    public constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
-        super(props, context);
+class GeneralRoomSettingsTab extends React.Component<IProps, IState> {
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
             isRoomPublished: false, // loaded async
@@ -62,7 +59,7 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
     };
 
     public render(): React.ReactNode {
-        const client = this.context;
+        const client = this.props.mxClient;
         const room = this.props.room;
 
         const canSetAliases = true; // Previously, we arbitrarily only allowed admins to do this
@@ -107,3 +104,5 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
         );
     }
 }
+
+export default withMatrixClientHOC(GeneralRoomSettingsTab);

@@ -35,13 +35,15 @@ import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import { IBodyProps } from "./IBodyProps";
 import { formatList } from "../../../utils/FormattingUtils";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import { GetRelationsForEvent } from "../rooms/EventTile";
 import PollCreateDialog from "../elements/PollCreateDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Spinner from "../elements/Spinner";
 import { PollOption } from "../polls/PollOption";
+
+interface Props extends IBodyProps, MatrixClientProps {}
 
 interface IState {
     poll?: Poll;
@@ -145,12 +147,10 @@ export function launchPollEditor(mxEvent: MatrixEvent, getRelationsForEvent?: Ge
     }
 }
 
-export default class MPollBody extends React.Component<IBodyProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
+class MPollBody extends React.Component<Props, IState> {
     private seenEventIds: string[] = []; // Events we have already seen
 
-    public constructor(props: IBodyProps) {
+    public constructor(props: Props) {
         super(props);
 
         this.state = {
@@ -160,7 +160,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
     }
 
     public componentDidMount(): void {
-        const room = this.context?.getRoom(this.props.mxEvent.getRoomId());
+        const room = this.props.mxClient?.getRoom(this.props.mxEvent.getRoomId());
         const poll = room?.polls.get(this.props.mxEvent.getId()!);
         if (poll) {
             this.setPollInstance(poll);
@@ -218,7 +218,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
             return;
         }
         const userVotes = this.collectUserVotes();
-        const userId = this.context.getSafeUserId();
+        const userId = this.props.mxClient.getSafeUserId();
         const myVote = userVotes.get(userId)?.answers[0];
         if (answerId === myVote) {
             return;
@@ -226,7 +226,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
         const response = PollResponseEvent.from([answerId], this.props.mxEvent.getId()!).serialize();
 
-        this.context
+        this.props.mxClient
             .sendEvent(
                 this.props.mxEvent.getRoomId()!,
                 response.type as keyof TimelineEvents,
@@ -248,10 +248,14 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
      * @returns userId -> UserVote
      */
     private collectUserVotes(): Map<string, UserVote> {
-        if (!this.state.voteRelations || !this.context) {
+        if (!this.state.voteRelations || !this.props.mxClient) {
             return new Map<string, UserVote>();
         }
-        return collectUserVotes(allVotes(this.state.voteRelations), this.context.getUserId(), this.state.selected);
+        return collectUserVotes(
+            allVotes(this.state.voteRelations),
+            this.props.mxClient.getUserId(),
+            this.state.selected,
+        );
     }
 
     /**
@@ -271,7 +275,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
         if (newEvents.length > 0) {
             for (const mxEvent of newEvents) {
-                if (mxEvent.getSender() === this.context.getUserId()) {
+                if (mxEvent.getSender() === this.props.mxClient.getUserId()) {
                     newSelected = null;
                 }
             }
@@ -303,7 +307,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const votes = countVotes(userVotes, pollEvent);
         const totalVotes = this.totalVotes(votes);
         const winCount = Math.max(...votes.values());
-        const userId = this.context.getSafeUserId();
+        const userId = this.props.mxClient.getSafeUserId();
         const myVote = userVotes?.get(userId)?.answers[0];
         const disclosed = M_POLL_KIND_DISCLOSED.matches(pollEvent.kind.name);
 
@@ -372,6 +376,9 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         );
     }
 }
+
+export default withMatrixClientHOC(MPollBody);
+
 export class UserVote {
     public constructor(
         public readonly ts: number,

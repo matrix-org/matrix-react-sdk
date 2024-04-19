@@ -18,7 +18,6 @@ import { EventType, RoomType, Room } from "matrix-js-sdk/src/matrix";
 import React, { ComponentType, createRef, ReactComponentElement, SyntheticEvent } from "react";
 
 import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { Action } from "../../../dispatcher/actions";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -427,9 +426,6 @@ const TAG_AESTHETICS: TagAestheticsMap = {
 export default class RoomList extends React.PureComponent<IProps, IState> {
     private dispatcherRef?: string;
     private treeRef = createRef<HTMLDivElement>();
-
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
 
     public constructor(props: IProps) {
         super(props);

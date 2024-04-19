@@ -38,7 +38,7 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
 import { toRightOf, useContextMenu } from "../../structures/ContextMenu";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import MatrixClientContext, { withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 import { NotificationLevel } from "../../../stores/notifications/NotificationLevel";
@@ -190,6 +190,7 @@ interface IItemProps extends InputHTMLAttributes<HTMLLIElement> {
     parents?: Set<string>;
     innerRef?: LegacyRef<HTMLLIElement>;
     dragHandleProps?: DraggableProvidedDragHandleProps | null;
+    mxClient: React.ContextType<typeof MatrixClientContext>;
 }
 
 interface IItemState {
@@ -198,9 +199,7 @@ interface IItemState {
     childSpaces: Room[];
 }
 
-export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
-    public static contextType = MatrixClientContext;
-
+class InnerSpaceItem extends React.PureComponent<IItemProps, IItemState> {
     private buttonRef = createRef<HTMLDivElement>();
 
     public constructor(props: IItemProps) {
@@ -391,6 +390,8 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         );
     }
 }
+
+export const SpaceItem = withMatrixClientHOC(InnerSpaceItem);
 
 interface ITreeLevelProps {
     spaces: Room[];

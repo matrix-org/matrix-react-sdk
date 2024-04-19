@@ -22,7 +22,7 @@ import { throttle } from "lodash";
 import dis from "../../dispatcher/dispatcher";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 import RightPanelStore from "../../stores/right-panel/RightPanelStore";
-import MatrixClientContext from "../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../contexts/MatrixClientContext";
 import RoomSummaryCard from "../views/right_panel/RoomSummaryCard";
 import WidgetCard from "../views/right_panel/WidgetCard";
 import SettingsStore from "../../settings/SettingsStore";
@@ -43,7 +43,7 @@ import { IRightPanelCard, IRightPanelCardState } from "../../stores/right-panel/
 import { Action } from "../../dispatcher/actions";
 import { XOR } from "../../@types/common";
 
-interface BaseProps {
+interface BaseProps extends MatrixClientProps {
     overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
     resizeNotifier: ResizeNotifier;
     e2eStatus?: E2EStatus;
@@ -68,12 +68,9 @@ interface IState {
     cardState?: IRightPanelCardState;
 }
 
-export default class RightPanel extends React.Component<Props, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
-    public constructor(props: Props, context: React.ContextType<typeof MatrixClientContext>) {
-        super(props, context);
+class RightPanel extends React.Component<Props, IState> {
+    public constructor(props: Props) {
+        super(props);
 
         this.state = {
             searchQuery: "",
@@ -89,12 +86,12 @@ export default class RightPanel extends React.Component<Props, IState> {
     );
 
     public componentDidMount(): void {
-        this.context.on(RoomStateEvent.Members, this.onRoomStateMember);
+        this.props.mxClient.on(RoomStateEvent.Members, this.onRoomStateMember);
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
     }
 
     public componentWillUnmount(): void {
-        this.context?.removeListener(RoomStateEvent.Members, this.onRoomStateMember);
+        this.props.mxClient?.removeListener(RoomStateEvent.Members, this.onRoomStateMember);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
     }
 
@@ -199,7 +196,7 @@ export default class RightPanel extends React.Component<Props, IState> {
                     card = (
                         <UserInfo
                             user={cardState.member}
-                            room={this.context.getRoom(roomMember?.roomId) ?? this.props.room}
+                            room={this.props.mxClient.getRoom(roomMember?.roomId) ?? this.props.room}
                             key={roomId ?? cardState.member.userId}
                             onClose={this.onClose}
                             phase={phase}
@@ -316,3 +313,5 @@ export default class RightPanel extends React.Component<Props, IState> {
         );
     }
 }
+
+export default withMatrixClientHOC(RightPanel);

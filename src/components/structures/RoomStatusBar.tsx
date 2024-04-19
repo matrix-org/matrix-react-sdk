@@ -15,7 +15,16 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { EventStatus, MatrixEvent, Room, MatrixError, SyncState, SyncStateData } from "matrix-js-sdk/src/matrix";
+import {
+    EventStatus,
+    MatrixEvent,
+    Room,
+    MatrixError,
+    SyncState,
+    SyncStateData,
+    ClientEvent,
+    RoomEvent,
+} from "matrix-js-sdk/src/matrix";
 
 import { Icon as WarningIcon } from "../../../res/img/feather-customised/warning-triangle.svg";
 import { _t, _td } from "../../languageHandler";
@@ -26,7 +35,7 @@ import { Action } from "../../dispatcher/actions";
 import { StaticNotificationState } from "../../stores/notifications/StaticNotificationState";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import InlineSpinner from "../views/elements/InlineSpinner";
-import MatrixClientContext from "../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../contexts/MatrixClientContext";
 import { RoomStatusBarUnsentMessages } from "./RoomStatusBarUnsentMessages";
 import ExternalLink from "../views/elements/ExternalLink";
 
@@ -45,7 +54,7 @@ export function getUnsentMessages(room: Room, threadId?: string): MatrixEvent[] 
     });
 }
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     // the room this statusbar is representing.
     room: Room;
 
@@ -79,31 +88,30 @@ interface IProps {
 }
 
 interface IState {
-    syncState: SyncState;
-    syncStateData: SyncStateData;
+    syncState: SyncState | null;
+    syncStateData: SyncStateData | null;
     unsentMessages: MatrixEvent[];
     isResending: boolean;
 }
 
-export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
+class RoomStatusBar extends React.PureComponent<IProps, IState> {
     private unmounted = false;
-    public static contextType = MatrixClientContext;
 
-    public constructor(props: IProps, context: typeof MatrixClientContext) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
-            syncState: this.context.getSyncState(),
-            syncStateData: this.context.getSyncStateData(),
+            syncState: this.props.mxClient.getSyncState(),
+            syncStateData: this.props.mxClient.getSyncStateData(),
             unsentMessages: getUnsentMessages(this.props.room),
             isResending: false,
         };
     }
 
     public componentDidMount(): void {
-        const client = this.context;
-        client.on("sync", this.onSyncStateChange);
-        client.on("Room.localEchoUpdated", this.onRoomLocalEchoUpdated);
+        const client = this.props.mxClient;
+        client.on(ClientEvent.Sync, this.onSyncStateChange);
+        client.on(RoomEvent.LocalEchoUpdated, this.onRoomLocalEchoUpdated);
 
         this.checkSize();
     }
@@ -115,21 +123,21 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
     public componentWillUnmount(): void {
         this.unmounted = true;
         // we may have entirely lost our client as we're logging out before clicking login on the guest bar...
-        const client = this.context;
+        const client = this.props.mxClient;
         if (client) {
-            client.removeListener("sync", this.onSyncStateChange);
-            client.removeListener("Room.localEchoUpdated", this.onRoomLocalEchoUpdated);
+            client.removeListener(ClientEvent.Sync, this.onSyncStateChange);
+            client.removeListener(RoomEvent.LocalEchoUpdated, this.onRoomLocalEchoUpdated);
         }
     }
 
-    private onSyncStateChange = (state: SyncState, prevState: SyncState, data: SyncStateData): void => {
+    private onSyncStateChange = (state: SyncState, prevState: SyncState | null, data?: SyncStateData): void => {
         if (state === "SYNCING" && prevState === "SYNCING") {
             return;
         }
         if (this.unmounted) return;
         this.setState({
             syncState: state,
-            syncStateData: data,
+            syncStateData: data ?? null,
         });
     };
 
@@ -289,3 +297,5 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         return null;
     }
 }
+
+export default withMatrixClientHOC(RoomStatusBar);

@@ -19,15 +19,17 @@ import { render, RenderResult, screen } from "@testing-library/react";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import userEvent from "@testing-library/user-event";
 
-import NotificationSettingsTab from "../../../../../../src/components/views/settings/tabs/room/NotificationSettingsTab";
-import { mkStubRoom, stubClient } from "../../../../../test-utils";
+import _NotificationSettingsTab from "../../../../../../src/components/views/settings/tabs/room/NotificationSettingsTab";
+import { mkStubRoom, stubClient, wrapInMatrixClientContext } from "../../../../../test-utils";
 import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
 import { EchoChamber } from "../../../../../../src/stores/local-echo/EchoChamber";
 import { RoomEchoChamber } from "../../../../../../src/stores/local-echo/RoomEchoChamber";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../../../src/settings/SettingLevel";
 
-describe("NotificatinSettingsTab", () => {
+const NotificationSettingsTab = wrapInMatrixClientContext(_NotificationSettingsTab);
+
+describe("NotificationSettingsTab", () => {
     const roomId = "!room:example.com";
     let cli: MatrixClient;
     let roomProps: RoomEchoChamber;
@@ -41,8 +43,6 @@ describe("NotificatinSettingsTab", () => {
         cli = MatrixClientPeg.safeGet();
         const room = mkStubRoom(roomId, "test room", cli);
         roomProps = EchoChamber.forRoom(room);
-
-        NotificationSettingsTab.contextType = React.createContext<MatrixClient>(cli);
     });
 
     it("should prevent »Settings« link click from bubbling up to radio buttons", async () => {

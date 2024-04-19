@@ -71,11 +71,11 @@ interface IAppTileProps {
     // Note: these are only the props we care about
     app: IApp | IWidget;
     room?: Room; // without a room it is a user widget
-    userId: string;
-    creatorUserId: string;
-    waitForIframeLoad: boolean;
+    userId?: string;
+    creatorUserId?: string;
+    waitForIframeLoad?: boolean;
     whitelistCapabilities?: string[];
-    userWidget: boolean;
+    userWidget?: boolean;
     stickyPromise?: () => Promise<void>;
 }
 

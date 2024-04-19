@@ -15,29 +15,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ContextType, CSSProperties, MutableRefObject } from "react";
+import React, { CSSProperties, MutableRefObject } from "react";
 import { Room } from "matrix-js-sdk/src/matrix";
 
 import WidgetUtils from "../../../utils/WidgetUtils";
 import AppTile from "./AppTile";
 import WidgetStore from "../../../stores/WidgetStore";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     persistentWidgetId: string;
     persistentRoomId: string;
     pointerEvents?: CSSProperties["pointerEvents"];
     movePersistedElement: MutableRefObject<(() => void) | undefined>;
 }
 
-export default class PersistentApp extends React.Component<IProps> {
-    public static contextType = MatrixClientContext;
-    public context!: ContextType<typeof MatrixClientContext>;
+class PersistentApp extends React.Component<React.PropsWithChildren<IProps>> {
     private room: Room;
 
-    public constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
-        super(props, context);
-        this.room = context.getRoom(this.props.persistentRoomId)!;
+    public constructor(props: React.PropsWithChildren<IProps>) {
+        super(props);
+        this.room = props.mxClient.getRoom(this.props.persistentRoomId)!;
     }
 
     public render(): JSX.Element | null {
@@ -50,7 +48,7 @@ export default class PersistentApp extends React.Component<IProps> {
                 app={app}
                 fullWidth={true}
                 room={this.room}
-                userId={this.context.getSafeUserId()}
+                userId={this.props.mxClient.getSafeUserId()}
                 creatorUserId={app.creatorUserId}
                 widgetPageTitle={WidgetUtils.getWidgetDataTitle(app)}
                 waitForIframeLoad={app.waitForIframeLoad}
@@ -63,3 +61,5 @@ export default class PersistentApp extends React.Component<IProps> {
         );
     }
 }
+
+export default withMatrixClientHOC(PersistentApp);

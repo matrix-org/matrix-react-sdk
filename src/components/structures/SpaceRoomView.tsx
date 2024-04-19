@@ -19,7 +19,7 @@ import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 import React, { useCallback, useContext, useRef, useState } from "react";
 
-import MatrixClientContext from "../../contexts/MatrixClientContext";
+import MatrixClientContext, { MatrixClientProps, withMatrixClientHOC } from "../../contexts/MatrixClientContext";
 import createRoom, { IOpts } from "../../createRoom";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { Action } from "../../dispatcher/actions";
@@ -76,7 +76,7 @@ import RightPanel from "./RightPanel";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     space: Room;
     justCreatedOpts?: IOpts;
     resizeNotifier: ResizeNotifier;
@@ -603,19 +603,16 @@ const SpaceSetupPrivateInvite: React.FC<{
     );
 };
 
-export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
+class SpaceRoomView extends React.PureComponent<IProps, IState> {
     private readonly dispatcherRef: string;
 
-    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         let phase = Phase.Landing;
 
         const creator = this.props.space.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
-        const showSetup = this.props.justCreatedOpts && context.getSafeUserId() === creator;
+        const showSetup = this.props.justCreatedOpts && props.mxClient.getSafeUserId() === creator;
 
         if (showSetup) {
             phase =
@@ -635,13 +632,13 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        this.context.on(RoomEvent.MyMembership, this.onMyMembership);
+        this.props.mxClient.on(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     public componentWillUnmount(): void {
         defaultDispatcher.unregister(this.dispatcherRef);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
-        this.context.off(RoomEvent.MyMembership, this.onMyMembership);
+        this.props.mxClient.off(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     private onMyMembership = (room: Room, myMembership: string): void => {
@@ -780,3 +777,5 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
         );
     }
 }
+
+export default withMatrixClientHOC(SpaceRoomView);

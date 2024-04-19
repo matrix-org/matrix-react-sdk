@@ -22,12 +22,8 @@ import { IPreview } from "./IPreview";
 import { TagID } from "../models";
 import { _t, sanitizeForTranslation } from "../../../languageHandler";
 import { getSenderName, isSelf, shouldPrefixMessagesIn } from "./utils";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 export class PollStartEventPreview implements IPreview {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
     public getTextFor(event: MatrixEvent, tagId?: TagID, isThread?: boolean): string | null {
         let eventContent = event.getContent();
 

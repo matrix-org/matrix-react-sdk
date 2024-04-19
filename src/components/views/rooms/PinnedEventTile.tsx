@@ -25,7 +25,6 @@ import MessageEvent from "../messages/MessageEvent";
 import MemberAvatar from "../avatars/MemberAvatar";
 import { _t } from "../../../languageHandler";
 import { formatDate } from "../../../DateUtils";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { getUserNameColorClass } from "../../../utils/FormattingUtils";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
@@ -40,9 +39,6 @@ interface IProps {
 const AVATAR_SIZE = "24px";
 
 export default class PinnedEventTile extends React.Component<IProps> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
     private onTileClicked = (): void => {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,

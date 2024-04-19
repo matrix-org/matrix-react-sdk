@@ -24,7 +24,7 @@ import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { checkUserIsAllowedToChangeEncryption, IOpts } from "../../../createRoom";
 import Field from "../elements/Field";
-import RoomAliasField from "../elements/RoomAliasField";
+import RoomAliasField, { RoomAliasField as RoomAliasFieldClass } from "../elements/RoomAliasField";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import DialogButtons from "../elements/DialogButtons";
 import BaseDialog from "../dialogs/BaseDialog";
@@ -93,7 +93,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     private readonly askToJoinEnabled: boolean;
     private readonly supportsRestricted: boolean;
     private nameField = createRef<Field>();
-    private aliasField = createRef<RoomAliasField>();
+    private aliasField = createRef<RoomAliasFieldClass>();
 
     public constructor(props: IProps) {
         super(props);
@@ -197,7 +197,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         if (this.state.nameIsValid && (!this.aliasField.current || this.aliasField.current.isValid)) {
             this.props.onFinished(true, this.roomCreateOptions());
         } else {
-            let field: RoomAliasField | Field | null = null;
+            let field: RoomAliasFieldClass | Field | null = null;
             if (!this.state.nameIsValid) {
                 field = this.nameField.current;
             } else if (this.aliasField.current && !this.aliasField.current.isValid) {

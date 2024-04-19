@@ -29,20 +29,15 @@ import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
 import ExternalLink from "../../../elements/ExternalLink";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
-
-interface IProps {}
+import { MatrixClientProps, withMatrixClientHOC } from "../../../../../contexts/MatrixClientContext";
 
 interface IState {
     appVersion: string | null;
     canUpdate: boolean;
 }
 
-export default class HelpUserSettingsTab extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
-    public constructor(props: IProps) {
+class HelpUserSettingsTab extends React.Component<MatrixClientProps, IState> {
+    public constructor(props: MatrixClientProps) {
         super(props);
 
         this.state = {
@@ -69,7 +64,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
     private getVersionInfo(): { appVersion: string; cryptoVersion: string } {
         const brand = SdkConfig.get().brand;
         const appVersion = this.state.appVersion || "unknown";
-        const cryptoVersion = this.context.getCrypto()?.getVersion() ?? "<not-enabled>";
+        const cryptoVersion = this.props.mxClient.getCrypto()?.getVersion() ?? "<not-enabled>";
 
         return {
             appVersion: `${_t("setting|help_about|brand_version", { brand })} ${appVersion}`,
@@ -83,8 +78,8 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         // Dev note: please keep this log line, it's useful when troubleshooting a MatrixClient suddenly
         // stopping in the middle of the logs.
         logger.log("Clear cache & reload clicked");
-        this.context.stopClient();
-        this.context.store.deleteAllData().then(() => {
+        this.props.mxClient.stopClient();
+        this.props.mxClient.store.deleteAllData().then(() => {
             PlatformPeg.get()?.reload();
         });
     };
@@ -285,19 +280,19 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                             {_t(
                                 "setting|help_about|homeserver",
                                 {
-                                    homeserverUrl: this.context.getHomeserverUrl(),
+                                    homeserverUrl: this.props.mxClient.getHomeserverUrl(),
                                 },
                                 {
                                     code: (sub) => <code>{sub}</code>,
                                 },
                             )}
                         </SettingsSubsectionText>
-                        {this.context.getIdentityServerUrl() && (
+                        {this.props.mxClient.getIdentityServerUrl() && (
                             <SettingsSubsectionText>
                                 {_t(
                                     "setting|help_about|identity_server",
                                     {
-                                        identityServerUrl: this.context.getIdentityServerUrl(),
+                                        identityServerUrl: this.props.mxClient.getIdentityServerUrl(),
                                     },
                                     {
                                         code: (sub) => <code>{sub}</code>,
@@ -311,8 +306,8 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                                     {_t("common|access_token")}
                                 </summary>
                                 <b>{_t("setting|help_about|access_token_detail")}</b>
-                                <CopyableText getTextToCopy={() => this.context.getAccessToken()}>
-                                    {this.context.getAccessToken()}
+                                <CopyableText getTextToCopy={() => this.props.mxClient.getAccessToken()}>
+                                    {this.props.mxClient.getAccessToken()}
                                 </CopyableText>
                             </details>
                         </SettingsSubsectionText>
@@ -325,3 +320,5 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         );
     }
 }
+
+export default withMatrixClientHOC(HelpUserSettingsTab);

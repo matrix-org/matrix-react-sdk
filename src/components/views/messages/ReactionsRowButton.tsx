@@ -24,10 +24,10 @@ import { formatList } from "../../../utils/FormattingUtils";
 import dis from "../../../dispatcher/dispatcher";
 import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
 import { REACTION_SHORTCODE_KEY } from "./ReactionsRow";
 
-export interface IProps {
+interface IProps extends MatrixClientProps {
     // The event we're displaying reactions for
     mxEvent: MatrixEvent;
     // The reaction content / key / emoji
@@ -49,10 +49,7 @@ interface IState {
     tooltipVisible: boolean;
 }
 
-export default class ReactionsRowButton extends React.PureComponent<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
+class ReactionsRowButton extends React.PureComponent<IProps, IState> {
     public state = {
         tooltipRendered: false,
         tooltipVisible: false,
@@ -61,9 +58,9 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
     public onClick = (): void => {
         const { mxEvent, myReactionEvent, content } = this.props;
         if (myReactionEvent) {
-            this.context.redactEvent(mxEvent.getRoomId()!, myReactionEvent.getId()!);
+            this.props.mxClient.redactEvent(mxEvent.getRoomId()!, myReactionEvent.getId()!);
         } else {
-            this.context.sendEvent(mxEvent.getRoomId()!, EventType.Reaction, {
+            this.props.mxClient.sendEvent(mxEvent.getRoomId()!, EventType.Reaction, {
                 "m.relates_to": {
                     rel_type: RelationType.Annotation,
                     event_id: mxEvent.getId()!,
@@ -110,7 +107,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
             );
         }
 
-        const room = this.context.getRoom(mxEvent.getRoomId());
+        const room = this.props.mxClient.getRoom(mxEvent.getRoomId());
         let label: string | undefined;
         let customReactionName: string | undefined;
         if (room) {
@@ -173,3 +170,5 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
         );
     }
 }
+
+export default withMatrixClientHOC(ReactionsRowButton);

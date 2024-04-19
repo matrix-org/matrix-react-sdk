@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, ContextType, createRef, SyntheticEvent } from "react";
+import React, { ChangeEvent, createRef, SyntheticEvent } from "react";
 import { MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomCanonicalAliasEventContent } from "matrix-js-sdk/src/types";
@@ -27,8 +27,8 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import RoomPublishSetting from "./RoomPublishSetting";
-import RoomAliasField from "../elements/RoomAliasField";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import RoomAliasField, { RoomAliasField as RoomAliasFieldClass } from "../elements/RoomAliasField";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
 import SettingsFieldset from "../settings/SettingsFieldset";
 
 interface IEditableAliasesListProps {
@@ -37,7 +37,7 @@ interface IEditableAliasesListProps {
 }
 
 class EditableAliasesList extends EditableItemList<IEditableAliasesListProps> {
-    private aliasField = createRef<RoomAliasField>();
+    private aliasField = createRef<RoomAliasFieldClass>();
 
     private onAliasAdded = async (ev: SyntheticEvent): Promise<void> => {
         ev.preventDefault();
@@ -78,7 +78,7 @@ class EditableAliasesList extends EditableItemList<IEditableAliasesListProps> {
     }
 }
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     roomId: string;
     canSetCanonicalAlias: boolean;
     canSetAliases: boolean;
@@ -100,17 +100,14 @@ interface IState {
     newAltAlias?: string;
 }
 
-export default class AliasSettings extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: ContextType<typeof MatrixClientContext>;
-
+class AliasSettings extends React.Component<IProps, IState> {
     public static defaultProps = {
         canSetAliases: false,
         canSetCanonicalAlias: false,
     };
 
-    public constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         const state: IState = {
             altAliases: [],
@@ -144,7 +141,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
     private async loadLocalAliases(): Promise<void> {
         this.setState({ localAliasesLoading: true });
         try {
-            const mxClient = this.context;
+            const mxClient = this.props.mxClient;
 
             let localAliases: string[] = [];
             const response = await mxClient.getLocalAliases(this.props.roomId);
@@ -176,7 +173,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
 
         if (alias) eventContent["alias"] = alias;
 
-        this.context
+        this.props.mxClient
             .sendStateEvent(this.props.roomId, EventType.RoomCanonicalAlias, eventContent, "")
             .catch((err) => {
                 logger.error(err);
@@ -207,7 +204,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
             eventContent["alt_aliases"] = altAliases;
         }
 
-        this.context
+        this.props.mxClient
             .sendStateEvent(this.props.roomId, EventType.RoomCanonicalAlias, eventContent, "")
             .then(() => {
                 this.setState({
@@ -234,10 +231,10 @@ export default class AliasSettings extends React.Component<IProps, IState> {
     private onLocalAliasAdded = (alias?: string): void => {
         if (!alias || alias.length === 0) return; // ignore attempts to create blank aliases
 
-        const localDomain = this.context.getDomain();
+        const localDomain = this.props.mxClient.getDomain();
         if (!alias.includes(":")) alias += ":" + localDomain;
 
-        this.context
+        this.props.mxClient
             .createAlias(alias, this.props.roomId)
             .then(() => {
                 this.setState({
@@ -261,7 +258,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
         const alias = this.state.localAliases[index];
         // TODO: In future, we should probably be making sure that the alias actually belongs
         // to this room. See https://github.com/vector-im/element-web/issues/7353
-        this.context
+        this.props.mxClient
             .deleteAlias(alias)
             .then(() => {
                 const localAliases = this.state.localAliases.filter((a) => a !== alias);
@@ -330,7 +327,7 @@ export default class AliasSettings extends React.Component<IProps, IState> {
     }
 
     public render(): React.ReactNode {
-        const mxClient = this.context;
+        const mxClient = this.props.mxClient;
         const localDomain = mxClient.getDomain()!;
         const isSpaceRoom = mxClient.getRoom(this.props.roomId)?.isSpaceRoom();
 
@@ -455,3 +452,5 @@ export default class AliasSettings extends React.Component<IProps, IState> {
         );
     }
 }
+
+export default withMatrixClientHOC(AliasSettings);

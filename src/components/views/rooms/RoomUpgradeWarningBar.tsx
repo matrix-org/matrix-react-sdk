@@ -21,9 +21,9 @@ import Modal from "../../../Modal";
 import { _t } from "../../../languageHandler";
 import RoomUpgradeDialog from "../dialogs/RoomUpgradeDialog";
 import AccessibleButton from "../elements/AccessibleButton";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     room: Room;
 }
 
@@ -31,12 +31,9 @@ interface IState {
     upgraded?: boolean;
 }
 
-export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
-    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
-        super(props, context);
+class RoomUpgradeWarningBar extends React.PureComponent<IProps, IState> {
+    public constructor(props: IProps) {
+        super(props);
 
         const tombstone = this.props.room.currentState.getStateEvents("m.room.tombstone", "");
         this.state = {
@@ -45,11 +42,11 @@ export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, I
     }
 
     public componentDidMount(): void {
-        this.context.on(RoomStateEvent.Events, this.onStateEvents);
+        this.props.mxClient.on(RoomStateEvent.Events, this.onStateEvents);
     }
 
     public componentWillUnmount(): void {
-        this.context.removeListener(RoomStateEvent.Events, this.onStateEvents);
+        this.props.mxClient.removeListener(RoomStateEvent.Events, this.onStateEvents);
     }
 
     private onStateEvents = (event: MatrixEvent): void => {
@@ -119,3 +116,5 @@ export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, I
         );
     }
 }
+
+export default withMatrixClientHOC(RoomUpgradeWarningBar);

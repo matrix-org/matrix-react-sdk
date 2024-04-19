@@ -24,7 +24,7 @@ import SettingsStore from "../../../../../settings/SettingsStore";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { RoomEchoChamber } from "../../../../../stores/local-echo/RoomEchoChamber";
 import { EchoChamber } from "../../../../../stores/local-echo/EchoChamber";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../../../contexts/MatrixClientContext";
 import StyledRadioGroup from "../../../elements/StyledRadioGroup";
 import { RoomNotifState } from "../../../../../RoomNotifs";
 import defaultDispatcher from "../../../../../dispatcher/dispatcher";
@@ -35,7 +35,7 @@ import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection from "../../shared/SettingsSubsection";
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     roomId: string;
     closeSettingsFn(): void;
 }
@@ -45,17 +45,14 @@ interface IState {
     uploadedFile: File | null;
 }
 
-export default class NotificationsSettingsTab extends React.Component<IProps, IState> {
+class NotificationsSettingsTab extends React.Component<IProps, IState> {
     private readonly roomProps: RoomEchoChamber;
     private soundUpload = createRef<HTMLInputElement>();
 
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
+    public constructor(props: IProps) {
+        super(props);
 
-    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
-        super(props, context);
-
-        this.roomProps = EchoChamber.forRoom(context.getRoom(this.props.roomId)!);
+        this.roomProps = EchoChamber.forRoom(props.mxClient.getRoom(this.props.roomId)!);
 
         let currentSound = "default";
         const soundData = Notifier.getSoundForRoom(this.props.roomId);
@@ -315,3 +312,5 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         );
     }
 }
+
+export default withMatrixClientHOC(NotificationsSettingsTab);

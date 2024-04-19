@@ -44,14 +44,14 @@ import ErrorDialog from "../../../dialogs/ErrorDialog";
 import SettingsFieldset from "../../SettingsFieldset";
 import ExternalLink from "../../../elements/ExternalLink";
 import PosthogTrackers from "../../../../../PosthogTrackers";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../../../contexts/MatrixClientContext";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsTab from "../SettingsTab";
 import SdkConfig from "../../../../../SdkConfig";
 import { shouldForceDisableEncryption } from "../../../../../utils/crypto/shouldForceDisableEncryption";
 import { Caption } from "../../../typography/Caption";
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     room: Room;
     closeSettingsFn: () => void;
 }
@@ -64,12 +64,9 @@ interface IState {
     showAdvancedSection: boolean;
 }
 
-export default class SecurityRoomSettingsTab extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
-    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
-        super(props, context);
+class SecurityRoomSettingsTab extends React.Component<IProps, IState> {
+    public constructor(props: IProps) {
+        super(props);
 
         const state = this.props.room.currentState;
 
@@ -85,13 +82,13 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                 HistoryVisibility.Shared,
             ),
             hasAliases: false, // async loaded in componentDidMount
-            encrypted: context.isRoomEncrypted(this.props.room.roomId),
+            encrypted: props.mxClient.isRoomEncrypted(this.props.room.roomId),
             showAdvancedSection: false,
         };
     }
 
     public componentDidMount(): void {
-        this.context.on(RoomStateEvent.Events, this.onStateEvent);
+        this.props.mxClient.on(RoomStateEvent.Events, this.onStateEvent);
         this.hasAliases().then((hasAliases) => this.setState({ hasAliases }));
     }
 
@@ -100,7 +97,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     }
 
     public componentWillUnmount(): void {
-        this.context.removeListener(RoomStateEvent.Events, this.onStateEvent);
+        this.props.mxClient.removeListener(RoomStateEvent.Events, this.onStateEvent);
     }
 
     private onStateEvent = (e: MatrixEvent): void => {
@@ -174,7 +171,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
 
                 const beforeEncrypted = this.state.encrypted;
                 this.setState({ encrypted: true });
-                this.context
+                this.props.mxClient
                     .sendStateEvent(this.props.room.roomId, EventType.RoomEncryption, {
                         algorithm: "m.megolm.v1.aes-sha2",
                     })
@@ -193,7 +190,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
 
         this.setState({ guestAccess });
 
-        this.context
+        this.props.mxClient
             .sendStateEvent(
                 this.props.room.roomId,
                 EventType.RoomGuestAccess,
@@ -215,7 +212,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
 
         const [shouldCreate, opts] = await modal.finished;
         if (shouldCreate) {
-            await createRoom(this.context, opts);
+            await createRoom(this.props.mxClient, opts);
         }
         return shouldCreate;
     };
@@ -225,7 +222,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         if (beforeHistory === history) return;
 
         this.setState({ history: history });
-        this.context
+        this.props.mxClient
             .sendStateEvent(
                 this.props.room.roomId,
                 EventType.RoomHistoryVisibility,
@@ -245,7 +242,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     };
 
     private async hasAliases(): Promise<boolean> {
-        const cli = this.context;
+        const cli = this.props.mxClient;
         const response = await cli.getLocalAliases(this.props.room.roomId);
         const localAliases = response.aliases;
         return Array.isArray(localAliases) && localAliases.length !== 0;
@@ -352,7 +349,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             return null;
         }
 
-        const client = this.context;
+        const client = this.props.mxClient;
         const history = this.state.history;
         const state = this.props.room.currentState;
         const canChangeHistory = state?.mayClientSendStateEvent(EventType.RoomHistoryVisibility, client);
@@ -400,7 +397,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     };
 
     private renderAdvanced(): JSX.Element {
-        const client = this.context;
+        const client = this.props.mxClient;
         const guestAccess = this.state.guestAccess;
         const state = this.props.room.currentState;
         const canSetGuestAccess = state?.mayClientSendStateEvent(EventType.RoomGuestAccess, client);
@@ -419,7 +416,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     }
 
     public render(): React.ReactNode {
-        const client = this.context;
+        const client = this.props.mxClient;
         const room = this.props.room;
         const isEncrypted = this.state.encrypted;
         const hasEncryptionPermission = room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
@@ -473,3 +470,5 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         );
     }
 }
+
+export default withMatrixClientHOC(SecurityRoomSettingsTab);

@@ -33,9 +33,7 @@ import ImageSizePanel from "../../ImageSizePanel";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
-
-interface IProps {}
+import { MatrixClientProps, withMatrixClientHOC } from "../../../../../contexts/MatrixClientContext";
 
 interface IState {
     useBundledEmojiFont: boolean;
@@ -49,15 +47,12 @@ interface IState {
     avatarUrl?: string;
 }
 
-export default class AppearanceUserSettingsTab extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
+class AppearanceUserSettingsTab extends React.Component<MatrixClientProps, IState> {
     private readonly MESSAGE_PREVIEW_TEXT = _t("common|preview_message");
 
     private unmounted = false;
 
-    public constructor(props: IProps) {
+    public constructor(props: MatrixClientProps) {
         super(props);
 
         this.state = {
@@ -71,7 +66,7 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
 
     public async componentDidMount(): Promise<void> {
         // Fetch the current user profile for the message preview
-        const client = this.context;
+        const client = this.props.mxClient;
         const userId = client.getUserId()!;
         const profileInfo = await client.getProfileInfo(userId);
         if (this.unmounted) return;
@@ -174,3 +169,5 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
         );
     }
 }
+
+export default withMatrixClientHOC(AppearanceUserSettingsTab);

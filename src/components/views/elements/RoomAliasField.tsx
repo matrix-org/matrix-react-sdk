@@ -20,9 +20,9 @@ import { MatrixError } from "matrix-js-sdk/src/matrix";
 import { _t } from "../../../languageHandler";
 import withValidation, { IFieldState, IValidationResult } from "./Validation";
 import Field, { IValidateOpts } from "./Field";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../../contexts/MatrixClientContext";
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     domain?: string;
     value: string;
     label?: string;
@@ -39,14 +39,11 @@ interface IState {
 }
 
 // Controlled form component wrapping Field for inputting a room alias scoped to a given domain
-export default class RoomAliasField extends React.PureComponent<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
+export class RoomAliasField extends React.PureComponent<IProps, IState> {
     private fieldRef = createRef<Field>();
 
-    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
             isValid: true,
@@ -182,7 +179,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                           if (!value) {
                               return true;
                           }
-                          const client = this.context;
+                          const client = this.props.mxClient;
                           try {
                               const result = await client.getRoomIdForAlias(this.asFullAlias(value));
                               return result.room_id === this.props.roomId;
@@ -200,7 +197,7 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
                           if (!value) {
                               return true;
                           }
-                          const client = this.context;
+                          const client = this.props.mxClient;
                           try {
                               await client.getRoomIdForAlias(this.asFullAlias(value));
                               // we got a room id, so the alias is taken
@@ -235,3 +232,5 @@ export default class RoomAliasField extends React.PureComponent<IProps, IState> 
         this.fieldRef.current?.focus();
     }
 }
+
+export default withMatrixClientHOC(RoomAliasField);

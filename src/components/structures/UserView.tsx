@@ -27,9 +27,9 @@ import Spinner from "../views/elements/Spinner";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 import { UserOnboardingPage } from "../views/user-onboarding/UserOnboardingPage";
-import MatrixClientContext from "../../contexts/MatrixClientContext";
+import { MatrixClientProps, withMatrixClientHOC } from "../../contexts/MatrixClientContext";
 
-interface IProps {
+interface IProps extends MatrixClientProps {
     userId: string;
     resizeNotifier: ResizeNotifier;
 }
@@ -39,10 +39,7 @@ interface IState {
     member?: RoomMember;
 }
 
-export default class UserView extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
+class UserView extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
         this.state = {
@@ -69,7 +66,7 @@ export default class UserView extends React.Component<IProps, IState> {
         this.setState({ loading: true });
         let profileInfo: Awaited<ReturnType<MatrixClient["getProfileInfo"]>>;
         try {
-            profileInfo = await this.context.getProfileInfo(this.props.userId);
+            profileInfo = await this.props.mxClient.getProfileInfo(this.props.userId);
         } catch (err) {
             Modal.createDialog(ErrorDialog, {
                 title: _t("error_dialog|error_loading_user_profile"),
@@ -105,3 +102,5 @@ export default class UserView extends React.Component<IProps, IState> {
         }
     }
 }
+
+export default withMatrixClientHOC(UserView);

@@ -20,7 +20,7 @@ import { render } from "@testing-library/react";
 
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { getMockClientWithEventEmitter } from "../../../test-utils";
-import ReactionsRowButton, { IProps } from "../../../../src/components/views/messages/ReactionsRowButton";
+import ReactionsRowButton from "../../../../src/components/views/messages/ReactionsRowButton";
 
 describe("ReactionsRowButton", () => {
     const userId = "@alice:server";
@@ -31,7 +31,7 @@ describe("ReactionsRowButton", () => {
     });
     const room = new Room(roomId, mockClient, userId);
 
-    const createProps = (relationContent: IContent): IProps => ({
+    const createProps = (relationContent: IContent): React.ComponentProps<typeof ReactionsRowButton> => ({
         mxEvent: new MatrixEvent({
             room_id: roomId,
             event_id: "$test:example.com",
