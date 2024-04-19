@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { forwardRef } from "react";
 
 import { _t } from "../../../languageHandler";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
@@ -27,12 +27,10 @@ interface IProps {
     onChange(value: string): void;
     onEnter(): void;
     onKeyDown(event: React.KeyboardEvent): void;
+    context: React.ContextType<typeof RovingTabIndexContext>;
 }
 
 class Search extends React.PureComponent<IProps> {
-    public static contextType = RovingTabIndexContext;
-    public context!: React.ContextType<typeof RovingTabIndexContext>;
-
     private inputRef = React.createRef<HTMLInputElement>();
 
     public componentDidMount(): void {
@@ -78,7 +76,7 @@ class Search extends React.PureComponent<IProps> {
                     onChange={(ev) => this.props.onChange(ev.target.value)}
                     onKeyDown={this.onKeyDown}
                     ref={this.inputRef}
-                    aria-activedescendant={this.context.state.activeRef?.current?.id}
+                    aria-activedescendant={this.props.context.state.activeRef?.current?.id}
                     aria-controls="mx_EmojiPicker_body"
                     aria-haspopup="grid"
                     aria-autocomplete="list"
@@ -89,4 +87,8 @@ class Search extends React.PureComponent<IProps> {
     }
 }
 
-export default Search;
+export default forwardRef<Search, Omit<IProps, "context">>((props, ref) => (
+    <RovingTabIndexContext.Consumer>
+        {(context) => <Search {...props} context={context} ref={ref} />}
+    </RovingTabIndexContext.Consumer>
+));
