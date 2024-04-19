@@ -145,6 +145,7 @@ export class Playback extends EventEmitter implements IDestroyable, PlaybackInte
         this.removeAllListeners();
         this.clock.destroy();
         this.waveformObservable.close();
+        this.worker.terminate();
         if (this.element) {
             URL.revokeObjectURL(this.element.src);
             this.element.remove();

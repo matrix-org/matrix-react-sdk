@@ -43,4 +43,8 @@ export class WorkerManager<Request extends {}, Response> {
         this.worker.postMessage({ seq, ...request });
         return deferred.promise;
     }
+
+    public terminate(): void {
+        this.worker.terminate()
+    }
 }
