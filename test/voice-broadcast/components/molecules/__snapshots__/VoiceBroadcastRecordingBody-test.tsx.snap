@@ -27,11 +27,10 @@ exports[`VoiceBroadcastRecordingBody when rendering a live broadcast should rend
           </div>
         </div>
         <div
+          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
-          data-state="closed"
           role="button"
           tabindex="0"
-          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"
@@ -81,11 +80,10 @@ exports[`VoiceBroadcastRecordingBody when rendering a paused broadcast should re
           </div>
         </div>
         <div
+          aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
-          data-state="closed"
           role="button"
           tabindex="0"
-          title="Change input device"
         >
           <div
             class="mx_Icon mx_Icon_16"

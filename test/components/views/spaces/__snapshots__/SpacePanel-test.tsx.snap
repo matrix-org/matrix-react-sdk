@@ -17,7 +17,6 @@ exports[`<SpacePanel /> should show all activated MetaSpaces in the correct orde
         data-state="closed"
         role="button"
         tabindex="0"
-        title="User menu"
       >
         <div
           class="mx_UserMenu_userAvatar"
@@ -35,11 +34,10 @@ exports[`<SpacePanel /> should show all activated MetaSpaces in the correct orde
         </div>
       </div>
       <div
+        aria-label="Expand"
         class="mx_AccessibleButton mx_SpacePanel_toggleCollapse"
-        data-state="closed"
         role="button"
         tabindex="0"
-        title="Expand"
       />
     </div>
     <ul
