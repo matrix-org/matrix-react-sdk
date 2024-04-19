@@ -539,7 +539,7 @@ class Helpers {
         const threadPanel = this.page.locator(".mx_ThreadPanel");
         await expect(threadPanel).toBeVisible();
         await threadPanel.evaluate(($panel) => {
-            const $button = $panel.querySelector<HTMLElement>('.mx_BaseCard_back[title="Threads"]');
+            const $button = $panel.querySelector<HTMLElement>('.mx_BaseCard_back[aria-label="Threads"]');
             // If the Threads back button is present then click it - the
             // threads button can open either threads list or thread panel
             if ($button) {
