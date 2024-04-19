@@ -2514,6 +2514,7 @@
                 "requires_password_confirmation": "Gib dein Kontopasswort ein, um die Aktualisierung zu bestätigen:",
                 "requires_server_authentication": "Du musst dich authentifizieren, um die Aktualisierung zu bestätigen.",
                 "secret_storage_query_failure": "Status des sicheren Speichers kann nicht gelesen werden",
+                "secret_storage_migration_failure": "Während des Backup-Migrationsprozesses ist ein Fehler aufgetreten. Wir können nicht auf deinen Wiederherstellungsschlüssel zugreifen. Bitte versuche es erneut.",
                 "security_key_safety_reminder": "Bewahre deinen Sicherheitsschlüssel sicher auf, etwa in einem Passwortmanager oder einem Safe, da er verwendet wird, um deine Daten zu sichern.",
                 "session_upgrade_description": "Aktualisiere diese Sitzung, um mit ihr andere Sitzungen verifizieren zu können, damit sie Zugang zu verschlüsselten Nachrichten erhalten und für andere als vertrauenswürdig markiert werden.",
                 "set_phrase_again": "Gehe zurück und setze es erneut.",

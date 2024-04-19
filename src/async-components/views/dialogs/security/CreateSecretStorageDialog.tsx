@@ -18,10 +18,11 @@ limitations under the License.
 import React, { createRef } from "react";
 import FileSaver from "file-saver";
 import { logger } from "matrix-js-sdk/src/logger";
-import { AuthDict, CrossSigningKeys, MatrixError, UIAFlow, UIAResponse } from "matrix-js-sdk/src/matrix";
+import { AuthDict, CrossSigningKeys, MatrixError, UIAFlow, UIAResponse, encodeBase64 } from "matrix-js-sdk/src/matrix";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import classNames from "classnames";
 import { BackupTrustInfo, GeneratedSecretStorageKey, KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
+import { encodeRecoveryKey } from "matrix-js-sdk/src/crypto/recoverykey";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t, _td } from "../../../../languageHandler";
@@ -56,6 +57,7 @@ enum Phase {
     LoadError = "load_error",
     ChooseKeyPassphrase = "choose_key_passphrase",
     Migrate = "migrate",
+    MigrationError = "migration_error",
     Passphrase = "passphrase",
     PassphraseConfirm = "passphrase_confirm",
     ShowKey = "show_key",
@@ -126,6 +128,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     private backupKey?: Uint8Array;
     private recoveryKeyNode = createRef<HTMLElement>();
     private passphraseField = createRef<Field>();
+    private usedBackupWithout4s?: boolean;
 
     public constructor(props: IProps) {
         super(props);
@@ -398,6 +401,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                         return promptForBackupPassphrase();
                     },
                 });
+                await this.resignBackupIfRequired();
             }
             await initialiseDehydration(true);
 
@@ -450,8 +454,89 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         const backupTrustInfo = await this.fetchBackupInfo();
         if (backupTrustInfo?.trusted && this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
             this.bootstrapSecretStorage();
+        } else {
+            this.checkForBackupMigrationAndApply(backupTrustInfo);
         }
     };
+
+    /**
+     * Retrieve the secret storage key (with which other keys are encrypted). Since this method can indirectly use 
+     * {@link SecurityManager#getSecretStorageKey} a AccessSecretStorageDialog can be shown if the secret storage was never accessed before.
+     * 
+     * @returns The secret storage key, if any can be retrieved and null otherwise.
+     */
+    private async getSecretStorageKeyAsString(): Promise<string | null> {
+        try {
+            const cli = MatrixClientPeg.safeGet();
+            const defaultKeyId = await cli.secretStorage.getDefaultKeyId();
+
+            if (!defaultKeyId) return null;
+
+            const secretStorageKeyTuple = await cli.secretStorage.getKey(defaultKeyId);
+
+            if (!secretStorageKeyTuple) return null;
+
+            const [, keyInfo] = secretStorageKeyTuple;
+            const possibleSsKPair = await cli!.cryptoCallbacks!.getSecretStorageKey?.({ keys: { [defaultKeyId!]: keyInfo } },  "");
+
+            if (!possibleSsKPair) return null;
+
+            const [, secretStorageKeyAsUint8Array] = possibleSsKPair;
+
+            return encodeRecoveryKey(secretStorageKeyAsUint8Array)!;
+        } catch(e) {
+            logger.error(`Coudln't run getSecretStorageKeyAsString!`);
+        }
+
+        return null;
+    }
+
+    /**
+     * If the keys of the "current" backup can be decrypted and no 4s was setup, then usedBackupWithout4s is set to true and bootstrapSecretStorage is invoked.
+     * Before this it is ensured that this.recoveryKey is set correctly. If this is not possible an error dialog is shown which ask to re-login.
+     * 
+     * @param backupTrustInfo Required to check whether the keys of the current backup can be decrypted.
+     * @returns 
+     */
+    private async checkForBackupMigrationAndApply(backupTrustInfo: BackupTrustInfo | undefined): Promise<void> {
+        const cli = MatrixClientPeg.safeGet();
+
+        // The user has not entered the correct passphrase / recovery key or 4s is already set up.
+        if (!(backupTrustInfo?.matchesDecryptionKey)
+            || await cli.secretStorage.hasKey()) return;
+
+        if (!this.recoveryKey) {
+            const secretStorageKeyAsString = await this.getSecretStorageKeyAsString();
+
+            if (!secretStorageKeyAsString) {
+                this.setState({ phase: Phase.MigrationError }); 
+                return;
+            } else {
+                const privatKey = new TextEncoder().encode(secretStorageKeyAsString);
+                this.recoveryKey = { privateKey: privatKey, encodedPrivateKey: secretStorageKeyAsString }
+            }
+        }
+
+        this.usedBackupWithout4s = true;
+        this.bootstrapSecretStorage();
+    }
+
+    private async resignBackupIfRequired(): Promise<void> {
+        if (this.usedBackupWithout4s) {
+            const cli = MatrixClientPeg.safeGet();
+            const crypto = cli.getCrypto()!;
+
+            const privKey = await crypto.getSessionBackupPrivateKey();
+            const defaultKeyId = await cli.secretStorage.getDefaultKeyId();
+            await cli.secretStorage.store("m.megolm_backup.v1", encodeBase64(privKey!), [defaultKeyId!]);
+
+            if (this.state.backupInfo?.version) {
+                await crypto.resignKeyBackup(privKey!, this.state.backupInfo.version);
+            } else {
+                logger.error(`It was not possible to run resignBackupIfRequired because no backupInfo existed or its version property was not set.`)
+            }
+        }
+    }
 
     private onLoadRetryClick = (): void => {
         this.setState({ phase: Phase.Loading });
@@ -857,6 +942,22 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         );
     }
 
+    private renderMigrationError(): JSX.Element {
+        return (
+            <div>
+                <p>{_t("settings|key_backup|setup_secure_backup|secret_storage_migration_failure")}</p>
+                <div className="mx_Dialog_buttons">
+                    <DialogButtons
+                        primaryButton={_t("action|retry")}
+                        onPrimaryButtonClick={this.onLoadRetryClick}
+                        hasCancel={this.state.canSkip}
+                        onCancel={this.onCancel}
+                    />
+                </div>
+            </div>
+        );
+    }
+
     private titleForPhase(phase: Phase): string {
         switch (phase) {
             case Phase.ChooseKeyPassphrase:
@@ -941,6 +1042,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     break;
                 case Phase.ConfirmSkip:
                     content = this.renderPhaseSkipConfirm();
+                    break;
+                case Phase.MigrationError:
+                    content = this.renderMigrationError();
                     break;
             }
         }
