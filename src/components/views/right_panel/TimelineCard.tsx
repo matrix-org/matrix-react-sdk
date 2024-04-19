@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { forwardRef } from "react";
 import {
     IEventRelation,
     MatrixEvent,
@@ -59,6 +59,7 @@ interface IProps {
     timelineRenderingType?: TimelineRenderingType;
     showComposer?: boolean;
     composerRelation?: IEventRelation;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -75,12 +76,10 @@ interface IState {
     showReadReceipts?: boolean;
 }
 
-export default class TimelineCard extends React.Component<IProps, IState> {
-    public static contextType = RoomContext;
-
+class TimelineCard extends React.Component<IProps, IState> {
     private dispatcherRef?: string;
     private layoutWatcherRef?: string;
-    private timelinePanel = React.createRef<TimelinePanel>();
+    private timelinePanel = React.createRef<React.ComponentRef<typeof TimelinePanel>>();
     private card = React.createRef<HTMLDivElement>();
     private readReceiptsSettingWatcher: string | undefined;
 
@@ -224,7 +223,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
             <RoomContext.Provider
                 value={{
                     ...this.context,
-                    timelineRenderingType: this.props.timelineRenderingType ?? this.context.timelineRenderingType,
+                    timelineRenderingType: this.props.timelineRenderingType ?? this.props.context.timelineRenderingType,
                     liveTimeline: this.props.timelineSet?.getLiveTimeline(),
                     narrow: this.state.narrow,
                 }}
@@ -246,7 +245,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                             manageReadMarkers={false} // No RM support in the TimelineCard
                             sendReadReceiptOnLoad={true}
                             timelineSet={this.props.timelineSet}
-                            showUrlPreview={this.context.showUrlPreview}
+                            showUrlPreview={this.props.context.showUrlPreview}
                             // The right panel timeline (and therefore threads) don't support IRC layout at this time
                             layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
                             hideThreadedMessages={false}
@@ -281,3 +280,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
         );
     }
 }
+
+export default forwardRef<TimelineCard, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <TimelineCard {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));

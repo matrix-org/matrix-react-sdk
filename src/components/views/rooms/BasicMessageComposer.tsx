@@ -123,7 +123,7 @@ interface IState {
 
 export default class BasicMessageEditor extends React.Component<IProps, IState> {
     public readonly editorRef = createRef<HTMLDivElement>();
-    private autocompleteRef = createRef<Autocomplete>();
+    private autocompleteRef = createRef<React.ComponentRef<typeof Autocomplete>>();
     private formatBarRef = createRef<MessageComposerFormatBar>();
 
     private modifiedFlag = false;

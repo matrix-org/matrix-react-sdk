@@ -14,14 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, ReactNode } from "react";
+import React, { ComponentProps, forwardRef, ReactNode } from "react";
 import { Tooltip } from "@vector-im/compound-web";
 import { MediaEventContent } from "matrix-js-sdk/src/types";
 
-import MImageBody from "./MImageBody";
+import { MImageBody } from "./MImageBody";
 import { BLURHASH_FIELD } from "../../../utils/image-media";
+import RoomContext from "../../../contexts/RoomContext";
+import { IBodyProps } from "./IBodyProps";
 
-export default class MStickerBody extends MImageBody {
+interface Props extends IBodyProps {
+    context: React.ContextType<typeof RoomContext>;
+}
+
+class MStickerBody extends MImageBody {
     // Mostly empty to prevent default behaviour of MImageBody
     protected onClick = (ev: React.MouseEvent): void => {
         ev.preventDefault();
@@ -83,3 +89,7 @@ export default class MStickerBody extends MImageBody {
         return null; // we don't need a banner, we have a tooltip
     }
 }
+
+export default forwardRef<MStickerBody, Omit<Props, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <MStickerBody {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));

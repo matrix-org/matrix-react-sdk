@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, ReactNode, TransitionEvent } from "react";
+import React, { createRef, forwardRef, ReactNode, TransitionEvent } from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
 import { Room, MatrixClient, RoomStateEvent, EventStatus, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
@@ -31,7 +31,6 @@ import EventTile, {
     GetRelationsForEvent,
     IReadReceiptProps,
     isEligibleForSpecialReceipt,
-    UnwrappedEventTile,
 } from "../views/rooms/EventTile";
 import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -188,6 +187,7 @@ interface IProps {
     disableGrouping?: boolean;
 
     callEventGroupers: Map<string, LegacyCallEventGrouper>;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -203,10 +203,7 @@ interface IReadReceiptForUser {
 
 /* (almost) stateless UI component which builds the event tiles in the room timeline.
  */
-export default class MessagePanel extends React.Component<IProps, IState> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
+class MessagePanel extends React.Component<IProps, IState> {
     public static defaultProps = {
         disableGrouping: false,
     };
@@ -256,13 +253,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     private scrollPanel = createRef<ScrollPanel>();
 
     private readonly showTypingNotificationsWatcherRef: string;
-    private eventTiles: Record<string, UnwrappedEventTile> = {};
+    private eventTiles: Record<string, React.ComponentRef<typeof EventTile>> = {};
 
     // A map to allow groupers to maintain consistent keys even if their first event is uprooted due to back-pagination.
     public grouperKeyMap = new WeakMap<MatrixEvent, string>();
 
-    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
             // previous positions the read marker has been in, so we can
@@ -320,7 +317,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             defaultDispatcher.dispatch({
                 action: Action.EditEvent,
                 event: !event?.isRedacted() ? event : null,
-                timelineRenderingType: this.context.timelineRenderingType,
+                timelineRenderingType: this.props.context.timelineRenderingType,
             });
         }
     }
@@ -354,7 +351,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return this.eventTiles[eventId]?.ref?.current ?? undefined;
     }
 
-    public getTileForEventId(eventId?: string): UnwrappedEventTile | undefined {
+    public getTileForEventId(eventId?: string): React.ComponentRef<typeof EventTile> | undefined {
         if (!this.eventTiles || !eventId) {
             return undefined;
         }
@@ -454,7 +451,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     };
 
     public get showHiddenEvents(): boolean {
-        return this.context?.showHiddenEvents ?? this._showHiddenEvents;
+        return this.props.context?.showHiddenEvents ?? this._showHiddenEvents;
     }
 
     // TODO: Implement granular (per-room) hide options
@@ -481,7 +478,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // Always show highlighted event
         if (this.props.highlightedEventId === mxEv.getId()) return true;
 
-        return !shouldHideEvent(mxEv, this.context);
+        return !shouldHideEvent(mxEv, this.props.context);
     }
 
     public readMarkerForEvent(eventId: string, isLastEvent: boolean): ReactNode {
@@ -592,7 +589,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
 
         try {
-            return localStorage.getItem(editorRoomKey(this.props.room.roomId, this.context.timelineRenderingType));
+            return localStorage.getItem(
+                editorRoomKey(this.props.room.roomId, this.props.context.timelineRenderingType),
+            );
         } catch (err) {
             logger.error(err);
             return null;
@@ -775,13 +774,25 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 willWantSeparator === SeparatorKind.Date ||
                 mxEv.getSender() !== nextEv.getSender() ||
                 getEventDisplayInfo(cli, nextEv, this.showHiddenEvents).isInfoMessage ||
-                !shouldFormContinuation(mxEv, nextEv, cli, this.showHiddenEvents, this.context.timelineRenderingType);
+                !shouldFormContinuation(
+                    mxEv,
+                    nextEv,
+                    cli,
+                    this.showHiddenEvents,
+                    this.props.context.timelineRenderingType,
+                );
         }
 
         // is this a continuation of the previous message?
         const continuation =
             wantsSeparator === SeparatorKind.None &&
-            shouldFormContinuation(prevEvent, mxEv, cli, this.showHiddenEvents, this.context.timelineRenderingType);
+            shouldFormContinuation(
+                prevEvent,
+                mxEv,
+                cli,
+                this.showHiddenEvents,
+                this.props.context.timelineRenderingType,
+            );
 
         const eventId = mxEv.getId()!;
         const highlight = eventId === this.props.highlightedEventId;
@@ -826,7 +837,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     public wantsSeparator(prevEvent: MatrixEvent | null, mxEvent: MatrixEvent): SeparatorKind {
-        if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
+        if (this.props.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
             return SeparatorKind.None;
         }
 
@@ -863,13 +874,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             return null;
         }
 
-        const receiptDestination = this.context.threadId ? room.getThread(this.context.threadId) : room;
+        const receiptDestination = this.props.context.threadId ? room.getThread(this.props.context.threadId) : room;
 
         const receipts: IReadReceiptProps[] = [];
 
         if (!receiptDestination) {
             logger.debug(
-                "Discarding request, could not find the receiptDestination for event: " + this.context.threadId,
+                "Discarding request, could not find the receiptDestination for event: " + this.props.context.threadId,
             );
             return receipts;
         }
@@ -950,7 +961,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return receiptsByEvent;
     }
 
-    private collectEventTile = (eventId: string, node: UnwrappedEventTile): void => {
+    private collectEventTile = (eventId: string, node: React.ComponentRef<typeof EventTile>): void => {
         this.eventTiles[eventId] = node;
     };
 
@@ -1033,7 +1044,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         if (
             this.props.room &&
             this.state.showTypingNotifications &&
-            this.context.timelineRenderingType === TimelineRenderingType.Room
+            this.props.context.timelineRenderingType === TimelineRenderingType.Room
         ) {
             whoIsTyping = (
                 <WhoIsTypingTile
@@ -1053,7 +1064,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
 
         const classes = classNames(this.props.className, {
-            mx_MessagePanel_narrow: this.context.narrow,
+            mx_MessagePanel_narrow: this.props.context.narrow,
         });
 
         return (
@@ -1079,10 +1090,14 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 }
 
+export default forwardRef<MessagePanel, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <MessagePanel {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));
+
 /**
- * Holds on to an event, caching the information about it in the context of the current messages list.
+ * Holds on to an event, caching the information about it in the props.context. of the current messages list.
  * Avoids calling shouldShowEvent more times than we need to.
- * Simplifies threading of event context like whether it's the last successful event we sent which cannot be determined
+ * Simplifies threading of event props.context. like whether it's the last successful event we sent which cannot be determined
  * by a consumer from the event alone, so has to be done by the event list processing code earlier.
  */
 export interface WrappedEvent {

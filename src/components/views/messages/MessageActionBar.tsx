@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement, useCallback, useContext, useEffect } from "react";
+import React, { forwardRef, ReactElement, useCallback, useContext, useEffect } from "react";
 import {
     EventStatus,
     MatrixEvent,
@@ -261,11 +261,10 @@ interface IMessageActionBarProps {
     toggleThreadExpanded: () => void;
     isQuoteExpanded?: boolean;
     getRelationsForEvent?: GetRelationsForEvent;
+    context: React.ContextType<typeof RoomContext>;
 }
 
-export default class MessageActionBar extends React.PureComponent<IMessageActionBarProps> {
-    public static contextType = RoomContext;
-
+class MessageActionBar extends React.PureComponent<IMessageActionBarProps> {
     public componentDidMount(): void {
         if (this.props.mxEvent.status && this.props.mxEvent.status !== EventStatus.SENT) {
             this.props.mxEvent.on(MatrixEventEvent.Status, this.onSent);
@@ -314,7 +313,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         dis.dispatch({
             action: "reply_to_event",
             event: this.props.mxEvent,
-            context: this.context.timelineRenderingType,
+            context: this.props.context.timelineRenderingType,
         });
     };
 
@@ -326,7 +325,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         editEvent(
             MatrixClientPeg.safeGet(),
             this.props.mxEvent,
-            this.context.timelineRenderingType,
+            this.props.context.timelineRenderingType,
             this.props.getRelationsForEvent,
         );
     };
@@ -334,7 +333,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     private readonly forbiddenThreadHeadMsgType = [MsgType.KeyVerificationRequest];
 
     private get showReplyInThreadAction(): boolean {
-        const inNotThreadTimeline = this.context.timelineRenderingType !== TimelineRenderingType.Thread;
+        const inNotThreadTimeline = this.props.context.timelineRenderingType !== TimelineRenderingType.Thread;
 
         const isAllowedMessageType =
             !this.forbiddenThreadHeadMsgType.includes(this.props.mxEvent.getContent().msgtype as MsgType) &&
@@ -448,7 +447,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 // The only catch is we do the reply button first so that we can make sure the react
                 // button is the very first button without having to do length checks for `splice()`.
 
-                if (this.context.canSendMessages) {
+                if (this.props.context.canSendMessages) {
                     if (this.showReplyInThreadAction) {
                         toolbarOpts.splice(0, 0, threadTooltipButton);
                     }
@@ -467,7 +466,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     );
                 }
                 // We hide the react button in search results as we don't show reactions in results
-                if (this.context.canReact && !this.context.search) {
+                if (this.props.context.canReact && !this.props.context.search) {
                     toolbarOpts.splice(
                         0,
                         0,
@@ -494,7 +493,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 }
             } else if (
                 // Show thread icon even for deleted messages, but only within main timeline
-                this.context.timelineRenderingType === TimelineRenderingType.Room &&
+                this.props.context.timelineRenderingType === TimelineRenderingType.Room &&
                 this.props.mxEvent.getThread()
             ) {
                 toolbarOpts.unshift(threadTooltipButton);
@@ -560,3 +559,9 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         );
     }
 }
+
+export default forwardRef<MessageActionBar, Omit<IMessageActionBarProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>
+        {(context) => <MessageActionBar {...props} context={context} ref={ref} />}
+    </RoomContext.Consumer>
+));

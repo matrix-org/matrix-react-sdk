@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from "react";
+import React, { forwardRef, ReactNode } from "react";
 import { Room, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
@@ -50,6 +50,7 @@ interface IProps {
     permalinkCreator?: RoomPermalinkCreator;
     relation?: IEventRelation;
     replyToEvent?: MatrixEvent;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -61,9 +62,7 @@ interface IState {
 /**
  * Container tile for rendering the voice message recorder in the composer.
  */
-export default class VoiceRecordComposerTile extends React.PureComponent<IProps, IState> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+class VoiceRecordComposerTile extends React.PureComponent<IProps, IState> {
     private voiceRecordingId: string;
 
     public constructor(props: IProps) {
@@ -141,7 +140,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                 defaultDispatcher.dispatch({
                     action: "reply_to_event",
                     event: null,
-                    context: this.context.timelineRenderingType,
+                    context: this.props.context.timelineRenderingType,
                 });
             }
 
@@ -323,3 +322,9 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         );
     }
 }
+
+export default forwardRef<VoiceRecordComposerTile, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>
+        {(context) => <VoiceRecordComposerTile {...props} context={context} ref={ref} />}
+    </RoomContext.Consumer>
+));

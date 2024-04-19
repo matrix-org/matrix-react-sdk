@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, ReactNode } from "react";
+import React, { createRef, forwardRef, ReactNode } from "react";
 import classNames from "classnames";
 import {
     IEventRelation,
@@ -44,7 +44,7 @@ import { RecordingState } from "../../../audio/VoiceRecording";
 import Tooltip, { Alignment } from "../elements/Tooltip";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import { E2EStatus } from "../../../utils/ShieldUtils";
-import SendMessageComposer, { SendMessageComposer as SendMessageComposerClass } from "./SendMessageComposer";
+import SendMessageComposer from "./SendMessageComposer";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from "../../../dispatcher/actions";
 import EditorModel from "../../../editor/model";
@@ -92,6 +92,7 @@ interface IProps extends MatrixClientProps {
     relation?: IEventRelation;
     e2eStatus?: E2EStatus;
     compact?: boolean;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -113,15 +114,12 @@ interface IState {
 export class MessageComposer extends React.Component<IProps, IState> {
     private tooltipId = `mx_MessageComposer_${Math.random()}`;
     private dispatcherRef?: string;
-    private messageComposerInput = createRef<SendMessageComposerClass>();
-    private voiceRecordingButton = createRef<VoiceRecordComposerTile>();
+    private messageComposerInput = createRef<React.ComponentRef<typeof SendMessageComposer>>();
+    private voiceRecordingButton = createRef<React.ComponentRef<typeof VoiceRecordComposerTile>>();
     private ref: React.RefObject<HTMLDivElement> = createRef();
     private instanceId: number;
 
     private _voiceRecording: Optional<VoiceMessageRecording>;
-
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
 
     public static defaultProps = {
         compact: false,
@@ -189,7 +187,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
 
     private onResize = (type: UI_EVENTS, entry: ResizeObserverEntry): void => {
         if (type === UI_EVENTS.Resize) {
-            const { narrow } = this.context;
+            const { narrow } = this.props.context;
             this.setState({
                 isMenuOpen: !narrow ? false : this.state.isMenuOpen,
                 isStickerPickerOpen: false,
@@ -200,7 +198,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
     private onAction = (payload: ActionPayload): void => {
         switch (payload.action) {
             case "reply_to_event":
-                if (payload.context === this.context.timelineRenderingType) {
+                if (payload.context === this.props.context.timelineRenderingType) {
                     // add a timeout for the reply preview to be rendered, so
                     // that the ScrollPanel listening to the resizeNotifier can
                     // correctly measure it's new height and scroll down to keep
@@ -274,7 +272,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
     private onTombstoneClick = (ev: ButtonEvent): void => {
         ev.preventDefault();
 
-        const replacementRoomId = this.context.tombstone?.getContent()["replacement_room"];
+        const replacementRoomId = this.props.context.tombstone?.getContent()["replacement_room"];
         const replacementRoom = MatrixClientPeg.safeGet().getRoom(replacementRoomId);
         let createEventId: string | undefined;
         if (replacementRoom) {
@@ -282,7 +280,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
             if (createEvent?.getId()) createEventId = createEvent.getId();
         }
 
-        const sender = this.context.tombstone?.getSender();
+        const sender = this.props.context.tombstone?.getSender();
         const viaServers = sender ? [sender.split(":").slice(1).join(":")] : undefined;
 
         dis.dispatch<ViewRoomPayload>({
@@ -324,7 +322,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
             text: emoji,
-            timelineRenderingType: this.context.timelineRenderingType,
+            timelineRenderingType: this.props.context.timelineRenderingType,
         });
         return true;
     };
@@ -345,11 +343,11 @@ export class MessageComposer extends React.Component<IProps, IState> {
             this.setState({ composerContent: "", initialComposerContent: "" });
             dis.dispatch({
                 action: Action.ClearAndFocusSendMessageComposer,
-                timelineRenderingType: this.context.timelineRenderingType,
+                timelineRenderingType: this.props.context.timelineRenderingType,
             });
             await sendMessage(composerContent, this.state.isRichTextEnabled, {
                 mxClient: this.props.mxClient,
-                roomContext: this.context,
+                roomContext: this.props.context,
                 permalinkCreator,
                 relation,
                 replyToEvent,
@@ -467,7 +465,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
             this.voiceRecordingButton.current?.onRecordStartEndClick();
         }
 
-        if (this.context.narrow) {
+        if (this.props.context.narrow) {
             this.toggleButtonMenu();
         }
     };
@@ -483,7 +481,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
         const controls: ReactNode[] = [];
         const menuPosition = this.getMenuPosition();
 
-        const canSendMessages = this.context.canSendMessages && !this.context.tombstone;
+        const canSendMessages = this.props.context.canSendMessages && !this.props.context.tombstone;
         let composer: ReactNode;
         if (canSendMessages) {
             if (this.state.isWysiwygLabEnabled && menuPosition) {
@@ -528,8 +526,8 @@ export class MessageComposer extends React.Component<IProps, IState> {
                     replyToEvent={this.props.replyToEvent}
                 />,
             );
-        } else if (this.context.tombstone) {
-            const replacementRoomId = this.context.tombstone.getContent()["replacement_room"];
+        } else if (this.props.context.tombstone) {
+            const replacementRoomId = this.props.context.tombstone.getContent()["replacement_room"];
 
             const continuesLink = replacementRoomId ? (
                 <a
@@ -667,4 +665,8 @@ export class MessageComposer extends React.Component<IProps, IState> {
 }
 
 const MessageComposerWithMatrixClient = withMatrixClientHOC(MessageComposer);
-export default MessageComposerWithMatrixClient;
+export default forwardRef<MessageComposer, Omit<IProps, "context" | "mxClient">>((props, ref) => (
+    <RoomContext.Consumer>
+        {(context) => <MessageComposerWithMatrixClient {...props} context={context} ref={ref} />}
+    </RoomContext.Consumer>
+));

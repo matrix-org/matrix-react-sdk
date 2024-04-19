@@ -323,7 +323,7 @@ function LocalRoomView(props: LocalRoomViewProps): ReactElement {
                     <RoomHeader room={room} />
                 ) : (
                     <LegacyRoomHeader
-                        room={context.room}
+                        room={context.room!}
                         searchInfo={undefined}
                         inRoom={true}
                         onSearchClick={null}
@@ -410,7 +410,7 @@ class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private roomView = createRef<HTMLDivElement>();
     private searchResultsPanel = createRef<ScrollPanel>();
-    private messagePanel: TimelinePanel | null = null;
+    private messagePanel: React.ComponentRef<typeof TimelinePanel> | null = null;
     private roomViewBody = createRef<HTMLDivElement>();
 
     public constructor(props: IRoomProps) {
@@ -1958,7 +1958,7 @@ class RoomView extends React.Component<IRoomProps, IRoomState> {
      * We pass it down to the scroll panel.
      */
     public handleScrollKey = (ev: React.KeyboardEvent | KeyboardEvent): void => {
-        let panel: ScrollPanel | TimelinePanel | undefined;
+        let panel: ScrollPanel | React.ComponentRef<typeof TimelinePanel> | undefined;
         if (this.searchResultsPanel.current) {
             panel = this.searchResultsPanel.current;
         } else if (this.messagePanel) {
@@ -1980,7 +1980,7 @@ class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     // this has to be a proper method rather than an unnamed function,
     // otherwise react calls it with null on each update.
-    private gatherTimelinePanelRef = (r: TimelinePanel | null): void => {
+    private gatherTimelinePanelRef = (r: React.ComponentRef<typeof TimelinePanel> | null): void => {
         this.messagePanel = r;
     };
 

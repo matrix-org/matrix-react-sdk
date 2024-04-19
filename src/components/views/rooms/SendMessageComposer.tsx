@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent, SyntheticEvent } from "react";
+import React, { createRef, forwardRef, KeyboardEvent, SyntheticEvent } from "react";
 import EMOJI_REGEX from "emojibase-regex";
 import {
     IContent,
@@ -250,12 +250,10 @@ interface ISendMessageComposerProps extends MatrixClientProps {
     onChange?(model: EditorModel): void;
     includeReplyLegacyFallback?: boolean;
     toggleStickerPickerOpen: () => void;
+    context: React.ContextType<typeof RoomContext>;
 }
 
-export class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
+class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
     private readonly prepareToEncrypt?: DebouncedFunc<() => void>;
     private readonly editorRef = createRef<BasicMessageComposer>();
     private model: EditorModel;
@@ -267,9 +265,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         includeReplyLegacyFallback: true,
     };
 
-    public constructor(props: ISendMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
-        super(props, context);
-        this.context = context; // otherwise React will only set it prior to render due to type def above
+    public constructor(props: ISendMessageComposerProps) {
+        super(props);
 
         if (this.props.mxClient.isCryptoEnabled() && this.props.mxClient.isRoomEncrypted(this.props.room.roomId)) {
             this.prepareToEncrypt = throttle(
@@ -336,7 +333,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             case KeyBindingAction.EditPrevMessage:
                 // selection must be collapsed and caret at start
                 if (this.editorRef.current?.isSelectionCollapsed() && this.editorRef.current?.isCaretAtStart()) {
-                    const events = this.context.liveTimeline
+                    const events = this.props.context.liveTimeline
                         ?.getEvents()
                         .concat(replyingToThread ? [] : this.props.room.getPendingEvents());
                     const editEvent = events
@@ -352,17 +349,17 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                         dis.dispatch({
                             action: Action.EditEvent,
                             event: editEvent,
-                            timelineRenderingType: this.context.timelineRenderingType,
+                            timelineRenderingType: this.props.context.timelineRenderingType,
                         });
                     }
                 }
                 break;
             case KeyBindingAction.CancelReplyOrEdit:
-                if (!!this.context.replyToEvent) {
+                if (!!this.props.context.replyToEvent) {
                     dis.dispatch({
                         action: "reply_to_event",
                         event: null,
-                        context: this.context.timelineRenderingType,
+                        context: this.props.context.timelineRenderingType,
                     });
                     event.preventDefault();
                     event.stopPropagation();
@@ -395,7 +392,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         dis.dispatch({
             action: "reply_to_event",
             event: replyEventId ? this.props.room.findEventById(replyEventId) : null,
-            context: this.context.timelineRenderingType,
+            context: this.props.context.timelineRenderingType,
         });
         if (parts) {
             this.model.reset(parts);
@@ -405,7 +402,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     }
 
     private sendQuickReaction(): void {
-        const timeline = this.context.liveTimeline;
+        const timeline = this.props.context.liveTimeline;
         if (!timeline) return;
         const events = timeline.getEvents();
         const reaction = this.model.parts[1].text;
@@ -518,7 +515,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 // re-focus the composer after QuestionDialog is closed
                 dis.dispatch({
                     action: Action.FocusAComposer,
-                    context: this.context.timelineRenderingType,
+                    context: this.props.context.timelineRenderingType,
                 });
                 // if !sendAnyway bail to let the user edit the composer and try again
                 if (!sendAnyway) return;
@@ -563,7 +560,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 dis.dispatch({
                     action: "reply_to_event",
                     event: null,
-                    context: this.context.timelineRenderingType,
+                    context: this.props.context.timelineRenderingType,
                 });
             }
             dis.dispatch({ action: "message_sent" });
@@ -593,7 +590,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         if (shouldSend && SettingsStore.getValue("scrollToBottomOnMessageSent")) {
             dis.dispatch({
                 action: "scroll_to_bottom",
-                timelineRenderingType: this.context.timelineRenderingType,
+                timelineRenderingType: this.props.context.timelineRenderingType,
             });
         }
     }
@@ -631,7 +628,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     dis.dispatch({
                         action: "reply_to_event",
                         event: this.props.room.findEventById(replyEventId),
-                        context: this.context.timelineRenderingType,
+                        context: this.props.context.timelineRenderingType,
                     });
                 }
                 return parts;
@@ -665,12 +662,12 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         switch (payload.action) {
             case "reply_to_event":
             case Action.FocusSendMessageComposer:
-                if ((payload.context ?? TimelineRenderingType.Room) === this.context.timelineRenderingType) {
+                if ((payload.context ?? TimelineRenderingType.Room) === this.props.context.timelineRenderingType) {
                     this.editorRef.current?.focus();
                 }
                 break;
             case Action.ComposerInsert:
-                if (payload.timelineRenderingType !== this.context.timelineRenderingType) break;
+                if (payload.timelineRenderingType !== this.props.context.timelineRenderingType) break;
                 if (payload.composerType !== ComposerType.Send) break;
 
                 if (payload.userId) {
@@ -695,7 +692,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 this.props.room.roomId,
                 this.props.relation,
                 this.props.mxClient,
-                this.context.timelineRenderingType,
+                this.props.context.timelineRenderingType,
             );
             return true; // to skip internal onPaste handler
         }
@@ -734,7 +731,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                                 this.props.room.roomId,
                                 this.props.relation,
                                 this.props.mxClient,
-                                this.context.replyToEvent,
+                                this.props.context.replyToEvent,
                             );
                         },
                         (error) => {
@@ -789,4 +786,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 }
 
 const SendMessageComposerWithMatrixClient = withMatrixClientHOC(SendMessageComposer);
-export default SendMessageComposerWithMatrixClient;
+export default forwardRef<SendMessageComposer, Omit<ISendMessageComposerProps, "context" | "mxClient">>(
+    (props, ref) => (
+        <RoomContext.Consumer>
+            {(context) => <SendMessageComposerWithMatrixClient {...props} context={context} ref={ref} />}
+        </RoomContext.Consumer>
+    ),
+);

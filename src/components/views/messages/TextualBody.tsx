@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, SyntheticEvent, MouseEvent } from "react";
+import React, { createRef, SyntheticEvent, MouseEvent, forwardRef } from "react";
 import ReactDOM from "react-dom";
 import { MsgType } from "matrix-js-sdk/src/matrix";
 
@@ -51,6 +51,10 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
+interface Props extends IBodyProps {
+    context: React.ContextType<typeof RoomContext>;
+}
+
 interface IState {
     // the URLs (if any) to be previewed with a LinkPreviewWidget inside this TextualBody.
     links: string[];
@@ -59,17 +63,14 @@ interface IState {
     widgetHidden: boolean;
 }
 
-export default class TextualBody extends React.Component<IBodyProps, IState> {
+class TextualBody extends React.Component<Props, IState> {
     private readonly contentRef = createRef<HTMLSpanElement>();
 
     private unmounted = false;
     private pills: Element[] = [];
     private tooltips: Element[] = [];
 
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
-    public constructor(props: IBodyProps) {
+    public constructor(props: Props) {
         super(props);
 
         this.state = {
@@ -429,7 +430,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         dis.dispatch({
             action: Action.ComposerInsert,
             userId: mxEvent.getSender(),
-            timelineRenderingType: this.context.timelineRenderingType,
+            timelineRenderingType: this.props.context.timelineRenderingType,
         });
     };
 
@@ -659,3 +660,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         );
     }
 }
+
+export default forwardRef<TextualBody, Omit<Props, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <TextualBody {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));

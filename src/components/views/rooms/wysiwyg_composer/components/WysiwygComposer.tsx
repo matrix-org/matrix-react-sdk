@@ -58,7 +58,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     eventRelation,
 }: WysiwygComposerProps) {
     const { room } = useRoomContext();
-    const autocompleteRef = useRef<Autocomplete | null>(null);
+    const autocompleteRef = useRef<React.ComponentRef<typeof Autocomplete> | null>(null);
 
     const inputEventProcessor = useInputEventProcessor(onSend, autocompleteRef, initialContent, eventRelation);
     const { ref, isWysiwygReady, content, actionStates, wysiwyg, suggestion, messageContent } = useWysiwyg({

@@ -31,7 +31,7 @@ import MessagePanel, { WrappedEvent } from "../MessagePanel";
  *   when determining things such as whether a date separator is necessary
  */
 export abstract class BaseGrouper {
-    public static canStartGroup = (_panel: MessagePanel, _ev: WrappedEvent): boolean => true;
+    public static canStartGroup = (_panel: React.ComponentRef<typeof MessagePanel>, _ev: WrappedEvent): boolean => true;
 
     public events: WrappedEvent[] = [];
     // events that we include in the group but then eject out and place above the group.
@@ -39,7 +39,7 @@ export abstract class BaseGrouper {
     public readMarker: ReactNode;
 
     public constructor(
-        public readonly panel: MessagePanel,
+        public readonly panel: React.ComponentRef<typeof MessagePanel>,
         public readonly firstEventAndShouldShow: WrappedEvent,
         public readonly prevEvent: MatrixEvent | null,
         public readonly lastShownEvent: MatrixEvent | undefined,

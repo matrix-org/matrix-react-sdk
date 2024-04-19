@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent } from "react";
+import React, { forwardRef, SyntheticEvent } from "react";
 import classNames from "classnames";
 import { MatrixEvent, MatrixEventEvent, Relations, RelationsEvent } from "matrix-js-sdk/src/matrix";
 import { uniqBy } from "lodash";
@@ -35,7 +35,7 @@ const MAX_ITEMS_WHEN_LIMITED = 8;
 
 export const REACTION_SHORTCODE_KEY = new UnstableValue("shortcode", "com.beeper.reaction.shortcode");
 
-const ReactButton: React.FC<IProps> = ({ mxEvent, reactions }) => {
+const ReactButton: React.FC<Omit<IProps, "context">> = ({ mxEvent, reactions }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     let contextMenu: JSX.Element | undefined;
@@ -74,6 +74,7 @@ interface IProps {
     mxEvent: MatrixEvent;
     // The Relations model from the JS SDK for reactions to `mxEvent`
     reactions?: Relations | null | undefined;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -81,13 +82,9 @@ interface IState {
     showAll: boolean;
 }
 
-export default class ReactionsRow extends React.PureComponent<IProps, IState> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
-    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
-        super(props, context);
-        this.context = context;
+class ReactionsRow extends React.PureComponent<IProps, IState> {
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
             myReactions: this.getMyReactions(),
@@ -151,7 +148,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         if (!reactions) {
             return null;
         }
-        const userId = this.context.room?.client.getUserId();
+        const userId = this.props.context.room?.client.getUserId();
         if (!userId) return null;
         const myReactions = reactions.getAnnotationsBySender()?.[userId];
         if (!myReactions) {
@@ -202,8 +199,8 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
                         myReactionEvent={myReactionEvent}
                         customReactionImagesEnabled={customReactionImagesEnabled}
                         disabled={
-                            !this.context.canReact ||
-                            (myReactionEvent && !myReactionEvent.isRedacted() && !this.context.canSelfRedact)
+                            !this.props.context.canReact ||
+                            (myReactionEvent && !myReactionEvent.isRedacted() && !this.props.context.canSelfRedact)
                         }
                     />
                 );
@@ -226,7 +223,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         }
 
         let addReactionButton: JSX.Element | undefined;
-        if (this.context.canReact) {
+        if (this.props.context.canReact) {
             addReactionButton = <ReactButton mxEvent={mxEvent} reactions={reactions} />;
         }
 
@@ -239,3 +236,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         );
     }
 }
+
+export default forwardRef<ReactionsRow, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <ReactionsRow {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));

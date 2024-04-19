@@ -31,7 +31,6 @@ import ReplyTile from "../rooms/ReplyTile";
 import { Pill, PillType } from "./Pill";
 import AccessibleButton from "./AccessibleButton";
 import { getParentEventId, shouldDisplayReply } from "../../../utils/Reply";
-import RoomContext from "../../../contexts/RoomContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { GetRelationsForEvent } from "../rooms/EventTile";
 
@@ -72,15 +71,12 @@ interface IState {
 // craft event_id's, using a homeserver that generates predictable event IDs; even then the impact would
 // be low as each event being loaded (after the first) is triggered by an explicit user action.
 export default class ReplyChain extends React.Component<IProps, IState> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
     private unmounted = false;
     private room: Room;
     private blockquoteRef = React.createRef<HTMLQuoteElement>();
 
-    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
             events: [],

@@ -230,7 +230,7 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
 const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) => {
     const mxClient = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const timelinePanel = useRef<TimelinePanel | null>(null);
+    const timelinePanel = useRef<React.ComponentRef<typeof TimelinePanel> | null>(null);
     const card = useRef<HTMLDivElement | null>(null);
     const closeButonRef = useRef<HTMLDivElement | null>(null);
 

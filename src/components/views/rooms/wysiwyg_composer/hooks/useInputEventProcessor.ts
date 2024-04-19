@@ -37,7 +37,7 @@ import { handleClipboardEvent, handleEventWithAutocomplete, isEventToHandleAsCli
 
 export function useInputEventProcessor(
     onSend: () => void,
-    autocompleteRef: React.RefObject<Autocomplete>,
+    autocompleteRef: React.RefObject<React.ComponentRef<typeof Autocomplete>>,
     initialContent?: string,
     eventRelation?: IEventRelation,
 ): (event: WysiwygEvent, composer: Wysiwyg, editor: HTMLElement) => WysiwygEvent | null {
@@ -105,7 +105,7 @@ function handleKeyboardEvent(
     roomContext: IRoomState,
     composerContext: ComposerContextState,
     mxClient: MatrixClient | undefined,
-    autocompleteRef: React.RefObject<Autocomplete>,
+    autocompleteRef: React.RefObject<React.ComponentRef<typeof Autocomplete>>,
 ): KeyboardEvent | null {
     const { editorStateTransfer } = composerContext;
     const isEditing = Boolean(editorStateTransfer);

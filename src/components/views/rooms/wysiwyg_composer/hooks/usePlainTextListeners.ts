@@ -55,7 +55,7 @@ export function usePlainTextListeners(
     eventRelation?: IEventRelation,
 ): {
     ref: RefObject<HTMLDivElement>;
-    autocompleteRef: React.RefObject<Autocomplete>;
+    autocompleteRef: React.RefObject<React.ComponentRef<typeof Autocomplete>>;
     content?: string;
     onBeforeInput(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
     onInput(event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>): void;
@@ -72,7 +72,7 @@ export function usePlainTextListeners(
     const mxClient = useMatrixClientContext();
 
     const ref = useRef<HTMLDivElement | null>(null);
-    const autocompleteRef = useRef<Autocomplete | null>(null);
+    const autocompleteRef = useRef<React.ComponentRef<typeof Autocomplete> | null>(null);
     const [content, setContent] = useState<string | undefined>(initialContent);
 
     const send = useCallback(() => {

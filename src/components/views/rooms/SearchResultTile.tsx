@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { forwardRef } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
@@ -40,17 +40,15 @@ interface IProps {
     ourEventsIndexes: number[];
     onHeightChanged?: () => void;
     permalinkCreator?: RoomPermalinkCreator;
+    context: React.ContextType<typeof RoomContext>;
 }
 
-export default class SearchResultTile extends React.Component<IProps> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
+class SearchResultTile extends React.Component<IProps> {
     // A map of <callId, LegacyCallEventGrouper>
     private callEventGroupers = new Map<string, LegacyCallEventGrouper>();
 
-    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.buildLegacyCallEventGroupers(this.props.timeline);
     }
@@ -79,7 +77,7 @@ export default class SearchResultTile extends React.Component<IProps> {
                 highlights = this.props.searchHighlights;
             }
 
-            if (haveRendererForEvent(mxEv, cli, this.context?.showHiddenEvents)) {
+            if (haveRendererForEvent(mxEv, cli, this.props.context?.showHiddenEvents)) {
                 // do we need a date separator since the last event?
                 const prevEv = timeline[j - 1];
                 // is this a continuation of the previous message?
@@ -90,7 +88,7 @@ export default class SearchResultTile extends React.Component<IProps> {
                         prevEv,
                         mxEv,
                         cli,
-                        this.context?.showHiddenEvents,
+                        this.props.context?.showHiddenEvents,
                         TimelineRenderingType.Search,
                     );
 
@@ -108,7 +106,7 @@ export default class SearchResultTile extends React.Component<IProps> {
                             mxEv,
                             nextEv,
                             cli,
-                            this.context?.showHiddenEvents,
+                            this.props.context?.showHiddenEvents,
                             TimelineRenderingType.Search,
                         );
                 }
@@ -140,3 +138,9 @@ export default class SearchResultTile extends React.Component<IProps> {
         );
     }
 }
+
+export default forwardRef<SearchResultTile, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>
+        {(context) => <SearchResultTile {...props} context={context} ref={ref} />}
+    </RoomContext.Consumer>
+));

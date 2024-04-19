@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { forwardRef } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IContent } from "matrix-js-sdk/src/matrix";
 import { MediaEventContent } from "matrix-js-sdk/src/types";
@@ -31,16 +31,17 @@ import { PlaybackQueue } from "../../../audio/PlaybackQueue";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import MediaProcessingError from "./shared/MediaProcessingError";
 
+interface Props extends IBodyProps {
+    context: React.ContextType<typeof RoomContext>;
+}
+
 interface IState {
     error?: boolean;
     playback?: Playback;
 }
 
-export default class MAudioBody extends React.PureComponent<IBodyProps, IState> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
-    public constructor(props: IBodyProps) {
+export class MAudioBody extends React.PureComponent<Props, IState> {
+    public constructor(props: Props) {
         super(props);
 
         this.state = {};
@@ -88,9 +89,9 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
 
     protected get showFileBody(): boolean {
         return (
-            this.context.timelineRenderingType !== TimelineRenderingType.Room &&
-            this.context.timelineRenderingType !== TimelineRenderingType.Pinned &&
-            this.context.timelineRenderingType !== TimelineRenderingType.Search
+            this.props.context.timelineRenderingType !== TimelineRenderingType.Room &&
+            this.props.context.timelineRenderingType !== TimelineRenderingType.Pinned &&
+            this.props.context.timelineRenderingType !== TimelineRenderingType.Search
         );
     }
 
@@ -131,3 +132,7 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         );
     }
 }
+
+export default forwardRef<MAudioBody, Omit<Props, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <MAudioBody {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));

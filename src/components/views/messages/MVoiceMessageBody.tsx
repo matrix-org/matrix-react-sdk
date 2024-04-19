@@ -14,16 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { forwardRef } from "react";
 
 import InlineSpinner from "../elements/InlineSpinner";
 import { _t } from "../../../languageHandler";
 import RecordingPlayback from "../audio_messages/RecordingPlayback";
-import MAudioBody from "./MAudioBody";
+import { MAudioBody } from "./MAudioBody";
 import MFileBody from "./MFileBody";
 import MediaProcessingError from "./shared/MediaProcessingError";
+import { IBodyProps } from "./IBodyProps";
+import RoomContext from "../../../contexts/RoomContext";
 
-export default class MVoiceMessageBody extends MAudioBody {
+interface Props extends IBodyProps {
+    context: React.ContextType<typeof RoomContext>;
+}
+
+class MVoiceMessageBody extends MAudioBody {
     // A voice message is an audio file but rendered in a special way.
     public render(): React.ReactNode {
         if (this.state.error) {
@@ -51,3 +57,9 @@ export default class MVoiceMessageBody extends MAudioBody {
         );
     }
 }
+
+export default forwardRef<MVoiceMessageBody, Omit<Props, "context">>((props, ref) => (
+    <RoomContext.Consumer>
+        {(context) => <MVoiceMessageBody {...props} context={context} ref={ref} />}
+    </RoomContext.Consumer>
+));

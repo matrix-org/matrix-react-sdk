@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { forwardRef } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../languageHandler";
@@ -29,6 +29,7 @@ import Heading from "../views/typography/Heading";
 
 interface IProps {
     onClose(): void;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -38,9 +39,7 @@ interface IState {
 /*
  * Component which shows the global notification list using a TimelinePanel
  */
-export default class NotificationPanel extends React.PureComponent<IProps, IState> {
-    public static contextType = RoomContext;
-
+class NotificationPanel extends React.PureComponent<IProps, IState> {
     private card = React.createRef<HTMLDivElement>();
 
     public constructor(props: IProps) {
@@ -86,7 +85,7 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
         return (
             <RoomContext.Provider
                 value={{
-                    ...this.context,
+                    ...this.props.context,
                     timelineRenderingType: TimelineRenderingType.Notification,
                     narrow: this.state.narrow,
                 }}
@@ -114,3 +113,9 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
         );
     }
 }
+
+export default forwardRef<NotificationPanel, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>
+        {(context) => <NotificationPanel {...props} context={context} ref={ref} />}
+    </RoomContext.Consumer>
+));

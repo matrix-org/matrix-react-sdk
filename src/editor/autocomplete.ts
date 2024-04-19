@@ -28,7 +28,7 @@ export interface ICallback {
 }
 
 export type UpdateCallback = (data: ICallback) => void;
-export type GetAutocompleterComponent = () => Autocomplete | null;
+export type GetAutocompleterComponent = () => React.ComponentRef<typeof Autocomplete> | null;
 export type UpdateQuery = (test: string) => Promise<void>;
 
 export default class AutocompleteWrapperModel {

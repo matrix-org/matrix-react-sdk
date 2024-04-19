@@ -163,7 +163,7 @@ interface CallEventProps {
 /**
  * An event tile representing an active or historical Element call.
  */
-export const CallEvent = forwardRef<any, CallEventProps>(({ mxEvent }, ref) => {
+export const CallEvent = forwardRef<HTMLDivElement, CallEventProps>(({ mxEvent }, ref) => {
     const client = useContext(MatrixClientContext);
     const call = useCall(mxEvent.getRoomId()!);
     const latestEvent = client

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent } from "react";
+import React, { createRef, forwardRef, KeyboardEvent } from "react";
 import {
     Thread,
     THREAD_RELATION_TYPE,
@@ -70,6 +70,7 @@ interface IProps {
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
     initialEventScrollIntoView?: boolean;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -81,13 +82,10 @@ interface IState {
     narrow: boolean;
 }
 
-export default class ThreadView extends React.Component<IProps, IState> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
+class ThreadView extends React.Component<IProps, IState> {
     private dispatcherRef: string | null = null;
     private readonly layoutWatcherRef: string;
-    private timelinePanel = createRef<TimelinePanel>();
+    private timelinePanel = createRef<React.ComponentRef<typeof TimelinePanel>>();
     private card = createRef<HTMLDivElement>();
 
     // Set by setEventId in ctor.
@@ -398,12 +396,12 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     <TimelinePanel
                         key={this.state.thread.id}
                         ref={this.timelinePanel}
-                        showReadReceipts={this.context.showReadReceipts}
+                        showReadReceipts={this.props.context.showReadReceipts}
                         manageReadReceipts={true}
                         manageReadMarkers={true}
                         sendReadReceiptOnLoad={true}
                         timelineSet={this.state.thread.timelineSet}
-                        showUrlPreview={this.context.showUrlPreview}
+                        showUrlPreview={this.props.context.showUrlPreview}
                         // ThreadView doesn't support IRC layout at this time
                         layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
                         hideThreadedMessages={false}
@@ -474,3 +472,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         );
     }
 }
+
+export default forwardRef<ThreadView, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <ThreadView {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));

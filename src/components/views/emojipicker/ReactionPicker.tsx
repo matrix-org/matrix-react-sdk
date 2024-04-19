@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { forwardRef } from "react";
 import { MatrixEvent, EventType, RelationType, Relations, RelationsEvent } from "matrix-js-sdk/src/matrix";
 
 import EmojiPicker from "./EmojiPicker";
@@ -29,6 +29,7 @@ interface IProps {
     mxEvent: MatrixEvent;
     reactions?: Relations | null | undefined;
     onFinished(): void;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -36,11 +37,8 @@ interface IState {
 }
 
 class ReactionPicker extends React.Component<IProps, IState> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
-    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
 
         this.state = {
             selectedEmojis: new Set(Object.keys(this.getReactions())),
@@ -95,12 +93,12 @@ class ReactionPicker extends React.Component<IProps, IState> {
         this.props.onFinished();
         const myReactions = this.getReactions();
         if (myReactions.hasOwnProperty(reaction)) {
-            if (this.props.mxEvent.isRedacted() || !this.context.canSelfRedact) return false;
+            if (this.props.mxEvent.isRedacted() || !this.props.context.canSelfRedact) return false;
 
             MatrixClientPeg.safeGet().redactEvent(this.props.mxEvent.getRoomId()!, myReactions[reaction]);
             dis.dispatch<FocusComposerPayload>({
                 action: Action.FocusAComposer,
-                context: this.context.timelineRenderingType,
+                context: this.props.context.timelineRenderingType,
             });
             // Tell the emoji picker not to bump this in the more frequently used list.
             return false;
@@ -115,7 +113,7 @@ class ReactionPicker extends React.Component<IProps, IState> {
             dis.dispatch({ action: "message_sent" });
             dis.dispatch<FocusComposerPayload>({
                 action: Action.FocusAComposer,
-                context: this.context.timelineRenderingType,
+                context: this.props.context.timelineRenderingType,
             });
             return true;
         }
@@ -123,7 +121,7 @@ class ReactionPicker extends React.Component<IProps, IState> {
 
     private isEmojiDisabled = (unicode: string): boolean => {
         if (!this.getReactions()[unicode]) return false;
-        if (this.context.canSelfRedact) return false;
+        if (this.props.context.canSelfRedact) return false;
 
         return true;
     };
@@ -140,4 +138,8 @@ class ReactionPicker extends React.Component<IProps, IState> {
     }
 }
 
-export default ReactionPicker;
+export default forwardRef<ReactionPicker, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>
+        {(context) => <ReactionPicker {...props} context={context} ref={ref} />}
+    </RoomContext.Consumer>
+));

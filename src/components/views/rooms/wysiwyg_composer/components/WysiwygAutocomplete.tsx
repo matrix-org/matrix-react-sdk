@@ -59,7 +59,7 @@ interface WysiwygAutocompleteProps {
 const WysiwygAutocomplete = forwardRef(
     (
         { suggestion, handleMention, handleCommand, handleAtRoomMention }: WysiwygAutocompleteProps,
-        ref: ForwardedRef<Autocomplete>,
+        ref: ForwardedRef<React.ComponentRef<typeof Autocomplete>>,
     ): JSX.Element | null => {
         const { room } = useRoomContext();
         const client = useMatrixClientContext();

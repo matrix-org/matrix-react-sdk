@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { AllHTMLAttributes, createRef } from "react";
+import React, { AllHTMLAttributes, createRef, forwardRef } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MediaEventContent } from "matrix-js-sdk/src/types";
 
@@ -97,17 +97,15 @@ export function computedStyle(element: HTMLElement | null): string {
 
 interface IProps extends IBodyProps {
     /* whether or not to show the default placeholder for the file. Defaults to true. */
-    showGenericPlaceholder: boolean;
+    showGenericPlaceholder?: boolean;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
     decryptedBlob?: Blob;
 }
 
-export default class MFileBody extends React.Component<IProps, IState> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
+class MFileBody extends React.Component<IProps, IState> {
     public static defaultProps = {
         showGenericPlaceholder: true,
     };
@@ -226,11 +224,11 @@ export default class MFileBody extends React.Component<IProps, IState> {
 
         let showDownloadLink =
             !this.props.showGenericPlaceholder ||
-            (this.context.timelineRenderingType !== TimelineRenderingType.Room &&
-                this.context.timelineRenderingType !== TimelineRenderingType.Search &&
-                this.context.timelineRenderingType !== TimelineRenderingType.Pinned);
+            (this.props.context.timelineRenderingType !== TimelineRenderingType.Room &&
+                this.props.context.timelineRenderingType !== TimelineRenderingType.Search &&
+                this.props.context.timelineRenderingType !== TimelineRenderingType.Pinned);
 
-        if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
+        if (this.props.context.timelineRenderingType === TimelineRenderingType.Thread) {
             showDownloadLink = false;
         }
 
@@ -348,7 +346,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                                 <span className="mx_MFileBody_download_icon" />
                                 {_t("timeline|m.file|download_label", { text: this.linkText })}
                             </a>
-                            {this.context.timelineRenderingType === TimelineRenderingType.File && (
+                            {this.props.context.timelineRenderingType === TimelineRenderingType.File && (
                                 <div className="mx_MImageBody_size">
                                     {this.content.info?.size ? fileSize(this.content.info.size) : ""}
                                 </div>
@@ -368,3 +366,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
         }
     }
 }
+
+export default forwardRef<MFileBody, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <MFileBody {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));

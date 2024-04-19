@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, createRef, ReactNode } from "react";
+import React, { ComponentProps, createRef, forwardRef, ReactNode } from "react";
 import { Blurhash } from "react-blurhash";
 import classNames from "classnames";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
@@ -47,6 +47,10 @@ enum Placeholder {
     Blurhash,
 }
 
+interface Props extends IBodyProps {
+    context: React.ContextType<typeof RoomContext>;
+}
+
 interface IState {
     contentUrl: string | null;
     thumbUrl: string | null;
@@ -63,17 +67,14 @@ interface IState {
     placeholder: Placeholder;
 }
 
-export default class MImageBody extends React.Component<IBodyProps, IState> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
+export class MImageBody extends React.Component<Props, IState> {
     private unmounted = true;
     private image = createRef<HTMLImageElement>();
     private timeout?: number;
     private sizeWatcher?: string;
     private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
 
-    public constructor(props: IBodyProps) {
+    public constructor(props: Props) {
         super(props);
 
         this.reconnectedListener = createReconnectedListener(this.clearError);
@@ -391,7 +392,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     protected getBanner(content: ImageContent): ReactNode {
         // Hide it for the threads list & the file panel where we show it as text anyway.
         if (
-            [TimelineRenderingType.ThreadsList, TimelineRenderingType.File].includes(this.context.timelineRenderingType)
+            [TimelineRenderingType.ThreadsList, TimelineRenderingType.File].includes(
+                this.props.context.timelineRenderingType,
+            )
         ) {
             return null;
         }
@@ -601,11 +604,11 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
          * link as the message action bar will fulfill that
          */
         const hasMessageActionBar =
-            this.context.timelineRenderingType === TimelineRenderingType.Room ||
-            this.context.timelineRenderingType === TimelineRenderingType.Pinned ||
-            this.context.timelineRenderingType === TimelineRenderingType.Search ||
-            this.context.timelineRenderingType === TimelineRenderingType.Thread ||
-            this.context.timelineRenderingType === TimelineRenderingType.ThreadsList;
+            this.props.context.timelineRenderingType === TimelineRenderingType.Room ||
+            this.props.context.timelineRenderingType === TimelineRenderingType.Pinned ||
+            this.props.context.timelineRenderingType === TimelineRenderingType.Search ||
+            this.props.context.timelineRenderingType === TimelineRenderingType.Thread ||
+            this.props.context.timelineRenderingType === TimelineRenderingType.ThreadsList;
         if (!hasMessageActionBar) {
             return <MFileBody {...this.props} showGenericPlaceholder={false} />;
         }
@@ -647,6 +650,10 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         );
     }
 }
+
+export default forwardRef<MImageBody, Omit<Props, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <MImageBody {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));
 
 interface PlaceholderIProps {
     hover?: boolean;

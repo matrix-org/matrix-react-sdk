@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { forwardRef } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import RoomContext from "../../../contexts/RoomContext";
@@ -23,19 +23,22 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
+    context: React.ContextType<typeof RoomContext>;
 }
 
-export default class TextualEvent extends React.Component<IProps> {
-    public static contextType = RoomContext;
-
+class TextualEvent extends React.Component<IProps> {
     public render(): React.ReactNode {
         const text = TextForEvent.textForEvent(
             this.props.mxEvent,
             MatrixClientPeg.safeGet(),
             true,
-            this.context?.showHiddenEvents,
+            this.props.context?.showHiddenEvents,
         );
         if (!text) return null;
         return <div className="mx_TextualEvent">{text}</div>;
     }
 }
+
+export default forwardRef<TextualEvent, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <TextualEvent {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));

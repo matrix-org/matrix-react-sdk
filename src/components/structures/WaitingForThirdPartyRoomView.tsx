@@ -26,7 +26,7 @@ import RoomHeader from "../views/rooms/RoomHeader";
 import ScrollPanel from "./ScrollPanel";
 import EventTileBubble from "../views/messages/EventTileBubble";
 import NewRoomIntro from "../views/rooms/NewRoomIntro";
-import { UnwrappedEventTile } from "../views/rooms/EventTile";
+import EventTile from "../views/rooms/EventTile";
 import { _t } from "../../languageHandler";
 import SdkConfig from "../../SdkConfig";
 import SettingsStore from "../../settings/SettingsStore";
@@ -53,7 +53,7 @@ export const WaitingForThirdPartyRoomView: React.FC<Props> = ({ roomView, resize
                     <RoomHeader room={context.room!} />
                 ) : (
                     <LegacyRoomHeader
-                        room={context.room}
+                        room={context.room!}
                         inRoom={true}
                         onSearchClick={null}
                         onInviteClick={null}
@@ -77,7 +77,7 @@ export const WaitingForThirdPartyRoomView: React.FC<Props> = ({ roomView, resize
                                 subtitle={_t("room|waiting_for_join_subtitle", { brand })}
                             />
                             <NewRoomIntro />
-                            <UnwrappedEventTile mxEvent={inviteEvent} />
+                            <EventTile mxEvent={inviteEvent} />
                         </ScrollPanel>
                     </div>
                 </main>

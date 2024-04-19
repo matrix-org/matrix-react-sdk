@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent } from "react";
+import React, { createRef, forwardRef, KeyboardEvent } from "react";
 import classNames from "classnames";
 import { flatMap } from "lodash";
 import { Room } from "matrix-js-sdk/src/matrix";
@@ -38,6 +38,7 @@ interface IProps {
     selection: ISelectionRange;
     // The room in which we're autocompleting
     room: Room;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -49,13 +50,11 @@ interface IState {
     forceComplete: boolean;
 }
 
-export default class Autocomplete extends React.PureComponent<IProps, IState> {
+export class Autocomplete extends React.PureComponent<IProps, IState> {
     public autocompleter?: Autocompleter;
     public queryRequested?: string;
     public debounceCompletionsRequest?: number;
     private containerRef = createRef<HTMLDivElement>();
-
-    public static contextType = RoomContext;
 
     public constructor(props: IProps) {
         super(props);
@@ -80,7 +79,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        this.autocompleter = new Autocompleter(this.props.room, this.context.timelineRenderingType);
+        this.autocompleter = new Autocompleter(this.props.room, this.props.context.timelineRenderingType);
         this.applyNewProps();
     }
 
@@ -320,3 +319,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
         ) : null;
     }
 }
+
+export default forwardRef<Autocomplete, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <Autocomplete {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));

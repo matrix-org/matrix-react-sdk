@@ -14,14 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { forwardRef } from "react";
 import { ImageContent } from "matrix-js-sdk/src/types";
 
-import MImageBody from "./MImageBody";
+import { MImageBody } from "./MImageBody";
+import { IBodyProps } from "./IBodyProps";
+import RoomContext from "../../../contexts/RoomContext";
 
 const FORCED_IMAGE_HEIGHT = 44;
 
-export default class MImageReplyBody extends MImageBody {
+interface Props extends IBodyProps {
+    context: React.ContextType<typeof RoomContext>;
+}
+
+class MImageReplyBody extends MImageBody {
     public onClick = (ev: React.MouseEvent): void => {
         ev.preventDefault();
     };
@@ -43,3 +49,9 @@ export default class MImageReplyBody extends MImageBody {
         return <div className="mx_MImageReplyBody">{thumbnail}</div>;
     }
 }
+
+export default forwardRef<MImageReplyBody, Omit<Props, "context">>((props, ref) => (
+    <RoomContext.Consumer>
+        {(context) => <MImageReplyBody {...props} context={context} ref={ref} />}
+    </RoomContext.Consumer>
+));

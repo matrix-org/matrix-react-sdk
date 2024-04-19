@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent } from "react";
+import React, { createRef, forwardRef, KeyboardEvent } from "react";
 import classNames from "classnames";
 import { EventStatus, MatrixEvent, Room, MsgType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -122,28 +122,25 @@ export function createEditContent(
 interface IEditMessageComposerProps extends MatrixClientProps {
     editState: EditorStateTransfer;
     className?: string;
+    context: React.ContextType<typeof RoomContext>;
 }
 interface IState {
     saveDisabled: boolean;
 }
 
 class EditMessageComposer extends React.Component<IEditMessageComposerProps, IState> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
     private readonly editorRef = createRef<BasicMessageComposer>();
     private readonly dispatcherRef: string;
     private readonly replyToEvent?: MatrixEvent;
     private model!: EditorModel;
 
-    public constructor(props: IEditMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
+    public constructor(props: IEditMessageComposerProps) {
         super(props);
-        this.context = context; // otherwise React will only set it prior to render due to type def above
 
         const isRestored = this.createEditorModel();
         const ev = this.props.editState.getEvent();
 
-        this.replyToEvent = ev.replyEventId ? this.context.room?.findEventById(ev.replyEventId) : undefined;
+        this.replyToEvent = ev.replyEventId ? this.props.context.room?.findEventById(ev.replyEventId) : undefined;
 
         const editContent = createEditContent(this.model, ev, this.replyToEvent);
         this.state = {
@@ -155,10 +152,10 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private getRoom(): Room {
-        if (!this.context.room) {
+        if (!this.props.context.room) {
             throw new Error(`Cannot render without room`);
         }
-        return this.context.room;
+        return this.props.context.room;
     }
 
     private onKeyDown = (event: KeyboardEvent): void => {
@@ -191,7 +188,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     dis.dispatch({
                         action: Action.EditEvent,
                         event: previousEvent,
-                        timelineRenderingType: this.context.timelineRenderingType,
+                        timelineRenderingType: this.props.context.timelineRenderingType,
                     });
                     event.preventDefault();
                 }
@@ -211,7 +208,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     dis.dispatch({
                         action: Action.EditEvent,
                         event: nextEvent,
-                        timelineRenderingType: this.context.timelineRenderingType,
+                        timelineRenderingType: this.props.context.timelineRenderingType,
                     });
                 } else {
                     this.cancelEdit();
@@ -230,16 +227,16 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         dis.dispatch({
             action: Action.EditEvent,
             event: null,
-            timelineRenderingType: this.context.timelineRenderingType,
+            timelineRenderingType: this.props.context.timelineRenderingType,
         });
         dis.dispatch({
             action: Action.FocusSendMessageComposer,
-            context: this.context.timelineRenderingType,
+            context: this.props.context.timelineRenderingType,
         });
     }
 
     private get editorRoomKey(): string {
-        return editorRoomKey(this.props.editState.getEvent().getRoomId()!, this.context.timelineRenderingType);
+        return editorRoomKey(this.props.editState.getEvent().getRoomId()!, this.props.context.timelineRenderingType);
     }
 
     private get editorStateKey(): string {
@@ -247,7 +244,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private get events(): MatrixEvent[] {
-        const liveTimelineEvents = this.context.liveTimeline?.getEvents();
+        const liveTimelineEvents = this.props.context.liveTimeline?.getEvents();
         const room = this.getRoom();
         if (!liveTimelineEvents || !room) return [];
         const pendingEvents = room.getPendingEvents();
@@ -368,7 +365,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                     // re-focus the composer after QuestionDialog is closed
                     dis.dispatch({
                         action: Action.FocusAComposer,
-                        context: this.context.timelineRenderingType,
+                        context: this.props.context.timelineRenderingType,
                     });
                     // if !sendAnyway bail to let the user edit the composer and try again
                     if (!sendAnyway) return;
@@ -462,7 +459,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         if (!this.editorRef.current) return;
 
         if (payload.action === Action.ComposerInsert) {
-            if (payload.timelineRenderingType !== this.context.timelineRenderingType) return;
+            if (payload.timelineRenderingType !== this.props.context.timelineRenderingType) return;
             if (payload.composerType !== ComposerType.Edit) return;
 
             if (payload.userId) {
@@ -506,4 +503,10 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
 }
 
 const EditMessageComposerWithMatrixClient = withMatrixClientHOC(EditMessageComposer);
-export default EditMessageComposerWithMatrixClient;
+export default forwardRef<EditMessageComposer, Omit<IEditMessageComposerProps, "context" | "mxClient">>(
+    (props, ref) => (
+        <RoomContext.Consumer>
+            {(context) => <EditMessageComposerWithMatrixClient {...props} context={context} ref={ref} />}
+        </RoomContext.Consumer>
+    ),
+);

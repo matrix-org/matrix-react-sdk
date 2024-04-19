@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, ReactNode } from "react";
+import React, { createRef, forwardRef, ReactNode } from "react";
 import ReactDOM from "react-dom";
 import {
     Room,
@@ -167,6 +167,7 @@ interface IProps {
 
     hideThreadedMessages?: boolean;
     disableGrouping?: boolean;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -244,10 +245,7 @@ interface IEventIndexOpts {
  *
  * Also responsible for handling and sending read receipts.
  */
-class TimelinePanel extends React.Component<IProps, IState> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
+export class TimelinePanel extends React.Component<IProps, IState> {
     // a map from room id to read marker event timestamp
     public static roomReadMarkerTsMap: Record<string, number> = {};
 
@@ -264,7 +262,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private lastRRSentEventId: string | null | undefined = undefined;
     private lastRMSentEventId: string | null | undefined = undefined;
 
-    private readonly messagePanel = createRef<MessagePanel>();
+    private readonly messagePanel = createRef<React.ComponentRef<typeof MessagePanel>>();
     private readonly dispatcherRef: string;
     private timelineWindow?: TimelineWindow;
     private overlayTimelineWindow?: TimelineWindow;
@@ -276,9 +274,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private callEventGroupers = new Map<string, LegacyCallEventGrouper>();
     private initialReadMarkerId: string | null = null;
 
-    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
-        super(props, context);
-        this.context = context;
+    public constructor(props: IProps) {
+        super(props);
 
         debuglog("mounting");
 
@@ -500,7 +497,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         logger.debug(
-            `TimelinePanel(${this.context.timelineRenderingType}): Debugging info for ${room?.roomId}\n` +
+            `TimelinePanel(${this.props.context.timelineRenderingType}): Debugging info for ${room?.roomId}\n` +
                 `\tevents(${eventIdList.length})=${JSON.stringify(eventIdList)}\n` +
                 `\trenderedEventIds(${renderedEventIds?.length ?? 0})=` +
                 `${JSON.stringify(renderedEventIds)}\n` +
@@ -736,7 +733,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             return;
         }
 
-        if (!Thread.hasServerSideSupport && this.context.timelineRenderingType === TimelineRenderingType.Thread) {
+        if (!Thread.hasServerSideSupport && this.props.context.timelineRenderingType === TimelineRenderingType.Thread) {
             if (toStartOfTimeline && !this.state.canBackPaginate) {
                 this.setState({
                     canBackPaginate: true,
@@ -1780,8 +1777,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
                         pendingEvents,
                     );
 
-                    if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
-                        return threadId === this.context.threadId;
+                    if (this.props.context.timelineRenderingType === TimelineRenderingType.Thread) {
+                        return threadId === this.props.context.threadId;
                     }
                     {
                         return shouldLiveInRoom;
@@ -1812,7 +1809,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const room = this.props.timelineSet.room;
 
         const isThreadTimeline = [TimelineRenderingType.Thread, TimelineRenderingType.ThreadsList].includes(
-            this.context.timelineRenderingType,
+            this.props.context.timelineRenderingType,
         );
         if (events.length === 0 || !room || !cli.isRoomEncrypted(room.roomId) || isThreadTimeline) {
             logger.debug("checkForPreJoinUISI: showing all messages, skipping check");
@@ -1881,7 +1878,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         /* Threads do not have server side support for read receipts and the concept
         is very tied to the main room timeline, we are forcing the timeline to
         send read receipts for threaded events */
-        if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
+        if (this.props.context.timelineRenderingType === TimelineRenderingType.Thread) {
             return 0;
         }
         const index = this.state.events.findIndex((ev) => ev.getId() === evId);
@@ -2193,4 +2190,6 @@ function serializeEventIdsFromTimelineSets(timelineSets: EventTimelineSet[]): { 
     return serializedEventIdsInTimelineSet;
 }
 
-export default TimelinePanel;
+export default forwardRef<TimelinePanel, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <TimelinePanel {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));

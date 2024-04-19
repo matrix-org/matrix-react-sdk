@@ -51,8 +51,8 @@ import { VoiceBroadcastBody, VoiceBroadcastInfoEventType, VoiceBroadcastInfoStat
 // onMessageAllowed is handled internally
 interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper"> {
     /* overrides for the msgtype-specific components, used by ReplyTile to override file rendering */
-    overrideBodyTypes?: Record<string, typeof React.Component>;
-    overrideEventTypes?: Record<string, typeof React.Component>;
+    overrideBodyTypes?: Record<string, ComponentType>;
+    overrideEventTypes?: Record<string, ComponentType>;
 
     // helper function to access relations for this event
     getRelationsForEvent?: GetRelationsForEvent;
@@ -64,7 +64,9 @@ export interface IOperableEventTile {
     getEventTileOps(): IEventTileOps | null;
 }
 
-const baseBodyTypes = new Map<string, typeof React.Component>([
+type ComponentType = React.ComponentType<IBodyProps & React.RefAttributes<any>>;
+
+const baseBodyTypes = new Map<string, ComponentType>([
     [MsgType.Text, TextualBody],
     [MsgType.Notice, TextualBody],
     [MsgType.Emote, TextualBody],
@@ -73,7 +75,7 @@ const baseBodyTypes = new Map<string, typeof React.Component>([
     [MsgType.Audio, MVoiceOrAudioBody],
     [MsgType.Video, MVideoBody],
 ]);
-const baseEvTypes = new Map<string, React.ComponentType<IBodyProps>>([
+const baseEvTypes = new Map<string, ComponentType>([
     [EventType.Sticker, MStickerBody],
     [M_POLL_START.name, MPollBody],
     [M_POLL_START.altName, MPollBody],
@@ -84,10 +86,10 @@ const baseEvTypes = new Map<string, React.ComponentType<IBodyProps>>([
 ]);
 
 export default class MessageEvent extends React.Component<IProps> implements IMediaBody, IOperableEventTile {
-    private body: React.RefObject<React.Component | IOperableEventTile> = createRef();
+    private body: React.RefObject<ComponentType | IOperableEventTile> = createRef();
     private mediaHelper?: MediaEventHelper;
-    private bodyTypes = new Map<string, typeof React.Component>(baseBodyTypes.entries());
-    private evTypes = new Map<string, React.ComponentType<IBodyProps>>(baseEvTypes.entries());
+    private bodyTypes = new Map<string, ComponentType>(baseBodyTypes.entries());
+    private evTypes = new Map<string, ComponentType>(baseEvTypes.entries());
 
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
@@ -121,12 +123,12 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
     }
 
     private updateComponentMaps(): void {
-        this.bodyTypes = new Map<string, typeof React.Component>(baseBodyTypes.entries());
+        this.bodyTypes = new Map<string, ComponentType>(baseBodyTypes.entries());
         for (const [bodyType, bodyComponent] of Object.entries(this.props.overrideBodyTypes ?? {})) {
             this.bodyTypes.set(bodyType, bodyComponent);
         }
 
-        this.evTypes = new Map<string, React.ComponentType<IBodyProps>>(baseEvTypes.entries());
+        this.evTypes = new Map<string, ComponentType>(baseEvTypes.entries());
         for (const [evType, evComponent] of Object.entries(this.props.overrideEventTypes ?? {})) {
             this.evTypes.set(evType, evComponent);
         }
@@ -156,7 +158,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         const content = this.props.mxEvent.getContent();
         const type = this.props.mxEvent.getType();
         const msgtype = content.msgtype;
-        let BodyType: React.ComponentType<IBodyProps> = RedactedBody;
+        let BodyType: ComponentType = RedactedBody;
         if (!this.props.mxEvent.isRedacted()) {
             // only resolve BodyType if event is not redacted
             if (this.props.mxEvent.isDecryptionFailure()) {

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { forwardRef } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import dis from "../../../dispatcher/dispatcher";
@@ -35,11 +35,10 @@ function cancelQuoting(context: TimelineRenderingType): void {
 interface IProps {
     permalinkCreator?: RoomPermalinkCreator;
     replyToEvent?: MatrixEvent;
+    context: React.ContextType<typeof RoomContext>;
 }
 
-export default class ReplyPreview extends React.Component<IProps> {
-    public static contextType = RoomContext;
-
+class ReplyPreview extends React.Component<IProps> {
     public render(): JSX.Element | null {
         if (!this.props.replyToEvent) return null;
 
@@ -50,7 +49,7 @@ export default class ReplyPreview extends React.Component<IProps> {
                         <span>{_t("composer|replying_title")}</span>
                         <AccessibleButton
                             className="mx_ReplyPreview_header_cancel"
-                            onClick={() => cancelQuoting(this.context.timelineRenderingType)}
+                            onClick={() => cancelQuoting(this.props.context.timelineRenderingType)}
                         />
                     </div>
                     <ReplyTile mxEvent={this.props.replyToEvent} permalinkCreator={this.props.permalinkCreator} />
@@ -59,3 +58,7 @@ export default class ReplyPreview extends React.Component<IProps> {
         );
     }
 }
+
+export default forwardRef<ReplyPreview, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <ReplyPreview {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));

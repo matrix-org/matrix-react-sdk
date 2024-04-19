@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, useContext } from "react";
+import React, { createRef, forwardRef, useContext } from "react";
 import {
     EventStatus,
     MatrixEvent,
@@ -123,6 +123,7 @@ interface IProps extends MenuProps {
     link?: string;
 
     getRelationsForEvent?: GetRelationsForEvent;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -131,11 +132,8 @@ interface IState {
     reactionPickerDisplayed: boolean;
 }
 
-export default class MessageContextMenu extends React.Component<IProps, IState> {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
-    private reactButtonRef = createRef<any>(); // XXX Ref to a functional component
+class MessageContextMenu extends React.Component<IProps, IState> {
+    private reactButtonRef = createRef<HTMLElement>();
 
     public constructor(props: IProps) {
         super(props);
@@ -315,7 +313,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         editEvent(
             MatrixClientPeg.safeGet(),
             this.props.mxEvent,
-            this.context.timelineRenderingType,
+            this.props.context.timelineRenderingType,
             this.props.getRelationsForEvent,
         );
         this.closeMenu();
@@ -325,7 +323,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         dis.dispatch({
             action: "reply_to_event",
             event: this.props.mxEvent,
-            context: this.context.timelineRenderingType,
+            context: this.props.context.timelineRenderingType,
         });
         this.closeMenu();
     };
@@ -733,3 +731,9 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         );
     }
 }
+
+export default forwardRef<MessageContextMenu, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>
+        {(context) => <MessageContextMenu {...props} context={context} ref={ref} />}
+    </RoomContext.Consumer>
+));

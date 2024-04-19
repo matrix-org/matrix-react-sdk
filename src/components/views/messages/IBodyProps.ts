@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { LegacyRef } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
@@ -53,8 +52,6 @@ export interface IBodyProps {
 
     // helper function to access relations for this event
     getRelationsForEvent?: GetRelationsForEvent;
-
-    ref?: React.RefObject<any> | LegacyRef<any>;
 
     // Set to `true` to disable interactions (e.g. video controls) and to remove controls from the tab order.
     // This may be useful when displaying a preview of the event.

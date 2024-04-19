@@ -50,7 +50,7 @@ import {
 } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
-import RoomHeader, { IProps as RoomHeaderProps } from "../../../../src/components/views/rooms/LegacyRoomHeader";
+import RoomHeader from "../../../../src/components/views/rooms/LegacyRoomHeader";
 import { SearchScope } from "../../../../src/components/views/rooms/SearchBar";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
@@ -201,7 +201,10 @@ describe("LegacyRoomHeader", () => {
         WidgetMessagingStore.instance.stopMessaging(widget, call.roomId);
     };
 
-    const renderHeader = (props: Partial<RoomHeaderProps> = {}, roomContext: Partial<IRoomState> = {}) => {
+    const renderHeader = (
+        props: Partial<React.ComponentProps<typeof RoomHeader>> = {},
+        roomContext: Partial<IRoomState> = {},
+    ) => {
         render(
             <RoomContext.Provider value={{ ...roomContext, room } as IRoomState}>
                 <RoomHeader
@@ -843,7 +846,7 @@ function createRoom(info: IRoomCreationInfo) {
 }
 
 function mountHeader(room: Room, propsOverride = {}, roomContext?: Partial<IRoomState>): RenderResult {
-    const props: RoomHeaderProps = {
+    const props: React.ComponentProps<typeof RoomHeader> = {
         room,
         inRoom: true,
         onSearchClick: () => {},

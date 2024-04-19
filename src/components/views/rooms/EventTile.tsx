@@ -266,6 +266,10 @@ interface IState {
     threadNotification?: NotificationCountType;
 }
 
+interface Props extends EventTileProps {
+    context: React.ContextType<typeof RoomContext>;
+}
+
 /**
  * When true, the tile qualifies for some sort of special read receipt.
  * This could be a 'sending' or 'sent' receipt, for example.
@@ -282,7 +286,7 @@ export function isEligibleForSpecialReceipt(event: MatrixEvent): boolean {
 }
 
 // MUST be rendered within a RoomContext with a set timelineRenderingType
-export class UnwrappedEventTile extends React.Component<EventTileProps, IState> {
+class UnwrappedEventTile extends React.Component<Props, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
     private tile = createRef<IEventTileType>();
@@ -297,13 +301,10 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         layout: Layout.Group,
     };
 
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
     private unmounted = false;
 
-    public constructor(props: EventTileProps, context: React.ContextType<typeof RoomContext>) {
-        super(props, context);
+    public constructor(props: Props) {
+        super(props);
 
         const thread = this.thread;
 
@@ -508,7 +509,10 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             );
         }
 
-        if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
+        if (
+            this.props.context.timelineRenderingType === TimelineRenderingType.Search &&
+            this.props.mxEvent.threadRootId
+        ) {
             if (this.props.highlightLink) {
                 return (
                     <a className="mx_ThreadSummary_icon" href={this.props.highlightLink}>
@@ -676,8 +680,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
      */
     private shouldHighlight(): boolean {
         if (this.props.forExport) return false;
-        if (this.context.timelineRenderingType === TimelineRenderingType.Notification) return false;
-        if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) return false;
+        if (this.props.context.timelineRenderingType === TimelineRenderingType.Notification) return false;
+        if (this.props.context.timelineRenderingType === TimelineRenderingType.ThreadsList) return false;
 
         const cli = MatrixClientPeg.safeGet();
         const actions = cli.getPushActionsForEvent(this.props.mxEvent.replacingEvent() || this.props.mxEvent);
@@ -701,7 +705,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
             userId: this.props.mxEvent.getSender()!,
-            timelineRenderingType: this.context.timelineRenderingType,
+            timelineRenderingType: this.props.context.timelineRenderingType,
         });
     };
 
@@ -715,7 +719,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
             metricsTrigger:
-                this.context.timelineRenderingType === TimelineRenderingType.Search ? "MessageSearch" : undefined,
+                this.props.context.timelineRenderingType === TimelineRenderingType.Search ? "MessageSearch" : undefined,
         });
     };
 
@@ -923,7 +927,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         } = getEventDisplayInfo(
             MatrixClientPeg.safeGet(),
             this.props.mxEvent,
-            this.context.showHiddenEvents,
+            this.props.context.showHiddenEvents,
             this.shouldHideEvent(),
         );
         const { isQuoteExpanded } = this.state;
@@ -958,15 +962,15 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         let isContinuation = this.props.continuation;
         if (
-            this.context.timelineRenderingType !== TimelineRenderingType.Room &&
-            this.context.timelineRenderingType !== TimelineRenderingType.Search &&
-            this.context.timelineRenderingType !== TimelineRenderingType.Thread &&
+            this.props.context.timelineRenderingType !== TimelineRenderingType.Room &&
+            this.props.context.timelineRenderingType !== TimelineRenderingType.Search &&
+            this.props.context.timelineRenderingType !== TimelineRenderingType.Thread &&
             this.props.layout !== Layout.Bubble
         ) {
             isContinuation = false;
         }
 
-        const isRenderingNotification = this.context.timelineRenderingType === TimelineRenderingType.Notification;
+        const isRenderingNotification = this.props.context.timelineRenderingType === TimelineRenderingType.Notification;
 
         const isEditing = !!this.props.editState;
         const classes = classNames({
@@ -990,7 +994,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             mx_EventTile_emote: msgtype === MsgType.Emote,
             mx_EventTile_noSender: this.props.hideSender,
             mx_EventTile_clamp:
-                this.context.timelineRenderingType === TimelineRenderingType.ThreadsList || isRenderingNotification,
+                this.props.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
+                isRenderingNotification,
             mx_EventTile_noBubble: noBubbleEvent,
         });
 
@@ -1020,8 +1025,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             avatarSize = "14px";
             needsSenderProfile = false;
         } else if (
-            this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
-            (this.context.timelineRenderingType === TimelineRenderingType.Thread && !this.props.continuation)
+            this.props.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
+            (this.props.context.timelineRenderingType === TimelineRenderingType.Thread && !this.props.continuation)
         ) {
             avatarSize = "32px";
             needsSenderProfile = true;
@@ -1032,7 +1037,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             avatarSize = "14px";
             needsSenderProfile = true;
         } else if (
-            (this.props.continuation && this.context.timelineRenderingType !== TimelineRenderingType.File) ||
+            (this.props.continuation && this.props.context.timelineRenderingType !== TimelineRenderingType.File) ||
             eventType === EventType.CallInvite ||
             ElementCall.CALL_EVENT_TYPE.matches(eventType)
         ) {
@@ -1058,7 +1063,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
             const viewUserOnClick =
                 !this.props.inhibitInteraction &&
                 ![TimelineRenderingType.ThreadsList, TimelineRenderingType.Notification].includes(
-                    this.context.timelineRenderingType,
+                    this.props.context.timelineRenderingType,
                 );
             avatar = (
                 <div className="mx_EventTile_avatar">
@@ -1074,13 +1079,13 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         if (needsSenderProfile && this.props.hideSender !== true) {
             if (
-                this.context.timelineRenderingType === TimelineRenderingType.Room ||
-                this.context.timelineRenderingType === TimelineRenderingType.Search ||
-                this.context.timelineRenderingType === TimelineRenderingType.Pinned ||
-                this.context.timelineRenderingType === TimelineRenderingType.Thread
+                this.props.context.timelineRenderingType === TimelineRenderingType.Room ||
+                this.props.context.timelineRenderingType === TimelineRenderingType.Search ||
+                this.props.context.timelineRenderingType === TimelineRenderingType.Pinned ||
+                this.props.context.timelineRenderingType === TimelineRenderingType.Thread
             ) {
                 sender = <SenderProfile onClick={this.onSenderProfileClick} mxEvent={this.props.mxEvent} />;
-            } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
+            } else if (this.props.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
                 sender = <SenderProfile mxEvent={this.props.mxEvent} withTooltip />;
             } else {
                 sender = <SenderProfile mxEvent={this.props.mxEvent} />;
@@ -1113,7 +1118,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         // Thread panel shows the timestamp of the last reply in that thread
         let ts =
-            this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
+            this.props.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
                 ? this.props.mxEvent.getTs()
                 : this.state.thread?.replyToEvent?.getTs();
         if (typeof ts !== "number") {
@@ -1123,7 +1128,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         const messageTimestamp = (
             <MessageTimestamp
-                showRelative={this.context.timelineRenderingType === TimelineRenderingType.ThreadsList}
+                showRelative={this.props.context.timelineRenderingType === TimelineRenderingType.ThreadsList}
                 showTwelveHour={this.props.isTwelveHour}
                 ts={ts}
                 receivedTs={getLateEventInfo(this.props.mxEvent)?.received_ts}
@@ -1180,7 +1185,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
 
         let replyChain: JSX.Element | undefined;
         if (
-            haveRendererForEvent(this.props.mxEvent, MatrixClientPeg.safeGet(), this.context.showHiddenEvents) &&
+            haveRendererForEvent(this.props.mxEvent, MatrixClientPeg.safeGet(), this.props.context.showHiddenEvents) &&
             shouldDisplayReply(this.props.mxEvent)
         ) {
             replyChain = (
@@ -1202,7 +1207,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         // Use `getSender()` because searched events might not have a proper `sender`.
         const isOwnEvent = this.props.mxEvent?.getSender() === MatrixClientPeg.safeGet().getUserId();
 
-        switch (this.context.timelineRenderingType) {
+        switch (this.props.context.timelineRenderingType) {
             case TimelineRenderingType.Thread: {
                 return React.createElement(
                     this.props.as || "li",
@@ -1242,7 +1247,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                                     onHeightChanged: () => this.props.onHeightChanged,
                                     permalinkCreator: this.props.permalinkCreator!,
                                 },
-                                this.context.showHiddenEvents,
+                                this.props.context.showHiddenEvents,
                             )}
                             {actionBar}
                             <a href={permalink} onClick={this.onPermalinkClicked}>
@@ -1268,7 +1273,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         "aria-atomic": "true",
                         "data-scroll-tokens": scrollToken,
                         "data-layout": this.props.layout,
-                        "data-shape": this.context.timelineRenderingType,
+                        "data-shape": this.props.context.timelineRenderingType,
                         "data-self": isOwnEvent,
                         "data-has-reply": !!replyChain,
                         "onMouseEnter": () => this.setState({ hover: true }),
@@ -1277,7 +1282,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                             const target = ev.currentTarget as HTMLElement;
                             let index = -1;
                             if (target.parentElement) index = Array.from(target.parentElement.children).indexOf(target);
-                            switch (this.context.timelineRenderingType) {
+                            switch (this.props.context.timelineRenderingType) {
                                 case TimelineRenderingType.Notification:
                                     this.viewInRoom(ev);
                                     break;
@@ -1333,7 +1338,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                             </div>
                             {this.renderThreadPanelSummary()}
                         </div>
-                        {this.context.timelineRenderingType === TimelineRenderingType.ThreadsList && (
+                        {this.props.context.timelineRenderingType === TimelineRenderingType.ThreadsList && (
                             <EventTileThreadToolbar
                                 viewInRoom={this.viewInRoom}
                                 copyLinkToThread={this.copyLinkToThread}
@@ -1371,7 +1376,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                                     onHeightChanged: this.props.onHeightChanged,
                                     permalinkCreator: this.props.permalinkCreator,
                                 },
-                                this.context.showHiddenEvents,
+                                this.props.context.showHiddenEvents,
                             )}
                         </div>,
                         <a
@@ -1419,7 +1424,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                             {groupPadlock}
                             {replyChain}
                             {renderTile(
-                                this.context.timelineRenderingType,
+                                this.props.context.timelineRenderingType,
                                 {
                                     ...this.props,
 
@@ -1434,7 +1439,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                                     onHeightChanged: this.props.onHeightChanged,
                                     permalinkCreator: this.props.permalinkCreator,
                                 },
-                                this.context.showHiddenEvents,
+                                this.props.context.showHiddenEvents,
                             )}
                             {actionBar}
                             {this.props.layout === Layout.IRC && (
@@ -1463,7 +1468,9 @@ const SafeEventTile = forwardRef<UnwrappedEventTile, EventTileProps>((props, ref
     return (
         <>
             <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout ?? Layout.Group}>
-                <UnwrappedEventTile ref={ref} {...props} />
+                <RoomContext.Consumer>
+                    {(context) => <UnwrappedEventTile {...props} ref={ref} context={context} />}
+                </RoomContext.Consumer>
             </TileErrorBoundary>
         </>
     );

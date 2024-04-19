@@ -40,7 +40,7 @@ import React, { createRef } from "react";
 import { Mocked, mocked } from "jest-mock";
 import { forEachRight } from "lodash";
 
-import TimelinePanel from "../../../src/components/structures/TimelinePanel";
+import TimelinePanel, { TimelinePanel as TimelinePanelClass } from "../../../src/components/structures/TimelinePanel";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { isCallEvent } from "../../../src/components/structures/LegacyCallEventGrouper";
@@ -77,7 +77,7 @@ const mkTimeline = (room: Room, events: MatrixEvent[]): [EventTimeline, EventTim
     return [timeline, timelineSet];
 };
 
-const getProps = (room: Room, events: MatrixEvent[]): TimelinePanel["props"] => {
+const getProps = (room: Room, events: MatrixEvent[]): React.ComponentProps<typeof TimelinePanel> => {
     const [, timelineSet] = mkTimeline(room, events);
 
     return {
@@ -184,7 +184,7 @@ describe("TimelinePanel", () => {
         const roomId = "#room:example.com";
         let room: Room;
         let timelineSet: EventTimelineSet;
-        let timelinePanel: TimelinePanel;
+        let timelinePanel: React.ComponentRef<typeof TimelinePanel>;
 
         const ev1 = new MatrixEvent({
             event_id: "ev1",
@@ -203,7 +203,7 @@ describe("TimelinePanel", () => {
         });
 
         const renderTimelinePanel = async (): Promise<void> => {
-            const ref = createRef<TimelinePanel>();
+            const ref = createRef<React.ComponentRef<typeof TimelinePanel>>();
             render(
                 <TimelinePanel
                     timelineSet={timelineSet}
@@ -239,7 +239,7 @@ describe("TimelinePanel", () => {
         });
 
         afterEach(() => {
-            TimelinePanel.roomReadMarkerTsMap = {};
+            TimelinePanelClass.roomReadMarkerTsMap = {};
         });
 
         it("when there is no event, it should not send any receipt", async () => {

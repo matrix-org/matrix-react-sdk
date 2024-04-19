@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
+import React, { createRef, forwardRef } from "react";
 import {
     Filter,
     EventTimelineSet,
@@ -45,6 +45,7 @@ interface IProps {
     roomId: string;
     onClose: () => void;
     resizeNotifier: ResizeNotifier;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -56,8 +57,6 @@ interface IState {
  * Component which shows the filtered file using a TimelinePanel
  */
 class FilePanel extends React.Component<IProps, IState> {
-    public static contextType = RoomContext;
-
     // This is used to track if a decrypted event was a live event and should be
     // added to the timeline.
     private decryptingEvents = new Set<string>();
@@ -267,7 +266,7 @@ class FilePanel extends React.Component<IProps, IState> {
             return (
                 <RoomContext.Provider
                     value={{
-                        ...this.context,
+                        ...this.props.context,
                         timelineRenderingType: TimelineRenderingType.File,
                         narrow: this.state.narrow,
                     }}
@@ -299,7 +298,7 @@ class FilePanel extends React.Component<IProps, IState> {
             return (
                 <RoomContext.Provider
                     value={{
-                        ...this.context,
+                        ...this.props.context,
                         timelineRenderingType: TimelineRenderingType.File,
                     }}
                 >
@@ -312,4 +311,6 @@ class FilePanel extends React.Component<IProps, IState> {
     }
 }
 
-export default FilePanel;
+export default forwardRef<FilePanel, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>{(context) => <FilePanel {...props} context={context} ref={ref} />}</RoomContext.Consumer>
+));

@@ -33,7 +33,10 @@ import { SeparatorKind } from "../../views/messages/TimelineSeparator";
 // the first non-state event, beacon_info event or membership event which is not regarding the sender of the `m.room.create` event
 
 export class CreationGrouper extends BaseGrouper {
-    public static canStartGroup = function (_panel: MessagePanel, { event }: WrappedEvent): boolean {
+    public static canStartGroup = function (
+        _panel: React.ComponentRef<typeof MessagePanel>,
+        { event }: WrappedEvent,
+    ): boolean {
         return event.getType() === EventType.RoomCreate;
     };
 

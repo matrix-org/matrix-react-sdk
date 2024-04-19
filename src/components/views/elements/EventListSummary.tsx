@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, ReactNode } from "react";
+import React, { ComponentProps, forwardRef, ReactNode } from "react";
 import { MatrixEvent, RoomMember, EventType } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 
@@ -43,7 +43,8 @@ interface IProps extends Omit<ComponentProps<typeof GenericEventListSummary>, "s
     // The maximum number of avatars to display in the summary
     avatarsMaxLength?: number;
     // The currently selected layout
-    layout: Layout;
+    layout?: Layout;
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IUserEvents {
@@ -77,12 +78,9 @@ enum TransitionType {
 
 const SEP = ",";
 
-export default class EventListSummary extends React.Component<
+class EventListSummary extends React.Component<
     IProps & Required<Pick<IProps, "summaryLength" | "threshold" | "avatarsMaxLength" | "layout">>
 > {
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
-
     public static defaultProps = {
         summaryLength: 1,
         threshold: 3,
@@ -527,7 +525,7 @@ export default class EventListSummary extends React.Component<
 
             let displayName = userKey;
             if (e.isRedacted()) {
-                const sender = this.context?.room?.getMember(userKey);
+                const sender = this.props.context?.room?.getMember(userKey);
                 if (sender) {
                     displayName = sender.name;
                     latestUserAvatarMember.set(userKey, sender);
@@ -569,3 +567,9 @@ export default class EventListSummary extends React.Component<
         );
     }
 }
+
+export default forwardRef<EventListSummary, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>
+        {(context) => <EventListSummary {...props} context={context} ref={ref} />}
+    </RoomContext.Consumer>
+));

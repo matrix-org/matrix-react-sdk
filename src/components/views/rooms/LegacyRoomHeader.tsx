@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FC, useState, useMemo, useCallback } from "react";
+import React, { FC, useState, useMemo, useCallback, forwardRef } from "react";
 import classNames from "classnames";
 import { throttle } from "lodash";
 import { RoomStateEvent, ISearchResults } from "matrix-js-sdk/src/matrix";
@@ -470,7 +470,7 @@ export interface ISearchInfo {
     count?: number;
 }
 
-export interface IProps {
+interface IProps {
     room: Room;
     oobData?: IOOBData;
     inRoom: boolean;
@@ -478,7 +478,7 @@ export interface IProps {
     onInviteClick: (() => void) | null;
     onForgetClick: (() => void) | null;
     onAppsClick: (() => void) | null;
-    e2eStatus: E2EStatus;
+    e2eStatus?: E2EStatus;
     appsShown: boolean;
     searchInfo?: ISearchInfo;
     excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
@@ -487,6 +487,7 @@ export interface IProps {
     viewingCall: boolean;
     activeCall: Call | null;
     additionalButtons?: ViewRoomOpts["buttons"];
+    context: React.ContextType<typeof RoomContext>;
 }
 
 interface IState {
@@ -498,7 +499,7 @@ interface IState {
 /**
  * @deprecated use `src/components/views/rooms/RoomHeader.tsx` instead
  */
-export default class RoomHeader extends React.Component<IProps, IState> {
+class LegacyRoomHeader extends React.Component<IProps, IState> {
     public static defaultProps: Partial<IProps> = {
         inRoom: false,
         excludedRightPanelPhaseButtons: [],
@@ -506,13 +507,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         enableRoomOptionsMenu: true,
     };
 
-    public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
     private readonly client = this.props.room.client;
     private readonly featureAskToJoinWatcher: string;
 
-    public constructor(props: IProps, context: IState) {
-        super(props, context);
+    public constructor(props: IProps) {
+        super(props);
         const notiStore = RoomNotificationStateStore.instance.getRoomState(props.room);
         notiStore.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.state = {
@@ -590,7 +589,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     private renderButtons(isVideoRoom: boolean): React.ReactNode {
         const startButtons: JSX.Element[] = [];
 
-        if (!this.props.viewingCall && this.props.inRoom && !this.context.tombstone) {
+        if (!this.props.viewingCall && this.props.inRoom && !this.props.context.tombstone) {
             startButtons.push(<CallButtons key="calls" room={this.props.room} />);
         }
 
@@ -866,3 +865,9 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         );
     }
 }
+
+export default forwardRef<LegacyRoomHeader, Omit<IProps, "context">>((props, ref) => (
+    <RoomContext.Consumer>
+        {(context) => <LegacyRoomHeader {...props} context={context} ref={ref} />}
+    </RoomContext.Consumer>
+));

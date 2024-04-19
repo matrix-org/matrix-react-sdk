@@ -36,7 +36,10 @@ const groupedStateEvents = [
 
 // Wrap consecutive grouped events in a ListSummary
 export class MainGrouper extends BaseGrouper {
-    public static canStartGroup = function (panel: MessagePanel, { event: ev, shouldShow }: WrappedEvent): boolean {
+    public static canStartGroup = function (
+        panel: React.ComponentRef<typeof MessagePanel>,
+        { event: ev, shouldShow }: WrappedEvent,
+    ): boolean {
         if (!shouldShow) return false;
 
         if (ev.isState() && groupedStateEvents.includes(ev.getType() as EventType)) {
@@ -55,7 +58,7 @@ export class MainGrouper extends BaseGrouper {
     };
 
     public constructor(
-        public readonly panel: MessagePanel,
+        public readonly panel: React.ComponentRef<typeof MessagePanel>,
         public readonly firstEventAndShouldShow: WrappedEvent,
         public readonly prevEvent: MatrixEvent | null,
         public readonly lastShownEvent: MatrixEvent | undefined,
