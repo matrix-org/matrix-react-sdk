@@ -24,6 +24,7 @@ import {
 import { deriveKey } from "matrix-js-sdk/src/crypto/key_passphrase";
 import { decodeRecoveryKey } from "matrix-js-sdk/src/crypto/recoverykey";
 import { logger } from "matrix-js-sdk/src/logger";
+import { GeneratedSecretStorageKey } from "matrix-js-sdk/src/crypto-api";
 
 import type CreateSecretStorageDialog from "./async-components/views/dialogs/security/CreateSecretStorageDialog";
 import Modal from "./Modal";
@@ -297,7 +298,7 @@ export async function promptForBackupPassphrase(): Promise<Uint8Array> {
         RestoreKeyBackupDialog,
         {
             showSummary: false,
-            keyCallback: (k: Uint8Array) => (key = k),
+            keyCallback: (k: Uint8Array, _: GeneratedSecretStorageKey) => (key = k),
         },
         undefined,
         /* priority = */ false,
@@ -430,7 +431,7 @@ async function doAccessSecretStorage(func: () => Promise<void>, forceReset: bool
         // inner operation completes.
         return await func();
     } catch (e) {
-        ModuleRunner.instance.extensions.cryptoSetup.catchAccessSecretStorageError(e as Error);
+        SecurityCustomisations.catchAccessSecretStorageError?.(e);
         logger.error(e);
         // Re-throw so that higher level logic can abort as needed
         throw e;

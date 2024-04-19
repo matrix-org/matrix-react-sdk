@@ -19,6 +19,7 @@ import React, { ChangeEvent } from "react";
 import { MatrixClient, MatrixError, SecretStorage } from "matrix-js-sdk/src/matrix";
 import { IKeyBackupInfo, IKeyBackupRestoreResult } from "matrix-js-sdk/src/crypto/keybackup";
 import { logger } from "matrix-js-sdk/src/logger";
+import { GeneratedSecretStorageKey } from "matrix-js-sdk/src/crypto-api";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
@@ -46,7 +47,7 @@ interface IProps {
     showSummary?: boolean;
     // If specified, gather the key from the user but then call the function with the backup
     // key rather than actually (necessarily) restoring the backup.
-    keyCallback?: (key: Uint8Array) => void;
+    keyCallback?: (key: Uint8Array, recoveryKey: GeneratedSecretStorageKey) => void;
     onFinished(done?: boolean): void;
 }
 
@@ -154,7 +155,8 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
                     this.state.passPhrase,
                     this.state.backupInfo,
                 );
-                this.props.keyCallback(key);
+                const recoveryKey = await MatrixClientPeg.safeGet().getCrypto()!.createRecoveryKeyFromPassphrase(this.state.passPhrase!);
+                this.props.keyCallback(key, recoveryKey);
             }
 
             if (!this.props.showSummary) {
@@ -192,7 +194,8 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
             );
             if (this.props.keyCallback) {
                 const key = MatrixClientPeg.safeGet().keyBackupKeyFromRecoveryKey(this.state.recoveryKey);
-                this.props.keyCallback(key);
+                const secretStorageKey = new TextEncoder().encode(this.state.recoveryKey);
+                this.props.keyCallback(key, { privateKey: secretStorageKey });
             }
             if (!this.props.showSummary) {
                 this.props.onFinished(true);

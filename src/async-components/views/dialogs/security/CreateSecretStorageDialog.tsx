@@ -429,8 +429,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     private restoreBackup = async (): Promise<void> => {
         // It's possible we'll need the backup key later on for bootstrapping,
         // so let's stash it here, rather than prompting for it twice.
-        const keyCallback = (k: Uint8Array): void => {
+        const keyCallback = (k: Uint8Array, recoveryKey: GeneratedSecretStorageKey): void => {
             this.backupKey = k;
+            this.recoveryKey = recoveryKey;
         };
 
         const { finished } = Modal.createDialog(
