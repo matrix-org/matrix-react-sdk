@@ -354,7 +354,7 @@ test.describe("Read receipts", () => {
                 await util.assertUnreadThread("Root1");
                 await util.openThread("Root1");
                 await util.assertRead(room2);
-                await util.closeThread();
+                await util.backToThreadsList();
                 await util.assertReadThread("Root1");
 
                 await util.openThread("Root2");
@@ -570,7 +570,7 @@ test.describe("Read receipts", () => {
                 await util.assertRead(room2);
                 await util.openThread("Root");
                 await util.assertRead(room2);
-                await util.closeThread();
+                await util.backToThreadsList();
                 await util.assertReadThread("Root");
                 await util.goTo(room1);
 
