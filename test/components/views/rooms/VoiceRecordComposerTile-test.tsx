@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React, { createRef, RefObject } from "react";
+import { render } from "@testing-library/react";
 import { MatrixClient, MsgType, Room } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
-import { render } from "@testing-library/react";
 
 import VoiceRecordComposerTile from "../../../../src/components/views/rooms/VoiceRecordComposerTile";
 import { doMaybeLocalRoomAction } from "../../../../src/utils/local-room";

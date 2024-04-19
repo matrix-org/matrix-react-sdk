@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { act, getByTestId, render, RenderResult, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 import {
@@ -27,7 +28,6 @@ import {
     THREAD_RELATION_TYPE,
 } from "matrix-js-sdk/src/matrix";
 import React, { useState } from "react";
-import { act, getByTestId, render, RenderResult, waitFor } from "@testing-library/react";
 
 import ThreadView from "../../../src/components/structures/ThreadView";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";

@@ -19,6 +19,7 @@ import { jest } from "@jest/globals";
 import { Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi, IWidget, MatrixWidgetType } from "matrix-widget-api";
 import { Optional } from "matrix-events-sdk";
+import { act, render, RenderResult } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SpiedFunction } from "jest-mock";
 import {
@@ -26,7 +27,6 @@ import {
     WidgetInfo,
     WidgetLifecycle,
 } from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
-import { act, render, RenderResult } from "@testing-library/react";
 
 import RightPanel from "../../../../src/components/structures/RightPanel";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";

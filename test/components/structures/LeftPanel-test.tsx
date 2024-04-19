@@ -16,8 +16,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { mocked } from "jest-mock";
 import { render, RenderResult, screen } from "@testing-library/react";
+import { mocked } from "jest-mock";
 
 import LeftPanel from "../../../src/components/structures/LeftPanel";
 import PageType from "../../../src/PageTypes";
