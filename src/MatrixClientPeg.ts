@@ -273,9 +273,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.threadSupport = true;
 
         if (SettingsStore.getValue("feature_sliding_sync")) {
-            opts.slidingSync = await SlidingSyncManager.instance.setup();
+            opts.slidingSync = await SlidingSyncManager.instance.setup(this);
         } else {
-            SlidingSyncManager.instance.checkSupport();
+            SlidingSyncManager.instance.checkSupport(this);
         }
 
         // Connect the matrix client to the dispatcher and setting handlers

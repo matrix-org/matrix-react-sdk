@@ -58,7 +58,6 @@ import { defer, sleep } from "matrix-js-sdk/src/utils";
 
 import SettingsStore from "./settings/SettingsStore";
 import SlidingSyncController from "./settings/controllers/SlidingSyncController";
-import { MatrixClientPeg } from "./MatrixClientPeg";
 
 // how long to long poll for
 const SLIDING_SYNC_TIMEOUT_MS = 20 * 1000;
@@ -334,12 +333,12 @@ export class SlidingSyncManager {
      *   1. The user-defined sliding sync proxy URL (legacy, for backwards compatibility)
      *   2. The client `well-known` sliding sync proxy URL [declared at the unstable prefix](https://github.com/matrix-org/matrix-spec-proposals/blob/kegan/sync-v3/proposals/3575-sync.md#unstable-prefix)
      *   3. The homeserver base url (for native server support)
+     * @param client The MatrixClient to use
      */
-    public async setup(): Promise<SlidingSync | undefined> {
-        const client = MatrixClientPeg.safeGet();
+    public async setup(client: MatrixClient): Promise<SlidingSync | undefined> {
         const baseUrl = client.baseUrl;
         const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
-        const wellKnownProxyUrl = await this.getProxyFromWellKnown();
+        const wellKnownProxyUrl = await this.getProxyFromWellKnown(client);
 
         const slidingSyncEndpoint = proxyUrl || wellKnownProxyUrl || baseUrl;
 
@@ -352,10 +351,10 @@ export class SlidingSyncManager {
 
     /**
      * Get the sliding sync proxy URL from the client well known
+     * @param client The MatrixClient to use
      * @return The proxy url
      */
-    private async getProxyFromWellKnown(): Promise<string | undefined> {
-        const client = MatrixClientPeg.safeGet();
+    private async getProxyFromWellKnown(client: MatrixClient): Promise<string | undefined> {
         let proxyUrl: any | undefined;
 
         try {
@@ -373,12 +372,12 @@ export class SlidingSyncManager {
 
     /**
      * Check if the server "natively" supports sliding sync (at the unstable endpoint).
+     * @param client The MatrixClient to use
      * @return Whether the "native" (unstable) endpoint is up
      */
-    private async nativeSlidingSyncSupport(): Promise<boolean> {
-        const cli = MatrixClientPeg.safeGet();
+    private async nativeSlidingSyncSupport(client: MatrixClient): Promise<boolean> {
         try {
-            await cli.http.authedRequest<void>(Method.Post, "/sync", undefined, undefined, {
+            await client.http.authedRequest<void>(Method.Post, "/sync", undefined, undefined, {
                 localTimeoutMs: 10 * 1000, // 10s
                 prefix: "/_matrix/client/unstable/org.matrix.msc3575",
             });
@@ -395,14 +394,15 @@ export class SlidingSyncManager {
      * is a sliding sync endpoint.
      *
      * Sets static member `SlidingSyncController.serverSupportsSlidingSync`
+     * @param client The MatrixClient to use
      */
-    public async checkSupport(): Promise<void> {
-        if (await this.nativeSlidingSyncSupport()) {
+    public async checkSupport(client: MatrixClient): Promise<void> {
+        if (await this.nativeSlidingSyncSupport(client)) {
             SlidingSyncController.serverSupportsSlidingSync = true;
             return;
         }
 
-        const proxyUrl = await this.getProxyFromWellKnown();
+        const proxyUrl = await this.getProxyFromWellKnown(client);
         if (proxyUrl != undefined) {
             const response = await fetch(proxyUrl + "/client/server.json", {
                 method: Method.Get,
