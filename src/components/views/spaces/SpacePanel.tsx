@@ -34,6 +34,7 @@ import { _t } from "../../../languageHandler";
 import { useContextMenu } from "../../structures/ContextMenu";
 import SpaceCreateMenu from "./SpaceCreateMenu";
 import { SpaceButton, SpaceItem } from "./SpaceTreeLevel";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import {
@@ -71,7 +72,6 @@ import { NotificationState } from "../../../stores/notifications/NotificationSta
 import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
-import AccessibleButton from "../elements/AccessibleButton";
 import { ThreadsActivityCentre } from "./threads-activity-centre/";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
@@ -391,17 +391,24 @@ const SpacePanel: React.FC = () => {
                         aria-label={_t("common|spaces")}
                     >
                         <UserMenu isPanelCollapsed={isPanelCollapsed}>
-                            <AccessibleButton
+                            <AccessibleTooltipButton
                                 className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
                                 onClick={() => setPanelCollapsed(!isPanelCollapsed)}
                                 title={isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
-                                caption={
-                                    IS_MAC
-                                        ? "⌘ + ⇧ + D"
-                                        : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) +
-                                          " + " +
-                                          _t(ALTERNATE_KEY_NAME[Key.SHIFT]) +
-                                          " + D"
+                                tooltip={
+                                    <div>
+                                        <div className="mx_Tooltip_title">
+                                            {isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
+                                        </div>
+                                        <div className="mx_Tooltip_sub">
+                                            {IS_MAC
+                                                ? "⌘ + ⇧ + D"
+                                                : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) +
+                                                  " + " +
+                                                  _t(ALTERNATE_KEY_NAME[Key.SHIFT]) +
+                                                  " + D"}
+                                        </div>
+                                    </div>
                                 }
                             />
                         </UserMenu>

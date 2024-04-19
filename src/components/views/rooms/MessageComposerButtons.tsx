@@ -246,7 +246,6 @@ const UploadButton: React.FC = () => {
             iconClassName="mx_MessageComposer_upload"
             onClick={onClick}
             title={_t("common|attachment")}
-            aria-label={_t("common|attachment")}
         />
     );
 };

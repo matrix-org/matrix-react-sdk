@@ -38,6 +38,7 @@ import {
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ContextMenu, { ChevronFace } from "../../structures/ContextMenu";
 import createRoom, { IOpts as ICreateOpts } from "../../../createRoom";
 import MatrixClientContext, { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
@@ -309,7 +310,7 @@ const SpaceCreateMenu: React.FC<{
     } else {
         body = (
             <React.Fragment>
-                <AccessibleButton
+                <AccessibleTooltipButton
                     className="mx_SpaceCreateMenu_back"
                     onClick={() => setVisibility(null)}
                     title={_t("action|go_back")}
