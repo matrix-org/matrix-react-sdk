@@ -1153,8 +1153,8 @@ test.describe("Timeline", () => {
             );
         });
 
-        test("should render images in the timeline", async ({ page, app, room }) => {
-            await page.goto(`/#/room/${room.roomId}`);
+        async function testImageRendering(page: Page, app: ElementAppPage, room: {roomId: string}) {
+            await app.viewRoomById(room.roomId);
             await sendImage(app.client, room.roomId, NEW_AVATAR);
             await expect(page.locator(".mx_MImageBody").first()).toBeVisible();
 
@@ -1172,6 +1172,10 @@ test.describe("Timeline", () => {
                 "image-in-timeline-default-layout.png",
                 screenshotOptions,
             );
+        }
+
+        test("should render images in the timeline", async ({ page, app, room }) => {
+            await testImageRendering(page, app, room);
         });
 
         test.describe("MSC3916 - Authenticated Media", () => {
@@ -1180,26 +1184,26 @@ test.describe("Timeline", () => {
                 page.on("response", (response) => console.log("<<", response.status(), response.url()));
 
                 // Install our mocks and preventative measures
-                await page.route("*/**/_matrix/client/versions", async (route) => {
+                await page.route("**/_matrix/client/versions", async (route) => {
                     const json = await (await route.fetch()).json();
                     if (!json["unstable_features"]) json["unstable_features"] = {};
                     json["unstable_features"]["org.matrix.msc3916"] = true;
                     await route.fulfill({ json });
                 });
-                await page.route("*/**/_matrix/media/v3/download/**/*", async (route) => {
+                await page.route("**/_matrix/media/*/download/**", async (route) => {
                     await route.abort(); // should not be called
                 });
-                await page.route("*/**/_matrix/media/v3/thumbnail/**/*", async (route) => {
+                await page.route("**/_matrix/media/*/thumbnail/**", async (route) => {
                     await route.abort(); // should not be called
                 });
-                await page.route("*/**/_matrix/client/unstable/org.matrix.msc3916/download/**/*", async (route) => {
+                await page.route("**/_matrix/client/unstable/org.matrix.msc3916/download/*", async (route) => {
                     expect(route.request().headers()["Authorization"]).toBeDefined();
                     // we can't use route.continue() because no configured homeserver supports MSC3916 yet
                     await route.fulfill({
                         body: NEW_AVATAR,
                     });
                 });
-                await page.route("*/**/_matrix/client/unstable/org.matrix.msc3916/thumbnail/**/*", async (route) => {
+                await page.route("**/_matrix/client/unstable/org.matrix.msc3916/thumbnail/*", async (route) => {
                     expect(route.request().headers()["Authorization"]).toBeDefined();
                     // we can't use route.continue() because no configured homeserver supports MSC3916 yet
                     await route.fulfill({
@@ -1207,26 +1211,8 @@ test.describe("Timeline", () => {
                     });
                 });
 
-                await page.goto(`/#/room/${room.roomId}`);
-                await sendImage(app.client, room.roomId, NEW_AVATAR);
-                await expect(page.locator(".mx_MImageBody").first()).toBeVisible();
-
-                // Exclude timestamp and read marker from snapshot
-                const screenshotOptions = {
-                    mask: [page.locator(".mx_MessageTimestamp")],
-                    css: `
-                    .mx_TopUnreadMessagesBar, .mx_MessagePanel_myReadMarker {
-                        display: none !important;
-                    }
-                `,
-                };
-
-                await expect(page.locator(".mx_ScrollPanel")).toMatchScreenshot(
-                    // Yes, this is the same screenshot as the simple image render above: the user should
-                    // not see a difference.
-                    "image-in-timeline-default-layout.png",
-                    screenshotOptions,
-                );
+                // We check the same screenshot because there should be no user-visible impact to using authentication.
+                await testImageRendering(page, app, room);
             });
         });
     });
