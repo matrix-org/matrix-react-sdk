@@ -57,6 +57,7 @@ import { getClientInformationEventType } from "../../../../../../src/utils/devic
 import { SDKContext, SdkContextClass } from "../../../../../../src/contexts/SDKContext";
 import { OidcClientStore } from "../../../../../../src/stores/oidc/OidcClientStore";
 import { mockOpenIdConfiguration } from "../../../../../test-utils/oidc";
+import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 
 mockPlatformPeg();
 
@@ -123,6 +124,7 @@ describe("<SessionManagerTab />", () => {
         getDeviceVerificationStatus: jest.fn(),
         getUserDeviceInfo: jest.fn(),
         requestDeviceVerification: jest.fn().mockResolvedValue(mockVerificationRequest),
+        supportsSecretsForQrLogin: jest.fn().mockReturnValue(false),
     } as unknown as CryptoApi);
 
     let mockClient!: MockedObject<MatrixClient>;
@@ -131,7 +133,9 @@ describe("<SessionManagerTab />", () => {
     const defaultProps = {};
     const getComponent = (props = {}): React.ReactElement => (
         <SDKContext.Provider value={sdkContext}>
-            <SessionManagerTab {...defaultProps} {...props} />
+            <MatrixClientContext.Provider value={mockClient}>
+                <SessionManagerTab {...defaultProps} {...props} />
+            </MatrixClientContext.Provider>
         </SDKContext.Provider>
     );
 
@@ -1730,6 +1734,7 @@ describe("<SessionManagerTab />", () => {
                 },
             });
             mockClient.getAuthIssuer.mockResolvedValue({ issuer });
+            mockCrypto.supportsSecretsForQrLogin.mockReturnValue(true);
             fetchMock.mock(`${issuer}/.well-known/openid-configuration`, {
                 ...openIdConfiguration,
                 grant_types_supported: [
