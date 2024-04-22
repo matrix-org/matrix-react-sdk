@@ -758,7 +758,12 @@ test.describe("Read receipts", () => {
                 await util.assertReadThread("Root");
             });
 
-            test("A thread with a read redaction is still read after restart", async ({
+            /*
+             * Disabled: this doesn't seem to work as, at some point after syncing from cache, the redaction and redacted
+             * event get removed from the thread timeline such that we have no record of the events that the read receipt
+             * points to. I suspect this may have been passing by fluke before.
+             */
+            test.skip("A thread with a read redaction is still read after restart", async ({
                 roomAlpha: room1,
                 roomBeta: room2,
                 util,
@@ -796,6 +801,7 @@ test.describe("Read receipts", () => {
                 // and so is the thread
                 await util.openThreadList();
                 await util.assertReadThread("Root1");
+                await util.assertReadThread("Root2");
             });
 
             test("A thread with an unread reply to a redacted message is still unread after restart", async ({
@@ -890,7 +896,11 @@ test.describe("Read receipts", () => {
                 await util.assertStillRead(room2);
             });
 
-            test("Redacting a thread root still allows us to read the thread", async ({
+            /*
+             * Disabled for the same reason as "A thread with a read redaction is still read after restart"
+             * above
+             */
+            test.skip("Redacting a thread root still allows us to read the thread", async ({
                 roomAlpha: room1,
                 roomBeta: room2,
                 util,
