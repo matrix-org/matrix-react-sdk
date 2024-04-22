@@ -445,7 +445,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
     }
 
     if (shouldWrapInSpan) {
-        return React.createElement("span", null, ...output);
+        return React.createElement("span", null, ...(output as Array<number | string | React.ReactNode>));
     } else {
         return output.join("");
     }

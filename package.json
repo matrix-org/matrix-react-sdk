@@ -60,8 +60,8 @@
         "lint:workflows": "find .github/workflows -type f \\( -iname '*.yaml' -o -iname '*.yml' \\) | xargs -I {} sh -c 'echo \"Linting {}\"; action-validator \"{}\"'"
     },
     "resolutions": {
-        "@types/react-dom": "17.0.21",
-        "@types/react": "17.0.68",
+        "@types/react-dom": "18.2.25",
+        "@types/react": "18.2.79",
         "oidc-client-ts": "3.0.1",
         "jwt-decode": "4.0.0"
     },
@@ -74,7 +74,6 @@
         "@matrix-org/react-sdk-module-api": "^2.4.0",
         "@matrix-org/spec": "^1.7.0",
         "@sentry/browser": "^7.0.0",
-        "@testing-library/react-hooks": "^8.0.1",
         "@vector-im/compound-design-tokens": "^1.2.0",
         "@vector-im/compound-web": "^4.0.2",
         "@zxcvbn-ts/core": "^3.0.4",
@@ -120,10 +119,10 @@
         "proposal-temporal": "^0.9.0",
         "qrcode": "1.5.3",
         "re-resizable": "^6.9.0",
-        "react": "17.0.2",
+        "react": "^18.2.0",
         "react-beautiful-dnd": "^13.1.0",
         "react-blurhash": "^0.3.0",
-        "react-dom": "17.0.2",
+        "react-dom": "^18.2.0",
         "react-focus-lock": "^2.5.1",
         "react-transition-group": "^4.4.1",
         "rfc4648": "^1.4.0",
@@ -157,7 +156,7 @@
         "@playwright/test": "^1.40.1",
         "@testing-library/dom": "^9.0.0",
         "@testing-library/jest-dom": "^6.0.0",
-        "@testing-library/react": "^12.1.5",
+        "@testing-library/react": "^14",
         "@testing-library/user-event": "^14.4.3",
         "@types/commonmark": "^0.27.4",
         "@types/content-type": "^1.1.5",
@@ -176,9 +175,9 @@
         "@types/node-fetch": "^2.6.2",
         "@types/pako": "^2.0.0",
         "@types/qrcode": "^1.3.5",
-        "@types/react": "17.0.68",
+        "@types/react": "18.2.79",
         "@types/react-beautiful-dnd": "^13.0.0",
-        "@types/react-dom": "17.0.21",
+        "@types/react-dom": "18.2.25",
         "@types/react-transition-group": "^4.4.0",
         "@types/sanitize-html": "2.11.0",
         "@types/sdp-transform": "^2.4.6",
@@ -222,8 +221,8 @@
         "stylelint": "^16.1.0",
         "stylelint-config-standard": "^36.0.0",
         "stylelint-scss": "^6.0.0",
-        "ts-node": "^10.9.1",
-        "typescript": "5.4.3"
+        "typescript": "5.4.3",
+        "ts-node": "^10.9.1"
     },
     "peerDependencies": {
         "postcss": "^8.4.19",
