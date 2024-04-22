@@ -338,7 +338,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             await this.matrixClient.initRustCrypto();
 
             if (secrets) {
-                this.matrixClient.getCrypto()?.importSecretsForQRLogin(secrets);
+                this.matrixClient.getCrypto()?.importSecretsForQrLogin(secrets);
                 if (secrets.backup) {
                     const backupInfo = await this.matrixClient.getKeyBackupVersion();
                     if (backupInfo) {
