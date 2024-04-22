@@ -14,7 +14,6 @@ exports[`<SpacePanel /> should show all activated MetaSpaces in the correct orde
         aria-haspopup="true"
         aria-label="User menu"
         class="mx_AccessibleButton mx_UserMenu_contextMenuButton"
-        data-state="closed"
         role="button"
         tabindex="0"
       >

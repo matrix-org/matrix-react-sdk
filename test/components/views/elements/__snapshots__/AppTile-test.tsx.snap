@@ -36,7 +36,6 @@ exports[`AppTile destroys non-persisted right panel widget on room change 1`] = 
               aria-haspopup="true"
               aria-label="Options"
               class="mx_AccessibleButton mx_BaseCard_header_title_button--option"
-              data-state="closed"
               role="button"
               tabindex="0"
             />
@@ -163,7 +162,6 @@ exports[`AppTile for a pinned widget should render 1`] = `
           aria-haspopup="true"
           aria-label="Options"
           class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
-          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -252,7 +250,6 @@ exports[`AppTile for a pinned widget should render permission request 1`] = `
           aria-haspopup="true"
           aria-label="Options"
           class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
-          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -408,7 +405,6 @@ exports[`AppTile preserves non-persisted widget on container move 1`] = `
                 aria-haspopup="true"
                 aria-label="Options"
                 class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
-                data-state="closed"
                 role="button"
                 tabindex="0"
               >
