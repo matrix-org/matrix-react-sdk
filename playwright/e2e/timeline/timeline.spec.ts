@@ -1159,7 +1159,7 @@ test.describe("Timeline", () => {
             // Reinstall the service workers to clear their implicit caches (global-level stuff)
             await page.evaluate(async () => {
                 const registrations = await window.navigator.serviceWorker.getRegistrations();
-                registrations.forEach(r => r.update());
+                registrations.forEach((r) => r.update());
             });
 
             await sendImage(app.client, room.roomId, NEW_AVATAR);

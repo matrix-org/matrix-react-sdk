@@ -360,7 +360,7 @@ export default abstract class BasePlatform {
      *     pickle key has been stored.
      */
     public async getPickleKey(userId: string, deviceId: string): Promise<string | null> {
-        let data: { encrypted?: BufferSource, iv?: BufferSource, cryptoKey?: CryptoKey } | undefined;
+        let data: { encrypted?: BufferSource; iv?: BufferSource; cryptoKey?: CryptoKey } | undefined;
         try {
             data = await idbLoad("pickleKey", [userId, deviceId]);
         } catch (e) {

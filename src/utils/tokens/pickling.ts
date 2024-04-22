@@ -51,7 +51,11 @@ export function getPickleAdditionalData(userId: string, deviceId: string): Uint8
  * @param deviceId The device ID the pickle key belongs to.
  * @returns A promise that resolves to the encoded pickle key, or undefined if the key cannot be built and encoded.
  */
-export async function buildAndEncodePickleKey(data: { encrypted?: BufferSource, iv?: BufferSource, cryptoKey?: CryptoKey } | undefined, userId: string, deviceId: string): Promise<string | undefined> {
+export async function buildAndEncodePickleKey(
+    data: { encrypted?: BufferSource; iv?: BufferSource; cryptoKey?: CryptoKey } | undefined,
+    userId: string,
+    deviceId: string,
+): Promise<string | undefined> {
     if (!crypto?.subtle) {
         return undefined;
     }
@@ -62,7 +66,7 @@ export async function buildAndEncodePickleKey(data: { encrypted?: BufferSource, 
     try {
         const additionalData = getPickleAdditionalData(userId, deviceId);
         const pickleKeyBuf = await crypto.subtle.decrypt(
-            {name: "AES-GCM", iv: data.iv, additionalData},
+            { name: "AES-GCM", iv: data.iv, additionalData },
             data.cryptoKey,
             data.encrypted,
         );
