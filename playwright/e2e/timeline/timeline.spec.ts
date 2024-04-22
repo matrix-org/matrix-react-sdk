@@ -1188,6 +1188,7 @@ test.describe("Timeline", () => {
         // XXX: This test doesn't actually work because the service worker relies on IndexedDB, which Playwright forces
         // to be a localstorage implementation, which service workers cannot access.
         // See https://github.com/microsoft/playwright/issues/11164
+        // See https://github.com/microsoft/playwright/issues/15684#issuecomment-2070862042
         //
         // In practice, this means this test will *always* succeed because it ends up relying on fallback behaviour tested
         // above (unless of course the above tests are also broken).
