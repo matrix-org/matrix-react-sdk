@@ -1153,8 +1153,15 @@ test.describe("Timeline", () => {
             );
         });
 
-        async function testImageRendering(page: Page, app: ElementAppPage, room: {roomId: string}) {
+        async function testImageRendering(page: Page, app: ElementAppPage, room: { roomId: string }) {
             await app.viewRoomById(room.roomId);
+
+            // Reinstall the service workers to clear their implicit caches (global-level stuff)
+            await page.evaluate(async () => {
+                const registrations = await window.navigator.serviceWorker.getRegistrations();
+                registrations.forEach(r => r.update());
+            });
+
             await sendImage(app.client, room.roomId, NEW_AVATAR);
             await expect(page.locator(".mx_MImageBody").first()).toBeVisible();
 
@@ -1174,36 +1181,51 @@ test.describe("Timeline", () => {
             );
         }
 
-        test("should render images in the timeline", async ({ page, app, room }) => {
+        test("should render images in the timeline", async ({ page, app, room, context }) => {
             await testImageRendering(page, app, room);
         });
 
+        // XXX: This test doesn't actually work because the service worker relies on IndexedDB, which Playwright forces
+        // to be a localstorage implementation, which service workers cannot access.
+        // See https://github.com/microsoft/playwright/issues/11164
+        //
+        // In practice, this means this test will *always* succeed because it ends up relying on fallback behaviour tested
+        // above (unless of course the above tests are also broken).
         test.describe("MSC3916 - Authenticated Media", () => {
-            test("should render authenticated images in the timeline", async ({ page, app, room }) => {
-                page.on("request", (request) => console.log(">>", request.method(), request.url()));
-                page.on("response", (response) => console.log("<<", response.status(), response.url()));
+            test("should render authenticated images in the timeline", async ({ page, app, room, context }) => {
+                // Note: we have to use `context` instead of `page` for routing, otherwise we'll miss Service Worker events.
+                // See https://playwright.dev/docs/service-workers-experimental#network-events-and-routing
 
                 // Install our mocks and preventative measures
-                await page.route("**/_matrix/client/versions", async (route) => {
+                await context.route("**/_matrix/client/versions", async (route) => {
+                    // Force enable MSC3916, which may require the service worker's internal cache to be cleared later.
                     const json = await (await route.fetch()).json();
                     if (!json["unstable_features"]) json["unstable_features"] = {};
                     json["unstable_features"]["org.matrix.msc3916"] = true;
                     await route.fulfill({ json });
                 });
-                await page.route("**/_matrix/media/*/download/**", async (route) => {
-                    await route.abort(); // should not be called
+                await context.route("**/_matrix/media/*/download/**", async (route) => {
+                    // should not be called. We don't use `abort` so that it's clearer in the logs what happened.
+                    await route.fulfill({
+                        status: 500,
+                        json: { errcode: "M_UNKNOWN", error: "Unexpected route called." },
+                    });
                 });
-                await page.route("**/_matrix/media/*/thumbnail/**", async (route) => {
-                    await route.abort(); // should not be called
+                await context.route("**/_matrix/media/*/thumbnail/**", async (route) => {
+                    // should not be called. We don't use `abort` so that it's clearer in the logs what happened.
+                    await route.fulfill({
+                        status: 500,
+                        json: { errcode: "M_UNKNOWN", error: "Unexpected route called." },
+                    });
                 });
-                await page.route("**/_matrix/client/unstable/org.matrix.msc3916/download/*", async (route) => {
+                await context.route("**/_matrix/client/unstable/org.matrix.msc3916/download/**", async (route) => {
                     expect(route.request().headers()["Authorization"]).toBeDefined();
                     // we can't use route.continue() because no configured homeserver supports MSC3916 yet
                     await route.fulfill({
                         body: NEW_AVATAR,
                     });
                 });
-                await page.route("**/_matrix/client/unstable/org.matrix.msc3916/thumbnail/*", async (route) => {
+                await context.route("**/_matrix/client/unstable/org.matrix.msc3916/thumbnail/**", async (route) => {
                     expect(route.request().headers()["Authorization"]).toBeDefined();
                     // we can't use route.continue() because no configured homeserver supports MSC3916 yet
                     await route.fulfill({
