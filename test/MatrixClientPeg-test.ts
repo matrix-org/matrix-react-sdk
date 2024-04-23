@@ -21,6 +21,8 @@ import {
     ProvideCryptoSetupExtensions,
     SecretStorageKeyDescription,
 } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
+// eslint-disable-next-line no-restricted-imports
+import * as RustCrypto from "matrix-js-sdk/src/rust-crypto";
 
 import { advanceDateAndTime, stubClient } from "./test-utils";
 import { IMatrixClientPeg, MatrixClientPeg as peg } from "../src/MatrixClientPeg";
@@ -275,6 +277,26 @@ describe("MatrixClientPeg", () => {
 
             // we should have stashed the setting in the settings store
             expect(mockSetValue).toHaveBeenCalledWith("feature_rust_crypto", null, SettingLevel.DEVICE, false);
+        });
+
+        it("should import qr login secrets when passed", async () => {
+            fetchMockJest.get("http://example.com/_matrix/client/v3/room_keys/version", {
+                status: 404,
+                body: { errcode: "M_NOT_FOUND" },
+            });
+            const importSecretsForQrLogin = jest.fn();
+            jest.spyOn(RustCrypto, "initRustCrypto").mockResolvedValue({
+                importSecretsForQrLogin,
+                setSupportedVerificationMethods: jest.fn(),
+                onRoomMembership: jest.fn(),
+                on: jest.fn(),
+            } as any);
+            const secrets = {
+                cross_signing: { master_key: "mk", user_signing_key: "usk", self_signing_key: "ssk" },
+                backup: { algorithm: "m.megolm_backup.v1.curve25519-aes-sha2", backup_version: "1", key: "key" },
+            };
+            await testPeg.start(secrets);
+            expect(importSecretsForQrLogin).toHaveBeenCalledWith(secrets);
         });
 
         describe("Rust staged rollout", () => {
