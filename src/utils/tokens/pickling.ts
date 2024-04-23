@@ -21,8 +21,14 @@ import { encodeUnpaddedBase64 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 /**
- * Retrieves additional data for a pickle key (used to decrypt access tokens and similar
- * stored in IndexedDB).
+ * Calculates the `additionalData` for the AES-GCM key used by the pickling processes. This
+ * additional data is *not* encrypted, but *is* authenticated. The additional data is constructed
+ * from the user ID and device ID provided.
+ *
+ * The later-constructed pickle key is used to decrypt values, such as access tokens, from IndexedDB.
+ *
+ * See https://developer.mozilla.org/en-US/docs/Web/API/AesGcmParams for more information on
+ * `additionalData`.
  *
  * @param {string} userId The user ID who owns the pickle key.
  * @param {string} deviceId The device ID which owns the pickle key.

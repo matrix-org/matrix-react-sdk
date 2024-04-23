@@ -19,7 +19,7 @@ limitations under the License.
  *
  * @returns {IDBFactory | undefined} The IndexedDB factory object if available, or undefined if it is not supported.
  */
-export function getIndexedDb(): IDBFactory | undefined {
+export function getIDBFactory(): IDBFactory | undefined {
     // IndexedDB loading is lazy for easier testing.
 
     // just *accessing* _indexedDB throws an exception in firefox with
@@ -31,17 +31,14 @@ export function getIndexedDb(): IDBFactory | undefined {
     } catch (e) {}
 }
 
-/* Simple wrapper functions around IndexedDB.
- */
-
 let idb: IDBDatabase | null = null;
 
 async function idbInit(): Promise<void> {
-    if (!getIndexedDb()) {
+    if (!getIDBFactory()) {
         throw new Error("IndexedDB not available");
     }
     idb = await new Promise((resolve, reject) => {
-        const request = getIndexedDb()!.open("matrix-react-sdk", 1);
+        const request = getIDBFactory()!.open("matrix-react-sdk", 1);
         request.onerror = reject;
         request.onsuccess = (): void => {
             resolve(request.result);
@@ -55,7 +52,9 @@ async function idbInit(): Promise<void> {
 }
 
 /**
- * Loads an item from an IndexedDB table.
+ * Loads an item from an IndexedDB table within the underlying `matrix-react-sdk` database.
+ *
+ * If IndexedDB access is not supported in the environment, an error is thrown.
  *
  * @param {string} table The name of the object store in IndexedDB.
  * @param {string | string[]} key The key where the data is stored.
@@ -79,9 +78,11 @@ export async function idbLoad(table: string, key: string | string[]): Promise<an
 }
 
 /**
- * Saves data to an IndexedDB table.
+ * Saves data to an IndexedDB table within the underlying `matrix-react-sdk` database.
  *
- * @param {string} table The name of the table in the IndexedDB.
+ * If IndexedDB access is not supported in the environment, an error is thrown.
+ *
+ * @param {string} table The name of the object store in the IndexedDB.
  * @param {string|string[]} key The key to use for storing the data.
  * @param {*} data The data to be saved.
  * @returns {Promise<void>} A promise that resolves when the data is saved successfully.
@@ -104,9 +105,11 @@ export async function idbSave(table: string, key: string | string[], data: any):
 }
 
 /**
- * Deletes a record from an UndexedDB table.
+ * Deletes a record from an IndexedDB table within the underlying `matrix-react-sdk` database.
  *
- * @param {string} table The name of the table where the record is stored.
+ * If IndexedDB access is not supported in the environment, an error is thrown.
+ *
+ * @param {string} table The name of the object store where the record is stored.
  * @param {string|string[]} key The key of the record to be deleted.
  * @returns {Promise<void>} A Promise that resolves when the record(s) have been successfully deleted.
  */

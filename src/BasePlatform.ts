@@ -353,7 +353,7 @@ export default abstract class BasePlatform {
 
     /**
      * Get a previously stored pickle key.  The pickle key is used for
-     * encrypting libolm objects.
+     * encrypting libolm objects and react-sdk-crypto data.
      * @param {string} userId the user ID for the user that the pickle key is for.
      * @param {string} deviceId the device ID that the pickle key is for.
      * @returns {string|null} the previously stored pickle key, or null if no
