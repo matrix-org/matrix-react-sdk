@@ -298,6 +298,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     };
 
     private onFailure = (reason: RendezvousFailureReason): void => {
+        if (this.state.phase === Phase.Error) return; // Already in failed state
         logger.info(`Rendezvous failed: ${reason}`);
         this.setState({ phase: Phase.Error, failureReason: reason });
     };
