@@ -15,7 +15,16 @@ limitations under the License.
 */
 
 import { Mocked, mocked } from "jest-mock";
-import { EventTimeline, EventType, MatrixClient, MatrixEvent, RelationType, Room } from "matrix-js-sdk/src/matrix";
+import {
+    EventStatus,
+    EventTimeline,
+    EventType,
+    MatrixClient,
+    MatrixEvent,
+    PendingEventOrdering,
+    RelationType,
+    Room,
+} from "matrix-js-sdk/src/matrix";
 
 import { MessagePreviewStore } from "../../../src/stores/room-list/MessagePreviewStore";
 import { mkEvent, mkMessage, mkReaction, setupAsyncStoreWithClient, stubClient } from "../../test-utils";
@@ -46,9 +55,32 @@ describe("MessagePreviewStore", () => {
         }
     }
 
+    async function addPendingEvent(
+        store: MessagePreviewStore,
+        room: Room,
+        event: MatrixEvent,
+        fireAction = true,
+    ): Promise<void> {
+        room.addPendingEvent(event, "txid");
+        if (fireAction) {
+            // @ts-ignore private access
+            await store.onLocalEchoUpdated(event, room);
+        }
+    }
+
+    async function updatePendingEvent(event: MatrixEvent, eventStatus: EventStatus, fireAction = true): Promise<void> {
+        room.updatePendingEvent(event, eventStatus);
+        if (fireAction) {
+            // @ts-ignore private access
+            await store.onLocalEchoUpdated(event, room);
+        }
+    }
+
     beforeEach(async () => {
         client = mocked(stubClient());
-        room = new Room("!roomId:server", client, client.getSafeUserId());
+        room = new Room("!roomId:server", client, client.getSafeUserId(), {
+            pendingEventOrdering: PendingEventOrdering.Detached,
+        });
         mocked(client.getRoom).mockReturnValue(room);
 
         store = MessagePreviewStore.testInstance();
@@ -285,5 +317,42 @@ describe("MessagePreviewStore", () => {
         expect(preview).toBeDefined();
         expect(preview?.isThreadReply).toBe(false);
         expect(preview?.text).toContain("You reacted 🙃 to root event message");
+    });
+
+    it("should handle local echos correctly", async () => {
+        const firstMessage = mkMessage({
+            user: "@sender:server",
+            event: true,
+            room: room.roomId,
+            msg: "First message",
+            ts: 1,
+        });
+
+        await addEvent(store, room, firstMessage);
+
+        expect((await store.getPreviewForRoom(room, DefaultTagID.Untagged))?.text).toMatchInlineSnapshot(
+            `"@sender:server: First message"`,
+        );
+
+        const secondMessage = mkMessage({
+            user: "@sender:server",
+            event: true,
+            room: room.roomId,
+            msg: "Second message",
+            ts: 2,
+        });
+        secondMessage.status = EventStatus.NOT_SENT;
+
+        await addPendingEvent(store, room, secondMessage);
+
+        expect((await store.getPreviewForRoom(room, DefaultTagID.Untagged))?.text).toMatchInlineSnapshot(
+            `"@sender:server: Second message"`,
+        );
+
+        await updatePendingEvent(secondMessage, EventStatus.CANCELLED);
+
+        expect((await store.getPreviewForRoom(room, DefaultTagID.Untagged))?.text).toMatchInlineSnapshot(
+            `"@sender:server: First message"`,
+        );
     });
 });
