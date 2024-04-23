@@ -45,12 +45,11 @@ import { NotificationLevel } from "../../../stores/notifications/NotificationLev
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 type ButtonProps<T extends keyof JSX.IntrinsicElements> = Omit<
-    ComponentProps<typeof AccessibleTooltipButton<T>>,
+    ComponentProps<typeof AccessibleButton<T>>,
     "title" | "onClick" | "size"
 > & {
     space?: Room;
@@ -143,7 +142,7 @@ export const SpaceButton = <T extends keyof JSX.IntrinsicElements>({
     const onClick = props.onClick ?? (selected && space ? viewSpaceHome : activateSpace);
 
     return (
-        <AccessibleTooltipButton
+        <AccessibleButton
             {...props}
             className={classNames("mx_SpaceButton", className, {
                 mx_SpaceButton_active: selected,
@@ -157,6 +156,7 @@ export const SpaceButton = <T extends keyof JSX.IntrinsicElements>({
             ref={handle}
             tabIndex={tabIndex}
             onFocus={onFocus}
+            placement="right"
         >
             {children}
             <div className="mx_SpaceButton_selectionWrapper">
@@ -177,7 +177,7 @@ export const SpaceButton = <T extends keyof JSX.IntrinsicElements>({
 
                 {contextMenu}
             </div>
-        </AccessibleTooltipButton>
+        </AccessibleButton>
     );
 };
 

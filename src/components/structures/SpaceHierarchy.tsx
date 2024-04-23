@@ -62,7 +62,6 @@ import InfoTooltip from "../views/elements/InfoTooltip";
 import TextWithTooltip from "../views/elements/TextWithTooltip";
 import { useStateToggle } from "../../hooks/useStateToggle";
 import { getChildOrder } from "../../stores/spaces/SpaceStore";
-import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { Linkify, topicToHtml } from "../../HtmlUtils";
 import { useDispatcher } from "../../hooks/useDispatcher";
 import { Action } from "../../dispatcher/actions";
@@ -75,7 +74,6 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { JoinRoomReadyPayload } from "../../dispatcher/payloads/JoinRoomReadyPayload";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
-import { Alignment } from "../views/elements/Tooltip";
 import { getTopic } from "../../hooks/room/useTopic";
 import { SdkContextClass } from "../../contexts/SDKContext";
 import { getDisplayAliasForAliasSet } from "../../Rooms";
@@ -148,7 +146,7 @@ const Tile: React.FC<ITileProps> = ({
     let button: ReactElement;
     if (busy) {
         button = (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 disabled={true}
                 onClick={onJoinClick}
                 kind="primary_outline"
@@ -157,7 +155,7 @@ const Tile: React.FC<ITileProps> = ({
                 title={_t("space|joining_space")}
             >
                 <Spinner w={24} h={24} />
-            </AccessibleTooltipButton>
+            </AccessibleButton>
         );
     } else if (joinedRoom || room.join_rule === JoinRule.Knock) {
         // If the room is knockable, show the "View" button even if we are not a member; that
@@ -671,12 +669,12 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
     const disabled = !selectedRelations.length || removing || saving;
 
     let Button: React.ComponentType<React.ComponentProps<typeof AccessibleButton>> = AccessibleButton;
-    let props: Partial<ComponentProps<typeof AccessibleTooltipButton>> = {};
+    let props: Partial<ComponentProps<typeof AccessibleButton>> = {};
     if (!selectedRelations.length) {
-        Button = AccessibleTooltipButton;
+        Button = AccessibleButton;
         props = {
-            tooltip: _t("space|select_room_below"),
-            alignment: Alignment.Top,
+            title: _t("space|select_room_below"),
+            placement: "top",
         };
     }
 

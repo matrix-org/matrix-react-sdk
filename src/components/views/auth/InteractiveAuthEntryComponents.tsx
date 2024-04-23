@@ -26,10 +26,8 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { LocalisedPolicy, Policies } from "../../../Terms";
 import { AuthHeaderModifier } from "../../structures/auth/header/AuthHeaderModifier";
 import AccessibleButton, { AccessibleButtonKind, ButtonEvent } from "../elements/AccessibleButton";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
-import { Alignment } from "../elements/Tooltip";
 import CaptchaForm from "./CaptchaForm";
 
 /* This file contains a collection of components which are used by the
@@ -504,15 +502,17 @@ export class EmailIdentityAuthEntry extends React.Component<
                                 {},
                                 {
                                     a: (text: string) => (
-                                        <AccessibleTooltipButton
+                                        <AccessibleButton
                                             kind="link_inline"
                                             title={
                                                 this.state.requested ? _t("auth|uia|email_resent") : _t("action|resend")
                                             }
-                                            alignment={Alignment.Right}
-                                            onHideTooltip={
+                                            placement="right"
+                                            onOpenChange={
                                                 this.state.requested
-                                                    ? () => this.setState({ requested: false })
+                                                    ? (open) => {
+                                                          if (!open) this.setState({ requested: false });
+                                                      }
                                                     : undefined
                                             }
                                             onClick={async (): Promise<void> => {
@@ -527,7 +527,7 @@ export class EmailIdentityAuthEntry extends React.Component<
                                             }}
                                         >
                                             {text}
-                                        </AccessibleTooltipButton>
+                                        </AccessibleButton>
                                     ),
                                 },
                             )}

@@ -24,7 +24,6 @@ import MemberAvatar from "../avatars/MemberAvatar";
 import LegacyCallEventGrouper, { LegacyCallEventGrouperEvent } from "../../structures/LegacyCallEventGrouper";
 import AccessibleButton from "../elements/AccessibleButton";
 import InfoTooltip, { InfoTooltipKind } from "../elements/InfoTooltip";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { formatPreciseDuration } from "../../../DateUtils";
 import Clock from "../audio_messages/Clock";
 
@@ -114,10 +113,11 @@ export default class LegacyCallEvent extends React.PureComponent<IProps, IState>
         });
 
         return (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 className={silenceClass}
                 onClick={this.props.callEventGrouper.toggleSilenced}
                 title={this.state.silenced ? _t("voip|unsilence") : _t("voip|silence")}
+                placement="right"
             />
         );
     }

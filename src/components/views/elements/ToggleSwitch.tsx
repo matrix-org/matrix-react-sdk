@@ -18,7 +18,7 @@ limitations under the License.
 import React from "react";
 import classNames from "classnames";
 
-import AccessibleTooltipButton from "./AccessibleTooltipButton";
+import AccessibleButton from "./AccessibleButton";
 
 interface IProps {
     // Whether or not this toggle is in the 'on' position.
@@ -54,15 +54,16 @@ export default ({ checked, disabled = false, onChange, ...props }: IProps): JSX.
     });
 
     return (
-        <AccessibleTooltipButton
+        <AccessibleButton
             {...props}
             className={classes}
             onClick={_onClick}
             role="switch"
             aria-checked={checked}
             aria-disabled={disabled}
+            placement="right"
         >
             <div className="mx_ToggleSwitch_ball" />
-        </AccessibleTooltipButton>
+        </AccessibleButton>
     );
 };
