@@ -382,6 +382,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                 //     moment via token login)
                 await crypto.bootstrapCrossSigning({
                     authUploadDeviceSigningKeys: this.doBootstrapUIAuth,
+                    setupNewCrossSigning: true,
                 });
                 await crypto.bootstrapSecretStorage({
                     createSecretStorageKey: async () => this.recoveryKey!,
