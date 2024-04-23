@@ -94,7 +94,8 @@ type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> &
      */
     title?: string;
     /**
-     * The caption to show within a tooltip as above, only valid when used in conjunction with `title`.
+     * The caption is a secondary text displayed under the `title` of the tooltip.
+     * Only valid when used in conjunction with `title`.
      */
     caption?: string;
     /**
