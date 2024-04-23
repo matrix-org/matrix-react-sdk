@@ -41,12 +41,13 @@ export function getPickleAdditionalData(userId: string, deviceId: string): Uint8
 }
 
 /**
- * Assuming `data` is fully provided, this converts the data into a usable key then base64 encodes it for use in
- * other functions. `data` may be partially or completely undefined to deduplicate some validation logic shared
- * across callers - when undefined in part or in full, this function returns undefined too. If crypto functions
- * are not available, this function returns undefined regardless of input.
+ * Decrypts the provided data into a pickle key and base64-encodes it ready for use elsewhere.
  *
- * @param data An object containing the pickle key data: encrypted payload, initialization vector (IV), and crypto key.
+ * If `data` is undefined in part or in full, returns undefined.
+ *
+ *  If crypto functions are not available, returns undefined regardless of input.
+ *
+ * @param data An object containing the encrypted pickle key data: encrypted payload, initialization vector (IV), and crypto key. Typically loaded from indexedDB.
  * @param userId The user ID the pickle key belongs to.
  * @param deviceId The device ID the pickle key belongs to.
  * @returns A promise that resolves to the encoded pickle key, or undefined if the key cannot be built and encoded.
