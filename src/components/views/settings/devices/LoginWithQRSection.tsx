@@ -68,7 +68,8 @@ const LoginWithQRSection: React.FC<IProps> = ({ onShowQr, versions, capabilities
         ? deviceAuthorizationGrantSupported &&
           msc4108Supported &&
           SettingsStore.getValue(Features.OidcNativeFlow) &&
-          cli.getCrypto()?.supportsSecretsForQrLogin()
+          cli.getCrypto()?.supportsSecretsForQrLogin() &&
+          cli.getCrypto()?.isCrossSigningReady()
         : getLoginTokenSupported && msc3886Supported;
 
     // don't show anything if no method is available

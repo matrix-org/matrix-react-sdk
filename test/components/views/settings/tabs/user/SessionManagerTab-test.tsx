@@ -125,6 +125,7 @@ describe("<SessionManagerTab />", () => {
         getUserDeviceInfo: jest.fn(),
         requestDeviceVerification: jest.fn().mockResolvedValue(mockVerificationRequest),
         supportsSecretsForQrLogin: jest.fn().mockReturnValue(false),
+        isCrossSigningReady: jest.fn().mockReturnValue(true),
     } as unknown as CryptoApi);
 
     let mockClient!: MockedObject<MatrixClient>;
