@@ -599,5 +599,69 @@ test.describe("Cryptography", function () {
             await expect(tilesAfterVerify[1]).toContainText("test2 test2");
             await expect(tilesAfterVerify[1].locator(".mx_EventTile_e2eIcon_normal")).toBeVisible();
         });
+
+        test("should handle non-joined historical messages", async ({
+            homeserver,
+            page,
+            app,
+            credentials: aliceCredentials,
+            user: alice,
+            cryptoBackend,
+            bot: bob,
+        }) => {
+            test.skip(cryptoBackend === "legacy", "Not implemented for legacy crypto");
+
+            const roomId = await bob.evaluateHandle(
+                async (client) => {
+                    const { room_id: roomId } = await client.createRoom({
+                        initial_state: [
+                            {
+                                type: "m.room.encryption",
+                                content: {
+                                    algorithm: "m.megolm.v1.aes-sha2",
+                                },
+                            }
+                        ],
+                        name: "Test room",
+                        preset: Preset.PrivateChat,
+                    });
+
+                    // TODO: do we need to wait until we get the room info over sync?
+                    await client.sendTextMessage(roomId, "This should be undecryptable");
+
+                    await client.invite(roomId, alice.userId);
+
+                    return roomId;
+                },
+                undefined,
+            );
+
+            await expect(
+                page.getByRole("group", { name: "Invites" }).locator(".mx_RoomSublist_tiles").getByRole("treeitem"),
+            ).toHaveCount(1);
+
+            // Select the room to join
+            await page.getByRole("treeitem", { name: "Test room" }).click();
+
+            // Accept the invite
+            await page.locator(".mx_RoomView").getByRole("button", { name: "Accept" }).click();
+
+            await bob.evaluateHandle(
+                async (client) => {
+                    await client.sendTextMessage(roomId, "This should be decryptable");
+                },
+                undefined,
+            );
+
+            // There should be two events in the timeline
+            const tiles = await page.locator(".mx_EventTile").all();
+            expect(tiles.length).toBeGreaterThanOrEqual(2);
+
+            await expect(tiles[0]).toContainText("You don't have access to this message");
+            await expect(tiles[0]).locator(".mx_EventTile_e2eIcon_decryption_failure").toBeVisible();
+
+            await expect(tiles[1]).toContainText("This should be decryptable");
+            await expect(tiles[1]).locator(".mx_EventTile_e2eIcon_normal").toBeVisible();
+        });
     });
 });
