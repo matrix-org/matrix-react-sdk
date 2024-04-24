@@ -22,6 +22,7 @@ import {
     LegacyRendezvousFailureReason,
     ClientRendezvousFailureReason,
     MSC4108SignInWithQR,
+    MSC4108FailureReason,
 } from "matrix-js-sdk/src/rendezvous";
 import { HTTPError, LoginTokenPostResponse } from "matrix-js-sdk/src/matrix";
 
@@ -439,6 +440,26 @@ describe("<LoginWithQR />", () => {
                     }),
                 ),
             );
+        });
+
+        test("handles user cancelling during reciprocation", async () => {
+            render(getComponent({ client }));
+            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep1").mockResolvedValue({});
+            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep2And3").mockResolvedValue({});
+            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep2And3").mockResolvedValue({});
+            await waitFor(() =>
+                expect(mockedFlow).toHaveBeenLastCalledWith({
+                    phase: Phase.OutOfBandConfirmation,
+                    onClick: expect.any(Function),
+                }),
+            );
+
+            jest.spyOn(MSC4108SignInWithQR.prototype, "cancel").mockResolvedValue();
+            const onClick = mockedFlow.mock.calls[0][0].onClick;
+            await onClick(Click.Cancel);
+
+            const rendezvous = mocked(MSC4108SignInWithQR).mock.instances[0];
+            expect(rendezvous.cancel).toHaveBeenCalledWith(MSC4108FailureReason.UserCancelled);
         });
     });
 });
