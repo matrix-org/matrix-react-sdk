@@ -75,22 +75,46 @@ export interface IMatrixClientCreds {
  * you'll find a `MatrixClient` hanging on the `MatrixClientPeg`.
  */
 export interface IMatrixClientPeg {
+    /**
+     * The opts used to start the client
+     */
     opts: IStartClientOpts;
 
     /**
      * Return the server name of the user's homeserver
      * Throws an error if unable to deduce the homeserver name
-     * (eg. if the user is not logged in)
+     * (e.g. if the user is not logged in)
      *
      * @returns {string} The homeserver name, if present.
      */
     getHomeserverName(): string;
 
+    /**
+     * Get the current MatrixClient, if any
+     */
     get(): MatrixClient | null;
+
+    /**
+     * Get the current MatrixClient, throwing an error if there isn't one
+     */
     safeGet(): MatrixClient;
+
+    /**
+     * Unset the current MatrixClient
+     */
     unset(): void;
-    assign(secrets?: QRSecretsBundle): Promise<any>;
-    start(secrets?: QRSecretsBundle): Promise<any>;
+
+    /**
+     * Prepare the MatrixClient for use, including initialising the store and crypto, but do not start it
+     * @param secrets the secrets to use if authenticating using QR login
+     */
+    assign(secrets?: QRSecretsBundle): Promise<IStartClientOpts>;
+
+    /**
+     * Prepare the MatrixClient for use, including initialising the store and crypto, and start it
+     * @param secrets the secrets to use if authenticating using QR login
+     */
+    start(secrets?: QRSecretsBundle): Promise<void>;
 
     /**
      * If we've registered a user ID we set this to the ID of the
@@ -112,13 +136,13 @@ export interface IMatrixClientPeg {
 
     /**
      * If the current user has been registered by this device then this
-     * returns a boolean of whether it was within the last N hours given.
+     * returns boolean of whether it was within the last N hours given.
      */
     userRegisteredWithinLastHours(hours: number): boolean;
 
     /**
      * If the current user has been registered by this device then this
-     * returns a boolean of whether it was after a given timestamp.
+     * returns boolean of whether it was after a given timestamp.
      */
     userRegisteredAfter(date: Date): boolean;
 
@@ -237,7 +261,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         PlatformPeg.get()?.reload();
     };
 
-    public async assign(secrets?: QRSecretsBundle): Promise<any> {
+    public async assign(secrets?: QRSecretsBundle): Promise<IStartClientOpts> {
         if (!this.matrixClient) {
             throw new Error("createClient must be called first");
         }
@@ -374,7 +398,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
     }
 
-    public async start(secrets?: QRSecretsBundle): Promise<any> {
+    public async start(secrets?: QRSecretsBundle): Promise<void> {
         const opts = await this.assign(secrets);
 
         logger.log(`MatrixClientPeg: really starting MatrixClient`);
