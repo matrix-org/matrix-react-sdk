@@ -478,7 +478,7 @@ export class RoomTile extends React.PureComponent<ClassProps, State> {
                             aria-label={ariaLabel}
                             aria-selected={this.state.selected}
                             aria-describedby={ariaDescribedBy}
-                            title={!this.props.isMinimized && !this.state.generalMenuPosition ? name : undefined}
+                            title={this.props.isMinimized && !this.state.generalMenuPosition ? name : undefined}
                             placement="right"
                         >
                             <DecoratedRoomAvatar
