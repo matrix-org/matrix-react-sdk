@@ -34,6 +34,7 @@ import { mkThread } from "../../test-utils/threads";
 describe("MessagePreviewStore", () => {
     let client: Mocked<MatrixClient>;
     let room: Room;
+    let nonRenderedRoom: Room;
     let store: MessagePreviewStore;
 
     async function addEvent(
@@ -79,6 +80,9 @@ describe("MessagePreviewStore", () => {
     beforeEach(async () => {
         client = mocked(stubClient());
         room = new Room("!roomId:server", client, client.getSafeUserId(), {
+            pendingEventOrdering: PendingEventOrdering.Detached,
+        });
+        nonRenderedRoom = new Room("!roomId2:server", client, client.getSafeUserId(), {
             pendingEventOrdering: PendingEventOrdering.Detached,
         });
         mocked(client.getRoom).mockReturnValue(room);
@@ -325,7 +329,6 @@ describe("MessagePreviewStore", () => {
             event: true,
             room: room.roomId,
             msg: "First message",
-            ts: 1,
         });
 
         await addEvent(store, room, firstMessage);
@@ -339,7 +342,6 @@ describe("MessagePreviewStore", () => {
             event: true,
             room: room.roomId,
             msg: "Second message",
-            ts: 2,
         });
         secondMessage.status = EventStatus.NOT_SENT;
 
@@ -354,5 +356,29 @@ describe("MessagePreviewStore", () => {
         expect((await store.getPreviewForRoom(room, DefaultTagID.Untagged))?.text).toMatchInlineSnapshot(
             `"@sender:server: First message"`,
         );
+    });
+
+    it("should not generate previews for rooms not rendered", async () => {
+        const firstMessage = mkMessage({
+            user: "@sender:server",
+            event: true,
+            room: nonRenderedRoom.roomId,
+            msg: "First message",
+        });
+
+        await addEvent(store, room, firstMessage);
+
+        const secondMessage = mkMessage({
+            user: "@sender:server",
+            event: true,
+            room: nonRenderedRoom.roomId,
+            msg: "Second message",
+        });
+        secondMessage.status = EventStatus.NOT_SENT;
+
+        await addPendingEvent(store, room, secondMessage);
+
+        // @ts-ignore private access
+        expect(store.previews.has(nonRenderedRoom.roomId)).toBeFalsy();
     });
 });
