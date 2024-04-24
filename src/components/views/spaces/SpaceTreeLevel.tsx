@@ -149,10 +149,9 @@ export const SpaceButton = <T extends keyof JSX.IntrinsicElements>({
                 mx_SpaceButton_hasMenuOpen: menuDisplayed,
                 mx_SpaceButton_narrow: isNarrow,
             })}
-            title={label}
+            title={!isNarrow || menuDisplayed ? undefined : label}
             onClick={onClick}
             onContextMenu={openMenu}
-            forceHide={!isNarrow || menuDisplayed}
             ref={handle}
             tabIndex={tabIndex}
             onFocus={onFocus}
