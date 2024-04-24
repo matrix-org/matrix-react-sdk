@@ -44,21 +44,26 @@ type ButtonProps = Omit<ComponentProps<typeof AccessibleButton>, "title" | "elem
     state: boolean;
     onLabel?: string;
     offLabel?: string;
+    forceHide?: boolean;
+    onHover?: (hovering: boolean) => void;
 };
 
 const LegacyCallViewToggleButton = forwardRef<HTMLElement, ButtonProps>(
-    ({ children, state: isOn, className, onLabel, offLabel, ...props }, ref) => {
+    ({ children, state: isOn, className, onLabel, offLabel, forceHide, onHover, ...props }, ref) => {
         const classes = classNames("mx_LegacyCallViewButtons_button", className, {
             mx_LegacyCallViewButtons_button_on: isOn,
             mx_LegacyCallViewButtons_button_off: !isOn,
         });
 
+        const title = forceHide ? undefined : isOn ? onLabel : offLabel;
+
         return (
             <AccessibleButton
                 ref={ref}
                 className={classes}
-                title={isOn ? onLabel : offLabel}
+                title={title}
                 placement="top"
+                onOpenChange={onHover}
                 {...props}
             >
                 {children}
