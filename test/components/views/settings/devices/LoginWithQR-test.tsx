@@ -387,6 +387,8 @@ describe("<LoginWithQR />", () => {
         });
 
         test("reciprocates login", async () => {
+            jest.spyOn(global.window, "open");
+
             render(getComponent({ client }));
             jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep1").mockResolvedValue({});
             jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep2And3").mockResolvedValue({
@@ -408,6 +410,34 @@ describe("<LoginWithQR />", () => {
                     phase: Phase.WaitingForDevice,
                     onClick: expect.any(Function),
                 }),
+            );
+            expect(global.window.open).toHaveBeenCalledWith("mock-verification-uri", "_blank");
+        });
+
+        test("handles errors during reciprocation", async () => {
+            render(getComponent({ client }));
+            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep1").mockResolvedValue({});
+            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep2And3").mockResolvedValue({});
+            await waitFor(() =>
+                expect(mockedFlow).toHaveBeenLastCalledWith({
+                    phase: Phase.OutOfBandConfirmation,
+                    onClick: expect.any(Function),
+                }),
+            );
+
+            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep5").mockRejectedValue(
+                new HTTPError("Internal Server Error", 500),
+            );
+            const onClick = mockedFlow.mock.calls[0][0].onClick;
+            await onClick(Click.Approve);
+
+            await waitFor(() =>
+                expect(mockedFlow).toHaveBeenLastCalledWith(
+                    expect.objectContaining({
+                        phase: Phase.Error,
+                        failureReason: ClientRendezvousFailureReason.Unknown,
+                    }),
+                ),
             );
         });
     });
