@@ -312,10 +312,6 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
             case Phase.Loading:
                 main = this.simpleSpinner();
                 break;
-            case Phase.Connecting: // Legacy
-                main = this.simpleSpinner(_t("auth|qr_code_login|connecting"));
-                buttons = this.cancelButton();
-                break;
             case Phase.WaitingForDevice:
                 main = (
                     <>

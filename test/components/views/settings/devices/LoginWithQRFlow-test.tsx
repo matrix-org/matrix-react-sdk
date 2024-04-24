@@ -68,14 +68,6 @@ describe("<LoginWithQRFlow />", () => {
         expect(container).toMatchSnapshot();
     });
 
-    it("renders spinner while connecting", async () => {
-        const { container } = render(getComponent({ phase: Phase.Connecting }));
-        expect(screen.getAllByTestId("cancel-button")).toHaveLength(1);
-        expect(container).toMatchSnapshot();
-        fireEvent.click(screen.getByTestId("cancel-button"));
-        expect(onClick).toHaveBeenCalledWith(Click.Cancel, undefined);
-    });
-
     it("renders code when connected", async () => {
         const { container } = render(getComponent({ phase: Phase.LegacyConnected, confirmationDigits: "mock-digits" }));
         expect(screen.getAllByText("mock-digits")).toHaveLength(1);
