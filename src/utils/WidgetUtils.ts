@@ -471,6 +471,13 @@ export default class WidgetUtils {
         });
     }
 
+    public static async addBigBlueButtonWidget(client: MatrixClient, roomId: string, name: string): Promise<void> {
+        const widgetUrl = SdkConfig.getObject("big_blue_button")?.get("widget_url");
+        const widgetId = randomString(24); // Must be globally unique
+
+        await WidgetUtils.setRoomWidget(client, roomId, widgetId, WidgetType.BIGBLUEBUTTON, widgetUrl, name);
+    }
+
     public static makeAppConfig(
         appId: string,
         app: Partial<IApp>,

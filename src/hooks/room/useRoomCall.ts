@@ -46,6 +46,7 @@ export enum PlatformCallType {
     ElementCall,
     JitsiCall,
     LegacyCall,
+    BigBlueButtonCall,
 }
 export const getPlatformCallTypeLabel = (platformCallType: PlatformCallType): string => {
     switch (platformCallType) {
@@ -55,6 +56,8 @@ export const getPlatformCallTypeLabel = (platformCallType: PlatformCallType): st
             return _t("voip|jitsi_call");
         case PlatformCallType.LegacyCall:
             return _t("voip|legacy_call");
+        case PlatformCallType.BigBlueButtonCall:
+            return _t("voip|bigbluebutton_call");
     }
 };
 const enum State {
@@ -99,6 +102,12 @@ export const useRoomCall = (
     const widgets = useWidgets(room);
     const jitsiWidget = useMemo(() => widgets.find((widget) => WidgetType.JITSI.matches(widget.type)), [widgets]);
     const hasJitsiWidget = !!jitsiWidget;
+    const bigbluebuttonWidget = useMemo(
+        () => widgets.find((widget) => WidgetType.BIGBLUEBUTTON.matches(widget.type)),
+        [widgets],
+    );
+    const hasBigBlueButtonWidget = !!bigbluebuttonWidget;
+
     const managedHybridWidget = useMemo(() => widgets.find(isManagedHybridWidget), [widgets]);
     const hasManagedHybridWidget = !!managedHybridWidget;
 
@@ -127,8 +136,9 @@ export const useRoomCall = (
         const options = [];
         if (memberCount <= 2) {
             options.push(PlatformCallType.LegacyCall);
-        } else if (mayEditWidgets || hasJitsiWidget) {
-            options.push(PlatformCallType.JitsiCall);
+        } else {
+            if (mayEditWidgets || hasJitsiWidget) options.push(PlatformCallType.JitsiCall);
+            if (mayEditWidgets || hasBigBlueButtonWidget) options.push(PlatformCallType.BigBlueButtonCall);
         }
         if (groupCallsEnabled) {
             if (hasGroupCall || mayCreateElementCalls) {
@@ -147,6 +157,7 @@ export const useRoomCall = (
         memberCount,
         mayEditWidgets,
         hasJitsiWidget,
+        hasBigBlueButtonWidget,
         groupCallsEnabled,
         hasGroupCall,
         mayCreateElementCalls,
@@ -167,6 +178,7 @@ export const useRoomCall = (
         setCanPinWidget(WidgetLayoutStore.instance.canAddToContainer(room, Container.Top));
         setWidgetPinned(!!widget && WidgetLayoutStore.instance.isInContainer(room, widget, Container.Top));
     }, [room, widget]);
+
     useEventEmitter(WidgetLayoutStore.instance, WidgetLayoutStore.emissionForRoom(room), updateWidgetState);
     useEffect(() => {
         updateWidgetState();
@@ -185,7 +197,7 @@ export const useRoomCall = (
         if (activeCalls.find((call) => call.roomId != room.roomId)) {
             return State.Ongoing;
         }
-        if (hasGroupCall && (hasJitsiWidget || hasManagedHybridWidget)) {
+        if (hasGroupCall && (hasJitsiWidget || hasBigBlueButtonWidget || hasManagedHybridWidget)) {
             return promptPinWidget ? State.Unpinned : State.Ongoing;
         }
         if (hasLegacyCall) {
@@ -206,6 +218,7 @@ export const useRoomCall = (
         hasJitsiWidget,
         hasLegacyCall,
         hasManagedHybridWidget,
+        hasBigBlueButtonWidget,
         mayCreateElementCalls,
         mayEditWidgets,
         memberCount,

@@ -111,6 +111,9 @@ export interface IConfigOptions {
     jitsi?: {
         preferred_domain: string;
     };
+    big_blue_button?: {
+        widget_url: string;
+    };
     jitsi_widget?: {
         skip_built_in_welcome_screen?: boolean;
     };

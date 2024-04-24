@@ -66,6 +66,7 @@ import { localNotificationsAreSilenced } from "./utils/notifications";
 import { SdkContextClass } from "./contexts/SDKContext";
 import { showCantStartACallDialog } from "./voice-broadcast/utils/showCantStartACallDialog";
 import { isNotNull } from "./Typeguards";
+import { PlatformCallType } from "./hooks/room/useRoomCall";
 
 export const PROTOCOL_PSTN = "m.protocol.pstn";
 export const PROTOCOL_PSTN_PREFIXED = "im.vector.protocol.pstn";
@@ -928,7 +929,12 @@ export default class LegacyCallHandler extends EventEmitter {
         }
     }
 
-    public async placeCall(roomId: string, type: CallType, transferee?: MatrixCall): Promise<void> {
+    public async placeCall(
+        roomId: string,
+        type: CallType,
+        transferee?: MatrixCall,
+        platformType?: PlatformCallType,
+    ): Promise<void> {
         const cli = MatrixClientPeg.safeGet();
         // Pause current broadcast, if any
         SdkContextClass.instance.voiceBroadcastPlaybacksStore.getCurrent()?.pause();
@@ -991,7 +997,14 @@ export default class LegacyCallHandler extends EventEmitter {
             await this.placeMatrixCall(roomId, type, transferee);
         } else {
             // > 2
-            await this.placeJitsiCall(roomId, type);
+            switch (platformType) {
+                case PlatformCallType.JitsiCall:
+                    await this.placeJitsiCall(roomId, type);
+                    break;
+                case PlatformCallType.BigBlueButtonCall:
+                    await this.placeBigBlueButtonCall(roomId, type);
+                    break;
+            }
         }
     }
 
@@ -1190,6 +1203,37 @@ export default class LegacyCallHandler extends EventEmitter {
         try {
             await WidgetUtils.addJitsiWidget(client, roomId, type, "Jitsi", false);
             logger.log("Jitsi widget added");
+        } catch (e) {
+            if (e instanceof MatrixError && e.errcode === "M_FORBIDDEN") {
+                Modal.createDialog(ErrorDialog, {
+                    title: _t("voip|no_permission_conference"),
+                    description: _t("voip|no_permission_conference_description"),
+                });
+            }
+            logger.error(e);
+        }
+    }
+
+    private async placeBigBlueButtonCall(roomId: string, type: CallType): Promise<void> {
+        const client = MatrixClientPeg.safeGet();
+        logger.info(`Place conference call in ${roomId}`);
+
+        dis.dispatch({ action: "appsDrawer", show: true });
+
+        // Prevent double clicking the call button
+        const widget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.BIGBLUEBUTTON.matches(app.type));
+        if (widget) {
+            // If there already is a Jitsi widget, pin it
+            const room = client.getRoom(roomId);
+            if (isNotNull(room)) {
+                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Center);
+            }
+            return;
+        }
+
+        try {
+            await WidgetUtils.addBigBlueButtonWidget(client, roomId, "BigBlueButton");
+            logger.log("BigBlueButton widget added");
         } catch (e) {
             if (e instanceof MatrixError && e.errcode === "M_FORBIDDEN") {
                 Modal.createDialog(ErrorDialog, {

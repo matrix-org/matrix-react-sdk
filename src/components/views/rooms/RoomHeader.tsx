@@ -55,6 +55,8 @@ import { RoomKnocksBar } from "./RoomKnocksBar";
 import { isVideoRoom } from "../../../utils/video-rooms";
 import { notificationLevelToIndicator } from "../../../utils/notifications";
 import { CallGuestLinkButton } from "./RoomHeader/CallGuestLinkButton";
+import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 
 export default function RoomHeader({
     room,
@@ -72,6 +74,9 @@ export default function RoomHeader({
     const members = useRoomMembers(room, 2500);
     const memberCount = useRoomMemberCount(room, { throttleWait: 2500 });
 
+    const hasMaximisedWidget = useEventEmitterState(WidgetLayoutStore.instance, `update_${room.roomId}`, () =>
+        WidgetLayoutStore.instance.hasMaximisedWidget(room),
+    );
     const {
         voiceCallDisabledReason,
         voiceCallClick,
@@ -315,7 +320,9 @@ export default function RoomHeader({
                     })}
 
                     {isViewingCall && <CallGuestLinkButton room={room} />}
-                    {((isConnectedToCall && isViewingCall) || isVideoRoom(room)) && <VideoRoomChatButton room={room} />}
+                    {((isConnectedToCall && isViewingCall) || isVideoRoom(room) || hasMaximisedWidget) && (
+                        <VideoRoomChatButton room={room} />
+                    )}
 
                     {hasActiveCallSession && !isConnectedToCall && !isViewingCall ? (
                         joinCallButton
