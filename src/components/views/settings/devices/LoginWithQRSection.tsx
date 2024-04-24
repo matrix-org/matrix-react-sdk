@@ -22,9 +22,9 @@ import {
     Capabilities,
     IClientWellKnown,
     OidcClientConfig,
+    MatrixClient,
 } from "matrix-js-sdk/src/matrix";
 import { Icon as QrCodeIcon } from "@vector-im/compound-design-tokens/icons/qr-code.svg";
-import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../languageHandler";
 import AccessibleButton from "../../elements/AccessibleButton";
@@ -41,9 +41,7 @@ interface IProps {
     oidcClientConfig?: OidcClientConfig;
 }
 
-const LoginWithQRSection: React.FC<IProps> = ({ onShowQr, versions, capabilities, wellKnown, oidcClientConfig }) => {
-    const cli = useMatrixClientContext();
-
+function showQrLegacy(versions?: IServerVersions, wellKnown?: IClientWellKnown, capabilities?: Capabilities): boolean {
     // Needs server support for (get_login_token or OIDC Device Authorization Grant) and MSC3886:
     // in r0 of MSC3882 it is exposed as a feature flag, but in stable and unstable r1 it is a capability
     const loginTokenCapability = GET_LOGIN_TOKEN_CAPABILITY.findIn<IGetLoginTokenCapability>(capabilities);
@@ -51,6 +49,15 @@ const LoginWithQRSection: React.FC<IProps> = ({ onShowQr, versions, capabilities
         !!versions?.unstable_features?.["org.matrix.msc3882"] || !!loginTokenCapability?.enabled;
     const msc3886Supported =
         !!versions?.unstable_features?.["org.matrix.msc3886"] || !!wellKnown?.["io.element.rendezvous"]?.server;
+    return getLoginTokenSupported && msc3886Supported;
+}
+
+function showQr(
+    cli: MatrixClient,
+    oidcClientConfig?: OidcClientConfig,
+    versions?: IServerVersions,
+    wellKnown?: IClientWellKnown,
+): boolean {
     const msc4108Supported =
         !!versions?.unstable_features?.["org.matrix.msc4108"] || !!wellKnown?.["io.element.rendezvous"]?.server;
 
@@ -58,19 +65,20 @@ const LoginWithQRSection: React.FC<IProps> = ({ onShowQr, versions, capabilities
         "urn:ietf:params:oauth:grant-type:device_code",
     );
 
-    logger.debug({
-        msc3886Supported,
-        getLoginTokenSupported,
-        msc4108Supported,
-        deviceAuthorizationGrantSupported,
-    });
+    return (
+        deviceAuthorizationGrantSupported &&
+        msc4108Supported &&
+        SettingsStore.getValue(Features.OidcNativeFlow) &&
+        cli.getCrypto()?.supportsSecretsForQrLogin() &&
+        cli.getCrypto()?.isCrossSigningReady()
+    );
+}
+
+const LoginWithQRSection: React.FC<IProps> = ({ onShowQr, versions, capabilities, wellKnown, oidcClientConfig }) => {
+    const cli = useMatrixClientContext();
     const offerShowQr = oidcClientConfig
-        ? deviceAuthorizationGrantSupported &&
-          msc4108Supported &&
-          SettingsStore.getValue(Features.OidcNativeFlow) &&
-          cli.getCrypto()?.supportsSecretsForQrLogin() &&
-          cli.getCrypto()?.isCrossSigningReady()
-        : getLoginTokenSupported && msc3886Supported;
+        ? showQr(cli, oidcClientConfig, versions, wellKnown)
+        : showQrLegacy(versions, wellKnown, capabilities);
 
     // don't show anything if no method is available
     if (!offerShowQr) {
