@@ -56,8 +56,7 @@ function Button({ label, shortcut, onClick, actionState, icon }: ButtonProps): J
                 mx_FormattingButtons_Button_hover: actionState === "enabled",
                 mx_FormattingButtons_disabled: actionState === "disabled",
             })}
-            title={shortcut}
-            disabled={actionState === "disabled"}
+            title={actionState === "disabled" ? undefined : shortcut}
             placement="top"
         >
             {icon}
