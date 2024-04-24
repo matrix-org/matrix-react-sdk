@@ -839,11 +839,12 @@ exports[`<LoginWithQRFlow /> renders QR code 1`] = `
       class="mx_LoginWithQR_heading"
     >
       <div
+        aria-label="Back"
         class="mx_AccessibleButton mx_LoginWithQR_BackButton"
+        data-state="closed"
         data-testid="back-button"
         role="button"
         tabindex="0"
-        title="Back"
       >
         <div />
       </div>
@@ -1040,11 +1041,12 @@ exports[`<LoginWithQRFlow /> renders spinner while connecting 1`] = `
       class="mx_LoginWithQR_heading"
     >
       <div
+        aria-label="Back"
         class="mx_AccessibleButton mx_LoginWithQR_BackButton"
+        data-state="closed"
         data-testid="back-button"
         role="button"
         tabindex="0"
-        title="Back"
       >
         <div />
       </div>
@@ -1106,11 +1108,12 @@ exports[`<LoginWithQRFlow /> renders spinner while loading 1`] = `
       class="mx_LoginWithQR_heading"
     >
       <div
+        aria-label="Back"
         class="mx_AccessibleButton mx_LoginWithQR_BackButton"
+        data-state="closed"
         data-testid="back-button"
         role="button"
         tabindex="0"
-        title="Back"
       >
         <div />
       </div>
@@ -1160,11 +1163,12 @@ exports[`<LoginWithQRFlow /> renders spinner while signing in 1`] = `
       class="mx_LoginWithQR_heading"
     >
       <div
+        aria-label="Back"
         class="mx_AccessibleButton mx_LoginWithQR_BackButton"
+        data-state="closed"
         data-testid="back-button"
         role="button"
         tabindex="0"
-        title="Back"
       >
         <div />
       </div>
@@ -1226,11 +1230,12 @@ exports[`<LoginWithQRFlow /> renders spinner while verifying 1`] = `
       class="mx_LoginWithQR_heading"
     >
       <div
+        aria-label="Back"
         class="mx_AccessibleButton mx_LoginWithQR_BackButton"
+        data-state="closed"
         data-testid="back-button"
         role="button"
         tabindex="0"
-        title="Back"
       >
         <div />
       </div>
@@ -1283,11 +1288,12 @@ exports[`<LoginWithQRFlow /> renders spinner whilst QR generating 1`] = `
       class="mx_LoginWithQR_heading"
     >
       <div
+        aria-label="Back"
         class="mx_AccessibleButton mx_LoginWithQR_BackButton"
+        data-state="closed"
         data-testid="back-button"
         role="button"
         tabindex="0"
-        title="Back"
       >
         <div />
       </div>
