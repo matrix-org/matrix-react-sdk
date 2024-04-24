@@ -128,7 +128,7 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
                             <>
                                 {_t("auth|qr_code_login|error_insecure_channel_detected")}
 
-                                <Text as="h2" size="lg" weight="semibold">
+                                <Text as="h2" size="lg" weight="semibold" data-testid="cancellation-message">
                                     {_t("auth|qr_code_login|error_insecure_channel_detected_instructions")}
                                 </Text>
                                 <ol>

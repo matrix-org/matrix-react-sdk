@@ -136,6 +136,40 @@ exports[`<LoginWithQRFlow /> errors renders device_not_found 1`] = `
 </div>
 `;
 
+exports[`<LoginWithQRFlow /> errors renders etag_missing 1`] = `
+<div>
+  <div
+    class="mx_LoginWithQR mx_LoginWithQR_error"
+    data-testid="login-with-qr"
+  >
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <div
+        class="mx_LoginWithQR_icon mx_LoginWithQR_icon--critical"
+      >
+        <div
+          width="32px"
+        />
+      </div>
+      <h1
+        class="_typography_yh5dq_162 _font-heading-sm-semibold_yh5dq_102"
+      >
+        Something went wrong!
+      </h1>
+      <p
+        data-testid="cancellation-message"
+      >
+        An unexpected error occurred. This may be due to a browser extension, proxy server, or server misconfiguration.
+      </p>
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    />
+  </div>
+</div>
+`;
+
 exports[`<LoginWithQRFlow /> errors renders expired 1`] = `
 <div>
   <div
@@ -170,7 +204,224 @@ exports[`<LoginWithQRFlow /> errors renders expired 1`] = `
 </div>
 `;
 
+exports[`<LoginWithQRFlow /> errors renders expired 2`] = `
+<div>
+  <div
+    class="mx_LoginWithQR mx_LoginWithQR_error"
+    data-testid="login-with-qr"
+  >
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <div
+        class="mx_LoginWithQR_icon mx_LoginWithQR_icon--critical"
+      >
+        <div
+          width="32px"
+        />
+      </div>
+      <h1
+        class="_typography_yh5dq_162 _font-heading-sm-semibold_yh5dq_102"
+      >
+        The sign in was not completed in time
+      </h1>
+      <p
+        data-testid="cancellation-message"
+      >
+        Sign in expired. Please try again.
+      </p>
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    />
+  </div>
+</div>
+`;
+
 exports[`<LoginWithQRFlow /> errors renders homeserver_lacks_support 1`] = `
+<div>
+  <div
+    class="mx_LoginWithQR mx_LoginWithQR_error"
+    data-testid="login-with-qr"
+  >
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <div
+        class="mx_LoginWithQR_icon mx_LoginWithQR_icon--critical"
+      >
+        <div
+          width="32px"
+        />
+      </div>
+      <h1
+        class="_typography_yh5dq_162 _font-heading-sm-semibold_yh5dq_102"
+      >
+        Something went wrong!
+      </h1>
+      <p
+        data-testid="cancellation-message"
+      >
+        An unexpected error occurred. The request to connect your other device has been cancelled.
+      </p>
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    />
+  </div>
+</div>
+`;
+
+exports[`<LoginWithQRFlow /> errors renders homeserver_lacks_support 2`] = `
+<div>
+  <div
+    class="mx_LoginWithQR mx_LoginWithQR_error"
+    data-testid="login-with-qr"
+  >
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <div
+        class="mx_LoginWithQR_icon mx_LoginWithQR_icon--critical"
+      >
+        <div
+          width="32px"
+        />
+      </div>
+      <h1
+        class="_typography_yh5dq_162 _font-heading-sm-semibold_yh5dq_102"
+      >
+        Something went wrong!
+      </h1>
+      <p
+        data-testid="cancellation-message"
+      >
+        An unexpected error occurred. The request to connect your other device has been cancelled.
+      </p>
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    />
+  </div>
+</div>
+`;
+
+exports[`<LoginWithQRFlow /> errors renders insecure_channel_detected 1`] = `
+<div>
+  <div
+    class="mx_LoginWithQR mx_LoginWithQR_error"
+    data-testid="login-with-qr"
+  >
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <div
+        class="mx_LoginWithQR_icon mx_LoginWithQR_icon--critical"
+      >
+        <div
+          width="32px"
+        />
+      </div>
+      <h1
+        class="_typography_yh5dq_162 _font-heading-sm-semibold_yh5dq_102"
+      >
+        Connection not secure
+      </h1>
+      A secure connection could not be made to the new device. Your existing devices are still safe and you don't need to worry about them.
+      <h2
+        class="_typography_yh5dq_162 _font-body-lg-semibold_yh5dq_83"
+        data-testid="cancellation-message"
+      >
+        Now what?
+      </h2>
+      <ol>
+        <li>
+          Try signing in to the other device again with a QR code in case this was a network problem
+        </li>
+        <li>
+          If you encounter the same problem, try a different wifi network or use your mobile data instead of wifi
+        </li>
+        <li>
+          If that doesn't work, sign in manually
+        </li>
+      </ol>
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    />
+  </div>
+</div>
+`;
+
+exports[`<LoginWithQRFlow /> errors renders invalid_code 1`] = `
+<div>
+  <div
+    class="mx_LoginWithQR mx_LoginWithQR_error"
+    data-testid="login-with-qr"
+  >
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <div
+        class="mx_LoginWithQR_icon mx_LoginWithQR_icon--critical"
+      >
+        <div
+          width="32px"
+        />
+      </div>
+      <h1
+        class="_typography_yh5dq_162 _font-heading-sm-semibold_yh5dq_102"
+      >
+        Something went wrong!
+      </h1>
+      <p
+        data-testid="cancellation-message"
+      >
+        An unexpected error occurred. The request to connect your other device has been cancelled.
+      </p>
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    />
+  </div>
+</div>
+`;
+
+exports[`<LoginWithQRFlow /> errors renders other_device_already_signed_in 1`] = `
+<div>
+  <div
+    class="mx_LoginWithQR mx_LoginWithQR_error"
+    data-testid="login-with-qr"
+  >
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <div
+        class="mx_LoginWithQR_icon"
+      >
+        <div
+          width="32px"
+        />
+      </div>
+      <h1
+        class="_typography_yh5dq_162 _font-heading-sm-semibold_yh5dq_102"
+      >
+        Your other device is already signed in
+      </h1>
+      <p
+        data-testid="cancellation-message"
+      >
+        You don’t need to do anything else.
+      </p>
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    />
+  </div>
+</div>
+`;
+
+exports[`<LoginWithQRFlow /> errors renders other_device_not_signed_in 1`] = `
 <div>
   <div
     class="mx_LoginWithQR mx_LoginWithQR_error"
@@ -273,6 +524,40 @@ exports[`<LoginWithQRFlow /> errors renders unexpected_message_received 1`] = `
 `;
 
 exports[`<LoginWithQRFlow /> errors renders unknown 1`] = `
+<div>
+  <div
+    class="mx_LoginWithQR mx_LoginWithQR_error"
+    data-testid="login-with-qr"
+  >
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <div
+        class="mx_LoginWithQR_icon mx_LoginWithQR_icon--critical"
+      >
+        <div
+          width="32px"
+        />
+      </div>
+      <h1
+        class="_typography_yh5dq_162 _font-heading-sm-semibold_yh5dq_102"
+      >
+        Something went wrong!
+      </h1>
+      <p
+        data-testid="cancellation-message"
+      >
+        An unexpected error occurred. The request to connect your other device has been cancelled.
+      </p>
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    />
+  </div>
+</div>
+`;
+
+exports[`<LoginWithQRFlow /> errors renders unknown 2`] = `
 <div>
   <div
     class="mx_LoginWithQR mx_LoginWithQR_error"
@@ -510,6 +795,40 @@ exports[`<LoginWithQRFlow /> errors renders user_declined 1`] = `
 </div>
 `;
 
+exports[`<LoginWithQRFlow /> errors renders user_declined 2`] = `
+<div>
+  <div
+    class="mx_LoginWithQR mx_LoginWithQR_error"
+    data-testid="login-with-qr"
+  >
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <div
+        class="mx_LoginWithQR_icon mx_LoginWithQR_icon--critical"
+      >
+        <div
+          width="32px"
+        />
+      </div>
+      <h1
+        class="_typography_yh5dq_162 _font-heading-sm-semibold_yh5dq_102"
+      >
+        Sign in declined
+      </h1>
+      <p
+        data-testid="cancellation-message"
+      >
+        You declined the request from your other device to sign in.
+      </p>
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    />
+  </div>
+</div>
+`;
+
 exports[`<LoginWithQRFlow /> renders QR code 1`] = `
 <div>
   <div
@@ -581,6 +900,80 @@ exports[`<LoginWithQRFlow /> renders QR code 1`] = `
     <div
       class="mx_LoginWithQR_buttons"
     />
+  </div>
+</div>
+`;
+
+exports[`<LoginWithQRFlow /> renders check code confirmation 1`] = `
+<div>
+  <div
+    class="mx_LoginWithQR"
+    data-testid="login-with-qr"
+  >
+    <div
+      class="mx_LoginWithQR_main"
+    >
+      <h1
+        class="_typography_yh5dq_162 _font-heading-sm-semibold_yh5dq_102"
+      >
+        Do you see a green checkmark on your other device?
+      </h1>
+      <p
+        class="_typography_yh5dq_162 _font-body-md-regular_yh5dq_59"
+      >
+        Confirm that you see a green checkmark on the other device to verify that the connection is secure.
+      </p>
+      <label
+        for="mx_LoginWithQR_checkCode"
+      >
+        2-digit code
+      </label>
+      <div
+        class="_container_9zyti_18 mx_LoginWithQR_checkCode_input mx_no_textinput"
+      >
+        <input
+          autocomplete="one-time-code"
+          class="_control_9zyti_33"
+          id="mx_LoginWithQR_checkCode"
+          inputmode="numeric"
+          maxlength="2"
+          minlength="0"
+          pattern="\\d{2}"
+          type="text"
+        />
+        <div
+          aria-hidden="true"
+          class="_digit_9zyti_57"
+        />
+        <div
+          aria-hidden="true"
+          class="_digit_9zyti_57"
+        />
+      </div>
+      <div
+        class="mx_ErrorMessage"
+      />
+    </div>
+    <div
+      class="mx_LoginWithQR_buttons"
+    >
+      <div
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+        data-testid="approve-login-button"
+        role="button"
+        tabindex="0"
+      >
+        Continue
+      </div>
+      <div
+        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+        data-testid="decline-login-button"
+        role="button"
+        tabindex="0"
+      >
+        Cancel
+      </div>
+    </div>
   </div>
 </div>
 `;

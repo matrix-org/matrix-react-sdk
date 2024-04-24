@@ -16,7 +16,11 @@ limitations under the License.
 
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { LegacyRendezvousFailureReason, MSC4108FailureReason } from "matrix-js-sdk/src/rendezvous";
+import {
+    ClientRendezvousFailureReason,
+    LegacyRendezvousFailureReason,
+    MSC4108FailureReason,
+} from "matrix-js-sdk/src/rendezvous";
 
 import LoginWithQRFlow from "../../../../../src/components/views/auth/LoginWithQRFlow";
 import { LoginWithQRFailureReason, FailureReason } from "../../../../../src/components/views/auth/LoginWithQR";
@@ -97,11 +101,17 @@ describe("<LoginWithQRFlow />", () => {
         expect(container).toMatchSnapshot();
     });
 
+    it("renders check code confirmation", async () => {
+        const { container } = render(getComponent({ phase: Phase.OutOfBandConfirmation }));
+        expect(container).toMatchSnapshot();
+    });
+
     describe("errors", () => {
         for (const failureReason of [
             ...Object.values(LegacyRendezvousFailureReason),
             ...Object.values(MSC4108FailureReason),
             ...Object.values(LoginWithQRFailureReason),
+            ...Object.values(ClientRendezvousFailureReason),
         ]) {
             it(`renders ${failureReason}`, async () => {
                 const { container } = render(

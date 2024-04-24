@@ -385,5 +385,30 @@ describe("<LoginWithQR />", () => {
             const fn = jest.spyOn(MSC4108SignInWithQR.prototype, "cancel");
             await waitFor(() => expect(fn).toHaveBeenLastCalledWith(ClientRendezvousFailureReason.Unknown));
         });
+
+        test("reciprocates login", async () => {
+            render(getComponent({ client }));
+            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep1").mockResolvedValue({});
+            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep2And3").mockResolvedValue({
+                verificationUri: "mock-verification-uri",
+            });
+
+            await waitFor(() =>
+                expect(mockedFlow).toHaveBeenLastCalledWith({
+                    phase: Phase.OutOfBandConfirmation,
+                    onClick: expect.any(Function),
+                }),
+            );
+
+            const onClick = mockedFlow.mock.calls[0][0].onClick;
+            await onClick(Click.Approve);
+
+            await waitFor(() =>
+                expect(mockedFlow).toHaveBeenLastCalledWith({
+                    phase: Phase.WaitingForDevice,
+                    onClick: expect.any(Function),
+                }),
+            );
+        });
     });
 });
