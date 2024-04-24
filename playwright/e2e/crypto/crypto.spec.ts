@@ -683,7 +683,9 @@ test.describe("Cryptography", function () {
                     { roomId },
                 );
 
-                await expect(page.locator(`.mx_EventTile[data-event-id="${lastEventId as string}"]`)).toBeVisible();
+                await expect(
+                    page.locator(`.mx_EventTile[data-event-id="${lastEventId as unknown as string}"]`),
+                ).toBeVisible();
 
                 // Alice should see these event tiles:
                 // - first message sent by Bob (undecryptable)
