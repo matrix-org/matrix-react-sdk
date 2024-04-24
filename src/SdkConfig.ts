@@ -36,6 +36,10 @@ export const DEFAULTS: DeepReadonly<IConfigOptions> = {
     jitsi: {
         preferred_domain: "meet.element.io",
     },
+    big_blue_button: {
+        widget_url:
+            "https://droplet-7099.meetbbb.com/widget?device_id=$org.matrix.msc3819.matrix_device_id&room_id=$matrix_room_id&display_name=$matrix_display_name",
+    },
     element_call: {
         url: "https://call.element.io",
         use_exclusively: false,
