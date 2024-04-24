@@ -375,5 +375,15 @@ describe("<LoginWithQR />", () => {
             expect(onFinished).toHaveBeenCalledWith(false);
             expect(rendezvous.cancel).toHaveBeenCalledWith(LegacyRendezvousFailureReason.UserCancelled);
         });
+
+        test("failed to connect", async () => {
+            render(getComponent({ client }));
+            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep1").mockResolvedValue({});
+            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep2And3").mockRejectedValue(
+                new HTTPError("Internal Server Error", 500),
+            );
+            const fn = jest.spyOn(MSC4108SignInWithQR.prototype, "cancel");
+            await waitFor(() => expect(fn).toHaveBeenLastCalledWith(ClientRendezvousFailureReason.Unknown));
+        });
     });
 });
