@@ -129,6 +129,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
                 ref={button}
                 onFocus={onFocus}
                 tabIndex={isActive ? 0 : -1}
+                placement="left"
             >
                 <ContextMenuIcon />
             </ContextMenuTooltipButton>
@@ -186,6 +187,7 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
                 ref={button}
                 onFocus={onFocus}
                 tabIndex={isActive ? 0 : -1}
+                placement="left"
             >
                 <EmojiIcon />
             </ContextMenuTooltipButton>
@@ -239,6 +241,7 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
             aria-label={title}
             onClick={onClick}
             onContextMenu={onClick}
+            placement="left"
         >
             <ThreadIcon />
         </RovingAccessibleTooltipButton>
@@ -391,6 +394,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     onClick={this.onEditClick}
                     onContextMenu={this.onEditClick}
                     key="edit"
+                    placement="left"
                 >
                     <EditIcon />
                 </RovingAccessibleTooltipButton>,
@@ -404,6 +408,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 onClick={this.onCancelClick}
                 onContextMenu={this.onCancelClick}
                 key="cancel"
+                placement="left"
             >
                 <TrashcanIcon />
             </RovingAccessibleTooltipButton>
@@ -429,6 +434,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     onClick={this.onResendClick}
                     onContextMenu={this.onResendClick}
                     key="resend"
+                    placement="left"
                 >
                     <ResendIcon />
                 </RovingAccessibleTooltipButton>,
@@ -455,6 +461,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                             onClick={this.onReplyClick}
                             onContextMenu={this.onReplyClick}
                             key="reply"
+                            placement="left"
                         >
                             <ReplyIcon />
                         </RovingAccessibleTooltipButton>,
@@ -520,6 +527,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                         caption={_t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + " + _t("action|click")}
                         onClick={this.props.toggleThreadExpanded}
                         key="expand"
+                        placement="left"
                     >
                         {this.props.isQuoteExpanded ? <CollapseMessageIcon /> : <ExpandMessageIcon />}
                     </RovingAccessibleTooltipButton>,
