@@ -132,6 +132,7 @@ const QuickSettingsButton: React.FC<{
             <AccessibleButton
                 className={classNames("mx_QuickSettingsButton", { expanded: !isPanelCollapsed })}
                 onClick={openMenu}
+                aria-label={_t("quick_settings|title")}
                 title={isPanelCollapsed ? _t("quick_settings|title") : undefined}
                 ref={handle}
                 aria-expanded={!isPanelCollapsed}
