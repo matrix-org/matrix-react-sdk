@@ -356,7 +356,7 @@ describe("<LoginWithQR />", () => {
 
         test("render QR then back", async () => {
             const onFinished = jest.fn();
-            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep1").mockReturnValue(unresolvedPromise());
+            jest.spyOn(MSC4108SignInWithQR.prototype, "negotiateProtocols").mockReturnValue(unresolvedPromise());
             render(getComponent({ client, onFinished }));
 
             await waitFor(() =>
@@ -368,7 +368,7 @@ describe("<LoginWithQR />", () => {
 
             const rendezvous = mocked(MSC4108SignInWithQR).mock.instances[0];
             expect(rendezvous.generateCode).toHaveBeenCalled();
-            expect(rendezvous.loginStep1).toHaveBeenCalled();
+            expect(rendezvous.negotiateProtocols).toHaveBeenCalled();
 
             // back
             const onClick = mockedFlow.mock.calls[0][0].onClick;
@@ -379,8 +379,8 @@ describe("<LoginWithQR />", () => {
 
         test("failed to connect", async () => {
             render(getComponent({ client }));
-            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep1").mockResolvedValue({});
-            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep2And3").mockRejectedValue(
+            jest.spyOn(MSC4108SignInWithQR.prototype, "negotiateProtocols").mockResolvedValue({});
+            jest.spyOn(MSC4108SignInWithQR.prototype, "deviceAuthorizationGrant").mockRejectedValue(
                 new HTTPError("Internal Server Error", 500),
             );
             const fn = jest.spyOn(MSC4108SignInWithQR.prototype, "cancel");
@@ -391,8 +391,8 @@ describe("<LoginWithQR />", () => {
             jest.spyOn(global.window, "open");
 
             render(getComponent({ client }));
-            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep1").mockResolvedValue({});
-            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep2And3").mockResolvedValue({
+            jest.spyOn(MSC4108SignInWithQR.prototype, "negotiateProtocols").mockResolvedValue({});
+            jest.spyOn(MSC4108SignInWithQR.prototype, "deviceAuthorizationGrant").mockResolvedValue({
                 verificationUri: "mock-verification-uri",
             });
 
@@ -417,8 +417,8 @@ describe("<LoginWithQR />", () => {
 
         test("handles errors during reciprocation", async () => {
             render(getComponent({ client }));
-            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep1").mockResolvedValue({});
-            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep2And3").mockResolvedValue({});
+            jest.spyOn(MSC4108SignInWithQR.prototype, "negotiateProtocols").mockResolvedValue({});
+            jest.spyOn(MSC4108SignInWithQR.prototype, "deviceAuthorizationGrant").mockResolvedValue({});
             await waitFor(() =>
                 expect(mockedFlow).toHaveBeenLastCalledWith({
                     phase: Phase.OutOfBandConfirmation,
@@ -426,7 +426,7 @@ describe("<LoginWithQR />", () => {
                 }),
             );
 
-            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep5").mockRejectedValue(
+            jest.spyOn(MSC4108SignInWithQR.prototype, "shareSecrets").mockRejectedValue(
                 new HTTPError("Internal Server Error", 500),
             );
             const onClick = mockedFlow.mock.calls[0][0].onClick;
@@ -444,9 +444,9 @@ describe("<LoginWithQR />", () => {
 
         test("handles user cancelling during reciprocation", async () => {
             render(getComponent({ client }));
-            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep1").mockResolvedValue({});
-            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep2And3").mockResolvedValue({});
-            jest.spyOn(MSC4108SignInWithQR.prototype, "loginStep2And3").mockResolvedValue({});
+            jest.spyOn(MSC4108SignInWithQR.prototype, "negotiateProtocols").mockResolvedValue({});
+            jest.spyOn(MSC4108SignInWithQR.prototype, "deviceAuthorizationGrant").mockResolvedValue({});
+            jest.spyOn(MSC4108SignInWithQR.prototype, "deviceAuthorizationGrant").mockResolvedValue({});
             await waitFor(() =>
                 expect(mockedFlow).toHaveBeenLastCalledWith({
                     phase: Phase.OutOfBandConfirmation,

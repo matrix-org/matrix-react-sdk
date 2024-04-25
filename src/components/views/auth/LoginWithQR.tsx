@@ -223,7 +223,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 // MSC4108-Flow: ExistingScanned
 
                 // we get the homserver URL from the secure channel, but we don't trust it yet
-                const { homeserverBaseUrl } = await rendezvous.loginStep1();
+                const { homeserverBaseUrl } = await rendezvous.negotiateProtocols();
 
                 if (!homeserverBaseUrl) {
                     throw new Error("We don't know the homeserver");
@@ -234,8 +234,8 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 });
             } else {
                 // MSC4108-Flow: NewScanned
-                await rendezvous.loginStep1();
-                const { verificationUri } = await rendezvous.loginStep2And3();
+                await rendezvous.negotiateProtocols();
+                const { verificationUri } = await rendezvous.deviceAuthorizationGrant();
                 this.setState({
                     phase: Phase.OutOfBandConfirmation,
                     verificationUri,
@@ -283,7 +283,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 this.setState({ phase: Phase.WaitingForDevice });
 
                 // send secrets
-                await this.state.rendezvous.loginStep5();
+                await this.state.rendezvous.shareSecrets();
 
                 // done
                 this.props.onFinished(true);
