@@ -458,7 +458,7 @@ test.describe("Cryptography", function () {
             // no e2e icon
             await expect(lastTileE2eIcon).not.toBeVisible();
 
-            // Workaround for https://github.com/element-hq/element-web/issues/27267: it can take up to 10 seconds for
+            // Workaround for https://github.com/element-hq/element-web/issues/27267. It can take up to 10 seconds for
             // the key to be backed up.
             await page.waitForTimeout(10000);
 
@@ -569,7 +569,7 @@ test.describe("Cryptography", function () {
             await app.viewRoomByName("Test room");
             await sendMessageInCurrentRoom(page, "test2 test2");
 
-            // Workaround for https://github.com/element-hq/element-web/issues/27267: it can take up to 10 seconds for
+            // Workaround for https://github.com/element-hq/element-web/issues/27267. It can take up to 10 seconds for
             // the key to be backed up.
             await page.waitForTimeout(10000);
 

@@ -29,8 +29,9 @@ function getErrorMessage(mxEvent: MatrixEvent, isVerified: boolean | undefined):
             return _t("timeline|decryption_failure|historical_event_no_key_backup");
 
         case DecryptionFailureCode.HISTORICAL_MESSAGE_BACKUP_UNCONFIGURED:
-        case DecryptionFailureCode.HISTORICAL_MESSAGE_WORKING_BACKUP:
             if (isVerified === false) {
+                // The user seems to have a key backup, so prompt them to verify in the hope that doing so will
+                // mean we can restore from backup and we'll get the key for this message.
                 return _t("timeline|decryption_failure|historical_event_unverified_device");
             }
             // otherwise, use the default.

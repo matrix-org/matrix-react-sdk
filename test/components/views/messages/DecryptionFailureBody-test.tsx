@@ -82,27 +82,22 @@ describe("DecryptionFailureBody", () => {
         expect(container).toHaveTextContent("Historical messages are not available on this device");
     });
 
-    describe.each([true, false])(
-        "should handle historical messages when there is a backup and device verification is",
-        (verified) => {
-            it.each([
-                [DecryptionFailureCode.HISTORICAL_MESSAGE_BACKUP_UNCONFIGURED],
-                [DecryptionFailureCode.HISTORICAL_MESSAGE_WORKING_BACKUP],
-            ])("Error code %s", async (code) => {
-                // When
-                const event = await mkDecryptionFailureMatrixEvent({
-                    code,
-                    msg: "Failure",
-                    roomId: "fakeroom",
-                    sender: "fakesender",
-                });
-                const { container } = customRender(event, verified);
-
-                // Then
-                expect(container).toHaveTextContent(
-                    verified ? "Unable to decrypt" : "You need to verify this device for access to historical messages",
-                );
+    it.each([true, false])(
+        "should handle historical messages when there is a backup and device verification is %s",
+        async (verified) => {
+            // When
+            const event = await mkDecryptionFailureMatrixEvent({
+                code: DecryptionFailureCode.HISTORICAL_MESSAGE_BACKUP_UNCONFIGURED,
+                msg: "Failure",
+                roomId: "fakeroom",
+                sender: "fakesender",
             });
+            const { container } = customRender(event, verified);
+
+            // Then
+            expect(container).toHaveTextContent(
+                verified ? "Unable to decrypt" : "You need to verify this device for access to historical messages",
+            );
         },
     );
 

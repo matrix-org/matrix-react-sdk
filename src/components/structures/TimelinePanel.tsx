@@ -53,7 +53,6 @@ import dis from "../../dispatcher/dispatcher";
 import { Action } from "../../dispatcher/actions";
 import Timer from "../../utils/Timer";
 import shouldHideEvent from "../../shouldHideEvent";
-import { arrayFastClone } from "../../utils/arrays";
 import MessagePanel from "./MessagePanel";
 import { IScrollState } from "./ScrollPanel";
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -1726,15 +1725,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
             [...mainEvents],
         );
 
-        // `arrayFastClone` performs a shallow copy of the array
-        // we want the last event to be decrypted first but displayed last
-        // `reverse` is destructive and unfortunately mutates the "events" array
-        arrayFastClone(events)
-            .reverse()
-            .forEach((event) => {
-                const client = MatrixClientPeg.safeGet();
-                client.decryptEventIfNeeded(event);
-            });
+        // We want the last event to be decrypted first
+        const client = MatrixClientPeg.safeGet();
+        for (let i = events.length - 1; i >= 0; --i) {
+            client.decryptEventIfNeeded(events[i]);
+        }
 
         // Hold onto the live events separately. The read receipt and read marker
         // should use this list, so that they don't advance into pending events.
