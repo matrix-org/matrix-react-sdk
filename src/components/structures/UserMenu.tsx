@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, ReactNode } from "react";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { discoverAndValidateOIDCIssuerWellKnown, Room } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -67,6 +67,7 @@ interface IState {
     isHighContrast: boolean;
     selectedSpace?: Room | null;
     showLiveAvatarAddon: boolean;
+    showQrLogin: boolean;
     supportsQrLogin: boolean;
 }
 
@@ -105,6 +106,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
             isHighContrast: this.isUserOnHighContrastTheme(),
             selectedSpace: SpaceStore.instance.activeSpaceRoom,
             showLiveAvatarAddon: this.context.voiceBroadcastRecordingsStore.hasCurrent(),
+            showQrLogin: false,
             supportsQrLogin: false,
         };
 
@@ -145,9 +147,12 @@ export default class UserMenu extends React.Component<IProps, IState> {
     }
 
     private checkQrLoginSupport = async (): Promise<void> => {
-        const oidcClientConfig = SdkConfig.get().validated_server_config?.delegatedAuthentication;
-        if (oidcClientConfig && this.context.client) {
-            const [versions, wellKnown, isCrossSigningReady] = await Promise.all([
+        if (!this.context.client) return;
+
+        const { issuer } = await this.context.client.getAuthIssuer();
+        if (issuer) {
+            const [oidcClientConfig, versions, wellKnown, isCrossSigningReady] = await Promise.all([
+                discoverAndValidateOIDCIssuerWellKnown(issuer),
                 this.context.client.getVersions(),
                 this.context.client.waitForClientWellKnown(),
                 this.context.client.getCrypto()?.isCrossSigningReady(),
@@ -160,7 +165,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 versions,
                 wellKnown,
             );
-            this.setState({ supportsQrLogin });
+            this.setState({ supportsQrLogin, showQrLogin: true });
         }
     };
 
@@ -387,9 +392,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
             );
         }
 
-        const oidcClientConfig = SdkConfig.get().validated_server_config?.delegatedAuthentication;
         let linkNewDeviceButton: JSX.Element | undefined;
-        if (oidcClientConfig) {
+        if (this.state.showQrLogin) {
             const extraProps: Omit<
                 React.ComponentProps<typeof IconizedContextMenuOption>,
                 "iconClassname" | "label" | "onClick"
