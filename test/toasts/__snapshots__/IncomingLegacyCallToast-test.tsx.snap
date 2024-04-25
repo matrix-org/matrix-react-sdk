@@ -15,6 +15,7 @@ exports[`<IncomingLegacyCallToast /> renders sound on button when call is silenc
 <div
   aria-label="Sound on"
   class="mx_AccessibleButton mx_IncomingLegacyCallToast_iconButton mx_IncomingLegacyCallToast_unSilence"
+  data-state="closed"
   role="button"
   tabindex="0"
 />
@@ -24,6 +25,7 @@ exports[`<IncomingLegacyCallToast /> renders when silence button when call is no
 <div
   aria-label="Silence call"
   class="mx_AccessibleButton mx_IncomingLegacyCallToast_iconButton mx_IncomingLegacyCallToast_silence"
+  data-state="closed"
   role="button"
   tabindex="0"
 />
