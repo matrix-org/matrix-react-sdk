@@ -30,24 +30,36 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
     <div
       class="mx_SpaceHierarchy_listHeader_buttons"
     >
-      <div
-        aria-disabled="true"
-        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_outline mx_AccessibleButton_disabled"
-        disabled=""
-        role="button"
+      <span
+        data-state="closed"
         tabindex="0"
       >
-        Remove
-      </div>
-      <div
-        aria-disabled="true"
-        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline mx_AccessibleButton_disabled"
-        disabled=""
-        role="button"
+        <div
+          aria-disabled="true"
+          aria-label="Remove"
+          class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_outline mx_AccessibleButton_disabled"
+          disabled=""
+          role="button"
+          tabindex="0"
+        >
+          Remove
+        </div>
+      </span>
+      <span
+        data-state="closed"
         tabindex="0"
       >
-        Mark as not suggested
-      </div>
+        <div
+          aria-disabled="true"
+          aria-label="Mark as not suggested"
+          class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline mx_AccessibleButton_disabled"
+          disabled=""
+          role="button"
+          tabindex="0"
+        >
+          Mark as not suggested
+        </div>
+      </span>
     </div>
   </div>
   <ul

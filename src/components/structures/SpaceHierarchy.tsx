@@ -717,6 +717,7 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
                 }}
                 kind="danger_outline"
                 disabled={disabled}
+                aria-label={removing ? _t("redact|ongoing") : _t("action|remove")}
             >
                 {removing ? _t("redact|ongoing") : _t("action|remove")}
             </Button>
@@ -748,6 +749,7 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
                 }}
                 kind="primary_outline"
                 disabled={disabled}
+                aria-label={buttonText}
             >
                 {buttonText}
             </Button>
