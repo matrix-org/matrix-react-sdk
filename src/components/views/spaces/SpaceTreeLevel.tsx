@@ -149,6 +149,7 @@ export const SpaceButton = <T extends keyof JSX.IntrinsicElements>({
                 mx_SpaceButton_hasMenuOpen: menuDisplayed,
                 mx_SpaceButton_narrow: isNarrow,
             })}
+            aria-label={label}
             title={!isNarrow || menuDisplayed ? undefined : label}
             onClick={onClick}
             onContextMenu={openMenu}
