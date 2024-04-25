@@ -41,7 +41,7 @@ interface IProps {
 }
 
 // Controlled Toggle Switch element, written with Accessibility in mind
-export default ({ checked, disabled = false, onChange, ...props }: IProps): JSX.Element => {
+export default ({ checked, disabled = false, onChange, title, tooltip, ...props }: IProps): JSX.Element => {
     const _onClick = (): void => {
         if (disabled) return;
         onChange(!checked);
@@ -59,8 +59,10 @@ export default ({ checked, disabled = false, onChange, ...props }: IProps): JSX.
             className={classes}
             onClick={_onClick}
             role="switch"
+            aria-label={title}
             aria-checked={checked}
             aria-disabled={disabled}
+            title={tooltip}
             placement="right"
         >
             <div className="mx_ToggleSwitch_ball" />
