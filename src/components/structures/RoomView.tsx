@@ -549,6 +549,16 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             // Show chat in right panel when a widget is maximised
             this.context.rightPanelStore.setCard({ phase: RightPanelPhases.Timeline });
         }
+        if (
+            !this.context.widgetLayoutStore.hasMaximisedWidget(this.state.room) &&
+            this.context.rightPanelStore.isOpen &&
+            this.context.rightPanelStore.currentCard.phase === RightPanelPhases.Timeline &&
+            this.context.rightPanelStore.roomPhaseHistory.some((card) => card.phase === RightPanelPhases.Timeline)
+        ) {
+            // We're returning to the main timeline, so hide the right panel timeline
+            this.context.rightPanelStore.setCard({ phase: RightPanelPhases.RoomSummary });
+            this.context.rightPanelStore.hide(this.state.roomId ?? null);
+        }
         this.checkWidgets(this.state.room);
     };
 
