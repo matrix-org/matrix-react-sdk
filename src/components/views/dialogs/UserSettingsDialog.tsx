@@ -40,7 +40,7 @@ import { SDKContext, SdkContextClass } from "../../../contexts/SDKContext";
 
 interface IProps {
     initialTabId?: UserTab;
-    showQrCode: boolean;
+    showQrCode?: boolean;
     sdkContext: SdkContextClass;
     onFinished(): void;
 }
