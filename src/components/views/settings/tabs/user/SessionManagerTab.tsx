@@ -151,7 +151,9 @@ const useSignOut = (
     };
 };
 
-const SessionManagerTab: React.FC = () => {
+const SessionManagerTab: React.FC<{
+    showQrCode?: boolean;
+}> = ({ showQrCode }) => {
     const {
         devices,
         dehydratedDeviceId,
@@ -195,6 +197,10 @@ const SessionManagerTab: React.FC = () => {
             return discoverAndValidateOIDCIssuerWellKnown(authIssuer.issuer);
         }
     }, [matrixClient]);
+    const isCrossSigningReady = useAsyncMemo(
+        async () => matrixClient.getCrypto()?.isCrossSigningReady() ?? false,
+        [matrixClient],
+    );
 
     const onDeviceExpandToggle = (deviceId: ExtendedDevice["device_id"]): void => {
         if (expandedDeviceIds.includes(deviceId)) {
@@ -277,7 +283,7 @@ const SessionManagerTab: React.FC = () => {
               }
             : undefined;
 
-    const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>();
+    const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>(showQrCode ? Mode.Show : null);
 
     const onQrFinish = useCallback(() => {
         setSignInWithQrMode(null);
@@ -303,6 +309,14 @@ const SessionManagerTab: React.FC = () => {
     return (
         <SettingsTab>
             <SettingsSection heading={_t("settings|sessions|title")}>
+                <LoginWithQRSection
+                    onShowQr={onShowQrClicked}
+                    versions={clientVersions}
+                    capabilities={capabilities}
+                    wellKnown={wellKnown}
+                    oidcClientConfig={oidcClientConfig}
+                    isCrossSigningReady={isCrossSigningReady}
+                />
                 <SecurityRecommendations
                     devices={devices}
                     goToFilteredList={onGoToFilteredList}
@@ -356,13 +370,6 @@ const SessionManagerTab: React.FC = () => {
                         />
                     </SettingsSubsection>
                 )}
-                <LoginWithQRSection
-                    onShowQr={onShowQrClicked}
-                    versions={clientVersions}
-                    capabilities={capabilities}
-                    wellKnown={wellKnown}
-                    oidcClientConfig={oidcClientConfig}
-                />
             </SettingsSection>
         </SettingsTab>
     );

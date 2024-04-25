@@ -96,6 +96,10 @@ type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> &
      * Only valid when used in conjunction with `title`.
      */
     caption?: string;
+    /**
+     * The placement of the tooltip.
+     */
+    placement?: React.ComponentProps<typeof Tooltip>["placement"];
 };
 
 /**
@@ -128,6 +132,7 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
         triggerOnMouseDown,
         title,
         caption,
+        placement,
         ...restProps
     }: Props<T>,
     ref: Ref<HTMLElement>,
@@ -199,7 +204,7 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
 
     if (title) {
         return (
-            <Tooltip label={title} caption={caption} isTriggerInteractive={!disabled}>
+            <Tooltip label={title} caption={caption} placement={placement}>
                 {button}
             </Tooltip>
         );

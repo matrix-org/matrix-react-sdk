@@ -3786,6 +3786,9 @@
         "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices."
     },
     "user_menu": {
+        "link_new_device": "Link new device",
+        "link_new_device_not_supported": "Not supported",
+        "link_new_device_not_supported_caption": "You need to sign in manually",
         "settings": "All settings",
         "switch_theme_dark": "Switch to dark mode",
         "switch_theme_light": "Switch to light mode"
