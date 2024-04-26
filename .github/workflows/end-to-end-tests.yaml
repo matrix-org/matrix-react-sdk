@@ -85,7 +85,7 @@ jobs:
 
     playwright:
         name: "Run Tests ${{ matrix.runner }}/${{ strategy.job-total }}"
-        needs: prepare
+        needs: build
         runs-on: ubuntu-latest
         permissions:
             actions: read
