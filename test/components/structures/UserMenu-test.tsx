@@ -46,7 +46,6 @@ describe("<UserMenu>", () => {
 
     beforeEach(() => {
         sdkContext = new TestSdkContext();
-        jest.restoreAllMocks();
     });
 
     describe("<UserMenu> when video broadcast", () => {
