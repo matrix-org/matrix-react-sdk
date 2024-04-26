@@ -102,6 +102,10 @@ type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> &
      * The placement of the tooltip.
      */
     placement?: TooltipProps["placement"];
+    /**
+     * Callback for when the tooltip is opened or closed.
+     */
+    onTooltipOpenChange?: TooltipProps["onOpenChange"];
 };
 
 /**
@@ -135,6 +139,7 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
         title,
         caption,
         placement,
+        onTooltipOpenChange,
         ...restProps
     }: Props<T>,
     ref: Ref<HTMLElement>,
@@ -206,7 +211,13 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
 
     if (title) {
         return (
-            <Tooltip label={title} caption={caption} isTriggerInteractive={true} placement={placement}>
+            <Tooltip
+                label={title}
+                caption={caption}
+                isTriggerInteractive={true}
+                placement={placement}
+                onOpenChange={onTooltipOpenChange}
+            >
                 {button}
             </Tooltip>
         );
