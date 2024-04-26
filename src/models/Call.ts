@@ -58,7 +58,8 @@ import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { getJoinedNonFunctionalMembers } from "../utils/room/getJoinedNonFunctionalMembers";
 import { isVideoRoom } from "../utils/video-rooms";
 import { FontWatcher } from "../settings/watchers/FontWatcher";
-import { JitsiCallMemberContent, JitsiCallMemberEventType } from "../call-types";
+import { JitsiCallMemberContent } from "../call-types";
+import { Container, WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
 
 const TIMEOUT_MS = 16000;
 
@@ -822,7 +823,7 @@ export class ElementCall extends Call {
         ) {
             const apps = WidgetStore.instance.getApps(room.roomId);
             const hasEcWidget = apps.some((app) => WidgetType.CALL.matches(app.type));
-            const session = room.client.matrixRTC.getRoomSession(room);
+            const session = room.client.matrixRTC.getRoomSession(room, "m.call");
 
             // A call is present if we
             // - have a widget: This means the create function was called.
@@ -949,6 +950,15 @@ export class ElementCall extends Call {
         this.messaging?.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.session.off(MatrixRTCSessionEvent.MembershipsChanged, this.onMembershipChanged);
         this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
+        // TODO this is a hack to temporarly get the bbb widget removed
+        // what we want is a BBB call type or a generic call type that can be configured with a widget
+        // (bbb and jitsi could be covered by this same call type)
+        // The rtc session would contain which widget is used with what session so one can decide
+        // which widget to destroy based on `this.session`.
+        WidgetStore.instance
+            .getApps(this.roomId)
+            .filter((app) => WidgetType.BIGBLUEBUTTON.matches(app.type))
+            .forEach((app) => WidgetLayoutStore.instance.moveToContainer(this.room, app, Container.Right));
 
         if (this.settingsStoreCallEncryptionWatcher) {
             SettingsStore.unwatchSetting(this.settingsStoreCallEncryptionWatcher);
@@ -993,7 +1003,12 @@ export class ElementCall extends Call {
                 }
             }
         }
-
+        if (!participants.has(this.room.getMember(this.client.getUserId()!)!)) {
+            WidgetStore.instance
+                .getApps(this.roomId)
+                .filter((app) => WidgetType.BIGBLUEBUTTON.matches(app.type))
+                .forEach((app) => WidgetLayoutStore.instance.moveToContainer(this.room, app, Container.Right));
+        }
         this.participants = participants;
     }
 
@@ -1046,139 +1061,6 @@ export class OtherMatrixRtcSession extends Call {
         this.emit(CallEvent.Layout, value);
     }
 
-    private static generateWidgetUrl(client: MatrixClient, roomId: string): URL {
-        const accountAnalyticsData = client.getAccountData(PosthogAnalytics.ANALYTICS_EVENT_TYPE);
-        // The analyticsID is passed directly to element call (EC) since this codepath is only for EC and no other widget.
-        // We really don't want the same analyticID's for the EC and EW posthog instances (Data on posthog should be limited/anonymized as much as possible).
-        // This is prohibited in EC where a hashed version of the analyticsID is used for the actual posthog identification.
-        // We can pass the raw EW analyticsID here since we need to trust EC with not sending sensitive data to posthog (EC has access to more sensible data than the analyticsID e.g. the username)
-        const analyticsID: string = accountAnalyticsData?.getContent().pseudonymousAnalyticsOptIn
-            ? accountAnalyticsData?.getContent().id
-            : "";
-        // Splice together the Element Call URL for this call
-        const params = new URLSearchParams({
-            embed: "true", // We're embedding EC within another application
-            // Template variables are used, so that this can be configured using the widget data.
-            preload: "$preload", // We want it to load in the background.
-            skipLobby: "$skipLobby", // Skip the lobby in case we show a lobby component of our own.
-            returnToLobby: "$returnToLobby", // Returns to the lobby (instead of blank screen) when the call ends. (For video rooms)
-            perParticipantE2EE: "$perParticipantE2EE",
-            hideHeader: "true", // Hide the header since our room header is enough
-            userId: client.getUserId()!,
-            deviceId: client.getDeviceId()!,
-            roomId: roomId,
-            baseUrl: client.baseUrl,
-            lang: getCurrentLanguage().replace("_", "-"),
-            fontScale: (FontWatcher.getRootFontSize() / FontWatcher.getBrowserDefaultFontSize()).toString(),
-            theme: "$org.matrix.msc2873.client_theme",
-            analyticsID,
-        });
-
-        if (SettingsStore.getValue("fallbackICEServerAllowed")) params.append("allowIceFallback", "true");
-        if (SettingsStore.getValue("feature_allow_screen_share_only_mode"))
-            params.append("allowVoipWithNoMedia", "true");
-
-        // Set custom fonts
-        if (SettingsStore.getValue("useSystemFont")) {
-            SettingsStore.getValue<string>("systemFont")
-                .split(",")
-                .map((font) => {
-                    // Strip whitespace and quotes
-                    font = font.trim();
-                    if (font.startsWith('"') && font.endsWith('"')) font = font.slice(1, -1);
-                    return font;
-                })
-                .forEach((font) => params.append("font", font));
-        }
-
-        const url = new URL(SdkConfig.get("element_call").url ?? DEFAULTS.element_call.url!);
-        url.pathname = "/room";
-        const replacedUrl = params.toString().replace(/%24/g, "$");
-        url.hash = `#?${replacedUrl}`;
-        return url;
-    }
-
-    // Creates a new widget if there isn't any widget of typ Call in this room.
-    // Defaults for creating a new widget are: skipLobby = false, preload = false
-    // When there is already a widget the current widget configuration will be used or can be overwritten
-    // by passing the according parameters (skipLobby, preload).
-    //
-    // `preload` is deprecated. We used it for optimizing EC by using a custom EW call lobby and preloading the iframe.
-    // now it should always be false.
-    private static createOrGetCallWidget(
-        roomId: string,
-        client: MatrixClient,
-        skipLobby: boolean | undefined,
-        preload: boolean | undefined,
-        returnToLobby: boolean | undefined,
-    ): IApp {
-        const ecWidget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.CALL.matches(app.type));
-        if (ecWidget) {
-            // Always update the widget data because even if the widget is already created,
-            // we might have settings changes that update the widget.
-            const overwrites: IWidgetData = {};
-            if (skipLobby !== undefined) {
-                overwrites.skipLobby = skipLobby;
-            }
-            if (preload !== undefined) {
-                overwrites.preload = preload;
-            }
-            if (returnToLobby !== undefined) {
-                overwrites.returnToLobby = returnToLobby;
-            }
-            ecWidget.data = ElementCall.getWidgetData(client, roomId, ecWidget?.data ?? {}, overwrites);
-            return ecWidget;
-        }
-
-        // To use Element Call without touching room state, we create a virtual
-        // widget (one that doesn't have a corresponding state event)
-        const url = ElementCall.generateWidgetUrl(client, roomId);
-        return WidgetStore.instance.addVirtualWidget(
-            {
-                id: randomString(24), // So that it's globally unique
-                creatorUserId: client.getUserId()!,
-                name: "Element Call",
-                type: WidgetType.CALL.preferred,
-                url: url.toString(),
-                waitForIframeLoad: false,
-                data: ElementCall.getWidgetData(
-                    client,
-                    roomId,
-                    {},
-                    {
-                        skipLobby: skipLobby ?? false,
-                        preload: preload ?? false,
-                        returnToLobby: returnToLobby ?? false,
-                    },
-                ),
-            },
-            roomId,
-        );
-    }
-
-    private static getWidgetData(
-        client: MatrixClient,
-        roomId: string,
-        currentData: IWidgetData,
-        overwriteData: IWidgetData,
-    ): IWidgetData {
-        let perParticipantE2EE = false;
-        if (
-            client.getRoom(roomId)?.hasEncryptionStateEvent() &&
-            !SettingsStore.getValue("feature_disable_call_per_sender_encryption")
-        )
-            perParticipantE2EE = true;
-        return {
-            ...currentData,
-            ...overwriteData,
-            perParticipantE2EE,
-        };
-    }
-
-    private onCallEncryptionSettingsChange(): void {
-        this.widget.data = ElementCall.getWidgetData(this.client, this.roomId, this.widget.data ?? {}, {});
-    }
-
     private constructor(
         public session: MatrixRTCSession,
         widget: IApp,
@@ -1188,11 +1070,6 @@ export class OtherMatrixRtcSession extends Call {
 
         this.session.on(MatrixRTCSessionEvent.MembershipsChanged, this.onMembershipChanged);
         this.client.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
-        SettingsStore.watchSetting(
-            "feature_disable_call_per_sender_encryption",
-            null,
-            this.onCallEncryptionSettingsChange.bind(this),
-        );
         this.updateParticipants();
     }
 

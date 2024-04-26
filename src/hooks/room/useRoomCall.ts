@@ -136,18 +136,20 @@ export const useRoomCall = (
         const options = [];
         if (memberCount <= 2) {
             options.push(PlatformCallType.LegacyCall);
-        } else {
-            if (mayEditWidgets || hasJitsiWidget) options.push(PlatformCallType.JitsiCall);
-            if (mayEditWidgets || hasBigBlueButtonWidget) options.push(PlatformCallType.BigBlueButtonCall);
         }
+        if (mayEditWidgets || hasJitsiWidget) options.push(PlatformCallType.JitsiCall);
+        if (mayEditWidgets || hasBigBlueButtonWidget) options.push(PlatformCallType.BigBlueButtonCall);
         if (groupCallsEnabled) {
             if (hasGroupCall || mayCreateElementCalls) {
                 options.push(PlatformCallType.ElementCall);
             }
-            if (useElementCallExclusively && !hasJitsiWidget) {
+            if (useElementCallExclusively && !hasJitsiWidget && !hasBigBlueButtonWidget) {
                 return [PlatformCallType.ElementCall];
             }
-            if (hasGroupCall && WidgetType.CALL.matches(groupCall.widget.type)) {
+            // we need to do an exception here that if there is a bigbluebutton widget it looks like there is a group call
+            // but actually it is a bigbluebutton call...
+            // they both use matrix rtc sessions...
+            if (hasGroupCall && WidgetType.CALL.matches(groupCall.widget.type) && !hasBigBlueButtonWidget) {
                 // only allow joining the ongoing Element call if there is one.
                 return [PlatformCallType.ElementCall];
             }
@@ -166,6 +168,7 @@ export const useRoomCall = (
     ]);
 
     let widget: IApp | undefined;
+    // TODO make this so that it is correctly prompting the BBB widget if there is a BBB call..
     if (callOptions.includes(PlatformCallType.JitsiCall) || callOptions.includes(PlatformCallType.LegacyCall)) {
         widget = jitsiWidget ?? managedHybridWidget;
     }
@@ -173,6 +176,9 @@ export const useRoomCall = (
         widget = groupCall?.widget;
     } else {
         widget = groupCall?.widget ?? jitsiWidget;
+    }
+    if (callOptions.includes(PlatformCallType.BigBlueButtonCall) && bigbluebuttonWidget) {
+        widget = bigbluebuttonWidget;
     }
     const updateWidgetState = useCallback((): void => {
         setCanPinWidget(WidgetLayoutStore.instance.canAddToContainer(room, Container.Top));
@@ -194,7 +200,7 @@ export const useRoomCall = (
     const { canInviteGuests } = useGuestAccessInformation(room);
 
     const state = useMemo((): State => {
-        if (activeCalls.find((call) => call.roomId != room.roomId)) {
+        if (activeCalls.find((call) => call.roomId !== room.roomId)) {
             return State.Ongoing;
         }
         if (hasGroupCall && (hasJitsiWidget || hasBigBlueButtonWidget || hasManagedHybridWidget)) {
@@ -213,24 +219,24 @@ export const useRoomCall = (
         return State.NoCall;
     }, [
         activeCalls,
-        canInviteGuests,
         hasGroupCall,
         hasJitsiWidget,
-        hasLegacyCall,
-        hasManagedHybridWidget,
         hasBigBlueButtonWidget,
+        hasManagedHybridWidget,
+        hasLegacyCall,
+        memberCount,
+        canInviteGuests,
         mayCreateElementCalls,
         mayEditWidgets,
-        memberCount,
-        promptPinWidget,
         room.roomId,
+        promptPinWidget,
     ]);
 
     const voiceCallClick = useCallback(
         (evt: React.MouseEvent | undefined, callPlatformType: PlatformCallType): void => {
             evt?.stopPropagation();
             if (widget && promptPinWidget) {
-                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
+                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Center);
             } else {
                 placeCall(room, CallType.Voice, callPlatformType, evt?.shiftKey ?? false);
             }
@@ -241,7 +247,7 @@ export const useRoomCall = (
         (evt: React.MouseEvent | undefined, callPlatformType: PlatformCallType): void => {
             evt?.stopPropagation();
             if (widget && promptPinWidget) {
-                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
+                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Center);
             } else {
                 placeCall(room, CallType.Video, callPlatformType, evt?.shiftKey ?? false);
             }
