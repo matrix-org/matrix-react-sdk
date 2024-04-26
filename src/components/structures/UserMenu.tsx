@@ -410,7 +410,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     {...extraProps}
                     iconClassName="mx_UserMenu_iconQr"
                     label={_t("user_menu|link_new_device")}
-                    onClick={(e) => this.onSettingsOpen(e, UserTab.SessionManager, { showQrCode: true })}
+                    onClick={(e) => this.onSettingsOpen(e, UserTab.SessionManager, { showMsc4108QrCode: true })}
                 />
             );
         }

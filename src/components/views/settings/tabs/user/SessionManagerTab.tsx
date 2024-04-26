@@ -152,8 +152,8 @@ const useSignOut = (
 };
 
 const SessionManagerTab: React.FC<{
-    showQrCode?: boolean;
-}> = ({ showQrCode }) => {
+    showMsc4108QrCode?: boolean;
+}> = ({ showMsc4108QrCode }) => {
     const {
         devices,
         dehydratedDeviceId,
@@ -283,7 +283,7 @@ const SessionManagerTab: React.FC<{
               }
             : undefined;
 
-    const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>(showQrCode ? Mode.Show : null);
+    const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>(showMsc4108QrCode ? Mode.Show : null);
 
     const onQrFinish = useCallback(() => {
         setSignInWithQrMode(null);
@@ -300,7 +300,7 @@ const SessionManagerTab: React.FC<{
                     mode={signInWithQrMode}
                     onFinished={onQrFinish}
                     client={matrixClient}
-                    legacy={!oidcClientConfig}
+                    legacy={!oidcClientConfig && !showMsc4108QrCode}
                 />
             </Suspense>
         );

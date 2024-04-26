@@ -40,7 +40,7 @@ import { SDKContext, SdkContextClass } from "../../../contexts/SDKContext";
 
 interface IProps {
     initialTabId?: UserTab;
-    showQrCode?: boolean;
+    showMsc4108QrCode?: boolean;
     sdkContext: SdkContextClass;
     onFinished(): void;
 }
@@ -90,7 +90,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 UserTab.SessionManager,
                 _td("settings|sessions|title"),
                 "mx_UserSettingsDialog_sessionsIcon",
-                <SessionManagerTab showQrCode={this.props.showQrCode} />,
+                <SessionManagerTab showMsc4108QrCode={this.props.showMsc4108QrCode} />,
                 // don't track with posthog while under construction
                 undefined,
             ),
