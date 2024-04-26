@@ -81,6 +81,8 @@ export type FailureReason = RendezvousFailureReason | LoginWithQRFailureReason;
  * This uses the unstable feature of MSC3906: https://github.com/matrix-org/matrix-spec-proposals/pull/3906
  */
 export default class LoginWithQR extends React.Component<IProps, IState> {
+    private finished = false;
+
     public constructor(props: IProps) {
         super(props);
 
@@ -118,7 +120,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
-        if (this.state.rendezvous) {
+        if (this.state.rendezvous && !this.finished) {
             // eslint-disable-next-line react/no-direct-mutation-state
             this.state.rendezvous.onFailure = undefined;
             // calling cancel will call close() as well to clean up the resources
@@ -156,7 +158,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             }
             if (!this.props.client.getCrypto()) {
                 // no E2EE to set up
-                this.props.onFinished(true);
+                this.onFinished(true);
                 return;
             }
             this.setState({ phase: Phase.Verifying });
@@ -167,7 +169,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             } finally {
                 this.setState({ rendezvous: undefined });
             }
-            this.props.onFinished(true);
+            this.onFinished(true);
         } catch (e) {
             logger.error("Error whilst approving sign in", e);
             if (e instanceof HTTPError && e.httpStatus === 429) {
@@ -177,6 +179,11 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             }
             this.setState({ phase: Phase.Error, failureReason: ClientRendezvousFailureReason.Unknown });
         }
+    }
+
+    private onFinished(success: boolean): void {
+        this.finished = true;
+        this.props.onFinished(success);
     }
 
     private generateAndShowCode = async (): Promise<void> => {
@@ -286,7 +293,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 await this.state.rendezvous.shareSecrets();
 
                 // done
-                this.props.onFinished(true);
+                this.onFinished(true);
             } else {
                 this.setState({ phase: Phase.Error, failureReason: ClientRendezvousFailureReason.Unknown });
                 throw new Error("New device flows around OIDC are not yet implemented");
@@ -326,7 +333,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                     await this.state.rendezvous?.cancel(MSC4108FailureReason.UserCancelled);
                 }
                 this.reset();
-                this.props.onFinished(false);
+                this.onFinished(false);
                 break;
             case Click.Approve:
                 await (this.props.legacy ? this.legacyApproveLogin() : this.approveLogin(checkCode));
@@ -334,7 +341,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             case Click.Decline:
                 await this.state.rendezvous?.declineLoginOnExistingDevice();
                 this.reset();
-                this.props.onFinished(false);
+                this.onFinished(false);
                 break;
             case Click.Back:
                 if (this.state.rendezvous instanceof MSC3906Rendezvous) {
@@ -342,7 +349,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 } else {
                     await this.state.rendezvous?.cancel(MSC4108FailureReason.UserCancelled);
                 }
-                this.props.onFinished(false);
+                this.onFinished(false);
                 break;
             case Click.ShowQr:
                 await this.updateMode(Mode.Show);
