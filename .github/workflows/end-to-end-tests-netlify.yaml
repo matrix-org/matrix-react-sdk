@@ -14,7 +14,6 @@ concurrency:
 jobs:
     report:
         name: Report results
-        needs: tests
         runs-on: ubuntu-latest
         environment: Netlify
         permissions:
