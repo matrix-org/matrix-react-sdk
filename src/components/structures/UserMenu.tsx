@@ -149,7 +149,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
     private checkQrLoginSupport = async (): Promise<void> => {
         if (!this.context.client) return;
 
-        const { issuer } = await this.context.client.getAuthIssuer();
+        const { issuer } = await this.context.client.getAuthIssuer().catch(() => ({ issuer: undefined }));
         if (issuer) {
             const [oidcClientConfig, versions, wellKnown, isCrossSigningReady] = await Promise.all([
                 discoverAndValidateOIDCIssuerWellKnown(issuer),
