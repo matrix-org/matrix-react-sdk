@@ -47,6 +47,7 @@ interface IProps {
 
 interface IState {
     mjolnirEnabled: boolean;
+    showMsc4108QrCode?: boolean; // store it in state as changing tabs back and forth should clear it
 }
 
 export default class UserSettingsDialog extends React.Component<IProps, IState> {
@@ -57,6 +58,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
 
         this.state = {
             mjolnirEnabled: SettingsStore.getValue("feature_mjolnir"),
+            showMsc4108QrCode: props.showMsc4108QrCode,
         };
     }
 
@@ -71,6 +73,13 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
     private mjolnirChanged: CallbackFn = (settingName, roomId, atLevel, newValue) => {
         // We can cheat because we know what levels a feature is tracked at, and how it is tracked
         this.setState({ mjolnirEnabled: newValue });
+    };
+
+    private onTabChanged = (): void => {
+        this.setState({
+            // Clear this so switching away from the tab and back to it will not show the QR code again
+            showMsc4108QrCode: false,
+        });
     };
 
     private getTabs(): NonEmptyArray<Tab<UserTab>> {
@@ -90,7 +99,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 UserTab.SessionManager,
                 _td("settings|sessions|title"),
                 "mx_UserSettingsDialog_sessionsIcon",
-                <SessionManagerTab showMsc4108QrCode={this.props.showMsc4108QrCode} />,
+                <SessionManagerTab showMsc4108QrCode={this.state.showMsc4108QrCode} />,
                 // don't track with posthog while under construction
                 undefined,
             ),
@@ -215,6 +224,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                             tabs={this.getTabs()}
                             initialTabId={this.props.initialTabId}
                             screenName="UserSettings"
+                            onChange={this.onTabChanged}
                         />
                     </div>
                 </BaseDialog>
