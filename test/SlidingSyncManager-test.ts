@@ -231,6 +231,20 @@ describe("SlidingSyncManager", () => {
             );
         });
     });
+    describe("checkSupport", () => {
+        it("shorts out if the server has 'native' sliding sync support", async () => {
+            jest.spyOn(manager, "nativeSlidingSyncSupport").mockResolvedValue(true);
+            jest.spyOn(manager, "getProxyFromWellKnown")
+            await manager.checkSupport(client);
+            expect(manager.getProxyFromWellKnown).not.toHaveBeenCalled(); // We return earlier
+        });
+        it("tries to find a sliding sync proxy url from the client well-known if there's no 'native' support", async () => {
+            jest.spyOn(manager, "nativeSlidingSyncSupport").mockResolvedValue(false);
+            jest.spyOn(manager, "getProxyFromWellKnown").mockResolvedValue("proxy")
+            await manager.checkSupport(client);
+            expect(manager.getProxyFromWellKnown).toHaveBeenCalled();
+        })
+    });
     describe("setup", () => {
         it("uses the baseUrl as a proxy if no proxy is set in the client well-known and the server has no native support", async () => {
             jest.spyOn(manager, "configure");
