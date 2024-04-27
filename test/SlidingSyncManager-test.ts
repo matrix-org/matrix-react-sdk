@@ -248,6 +248,7 @@ describe("SlidingSyncManager", () => {
             jest.spyOn(manager, "nativeSlidingSyncSupport").mockResolvedValue(false);
             expect(SlidingSyncController.serverSupportsSlidingSync).toBeFalsy();
             await manager.checkSupport(client);
+            expect(manager.getProxyFromWellKnown).toHaveBeenCalled();
             expect(SlidingSyncController.serverSupportsSlidingSync).toBeTruthy();
         })
     });
