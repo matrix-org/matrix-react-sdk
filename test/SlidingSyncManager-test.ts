@@ -38,7 +38,6 @@ describe("SlidingSyncManager", () => {
         mocked(client.getRoom).mockReturnValue(null);
         manager.configure(client, "invalid");
         manager.slidingSync = slidingSync;
-        SlidingSyncController.serverSupportsSlidingSync = false;
     });
 
     describe("setRoomVisible", () => {
@@ -234,6 +233,9 @@ describe("SlidingSyncManager", () => {
         });
     });
     describe("checkSupport", () => {
+        beforeEach(() => {
+            SlidingSyncController.serverSupportsSlidingSync = false;
+        });
         it("shorts out if the server has 'native' sliding sync support", async () => {
             jest.spyOn(manager, "nativeSlidingSyncSupport").mockResolvedValue(true);
             jest.spyOn(manager, "getProxyFromWellKnown")
