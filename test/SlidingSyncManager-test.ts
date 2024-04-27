@@ -235,10 +235,10 @@ describe("SlidingSyncManager", () => {
     describe("checkSupport", () => {
         beforeEach(() => {
             SlidingSyncController.serverSupportsSlidingSync = false;
+            jest.spyOn(manager, "getProxyFromWellKnown").mockResolvedValue("proxy");
         });
         it("shorts out if the server has 'native' sliding sync support", async () => {
             jest.spyOn(manager, "nativeSlidingSyncSupport").mockResolvedValue(true);
-            jest.spyOn(manager, "getProxyFromWellKnown")
             expect(SlidingSyncController.serverSupportsSlidingSync).toBeFalsy();
             await manager.checkSupport(client);
             expect(manager.getProxyFromWellKnown).not.toHaveBeenCalled(); // We return earlier
@@ -246,7 +246,6 @@ describe("SlidingSyncManager", () => {
         });
         it("tries to find a sliding sync proxy url from the client well-known if there's no 'native' support", async () => {
             jest.spyOn(manager, "nativeSlidingSyncSupport").mockResolvedValue(false);
-            jest.spyOn(manager, "getProxyFromWellKnown").mockResolvedValue("proxy")
             expect(SlidingSyncController.serverSupportsSlidingSync).toBeFalsy();
             await manager.checkSupport(client);
             expect(SlidingSyncController.serverSupportsSlidingSync).toBeTruthy();
