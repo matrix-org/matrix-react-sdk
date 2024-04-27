@@ -263,5 +263,12 @@ describe("SlidingSyncManager", () => {
             expect(manager.configure).toHaveBeenCalledWith(client, client.baseUrl);
             expect(manager.startSpidering).toHaveBeenCalled();
         });
+        it("uses the proxy declared in the client well-known", async () => {
+            jest.spyOn(manager, "getProxyFromWellKnown").mockResolvedValue("proxy");
+            await manager.setup(client);
+            expect(manager.configure).toHaveBeenCalled();
+            expect(manager.configure).toHaveBeenCalledWith(client, "proxy");
+            expect(manager.startSpidering).toHaveBeenCalled();
+        });
     });
 });
