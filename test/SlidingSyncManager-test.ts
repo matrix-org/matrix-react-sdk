@@ -21,6 +21,7 @@ import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { SlidingSyncManager } from "../src/SlidingSyncManager";
 import { stubClient } from "./test-utils";
 import SlidingSyncController from "../src/settings/controllers/SlidingSyncController";
+import SettingsStore from "../src/settings/SettingsStore";
 
 jest.mock("matrix-js-sdk/src/sliding-sync");
 const MockSlidingSync = <jest.Mock<SlidingSync>>(<unknown>SlidingSync);
@@ -268,6 +269,16 @@ describe("SlidingSyncManager", () => {
             await manager.setup(client);
             expect(manager.configure).toHaveBeenCalled();
             expect(manager.configure).toHaveBeenCalledWith(client, "proxy");
+            expect(manager.startSpidering).toHaveBeenCalled();
+        });
+        it("uses the legacy `feature_sliding_sync_proxy_url` if it was set", async () => {
+            jest.spyOn(manager, "getProxyFromWellKnown").mockResolvedValue("proxy");
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name: string) => {
+                if (name === "feature_sliding_sync_proxy_url") return "legacy-proxy";
+            });
+            await manager.setup(client);
+            expect(manager.configure).toHaveBeenCalled();
+            expect(manager.configure).toHaveBeenCalledWith(client, "legacy-proxy");
             expect(manager.startSpidering).toHaveBeenCalled();
         });
     });
