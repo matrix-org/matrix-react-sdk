@@ -355,7 +355,7 @@ export class SlidingSyncManager {
      * @param client The MatrixClient to use
      * @return The proxy url
      */
-    private async getProxyFromWellKnown(client: MatrixClient): Promise<string | undefined> {
+    public async getProxyFromWellKnown(client: MatrixClient): Promise<string | undefined> {
         let proxyUrl: any;
 
         try {
@@ -376,7 +376,7 @@ export class SlidingSyncManager {
      * @param client The MatrixClient to use
      * @return Whether the "native" (unstable) endpoint is up
      */
-    private async nativeSlidingSyncSupport(client: MatrixClient): Promise<boolean> {
+    public async nativeSlidingSyncSupport(client: MatrixClient): Promise<boolean> {
         try {
             await client.http.authedRequest<void>(Method.Post, "/sync", undefined, undefined, {
                 localTimeoutMs: 10 * 1000, // 10s
