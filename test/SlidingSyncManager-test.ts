@@ -255,11 +255,13 @@ describe("SlidingSyncManager", () => {
     describe("setup", () => {
         beforeEach(() => {
             jest.spyOn(manager, "configure");
+            jest.spyOn(manager, "startSpidering");
         });
         it("uses the baseUrl as a proxy if no proxy is set in the client well-known and the server has no native support", async () => {
             await manager.setup(client);
             expect(manager.configure).toHaveBeenCalled();
             expect(manager.configure).toHaveBeenCalledWith(client, client.baseUrl);
+            expect(manager.startSpidering).toHaveBeenCalled();
         });
     });
 });
