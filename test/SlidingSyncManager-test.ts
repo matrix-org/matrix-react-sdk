@@ -20,6 +20,7 @@ import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import { SlidingSyncManager } from "../src/SlidingSyncManager";
 import { stubClient } from "./test-utils";
+import SlidingSyncController from "../src/settings/controllers/SlidingSyncController";
 
 jest.mock("matrix-js-sdk/src/sliding-sync");
 const MockSlidingSync = <jest.Mock<SlidingSync>>(<unknown>SlidingSync);
@@ -37,6 +38,7 @@ describe("SlidingSyncManager", () => {
         mocked(client.getRoom).mockReturnValue(null);
         manager.configure(client, "invalid");
         manager.slidingSync = slidingSync;
+        SlidingSyncController.serverSupportsSlidingSync = false;
     });
 
     describe("setRoomVisible", () => {
