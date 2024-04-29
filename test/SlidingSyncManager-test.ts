@@ -251,7 +251,7 @@ describe("SlidingSyncManager", () => {
             await manager.checkSupport(client);
             expect(manager.getProxyFromWellKnown).toHaveBeenCalled();
             expect(SlidingSyncController.serverSupportsSlidingSync).toBeTruthy();
-        })
+        });
     });
     describe("setup", () => {
         beforeEach(() => {
