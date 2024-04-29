@@ -754,7 +754,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     onClick={this.onContextMenuOpenClick}
                     isExpanded={!!this.state.contextMenuPosition}
                     title={_t("room|context_menu|title")}
-                    alignment={Alignment.Bottom}
+                    placement="bottom"
                 >
                     {roomName}
                     {this.props.room && <div className="mx_LegacyRoomHeader_chevron" />}

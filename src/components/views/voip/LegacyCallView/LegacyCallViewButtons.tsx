@@ -265,7 +265,7 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                         onClick={this.onDialpadClick}
                         isExpanded={this.state.showDialpad}
                         title={_t("voip|dialpad")}
-                        alignment={Alignment.Top}
+                        placement="top"
                     />
                 )}
                 <LegacyCallViewDropdownButton
@@ -311,7 +311,7 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                         ref={this.contextMenuButton}
                         isExpanded={this.state.showMoreMenu}
                         title={_t("voip|more_button")}
-                        alignment={Alignment.Top}
+                        placement="top"
                     />
                 )}
                 <AccessibleTooltipButton
