@@ -30,7 +30,6 @@ export const TooltipOption: React.FC<TooltipOptionProps> = ({ inputRef, classNam
     const [onFocus, isActive, ref] = useRovingTabIndex(inputRef);
     return (
         <AccessibleButton
-            placement="right"
             {...props}
             className={classNames(className, "mx_SpotlightDialog_option")}
             onFocus={onFocus}
