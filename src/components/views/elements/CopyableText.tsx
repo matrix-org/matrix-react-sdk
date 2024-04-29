@@ -59,7 +59,6 @@ const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border = true
                 onTooltipOpenChange={(open) => {
                     if (!open) onHideTooltip();
                 }}
-                placement="right"
             />
         </div>
     );

@@ -517,7 +517,6 @@ export default class ImageView extends React.Component<IProps, IState> {
                 className="mx_ImageView_button mx_ImageView_button_zoomOut"
                 title={_t("action|zoom_out")}
                 onClick={this.onZoomOutClick}
-                placement="right"
             />
         );
         const zoomInButton = (
@@ -525,7 +524,6 @@ export default class ImageView extends React.Component<IProps, IState> {
                 className="mx_ImageView_button mx_ImageView_button_zoomIn"
                 title={_t("action|zoom_in")}
                 onClick={this.onZoomInClick}
-                placement="right"
             />
         );
 
@@ -559,26 +557,22 @@ export default class ImageView extends React.Component<IProps, IState> {
                             className="mx_ImageView_button mx_ImageView_button_rotateCCW"
                             title={_t("lightbox|rotate_left")}
                             onClick={this.onRotateCounterClockwiseClick}
-                            placement="right"
                         />
                         <AccessibleButton
                             className="mx_ImageView_button mx_ImageView_button_rotateCW"
                             title={_t("lightbox|rotate_right")}
                             onClick={this.onRotateClockwiseClick}
-                            placement="right"
                         />
                         <AccessibleButton
                             className="mx_ImageView_button mx_ImageView_button_download"
                             title={_t("action|download")}
                             onClick={this.onDownloadClick}
-                            placement="right"
                         />
                         {contextMenuButton}
                         <AccessibleButton
                             className="mx_ImageView_button mx_ImageView_button_close"
                             title={_t("action|close")}
                             onClick={this.props.onFinished}
-                            placement="right"
                         />
                         {this.renderContextMenu()}
                     </div>

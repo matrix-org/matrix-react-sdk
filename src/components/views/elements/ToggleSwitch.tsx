@@ -63,7 +63,6 @@ export default ({ checked, disabled = false, onChange, title, tooltip, ...props 
             aria-checked={checked}
             aria-disabled={disabled}
             title={tooltip}
-            placement="right"
         >
             <div className="mx_ToggleSwitch_ball" />
         </AccessibleButton>
