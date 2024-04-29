@@ -917,12 +917,12 @@ exports[`<LoginWithQRFlow /> renders check code confirmation 1`] = `
       <h1
         class="_typography_yh5dq_162 _font-heading-sm-semibold_yh5dq_102"
       >
-        Do you see a green checkmark on your other device?
+        Enter the number shown on your other device
       </h1>
       <p
         class="_typography_yh5dq_162 _font-body-md-regular_yh5dq_59"
       >
-        Confirm that you see a green checkmark on the other device to verify that the connection is secure.
+        This will verify that the connection to your other device is secure.
       </p>
       <label
         for="mx_LoginWithQR_checkCode"
