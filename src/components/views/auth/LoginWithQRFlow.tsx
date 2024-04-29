@@ -146,6 +146,18 @@ export default class LoginWithQRFlow extends React.Component<Props> {
                 }
                 className = "mx_LoginWithQR_error";
                 backButton = false;
+                buttons = (
+                    <>
+                        <AccessibleButton
+                            data-testid="try-again-button"
+                            kind="primary"
+                            onClick={this.handleClick(Click.TryAgain)}
+                        >
+                            {_t("action|try_again")}
+                        </AccessibleButton>
+                        {this.cancelButton()}
+                    </>
+                );
                 main = (
                     <>
                         <div
