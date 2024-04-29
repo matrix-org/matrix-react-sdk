@@ -40,6 +40,8 @@ import { ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
 import { filterBoolean } from "../../../utils/arrays";
 import { Features } from "../../../settings/Settings";
 import { startOidcLogin } from "../../../utils/oidc/authorize";
+import LoginWithQR, { Mode } from "../../views/auth/LoginWithQR";
+import { Icon as QRIcon } from "../../../../res/img/element-icons/qrcode.svg";
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -89,6 +91,7 @@ interface IState {
     serverIsAlive: boolean;
     serverErrorIsFatal: boolean;
     serverDeadError?: ReactNode;
+    loginWithQrInProgress: boolean;
 }
 
 type OnPasswordLogin = {
@@ -125,6 +128,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             serverIsAlive: true,
             serverErrorIsFatal: false,
             serverDeadError: "",
+            loginWithQrInProgress: false,
         };
 
         // map from login step type to a function which will render a control
@@ -138,6 +142,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             // eslint-disable-next-line @typescript-eslint/naming-convention
             "m.login.sso": () => this.renderSsoStep("sso"),
             "oidcNativeFlow": () => this.renderOidcNativeStep(),
+            "loginWithQR": () => this.renderLoginWithQRStep(),
         };
     }
 
@@ -421,7 +426,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         if (!this.state.flows) return null;
 
         // this is the ideal order we want to show the flows in
-        const order = ["oidcNativeFlow", "m.login.password", "m.login.sso"];
+        const order = ["loginWithQR", "oidcNativeFlow", "m.login.password", "m.login.sso"];
 
         const flows = filterBoolean(order.map((type) => this.state.flows?.find((flow) => flow.type === type)));
         return (
@@ -489,6 +494,31 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         );
     };
 
+    private startLoginWithQR = (): void => {
+        this.setState({ loginWithQrInProgress: true });
+    };
+
+    private renderLoginWithQRStep = (): JSX.Element | null => {
+        return (
+            <>
+                <p className="mx_Login_withQR_or">or</p>
+                <AccessibleButton className="mx_Login_withQR" kind="primary_outline" onClick={this.startLoginWithQR}>
+                    <QRIcon />
+                    Sign in with QR code
+                </AccessibleButton>
+            </>
+        );
+    };
+
+    private onLoginWithQRFinished = (data: IMatrixClientCreds): void => {
+        if (!data) {
+            this.setState({ loginWithQrInProgress: false });
+        } else {
+            // PROTOTYPE: I'm not sure if this is the right way to do this. Obviously we don't have a password
+            this.props.onLoggedIn(data, "");
+        }
+    };
+
     public render(): React.ReactNode {
         const loader =
             this.isBusy() && !this.state.busyLoggingIn ? (
@@ -548,20 +578,26 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         return (
             <AuthPage>
                 <AuthHeader disableLanguageSelector={this.props.isSyncing || this.state.busyLoggingIn} />
-                <AuthBody>
-                    <h1>
-                        {_t("action|sign_in")}
-                        {loader}
-                    </h1>
-                    {errorTextSection}
-                    {serverDeadSection}
-                    <ServerPicker
-                        serverConfig={this.props.serverConfig}
-                        onServerConfigChange={this.props.onServerConfigChange}
-                    />
-                    {this.renderLoginComponentForFlows()}
-                    {footer}
-                </AuthBody>
+                {this.state.loginWithQrInProgress ? (
+                    <AuthBody>
+                        <LoginWithQR onFinished={this.onLoginWithQRFinished} mode={Mode.Scan} />
+                    </AuthBody>
+                ) : (
+                    <AuthBody>
+                        <h1>
+                            {_t("action|sign_in")}
+                            {loader}
+                        </h1>
+                        {errorTextSection}
+                        {serverDeadSection}
+                        <ServerPicker
+                            serverConfig={this.props.serverConfig}
+                            onServerConfigChange={this.props.onServerConfigChange}
+                        />
+                        {this.renderLoginComponentForFlows()}
+                        {footer}
+                    </AuthBody>
+                )}
             </AuthPage>
         );
     }
