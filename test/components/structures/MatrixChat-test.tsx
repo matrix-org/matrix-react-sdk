@@ -683,8 +683,6 @@ describe("<MatrixChat />", () => {
                         it("should warn when room is not public", async () => {
                             jest.spyOn(room.currentState, "getStateEvents").mockReturnValue(inviteJoinRule);
                             dispatchAction();
-                            const blerp = await screen.findByRole("dialog");
-                            console.log(blerp);
                             expect(
                                 screen.getByText(
                                     "This room is not public. You will not be able to rejoin without an invite.",
