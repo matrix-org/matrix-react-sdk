@@ -23,7 +23,8 @@ import AccessibleButton from "../elements/AccessibleButton";
 import QRCode from "../elements/QRCode";
 import Spinner from "../elements/Spinner";
 import { Icon as InfoIcon } from "../../../../res/img/element-icons/i.svg";
-import { Click, FailureReason, LoginWithQRFailureReason, Phase } from "./LoginWithQR";
+import { FailureReason, LoginWithQRFailureReason } from "./LoginWithQR";
+import { Phase, Click } from "./LoginWithQR-types";
 import SdkConfig from "../../../SdkConfig";
 
 interface IProps {
