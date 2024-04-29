@@ -1455,8 +1455,6 @@
         "sliding_sync_description": "Under active development, cannot be disabled.",
         "sliding_sync_disabled_notice": "Log out and back in to disable",
         "sliding_sync_server_no_support": "Your server lacks support",
-        "threads_activity_centre": "Threads Activity Centre (in development)",
-        "threads_activity_centre_description": "Warning: Under active development; reloads %(brand)s.",
         "under_active_development": "Under active development.",
         "unrealiable_e2e": "Unreliable in encrypted rooms",
         "video_rooms": "Video rooms",
