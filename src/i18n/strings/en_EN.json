@@ -246,8 +246,8 @@
         "phone_optional_label": "Phone (optional)",
         "qr_code_login": {
             "approve_access_warning": "By approving access for this device, it will have full access to your account.",
-            "check_code_explainer": "Confirm that you see a green checkmark on the other device to verify that the connection is secure.",
-            "check_code_heading": "Do you see a green checkmark on your other device?",
+            "check_code_explainer": "This will verify that the connection to your other device is secure.",
+            "check_code_heading": "Enter the number shown on your other device",
             "check_code_input_label": "2-digit code",
             "check_code_mismatch": "The numbers don't match",
             "completing_setup": "Completing set up of your new device",
