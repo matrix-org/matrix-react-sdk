@@ -271,7 +271,7 @@
             "error_user_cancelled_title": "Sign in request cancelled",
             "error_user_declined": "You declined the request from your other device to sign in.",
             "error_user_declined_title": "Sign in declined",
-            "follow_remaining_instructions": "Follow the remaining instructions to verify your other device",
+            "follow_remaining_instructions": "Follow the instructions to link your other device",
             "open_element_other_device": "Open %(brand)s on your other device",
             "point_the_camera": "Point the camera at the QR code shown here",
             "scan_code_instruction": "Scan the QR code with another device",
