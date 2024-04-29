@@ -284,6 +284,12 @@ const SessionManagerTab: React.FC = () => {
     return (
         <SettingsTab>
             <SettingsSection heading={_t("settings|sessions|title")}>
+                <LoginWithQRSection
+                    onShowQr={onShowQrClicked}
+                    versions={clientVersions}
+                    capabilities={capabilities}
+                    wellKnown={wellKnown}
+                />
                 <SecurityRecommendations
                     devices={devices}
                     goToFilteredList={onGoToFilteredList}
@@ -337,12 +343,6 @@ const SessionManagerTab: React.FC = () => {
                         />
                     </SettingsSubsection>
                 )}
-                <LoginWithQRSection
-                    onShowQr={onShowQrClicked}
-                    versions={clientVersions}
-                    capabilities={capabilities}
-                    wellKnown={wellKnown}
-                />
             </SettingsSection>
         </SettingsTab>
     );
