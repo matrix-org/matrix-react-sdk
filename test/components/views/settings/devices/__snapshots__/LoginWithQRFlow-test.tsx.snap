@@ -894,7 +894,7 @@ exports[`<LoginWithQRFlow /> renders QR code 1`] = `
           Point the camera at the QR code shown here
         </li>
         <li>
-          Follow the remaining instructions to verify your other device
+          Follow the instructions to link your other device
         </li>
       </ol>
     </div>
