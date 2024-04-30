@@ -26,6 +26,7 @@ import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { REACTION_SHORTCODE_KEY } from "./ReactionsRow";
+import AuthedImage from "../elements/AuthedImage";
 
 export interface IProps {
     // The event we're displaying reactions for
@@ -144,7 +145,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
             const imageSrc = mediaFromMxc(content).srcHttp;
             if (imageSrc) {
                 reactionContent = (
-                    <img
+                    <AuthedImage
                         className="mx_ReactionsRowButton_content"
                         alt={customReactionName || _t("timeline|reactions|custom_reaction_fallback_label")}
                         src={imageSrc}

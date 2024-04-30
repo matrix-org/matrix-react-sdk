@@ -41,6 +41,8 @@ import { presentableTextForFile } from "../../../utils/FileUtils";
 import { createReconnectedListener } from "../../../utils/connection";
 import MediaProcessingError from "./shared/MediaProcessingError";
 import { DecryptError, DownloadError } from "../../../utils/DecryptFile";
+import AuthedImage from "../elements/AuthedImage";
+import {getMediaByUrl} from "../../../utils/media";
 
 enum Placeholder {
     NoImage,
@@ -301,7 +303,19 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                     img.onerror = reject;
                 });
                 img.crossOrigin = "Anonymous"; // CORS allow canvas access
-                img.src = contentUrl ?? "";
+
+                if (contentUrl) {
+                    const response = await getMediaByUrl(contentUrl);
+                    const blob = await response.blob();
+                    const blobUrl = URL.createObjectURL(blob);
+                    img.src = blobUrl;
+
+                    loadPromise.then(() => {
+                        URL.revokeObjectURL(blobUrl);
+                    });
+                } else {
+                    img.src = "";
+                }
 
                 try {
                     await loadPromise;
@@ -435,7 +449,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                     imageElement = <HiddenImagePlaceholder />;
                 } else {
                     imageElement = (
-                        <img
+                        <AuthedImage
                             style={{ display: "none" }}
                             src={thumbUrl}
                             ref={this.image}
@@ -478,7 +492,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             // which has the same width as the timeline
             // mx_MImageBody_thumbnail resizes img to exactly container size
             img = (
-                <img
+                <AuthedImage
                     className="mx_MImageBody_thumbnail"
                     src={thumbUrl}
                     ref={this.image}

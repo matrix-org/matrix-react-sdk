@@ -21,6 +21,7 @@ import { Optional } from "matrix-events-sdk";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { IPreparedMedia, prepEventContentAsMedia } from "./models/IMediaEventContent";
 import { UserFriendlyError } from "../languageHandler";
+import {getMediaByUrl} from "../utils/media";
 
 // Populate this class with the details of your customisations when copying it.
 
@@ -149,7 +150,7 @@ export class Media {
         if (!src) {
             throw new UserFriendlyError("error|download_media");
         }
-        return fetch(src);
+        return getMediaByUrl(src);
     }
 }
 

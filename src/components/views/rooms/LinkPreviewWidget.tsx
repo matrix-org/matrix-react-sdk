@@ -26,6 +26,7 @@ import { mediaFromMxc } from "../../../customisations/Media";
 import ImageView from "../elements/ImageView";
 import LinkWithTooltip from "../elements/LinkWithTooltip";
 import PlatformPeg from "../../../PlatformPeg";
+import AuthedImage from "../elements/AuthedImage";
 
 interface IProps {
     link: string;
@@ -95,7 +96,7 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
         if (image) {
             img = (
                 <div className="mx_LinkPreviewWidget_image" style={{ height: thumbHeight }}>
-                    <img
+                    <AuthedImage
                         ref={this.image}
                         style={{ maxWidth: imageMaxWidth, maxHeight: imageMaxHeight }}
                         src={image}

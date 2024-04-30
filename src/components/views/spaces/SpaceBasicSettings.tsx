@@ -20,6 +20,7 @@ import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
+import AuthedImage from "../elements/AuthedImage";
 
 interface IProps {
     avatarUrl?: string;
@@ -44,7 +45,7 @@ export const SpaceAvatar: React.FC<Pick<IProps, "avatarUrl" | "avatarDisabled" |
     let avatarSection;
     if (avatarDisabled) {
         if (avatar) {
-            avatarSection = <img className="mx_SpaceBasicSettings_avatar" src={avatar} alt="" />;
+            avatarSection = <AuthedImage className="mx_SpaceBasicSettings_avatar" src={avatar} alt="" />;
         } else {
             avatarSection = <div className="mx_SpaceBasicSettings_avatar" />;
         }

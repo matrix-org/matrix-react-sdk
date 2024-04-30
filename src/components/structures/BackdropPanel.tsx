@@ -16,6 +16,8 @@ limitations under the License.
 
 import React, { CSSProperties } from "react";
 
+import AuthedImage from "../views/elements/AuthedImage";
+
 interface IProps {
     backgroundImage?: string;
     blurMultiplier?: number;
@@ -36,7 +38,7 @@ export const BackdropPanel: React.FC<IProps> = ({ backgroundImage, blurMultiplie
     }
     return (
         <div className="mx_BackdropPanel">
-            <img role="presentation" alt="" style={styles} className="mx_BackdropPanel--image" src={backgroundImage} />
+            <AuthedImage role="presentation" alt="" style={styles} className="mx_BackdropPanel--image" src={backgroundImage} />
         </div>
     );
 };

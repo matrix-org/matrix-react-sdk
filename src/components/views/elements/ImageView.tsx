@@ -37,6 +37,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { presentableTextForFile } from "../../../utils/FileUtils";
+import AuthedImage from "./AuthedImage";
 import AccessibleButton from "./AccessibleButton";
 
 // Max scale to keep gaps around the image
@@ -585,7 +586,7 @@ export default class ImageView extends React.Component<IProps, IState> {
                     onMouseUp={this.onEndMoving}
                     onMouseLeave={this.onEndMoving}
                 >
-                    <img
+                    <AuthedImage
                         src={this.props.src}
                         style={style}
                         alt={this.props.name}
