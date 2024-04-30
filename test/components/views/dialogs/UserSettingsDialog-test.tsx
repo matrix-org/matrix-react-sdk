@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactElement } from "react";
-import { render } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { mocked, MockedObject } from "jest-mock";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
@@ -152,14 +152,17 @@ describe("<UserSettingsDialog />", () => {
             watchSettingCallbacks[settingName] = callback;
             return `mock-watcher-id-${settingName}`;
         });
+        mockSettingsStore.getValue.mockReturnValue(false);
 
         const { queryByTestId, unmount } = render(getComponent());
         expect(queryByTestId(`settings-tab-${UserTab.Mjolnir}`)).toBeFalsy();
 
-        expect(mockSettingsStore.watchSetting.mock.calls[0][0]).toEqual("feature_mjolnir");
+        expect(mockSettingsStore.watchSetting).toHaveBeenCalledWith("feature_mjolnir", null, expect.anything());
 
         // call the watch setting callback
+        mockSettingsStore.getValue.mockReturnValue(true);
         watchSettingCallbacks["feature_mjolnir"]("feature_mjolnir", "", SettingLevel.ACCOUNT, true, true);
+
         // tab is rendered now
         expect(queryByTestId(`settings-tab-${UserTab.Mjolnir}`)).toBeTruthy();
 
