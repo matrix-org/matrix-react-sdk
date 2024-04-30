@@ -664,7 +664,7 @@ test.describe("Cryptography", function () {
                 await page.locator(".mx_RoomView").getByRole("button", { name: "Accept" }).click();
 
                 // Bob sends an encrypted event and an undecryptable event
-                const lastEventId = await bob.evaluate(
+                await bob.evaluate(
                     async (client, { roomId }) => {
                         await client.sendTextMessage(roomId, "This should be decryptable");
                         const { event_id: lastEventId } = await client.sendEvent(
@@ -678,7 +678,6 @@ test.describe("Cryptography", function () {
                                 session_id: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                             } as any,
                         );
-                        return lastEventId;
                     },
                     { roomId },
                 );
