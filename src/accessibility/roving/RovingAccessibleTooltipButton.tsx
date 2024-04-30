@@ -33,7 +33,6 @@ export const RovingAccessibleTooltipButton = <T extends keyof JSX.IntrinsicEleme
     const [onFocusInternal, isActive, ref] = useRovingTabIndex(inputRef);
     return (
         <AccessibleButton
-            placement="right"
             {...props}
             onFocus={(event: React.FocusEvent) => {
                 onFocusInternal();

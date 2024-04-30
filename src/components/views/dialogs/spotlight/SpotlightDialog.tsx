@@ -939,7 +939,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             setInviteLinkCopied(true);
                             copyPlaintext(ownInviteLink);
                         }}
-                        onOpenChange={(open) => {
+                        onTooltipOpenChange={(open) => {
                             if (!open) setInviteLinkCopied(false);
                         }}
                         title={inviteLinkCopied ? _t("common|copied") : _t("action|copy")}

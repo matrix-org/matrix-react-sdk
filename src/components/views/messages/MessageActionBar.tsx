@@ -238,7 +238,6 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
             className="mx_MessageActionBar_iconButton mx_MessageActionBar_threadButton"
             disabled={hasARelation}
             title={title}
-            aria-label={title}
             onClick={onClick}
             onContextMenu={onClick}
             placement="left"
@@ -514,11 +513,6 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 toolbarOpts.push(
                     <RovingAccessibleTooltipButton
                         className={expandClassName}
-                        aria-label={
-                            this.props.isQuoteExpanded
-                                ? _t("timeline|mab|collapse_reply_chain")
-                                : _t("timeline|mab|expand_reply_chain")
-                        }
                         title={
                             this.props.isQuoteExpanded
                                 ? _t("timeline|mab|collapse_reply_chain")

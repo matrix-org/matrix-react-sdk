@@ -130,7 +130,7 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
     if (mini) {
         // TODO fallback icon
         return (
-            <AccessibleButton {...props} title={label} className={classes} onClick={onClick} placement="right">
+            <AccessibleButton {...props} title={label} className={classes} onClick={onClick}>
                 {icon}
             </AccessibleButton>
         );

@@ -56,10 +56,9 @@ const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border = true
                 title={tooltip ?? _t("action|copy")}
                 onClick={onCopyClickInternal}
                 className="mx_CopyableText_copyButton"
-                onOpenChange={(open) => {
+                onTooltipOpenChange={(open) => {
                     if (!open) onHideTooltip();
                 }}
-                placement="right"
             />
         </div>
     );
