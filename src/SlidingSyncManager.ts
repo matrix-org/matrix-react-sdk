@@ -356,7 +356,7 @@ export class SlidingSyncManager {
      * @return The proxy url
      */
     public async getProxyFromWellKnown(client: MatrixClient): Promise<string | undefined> {
-        let proxyUrl: any;
+        let proxyUrl: string | undefined;
 
         try {
             const clientWellKnown = await AutoDiscovery.findClientConfig(client.baseUrl);
