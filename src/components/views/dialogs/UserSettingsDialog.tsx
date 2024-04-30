@@ -174,6 +174,9 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
     };
 
     return (
+        // XXX: SDKContext is provided within the LoggedInView subtree.
+        // Modals function outside the MatrixChat React tree, so sdkContext is reprovided here to simulate that.
+        // The longer term solution is to move our ModalManager into the React tree to inherit contexts properly.
         <SDKContext.Provider value={props.sdkContext}>
             <BaseDialog
                 className="mx_UserSettingsDialog"
