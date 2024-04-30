@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import {
     EventTimeline,
     EventType,
@@ -54,7 +54,7 @@ describe("PeopleRoomSettingsTab", () => {
             </MatrixClientContext.Provider>,
         );
     const getGroup = () => screen.getByRole("group", { name: "Asking to join" });
-    const getParagraph = () => screen.getByRole("paragraph");
+    const getParagraph = () => document.getElementsByTagName("p")[0];
 
     it("renders a heading", () => {
         getComponent(room);
@@ -123,7 +123,7 @@ describe("PeopleRoomSettingsTab", () => {
         it("allows to expand a reason", () => {
             getComponent(room);
             fireEvent.click(getButton("See more"));
-            expect(within(getGroup()).getByRole("paragraph")).toHaveTextContent(reason);
+            expect(getGroup().querySelector("p")).toHaveTextContent(reason);
         });
 
         it("allows to collapse a reason", () => {
