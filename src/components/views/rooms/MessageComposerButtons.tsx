@@ -131,7 +131,6 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
                     className={moreOptionsClasses}
                     onClick={props.toggleButtonMenu}
                     title={_t("quick_settings|sidebar_settings")}
-                    placement="right"
                 />
             )}
             {props.isMenuOpen && (
