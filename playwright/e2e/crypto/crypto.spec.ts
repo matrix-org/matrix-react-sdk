@@ -667,7 +667,7 @@ test.describe("Cryptography", function () {
                 await bob.evaluate(
                     async (client, { roomId }) => {
                         await client.sendTextMessage(roomId, "This should be decryptable");
-                        const { event_id: lastEventId } = await client.sendEvent(
+                        await client.sendEvent(
                             roomId,
                             "m.room.encrypted" as any,
                             {
@@ -687,12 +687,8 @@ test.describe("Cryptography", function () {
                 await expect(
                     page.locator(`.mx_EventTile`).getByText("You don't have access to this message"),
                 ).toBeVisible();
-                await expect(
-                    page.locator(`.mx_EventTile`).getByText("This should be decryptable"),
-                ).toBeVisible();
-                await expect(
-                    page.locator(`.mx_EventTile`).getByText("Unable to decrypt message"),
-                ).toBeVisible();
+                await expect(page.locator(`.mx_EventTile`).getByText("This should be decryptable")).toBeVisible();
+                await expect(page.locator(`.mx_EventTile`).getByText("Unable to decrypt message")).toBeVisible();
 
                 // And then we ensure that they are where we expect them to be
                 // Alice should see these event tiles:
