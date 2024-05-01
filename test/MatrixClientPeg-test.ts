@@ -21,8 +21,6 @@ import {
     ProvideCryptoSetupExtensions,
     SecretStorageKeyDescription,
 } from "@matrix-org/react-sdk-module-api/lib/lifecycles/CryptoSetupExtensions";
-// eslint-disable-next-line no-restricted-imports
-import * as RustCrypto from "matrix-js-sdk/src/rust-crypto";
 
 import { advanceDateAndTime, stubClient } from "./test-utils";
 import { IMatrixClientPeg, MatrixClientPeg as peg } from "../src/MatrixClientPeg";
