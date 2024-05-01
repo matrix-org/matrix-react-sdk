@@ -32,7 +32,6 @@ import {
 import { VerificationMethod } from "matrix-js-sdk/src/types";
 import * as utils from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
-import { QRSecretsBundle } from "matrix-js-sdk/src/crypto-api";
 
 import createMatrixClient from "./utils/createMatrixClient";
 import SettingsStore from "./settings/SettingsStore";
@@ -65,7 +64,6 @@ export interface IMatrixClientCreds {
     guest?: boolean;
     pickleKey?: string;
     freshLogin?: boolean;
-    secrets?: QRSecretsBundle;
 }
 
 /**
@@ -75,46 +73,22 @@ export interface IMatrixClientCreds {
  * you'll find a `MatrixClient` hanging on the `MatrixClientPeg`.
  */
 export interface IMatrixClientPeg {
-    /**
-     * The opts used to start the client
-     */
     opts: IStartClientOpts;
 
     /**
      * Return the server name of the user's homeserver
      * Throws an error if unable to deduce the homeserver name
-     * (e.g. if the user is not logged in)
+     * (eg. if the user is not logged in)
      *
      * @returns {string} The homeserver name, if present.
      */
     getHomeserverName(): string;
 
-    /**
-     * Get the current MatrixClient, if any
-     */
     get(): MatrixClient | null;
-
-    /**
-     * Get the current MatrixClient, throwing an error if there isn't one
-     */
     safeGet(): MatrixClient;
-
-    /**
-     * Unset the current MatrixClient
-     */
     unset(): void;
-
-    /**
-     * Prepare the MatrixClient for use, including initialising the store and crypto, but do not start it
-     * @param secrets the secrets to use if authenticating using QR login
-     */
-    assign(secrets?: QRSecretsBundle): Promise<IStartClientOpts>;
-
-    /**
-     * Prepare the MatrixClient for use, including initialising the store and crypto, and start it
-     * @param secrets the secrets to use if authenticating using QR login
-     */
-    start(secrets?: QRSecretsBundle): Promise<void>;
+    assign(): Promise<any>;
+    start(): Promise<any>;
 
     /**
      * If we've registered a user ID we set this to the ID of the
@@ -136,13 +110,13 @@ export interface IMatrixClientPeg {
 
     /**
      * If the current user has been registered by this device then this
-     * returns boolean of whether it was within the last N hours given.
+     * returns a boolean of whether it was within the last N hours given.
      */
     userRegisteredWithinLastHours(hours: number): boolean;
 
     /**
      * If the current user has been registered by this device then this
-     * returns boolean of whether it was after a given timestamp.
+     * returns a boolean of whether it was after a given timestamp.
      */
     userRegisteredAfter(date: Date): boolean;
 
@@ -261,7 +235,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         PlatformPeg.get()?.reload();
     };
 
-    public async assign(secrets?: QRSecretsBundle): Promise<IStartClientOpts> {
+    public async assign(): Promise<any> {
         if (!this.matrixClient) {
             throw new Error("createClient must be called first");
         }
@@ -288,7 +262,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
         // try to initialise e2e on the new client
         if (!SettingsStore.getValue("lowBandwidth")) {
-            await this.initClientCrypto(secrets);
+            await this.initClientCrypto();
         }
 
         const opts = utils.deepCopy(this.opts);
@@ -299,17 +273,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.threadSupport = true;
 
         if (SettingsStore.getValue("feature_sliding_sync")) {
-            const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
-            if (proxyUrl) {
-                logger.log("Activating sliding sync using proxy at ", proxyUrl);
-            } else {
-                logger.log("Activating sliding sync");
-            }
-            opts.slidingSync = SlidingSyncManager.instance.configure(
-                this.matrixClient,
-                proxyUrl || this.matrixClient.baseUrl,
-            );
-            SlidingSyncManager.instance.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
+            opts.slidingSync = await SlidingSyncManager.instance.setup(this.matrixClient);
+        } else {
+            SlidingSyncManager.instance.checkSupport(this.matrixClient);
         }
 
         // Connect the matrix client to the dispatcher and setting handlers
@@ -323,7 +289,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     /**
      * Attempt to initialize the crypto layer on a newly-created MatrixClient
      */
-    private async initClientCrypto(secrets?: QRSecretsBundle): Promise<void> {
+    private async initClientCrypto(): Promise<void> {
         if (!this.matrixClient) {
             throw new Error("createClient must be called first");
         }
@@ -361,16 +327,6 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         if (useRustCrypto) {
             await this.matrixClient.initRustCrypto();
 
-            if (secrets) {
-                this.matrixClient.getCrypto()?.importSecretsForQrLogin(secrets);
-                if (secrets.backup) {
-                    const backupInfo = await this.matrixClient.getKeyBackupVersion();
-                    if (backupInfo) {
-                        await this.matrixClient.restoreKeyBackupWithCache(undefined, undefined, backupInfo, {});
-                    }
-                }
-            }
-
             StorageManager.setCryptoInitialised(true);
             // TODO: device dehydration and whathaveyou
             return;
@@ -398,8 +354,8 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
     }
 
-    public async start(secrets?: QRSecretsBundle): Promise<void> {
-        const opts = await this.assign(secrets);
+    public async start(): Promise<any> {
+        const opts = await this.assign();
 
         logger.log(`MatrixClientPeg: really starting MatrixClient`);
         await this.matrixClient!.startClient(opts);
