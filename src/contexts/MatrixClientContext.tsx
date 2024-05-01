@@ -32,22 +32,24 @@ export function useMatrixClientContext(): MatrixClient {
     return useContext(MatrixClientContext);
 }
 
-const matrixHOC = <ComposedComponentProps extends {}>(
+/**
+ * A higher order component that injects the MatrixClient into props.mxClient of the wrapped component.
+ * Preferred over using `static contextType` as the types for this are quite broken in React 17.
+ * Inherently no different to wrapping in MatrixClientContext.Consumer but saves a lot of boilerplate.
+ * @param ComposedComponent the ComponentClass you wish to wrap in the HOC
+ * @returns a new component that takes the same props as the original component, but with an additional mxClient prop
+ */
+export const withMatrixClientHOC = <ComposedComponentProps extends {}>(
     ComposedComponent: ComponentClass<ComposedComponentProps>,
 ): ((
     props: Omit<ComposedComponentProps, "mxClient"> & React.RefAttributes<InstanceType<typeof ComposedComponent>>,
 ) => React.ReactElement | null) => {
     type ComposedComponentInstance = InstanceType<typeof ComposedComponent>;
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-
-    const TypedComponent = ComposedComponent;
-
     return forwardRef<ComposedComponentInstance, Omit<ComposedComponentProps, "mxClient">>((props, ref) => {
         const client = useContext(MatrixClientContext);
 
         // @ts-ignore
-        return <TypedComponent ref={ref} {...props} mxClient={client} />;
+        return <ComposedComponent ref={ref} {...props} mxClient={client} />;
     });
 };
-export const withMatrixClientHOC = matrixHOC;
