@@ -32,7 +32,7 @@ describe("<TabbedView />", () => {
     };
     const getComponent = (
         props: {
-            activeTabId: "GENERAL" | "LABS" | "SECURITY" | "bad-tab-id";
+            activeTabId: "GENERAL" | "LABS" | "SECURITY";
             onChange?: () => any;
             tabs?: NonEmptyArray<Tab<any>>;
         } = {
@@ -49,12 +49,6 @@ describe("<TabbedView />", () => {
     it("renders tabs", () => {
         const { container } = render(getComponent());
         expect(container).toMatchSnapshot();
-    });
-
-    it("renders first tab as active tab when activeTabId is not valid", () => {
-        const { container } = render(getComponent({ activeTabId: "bad-tab-id" }));
-        expect(getActiveTab(container)?.textContent).toEqual(_t(generalTab.label));
-        expect(getActiveTabBody(container)?.textContent).toEqual("general");
     });
 
     it("renders activeTabId tab as active when valid", () => {

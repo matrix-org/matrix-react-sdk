@@ -62,15 +62,12 @@ interface IProps<T extends string> {
 export default function TabbedView<T extends string>(props: IProps<T>): JSX.Element {
     const tabLocation = props.tabLocation ?? TabLocation.LEFT;
 
-    const activeTabIdPropIsValid = props.tabs.find((tab) => tab.id === props.activeTabId);
-    const activeTabId = activeTabIdPropIsValid ? props.activeTabId : props.tabs[0].id;
-
     const getTabById = (id: T): Tab<T> | undefined => {
         return props.tabs.find((tab) => tab.id === id);
     };
 
     const renderTabLabel = (tab: Tab<T>): JSX.Element => {
-        const isActive = activeTabId === tab.id;
+        const isActive = props.activeTabId === tab.id;
         const classes = classNames("mx_TabbedView_tabLabel", {
             mx_TabbedView_tabLabel_active: isActive,
         });
@@ -120,7 +117,7 @@ export default function TabbedView<T extends string>(props: IProps<T>): JSX.Elem
     };
 
     const labels = props.tabs.map((tab) => renderTabLabel(tab));
-    const tab = getTabById(activeTabId);
+    const tab = getTabById(props.activeTabId);
     const panel = tab ? renderTabPanel(tab) : null;
 
     const tabbedViewClasses = classNames({
