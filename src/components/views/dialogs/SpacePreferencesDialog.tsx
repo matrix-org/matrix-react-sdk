@@ -33,7 +33,6 @@ import SettingsSubsection, { SettingsSubsectionText } from "../settings/shared/S
 
 interface IProps {
     space: Room;
-    initialTabId?: SpacePreferenceTab;
     onFinished(): void;
 }
 
@@ -68,7 +67,7 @@ const SpacePreferencesAppearanceTab: React.FC<Pick<IProps, "space">> = ({ space 
     );
 };
 
-const SpacePreferencesDialog: React.FC<IProps> = ({ space, initialTabId, onFinished }) => {
+const SpacePreferencesDialog: React.FC<IProps> = ({ space, onFinished }) => {
     const tabs: NonEmptyArray<Tab<SpacePreferenceTab>> = [
         new Tab(
             SpacePreferenceTab.Appearance,
