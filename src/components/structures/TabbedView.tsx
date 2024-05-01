@@ -74,6 +74,7 @@ export default function TabbedView<T extends string>(props: IProps<T>): JSX.Elem
      * @param {Tab} tab the tab to show
      */
     const setActiveTab = (tab: Tab<T>): void => {
+        // make sure this tab is still in available tabs
         if (!!getTabById(tab.id)) {
             if (props.onChange) props.onChange(tab.id);
             setActiveTabId(tab.id);
