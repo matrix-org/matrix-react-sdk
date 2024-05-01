@@ -30,6 +30,12 @@ import {getMediaByUrl} from "../utils/media";
 // functions below create an instance of the Media class and are used throughout the
 // project.
 
+let USE_AUTHENTICATED_MEDIA = false;
+
+export function setUseAuthenticatedMedia(use: boolean): void {
+    USE_AUTHENTICATED_MEDIA = use;
+}
+
 /**
  * A media object is a representation of a "source media" and an optional
  * "thumbnail media", derived from event contents or external sources.
@@ -82,7 +88,7 @@ export class Media {
      */
     public get srcHttp(): string | null {
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.srcMxc, undefined, undefined, undefined, false, true) || null;
+        return this.client.mxcUrlToHttp(this.srcMxc, undefined, undefined, undefined, false, true, USE_AUTHENTICATED_MEDIA) || null;
     }
 
     /**
@@ -92,7 +98,7 @@ export class Media {
     public get thumbnailHttp(): string | null {
         if (!this.hasThumbnail) return null;
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.thumbnailMxc!, undefined, undefined, undefined, false, true);
+        return this.client.mxcUrlToHttp(this.thumbnailMxc!, undefined, undefined, undefined, false, true, USE_AUTHENTICATED_MEDIA);
     }
 
     /**
@@ -109,7 +115,7 @@ export class Media {
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.thumbnailMxc!, width, height, mode, false, true);
+        return this.client.mxcUrlToHttp(this.thumbnailMxc!, width, height, mode, false, true, USE_AUTHENTICATED_MEDIA);
     }
 
     /**
@@ -124,7 +130,7 @@ export class Media {
         width = Math.floor(width * window.devicePixelRatio);
         height = Math.floor(height * window.devicePixelRatio);
         // eslint-disable-next-line no-restricted-properties
-        return this.client.mxcUrlToHttp(this.srcMxc, width, height, mode, false, true);
+        return this.client.mxcUrlToHttp(this.srcMxc, width, height, mode, false, true, USE_AUTHENTICATED_MEDIA);
     }
 
     /**

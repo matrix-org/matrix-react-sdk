@@ -82,6 +82,7 @@ import {
     tryDecryptToken,
 } from "./utils/tokens/tokens";
 import { TokenRefresher } from "./utils/oidc/TokenRefresher";
+import { setUseAuthenticatedMedia } from "./customisations/Media";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -787,6 +788,13 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     checkSessionLock();
     MatrixClientPeg.replaceUsingCreds(credentials, tokenRefresher?.doRefreshAccessToken.bind(tokenRefresher));
     const client = MatrixClientPeg.safeGet();
+
+    try {
+        setUseAuthenticatedMedia(await client.doesServerSupportUnstableFeature("org.matrix.msc3916"));
+    } catch (e) {
+        logger.error("Error checking for authenticated media support:", e);
+        // we otherwise ignore the error to avoid breaking offline mode
+    }
 
     setSentryUser(credentials.userId);
 
