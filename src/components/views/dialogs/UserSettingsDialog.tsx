@@ -174,9 +174,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
     };
 
     const [activeTabId, setActiveTabId] = React.useState<UserTab>(
-        props.initialTabId && getTabs().some((t) => t.icon === props.initialTabId)
-            ? props.initialTabId
-            : UserTab.General,
+        props.initialTabId && getTabs().some((t) => t.id === props.initialTabId) ? props.initialTabId : UserTab.General,
     );
 
     return (
