@@ -1,7 +1,7 @@
 /*
 Copyright 2017 Travis Ralston
 Copyright 2019 New Vector Ltd
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020, 2024 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -55,50 +55,35 @@ export enum TabLocation {
 interface IProps<T extends string> {
     tabs: NonEmptyArray<Tab<T>>;
     initialTabId?: T;
-    tabLocation: TabLocation;
+    tabLocation?: TabLocation;
     onChange?: (tabId: T) => void;
     screenName?: ScreenName;
 }
 
-interface IState<T extends string> {
-    activeTabId: T;
-}
+export default function TabbedView<T extends string>(props: IProps<T>): JSX.Element {
+    const tabLocation = props.tabLocation ?? TabLocation.LEFT;
 
-export default class TabbedView<T extends string> extends React.Component<IProps<T>, IState<T>> {
-    public constructor(props: IProps<T>) {
-        super(props);
+    const [activeTabId, setActiveTabId] = React.useState<T>(props.initialTabId ?? props.tabs[0].id);
 
-        const initialTabIdIsValid = props.tabs.find((tab) => tab.id === props.initialTabId);
-        this.state = {
-            activeTabId: initialTabIdIsValid ? props.initialTabId! : props.tabs[0].id,
-        };
-    }
-
-    public static defaultProps = {
-        tabLocation: TabLocation.LEFT,
+    const getTabById = (id: T): Tab<T> | undefined => {
+        return props.tabs.find((tab) => tab.id === id);
     };
-
-    private getTabById(id: T): Tab<T> | undefined {
-        return this.props.tabs.find((tab) => tab.id === id);
-    }
 
     /**
      * Shows the given tab
      * @param {Tab} tab the tab to show
-     * @private
      */
-    private setActiveTab(tab: Tab<T>): void {
-        // make sure this tab is still in available tabs
-        if (!!this.getTabById(tab.id)) {
-            if (this.props.onChange) this.props.onChange(tab.id);
-            this.setState({ activeTabId: tab.id });
+    const setActiveTab = (tab: Tab<T>): void => {
+        if (!!getTabById(tab.id)) {
+            if (props.onChange) props.onChange(tab.id);
+            setActiveTabId(tab.id);
         } else {
             logger.error("Could not find tab " + tab.label + " in tabs");
         }
-    }
+    };
 
-    private renderTabLabel(tab: Tab<T>): JSX.Element {
-        const isActive = this.state.activeTabId === tab.id;
+    const renderTabLabel = (tab: Tab<T>): JSX.Element => {
+        const isActive = activeTabId === tab.id;
         const classes = classNames("mx_TabbedView_tabLabel", {
             mx_TabbedView_tabLabel_active: isActive,
         });
@@ -108,8 +93,8 @@ export default class TabbedView<T extends string> extends React.Component<IProps
             tabIcon = <span className={`mx_TabbedView_maskedIcon ${tab.icon}`} />;
         }
 
-        const onClickHandler = (): void => this.setActiveTab(tab);
-        const id = this.getTabId(tab);
+        const onClickHandler = (): void => setActiveTab(tab);
+        const id = getTabId(tab);
 
         const label = _t(tab.label);
         return (
@@ -129,56 +114,54 @@ export default class TabbedView<T extends string> extends React.Component<IProps
                 </span>
             </RovingAccessibleButton>
         );
-    }
+    };
 
-    private getTabId(tab: Tab<T>): string {
+    const getTabId = (tab: Tab<T>): string => {
         return `mx_tabpanel_${tab.id}`;
-    }
+    };
 
-    private renderTabPanel(tab: Tab<T>): React.ReactNode {
-        const id = this.getTabId(tab);
+    const renderTabPanel = (tab: Tab<T>): React.ReactNode => {
+        const id = getTabId(tab);
         return (
             <div className="mx_TabbedView_tabPanel" key={id} id={id} aria-labelledby={`${id}_label`}>
                 <AutoHideScrollbar className="mx_TabbedView_tabPanelContent">{tab.body}</AutoHideScrollbar>
             </div>
         );
-    }
+    };
 
-    public render(): React.ReactNode {
-        const labels = this.props.tabs.map((tab) => this.renderTabLabel(tab));
-        const tab = this.getTabById(this.state.activeTabId);
-        const panel = tab ? this.renderTabPanel(tab) : null;
+    const labels = props.tabs.map((tab) => renderTabLabel(tab));
+    const tab = getTabById(activeTabId);
+    const panel = tab ? renderTabPanel(tab) : null;
 
-        const tabbedViewClasses = classNames({
-            mx_TabbedView: true,
-            mx_TabbedView_tabsOnLeft: this.props.tabLocation == TabLocation.LEFT,
-            mx_TabbedView_tabsOnTop: this.props.tabLocation == TabLocation.TOP,
-        });
+    const tabbedViewClasses = classNames({
+        mx_TabbedView: true,
+        mx_TabbedView_tabsOnLeft: tabLocation == TabLocation.LEFT,
+        mx_TabbedView_tabsOnTop: tabLocation == TabLocation.TOP,
+    });
 
-        const screenName = tab?.screenName ?? this.props.screenName;
+    const screenName = tab?.screenName ?? props.screenName;
 
-        return (
-            <div className={tabbedViewClasses}>
-                {screenName && <PosthogScreenTracker screenName={screenName} />}
-                <RovingTabIndexProvider
-                    handleLoop
-                    handleHomeEnd
-                    handleLeftRight={this.props.tabLocation == TabLocation.TOP}
-                    handleUpDown={this.props.tabLocation == TabLocation.LEFT}
-                >
-                    {({ onKeyDownHandler }) => (
-                        <ul
-                            className="mx_TabbedView_tabLabels"
-                            role="tablist"
-                            aria-orientation={this.props.tabLocation == TabLocation.LEFT ? "vertical" : "horizontal"}
-                            onKeyDown={onKeyDownHandler}
-                        >
-                            {labels}
-                        </ul>
-                    )}
-                </RovingTabIndexProvider>
-                {panel}
-            </div>
-        );
-    }
+    return (
+        <div className={tabbedViewClasses}>
+            {screenName && <PosthogScreenTracker screenName={screenName} />}
+            <RovingTabIndexProvider
+                handleLoop
+                handleHomeEnd
+                handleLeftRight={tabLocation == TabLocation.TOP}
+                handleUpDown={tabLocation == TabLocation.LEFT}
+            >
+                {({ onKeyDownHandler }) => (
+                    <ul
+                        className="mx_TabbedView_tabLabels"
+                        role="tablist"
+                        aria-orientation={tabLocation == TabLocation.LEFT ? "vertical" : "horizontal"}
+                        onKeyDown={onKeyDownHandler}
+                    >
+                        {labels}
+                    </ul>
+                )}
+            </RovingTabIndexProvider>
+            {panel}
+        </div>
+    );
 }
