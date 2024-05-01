@@ -194,11 +194,11 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             if (this.props.legacy) {
                 const transport = new MSC3886SimpleHttpRendezvousTransport<MSC3903ECDHPayload>({
                     onFailure: this.onFailure,
-                    client: this.props.client!,
+                    client: this.props.client,
                     fallbackRzServer,
                 });
                 const channel = new MSC3903ECDHv2RendezvousChannel(transport, undefined, this.onFailure);
-                rendezvous = new MSC3906Rendezvous(channel, this.props.client!, this.onFailure);
+                rendezvous = new MSC3906Rendezvous(channel, this.props.client, this.onFailure);
             } else {
                 const transport = new MSC4108RendezvousSession({
                     onFailure: this.onFailure,
