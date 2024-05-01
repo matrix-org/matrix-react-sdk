@@ -173,7 +173,11 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
         return tabs as NonEmptyArray<Tab<UserTab>>;
     };
 
-    const [activeTabId, setActiveTabId] = React.useState<UserTab>(props.initialTabId ?? UserTab.General);
+    const [activeTabId, setActiveTabId] = React.useState<UserTab>(
+        props.initialTabId && getTabs().some((t) => t.icon === props.initialTabId)
+            ? props.initialTabId
+            : UserTab.General,
+    );
 
     return (
         // XXX: SDKContext is provided within the LoggedInView subtree.
