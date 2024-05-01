@@ -39,7 +39,7 @@ import { wrapRequestWithDialog } from "../../../utils/UserInteractiveAuth";
 import { _t } from "../../../languageHandler";
 
 interface IProps {
-    client?: MatrixClient;
+    client: MatrixClient;
     mode: Mode;
     legacy: boolean;
     onFinished(...args: any): void;
@@ -59,7 +59,6 @@ interface IState {
     checkCode?: string;
     failureReason?: FailureReason;
     lastScannedCode?: Buffer;
-    ourIntent: RendezvousIntent;
     homeserverBaseUrl?: string;
 }
 
@@ -88,10 +87,11 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
 
         this.state = {
             phase: Phase.Loading,
-            ourIntent: this.props.client
-                ? RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE
-                : RendezvousIntent.LOGIN_ON_NEW_DEVICE,
         };
+    }
+
+    private get ourIntent(): RendezvousIntent {
+        return RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE;
     }
 
     public componentDidMount(): void {
@@ -226,20 +226,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
             if (rendezvous instanceof MSC3906Rendezvous) {
                 const confirmationDigits = await rendezvous.startAfterShowingCode();
                 this.setState({ phase: Phase.LegacyConnected, confirmationDigits });
-            } else if (this.state.ourIntent === RendezvousIntent.LOGIN_ON_NEW_DEVICE) {
-                // MSC4108-Flow: ExistingScanned
-
-                // we get the homserver URL from the secure channel, but we don't trust it yet
-                const { homeserverBaseUrl } = await rendezvous.negotiateProtocols();
-
-                if (!homeserverBaseUrl) {
-                    throw new Error("We don't know the homeserver");
-                }
-                this.setState({
-                    phase: Phase.OutOfBandConfirmation,
-                    homeserverBaseUrl,
-                });
-            } else {
+            } else if (this.ourIntent === RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE) {
                 // MSC4108-Flow: NewScanned
                 await rendezvous.negotiateProtocols();
                 const { verificationUri } = await rendezvous.deviceAuthorizationGrant();
@@ -279,7 +266,7 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
         }
 
         try {
-            if (this.state.ourIntent === RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE) {
+            if (this.ourIntent === RendezvousIntent.RECIPROCATE_LOGIN_ON_EXISTING_DEVICE) {
                 // MSC4108-Flow: NewScanned
                 this.setState({ phase: Phase.Loading });
 
