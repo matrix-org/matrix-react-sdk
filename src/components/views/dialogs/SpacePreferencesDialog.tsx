@@ -90,7 +90,7 @@ const SpacePreferencesDialog: React.FC<IProps> = ({ space, initialTabId, onFinis
                 <RoomName room={space} />
             </h4>
             <div className="mx_SettingsDialog_content">
-                <TabbedView tabs={tabs} initialTabId={initialTabId} />
+                <TabbedView tabs={tabs} activeTabId={SpacePreferenceTab.Appearance} onChange={() => {}} />
             </div>
         </BaseDialog>
     );

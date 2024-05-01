@@ -173,6 +173,8 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
         return tabs as NonEmptyArray<Tab<UserTab>>;
     };
 
+    const [activeTabId, setActiveTabId] = React.useState<UserTab>(props.initialTabId ?? UserTab.General);
+
     return (
         // XXX: SDKContext is provided within the LoggedInView subtree.
         // Modals function outside the MatrixChat React tree, so sdkContext is reprovided here to simulate that.
@@ -185,7 +187,12 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
                 title={_t("common|settings")}
             >
                 <div className="mx_SettingsDialog_content">
-                    <TabbedView tabs={getTabs()} initialTabId={props.initialTabId} screenName="UserSettings" />
+                    <TabbedView
+                        tabs={getTabs()}
+                        activeTabId={activeTabId}
+                        screenName="UserSettings"
+                        onChange={setActiveTabId}
+                    />
                 </div>
             </BaseDialog>
         </SDKContext.Provider>

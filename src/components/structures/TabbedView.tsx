@@ -18,7 +18,6 @@ limitations under the License.
 
 import * as React from "react";
 import classNames from "classnames";
-import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, TranslationKey } from "../../languageHandler";
 import AutoHideScrollbar from "./AutoHideScrollbar";
@@ -54,37 +53,20 @@ export enum TabLocation {
 
 interface IProps<T extends string> {
     tabs: NonEmptyArray<Tab<T>>;
-    initialTabId?: T;
+    activeTabId: T;
     tabLocation?: TabLocation;
-    onChange?: (tabId: T) => void;
+    onChange: (tabId: T) => void;
     screenName?: ScreenName;
 }
 
 export default function TabbedView<T extends string>(props: IProps<T>): JSX.Element {
     const tabLocation = props.tabLocation ?? TabLocation.LEFT;
 
-    const [activeTabId, setActiveTabId] = React.useState<T>((): T => {
-        const initialTabIdIsValid = props.tabs.find((tab) => tab.id === props.initialTabId);
-        // unfortunately typescript doesn't infer the types coorectly if the null check is included above
-        return initialTabIdIsValid && props.initialTabId ? props.initialTabId : props.tabs[0].id;
-    });
+    const activeTabIdPropIsValid = props.tabs.find((tab) => tab.id === props.activeTabId);
+    const activeTabId = activeTabIdPropIsValid ? props.activeTabId : props.tabs[0].id;
 
     const getTabById = (id: T): Tab<T> | undefined => {
         return props.tabs.find((tab) => tab.id === id);
-    };
-
-    /**
-     * Shows the given tab
-     * @param {Tab} tab the tab to show
-     */
-    const setActiveTab = (tab: Tab<T>): void => {
-        // make sure this tab is still in available tabs
-        if (!!getTabById(tab.id)) {
-            if (props.onChange) props.onChange(tab.id);
-            setActiveTabId(tab.id);
-        } else {
-            logger.error("Could not find tab " + tab.label + " in tabs");
-        }
     };
 
     const renderTabLabel = (tab: Tab<T>): JSX.Element => {
@@ -98,7 +80,10 @@ export default function TabbedView<T extends string>(props: IProps<T>): JSX.Elem
             tabIcon = <span className={`mx_TabbedView_maskedIcon ${tab.icon}`} />;
         }
 
-        const onClickHandler = (): void => setActiveTab(tab);
+        const onClickHandler = (): void => {
+            props.onChange(tab.id);
+        };
+
         const id = getTabId(tab);
 
         const label = _t(tab.label);
