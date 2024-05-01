@@ -104,9 +104,7 @@ export default class LoginWithQRFlow extends React.Component<XOR<Props, MSC3906P
 
                 switch (this.props.failureReason) {
                     case MSC4108FailureReason.UnsupportedProtocol:
-                    case LegacyRendezvousFailureReason.UnsupportedAlgorithm:
                     case LegacyRendezvousFailureReason.UnsupportedProtocol:
-                    case LegacyRendezvousFailureReason.HomeserverLacksSupport:
                         title = _t("auth|qr_code_login|error_unsupported_protocol_title");
                         message = _t("auth|qr_code_login|error_unsupported_protocol");
                         break;
