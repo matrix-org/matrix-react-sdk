@@ -63,7 +63,11 @@ interface IProps<T extends string> {
 export default function TabbedView<T extends string>(props: IProps<T>): JSX.Element {
     const tabLocation = props.tabLocation ?? TabLocation.LEFT;
 
-    const [activeTabId, setActiveTabId] = React.useState<T>(props.initialTabId ?? props.tabs[0].id);
+    const [activeTabId, setActiveTabId] = React.useState<T>((): T => {
+        const initialTabIdIsValid = props.tabs.find((tab) => tab.id === props.initialTabId);
+        // unfortunately typescript doesn't infer the types coorectly if the null check is included above
+        return initialTabIdIsValid && props.initialTabId ? props.initialTabId : props.tabs[0].id;
+    });
 
     const getTabById = (id: T): Tab<T> | undefined => {
         return props.tabs.find((tab) => tab.id === id);
