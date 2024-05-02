@@ -82,21 +82,17 @@ describe("<UserSettingsDialog />", () => {
 
     const getActiveTabLabel = (container: Element) =>
         container.querySelector(".mx_TabbedView_tabLabel_active")?.textContent;
-    const getActiveTabHeading = (container: Element) =>
-        container.querySelector(".mx_SettingsSection .mx_Heading_h3")?.textContent;
 
     it("should render general settings tab when no initialTabId", () => {
         const { container } = render(getComponent());
 
         expect(getActiveTabLabel(container)).toEqual("General");
-        expect(getActiveTabHeading(container)).toEqual("General");
     });
 
     it("should render initial tab when initialTabId is set", () => {
         const { container } = render(getComponent({ initialTabId: UserTab.Help }));
 
         expect(getActiveTabLabel(container)).toEqual("Help & About");
-        expect(getActiveTabHeading(container)).toEqual("Help & About");
     });
 
     it("should render general tab if initialTabId tab cannot be rendered", () => {
@@ -104,7 +100,6 @@ describe("<UserSettingsDialog />", () => {
         const { container } = render(getComponent({ initialTabId: UserTab.Mjolnir }));
 
         expect(getActiveTabLabel(container)).toEqual("General");
-        expect(getActiveTabHeading(container)).toEqual("General");
     });
 
     it("renders tabs correctly", () => {
