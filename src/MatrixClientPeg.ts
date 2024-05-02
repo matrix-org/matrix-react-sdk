@@ -295,9 +295,17 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.threadSupport = true;
 
         if (SettingsStore.getValue("feature_sliding_sync")) {
-            opts.slidingSync = await SlidingSyncManager.instance.setup(this.matrixClient);
-        } else {
-            SlidingSyncManager.instance.checkSupport(this.matrixClient);
+            const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
+            if (proxyUrl) {
+                logger.log("Activating sliding sync using proxy at ", proxyUrl);
+            } else {
+                logger.log("Activating sliding sync");
+            }
+            opts.slidingSync = SlidingSyncManager.instance.configure(
+                this.matrixClient,
+                proxyUrl || this.matrixClient.baseUrl,
+            );
+            SlidingSyncManager.instance.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
         }
 
         // Connect the matrix client to the dispatcher and setting handlers
