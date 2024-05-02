@@ -83,6 +83,7 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
                     closeLabel={_t("action|ok")}
                 >
                     <ThreadsActivityCentreButton
+                        disableTooltip={true}
                         displayLabel={displayButtonLabel}
                         notificationLevel={roomsAndNotifications.greatestNotificationLevel}
                         onClick={async () => {
