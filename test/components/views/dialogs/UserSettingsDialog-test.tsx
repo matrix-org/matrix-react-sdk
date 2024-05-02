@@ -29,6 +29,7 @@ import {
     mockClientMethodsServer,
     mockPlatformPeg,
     mockClientMethodsCrypto,
+    mockClientMethodsRooms,
 } from "../../../test-utils";
 import { UIFeature } from "../../../../src/settings/UIFeature";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
@@ -48,6 +49,10 @@ jest.mock("../../../../src/settings/SettingsStore", () => ({
     unwatchSetting: jest.fn(),
     getFeatureSettingNames: jest.fn(),
     getBetaInfo: jest.fn(),
+    getDisplayName: jest.fn(),
+    getDescription: jest.fn(),
+    shouldHaveWarning: jest.fn(),
+    disabledMessage: jest.fn(),
 }));
 
 jest.mock("../../../../src/SdkConfig", () => ({
@@ -72,10 +77,15 @@ describe("<UserSettingsDialog />", () => {
             ...mockClientMethodsUser(userId),
             ...mockClientMethodsServer(),
             ...mockClientMethodsCrypto(),
+            ...mockClientMethodsRooms(),
+            getIgnoredUsers: jest.fn().mockResolvedValue([]),
+            getPushers: jest.fn().mockResolvedValue([]),
+            getProfileInfo: jest.fn().mockResolvedValue({}),
         });
         sdkContext = new SdkContextClass();
         sdkContext.client = mockClient;
         mockSettingsStore.getValue.mockReturnValue(false);
+        mockSettingsStore.getValueAt.mockReturnValue(false);
         mockSettingsStore.getFeatureSettingNames.mockReturnValue([]);
         mockSdkConfig.get.mockReturnValue({ brand: "Test" });
     });
@@ -122,6 +132,48 @@ describe("<UserSettingsDialog />", () => {
     it("renders session manager tab", () => {
         const { getByTestId } = render(getComponent());
         expect(getByTestId(`settings-tab-${UserTab.SessionManager}`)).toBeTruthy();
+    });
+
+    it("should render appearance tab", () => {
+        const { container } = render(getComponent({ initialTabId: UserTab.Appearance }));
+
+        expect(getActiveTabLabel(container)).toEqual("Appearance");
+    });
+
+    it("should render notifications tab", () => {
+        const { container } = render(getComponent({ initialTabId: UserTab.Notifications }));
+
+        expect(getActiveTabLabel(container)).toEqual("Notifications");
+    });
+
+    it("should render preferences tab", () => {
+        const { container } = render(getComponent({ initialTabId: UserTab.Preferences }));
+
+        expect(getActiveTabLabel(container)).toEqual("Preferences");
+    });
+
+    it("should render keyboard tab", () => {
+        const { container } = render(getComponent({ initialTabId: UserTab.Keyboard }));
+
+        expect(getActiveTabLabel(container)).toEqual("Keyboard");
+    });
+
+    it("should render sidebar tab", () => {
+        const { container } = render(getComponent({ initialTabId: UserTab.Sidebar }));
+
+        expect(getActiveTabLabel(container)).toEqual("Sidebar");
+    });
+
+    it("should render secutity tab", () => {
+        const { container } = render(getComponent({ initialTabId: UserTab.Security }));
+
+        expect(getActiveTabLabel(container)).toEqual("Security & Privacy");
+    });
+
+    it("should render help tab", () => {
+        const { container } = render(getComponent({ initialTabId: UserTab.Help }));
+
+        expect(getActiveTabLabel(container)).toEqual("Help & About");
     });
 
     it("renders labs tab when show_labs_settings is enabled in config", () => {
