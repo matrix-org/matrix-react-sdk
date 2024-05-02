@@ -32,7 +32,6 @@ export const ContextMenuTooltipButton = forwardRef(function <T extends keyof JSX
 ) {
     return (
         <AccessibleButton
-            placement="right"
             {...props}
             element={element as keyof JSX.IntrinsicElements}
             onClick={onClick}
