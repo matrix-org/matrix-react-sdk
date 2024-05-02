@@ -1,0 +1,178 @@
+import { ClientEvent, EventType, MatrixClient, MatrixEvent, Room, RoomEvent, RoomMemberEvent, RoomState, RoomStateEvent, RoomMember as SDKRoomMember, User, UserEvent } from "matrix-js-sdk/src/matrix";
+import { MemberListStore } from "../../../stores/MemberListStore";
+import { RoomMember } from "../../../models/rooms/RoomMember";
+import { IMemberService } from "./IMemberService";
+import { KnownMembership } from "matrix-js-sdk/src/types";
+import { mediaFromMxc } from "../../../customisations/Media";
+import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
+import { isValid3pidInvite } from "../../../RoomInvite";
+import { ThreePIDInvite } from "../../../models/rooms/ThreePIDInvite";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
+
+export class MemberService implements IMemberService {
+    private roomId: string;
+    private matixClient: MatrixClient
+    private memberListStore: MemberListStore
+    private membershipType?: string
+    private onMemberListUpdated?: (reload: boolean) => void
+
+    constructor(
+        roomId: string,
+        matixClient: MatrixClient,
+        memberListStore: MemberListStore
+        ) {
+        this.roomId = roomId;
+        this.matixClient = matixClient;
+        this.memberListStore = memberListStore;
+    }
+
+    setOnMemberListUpdated(callback: (reload: boolean) => void): void {
+        this.onMemberListUpdated = callback
+    }
+
+    load(): void {
+        this.matixClient.on(RoomStateEvent.Update, this.onRoomStateUpdate);
+        this.matixClient.on(RoomMemberEvent.Name, this.onRoomMemberName);
+        this.matixClient.on(RoomStateEvent.Events, this.onRoomStateEvent);
+        this.matixClient.on(ClientEvent.Room, this.onRoom); // invites & joining after peek
+        this.matixClient.on(RoomEvent.MyMembership, this.onMyMembership);
+        this.matixClient.on(UserEvent.LastPresenceTs, this.onUserPresenceChange);
+        this.matixClient.on(UserEvent.Presence, this.onUserPresenceChange);
+        this.matixClient.on(UserEvent.CurrentlyActive, this.onUserPresenceChange);
+    }
+
+    unload(): void {
+        this.matixClient.off(RoomStateEvent.Update, this.onRoomStateUpdate);
+        this.matixClient.off(RoomMemberEvent.Name, this.onRoomMemberName);
+        this.matixClient.off(RoomStateEvent.Events, this.onRoomStateEvent);
+        this.matixClient.off(ClientEvent.Room, this.onRoom);
+        this.matixClient.off(RoomEvent.MyMembership, this.onMyMembership);
+        this.matixClient.off(UserEvent.LastPresenceTs, this.onUserPresenceChange);
+        this.matixClient.off(UserEvent.Presence, this.onUserPresenceChange);
+        this.matixClient.off(UserEvent.CurrentlyActive, this.onUserPresenceChange);
+    }
+
+    async loadMembers(searchQuery: string): Promise<Record<"joined" | "invited", RoomMember[]>> {
+        const { joined: joinedSdk, invited: invitedSdk } = await this.memberListStore.loadMemberList(this.roomId, searchQuery)
+        const joined = joinedSdk.map(this.sdkRoomMemberToRoomMember)
+        const invited = invitedSdk.map(this.sdkRoomMemberToRoomMember)
+        return { joined, invited }
+    }
+
+    private sdkRoomMemberToRoomMember(member: SDKRoomMember): RoomMember {
+        const displayUserId = UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, {
+            roomId: member.roomId,
+        }) ?? member.userId;
+
+        const mxcAvatarURL = member.getMxcAvatarUrl(); 
+        const avatarThumbnailUrl = (mxcAvatarURL && mediaFromMxc(mxcAvatarURL).getThumbnailOfSourceHttp(10, 10)) ?? undefined;
+
+        return {
+            roomId: member.roomId,
+            userId: member.userId,
+            displayUserId:displayUserId,
+            name: member.name,
+            rawDisplayName: member.rawDisplayName,
+            disambiguate: member.disambiguate,
+            avatarThumbnailUrl: avatarThumbnailUrl,
+            powerLevel: member.powerLevel,
+            lastModifiedTime: member.getLastModifiedTime()
+        }
+    }
+
+    private onRoomStateUpdate(state: RoomState): void {
+        if (state.roomId !== this.roomId) return;
+        this.onMemberListUpdated?.(false);
+    }
+
+    private onRoomMemberName(ev: MatrixEvent, member: SDKRoomMember): void {
+        if (member.roomId !== this.roomId) {
+            return;
+        }
+        this.onMemberListUpdated?.(false);
+    };
+
+    private onRoomStateEvent(event: MatrixEvent): void {
+        if (event.getRoomId() !== this.roomId || event.getType() !== EventType.RoomThirdPartyInvite) {
+            return
+        }
+        this.onMemberListUpdated?.(false);
+    };
+
+    private onRoom(room: Room): void {
+        if (room.roomId !== this.roomId) {
+            return;
+        }
+        // We listen for room events because when we accept an invite
+        // we need to wait till the room is fully populated with state
+        // before refreshing the member list else we get a stale list.
+        this.onMemberListUpdated?.(true);
+    };
+
+    private onMyMembership = (room: Room, membership: string, oldMembership?: string): void => {
+        if(room.roomId != this.roomId) return
+
+        if (this.membershipType != membership) {
+            this.membershipType = membership
+        }
+        if (
+            membership === KnownMembership.Join &&
+            oldMembership !== KnownMembership.Join
+        ) {
+            // we just joined the room, load the member list
+            this.onMemberListUpdated?.(true);
+        }
+    };
+
+
+    private onUserPresenceChange = (event: MatrixEvent | undefined, user: User): void => {
+        // Attach a SINGLE listener for global presence changes then locate the
+        // member tile and re-render it. This is more efficient than every tile
+        // ever attaching their own listener.
+        // const tile = this.tiles.get(user.userId);
+        // if (tile) {
+            // this.updateList(); // reorder the membership list
+        // }
+    };
+
+    getThreePIDInvites(): ThreePIDInvite[] {
+        // include 3pid invites (m.room.third_party_invite) state events.
+        // The HS may have already converted these into m.room.member invites so
+        // we shouldn't add them if the 3pid invite state key (token) is in the
+        // member invite (content.third_party_invite.signed.token)
+        const room = this.matixClient.getRoom(this.roomId);
+        
+        if (room) {
+            return room.currentState.getStateEvents("m.room.third_party_invite").filter(function (e) {
+                if (!isValid3pidInvite(e)) return false;
+
+                // discard all invites which have a m.room.member event since we've
+                // already added them.
+                const memberEvent = room.currentState.getInviteForThreePidToken(e.getStateKey()!);
+                if (memberEvent) return false;
+                return true;
+            })
+            .reduce(function(filtered: ThreePIDInvite[], event) {
+                const eventID = event.getId()
+                const stateKey = event.getStateKey()
+                const displayName = event.getContent().display_name
+                if (!!eventID && !!stateKey && !!displayName) {
+                    filtered.push({
+                        eventId: eventID,
+                        stateKey: stateKey,
+                        displayName: displayName,
+                    });
+                }
+                return filtered
+            }, []);
+        }
+        return [];
+    }
+
+    shouldShowInvite(): boolean {
+        const room = this.matixClient.getRoom(this.roomId);
+        return room?.getMyMembership() == KnownMembership.Join && shouldShowComponent(UIComponent.InviteUsers)
+    }
+
+}

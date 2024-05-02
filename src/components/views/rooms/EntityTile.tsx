@@ -21,9 +21,11 @@ import classNames from "classnames";
 
 import AccessibleButton from "../elements/AccessibleButton";
 import { _t, _td, TranslationKey } from "../../../languageHandler";
-import E2EIcon, { E2EState } from "./E2EIcon";
+import E2EIcon from "./E2EIcon";
+import { E2EState } from "../../../models/rooms/E2EState";
 import BaseAvatar from "../avatars/BaseAvatar";
 import PresenceLabel from "./PresenceLabel";
+import { PresenceState } from "../../../models/rooms/PresenceState";
 
 export enum PowerStatus {
     Admin = "admin",
@@ -34,8 +36,6 @@ const PowerLabel: Record<PowerStatus, TranslationKey> = {
     [PowerStatus.Admin]: _td("power_level|admin"),
     [PowerStatus.Moderator]: _td("power_level|mod"),
 };
-
-export type PresenceState = "offline" | "online" | "unavailable" | "io.element.unreachable";
 
 const PRESENCE_CLASS: Record<PresenceState, string> = {
     "offline": "mx_EntityTile_offline",

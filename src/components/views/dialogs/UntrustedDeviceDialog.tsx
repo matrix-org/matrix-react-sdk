@@ -19,7 +19,8 @@ import { User } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import E2EIcon, { E2EState } from "../rooms/E2EIcon";
+import E2EIcon from "../rooms/E2EIcon";
+import { E2EState } from "../../../models/rooms/E2EState";
 import AccessibleButton from "../elements/AccessibleButton";
 import BaseDialog from "./BaseDialog";
 import { IDevice } from "../right_panel/UserInfo";
