@@ -27,18 +27,27 @@ describe("StorageAccess", () => {
         const key = ["a", "b"];
         const data = { hello: "world" };
 
+        // Should start undefined
+        let loaded = await idbLoad(tableName, key);
+        expect(loaded).toBeUndefined();
+
+        // ... then define a value
         await idbSave(tableName, key, data);
 
-        let loaded = await idbLoad(tableName, key);
+        // ... then check that value
+        loaded = await idbLoad(tableName, key);
         expect(loaded).toEqual(data);
 
+        // ... then set it back to undefined
         await idbDelete(tableName, key);
 
+        // ... which we then check again
         loaded = await idbLoad(tableName, key);
         expect(loaded).toBeUndefined();
     });
 
     it("should fail to save, load, and delete from a non-existent table", async () => {
+        // Regardless of validity on the key/data, or write order, these should all fail.
         await expect(() => idbSave(NONEXISTENT_TABLE, "whatever", "value")).rejects.toThrow();
         await expect(() => idbLoad(NONEXISTENT_TABLE, "whatever")).rejects.toThrow();
         await expect(() => idbDelete(NONEXISTENT_TABLE, "whatever")).rejects.toThrow();
