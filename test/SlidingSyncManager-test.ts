@@ -261,9 +261,16 @@ describe("SlidingSyncManager", () => {
             // Developer note: We mock this in a truly terrible way because of how the call is done. There's not
             // really much we can do to avoid it.
             client.http = {
-                async authedRequest(method: Method, path: string, queryParams?: QueryDict, body?: Body, paramOpts: IRequestOpts & {
-                    doNotAttemptTokenRefresh?: boolean
-                } = {}): Promise<any> { // XXX: Ideally we'd use ResponseType<> like in the real thing, but it's not exported
+                async authedRequest(
+                    method: Method,
+                    path: string,
+                    queryParams?: QueryDict,
+                    body?: Body,
+                    paramOpts: IRequestOpts & {
+                        doNotAttemptTokenRefresh?: boolean;
+                    } = {},
+                ): Promise<any> {
+                    // XXX: Ideally we'd use ResponseType<> like in the real thing, but it's not exported
                     expect(method).toBe(Method.Options);
                     expect(path).toBe("/sync");
                     expect(queryParams).toBeUndefined();
