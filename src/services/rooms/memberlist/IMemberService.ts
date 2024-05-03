@@ -6,6 +6,8 @@ export interface IMemberService {
     unload(): void
     loadMembers(searchQuery: string): Promise<Record<"joined" | "invited", RoomMember[]>>;
     setOnMemberListUpdated(callback: (reload: boolean) => void): void;
+    setOnPresemceUpdated(callback: (userId: string) => void): void;
     getThreePIDInvites(): ThreePIDInvite[];
     shouldShowInvite(): boolean;
+    showPresence(): boolean
 }

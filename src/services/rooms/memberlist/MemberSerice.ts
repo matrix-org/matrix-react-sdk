@@ -16,6 +16,7 @@ export class MemberService implements IMemberService {
     private memberListStore: MemberListStore
     private membershipType?: string
     private onMemberListUpdated?: (reload: boolean) => void
+    private onPresenceUpdated?: (userId: string) => void
 
     constructor(
         roomId: string,
@@ -29,6 +30,10 @@ export class MemberService implements IMemberService {
 
     setOnMemberListUpdated(callback: (reload: boolean) => void): void {
         this.onMemberListUpdated = callback
+    }
+
+    setOnPresemceUpdated(callback: (userId: string) => void): void {
+        this.onPresenceUpdated = callback
     }
 
     load(): void {
@@ -127,13 +132,7 @@ export class MemberService implements IMemberService {
 
 
     private onUserPresenceChange = (event: MatrixEvent | undefined, user: User): void => {
-        // Attach a SINGLE listener for global presence changes then locate the
-        // member tile and re-render it. This is more efficient than every tile
-        // ever attaching their own listener.
-        // const tile = this.tiles.get(user.userId);
-        // if (tile) {
-            // this.updateList(); // reorder the membership list
-        // }
+        this.onPresenceUpdated?.(user.userId)
     };
 
     getThreePIDInvites(): ThreePIDInvite[] {
@@ -173,6 +172,10 @@ export class MemberService implements IMemberService {
     shouldShowInvite(): boolean {
         const room = this.matixClient.getRoom(this.roomId);
         return room?.getMyMembership() == KnownMembership.Join && shouldShowComponent(UIComponent.InviteUsers)
+    }
+
+    showPresence(): boolean {
+        return this.memberListStore.isPresenceEnabled()
     }
 
 }

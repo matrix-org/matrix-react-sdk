@@ -41,9 +41,9 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { IRightPanelCard, IRightPanelCardState } from "../../stores/right-panel/RightPanelStoreIPanelState";
 import { Action } from "../../dispatcher/actions";
 import { XOR } from "../../@types/common";
-import MemberListHOC from "../views/rooms/MemberList";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { inviteToRoom } from "../../utils/room/inviteToRoom";
+import MemberList from "../views/rooms/MemberList";
 
 interface BaseProps {
     overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
@@ -179,7 +179,7 @@ export default class RightPanel extends React.Component<Props, IState> {
             case RightPanelPhases.RoomMemberList:
                 if (!!roomId) {
                     card = (
-                        <MemberListHOC
+                        <MemberList
                         roomId={roomId}
                         key={roomId}
                         onClose={this.onClose}
@@ -192,7 +192,7 @@ export default class RightPanel extends React.Component<Props, IState> {
             case RightPanelPhases.SpaceMemberList:
                 if (!!cardState?.spaceId || !!roomId) {
                     card = (
-                        <MemberListHOC
+                        <MemberList
                         roomId={cardState?.spaceId ?? roomId!}
                         key={cardState?.spaceId ?? roomId!}
                         onClose={this.onClose}

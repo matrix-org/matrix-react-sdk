@@ -25,6 +25,7 @@ export interface IMemberListViewModel extends MemberState {
     shouldShowInvite: boolean
     canInvite: boolean;
     isSpaceRoom: boolean;
+    showPresence: boolean;
     searchQuery: string;
     onSearchQueryChanged(query: string): void;
     showMoreJoinedMemberList(): void;
@@ -45,11 +46,13 @@ export default function MemberListViewModel(
         truncateAtInvited: INITIAL_LOAD_NUM_INVITED,
     });
     const [searchQuery, setSearchQuery] = useState("")
-
+    const [showPresence, setShowPresence] = useState(true)
     function load() {
         if(!memberService) return
         memberService.setOnMemberListUpdated(onMembersUpdated);
+        memberService.setOnPresemceUpdated(onPresenceUpdated);
         memberService.load();
+        setShowPresence(memberService.showPresence())
         loadMembersNow(true);
     }
 
@@ -63,6 +66,12 @@ export default function MemberListViewModel(
             loadMembersNow(true);
         } else {
             throttleLoadMembers();
+        }
+    }
+
+    function onPresenceUpdated(userId: string): void {
+        if (memberState.joinedMembers.map((member) => member.userId).includes(userId)) {
+            throttleLoadMembers()
         }
     }
     
@@ -110,6 +119,7 @@ export default function MemberListViewModel(
         shouldShowInvite: memberService?.shouldShowInvite() ?? false,
         canInvite,
         isSpaceRoom,
+        showPresence,
         searchQuery,
         onSearchQueryChanged,
         showMoreJoinedMemberList,
