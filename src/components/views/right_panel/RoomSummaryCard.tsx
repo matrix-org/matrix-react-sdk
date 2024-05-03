@@ -187,9 +187,8 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
                 className="mx_RoomSummaryCard_icon_app"
                 onClick={onOpenWidgetClick}
                 // only show a tooltip if the widget is pinned
-                title={openTitle}
+                title={!(isPinned || isMaximised) ? undefined : openTitle}
                 disabled={isPinned || isMaximised}
-                placement="right"
             >
                 <WidgetAvatar app={app} size="20px" />
                 <span>{name}</span>
@@ -210,13 +209,11 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
                 onClick={togglePin}
                 title={pinTitle}
                 disabled={cannotPin}
-                placement="right"
             />
             <AccessibleButton
                 className="mx_RoomSummaryCard_app_maximiseToggle"
                 onClick={toggleMaximised}
                 title={maximiseTitle}
-                placement="right"
             />
 
             {contextMenu}
