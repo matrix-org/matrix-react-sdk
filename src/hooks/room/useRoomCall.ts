@@ -41,6 +41,7 @@ import { Action } from "../../dispatcher/actions";
 import { CallStore, CallStoreEvent } from "../../stores/CallStore";
 import { isVideoRoom } from "../../utils/video-rooms";
 import { useGuestAccessInformation } from "./useGuestAccessInformation";
+import SettingsStore from "../../settings/SettingsStore";
 
 export enum PlatformCallType {
     ElementCall,
@@ -81,7 +82,7 @@ export const useRoomCall = (
     voiceCallClick(evt: React.MouseEvent | undefined, selectedType: PlatformCallType): void;
     videoCallDisabledReason: string | null;
     videoCallClick(evt: React.MouseEvent | undefined, selectedType: PlatformCallType): void;
-    toggleCallMaximized: () => void;
+    toggleCallMaximised: () => void;
     isViewingCall: boolean;
     isConnectedToCall: boolean;
     hasActiveCallSession: boolean;
@@ -138,18 +139,27 @@ export const useRoomCall = (
             options.push(PlatformCallType.LegacyCall);
         }
         if (mayEditWidgets || hasJitsiWidget) options.push(PlatformCallType.JitsiCall);
-        if (mayEditWidgets || hasBigBlueButtonWidget) options.push(PlatformCallType.BigBlueButtonCall);
+        if ((mayEditWidgets || hasBigBlueButtonWidget) && SettingsStore.getValue("feature_big_blue_button_calls"))
+            options.push(PlatformCallType.BigBlueButtonCall);
         if (groupCallsEnabled) {
             if (hasGroupCall || mayCreateElementCalls) {
                 options.push(PlatformCallType.ElementCall);
             }
-            if (useElementCallExclusively && !hasJitsiWidget && !hasBigBlueButtonWidget) {
+            if (
+                useElementCallExclusively &&
+                !hasJitsiWidget &&
+                (!hasBigBlueButtonWidget || !SettingsStore.getValue("feature_big_blue_button_calls"))
+            ) {
                 return [PlatformCallType.ElementCall];
             }
             // we need to do an exception here that if there is a bigbluebutton widget it looks like there is a group call
             // but actually it is a bigbluebutton call...
             // they both use matrix rtc sessions...
-            if (hasGroupCall && WidgetType.CALL.matches(groupCall.widget.type) && !hasBigBlueButtonWidget) {
+            if (
+                hasGroupCall &&
+                WidgetType.CALL.matches(groupCall.widget.type) &&
+                (!hasBigBlueButtonWidget || !SettingsStore.getValue("feature_big_blue_button_calls"))
+            ) {
                 // only allow joining the ongoing Element call if there is one.
                 return [PlatformCallType.ElementCall];
             }
@@ -177,7 +187,11 @@ export const useRoomCall = (
         widget = groupCall?.widget ?? jitsiWidget;
     }
     // big blue button widget always wins if available.
-    if (callOptions.includes(PlatformCallType.BigBlueButtonCall) && bigbluebuttonWidget) {
+    if (
+        SettingsStore.getValue("feature_big_blue_button_calls") &&
+        callOptions.includes(PlatformCallType.BigBlueButtonCall) &&
+        bigbluebuttonWidget
+    ) {
         widget = bigbluebuttonWidget;
     }
     const updateWidgetState = useCallback((): void => {
@@ -276,7 +290,7 @@ export const useRoomCall = (
             voiceCallDisabledReason = null;
             videoCallDisabledReason = null;
     }
-    const toggleCallMaximized = useCallback(() => {
+    const toggleCallMaximised = useCallback(() => {
         defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
@@ -293,10 +307,10 @@ export const useRoomCall = (
         voiceCallClick,
         videoCallDisabledReason,
         videoCallClick,
-        toggleCallMaximized: toggleCallMaximized,
-        isViewingCall: isViewingCall,
-        isConnectedToCall: isConnectedToCall,
-        hasActiveCallSession: hasActiveCallSession,
+        toggleCallMaximised,
+        isViewingCall,
+        isConnectedToCall,
+        hasActiveCallSession,
         callOptions,
     };
 };

@@ -82,7 +82,7 @@ export default function RoomHeader({
         voiceCallClick,
         videoCallDisabledReason,
         videoCallClick,
-        toggleCallMaximized: toggleCall,
+        toggleCallMaximised: toggleCall,
         isViewingCall,
         isConnectedToCall,
         hasActiveCallSession,

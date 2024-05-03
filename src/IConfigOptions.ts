@@ -112,6 +112,7 @@ export interface IConfigOptions {
         preferred_domain: string;
     };
     big_blue_button?: {
+        // should look like this: "https://some-bbb-domain.com/widget?device_id=$org.matrix.msc3819.matrix_device_id&room_id=$matrix_room_id&display_name=$matrix_display_name&baseUrl=$org.matrix.msc4039.matrix_base_url&userId=$matrix_user_id",
         widget_url: string;
     };
     jitsi_widget?: {

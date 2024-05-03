@@ -429,6 +429,14 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         controller: new ReloadOnChangeController(),
         default: false,
     },
+    "feature_big_blue_button_calls": {
+        isFeature: true,
+        labsGroup: LabGroup.VoiceAndVideo,
+        configDisablesSetting: true,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td("labs|big_blue_button_calls"),
+        default: false,
+    },
     "feature_disable_call_per_sender_encryption": {
         isFeature: true,
         labsGroup: LabGroup.VoiceAndVideo,

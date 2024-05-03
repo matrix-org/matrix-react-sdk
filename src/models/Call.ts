@@ -956,6 +956,8 @@ export class ElementCall extends Call {
         // (bbb and jitsi could be covered by this same call type)
         // The rtc session would contain which widget is used with what session so one can decide
         // which widget to destroy based on `this.session`.
+        // We intentionally do not put this behind a feature flag since we want to also hide it if someone else added
+        // the widget and this account is using it manually.
         WidgetStore.instance
             .getApps(this.roomId)
             .filter((app) => WidgetType.BIGBLUEBUTTON.matches(app.type))
