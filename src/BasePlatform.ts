@@ -315,9 +315,10 @@ export default abstract class BasePlatform {
 
     /**
      * The URL to return to after a successful SSO/OIDC authentication
+     * @param forOidc whether the callback URL is for OIDC or legacy SSO
      * @param fragmentAfterLogin optional fragment for specific view to return to
      */
-    public getSSOCallbackUrl(fragmentAfterLogin = ""): URL {
+    public getSSOCallbackUrl(forOidc = false, fragmentAfterLogin = ""): URL {
         const url = new URL(window.location.href);
         url.hash = fragmentAfterLogin;
         return url;
@@ -346,7 +347,7 @@ export default abstract class BasePlatform {
         if (idpId) {
             localStorage.setItem(SSO_IDP_ID_KEY, idpId);
         }
-        const callbackUrl = this.getSSOCallbackUrl(fragmentAfterLogin);
+        const callbackUrl = this.getSSOCallbackUrl(false, fragmentAfterLogin);
         window.location.href = mxClient.getSsoLoginUrl(callbackUrl.toString(), loginType, idpId, action); // redirect to SSO
     }
 
