@@ -168,7 +168,6 @@ export const useRoomCall = (
     ]);
 
     let widget: IApp | undefined;
-    // TODO make this so that it is correctly prompting the BBB widget if there is a BBB call..
     if (callOptions.includes(PlatformCallType.JitsiCall) || callOptions.includes(PlatformCallType.LegacyCall)) {
         widget = jitsiWidget ?? managedHybridWidget;
     }
@@ -177,6 +176,7 @@ export const useRoomCall = (
     } else {
         widget = groupCall?.widget ?? jitsiWidget;
     }
+    // big blue button widget always wins if available.
     if (callOptions.includes(PlatformCallType.BigBlueButtonCall) && bigbluebuttonWidget) {
         widget = bigbluebuttonWidget;
     }

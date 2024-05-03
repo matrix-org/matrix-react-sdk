@@ -58,7 +58,7 @@ import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { getJoinedNonFunctionalMembers } from "../utils/room/getJoinedNonFunctionalMembers";
 import { isVideoRoom } from "../utils/video-rooms";
 import { FontWatcher } from "../settings/watchers/FontWatcher";
-import { JitsiCallMemberContent } from "../call-types";
+import { JitsiCallMemberContent, JitsiCallMemberEventType } from "../call-types";
 import { Container, WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
 
 const TIMEOUT_MS = 16000;
@@ -330,7 +330,7 @@ export type { JitsiCallMemberContent };
  * A group call using Jitsi as a backend.
  */
 export class JitsiCall extends Call {
-    public static readonly MEMBER_EVENT_TYPE = "bbb.member.event";
+    public static readonly MEMBER_EVENT_TYPE = JitsiCallMemberEventType;
     public readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
     private resendDevicesTimer: number | null = null;
@@ -823,267 +823,6 @@ export class ElementCall extends Call {
         ) {
             const apps = WidgetStore.instance.getApps(room.roomId);
             const hasEcWidget = apps.some((app) => WidgetType.CALL.matches(app.type));
-            const session = room.client.matrixRTC.getRoomSession(room, "m.call");
-
-            // A call is present if we
-            // - have a widget: This means the create function was called.
-            // - or there is a running session where we have not yet created a widget for.
-            // - or this is a call room. Then we also always want to show a call.
-            if (hasEcWidget || session.memberships.length !== 0 || room.isCallRoom()) {
-                // create a widget for the case we are joining a running call and don't have on yet.
-                const availableOrCreatedWidget = ElementCall.createOrGetCallWidget(
-                    room.roomId,
-                    room.client,
-                    undefined,
-                    undefined,
-                    isVideoRoom(room),
-                );
-                return new ElementCall(session, availableOrCreatedWidget, room.client);
-            }
-        }
-
-        return null;
-    }
-
-    public static async create(room: Room, skipLobby = false): Promise<void> {
-        ElementCall.createOrGetCallWidget(room.roomId, room.client, skipLobby, false, isVideoRoom(room));
-        WidgetStore.instance.emit(UPDATE_EVENT, null);
-    }
-
-    protected async sendCallNotify(): Promise<void> {
-        const room = this.room;
-        const existingOtherRoomCallMembers = MatrixRTCSession.callMembershipsForRoom(room).filter(
-            // filter all memberships where the application is m.call and the call_id is ""
-            (m) => {
-                const isRoomCallMember = m.application === "m.call" && m.callId === "";
-                const isThisDevice = m.deviceId === this.client.deviceId;
-                return isRoomCallMember && !isThisDevice;
-            },
-        );
-
-        const memberCount = getJoinedNonFunctionalMembers(room).length;
-        if (!isVideoRoom(room) && existingOtherRoomCallMembers.length === 0) {
-            // send ringing event
-            const content: ICallNotifyContent = {
-                "application": "m.call",
-                "m.mentions": { user_ids: [], room: true },
-                "notify_type": memberCount == 2 ? "ring" : "notify",
-                "call_id": "",
-            };
-
-            await room.client.sendEvent(room.roomId, EventType.CallNotify, content);
-        }
-    }
-
-    protected async performConnection(
-        audioInput: MediaDeviceInfo | null,
-        videoInput: MediaDeviceInfo | null,
-    ): Promise<void> {
-        // The JoinCall action is only send if the widget is waiting for it.
-        if (this.widget.data?.preload) {
-            try {
-                await this.messaging!.transport.send(ElementWidgetActions.JoinCall, {
-                    audioInput: audioInput?.label ?? null,
-                    videoInput: videoInput?.label ?? null,
-                });
-            } catch (e) {
-                throw new Error(`Failed to join call in room ${this.roomId}: ${e}`);
-            }
-        }
-        this.messaging!.on(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
-        this.messaging!.on(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
-        this.messaging!.on(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
-
-        if (!this.widget.data?.skipLobby) {
-            // If we do not skip the lobby we need to wait until the widget has
-            // connected to matrixRTC. This is either observed through the session state
-            // or the MatrixRTCSessionManager session started event.
-            this.connectionState = ConnectionState.Lobby;
-        }
-        // TODO: if the widget informs us when the join button is clicked (widget action), so we can
-        // - set state to connecting
-        // - send call notify
-        const session = this.client.matrixRTC.getActiveRoomSession(this.room);
-        if (session) {
-            await waitForEvent(
-                session,
-                MatrixRTCSessionEvent.MembershipsChanged,
-                (_, newMemberships: CallMembership[]) =>
-                    newMemberships.some((m) => m.sender === this.client.getUserId()),
-                false, // allow user to wait as long as they want (no timeout)
-            );
-        } else {
-            await waitForEvent(
-                this.client.matrixRTC,
-                MatrixRTCSessionManagerEvents.SessionStarted,
-                (roomId: string, session: MatrixRTCSession) =>
-                    this.session.callId === session.callId && roomId === this.roomId,
-                false, // allow user to wait as long as they want (no timeout)
-            );
-        }
-        this.sendCallNotify();
-    }
-
-    protected async performDisconnection(): Promise<void> {
-        try {
-            await this.messaging!.transport.send(ElementWidgetActions.HangupCall, {});
-            await waitForEvent(
-                this.session,
-                MatrixRTCSessionEvent.MembershipsChanged,
-                (_, newMemberships: CallMembership[]) =>
-                    !newMemberships.some((m) => m.sender === this.client.getUserId()),
-            );
-        } catch (e) {
-            throw new Error(`Failed to hangup call in room ${this.roomId}: ${e}`);
-        }
-    }
-
-    public setDisconnected(): void {
-        this.messaging!.off(`action:${ElementWidgetActions.TileLayout}`, this.onTileLayout);
-        this.messaging!.off(`action:${ElementWidgetActions.SpotlightLayout}`, this.onSpotlightLayout);
-        super.setDisconnected();
-    }
-
-    public destroy(): void {
-        ActiveWidgetStore.instance.destroyPersistentWidget(this.widget.id, this.widget.roomId);
-        WidgetStore.instance.removeVirtualWidget(this.widget.id, this.widget.roomId);
-        this.messaging?.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
-        this.session.off(MatrixRTCSessionEvent.MembershipsChanged, this.onMembershipChanged);
-        this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
-        // TODO this is a hack to temporarly get the bbb widget removed
-        // what we want is a BBB call type or a generic call type that can be configured with a widget
-        // (bbb and jitsi could be covered by this same call type)
-        // The rtc session would contain which widget is used with what session so one can decide
-        // which widget to destroy based on `this.session`.
-        WidgetStore.instance
-            .getApps(this.roomId)
-            .filter((app) => WidgetType.BIGBLUEBUTTON.matches(app.type))
-            .forEach((app) => WidgetLayoutStore.instance.moveToContainer(this.room, app, Container.Right));
-
-        if (this.settingsStoreCallEncryptionWatcher) {
-            SettingsStore.unwatchSetting(this.settingsStoreCallEncryptionWatcher);
-        }
-        if (this.terminationTimer !== null) {
-            clearTimeout(this.terminationTimer);
-            this.terminationTimer = null;
-        }
-
-        super.destroy();
-    }
-
-    private onRTCSessionEnded = (roomId: string, session: MatrixRTCSession): void => {
-        // Don't destroy the call on hangup for video call rooms.
-        if (roomId == this.roomId && !this.room.isCallRoom()) {
-            this.destroy();
-        }
-    };
-
-    /**
-     * Sets the call's layout.
-     * @param layout The layout to switch to.
-     */
-    public async setLayout(layout: Layout): Promise<void> {
-        const action = layout === Layout.Tile ? ElementWidgetActions.TileLayout : ElementWidgetActions.SpotlightLayout;
-        await this.messaging!.transport.send(action, {});
-    }
-
-    private onMembershipChanged = (): void => this.updateParticipants();
-
-    private updateParticipants(): void {
-        const participants = new Map<RoomMember, Set<string>>();
-
-        for (const m of this.session.memberships) {
-            if (!m.sender) continue;
-            const member = this.room.getMember(m.sender);
-            if (member) {
-                if (participants.has(member)) {
-                    participants.get(member)?.add(m.deviceId);
-                } else {
-                    participants.set(member, new Set([m.deviceId]));
-                }
-            }
-        }
-        if (!participants.has(this.room.getMember(this.client.getUserId()!)!)) {
-            WidgetStore.instance
-                .getApps(this.roomId)
-                .filter((app) => WidgetType.BIGBLUEBUTTON.matches(app.type))
-                .forEach((app) => WidgetLayoutStore.instance.moveToContainer(this.room, app, Container.Right));
-        }
-        this.participants = participants;
-    }
-
-    private onHangup = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
-        ev.preventDefault();
-        await this.messaging!.transport.reply(ev.detail, {}); // ack
-        this.setDisconnected();
-        // In video rooms we immediately want to reconnect after hangup
-        // This starts the lobby again and connects to all signals from EC.
-        if (isVideoRoom(this.room)) {
-            this.start();
-        }
-    };
-
-    private onTileLayout = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
-        ev.preventDefault();
-        this.layout = Layout.Tile;
-        await this.messaging!.transport.reply(ev.detail, {}); // ack
-    };
-
-    private onSpotlightLayout = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
-        ev.preventDefault();
-        this.layout = Layout.Spotlight;
-        await this.messaging!.transport.reply(ev.detail, {}); // ack
-    };
-
-    public clean(): Promise<void> {
-        return Promise.resolve();
-    }
-}
-
-/**
- * A group call using BigBlueButton.
- */
-export class OtherMatrixRtcSession extends Call {
-    // TODO this is only there to support backwards compatibility in timeline rendering
-    // this should not be part of this class since it has nothing to do with it.
-    public static readonly CALL_EVENT_TYPE = new NamespacedValue(null, EventType.GroupCallPrefix);
-    public static readonly MEMBER_EVENT_TYPE = new NamespacedValue(null, EventType.GroupCallMemberPrefix);
-    public readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
-
-    private settingsStoreCallEncryptionWatcher: string | null = null;
-    private terminationTimer: number | null = null;
-    private _layout = Layout.Tile;
-    public get layout(): Layout {
-        return this._layout;
-    }
-    protected set layout(value: Layout) {
-        this._layout = value;
-        this.emit(CallEvent.Layout, value);
-    }
-
-    private constructor(
-        public session: MatrixRTCSession,
-        widget: IApp,
-        client: MatrixClient,
-    ) {
-        super(widget, client);
-
-        this.session.on(MatrixRTCSessionEvent.MembershipsChanged, this.onMembershipChanged);
-        this.client.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
-        this.updateParticipants();
-    }
-
-    public static get(room: Room): ElementCall | null {
-        // Only supported in the new group call experience or in video rooms.
-
-        if (
-            SettingsStore.getValue("feature_group_calls") ||
-            (SettingsStore.getValue("feature_video_rooms") &&
-                SettingsStore.getValue("feature_element_call_video_rooms") &&
-                room.isCallRoom())
-        ) {
-            const apps = WidgetStore.instance.getApps(room.roomId);
-            const hasEcWidget = apps.some((app) => WidgetType.CALL.matches(app.type));
             const session = room.client.matrixRTC.getRoomSession(room);
 
             // A call is present if we
@@ -1211,6 +950,16 @@ export class OtherMatrixRtcSession extends Call {
         this.messaging?.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.session.off(MatrixRTCSessionEvent.MembershipsChanged, this.onMembershipChanged);
         this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
+        // TODO this is a hack to temporarly get the bbb widget removed
+        // It should not be part of the ElementCall class.
+        // what we want is a BBB call type or a generic call type that can be configured with a widget
+        // (bbb and jitsi could be covered by this same call type)
+        // The rtc session would contain which widget is used with what session so one can decide
+        // which widget to destroy based on `this.session`.
+        WidgetStore.instance
+            .getApps(this.roomId)
+            .filter((app) => WidgetType.BIGBLUEBUTTON.matches(app.type))
+            .forEach((app) => WidgetLayoutStore.instance.moveToContainer(this.room, app, Container.Right));
 
         if (this.settingsStoreCallEncryptionWatcher) {
             SettingsStore.unwatchSetting(this.settingsStoreCallEncryptionWatcher);
@@ -1255,15 +1004,39 @@ export class OtherMatrixRtcSession extends Call {
                 }
             }
         }
-
+        // TODO this is a hack to temporarly get the bbb widget removed
+        // It should not be part of the ElementCall class.
+        if (!participants.has(this.room.getMember(this.client.getUserId()!)!)) {
+            WidgetStore.instance
+                .getApps(this.roomId)
+                .filter((app) => WidgetType.BIGBLUEBUTTON.matches(app.type))
+                .forEach((app) => WidgetLayoutStore.instance.moveToContainer(this.room, app, Container.Right));
+        }
         this.participants = participants;
     }
 
-    private onHangup = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {};
+    private onHangup = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
+        ev.preventDefault();
+        await this.messaging!.transport.reply(ev.detail, {}); // ack
+        this.setDisconnected();
+        // In video rooms we immediately want to reconnect after hangup
+        // This starts the lobby again and connects to all signals from EC.
+        if (isVideoRoom(this.room)) {
+            this.start();
+        }
+    };
 
-    private onTileLayout = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {};
+    private onTileLayout = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
+        ev.preventDefault();
+        this.layout = Layout.Tile;
+        await this.messaging!.transport.reply(ev.detail, {}); // ack
+    };
 
-    private onSpotlightLayout = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {};
+    private onSpotlightLayout = async (ev: CustomEvent<IWidgetApiRequest>): Promise<void> => {
+        ev.preventDefault();
+        this.layout = Layout.Spotlight;
+        await this.messaging!.transport.reply(ev.detail, {}); // ack
+    };
 
     public clean(): Promise<void> {
         return Promise.resolve();

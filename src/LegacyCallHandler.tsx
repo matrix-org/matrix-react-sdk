@@ -1223,11 +1223,9 @@ export default class LegacyCallHandler extends EventEmitter {
         // Prevent double clicking the call button
         const widget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.BIGBLUEBUTTON.matches(app.type));
         if (widget) {
-            // If there already is a Jitsi widget, pin it
+            // If there already is a BigBlueButton widget, pin it
             const room = client.getRoom(roomId);
-            if (isNotNull(room)) {
-                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Center);
-            }
+            if (!!room) WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Center);
             return;
         }
 
