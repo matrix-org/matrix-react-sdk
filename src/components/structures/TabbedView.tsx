@@ -133,29 +133,15 @@ export default function TabbedView<T extends string>(props: IProps<T>): JSX.Elem
         return props.tabs.find((tab) => tab.id === id);
     };
 
-    /**
-     * Shows the given tab
-     * @param {Tab} tab the tab to show
-     */
-    const setActiveTab = (tab: Tab<T>): void => {
-        // make sure this tab is still in available tabs
-        if (!!getTabById(tab.id)) {
-            props.onChange?.(tab.id);
-            setActiveTabId(tab.id);
-        } else {
-            logger.error("Could not find tab " + tab.label + " in tabs");
-        }
-    };
-
     const labels = props.tabs.map((tab) => (
         <TabLabel
             key={"tab_label_" + tab.id}
             tab={tab}
-            isActive={tab.id === activeTabId}
-            onClick={() => setActiveTab(tab)}
+            isActive={tab.id === props.activeTabId}
+            onClick={() => props.onChange(tab.id)}
         />
     ));
-    const tab = getTabById(activeTabId);
+    const tab = getTabById(props.activeTabId);
     const panel = tab ? <TabPanel tab={tab} /> : null;
 
     const tabbedViewClasses = classNames({
