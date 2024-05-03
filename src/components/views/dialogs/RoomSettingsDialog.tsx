@@ -56,12 +56,12 @@ export const enum RoomSettingsTab {
 interface IProps {
     roomId: string;
     onFinished: (success?: boolean) => void;
-    initialTabId?: string;
+    initialTabId?: RoomSettingsTab;
 }
 
 interface IState {
     room: Room;
-    activeTabId: string;
+    activeTabId: RoomSettingsTab;
 }
 
 class RoomSettingsDialog extends React.Component<IProps, IState> {
@@ -129,7 +129,7 @@ class RoomSettingsDialog extends React.Component<IProps, IState> {
         if (event.getType() === EventType.RoomJoinRules) this.forceUpdate();
     };
 
-    private onTabChange = (tabId: string): void => {
+    private onTabChange = (tabId: RoomSettingsTab): void => {
         this.setState({ activeTabId: tabId });
     };
 
