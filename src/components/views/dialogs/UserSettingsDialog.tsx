@@ -17,7 +17,7 @@ limitations under the License.
 
 import React from "react";
 
-import TabbedView, { Tab } from "../../structures/TabbedView";
+import TabbedView, { Tab, useActiveTabWithDefault } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
 import GeneralUserSettingsTab from "../settings/tabs/user/GeneralUserSettingsTab";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -173,9 +173,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
         return tabs as NonEmptyArray<Tab<UserTab>>;
     };
 
-    const [activeTabId, setActiveTabId] = React.useState<UserTab>(
-        props.initialTabId && getTabs().some((t) => t.id === props.initialTabId) ? props.initialTabId : UserTab.General,
-    );
+    const [activeTabId, setActiveTabId] = useActiveTabWithDefault(getTabs(), UserTab.General, props.initialTabId);
 
     return (
         // XXX: SDKContext is provided within the LoggedInView subtree.

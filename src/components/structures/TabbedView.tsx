@@ -46,6 +46,18 @@ export class Tab<T extends string> {
     ) {}
 }
 
+export function useActiveTabWithDefault<T extends string>(
+    tabs: NonEmptyArray<Tab<string>>,
+    defaultTabID: T,
+    initialTabID?: T,
+): [T, (tabId: T) => void] {
+    const [activeTabId, setActiveTabId] = React.useState(
+        initialTabID && tabs.some((t) => t.id === initialTabID) ? initialTabID : defaultTabID,
+    );
+
+    return [activeTabId, setActiveTabId];
+}
+
 export enum TabLocation {
     LEFT = "left",
     TOP = "top",
