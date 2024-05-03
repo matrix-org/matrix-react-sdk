@@ -102,13 +102,22 @@ function TabLabel<T extends string>({ tab, isActive, onClick }: ITabLabelProps<T
 }
 
 interface IProps<T extends string> {
+    // An array of objects representign tabs that the tabbed view will display.
     tabs: NonEmptyArray<Tab<T>>;
+    // The ID of the tab to display initially.
     initialTabId?: T;
+    // The location of the tabs, dictating the layout of the TabbedView.
     tabLocation?: TabLocation;
+    // A callback that is called when the active tab changes.
     onChange?: (tabId: T) => void;
+    // The screen name to report to Posthog.
     screenName?: ScreenName;
 }
 
+/**
+ * A tabbed view component. Given objects representing content with titles, displays
+ * them in a tabbed view where the user can select which one of the items to view at once.
+ */
 export default function TabbedView<T extends string>(props: IProps<T>): JSX.Element {
     const tabLocation = props.tabLocation ?? TabLocation.LEFT;
 
