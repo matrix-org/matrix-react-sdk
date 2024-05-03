@@ -47,6 +47,7 @@ import ServerSupportUnstableFeatureController from "./controllers/ServerSupportU
 import { WatchManager } from "./WatchManager";
 import { CustomTheme } from "../theme";
 import SettingsStore from "./SettingsStore";
+import AnalyticsController from "./controllers/AnalyticsController";
 
 export const defaultWatchManager = new WatchManager();
 
@@ -406,7 +407,7 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         controller: new SlidingSyncController(),
     },
     "feature_sliding_sync_proxy_url": {
-        // This is not a distinct feature, it is a setting for feature_sliding_sync above
+        // This is not a distinct feature, it is a legacy setting for feature_sliding_sync above
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: "",
     },
@@ -597,11 +598,13 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("settings|showbold"),
         default: false,
         invertedSettingName: "feature_hidebold",
+        controller: new AnalyticsController("WebSettingsNotificationsShowBoldToggle"),
     },
     "Notifications.tac_only_notifications": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td("settings|tac_only_notifications"),
         default: true,
+        controller: new AnalyticsController("WebSettingsNotificationsTACOnlyNotificationsToggle"),
     },
     "feature_ask_to_join": {
         isFeature: true,
@@ -1147,15 +1150,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "activeCallRoomIds": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: [],
-    },
-    "threadsActivityCentre": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        labsGroup: LabGroup.Threads,
-        controller: new ReloadOnChangeController(),
-        displayName: _td("labs|threads_activity_centre"),
-        description: () => _t("labs|threads_activity_centre_description", { brand: SdkConfig.get().brand }),
-        default: false,
-        isFeature: true,
     },
     /**
      * Enable or disable the release announcement feature

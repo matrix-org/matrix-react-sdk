@@ -37,6 +37,7 @@ import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
 import { ReleaseAnnouncement } from "../../../structures/ReleaseAnnouncement";
 import { useIsReleaseAnnouncementOpen } from "../../../../hooks/useIsReleaseAnnouncementOpen";
 import { useSettingValue } from "../../../../hooks/useSettings";
+import { ReleaseAnnouncementStore } from "../../../../stores/ReleaseAnnouncementStore";
 
 interface ThreadsActivityCentreProps {
     /**
@@ -82,13 +83,20 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
                     closeLabel={_t("action|ok")}
                 >
                     <ThreadsActivityCentreButton
+                        disableTooltip={true}
                         displayLabel={displayButtonLabel}
                         notificationLevel={roomsAndNotifications.greatestNotificationLevel}
+                        onClick={async () => {
+                            // Open the TAC after the release announcement closing
+                            setOpen(true);
+                            await ReleaseAnnouncementStore.instance.nextReleaseAnnouncement();
+                        }}
                     />
                 </ReleaseAnnouncement>
             ) : (
                 <Menu
-                    align="end"
+                    align="start"
+                    side="top"
                     open={open}
                     onOpenChange={(newOpen) => {
                         // Track only when the Threads Activity Centre is opened
@@ -96,7 +104,6 @@ export function ThreadsActivityCentre({ displayButtonLabel }: ThreadsActivityCen
 
                         setOpen(newOpen);
                     }}
-                    side="right"
                     title={_t("threads_activity_centre|header")}
                     trigger={
                         <ThreadsActivityCentreButton

@@ -20,7 +20,6 @@ import React, { ComponentProps } from "react";
 import { getByText, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { NotificationCountType, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
-import { TooltipProvider } from "@vector-im/compound-web";
 
 import { ThreadsActivityCentre } from "../../../../src/components/views/spaces/threads-activity-centre";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -49,7 +48,6 @@ describe("ThreadsActivityCentre", () => {
             <MatrixClientContext.Provider value={cli}>
                 <ThreadsActivityCentre {...props} />
             </MatrixClientContext.Provider>,
-            { wrapper: TooltipProvider },
         );
     };
 
@@ -117,6 +115,27 @@ describe("ThreadsActivityCentre", () => {
         await SettingsStore.setValue("feature_release_announcement", null, SettingLevel.DEVICE, true);
 
         renderTAC();
+        expect(document.body).toMatchSnapshot();
+    });
+
+    it("should render not display the tooltip when the release announcement is displayed", async () => {
+        // Enable release announcement
+        await SettingsStore.setValue("feature_release_announcement", null, SettingLevel.DEVICE, true);
+
+        renderTAC();
+
+        // The tooltip should not be displayed
+        await userEvent.hover(getTACButton());
+        expect(screen.queryByRole("tooltip")).toBeNull();
+    });
+
+    it("should close the release announcement when the TAC button is clicked", async () => {
+        // Enable release announcement
+        await SettingsStore.setValue("feature_release_announcement", null, SettingLevel.DEVICE, true);
+
+        renderTAC();
+        await userEvent.click(getTACButton());
+        expect(getTACMenu()).toBeInTheDocument();
         expect(document.body).toMatchSnapshot();
     });
 
@@ -251,7 +270,6 @@ describe("ThreadsActivityCentre", () => {
                     <ThreadsActivityCentre />
                 </MatrixClientContext.Provider>
             </div>,
-            { wrapper: TooltipProvider },
         );
         await userEvent.click(getTACButton());
 
