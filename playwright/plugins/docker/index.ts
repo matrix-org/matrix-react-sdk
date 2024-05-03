@@ -94,7 +94,6 @@ export class Docker {
         if (!process.env.CI) params.unshift("--rm");
 
         const args = [
-            "docker",
             "run",
             "--name",
             `${opts.containerName}-${crypto.randomBytes(4).toString("hex")}`,
@@ -105,14 +104,14 @@ export class Docker {
 
         if (opts.cmd) args.push(...opts.cmd);
 
-        const { stdout } = await exec("sudo", args);
+        const { stdout } = await exec("docker", args);
         this.id = stdout.trim();
         return this.id;
     }
 
     async stop(): Promise<void> {
         try {
-            await exec("sudo", ["docker", "stop", this.id]);
+            await exec("docker", ["stop", this.id]);
         } catch (err) {
             console.error(`Failed to stop docker container`, this.id, err);
         }
@@ -123,11 +122,11 @@ export class Docker {
      * @param suppressOutput - whether to suppress the stdout and stderr resulting from this command.
      */
     async exec(params: string[], suppressOutput = true): Promise<void> {
-        await exec("sudo", ["docker", "exec", this.id, ...params], suppressOutput);
+        await exec("docker", ["exec", this.id, ...params], suppressOutput);
     }
 
     async getContainerIp(): Promise<string> {
-        const { stdout } = await exec("sudo", ["docker", "inspect", "-f", "{{ .NetworkSettings.IPAddress }}", this.id]);
+        const { stdout } = await exec("docker", ["inspect", "-f", "{{ .NetworkSettings.IPAddress }}", this.id]);
         return stdout.trim();
     }
 
@@ -136,7 +135,7 @@ export class Docker {
         const stderrFile = args.stderrFile ? await fse.open(args.stderrFile, "w") : "ignore";
         await new Promise<void>((resolve) => {
             childProcess
-                .spawn("sudo", ["docker", "logs", this.id], {
+                .spawn("docker", ["logs", this.id], {
                     stdio: ["ignore", stdoutFile, stderrFile],
                 })
                 .once("close", resolve);
