@@ -378,7 +378,8 @@ export class SlidingSyncManager {
      */
     public async nativeSlidingSyncSupport(client: MatrixClient): Promise<boolean> {
         // Per https://github.com/matrix-org/matrix-spec-proposals/pull/3575/files#r1589542561
-        const support = await client.doesServerSupportUnstableFeature("org.matrix.msc3575");
+        // `client` can be undefined/null in tests for some reason.
+        const support = await client?.doesServerSupportUnstableFeature("org.matrix.msc3575");
         if (support) {
             logger.log("nativeSlidingSyncSupport: sliding sync advertised as unstable");
         }
