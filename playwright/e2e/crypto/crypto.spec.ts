@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2022-2024 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -602,13 +602,13 @@ test.describe("Cryptography", function () {
             await expect(tilesAfterVerify[1].locator(".mx_EventTile_e2eIcon_normal")).toBeVisible();
         });
 
-        test.describe("decryption failure messages", () => {
+        test.describe("non-joined historical messages", () => {
             test.skip(isDendrite, "does not yet support membership on events");
             test.use({
                 startHomeserverOpts: "membership-on-events",
             });
 
-            test("should handle non-joined historical messages", async ({
+            test("should display undecryptable non-joined historical messages with a different message", async ({
                 homeserver,
                 page,
                 app,
@@ -714,6 +714,106 @@ test.describe("Cryptography", function () {
                 // standard UTD message
                 await expect(tiles[tiles.length - 1]).toContainText("Unable to decrypt message");
                 await expect(tiles[tiles.length - 1].locator(".mx_EventTile_e2eIcon_decryption_failure")).toBeVisible();
+            });
+
+            test("should be able to jump to a message sent before our last join event", async ({
+                homeserver,
+                page,
+                app,
+                credentials: aliceCredentials,
+                user: alice,
+                cryptoBackend,
+                bot: bob,
+            }) => {
+                // The old pre-join UTD hiding code would hide events sent
+                // before our latest join event, even if the event that we're
+                // jumping to was decryptable.  We test that this no longer happens.
+
+                test.skip(cryptoBackend === "legacy", "Not implemented for legacy crypto");
+
+                // Bob:
+                // - creates an encrypted room,
+                // - invites Alice,
+                // - sends a message to it,
+                // - kicks Alice,
+                // - sends a bunch more events
+                // - invites Alice again
+                // In this way, there will be an event that Alice can decrypt,
+                // followed by a bunch of undecryptable events which Alice shouldn't
+                // expect to be able to decrypt.  The old code would have hidden all
+                // the events, even the decryptable event (which it wouldn't have
+                // even tried to fetch, if it was far enough back).
+                const { roomId, eventId } = await bob.evaluate(
+                    async (client, { alice }) => {
+                        const { room_id: roomId } = await client.createRoom({
+                            initial_state: [
+                                {
+                                    type: "m.room.encryption",
+                                    content: {
+                                        algorithm: "m.megolm.v1.aes-sha2",
+                                    },
+                                },
+                            ],
+                            name: "Test room",
+                            preset: "private_chat" as Preset,
+                        });
+
+                        // invite Alice
+                        const inviteAlicePromise = new Promise<void>((resolve) => {
+                            client.on("RoomMember.membership" as EmittedEvents, (_event, member, _oldMembership?) => {
+                                if (member.userId === alice.userId && member.membership === "invite") {
+                                    resolve();
+                                }
+                            });
+                        });
+                        await client.invite(roomId, alice.userId);
+                        // wait for the invite to come back so that we encrypt to Alice
+                        await inviteAlicePromise;
+
+                        // send a message that Alice should be able to decrypt
+                        const { event_id: eventId } = await client.sendTextMessage(
+                            roomId,
+                            "This should be decryptable",
+                        );
+
+                        // kick Alice
+                        const kickAlicePromise = new Promise<void>((resolve) => {
+                            client.on("RoomMember.membership" as EmittedEvents, (_event, member, _oldMembership?) => {
+                                if (member.userId === alice.userId && member.membership === "leave") {
+                                    resolve();
+                                }
+                            });
+                        });
+                        await client.kick(roomId, alice.userId);
+                        await kickAlicePromise;
+
+                        // send a bunch of messages that Alice won't be able to decrypt
+                        for (let i = 0; i < 20; i++) {
+                            await client.sendTextMessage(roomId, `${i}`);
+                        }
+
+                        // invite Alice again
+                        await client.invite(roomId, alice.userId);
+
+                        return { roomId, eventId };
+                    },
+                    { alice },
+                );
+
+                // Alice accepts the invite
+                await expect(
+                    page.getByRole("group", { name: "Invites" }).locator(".mx_RoomSublist_tiles").getByRole("treeitem"),
+                ).toHaveCount(1);
+                await page.getByRole("treeitem", { name: "Test room" }).click();
+                await page.locator(".mx_RoomView").getByRole("button", { name: "Accept" }).click();
+
+                // wait until we're joined and see the timeline
+                await expect(page.locator(`.mx_EventTile`).getByText("Alice joined the room")).toBeVisible();
+
+                // we should be able to jump to the decryptable message that Bob sent
+                await page.goto(`#/room/${roomId}/${eventId}`);
+
+                await expect(page.locator(`.mx_EventTile`).getByText("This should be decryptable")).toBeVisible();
             });
         });
     });
