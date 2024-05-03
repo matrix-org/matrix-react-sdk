@@ -260,10 +260,12 @@ describe("SlidingSyncManager", () => {
         it("should make an OPTIONS request to avoid unintended side effects", async () => {
             // See https://github.com/element-hq/element-web/issues/27426
 
-            const unstableSpy = jest.spyOn(client, "doesServerSupportUnstableFeature").mockImplementation(async (feature: string) => {
-                expect(feature).toBe("org.matrix.msc3575");
-                return true;
-            });
+            const unstableSpy = jest
+                .spyOn(client, "doesServerSupportUnstableFeature")
+                .mockImplementation(async (feature: string) => {
+                    expect(feature).toBe("org.matrix.msc3575");
+                    return true;
+                });
             const proxySpy = jest.spyOn(manager, "getProxyFromWellKnown").mockResolvedValue("proxy");
 
             expect(SlidingSyncController.serverSupportsSlidingSync).toBeFalsy();
