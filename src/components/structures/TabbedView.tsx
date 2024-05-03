@@ -52,6 +52,55 @@ export enum TabLocation {
     TOP = "top",
 }
 
+interface ITabPanelProps<T extends string> {
+    tab: Tab<T>;
+}
+
+function TabPanel<T extends string>({ tab }: ITabPanelProps<T>): JSX.Element {
+    return (
+        <div className="mx_TabbedView_tabPanel" key={tab.id} id={tab.id} aria-labelledby={`${tab.id}_label`}>
+            <AutoHideScrollbar className="mx_TabbedView_tabPanelContent">{tab.body}</AutoHideScrollbar>
+        </div>
+    );
+}
+
+interface ITabLabelProps<T extends string> {
+    tab: Tab<T>;
+    isActive: boolean;
+    onClick: () => void;
+}
+
+function TabLabel<T extends string>({ tab, isActive, onClick }: ITabLabelProps<T>): JSX.Element {
+    const classes = classNames("mx_TabbedView_tabLabel", {
+        mx_TabbedView_tabLabel_active: isActive,
+    });
+
+    let tabIcon: JSX.Element | undefined;
+    if (tab.icon) {
+        tabIcon = <span className={`mx_TabbedView_maskedIcon ${tab.icon}`} />;
+    }
+
+    const id = `mx_tabpanel_${tab.id}`;
+
+    const label = _t(tab.label);
+    return (
+        <RovingAccessibleButton
+            className={classes}
+            onClick={onClick}
+            data-testid={`settings-tab-${tab.id}`}
+            role="tab"
+            aria-selected={isActive}
+            aria-controls={id}
+            element="li"
+        >
+            {tabIcon}
+            <span className="mx_TabbedView_tabLabel_text" id={`${id}_label`}>
+                {label}
+            </span>
+        </RovingAccessibleButton>
+    );
+}
+
 interface IProps<T extends string> {
     tabs: NonEmptyArray<Tab<T>>;
     initialTabId?: T;
@@ -80,63 +129,23 @@ export default function TabbedView<T extends string>(props: IProps<T>): JSX.Elem
     const setActiveTab = (tab: Tab<T>): void => {
         // make sure this tab is still in available tabs
         if (!!getTabById(tab.id)) {
-            if (props.onChange) props.onChange(tab.id);
+            props.onChange?.(tab.id);
             setActiveTabId(tab.id);
         } else {
             logger.error("Could not find tab " + tab.label + " in tabs");
         }
     };
 
-    const renderTabLabel = (tab: Tab<T>): JSX.Element => {
-        const isActive = activeTabId === tab.id;
-        const classes = classNames("mx_TabbedView_tabLabel", {
-            mx_TabbedView_tabLabel_active: isActive,
-        });
-
-        let tabIcon: JSX.Element | undefined;
-        if (tab.icon) {
-            tabIcon = <span className={`mx_TabbedView_maskedIcon ${tab.icon}`} />;
-        }
-
-        const onClickHandler = (): void => setActiveTab(tab);
-        const id = getTabId(tab);
-
-        const label = _t(tab.label);
-        return (
-            <RovingAccessibleButton
-                className={classes}
-                key={"tab_label_" + tab.label}
-                onClick={onClickHandler}
-                data-testid={`settings-tab-${tab.id}`}
-                role="tab"
-                aria-selected={isActive}
-                aria-controls={id}
-                element="li"
-            >
-                {tabIcon}
-                <span className="mx_TabbedView_tabLabel_text" id={`${id}_label`}>
-                    {label}
-                </span>
-            </RovingAccessibleButton>
-        );
-    };
-
-    const getTabId = (tab: Tab<T>): string => {
-        return `mx_tabpanel_${tab.id}`;
-    };
-
-    const renderTabPanel = (tab: Tab<T>): React.ReactNode => {
-        const id = getTabId(tab);
-        return (
-            <div className="mx_TabbedView_tabPanel" key={id} id={id} aria-labelledby={`${id}_label`}>
-                <AutoHideScrollbar className="mx_TabbedView_tabPanelContent">{tab.body}</AutoHideScrollbar>
-            </div>
-        );
-    };
-
-    const labels = props.tabs.map((tab) => renderTabLabel(tab));
+    const labels = props.tabs.map((tab) => (
+        <TabLabel
+            key={"tab_label_" + tab.id}
+            tab={tab}
+            isActive={tab.id === activeTabId}
+            onClick={() => setActiveTab(tab)}
+        />
+    ));
     const tab = getTabById(activeTabId);
-    const panel = tab ? renderTabPanel(tab) : null;
+    const panel = tab ? <TabPanel tab={tab} /> : null;
 
     const tabbedViewClasses = classNames({
         mx_TabbedView: true,
