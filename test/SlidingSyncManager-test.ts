@@ -255,6 +255,9 @@ describe("SlidingSyncManager", () => {
         });
     });
     describe("nativeSlidingSyncSupport", () => {
+        beforeEach(() => {
+            SlidingSyncController.serverSupportsSlidingSync = false;
+        });
         it("should make an OPTIONS request to avoid unintended side effects", async () => {
             // See https://github.com/element-hq/element-web/issues/27426
 
