@@ -56,9 +56,18 @@ interface ITabPanelProps<T extends string> {
     tab: Tab<T>;
 }
 
+function domIDForTabID(tabId: string): string {
+    return `mx_tabpanel_${tabId}`;
+}
+
 function TabPanel<T extends string>({ tab }: ITabPanelProps<T>): JSX.Element {
     return (
-        <div className="mx_TabbedView_tabPanel" key={tab.id} id={tab.id} aria-labelledby={`${tab.id}_label`}>
+        <div
+            className="mx_TabbedView_tabPanel"
+            key={tab.id}
+            id={domIDForTabID(tab.id)}
+            aria-labelledby={`${domIDForTabID(tab.id)}_label`}
+        >
             <AutoHideScrollbar className="mx_TabbedView_tabPanelContent">{tab.body}</AutoHideScrollbar>
         </div>
     );
@@ -80,7 +89,7 @@ function TabLabel<T extends string>({ tab, isActive, onClick }: ITabLabelProps<T
         tabIcon = <span className={`mx_TabbedView_maskedIcon ${tab.icon}`} />;
     }
 
-    const id = `mx_tabpanel_${tab.id}`;
+    const id = domIDForTabID(tab.id);
 
     const label = _t(tab.label);
     return (
