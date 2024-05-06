@@ -59,7 +59,6 @@ exports[`RoomTile when message previews are enabled and there is a message in a 
       aria-haspopup="true"
       aria-label="Room options"
       class="mx_AccessibleButton mx_RoomTile_menuButton"
-      data-state="closed"
       role="button"
       tabindex="0"
     />
@@ -68,7 +67,6 @@ exports[`RoomTile when message previews are enabled and there is a message in a 
       aria-haspopup="true"
       aria-label="Notification options"
       class="mx_AccessibleButton mx_RoomTile_notificationsButton"
-      data-state="closed"
       role="button"
       tabindex="-1"
     />
@@ -143,7 +141,6 @@ exports[`RoomTile when message previews are enabled and there is a message in th
       aria-haspopup="true"
       aria-label="Room options"
       class="mx_AccessibleButton mx_RoomTile_menuButton"
-      data-state="closed"
       role="button"
       tabindex="0"
     />
@@ -152,7 +149,6 @@ exports[`RoomTile when message previews are enabled and there is a message in th
       aria-haspopup="true"
       aria-label="Notification options"
       class="mx_AccessibleButton mx_RoomTile_notificationsButton"
-      data-state="closed"
       role="button"
       tabindex="-1"
     />
@@ -208,7 +204,6 @@ exports[`RoomTile when message previews are enabled should render a room without
       aria-haspopup="true"
       aria-label="Room options"
       class="mx_AccessibleButton mx_RoomTile_menuButton"
-      data-state="closed"
       role="button"
       tabindex="0"
     />
@@ -217,7 +212,6 @@ exports[`RoomTile when message previews are enabled should render a room without
       aria-haspopup="true"
       aria-label="Notification options"
       class="mx_AccessibleButton mx_RoomTile_notificationsButton"
-      data-state="closed"
       role="button"
       tabindex="-1"
     />
@@ -272,7 +266,6 @@ exports[`RoomTile when message previews are not enabled should render the room 1
       aria-haspopup="true"
       aria-label="Room options"
       class="mx_AccessibleButton mx_RoomTile_menuButton"
-      data-state="closed"
       role="button"
       tabindex="0"
     />
@@ -281,7 +274,6 @@ exports[`RoomTile when message previews are not enabled should render the room 1
       aria-haspopup="true"
       aria-label="Notification options"
       class="mx_AccessibleButton mx_RoomTile_notificationsButton"
-      data-state="closed"
       role="button"
       tabindex="-1"
     />
