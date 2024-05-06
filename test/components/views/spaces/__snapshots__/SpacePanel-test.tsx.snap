@@ -77,7 +77,6 @@ exports[`<SpacePanel /> should show all activated MetaSpaces in the correct orde
               aria-haspopup="true"
               aria-label="Options"
               class="mx_AccessibleButton mx_SpaceButton_menuButton"
-              data-state="closed"
               role="button"
               tabindex="0"
             />
@@ -230,13 +229,12 @@ exports[`<SpacePanel /> should show all activated MetaSpaces in the correct orde
       class="mx_ThreadsActivityCentre_container"
     >
       <button
-        aria-controls="floating-ui-11"
-        aria-describedby="floating-ui-11"
+        aria-controls="floating-ui-35"
+        aria-describedby="floating-ui-35"
         aria-expanded="true"
         aria-haspopup="dialog"
         aria-label="Threads"
         class="_icon-button_16nk7_17 mx_ThreadsActivityCentreButton"
-        data-state="closed"
         role="button"
         style="--cpd-icon-button-size: 32px;"
         tabindex="0"
