@@ -8,7 +8,6 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       aria-label="Fett"
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
-      data-state="closed"
       role="button"
       tabindex="0"
     >
@@ -19,7 +18,6 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       aria-label="Kursiv"
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
-      data-state="closed"
       role="button"
       tabindex="0"
     >
@@ -30,7 +28,6 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       aria-label="Unterstrichen"
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
-      data-state="closed"
       role="button"
       tabindex="0"
     >
@@ -41,7 +38,6 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       aria-label="Durchgestrichen"
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
-      data-state="closed"
       role="button"
       tabindex="0"
     >
@@ -52,7 +48,6 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       aria-label="Ungeordnete Liste"
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
-      data-state="closed"
       role="button"
       tabindex="0"
     >
@@ -63,7 +58,6 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       aria-label="Nummerierte Liste"
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
-      data-state="closed"
       role="button"
       tabindex="0"
     >
@@ -74,7 +68,6 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       aria-label="Zitieren"
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
-      data-state="closed"
       role="button"
       tabindex="0"
     >
@@ -85,7 +78,6 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       aria-label="Code"
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
-      data-state="closed"
       role="button"
       tabindex="0"
     >
@@ -96,7 +88,6 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       aria-label="Quelltextblock"
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
-      data-state="closed"
       role="button"
       tabindex="0"
     >
@@ -107,7 +98,6 @@ exports[`FormattingButtons renders in german 1`] = `
     <button
       aria-label="Link"
       class="mx_AccessibleButton mx_FormattingButtons_Button mx_FormattingButtons_Button_hover"
-      data-state="closed"
       role="button"
       tabindex="0"
     >
