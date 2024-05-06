@@ -372,22 +372,18 @@ export class SlidingSyncManager {
     }
 
     /**
-     * Check if the server "natively" supports sliding sync (at the unstable endpoint).
+     * Check if the server "natively" supports sliding sync (with an unstable endpoint).
      * @param client The MatrixClient to use
-     * @return Whether the "native" (unstable) endpoint is up
+     * @return Whether the "native" (unstable) endpoint is supported
      */
     public async nativeSlidingSyncSupport(client: MatrixClient): Promise<boolean> {
-        try {
-            await client.http.authedRequest<void>(Method.Post, "/sync", undefined, undefined, {
-                localTimeoutMs: 10 * 1000, // 10s
-                prefix: "/_matrix/client/unstable/org.matrix.msc3575",
-            });
-        } catch (e) {
-            return false; // 404, M_UNRECOGNIZED
+        // Per https://github.com/matrix-org/matrix-spec-proposals/pull/3575/files#r1589542561
+        // `client` can be undefined/null in tests for some reason.
+        const support = await client?.doesServerSupportUnstableFeature("org.matrix.msc3575");
+        if (support) {
+            logger.log("nativeSlidingSyncSupport: sliding sync advertised as unstable");
         }
-
-        logger.log("nativeSlidingSyncSupport: sliding sync endpoint is up");
-        return true; // 200, OK
+        return support;
     }
 
     /**

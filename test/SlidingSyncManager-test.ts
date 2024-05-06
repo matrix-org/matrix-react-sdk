@@ -253,6 +253,28 @@ describe("SlidingSyncManager", () => {
             expect(SlidingSyncController.serverSupportsSlidingSync).toBeTruthy();
         });
     });
+    describe("nativeSlidingSyncSupport", () => {
+        beforeEach(() => {
+            SlidingSyncController.serverSupportsSlidingSync = false;
+        });
+        it("should make an OPTIONS request to avoid unintended side effects", async () => {
+            // See https://github.com/element-hq/element-web/issues/27426
+
+            const unstableSpy = jest
+                .spyOn(client, "doesServerSupportUnstableFeature")
+                .mockImplementation(async (feature: string) => {
+                    expect(feature).toBe("org.matrix.msc3575");
+                    return true;
+                });
+            const proxySpy = jest.spyOn(manager, "getProxyFromWellKnown").mockResolvedValue("proxy");
+
+            expect(SlidingSyncController.serverSupportsSlidingSync).toBeFalsy();
+            await manager.checkSupport(client); // first thing it does is call nativeSlidingSyncSupport
+            expect(proxySpy).not.toHaveBeenCalled();
+            expect(unstableSpy).toHaveBeenCalled();
+            expect(SlidingSyncController.serverSupportsSlidingSync).toBeTruthy();
+        });
+    });
     describe("setup", () => {
         beforeEach(() => {
             jest.spyOn(manager, "configure");
