@@ -80,7 +80,6 @@ exports[`VoiceBroadcastRecordingPip when rendering a paused recording should ren
       <div
         aria-label="Change input device"
         class="mx_AccessibleButton"
-        data-state="closed"
         role="button"
         tabindex="0"
       >
@@ -183,7 +182,6 @@ exports[`VoiceBroadcastRecordingPip when rendering a started recording should re
       <div
         aria-label="Change input device"
         class="mx_AccessibleButton"
-        data-state="closed"
         role="button"
         tabindex="0"
       >

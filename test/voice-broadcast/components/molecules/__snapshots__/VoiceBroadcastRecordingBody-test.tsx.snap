@@ -29,7 +29,6 @@ exports[`VoiceBroadcastRecordingBody when rendering a live broadcast should rend
         <div
           aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
-          data-state="closed"
           role="button"
           tabindex="0"
         >
@@ -83,7 +82,6 @@ exports[`VoiceBroadcastRecordingBody when rendering a paused broadcast should re
         <div
           aria-label="Change input device"
           class="mx_AccessibleButton mx_VoiceBroadcastHeader_line"
-          data-state="closed"
           role="button"
           tabindex="0"
         >
