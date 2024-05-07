@@ -5,7 +5,7 @@ HTMLCollection [
   <div
     class="mx_FilteredDeviceList_noResults"
   >
-    No sessions found.
+    No devices found.
   </div>,
 ]
 `;
@@ -32,13 +32,13 @@ HTMLCollection [
         <p
           class="mx_DeviceSecurityCard_heading"
         >
-          Inactive sessions
+          Inactive devices
         </p>
         <p
           class="mx_DeviceSecurityCard_description"
         >
           <span>
-            Consider signing out from old sessions (90 days or older) you don't use anymore.
+            Consider signing out from old devices (90 days or older) you don't use anymore.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -76,13 +76,13 @@ HTMLCollection [
         <p
           class="mx_DeviceSecurityCard_heading"
         >
-          Unverified sessions
+          Unverified devices
         </p>
         <p
           class="mx_DeviceSecurityCard_description"
         >
           <span>
-            Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.
+            Verify your devices for enhanced secure messaging or sign out from those you don't recognize or use anymore.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -120,13 +120,13 @@ HTMLCollection [
         <p
           class="mx_DeviceSecurityCard_heading"
         >
-          Verified sessions
+          Verified devices
         </p>
         <p
           class="mx_DeviceSecurityCard_description"
         >
           <span>
-            For best security, sign out from any session that you don't recognize or use anymore.
+            For best security, sign out from any device that you don't recognize or use anymore.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -147,7 +147,7 @@ HTMLCollection [
   <div
     class="mx_FilteredDeviceList_noResults"
   >
-    No inactive sessions found.
+    No inactive devices found.
      
     <div
       class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
@@ -166,7 +166,7 @@ HTMLCollection [
   <div
     class="mx_FilteredDeviceList_noResults"
   >
-    No unverified sessions found.
+    No unverified devices found.
      
     <div
       class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
@@ -185,7 +185,7 @@ HTMLCollection [
   <div
     class="mx_FilteredDeviceList_noResults"
   >
-    No verified sessions found.
+    No verified devices found.
      
     <div
       class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"

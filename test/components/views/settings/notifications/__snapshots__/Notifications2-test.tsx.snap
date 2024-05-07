@@ -48,7 +48,7 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
               <div
                 id="mx_LabelledToggleSwitch_QgU2PomxwKpa"
               >
-                Enable desktop notifications for this session
+                Enable desktop notifications for this device
               </div>
             </span>
             <div
@@ -98,7 +98,7 @@ exports[`<Notifications /> correctly handles the loading/disabled state 1`] = `
               <div
                 id="mx_LabelledToggleSwitch_4yVCeEefiPqp"
               >
-                Enable audible notifications for this session
+                Enable audible notifications for this device
               </div>
             </span>
             <div
@@ -816,7 +816,7 @@ exports[`<Notifications /> matches the snapshot 1`] = `
               <div
                 id="mx_LabelledToggleSwitch_QgU2PomxwKpa"
               >
-                Enable desktop notifications for this session
+                Enable desktop notifications for this device
               </div>
             </span>
             <div
@@ -866,7 +866,7 @@ exports[`<Notifications /> matches the snapshot 1`] = `
               <div
                 id="mx_LabelledToggleSwitch_4yVCeEefiPqp"
               >
-                Enable audible notifications for this session
+                Enable audible notifications for this device
               </div>
             </span>
             <div

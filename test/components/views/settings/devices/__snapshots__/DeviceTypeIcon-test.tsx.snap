@@ -9,7 +9,7 @@ exports[`<DeviceTypeIcon /> renders a verified device 1`] = `
       class="mx_DeviceTypeIcon_deviceIconWrapper"
     >
       <div
-        aria-label="Unknown session type"
+        aria-label="Unknown device type"
         class="mx_DeviceTypeIcon_deviceIcon"
         role="img"
       />
@@ -32,7 +32,7 @@ exports[`<DeviceTypeIcon /> renders an unverified device 1`] = `
       class="mx_DeviceTypeIcon_deviceIconWrapper"
     >
       <div
-        aria-label="Unknown session type"
+        aria-label="Unknown device type"
         class="mx_DeviceTypeIcon_deviceIcon"
         role="img"
       />
@@ -55,7 +55,7 @@ exports[`<DeviceTypeIcon /> renders correctly when selected 1`] = `
       class="mx_DeviceTypeIcon_deviceIconWrapper"
     >
       <div
-        aria-label="Unknown session type"
+        aria-label="Unknown device type"
         class="mx_DeviceTypeIcon_deviceIcon"
         role="img"
       />

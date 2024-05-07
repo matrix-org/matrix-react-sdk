@@ -104,7 +104,7 @@ describe("<SecureBackupPanel />", () => {
         // flush checkKeyBackup promise
         await flushPromises();
 
-        expect(screen.getByText("✅ This session is backing up your keys.")).toBeInTheDocument();
+        expect(screen.getByText("✅ This device is backing up your keys.")).toBeInTheDocument();
     });
 
     it("asks for confirmation before deleting a backup", async () => {

@@ -44,12 +44,12 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
           <p
             class="mx_DeviceSecurityCard_heading"
           >
-            Verified session
+            Verified device
           </p>
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Your current session is ready for secure messaging.
+            Your current device is ready for secure messaging.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -67,7 +67,7 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
       <p
         class="mx_DeviceDetails_sectionHeading"
       >
-        Session details
+        Device details
       </p>
       <table
         class="mx_DeviceDetails_metadataTable"
@@ -78,7 +78,7 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
             <td
               class="mxDeviceDetails_metadataLabel"
             >
-              Session ID
+              Device ID
             </td>
             <td
               class="mxDeviceDetails_metadataValue"
@@ -101,7 +101,7 @@ exports[`<DeviceDetails /> renders a verified device 1`] = `
         <span
           class="mx_DeviceDetails_signOutButtonContent"
         >
-          Sign out of this session
+          Sign out of this device
         </span>
       </div>
     </section>
@@ -153,12 +153,12 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
           <p
             class="mx_DeviceSecurityCard_heading"
           >
-            Unverified session
+            Unverified device
           </p>
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Verify your current session for enhanced secure messaging.
+            Verify your current device for enhanced secure messaging.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -176,7 +176,7 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
       <p
         class="mx_DeviceDetails_sectionHeading"
       >
-        Session details
+        Device details
       </p>
       <table
         class="mx_DeviceDetails_metadataTable"
@@ -187,7 +187,7 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
             <td
               class="mxDeviceDetails_metadataLabel"
             >
-              Session ID
+              Device ID
             </td>
             <td
               class="mxDeviceDetails_metadataValue"
@@ -310,7 +310,7 @@ exports[`<DeviceDetails /> renders device with metadata 1`] = `
         <span
           class="mx_DeviceDetails_signOutButtonContent"
         >
-          Sign out of this session
+          Sign out of this device
         </span>
       </div>
     </section>
@@ -362,12 +362,12 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
           <p
             class="mx_DeviceSecurityCard_heading"
           >
-            Unverified session
+            Unverified device
           </p>
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Verify your current session for enhanced secure messaging.
+            Verify your current device for enhanced secure messaging.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -385,7 +385,7 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
       <p
         class="mx_DeviceDetails_sectionHeading"
       >
-        Session details
+        Device details
       </p>
       <table
         class="mx_DeviceDetails_metadataTable"
@@ -396,7 +396,7 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
             <td
               class="mxDeviceDetails_metadataLabel"
             >
-              Session ID
+              Device ID
             </td>
             <td
               class="mxDeviceDetails_metadataValue"
@@ -419,7 +419,7 @@ exports[`<DeviceDetails /> renders device without metadata 1`] = `
         <span
           class="mx_DeviceDetails_signOutButtonContent"
         >
-          Sign out of this session
+          Sign out of this device
         </span>
       </div>
     </section>

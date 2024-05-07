@@ -44,12 +44,12 @@ HTMLCollection [
           <p
             class="mx_DeviceSecurityCard_heading"
           >
-            Unverified session
+            Unverified device
           </p>
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Verify your current session for enhanced secure messaging.
+            Verify your current device for enhanced secure messaging.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -67,7 +67,7 @@ HTMLCollection [
               role="button"
               tabindex="0"
             >
-              Verify session
+              Verify device
             </div>
           </div>
         </div>
@@ -79,7 +79,7 @@ HTMLCollection [
       <p
         class="mx_DeviceDetails_sectionHeading"
       >
-        Session details
+        Device details
       </p>
       <table
         class="mx_DeviceDetails_metadataTable"
@@ -90,7 +90,7 @@ HTMLCollection [
             <td
               class="mxDeviceDetails_metadataLabel"
             >
-              Session ID
+              Device ID
             </td>
             <td
               class="mxDeviceDetails_metadataValue"
@@ -113,7 +113,7 @@ HTMLCollection [
         <span
           class="mx_DeviceDetails_signOutButtonContent"
         >
-          Sign out of this session
+          Sign out of this device
         </span>
       </div>
     </section>
@@ -133,7 +133,7 @@ exports[`<CurrentDeviceSection /> handles when device is falsy 1`] = `
       <h3
         class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
       >
-        Current session
+        Current device
       </h3>
       <div
         aria-disabled="true"
@@ -170,7 +170,7 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
       <h3
         class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
       >
-        Current session
+        Current device
       </h3>
       <div
         aria-expanded="false"
@@ -200,7 +200,7 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
             class="mx_DeviceTypeIcon_deviceIconWrapper"
           >
             <div
-              aria-label="Unknown session type"
+              aria-label="Unknown device type"
               class="mx_DeviceTypeIcon_deviceIcon"
               role="img"
             />
@@ -269,12 +269,12 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
           <p
             class="mx_DeviceSecurityCard_heading"
           >
-            Unverified session
+            Unverified device
           </p>
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Verify your current session for enhanced secure messaging.
+            Verify your current device for enhanced secure messaging.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -292,7 +292,7 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
               role="button"
               tabindex="0"
             >
-              Verify session
+              Verify device
             </div>
           </div>
         </div>
@@ -314,7 +314,7 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
       <h3
         class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
       >
-        Current session
+        Current device
       </h3>
       <div
         aria-expanded="false"
@@ -344,7 +344,7 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
             class="mx_DeviceTypeIcon_deviceIconWrapper"
           >
             <div
-              aria-label="Unknown session type"
+              aria-label="Unknown device type"
               class="mx_DeviceTypeIcon_deviceIcon"
               role="img"
             />
@@ -413,12 +413,12 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
           <p
             class="mx_DeviceSecurityCard_heading"
           >
-            Unverified session
+            Unverified device
           </p>
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Verify your current session for enhanced secure messaging.
+            Verify your current device for enhanced secure messaging.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -436,7 +436,7 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
               role="button"
               tabindex="0"
             >
-              Verify session
+              Verify device
             </div>
           </div>
         </div>

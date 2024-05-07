@@ -37,7 +37,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               <div
                 class="mx_SettingsSubsection_text"
               >
-                Back up your encryption keys with your account data in case you lose access to your sessions. Your keys will be secured with a unique Security Key.
+                Back up your encryption keys with your account data in case you lose access to your devices. Your keys will be secured with a unique Security Key.
               </div>
               <div
                 class="mx_Spinner"
@@ -266,7 +266,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                     <th
                       scope="row"
                     >
-                      Session ID:
+                      Device ID:
                     </th>
                     <td>
                       <code />
@@ -276,7 +276,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                     <th
                       scope="row"
                     >
-                      Session key:
+                      Device key:
                     </th>
                     <td>
                       <code>
@@ -298,13 +298,13 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                   <span
                     class="mx_SettingsFlag_labelText"
                   >
-                    Never send encrypted messages to unverified sessions from this session
+                    Never send encrypted messages to unverified devices from this device
                   </span>
                 </label>
                 <div
                   aria-checked="false"
                   aria-disabled="false"
-                  aria-label="Never send encrypted messages to unverified sessions from this session"
+                  aria-label="Never send encrypted messages to unverified devices from this device"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
                   id="mx_SettingsFlag_vY7Q4uEh9K38"
                   role="switch"
@@ -377,13 +377,13 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                   <span
                     class="mx_SettingsFlag_labelText"
                   >
-                    Manually verify all remote sessions
+                    Manually verify all remote devices
                   </span>
                 </label>
                 <div
                   aria-checked="false"
                   aria-disabled="false"
-                  aria-label="Manually verify all remote sessions"
+                  aria-label="Manually verify all remote devices"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
                   id="mx_SettingsFlag_QgU2PomxwKpa"
                   role="switch"
@@ -397,7 +397,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               <div
                 class="mx_SettingsSubsection_text"
               >
-                Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.
+                Individually verify each device used by a user to mark it as trusted, not trusting cross-signed devices.
               </div>
             </div>
           </div>
