@@ -950,7 +950,7 @@ export class ElementCall extends Call {
         this.messaging?.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.session.off(MatrixRTCSessionEvent.MembershipsChanged, this.onMembershipChanged);
         this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
-        // TODO this is a hack to temporarly get the bbb widget removed
+        // TODO this is a hack to temporarily get the bbb widget removed
         // It should not be part of the ElementCall class.
         // what we want is a BBB call type or a generic call type that can be configured with a widget
         // (bbb and jitsi could be covered by this same call type)
@@ -1006,7 +1006,7 @@ export class ElementCall extends Call {
                 }
             }
         }
-        // TODO this is a hack to temporarly get the bbb widget removed
+        // TODO this is a hack to temporarily get the bbb widget removed
         // It should not be part of the ElementCall class.
         if (!participants.has(this.room.getMember(this.client.getUserId()!)!)) {
             WidgetStore.instance
