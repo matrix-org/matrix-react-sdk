@@ -246,13 +246,8 @@
         "phone_optional_label": "Phone (optional)",
         "qr_code_login": {
             "approve_access_warning": "By approving access for this device, it will have full access to your account.",
-            "check_code_explainer": "This will verify that the connection to your other device is secure.",
-            "check_code_heading": "Enter the number shown on your other device",
-            "check_code_input_label": "2-digit code",
-            "check_code_mismatch": "The numbers don't match",
             "completing_setup": "Completing set up of your new device",
             "confirm_code_match": "Check that the code below matches with your other device:",
-            "error_etag_missing": "An unexpected error occurred. This may be due to a browser extension, proxy server, or server misconfiguration.",
             "error_expired": "Sign in expired. Please try again.",
             "error_expired_title": "The sign in was not completed in time",
             "error_insecure_channel_detected": "A secure connection could not be made to the new device. Your existing devices are still safe and you don't need to worry about them.",
@@ -276,11 +271,16 @@
             "point_the_camera": "Point the camera at the QR code shown here",
             "scan_code_instruction": "Scan the QR code with another device",
             "scan_qr_code": "Sign in with QR code",
-            "security_code": "Security code",
-            "security_code_prompt": "If asked, enter the code below on your other device.",
             "select_qr_code": "Select \"%(scanQRCode)s\"",
             "sign_in_new_device": "Sign in new device",
-            "waiting_for_device": "Waiting for device to sign in"
+            "waiting_for_device": "Waiting for device to sign in",
+            "security_code_prompt": "If asked, enter the code below on your other device.",
+            "security_code": "Security code",
+            "error_etag_missing": "An unexpected error occurred. This may be due to a browser extension, proxy server, or server misconfiguration.",
+            "check_code_mismatch": "The numbers don't match",
+            "check_code_input_label": "2-digit code",
+            "check_code_heading": "Enter the number shown on your other device",
+            "check_code_explainer": "This will verify that the connection to your other device is secure."
         },
         "register_action": "Create Account",
         "registration": {
@@ -2405,7 +2405,8 @@
             "homeserver": "Homeserver is <code>%(homeserverUrl)s</code>",
             "identity_server": "Identity server is <code>%(identityServerUrl)s</code>",
             "title": "Help & About",
-            "versions": "Versions"
+            "versions": "Versions",
+            "dialog_title": "<strong>Settings:</strong> Help & About"
         }
     },
     "settings": {
@@ -2425,15 +2426,14 @@
             "custom_theme_url": "Custom theme URL",
             "font_size": "Font size",
             "font_size_default": "%(fontSize)s (default)",
-            "heading": "Customise your appearance",
             "image_size_default": "Default",
             "image_size_large": "Large",
             "layout_bubbles": "Message bubbles",
             "layout_irc": "IRC (Experimental)",
             "match_system_theme": "Match system theme",
-            "subheading": "Appearance Settings only affect this %(brand)s session.",
             "timeline_image_size": "Image size in the timeline",
-            "use_high_contrast": "Use high contrast"
+            "use_high_contrast": "Use high contrast",
+            "dialog_title": "<strong>Settings:</strong> Appearance"
         },
         "automatic_language_detection_syntax_highlight": "Enable automatic language detection for syntax highlighting",
         "autoplay_gifs": "Autoplay GIFs",
@@ -2519,7 +2519,8 @@
             "remove_email_prompt": "Remove %(email)s?",
             "remove_msisdn_prompt": "Remove %(phone)s?",
             "spell_check_locale_placeholder": "Choose a locale",
-            "spell_check_section": "Spell check"
+            "spell_check_section": "Spell check",
+            "dialog_title": "<strong>Settings:</strong> General"
         },
         "image_thumbnails": "Show previews/thumbnails for images",
         "inline_url_previews_default": "Enable inline URL previews by default",
@@ -2580,7 +2581,8 @@
             "phrase_strong_enough": "Great! This passphrase looks strong enough"
         },
         "keyboard": {
-            "title": "Keyboard"
+            "title": "Keyboard",
+            "dialog_title": "<strong>Settings:</strong> Keyboard"
         },
         "notifications": {
             "default_setting_description": "This setting will be applied by default to all your rooms.",
@@ -2635,7 +2637,8 @@
             "rule_suppress_notices": "Messages sent by bot",
             "rule_tombstone": "When rooms are upgraded",
             "show_message_desktop_notification": "Show message in desktop notification",
-            "voip": "Audio and Video calls"
+            "voip": "Audio and Video calls",
+            "dialog_title": "<strong>Settings:</strong> Notifications"
         },
         "preferences": {
             "Electron.enableHardwareAcceleration": "Enable hardware acceleration (restart %(appName)s to take effect)",
@@ -2658,7 +2661,8 @@
             "show_checklist_shortcuts": "Show shortcut to welcome checklist above the room list",
             "show_polls_button": "Show polls button",
             "surround_text": "Surround selected text when typing special characters",
-            "time_heading": "Displaying time"
+            "time_heading": "Displaying time",
+            "dialog_title": "<strong>Settings:</strong> Preferences"
         },
         "prompt_invite": "Prompt before sending invites to potentially invalid matrix IDs",
         "replace_plain_emoji": "Automatically replace plain text Emoji",
@@ -2741,7 +2745,8 @@
             "send_analytics": "Send analytics data",
             "session_id": "Session ID:",
             "session_key": "Session key:",
-            "strict_encryption": "Never send encrypted messages to unverified sessions from this session"
+            "strict_encryption": "Never send encrypted messages to unverified sessions from this session",
+            "dialog_title": "<strong>Settings:</strong> Security & Privacy"
         },
         "send_read_receipts": "Send read receipts",
         "send_read_receipts_unsupported": "Your server doesn't support disabling sending read receipts.",
@@ -2841,7 +2846,8 @@
             "verified_sessions_explainer_2": "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.",
             "verified_sessions_list_description": "For best security, sign out from any session that you don't recognize or use anymore.",
             "verify_session": "Verify session",
-            "web_session": "Web session"
+            "web_session": "Web session",
+            "dialog_title": "<strong>Settings:</strong> Sessions"
         },
         "show_avatar_changes": "Show profile picture changes",
         "show_breadcrumbs": "Show shortcuts to recently viewed rooms above the room list",
@@ -2867,7 +2873,8 @@
             "metaspaces_video_rooms_description": "Group all private video rooms and conferences.",
             "metaspaces_video_rooms_description_invite_extension": "In conferences you can invite people outside of matrix.",
             "spaces_explainer": "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.",
-            "title": "Sidebar"
+            "title": "Sidebar",
+            "dialog_title": "<strong>Settings:</strong> Sidebar"
         },
         "start_automatically": "Start automatically after system login",
         "tac_only_notifications": "Only show notifications in the thread activity centre",
@@ -2896,10 +2903,17 @@
             "video_section": "Video settings",
             "voice_agc": "Automatically adjust the microphone volume",
             "voice_processing": "Voice processing",
-            "voice_section": "Voice settings"
+            "voice_section": "Voice settings",
+            "dialog_title": "<strong>Settings:</strong> Voice & Video"
         },
         "warn_quit": "Warn before quitting",
-        "warning": "<w>WARNING:</w> <description/>"
+        "warning": "<w>WARNING:</w> <description/>",
+        "labs_mjolnir": {
+            "dialog_title": "<strong>Settings:</strong> Ignored Users"
+        },
+        "labs": {
+            "dialog_title": "<strong>Settings:</strong> Labs"
+        }
     },
     "share": {
         "link_title": "Link to room",
@@ -3780,12 +3794,12 @@
         "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices."
     },
     "user_menu": {
-        "link_new_device": "Link new device",
-        "link_new_device_not_supported": "Not supported",
-        "link_new_device_not_supported_caption": "You need to sign in manually",
         "settings": "All settings",
         "switch_theme_dark": "Switch to dark mode",
-        "switch_theme_light": "Switch to light mode"
+        "switch_theme_light": "Switch to light mode",
+        "link_new_device_not_supported_caption": "You need to sign in manually",
+        "link_new_device_not_supported": "Not supported",
+        "link_new_device": "Link new device"
     },
     "voice_broadcast": {
         "30s_backward": "30s backward",

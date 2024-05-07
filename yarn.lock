@@ -3096,10 +3096,10 @@
   dependencies:
     svg2vectordrawable "^2.9.1"
 
-"@vector-im/compound-web@^4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-4.1.1.tgz#7a3c7deb8be2ca7f13f151a51434759d64687ad9"
-  integrity sha512-vFJ6dyn712taz0TAt/ZwfwiD86ZbKyP9ePLcqCCeJ2M0dzvzrr0lCl702g6mbdiUKVqYwKHrqDhOUgsqb6TNoQ==
+"@vector-im/compound-web@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-4.1.2.tgz#d8f9ba523700660942722a800c64406216bbbfea"
+  integrity sha512-u/jj8HF8qpX1NU+sh6f/S1B7HUMGcoAGYLH0wc5lVbf6x6elBsYKD0LSa+/8NDPuQqVWMztu76chUsM5slC49w==
   dependencies:
     "@floating-ui/react" "^0.26.9"
     "@floating-ui/react-dom" "^2.0.8"
@@ -7065,8 +7065,8 @@ matrix-events-sdk@0.0.1:
   integrity sha512-1QEOsXO+bhyCroIe2/A5OwaxHvBm7EsSQ46DEDn8RBIfQwN5HWBpFvyWWR4QY0KHPPnnJdI99wgRiAl7Ad5qaA==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "32.1.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/1da5e8f56a29afef0197dd4c3553d2ee4dfbd576"
+  version "32.2.0"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/2a716bd076459f48fed967f3eb4158ebdc1f3600"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@matrix-org/matrix-sdk-crypto-wasm" "^4.9.0"

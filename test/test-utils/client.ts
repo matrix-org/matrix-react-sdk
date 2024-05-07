@@ -17,7 +17,7 @@ limitations under the License.
 import EventEmitter from "events";
 import { MethodLikeKeys, mocked, MockedObject, PropertyLikeKeys } from "jest-mock";
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
-import { MatrixClient, MatrixError, User } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Room, MatrixError, User } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 
@@ -174,4 +174,9 @@ export const mockClientMethodsCrypto = (): Partial<
         getOwnDeviceKeys: jest.fn(),
         getCrossSigningKeyId: jest.fn(),
     }),
+    getDeviceEd25519Key: jest.fn(),
+});
+
+export const mockClientMethodsRooms = (rooms: Room[] = []): Partial<Record<MethodLikeKeys<MatrixClient>, unknown>> => ({
+    getRooms: jest.fn().mockReturnValue(rooms),
 });

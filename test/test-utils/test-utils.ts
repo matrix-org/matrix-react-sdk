@@ -271,6 +271,7 @@ export function createTestClient(): MatrixClient {
         getMediaConfig: jest.fn(),
         baseUrl: "https://matrix-client.matrix.org",
         matrixRTC: createStubMatrixRTC(),
+        isFallbackICEServerAllowed: jest.fn().mockReturnValue(false),
         getAuthIssuer: jest.fn(),
     } as unknown as MatrixClient;
 
