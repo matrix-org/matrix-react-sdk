@@ -246,8 +246,13 @@
         "phone_optional_label": "Phone (optional)",
         "qr_code_login": {
             "approve_access_warning": "By approving access for this device, it will have full access to your account.",
+            "check_code_explainer": "This will verify that the connection to your other device is secure.",
+            "check_code_heading": "Enter the number shown on your other device",
+            "check_code_input_label": "2-digit code",
+            "check_code_mismatch": "The numbers don't match",
             "completing_setup": "Completing set up of your new device",
             "confirm_code_match": "Check that the code below matches with your other device:",
+            "error_etag_missing": "An unexpected error occurred. This may be due to a browser extension, proxy server, or server misconfiguration.",
             "error_expired": "Sign in expired. Please try again.",
             "error_expired_title": "The sign in was not completed in time",
             "error_insecure_channel_detected": "A secure connection could not be made to the new device. Your existing devices are still safe and you don't need to worry about them.",
@@ -271,16 +276,11 @@
             "point_the_camera": "Point the camera at the QR code shown here",
             "scan_code_instruction": "Scan the QR code with another device",
             "scan_qr_code": "Sign in with QR code",
+            "security_code": "Security code",
+            "security_code_prompt": "If asked, enter the code below on your other device.",
             "select_qr_code": "Select \"%(scanQRCode)s\"",
             "sign_in_new_device": "Sign in new device",
-            "waiting_for_device": "Waiting for device to sign in",
-            "security_code_prompt": "If asked, enter the code below on your other device.",
-            "security_code": "Security code",
-            "error_etag_missing": "An unexpected error occurred. This may be due to a browser extension, proxy server, or server misconfiguration.",
-            "check_code_mismatch": "The numbers don't match",
-            "check_code_input_label": "2-digit code",
-            "check_code_heading": "Enter the number shown on your other device",
-            "check_code_explainer": "This will verify that the connection to your other device is secure."
+            "waiting_for_device": "Waiting for device to sign in"
         },
         "register_action": "Create Account",
         "registration": {
@@ -2401,12 +2401,12 @@
             "brand_version": "%(brand)s version:",
             "clear_cache_reload": "Clear cache and reload",
             "crypto_version": "Crypto version:",
+            "dialog_title": "<strong>Settings:</strong> Help & About",
             "help_link": "For help with using %(brand)s, click <a>here</a>.",
             "homeserver": "Homeserver is <code>%(homeserverUrl)s</code>",
             "identity_server": "Identity server is <code>%(identityServerUrl)s</code>",
             "title": "Help & About",
-            "versions": "Versions",
-            "dialog_title": "<strong>Settings:</strong> Help & About"
+            "versions": "Versions"
         }
     },
     "settings": {
@@ -2424,6 +2424,7 @@
             "custom_theme_invalid": "Invalid theme schema.",
             "custom_theme_success": "Theme added!",
             "custom_theme_url": "Custom theme URL",
+            "dialog_title": "<strong>Settings:</strong> Appearance",
             "font_size": "Font size",
             "font_size_default": "%(fontSize)s (default)",
             "image_size_default": "Default",
@@ -2432,8 +2433,7 @@
             "layout_irc": "IRC (Experimental)",
             "match_system_theme": "Match system theme",
             "timeline_image_size": "Image size in the timeline",
-            "use_high_contrast": "Use high contrast",
-            "dialog_title": "<strong>Settings:</strong> Appearance"
+            "use_high_contrast": "Use high contrast"
         },
         "automatic_language_detection_syntax_highlight": "Enable automatic language detection for syntax highlighting",
         "autoplay_gifs": "Autoplay GIFs",
@@ -2473,6 +2473,7 @@
             "deactivate_confirm_erase_label": "Hide my messages from new joiners",
             "deactivate_section": "Deactivate Account",
             "deactivate_warning": "Deactivating your account is a permanent action — be careful!",
+            "dialog_title": "<strong>Settings:</strong> General",
             "discovery_email_empty": "Discovery options will appear once you have added an email above.",
             "discovery_email_verification_instructions": "Verify the link in your inbox",
             "discovery_msisdn_empty": "Discovery options will appear once you have added a phone number above.",
@@ -2519,8 +2520,7 @@
             "remove_email_prompt": "Remove %(email)s?",
             "remove_msisdn_prompt": "Remove %(phone)s?",
             "spell_check_locale_placeholder": "Choose a locale",
-            "spell_check_section": "Spell check",
-            "dialog_title": "<strong>Settings:</strong> General"
+            "spell_check_section": "Spell check"
         },
         "image_thumbnails": "Show previews/thumbnails for images",
         "inline_url_previews_default": "Enable inline URL previews by default",
@@ -2581,13 +2581,20 @@
             "phrase_strong_enough": "Great! This passphrase looks strong enough"
         },
         "keyboard": {
-            "title": "Keyboard",
-            "dialog_title": "<strong>Settings:</strong> Keyboard"
+            "dialog_title": "<strong>Settings:</strong> Keyboard",
+            "title": "Keyboard"
+        },
+        "labs": {
+            "dialog_title": "<strong>Settings:</strong> Labs"
+        },
+        "labs_mjolnir": {
+            "dialog_title": "<strong>Settings:</strong> Ignored Users"
         },
         "notifications": {
             "default_setting_description": "This setting will be applied by default to all your rooms.",
             "default_setting_section": "I want to be notified for (Default Setting)",
             "desktop_notification_message_preview": "Show message preview in desktop notification",
+            "dialog_title": "<strong>Settings:</strong> Notifications",
             "email_description": "Receive an email summary of missed notifications",
             "email_section": "Email summary",
             "email_select": "Select which emails you want to send summaries to. Manage your emails in <button>General</button>.",
@@ -2637,8 +2644,7 @@
             "rule_suppress_notices": "Messages sent by bot",
             "rule_tombstone": "When rooms are upgraded",
             "show_message_desktop_notification": "Show message in desktop notification",
-            "voip": "Audio and Video calls",
-            "dialog_title": "<strong>Settings:</strong> Notifications"
+            "voip": "Audio and Video calls"
         },
         "preferences": {
             "Electron.enableHardwareAcceleration": "Enable hardware acceleration (restart %(appName)s to take effect)",
@@ -2647,6 +2653,7 @@
             "code_blocks_heading": "Code blocks",
             "compact_modern": "Use a more compact 'Modern' layout",
             "composer_heading": "Composer",
+            "dialog_title": "<strong>Settings:</strong> Preferences",
             "enable_hardware_acceleration": "Enable hardware acceleration",
             "enable_tray_icon": "Show tray icon and minimise window to it on close",
             "keyboard_heading": "Keyboard shortcuts",
@@ -2661,8 +2668,7 @@
             "show_checklist_shortcuts": "Show shortcut to welcome checklist above the room list",
             "show_polls_button": "Show polls button",
             "surround_text": "Surround selected text when typing special characters",
-            "time_heading": "Displaying time",
-            "dialog_title": "<strong>Settings:</strong> Preferences"
+            "time_heading": "Displaying time"
         },
         "prompt_invite": "Prompt before sending invites to potentially invalid matrix IDs",
         "replace_plain_emoji": "Automatically replace plain text Emoji",
@@ -2697,6 +2703,7 @@
             "dehydrated_device_enabled": "Offline device enabled",
             "delete_backup": "Delete Backup",
             "delete_backup_confirm_description": "Are you sure? You will lose your encrypted messages if your keys are not backed up properly.",
+            "dialog_title": "<strong>Settings:</strong> Security & Privacy",
             "e2ee_default_disabled_warning": "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
             "enable_message_search": "Enable message search in encrypted rooms",
             "encryption_individual_verification_mode": "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.",
@@ -2745,8 +2752,7 @@
             "send_analytics": "Send analytics data",
             "session_id": "Session ID:",
             "session_key": "Session key:",
-            "strict_encryption": "Never send encrypted messages to unverified sessions from this session",
-            "dialog_title": "<strong>Settings:</strong> Security & Privacy"
+            "strict_encryption": "Never send encrypted messages to unverified sessions from this session"
         },
         "send_read_receipts": "Send read receipts",
         "send_read_receipts_unsupported": "Your server doesn't support disabling sending read receipts.",
@@ -2777,6 +2783,7 @@
             "device_unverified_description_current": "Verify your current session for enhanced secure messaging.",
             "device_verified_description": "This session is ready for secure messaging.",
             "device_verified_description_current": "Your current session is ready for secure messaging.",
+            "dialog_title": "<strong>Settings:</strong> Sessions",
             "error_pusher_state": "Failed to set pusher state",
             "error_set_name": "Failed to set session name",
             "filter_all": "All",
@@ -2846,8 +2853,7 @@
             "verified_sessions_explainer_2": "This means that you have all the keys needed to unlock your encrypted messages and confirm to other users that you trust this session.",
             "verified_sessions_list_description": "For best security, sign out from any session that you don't recognize or use anymore.",
             "verify_session": "Verify session",
-            "web_session": "Web session",
-            "dialog_title": "<strong>Settings:</strong> Sessions"
+            "web_session": "Web session"
         },
         "show_avatar_changes": "Show profile picture changes",
         "show_breadcrumbs": "Show shortcuts to recently viewed rooms above the room list",
@@ -2861,6 +2867,7 @@
         "show_typing_notifications": "Show typing notifications",
         "showbold": "Show all activity in the room list (dots or number of unread messages)",
         "sidebar": {
+            "dialog_title": "<strong>Settings:</strong> Sidebar",
             "metaspaces_favourites_description": "Group all your favourite rooms and people in one place.",
             "metaspaces_home_all_rooms": "Show all rooms",
             "metaspaces_home_all_rooms_description": "Show all your rooms in Home, even if they're in a space.",
@@ -2873,8 +2880,7 @@
             "metaspaces_video_rooms_description": "Group all private video rooms and conferences.",
             "metaspaces_video_rooms_description_invite_extension": "In conferences you can invite people outside of matrix.",
             "spaces_explainer": "Spaces are ways to group rooms and people. Alongside the spaces you're in, you can use some pre-built ones too.",
-            "title": "Sidebar",
-            "dialog_title": "<strong>Settings:</strong> Sidebar"
+            "title": "Sidebar"
         },
         "start_automatically": "Start automatically after system login",
         "tac_only_notifications": "Only show notifications in the thread activity centre",
@@ -2891,6 +2897,7 @@
             "audio_output_empty": "No Audio Outputs detected",
             "auto_gain_control": "Automatic gain control",
             "connection_section": "Connection",
+            "dialog_title": "<strong>Settings:</strong> Voice & Video",
             "echo_cancellation": "Echo cancellation",
             "enable_fallback_ice_server": "Allow fallback call assist server (%(server)s)",
             "enable_fallback_ice_server_description": "Only applies if your homeserver does not offer one. Your IP address would be shared during a call.",
@@ -2903,17 +2910,10 @@
             "video_section": "Video settings",
             "voice_agc": "Automatically adjust the microphone volume",
             "voice_processing": "Voice processing",
-            "voice_section": "Voice settings",
-            "dialog_title": "<strong>Settings:</strong> Voice & Video"
+            "voice_section": "Voice settings"
         },
         "warn_quit": "Warn before quitting",
-        "warning": "<w>WARNING:</w> <description/>",
-        "labs_mjolnir": {
-            "dialog_title": "<strong>Settings:</strong> Ignored Users"
-        },
-        "labs": {
-            "dialog_title": "<strong>Settings:</strong> Labs"
-        }
+        "warning": "<w>WARNING:</w> <description/>"
     },
     "share": {
         "link_title": "Link to room",
@@ -3794,12 +3794,12 @@
         "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices."
     },
     "user_menu": {
+        "link_new_device": "Link new device",
+        "link_new_device_not_supported": "Not supported",
+        "link_new_device_not_supported_caption": "You need to sign in manually",
         "settings": "All settings",
         "switch_theme_dark": "Switch to dark mode",
-        "switch_theme_light": "Switch to light mode",
-        "link_new_device_not_supported_caption": "You need to sign in manually",
-        "link_new_device_not_supported": "Not supported",
-        "link_new_device": "Link new device"
+        "switch_theme_light": "Switch to light mode"
     },
     "voice_broadcast": {
         "30s_backward": "30s backward",
