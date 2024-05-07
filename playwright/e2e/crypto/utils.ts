@@ -194,7 +194,7 @@ export async function logOutOfElement(page: Page, discardKeys: boolean = false) 
  */
 export async function verifySession(app: ElementAppPage, securityKey: string) {
     const settings = await app.settings.openUserSettings("Security & Privacy");
-    await settings.getByRole("button", { name: "Verify this session" }).click();
+    await settings.getByRole("button", { name: "Verify this device" }).click();
     await app.page.getByRole("button", { name: "Verify with Security Key" }).click();
     await app.page.locator(".mx_Dialog").locator('input[type="password"]').fill(securityKey);
     await app.page.getByRole("button", { name: "Continue", disabled: false }).click();
