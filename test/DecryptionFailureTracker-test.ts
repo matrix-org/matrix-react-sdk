@@ -256,7 +256,7 @@ describe("DecryptionFailureTracker", function () {
         expect(count).toBe(1);
     });
 
-    it.skip("should not track a failure for an event that was tracked in a previous session", async () => {
+    it("should not track a failure for an event that was tracked in a previous session", async () => {
         // This test uses localStorage, clear it beforehand
         localStorage.clear();
 
@@ -288,8 +288,6 @@ describe("DecryptionFailureTracker", function () {
         );
 
         secondTracker.addVisibleEvent(decryptedEvent);
-
-        //secondTracker.loadTrackedEvents();
 
         secondTracker.eventDecrypted(decryptedEvent);
         secondTracker.checkFailures(Infinity);

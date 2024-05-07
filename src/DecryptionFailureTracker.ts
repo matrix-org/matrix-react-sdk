@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { ScalableBloomFilter } from "bloom-filters";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Error as ErrorEvent } from "@matrix-org/analytics-events/types/typescript/Error";
 import { DecryptionFailureCode } from "matrix-js-sdk/src/crypto-api";
@@ -85,7 +86,7 @@ export class DecryptionFailureTracker {
     private failureCounts: Map<DecryptionFailureCode, number> = new Map();
 
     // Event IDs of failures that were tracked previously
-    public trackedEvents: Set<string> = new Set();
+    public trackedEvents: ScalableBloomFilter = new ScalableBloomFilter();
 
     // Set to an interval ID when `start` is called
     public checkInterval: number | null = null;
@@ -100,6 +101,9 @@ export class DecryptionFailureTracker {
     // Give events a chance to be decrypted by waiting `GRACE_PERIOD_MS` before counting
     // the failure in `failureCounts`.
     public static GRACE_PERIOD_MS = 30000;
+
+    // The key that we use for storing
+    public static DECRYPTION_FAILURE_STORAGE_KEY = "mx_decryption_failure_event_ids";
 
     /**
      * Create a new DecryptionFailureTracker.
@@ -126,19 +130,29 @@ export class DecryptionFailureTracker {
         if (typeof errorCodeMapFn !== "function") {
             throw new Error("DecryptionFailureTracker second constructor argument should be a function");
         }
+
+        this.loadTrackedEvents();
     }
 
     public static get instance(): DecryptionFailureTracker {
         return DecryptionFailureTracker.internalInstance;
     }
 
-    // loadTrackedEvents() {
-    //     this.trackedEvents = new Set(JSON.parse(localStorage.getItem('mx-decryption-failure-event-ids')) || []);
-    // }
+    private loadTrackedEvents(): void {
+        const storedFailures = localStorage.getItem(DecryptionFailureTracker.DECRYPTION_FAILURE_STORAGE_KEY);
+        if (storedFailures) {
+            this.trackedEvents = ScalableBloomFilter.fromJSON(JSON.parse(storedFailures));
+        } else {
+            this.trackedEvents = new ScalableBloomFilter();
+        }
+    }
 
-    // saveTrackedEvents() {
-    //     localStorage.setItem('mx-decryption-failure-event-ids', JSON.stringify([...this.trackedEvents]));
-    // }
+    private saveTrackedEvents(): void {
+        localStorage.setItem(
+            DecryptionFailureTracker.DECRYPTION_FAILURE_STORAGE_KEY,
+            JSON.stringify(this.trackedEvents.saveAsJSON()),
+        );
+    }
 
     public eventDecrypted(e: MatrixEvent): void {
         // for now we only track megolm decryption failures
@@ -230,9 +244,7 @@ export class DecryptionFailureTracker {
         }
         this.visibleFailures = failuresNotReady;
 
-        // Commented out for now for expediency, we need to consider unbound nature of storing
-        // this in localStorage
-        // this.saveTrackedEvents();
+        this.saveTrackedEvents();
 
         this.aggregateFailures(failuresGivenGrace);
     }
