@@ -34,18 +34,18 @@ import { _t } from "../../../../../languageHandler";
 import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import { openLinkModal } from "./LinkModal";
 import { useComposerContext } from "../ComposerContext";
-import { IS_MAC, Key } from "../../../../../Keyboard";
-import { ALTERNATE_KEY_NAME } from "../../../../../accessibility/KeyboardShortcuts";
+import { KeyboardShortcut } from "../../../settings/KeyboardShortcut";
+import { KeyCombo } from "../../../../../KeyBindingsManager";
 
 interface ButtonProps {
     icon: ReactNode;
     actionState: ActionState;
     onClick: MouseEventHandler<HTMLButtonElement>;
     label: string;
-    shortcut?: string;
+    keyCombo?: KeyCombo;
 }
 
-function Button({ label, shortcut, onClick, actionState, icon }: ButtonProps): JSX.Element {
+function Button({ label, keyCombo, onClick, actionState, icon }: ButtonProps): JSX.Element {
     return (
         <AccessibleButton
             element="button"
@@ -57,20 +57,16 @@ function Button({ label, shortcut, onClick, actionState, icon }: ButtonProps): J
                 mx_FormattingButtons_disabled: actionState === "disabled",
             })}
             title={actionState === "disabled" ? undefined : label}
-            caption={shortcut}
+            caption={
+                keyCombo && (
+                    <KeyboardShortcut value={keyCombo} className="mx_FormattingButtons_Tooltip_KeyboardShortcut" />
+                )
+            }
             placement="top"
         >
             {icon}
         </AccessibleButton>
     );
-}
-
-/**
- * Get the shortcut string for a given key.
- * @param key
- */
-function getShortcutFromKey(key: string): string {
-    return (IS_MAC ? "⌘" : _t(ALTERNATE_KEY_NAME[Key.CONTROL])) + "+" + key;
 }
 
 interface FormattingButtonsProps {
@@ -86,21 +82,21 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
             <Button
                 actionState={actionStates.bold}
                 label={_t("composer|format_bold")}
-                shortcut={getShortcutFromKey("B")}
+                keyCombo={{ ctrlOrCmdKey: true, key: "b" }}
                 onClick={() => composer.bold()}
                 icon={<BoldIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 actionState={actionStates.italic}
                 label={_t("composer|format_italic")}
-                shortcut={getShortcutFromKey("I")}
+                keyCombo={{ ctrlOrCmdKey: true, key: "i" }}
                 onClick={() => composer.italic()}
                 icon={<ItalicIcon className="mx_FormattingButtons_Icon" />}
             />
             <Button
                 actionState={actionStates.underline}
                 label={_t("composer|format_underline")}
-                shortcut={getShortcutFromKey("U")}
+                keyCombo={{ ctrlOrCmdKey: true, key: "u" }}
                 onClick={() => composer.underline()}
                 icon={<UnderlineIcon className="mx_FormattingButtons_Icon" />}
             />
@@ -147,7 +143,7 @@ export function FormattingButtons({ composer, actionStates }: FormattingButtonsP
             <Button
                 actionState={actionStates.inlineCode}
                 label={_t("composer|format_inline_code")}
-                shortcut={getShortcutFromKey("E")}
+                keyCombo={{ ctrlOrCmdKey: true, key: "e" }}
                 onClick={() => composer.inlineCode()}
                 icon={<InlineCodeIcon className="mx_FormattingButtons_Icon" />}
             />
