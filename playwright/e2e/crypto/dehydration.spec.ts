@@ -91,7 +91,7 @@ test.describe("Dehydration", () => {
         // the dehydrated device gets created with the name "Dehydrated
         // device".  We want to make sure that it is not visible as a normal
         // device.
-        const sessionsTab = await app.settings.openUserSettings("Sessions");
+        const sessionsTab = await app.settings.openUserSettings("Devices");
         await expect(sessionsTab.getByText("Dehydrated device")).not.toBeVisible();
 
         await app.settings.closeDialog();
