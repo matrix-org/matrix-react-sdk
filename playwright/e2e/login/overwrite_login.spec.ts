@@ -52,9 +52,13 @@ test.describe("Overwrite login action", () => {
         // It should be now another user!!
         await expect
             .poll(async () => {
-                const newUserMenu = await app.openUserMenu();
-                return newUserMenu.locator(".mx_UserMenu_contextMenu_userId").innerText();
-                //return await newUserMenu.getByText(bobRegister.userId)).toBeVisible();
+                try {
+                    const newUserMenu = await app.openUserMenu();
+                    return newUserMenu.locator(".mx_UserMenu_contextMenu_userId").innerText();
+                } finally {
+                    page.keyboard.press("Escape");
+                    await expect(userMenu.getByText(credentials.userId)).not.toBeVisible();
+                }
             })
             .toBe(bobRegister.userId);
     });
