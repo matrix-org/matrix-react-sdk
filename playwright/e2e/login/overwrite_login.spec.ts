@@ -47,7 +47,12 @@ test.describe("Overwrite login action", () => {
         }, clientCredentials);
 
         // It should be now another user!!
-        const newUserMenu = await app.openUserMenu();
-        await expect(newUserMenu.getByText(bobRegister.userId)).toBeVisible();
+        await expect
+            .poll(async () => {
+                const newUserMenu = await app.openUserMenu();
+                return newUserMenu.locator(".mx_UserMenu_contextMenu_userId").innerText();
+                //return await newUserMenu.getByText(bobRegister.userId)).toBeVisible();
+            })
+            .toBe(bobRegister.userId);
     });
 });
