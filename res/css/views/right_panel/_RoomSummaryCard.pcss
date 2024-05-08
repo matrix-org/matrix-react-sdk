@@ -52,10 +52,11 @@ limitations under the License.
     }
 
     .mx_RoomSummaryCard_topic {
-        > span {
+        > p {
             white-space: pre-wrap;
             width: 100%;
             min-width: 0;
+            margin: 0;
         }
 
         .mx_RoomSummaryCard_topic_chevron {
@@ -63,7 +64,7 @@ limitations under the License.
         }
 
         &.mx_RoomSummaryCard_topic_collapsed {
-            > span {
+            > p {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: normal;

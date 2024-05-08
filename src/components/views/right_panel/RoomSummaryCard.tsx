@@ -303,7 +303,9 @@ const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element => {
                 setExpanded(!expanded);
             }}
         >
-            {content}
+            <Text size="sm" weight="regular">
+                {content}
+            </Text>
             <IconButton className="mx_RoomSummaryCard_topic_chevron" size="24px">
                 <ChevronDownIcon />
             </IconButton>
