@@ -16,7 +16,16 @@ limitations under the License.
 
 import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
-import { MenuItem, Tooltip, Separator, ToggleMenuItem, Text, Badge, Heading } from "@vector-im/compound-web";
+import {
+    MenuItem,
+    Tooltip,
+    Separator,
+    ToggleMenuItem,
+    Text,
+    Badge,
+    Heading,
+    IconButton,
+} from "@vector-im/compound-web";
 import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
 import { Icon as FavouriteIcon } from "@vector-im/compound-design-tokens/icons/favourite.svg";
 import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add.svg";
@@ -32,6 +41,7 @@ import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock-s
 import { Icon as LockOffIcon } from "@vector-im/compound-design-tokens/icons/lock-off.svg";
 import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
 import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
+import { Icon as ChevronDownIcon } from "@vector-im/compound-design-tokens/icons/chevron-down.svg";
 import { EventType, JoinRule, Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -74,6 +84,8 @@ import { canInviteTo } from "../../../utils/room/canInviteTo";
 import { inviteToRoom } from "../../../utils/room/inviteToRoom";
 import { useAccountData } from "../../../hooks/useAccountData";
 import { useRoomState } from "../../../hooks/useRoomState";
+import { useTopic } from "../../../hooks/room/useTopic";
+import { Linkify, topicToHtml } from "../../../HtmlUtils";
 
 interface IProps {
     room: Room;
@@ -271,6 +283,34 @@ const onRoomSettingsClick = (ev: Event): void => {
     PosthogTrackers.trackInteraction("WebRightPanelRoomInfoSettingsButton", ev);
 };
 
+const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element => {
+    const [expanded, setExpanded] = useState(false);
+
+    const topic = useTopic(room);
+    const body = topicToHtml(topic?.text, topic?.html);
+
+    const content = expanded ? <Linkify>{body}</Linkify> : body;
+    return (
+        <Flex
+            as="section"
+            justify="center"
+            gap="var(--cpd-space-2x)"
+            className={classNames("mx_RoomSummaryCard_topic", {
+                mx_RoomSummaryCard_topic_collapsed: !expanded,
+            })}
+            onClick={(ev) => {
+                if (ev.target instanceof HTMLAnchorElement) return;
+                setExpanded(!expanded);
+            }}
+        >
+            {content}
+            <IconButton className="mx_RoomSummaryCard_topic_chevron" size="24px">
+                <ChevronDownIcon />
+            </IconButton>
+        </Flex>
+    );
+};
+
 const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, onSearchClick }) => {
     const cli = useContext(MatrixClientContext);
 
@@ -382,6 +422,8 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                     </Badge>
                 )}
             </Flex>
+
+            <RoomTopic room={room} />
         </header>
     );
 

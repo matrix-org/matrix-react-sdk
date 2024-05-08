@@ -51,6 +51,33 @@ limitations under the License.
         }
     }
 
+    .mx_RoomSummaryCard_topic {
+        > span {
+            white-space: pre-wrap;
+            width: 100%;
+            min-width: 0;
+        }
+
+        .mx_RoomSummaryCard_topic_chevron {
+            transition: transform 0.3s;
+        }
+
+        &.mx_RoomSummaryCard_topic_collapsed {
+            > span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: normal;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+
+            .mx_RoomSummaryCard_topic_chevron {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+
     .mx_RoomSummaryCard_appsGroup {
         .mx_RoomSummaryCard_Button {
             /* this button is special so we have to override some of the original styling */
