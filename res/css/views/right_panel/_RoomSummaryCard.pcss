@@ -52,11 +52,29 @@ limitations under the License.
     }
 
     .mx_RoomSummaryCard_topic {
-        > p {
+        padding: 0 12px;
+
+        .mx_Box {
+            width: 100%;
+        }
+
+        .mx_RoomSummaryCard_topic_container {
+            display: flex;
+        }
+
+        .mx_RoomSummaryCard_topic_edit {
+            width: max-content;
+        }
+
+        p {
             white-space: pre-wrap;
             width: 100%;
             min-width: 0;
             margin: 0;
+        }
+
+        a {
+            cursor: pointer;
         }
 
         .mx_RoomSummaryCard_topic_chevron {
@@ -64,7 +82,7 @@ limitations under the License.
         }
 
         &.mx_RoomSummaryCard_topic_collapsed {
-            > p {
+            p {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: normal;

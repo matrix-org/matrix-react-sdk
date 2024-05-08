@@ -68,6 +68,27 @@ exports[`<RoomSummaryCard /> renders the room summary 1`] = `
             Not encrypted
           </span>
         </section>
+        <section
+          class="mx_Flex mx_RoomSummaryCard_topic"
+          style="--mx-flex-display: flex; --mx-flex-direction: column; --mx-flex-align: start; --mx-flex-justify: center; --mx-flex-gap: var(--cpd-space-2x);"
+        >
+          <div
+            class="mx_Box mx_Box--flex"
+            style="--mx-box-flex: 1;"
+          >
+            <a
+              class="_link_1mzip_17"
+              data-kind="primary"
+              rel="noreferrer noopener"
+            >
+              <p
+                class="_typography_yh5dq_162 _font-body-sm-regular_yh5dq_40"
+              >
+                Add topic
+              </p>
+            </a>
+          </div>
+        </section>
       </header>
       <div
         class="_separator_144s5_17"

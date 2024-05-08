@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { SyntheticEvent, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import {
     MenuItem,
@@ -25,6 +25,7 @@ import {
     Badge,
     Heading,
     IconButton,
+    Link,
 } from "@vector-im/compound-web";
 import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
 import { Icon as FavouriteIcon } from "@vector-im/compound-design-tokens/icons/favourite.svg";
@@ -86,6 +87,8 @@ import { useAccountData } from "../../../hooks/useAccountData";
 import { useRoomState } from "../../../hooks/useRoomState";
 import { useTopic } from "../../../hooks/room/useTopic";
 import { Linkify, topicToHtml } from "../../../HtmlUtils";
+import { Box } from "../../utils/Box";
+import { onRoomTopicLinkClick } from "../elements/RoomTopic";
 
 interface IProps {
     room: Room;
@@ -289,28 +292,74 @@ const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element | null
     const topic = useTopic(room);
     const body = topicToHtml(topic?.text, topic?.html);
 
-    if (!body) return null;
+    const onEditClick = (e: SyntheticEvent): void => {
+        e.preventDefault();
+        e.stopPropagation();
+        defaultDispatcher.dispatch({ action: "open_room_settings" });
+    };
+
+    if (!body) {
+        return (
+            <Flex
+                as="section"
+                direction="column"
+                justify="center"
+                gap="var(--cpd-space-2x)"
+                className="mx_RoomSummaryCard_topic"
+            >
+                <Box flex="1">
+                    <Link kind="primary" onClick={onEditClick}>
+                        <Text size="sm" weight="regular">
+                            {_t("right_panel|add_topic")}
+                        </Text>
+                    </Link>
+                </Box>
+            </Flex>
+        );
+    }
 
     const content = expanded ? <Linkify>{body}</Linkify> : body;
     return (
         <Flex
             as="section"
+            direction="column"
             justify="center"
             gap="var(--cpd-space-2x)"
             className={classNames("mx_RoomSummaryCard_topic", {
                 mx_RoomSummaryCard_topic_collapsed: !expanded,
             })}
-            onClick={(ev) => {
-                if (ev.target instanceof HTMLAnchorElement) return;
-                setExpanded(!expanded);
-            }}
         >
-            <Text size="sm" weight="regular">
-                {content}
-            </Text>
-            <IconButton className="mx_RoomSummaryCard_topic_chevron" size="24px">
-                <ChevronDownIcon />
-            </IconButton>
+            <Box flex="1" className="mx_RoomSummaryCard_topic_container">
+                <Text
+                    size="sm"
+                    weight="regular"
+                    onClick={(ev: React.MouseEvent): void => {
+                        if (ev.target instanceof HTMLAnchorElement) {
+                            onRoomTopicLinkClick(ev);
+                            return;
+                        }
+                        setExpanded(!expanded);
+                    }}
+                >
+                    {content}
+                </Text>
+                <IconButton
+                    className="mx_RoomSummaryCard_topic_chevron"
+                    size="24px"
+                    onClick={() => setExpanded(!expanded)}
+                >
+                    <ChevronDownIcon />
+                </IconButton>
+            </Box>
+            {expanded && (
+                <Box flex="1" className="mx_RoomSummaryCard_topic_edit">
+                    <Link kind="primary" onClick={onEditClick}>
+                        <Text size="sm" weight="regular">
+                            {_t("action|edit")}
+                        </Text>
+                    </Link>
+                </Box>
+            )}
         </Flex>
     );
 };
