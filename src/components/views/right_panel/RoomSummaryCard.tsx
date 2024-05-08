@@ -283,11 +283,13 @@ const onRoomSettingsClick = (ev: Event): void => {
     PosthogTrackers.trackInteraction("WebRightPanelRoomInfoSettingsButton", ev);
 };
 
-const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element => {
+const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element | null => {
     const [expanded, setExpanded] = useState(false);
 
     const topic = useTopic(room);
     const body = topicToHtml(topic?.text, topic?.html);
+
+    if (!body) return null;
 
     const content = expanded ? <Linkify>{body}</Linkify> : body;
     return (
