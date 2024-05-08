@@ -23,6 +23,9 @@ test.describe("Overwrite login action", () => {
 
         const userMenu = await app.openUserMenu();
         await expect(userMenu.getByText(credentials.userId)).toBeVisible();
+        // close it again, so we know it's closed when we come to open it again later
+        page.keyboard.press("Escape");
+        await expect(userMenu.getByText(credentials.userId)).not.toBeVisible();
 
         const bobRegister = await homeserver.registerUser("BobOverwrite", "p@ssword1!", "BOB");
 
