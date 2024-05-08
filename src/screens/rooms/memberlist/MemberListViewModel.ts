@@ -70,7 +70,10 @@ export default function MemberListViewModel(
     }
 
     function onPresenceUpdated(userId: string): void {
-        if (memberState.joinedMembers.map((member) => member.userId).includes(userId)) {
+        // Only update the memberlist for presence changes for the members we are actually showing
+        if (memberState.joinedMembers
+            .slice(0, memberState.truncateAtJoined)
+            .map((member) => member.userId).includes(userId)) {
             throttleLoadMembers()
         }
     }
