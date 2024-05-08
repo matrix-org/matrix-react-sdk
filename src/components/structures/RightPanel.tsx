@@ -44,6 +44,7 @@ import { XOR } from "../../@types/common";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { inviteToRoom } from "../../utils/room/inviteToRoom";
 import MemberList from "../views/rooms/MemberList";
+import { SpaceScopeHeader } from "../views/rooms/SpaceScopeHeader";
 
 interface BaseProps {
     overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
@@ -163,10 +164,8 @@ export default class RightPanel extends React.Component<Props, IState> {
     };
 
     private onInviteButtonClick = (roomId: string): void => {
-
         const cli = MatrixClientPeg.safeGet();
         const room = cli.getRoom(roomId)!;
-
         inviteToRoom(room);
     };
 
@@ -191,9 +190,13 @@ export default class RightPanel extends React.Component<Props, IState> {
                 break;
             case RightPanelPhases.SpaceMemberList:
                 if (!!cardState?.spaceId || !!roomId) {
+                    const cli = MatrixClientPeg.safeGet();
+                    const room = cli.getRoom(roomId);
+                    const spaceHeader = room ? <SpaceScopeHeader room={room} /> : undefined;
                     card = (
                         <MemberList
                         roomId={cardState?.spaceId ?? roomId!}
+                        header={spaceHeader}
                         key={cardState?.spaceId ?? roomId!}
                         onClose={this.onClose}
                         onThreePIDInviteClick={this.onThreePIDInviteClick}

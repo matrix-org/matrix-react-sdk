@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { Button, Tooltip } from "@vector-im/compound-web";
 import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add-solid.svg";
 
@@ -31,13 +31,13 @@ import EntityTile from "./EntityTile";
 import MemberTile from "./MemberTile";
 import BaseAvatar from "../avatars/BaseAvatar";
 import PosthogTrackers from "../../../PosthogTrackers";
-// import { SpaceScopeHeader } from "./SpaceScopeHeader";
 import { RoomMember } from "../../../models/rooms/RoomMember";
 import { ThreePIDInvite } from "../../../models/rooms/ThreePIDInvite";
 import { useMemberListViewModel } from "../../../screens/rooms/memberlist/useMemberListViewModel";
 
 interface IProps {
     roomId: string;
+    header?: ReactNode;
     onClose(): void;
     onInviteButtonClick(roomId: string): void;
     onThreePIDInviteClick(eventId: string): void;
@@ -179,12 +179,10 @@ const MemberList: React.FC<IProps> = (propsIn: IProps) => {
         />
     );
 
-    // const scopeHeader = room ? <SpaceScopeHeader room={room} /> : undefined;
-
     return (
         <BaseCard
             className="mx_MemberList"
-            // header={<React.Fragment>{scopeHeader}</React.Fragment>}
+            header={props.header && <React.Fragment>{props.header}</React.Fragment>}
             footer={footer}
             onClose={props.onClose}
         >
