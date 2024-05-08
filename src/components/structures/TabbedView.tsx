@@ -132,6 +132,9 @@ interface IProps<T extends string> {
     onChange: (tabId: T) => void;
     // The screen name to report to Posthog.
     screenName?: ScreenName;
+    // If true, the layout of the tabbed view will be responsive to the viewport size.
+    // Only applies if tabs are on the left. Default: false.
+    responsive?: boolean;
 }
 
 /**
@@ -160,6 +163,7 @@ export default function TabbedView<T extends string>(props: IProps<T>): JSX.Elem
         mx_TabbedView: true,
         mx_TabbedView_tabsOnLeft: tabLocation == TabLocation.LEFT,
         mx_TabbedView_tabsOnTop: tabLocation == TabLocation.TOP,
+        mx_TabbedView_responsive: props.responsive,
     });
 
     const screenName = tab?.screenName ?? props.screenName;
