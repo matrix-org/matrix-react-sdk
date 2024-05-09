@@ -45,7 +45,7 @@ interface IState {
 }
 
 export default class MemberTile extends React.Component<IProps, IState> {
-    // private userLastModifiedTime?: number;
+    private userLastModifiedTime?: number;
     private memberLastModifiedTime?: number;
 
     public static defaultProps = {
@@ -148,13 +148,13 @@ export default class MemberTile extends React.Component<IProps, IState> {
         ) {
             return true;
         }
-        // if (
-        //     nextProps.member.user &&
-        //     (this.userLastModifiedTime === undefined ||
-        //         this.userLastModifiedTime < nextProps.member.user.getLastModifiedTime())
-        // ) {
-        //     return true;
-        // }
+        if (
+            nextProps.member.presence &&
+            (this.userLastModifiedTime === undefined ||
+                this.userLastModifiedTime < nextProps.member.presence.lastModifiedTime)
+        ) {
+            return true;
+        }
         if (nextState.isRoomEncrypted !== this.state.isRoomEncrypted || nextState.e2eStatus !== this.state.e2eStatus) {
             return true;
         }
@@ -185,14 +185,12 @@ export default class MemberTile extends React.Component<IProps, IState> {
     public render(): React.ReactNode {
         const member = this.props.member;
         const name = this.getDisplayName();
-        // const presenceState = member.user?.presence as PresenceState | undefined;
-        const presenceState = undefined;
 
         const av = <MemberAvatarNext member={member} size="36px" aria-hidden="true" />;
 
-        // if (member.user) {
-        //     this.userLastModifiedTime = member.user.getLastModifiedTime();
-        // }
+        if (member.presence) {
+            this.userLastModifiedTime = member.presence.lastModifiedTime;
+        }
         this.memberLastModifiedTime = member.lastModifiedTime;
 
         const powerStatusMap = new Map([
@@ -221,13 +219,10 @@ export default class MemberTile extends React.Component<IProps, IState> {
         return (
             <EntityTile
                 {...this.props}
-                // presenceState={presenceState}
-                // presenceLastActiveAgo={member.user ? member.user.lastActiveAgo : 0}
-                // presenceLastTs={member.user ? member.user.lastPresenceTs : 0}
-                // presenceCurrentlyActive={member.user ? member.user.currentlyActive : false}
-                presenceLastActiveAgo={0}
-                presenceLastTs={0}
-                presenceCurrentlyActive={false}
+                presenceState={member.presence?.state}
+                presenceLastActiveAgo={member.presence?.lastActiveAgo || 0}
+                presenceLastTs={member.presence?.lastPresenceTime || 0}
+                presenceCurrentlyActive={member.presence?.currentlyActive || false}
                 avatarJsx={av}
                 title={this.getPowerLabel()}
                 name={name}

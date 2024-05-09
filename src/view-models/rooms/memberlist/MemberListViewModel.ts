@@ -1,3 +1,19 @@
+/*
+Copyright 2024 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import { useState } from "react"
 import { RoomMember } from "../../../models/rooms/RoomMember";
 import { IMemberService } from "../../../services/rooms/memberlist/IMemberService";
@@ -17,7 +33,7 @@ export type MemberState = {
 };
 
 export interface IMemberListViewModel extends MemberState { 
-    load(): void;
+    load(): Promise<void>;
     unload(): void;
     loading: boolean;
     joinedMembers: RoomMember[];
@@ -27,7 +43,7 @@ export interface IMemberListViewModel extends MemberState {
     isSpaceRoom: boolean;
     showPresence: boolean;
     searchQuery: string;
-    onSearchQueryChanged(query: string): void;
+    onSearchQueryChanged(query: string): Promise<void>;
     showMoreJoinedMemberList(): void;
     showMoreInvitedMemberList(): void;
 }
@@ -47,13 +63,13 @@ export default function MemberListViewModel(
     });
     const [searchQuery, setSearchQuery] = useState("")
     const [showPresence, setShowPresence] = useState(true)
-    function load() {
+    async function load() {
         if(!memberService) return
         memberService.setOnMemberListUpdated(onMembersUpdated);
         memberService.setOnPresemceUpdated(onPresenceUpdated);
         memberService.load();
         setShowPresence(memberService.showPresence())
-        loadMembersNow(true);
+        await loadMembersNow(true);
     }
 
     function unload() {
@@ -78,7 +94,7 @@ export default function MemberListViewModel(
         }
     }
     
-    function onSearchQueryChanged(query: string): void {
+    async function onSearchQueryChanged(query: string): Promise<void> {
         setSearchQuery(query);
         loadMembersNow(false, query);
     }

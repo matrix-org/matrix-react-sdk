@@ -1,3 +1,19 @@
+/*
+Copyright 2024 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import { ClientEvent, EventType, MatrixClient, MatrixEvent, Room, RoomEvent, RoomMemberEvent, RoomState, RoomStateEvent, RoomMember as SDKRoomMember, User, UserEvent } from "matrix-js-sdk/src/matrix";
 import { MemberListStore } from "../../../stores/MemberListStore";
 import { RoomMember } from "../../../models/rooms/RoomMember";
@@ -9,6 +25,8 @@ import { isValid3pidInvite } from "../../../RoomInvite";
 import { ThreePIDInvite } from "../../../models/rooms/ThreePIDInvite";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import { UserPresence } from "../../../models/rooms/UserPresence";
+import { PresenceState } from "../../../models/rooms/PresenceState";
 
 export class MemberService implements IMemberService {
     private roomId: string;
@@ -73,6 +91,18 @@ export class MemberService implements IMemberService {
         const mxcAvatarURL = member.getMxcAvatarUrl(); 
         const avatarThumbnailUrl = (mxcAvatarURL && mediaFromMxc(mxcAvatarURL).getThumbnailOfSourceHttp(10, 10)) ?? undefined;
 
+        const user = member.user
+        let presence: UserPresence | undefined = undefined;
+        if(user) {
+            presence = {
+                state: user.presence as PresenceState || undefined,
+                lastModifiedTime: user.getLastModifiedTime(),
+                lastActiveAgo: user.lastActiveAgo,
+                lastPresenceTime: user.lastPresenceTs,
+                currentlyActive: user.currentlyActive
+            }
+        }
+        
         return {
             roomId: member.roomId,
             userId: member.userId,
@@ -82,7 +112,8 @@ export class MemberService implements IMemberService {
             disambiguate: member.disambiguate,
             avatarThumbnailUrl: avatarThumbnailUrl,
             powerLevel: member.powerLevel,
-            lastModifiedTime: member.getLastModifiedTime()
+            lastModifiedTime: member.getLastModifiedTime(),
+            presence: presence
         }
     }
 

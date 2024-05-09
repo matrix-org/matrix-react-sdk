@@ -33,7 +33,7 @@ import BaseAvatar from "../avatars/BaseAvatar";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { RoomMember } from "../../../models/rooms/RoomMember";
 import { ThreePIDInvite } from "../../../models/rooms/ThreePIDInvite";
-import { useMemberListViewModel } from "../../../screens/rooms/memberlist/useMemberListViewModel";
+import { useMemberListViewModel } from "../../../view-models/rooms/memberlist/useMemberListViewModel";
 
 interface IProps {
     roomId: string;
