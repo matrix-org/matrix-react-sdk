@@ -129,7 +129,7 @@ function toStandardRules(
     if (supportsIntentionalMentions) {
         standardRules.set(RuleId.IsRoomMention, {
             rule_id: RuleId.IsRoomMention,
-            kind: PushRuleKind.ContentSpecific,
+            kind: PushRuleKind.Override,
             enabled: true,
             actions: roomMentionActions,
         });
