@@ -890,10 +890,10 @@ exports[`<LoginWithQRFlow /> renders QR code 1`] = `
           </span>
         </li>
         <li>
-          Point the camera at the QR code shown here
+          Scan the QR code shown here
         </li>
         <li>
-          Follow the instructions to link your other device
+          Follow the remaining instructions
         </li>
       </ol>
     </div>
