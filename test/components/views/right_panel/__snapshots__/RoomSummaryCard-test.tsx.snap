@@ -126,7 +126,7 @@ exports[`<RoomSummaryCard /> has button to edit topic when expanded 1`] = `
       <label
         class="_item_1gwvj_17 _interactive_1gwvj_36"
         data-kind="primary"
-        for=":r1:"
+        for=":r3:"
         role="menuitemcheckbox"
       >
         <div
@@ -145,7 +145,7 @@ exports[`<RoomSummaryCard /> has button to edit topic when expanded 1`] = `
         >
           <input
             class="_input_ik1u1_32"
-            id=":r1:"
+            id=":r3:"
             type="checkbox"
           />
           <div
@@ -931,7 +931,7 @@ exports[`<RoomSummaryCard /> renders the room topic in the summary 1`] = `
       <label
         class="_item_1gwvj_17 _interactive_1gwvj_36"
         data-kind="primary"
-        for=":r1:"
+        for=":r2:"
         role="menuitemcheckbox"
       >
         <div
@@ -950,7 +950,7 @@ exports[`<RoomSummaryCard /> renders the room topic in the summary 1`] = `
         >
           <input
             class="_input_ik1u1_32"
-            id=":r1:"
+            id=":r2:"
             type="checkbox"
           />
           <div
