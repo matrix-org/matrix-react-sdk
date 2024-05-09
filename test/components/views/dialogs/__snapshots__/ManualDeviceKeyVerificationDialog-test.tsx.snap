@@ -21,7 +21,7 @@ exports[`ManualDeviceKeyVerificationDialog should display the device 1`] = `
         class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
-        Verify session
+        Verify device
       </h1>
     </div>
     <div
@@ -36,7 +36,7 @@ exports[`ManualDeviceKeyVerificationDialog should display the device 1`] = `
     >
       <div>
         <p>
-          Confirm by comparing the following with the User Settings in your other session:
+          Confirm by comparing the following with the User Settings in your other device:
         </p>
         <div
           class="mx_DeviceVerifyDialog_cryptoSection"
@@ -102,7 +102,7 @@ exports[`ManualDeviceKeyVerificationDialog should display the device 1`] = `
           data-testid="dialog-primary-button"
           type="button"
         >
-          Verify session
+          Verify device
         </button>
       </span>
     </div>
@@ -136,7 +136,7 @@ exports[`ManualDeviceKeyVerificationDialog should display the device of another 
         class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
-        Verify session
+        Verify device
       </h1>
     </div>
     <div
@@ -151,7 +151,7 @@ exports[`ManualDeviceKeyVerificationDialog should display the device of another 
     >
       <div>
         <p>
-          Confirm this user's session by comparing the following with their User Settings:
+          Confirm this user's device by comparing the following with their User Settings:
         </p>
         <div
           class="mx_DeviceVerifyDialog_cryptoSection"
@@ -217,7 +217,7 @@ exports[`ManualDeviceKeyVerificationDialog should display the device of another 
           data-testid="dialog-primary-button"
           type="button"
         >
-          Verify session
+          Verify device
         </button>
       </span>
     </div>

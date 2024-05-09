@@ -61,7 +61,7 @@ exports[`LogoutDialog Prompts user to connect backup if there is a backup on the
             data-testid="dialog-primary-button"
             type="button"
           >
-            Connect this session to Key Backup
+            Connect this device to Key Backup
           </button>
         </span>
       </div>

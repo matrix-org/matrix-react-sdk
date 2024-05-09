@@ -267,7 +267,7 @@ describe("EventTile", () => {
             [EventShieldReason.UNSIGNED_DEVICE, "device not verified by its owner"],
             [EventShieldReason.UNKNOWN_DEVICE, "unknown or deleted device"],
             [EventShieldReason.AUTHENTICITY_NOT_GUARANTEED, "can't be guaranteed"],
-            [EventShieldReason.MISMATCHED_SENDER_KEY, "Encrypted by an unverified session"],
+            [EventShieldReason.MISMATCHED_SENDER_KEY, "Encrypted by an unverified device"],
         ])("shows the correct reason code for %i (%s)", async (reasonCode: EventShieldReason, expectedText: string) => {
             mxEvent = await mkEncryptedMatrixEvent({
                 plainContent: { msgtype: "m.text", body: "msg1" },

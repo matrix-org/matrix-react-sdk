@@ -60,7 +60,7 @@ describe("LogoutDialog", () => {
     it("Prompts user to connect backup if there is a backup on the server", async () => {
         mockClient.getKeyBackupVersion.mockResolvedValue({} as KeyBackupInfo);
         const rendered = renderComponent();
-        await rendered.findByText("Connect this session to Key Backup");
+        await rendered.findByText("Connect this device to Key Backup");
         expect(rendered.container).toMatchSnapshot();
     });
 

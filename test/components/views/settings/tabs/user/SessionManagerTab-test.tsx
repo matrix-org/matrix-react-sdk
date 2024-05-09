@@ -851,7 +851,7 @@ describe("<SessionManagerTab />", () => {
             });
 
             fireEvent.click(getByTestId("current-session-menu"));
-            fireEvent.click(getByLabelText("Sign out of all other sessions (2)"));
+            fireEvent.click(getByLabelText("Sign out of all other devices (2)"));
             await confirmSignout(getByTestId);
 
             // other devices deleted, excluding current device
@@ -892,7 +892,7 @@ describe("<SessionManagerTab />", () => {
             expect(mockClient.deleteAccountData).not.toHaveBeenCalled();
 
             fireEvent.click(getByTestId("current-session-menu"));
-            fireEvent.click(getByLabelText("Sign out of all other sessions (2)"));
+            fireEvent.click(getByLabelText("Sign out of all other devices (2)"));
             await confirmSignout(getByTestId);
 
             // only called once for signed out device with account data event
@@ -1185,7 +1185,7 @@ describe("<SessionManagerTab />", () => {
                 });
 
                 fireEvent.click(getByTestId("other-sessions-menu"));
-                fireEvent.click(getByLabelText("Sign out of 2 sessions"));
+                fireEvent.click(getByLabelText("Sign out of 2 devices"));
                 await confirmSignout(getByTestId);
 
                 // other devices deleted, excluding current device
@@ -1450,7 +1450,7 @@ describe("<SessionManagerTab />", () => {
             toggleDeviceSelection(getByTestId, alicesOlderMobileDevice.device_id);
 
             // header displayed correctly
-            expect(getByText("2 sessions selected")).toBeTruthy();
+            expect(getByText("2 devices selected")).toBeTruthy();
 
             expect(isDeviceSelected(getByTestId, alicesMobileDevice.device_id)).toBeTruthy();
             expect(isDeviceSelected(getByTestId, alicesOlderMobileDevice.device_id)).toBeTruthy();
@@ -1474,7 +1474,7 @@ describe("<SessionManagerTab />", () => {
             toggleDeviceSelection(getByTestId, alicesOlderMobileDevice.device_id);
 
             // header displayed correctly
-            expect(getByText("2 sessions selected")).toBeTruthy();
+            expect(getByText("2 devices selected")).toBeTruthy();
 
             fireEvent.click(getByTestId("cancel-selection-cta"));
 
@@ -1513,7 +1513,7 @@ describe("<SessionManagerTab />", () => {
                 fireEvent.click(getByTestId("device-select-all-checkbox"));
 
                 // header displayed correctly
-                expect(getByText("2 sessions selected")).toBeTruthy();
+                expect(getByText("2 devices selected")).toBeTruthy();
                 expect(isSelectAllChecked(getByTestId)).toBeTruthy();
 
                 // devices selected
@@ -1533,7 +1533,7 @@ describe("<SessionManagerTab />", () => {
                 fireEvent.click(getByTestId("device-select-all-checkbox"));
 
                 // header displayed correctly
-                expect(getByText("2 sessions selected")).toBeTruthy();
+                expect(getByText("2 devices selected")).toBeTruthy();
                 expect(isSelectAllChecked(getByTestId)).toBeTruthy();
 
                 // devices selected
@@ -1551,7 +1551,7 @@ describe("<SessionManagerTab />", () => {
                 fireEvent.click(getByTestId("device-select-all-checkbox"));
 
                 // header displayed correctly
-                expect(getByText("2 sessions selected")).toBeTruthy();
+                expect(getByText("2 devices selected")).toBeTruthy();
                 expect(isSelectAllChecked(getByTestId)).toBeTruthy();
 
                 // devices selected

@@ -646,7 +646,7 @@ exports[`<LoginWithQRFlow /> renders QR code 1`] = `
       <div
         class="mx_LoginWithQR_breadcrumbs"
       >
-        Sessions
+        Devices
          / 
         Link new device
       </div>
@@ -773,7 +773,7 @@ exports[`<LoginWithQRFlow /> renders spinner while connecting 1`] = `
       <div
         class="mx_LoginWithQR_breadcrumbs"
       >
-        Sessions
+        Devices
          / 
         Link new device
       </div>
@@ -839,7 +839,7 @@ exports[`<LoginWithQRFlow /> renders spinner while loading 1`] = `
       <div
         class="mx_LoginWithQR_breadcrumbs"
       >
-        Sessions
+        Devices
          / 
         Link new device
       </div>
@@ -893,7 +893,7 @@ exports[`<LoginWithQRFlow /> renders spinner while signing in 1`] = `
       <div
         class="mx_LoginWithQR_breadcrumbs"
       >
-        Sessions
+        Devices
          / 
         Link new device
       </div>
@@ -959,7 +959,7 @@ exports[`<LoginWithQRFlow /> renders spinner while verifying 1`] = `
       <div
         class="mx_LoginWithQR_breadcrumbs"
       >
-        Sessions
+        Devices
          / 
         Link new device
       </div>
@@ -1016,7 +1016,7 @@ exports[`<LoginWithQRFlow /> renders spinner whilst QR generating 1`] = `
       <div
         class="mx_LoginWithQR_breadcrumbs"
       >
-        Sessions
+        Devices
          / 
         Link new device
       </div>

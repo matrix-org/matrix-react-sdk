@@ -53,7 +53,7 @@ describe("MemberTile", () => {
         await waitFor(async () => {
             await userEvent.hover(container.querySelector(".mx_E2EIcon")!);
             expect(
-                screen.getByRole("tooltip", { name: "This user has not verified all of their sessions." }),
+                screen.getByRole("tooltip", { name: "This user has not verified all of their devices." }),
             ).toBeInTheDocument();
         });
     });
@@ -78,7 +78,7 @@ describe("MemberTile", () => {
             await userEvent.hover(container.querySelector(".mx_E2EIcon")!);
             expect(
                 screen.getByRole("tooltip", {
-                    name: "You have verified this user. This user has verified all of their sessions.",
+                    name: "You have verified this user. This user has verified all of their devices.",
                 }),
             ).toBeInTheDocument();
         });

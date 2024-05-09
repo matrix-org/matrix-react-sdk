@@ -83,7 +83,7 @@ describe("ManualDeviceKeyVerificationDialog", () => {
         const onFinished = jest.fn();
         renderDialog(mockClient.getUserId()!, device, onFinished);
 
-        screen.getByRole("button", { name: "Verify session" }).click();
+        screen.getByRole("button", { name: "Verify device" }).click();
 
         // Then
         expect(onFinished).toHaveBeenCalledWith(true);

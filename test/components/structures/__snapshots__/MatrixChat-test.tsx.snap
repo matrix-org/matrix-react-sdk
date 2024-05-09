@@ -287,7 +287,7 @@ exports[`<MatrixChat /> with a soft-logged-out session should show the soft-logo
           Clear personal data
         </h2>
         <p>
-          Warning: your personal data (including encryption keys) is still stored in this session. Clear it if you're finished using this session, or want to sign in to another account.
+          Warning: your personal data (including encryption keys) is still stored in this device. Clear it if you're finished using this device, or want to sign in to another account.
         </p>
         <div>
           <div

@@ -44,12 +44,12 @@ exports[`<SecurityRecommendations /> renders both cards when user has both unver
           <p
             class="mx_DeviceSecurityCard_heading"
           >
-            Unverified sessions
+            Unverified devices
           </p>
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.
+            Verify your devices for enhanced secure messaging or sign out from those you don't recognize or use anymore.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -92,12 +92,12 @@ exports[`<SecurityRecommendations /> renders both cards when user has both unver
           <p
             class="mx_DeviceSecurityCard_heading"
           >
-            Inactive sessions
+            Inactive devices
           </p>
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Consider signing out from old sessions (90 days or older) you don't use anymore.
+            Consider signing out from old devices (90 days or older) you don't use anymore.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -169,12 +169,12 @@ exports[`<SecurityRecommendations /> renders inactive devices section when user 
           <p
             class="mx_DeviceSecurityCard_heading"
           >
-            Unverified sessions
+            Unverified devices
           </p>
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.
+            Verify your devices for enhanced secure messaging or sign out from those you don't recognize or use anymore.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -217,12 +217,12 @@ exports[`<SecurityRecommendations /> renders inactive devices section when user 
           <p
             class="mx_DeviceSecurityCard_heading"
           >
-            Inactive sessions
+            Inactive devices
           </p>
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Consider signing out from old sessions (90 days or older) you don't use anymore.
+            Consider signing out from old devices (90 days or older) you don't use anymore.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -294,12 +294,12 @@ exports[`<SecurityRecommendations /> renders unverified devices section when use
           <p
             class="mx_DeviceSecurityCard_heading"
           >
-            Unverified sessions
+            Unverified devices
           </p>
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Verify your sessions for enhanced secure messaging or sign out from those you don't recognize or use anymore.
+            Verify your devices for enhanced secure messaging or sign out from those you don't recognize or use anymore.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"
@@ -342,12 +342,12 @@ exports[`<SecurityRecommendations /> renders unverified devices section when use
           <p
             class="mx_DeviceSecurityCard_heading"
           >
-            Inactive sessions
+            Inactive devices
           </p>
           <p
             class="mx_DeviceSecurityCard_description"
           >
-            Consider signing out from old sessions (90 days or older) you don't use anymore.
+            Consider signing out from old devices (90 days or older) you don't use anymore.
             <div
               class="mx_AccessibleButton mx_LearnMore_button mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link_inline"
               role="button"

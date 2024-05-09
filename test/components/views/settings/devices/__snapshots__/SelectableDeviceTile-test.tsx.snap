@@ -44,7 +44,7 @@ exports[`<SelectableDeviceTile /> renders unselected device tile with checkbox 1
                 class="mx_DeviceTypeIcon_deviceIconWrapper"
               >
                 <div
-                  aria-label="Unknown session type"
+                  aria-label="Unknown device type"
                   class="mx_DeviceTypeIcon_deviceIcon"
                   role="img"
                 />

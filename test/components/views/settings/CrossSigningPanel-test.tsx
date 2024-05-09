@@ -134,7 +134,7 @@ describe("<CrossSigningPanel />", () => {
             await flushPromises();
 
             expect(screen.getByTestId("summarised-status").innerHTML).toEqual(
-                "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this session.",
+                "Your account has a cross-signing identity in secret storage, but it is not yet trusted by this device.",
             );
             expect(screen.getByText("Cross-signing private keys:").parentElement!).toMatchSnapshot();
         });

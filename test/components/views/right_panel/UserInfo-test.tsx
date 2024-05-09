@@ -383,7 +383,7 @@ describe("<UserInfo />", () => {
             await act(flushPromises);
 
             // check the button exists with the expected text
-            const devicesButton = screen.getByRole("button", { name: "1 session" });
+            const devicesButton = screen.getByRole("button", { name: "1 device" });
 
             // click it
             await userEvent.click(devicesButton);
@@ -434,7 +434,7 @@ describe("<UserInfo />", () => {
                 await act(flushPromises);
 
                 // check the button exists with the expected text (the dehydrated device shouldn't be counted)
-                const devicesButton = screen.getByRole("button", { name: "1 session" });
+                const devicesButton = screen.getByRole("button", { name: "1 device" });
 
                 // click it
                 await act(() => {
@@ -482,7 +482,7 @@ describe("<UserInfo />", () => {
                 await act(flushPromises);
 
                 // check the button exists with the expected text (the dehydrated device shouldn't be counted)
-                const devicesButton = screen.getByRole("button", { name: "1 verified session" });
+                const devicesButton = screen.getByRole("button", { name: "1 verified device" });
 
                 // click it
                 await act(() => {
@@ -562,7 +562,7 @@ describe("<UserInfo />", () => {
                 await act(flushPromises);
 
                 // check the button exists with the expected text (the dehydrated device shouldn't be counted)
-                const devicesButton = screen.getByRole("button", { name: "2 sessions" });
+                const devicesButton = screen.getByRole("button", { name: "2 devices" });
 
                 // click it
                 await act(() => {

@@ -409,10 +409,10 @@ test.describe("Cryptography", function () {
                 await rightPanel.getByText("Bob").click();
                 const sessionCountText = await rightPanel
                     .locator(".mx_UserInfo_devices")
-                    .getByText(" session", { exact: false })
+                    .getByText(" device", { exact: false })
                     .textContent();
                 // cf https://github.com/vector-im/element-web/issues/26279: Element-R uses the wrong text here
-                if (sessionCountText != "1 session" && sessionCountText != "1 verified session") {
+                if (sessionCountText != "1 device" && sessionCountText != "1 verified device") {
                     if (iterations >= 10) {
                         throw new Error(`Bob still has ${sessionCountText} after 10 iterations`);
                     }
