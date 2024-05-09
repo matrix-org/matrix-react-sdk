@@ -11,7 +11,6 @@ exports[`<Pill> should not render an avatar or link when called with inMessage =
   <div>
     <bdi>
       <span
-        data-state="closed"
         tabindex="0"
       >
         <span
@@ -34,7 +33,6 @@ exports[`<Pill> should render the expected pill for @room 1`] = `
   <div>
     <bdi>
       <span
-        data-state="closed"
         tabindex="0"
       >
         <span
@@ -42,8 +40,8 @@ exports[`<Pill> should render the expected pill for @room 1`] = `
         >
           <span
             aria-hidden="true"
-            class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
-            data-color="3"
+            class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+            data-color="1"
             data-testid="avatar-img"
             data-type="round"
             role="presentation"
@@ -69,12 +67,11 @@ exports[`<Pill> should render the expected pill for a known user not in the room
     <bdi>
       <a
         class="mx_Pill mx_UserPill"
-        data-state="closed"
         href="https://matrix.to/#/@user2:example.com"
       >
         <span
           aria-hidden="true"
-          class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
           data-color="5"
           data-testid="avatar-img"
           data-type="round"
@@ -100,13 +97,12 @@ exports[`<Pill> should render the expected pill for a message in another room 1`
     <bdi>
       <a
         class="mx_Pill mx_EventPill"
-        data-state="closed"
         href="https://matrix.to/#/!room1:example.com/$123-456"
       >
         <span
           aria-hidden="true"
-          class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
-          data-color="3"
+          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+          data-color="1"
           data-testid="avatar-img"
           data-type="round"
           role="presentation"
@@ -131,12 +127,11 @@ exports[`<Pill> should render the expected pill for a message in the same room 1
     <bdi>
       <a
         class="mx_Pill mx_EventPill"
-        data-state="closed"
         href="https://matrix.to/#/!room1:example.com/$123-456"
       >
         <span
           aria-hidden="true"
-          class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
           data-color="4"
           data-testid="avatar-img"
           data-type="round"
@@ -162,13 +157,12 @@ exports[`<Pill> should render the expected pill for a room alias 1`] = `
     <bdi>
       <a
         class="mx_Pill mx_RoomPill"
-        data-state="closed"
         href="https://matrix.to/#/#room1:example.com"
       >
         <span
           aria-hidden="true"
-          class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
-          data-color="3"
+          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+          data-color="1"
           data-testid="avatar-img"
           data-type="round"
           role="presentation"
@@ -193,12 +187,11 @@ exports[`<Pill> should render the expected pill for a space 1`] = `
     <bdi>
       <a
         class="mx_Pill mx_RoomPill"
-        data-state="closed"
         href="https://matrix.to/#/!space1:example.com"
       >
         <span
           aria-hidden="true"
-          class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
           data-color="2"
           data-testid="avatar-img"
           data-type="round"
@@ -224,7 +217,6 @@ exports[`<Pill> should render the expected pill for an uknown user not in the ro
     <bdi>
       <a
         class="mx_Pill mx_UserPill"
-        data-state="closed"
         href="https://matrix.to/#/@user3:example.com"
       >
         <div
@@ -247,13 +239,12 @@ exports[`<Pill> when rendering a pill for a room should render the expected pill
     <bdi>
       <a
         class="mx_Pill mx_RoomPill"
-        data-state="closed"
         href="https://matrix.to/#/!room1:example.com"
       >
         <span
           aria-hidden="true"
-          class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
-          data-color="3"
+          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+          data-color="1"
           data-testid="avatar-img"
           data-type="round"
           role="presentation"
@@ -278,12 +269,11 @@ exports[`<Pill> when rendering a pill for a user in the room should render as ex
     <bdi>
       <a
         class="mx_Pill mx_UserPill"
-        data-state="closed"
         href="https://matrix.to/#/@user1:example.com"
       >
         <span
           aria-hidden="true"
-          class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
+          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
           data-color="4"
           data-testid="avatar-img"
           data-type="round"

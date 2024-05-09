@@ -22,7 +22,7 @@ $separator: var(--cpd-color-alpha-gray-400);
 /* ******************** */
 $roomlist-bg-color: rgba(38, 40, 45, 0.9);
 $roomsublist-skeleton-ui-bg: linear-gradient(180deg, $background 0%, #ffffff00 100%);
-$roomtile-default-badge-bg-color: $muted-fg-color;
+$roomtile-default-badge-bg-color: var(--cpd-color-icon-secondary);
 /* ******************** */
 
 /**
@@ -76,7 +76,7 @@ $muted-fg-color: $header-panel-text-primary-color;
 $light-fg-color: $header-panel-text-secondary-color;
 $focus-bg-color: $room-highlight-color;
 $info-plinth-bg-color: $header-panel-bg-color;
-$event-selected-color: $system;
+$event-selected-color: var(--cpd-color-bg-subtle-secondary);
 $topleftmenu-color: $primary-content;
 $roomtopic-color: $text-secondary-color;
 $spacePanel-bg-color: rgba(38, 39, 43, 0.82);
@@ -125,8 +125,9 @@ $roomheader-addroom-fg-color: $primary-content;
 
 /* Rich-text-editor */
 /* ******************** */
-$pill-bg-color: $room-highlight-color;
-$pill-hover-bg-color: #545a66;
+$pill-bg-color: var(--cpd-color-bg-action-primary-rest);
+$pill-hover-bg-color: var(--cpd-color-bg-action-primary-hovered);
+$pill-press-bg-color: var(--cpd-color-bg-action-primary-pressed);
 /* ******************** */
 
 /* Inputs */
@@ -141,7 +142,7 @@ $input-placeholder: var(--cpd-color-text-placeholder);
 /* Dialog */
 /* ******************** */
 $dialog-title-fg-color: $primary-content;
-$dialog-backdrop-color: $menu-border-color;
+$dialog-backdrop-color: #00000080;
 $dialog-close-fg-color: $icon-button-color;
 $dialog-close-external-color: $primary-content;
 /* ******************** */
@@ -150,12 +151,12 @@ $dialog-close-external-color: $primary-content;
 /* ******************** */
 $system: var(--cpd-color-bg-subtle-secondary);
 $roomsublist-skeleton-ui-bg: linear-gradient(180deg, #3e444c 0%, #3e444c00 100%);
-$roomtile-default-badge-bg-color: $input-darker-fg-color;
+$roomtile-default-badge-bg-color: var(--cpd-color-icon-secondary);
 /* ******************** */
 
 /* Tabbed views */
 /* ******************** */
-$tab-label-fg-color: $primary-content;
+$tab-label-fg-color: $secondary-content;
 $tab-label-active-fg-color: $primary-content;
 /* ******************** */
 
@@ -199,10 +200,9 @@ $voice-record-icon-color: $quaternary-content;
 
 /* Bubble tiles */
 /* ******************** */
-$eventbubble-self-bg: #133a34;
-$eventbubble-others-bg: #21262c;
-$eventbubble-bg-hover: #1c2026;
-$eventbubble-reply-color: #c1c6cd;
+$eventbubble-self-bg: var(--cpd-color-green-300);
+$eventbubble-others-bg: var(--cpd-color-gray-300);
+$eventbubble-bg-hover: var(--cpd-color-bg-subtle-secondary);
 /* ******************** */
 
 /* Lightbox */
@@ -247,12 +247,10 @@ $live-badge-color: #ffffff;
 
 /* One-off colors */
 /* ******************** */
-$progressbar-bg-color: $system;
+$progressbar-bg-color: var(--cpd-color-gray-200);
 $kbd-border-color: $strong-input-border-color;
 $visual-bell-bg-color: #800;
 $event-timestamp-color: $text-secondary-color;
-$slider-background-color: $quinary-content;
-$appearance-tab-border-color: $room-highlight-color;
 $composer-shadow-color: rgba(0, 0, 0, 0.28);
 $breadcrumb-placeholder-bg-color: #272c35;
 $theme-button-bg-color: #e3e8f0;

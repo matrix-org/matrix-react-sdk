@@ -18,20 +18,19 @@ limitations under the License.
 */
 
 import {
-    ICreateClientOpts,
-    PendingEventOrdering,
-    RoomNameState,
-    RoomNameType,
     EventTimeline,
     EventTimelineSet,
+    ICreateClientOpts,
     IStartClientOpts,
     MatrixClient,
     MemoryStore,
+    PendingEventOrdering,
+    RoomNameState,
+    RoomNameType,
     TokenRefreshFunction,
 } from "matrix-js-sdk/src/matrix";
+import { VerificationMethod } from "matrix-js-sdk/src/types";
 import * as utils from "matrix-js-sdk/src/utils";
-import { verificationMethods } from "matrix-js-sdk/src/crypto";
-import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import createMatrixClient from "./utils/createMatrixClient";
@@ -42,7 +41,7 @@ import MatrixClientBackedSettingsHandler from "./settings/handlers/MatrixClientB
 import * as StorageManager from "./utils/StorageManager";
 import IdentityAuthClient from "./IdentityAuthClient";
 import { crossSigningCallbacks, tryToUnlockSecretStorageWithDehydrationKey } from "./SecurityManager";
-import SecurityCustomisations from "./customisations/Security";
+import { ModuleRunner } from "./modules/ModuleRunner";
 import { SlidingSyncManager } from "./SlidingSyncManager";
 import CryptoStoreTooNewDialog from "./components/views/dialogs/CryptoStoreTooNewDialog";
 import { _t, UserFriendlyError } from "./languageHandler";
@@ -52,6 +51,8 @@ import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import PlatformPeg from "./PlatformPeg";
 import { formatList } from "./utils/FormattingUtils";
 import SdkConfig from "./SdkConfig";
+import { Features } from "./settings/Settings";
+import { PhasedRolloutFeature } from "./utils/PhasedRolloutFeature";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -72,22 +73,44 @@ export interface IMatrixClientCreds {
  * you'll find a `MatrixClient` hanging on the `MatrixClientPeg`.
  */
 export interface IMatrixClientPeg {
+    /**
+     * The opts used to start the client
+     */
     opts: IStartClientOpts;
 
     /**
      * Return the server name of the user's homeserver
      * Throws an error if unable to deduce the homeserver name
-     * (eg. if the user is not logged in)
+     * (e.g. if the user is not logged in)
      *
      * @returns {string} The homeserver name, if present.
      */
     getHomeserverName(): string;
 
+    /**
+     * Get the current MatrixClient, if any
+     */
     get(): MatrixClient | null;
+
+    /**
+     * Get the current MatrixClient, throwing an error if there isn't one
+     */
     safeGet(): MatrixClient;
+
+    /**
+     * Unset the current MatrixClient
+     */
     unset(): void;
-    assign(): Promise<any>;
-    start(): Promise<any>;
+
+    /**
+     * Prepare the MatrixClient for use, including initialising the store and crypto, but do not start it
+     */
+    assign(): Promise<IStartClientOpts>;
+
+    /**
+     * Prepare the MatrixClient for use, including initialising the store and crypto, and start it
+     */
+    start(): Promise<void>;
 
     /**
      * If we've registered a user ID we set this to the ID of the
@@ -234,7 +257,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         PlatformPeg.get()?.reload();
     };
 
-    public async assign(): Promise<any> {
+    public async assign(): Promise<IStartClientOpts> {
         if (!this.matrixClient) {
             throw new Error("createClient must be called first");
         }
@@ -272,17 +295,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         opts.threadSupport = true;
 
         if (SettingsStore.getValue("feature_sliding_sync")) {
-            const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
-            if (proxyUrl) {
-                logger.log("Activating sliding sync using proxy at ", proxyUrl);
-            } else {
-                logger.log("Activating sliding sync");
-            }
-            opts.slidingSync = SlidingSyncManager.instance.configure(
-                this.matrixClient,
-                proxyUrl || this.matrixClient.baseUrl,
-            );
-            SlidingSyncManager.instance.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
+            opts.slidingSync = await SlidingSyncManager.instance.setup(this.matrixClient);
+        } else {
+            SlidingSyncManager.instance.checkSupport(this.matrixClient);
         }
 
         // Connect the matrix client to the dispatcher and setting handlers
@@ -301,18 +316,40 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             throw new Error("createClient must be called first");
         }
 
-        const useRustCrypto = SettingsStore.getValue("feature_rust_crypto");
+        let useRustCrypto = SettingsStore.getValue(Features.RustCrypto);
+
+        // We want the value that is set in the config.json for that web instance
+        const defaultUseRustCrypto = SettingsStore.getValueAt(SettingLevel.CONFIG, Features.RustCrypto);
+        const migrationPercent = SettingsStore.getValueAt(SettingLevel.CONFIG, "RustCrypto.staged_rollout_percent");
+
+        // If the default config is to use rust crypto, and the user is on legacy crypto,
+        // we want to check if we should migrate the current user.
+        if (!useRustCrypto && defaultUseRustCrypto && Number.isInteger(migrationPercent)) {
+            // The user is not on rust crypto, but the default stack is now rust; Let's check if we should migrate
+            // the current user to rust crypto.
+            try {
+                const stagedRollout = new PhasedRolloutFeature("RustCrypto.staged_rollout_percent", migrationPercent);
+                // Device id should not be null at that point, or init crypto will fail anyhow
+                const deviceId = this.matrixClient.getDeviceId()!;
+                // we use deviceId rather than userId because we don't particularly want all devices
+                // of a user to be migrated at the same time.
+                useRustCrypto = stagedRollout.isFeatureEnabled(deviceId);
+            } catch (e) {
+                logger.warn("Failed to create staged rollout feature for rust crypto migration", e);
+            }
+        }
 
         // we want to make sure that the same crypto implementation is used throughout the lifetime of a device,
         // so persist the setting at the device layer
         // (At some point, we'll allow the user to *enable* the setting via labs, which will migrate their existing
         // device to the rust-sdk implementation, but that won't change anything here).
-        await SettingsStore.setValue("feature_rust_crypto", null, SettingLevel.DEVICE, useRustCrypto);
+        await SettingsStore.setValue(Features.RustCrypto, null, SettingLevel.DEVICE, useRustCrypto);
 
         // Now we can initialise the right crypto impl.
         if (useRustCrypto) {
             await this.matrixClient.initRustCrypto();
 
+            StorageManager.setCryptoInitialised(true);
             // TODO: device dehydration and whathaveyou
             return;
         }
@@ -339,7 +376,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
     }
 
-    public async start(): Promise<any> {
+    public async start(): Promise<void> {
         const opts = await this.assign();
 
         logger.log(`MatrixClientPeg: really starting MatrixClient`);
@@ -409,9 +446,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             // the call arrives.
             iceCandidatePoolSize: 20,
             verificationMethods: [
-                verificationMethods.SAS,
-                SHOW_QR_CODE_METHOD,
-                verificationMethods.RECIPROCATE_QR_CODE,
+                VerificationMethod.Sas,
+                VerificationMethod.ShowQrCode,
+                VerificationMethod.Reciprocate,
             ],
             identityServer: new IdentityAuthClient(),
             // These are always installed regardless of the labs flag so that cross-signing features
@@ -440,8 +477,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
             },
         };
 
-        if (SecurityCustomisations.getDehydrationKey) {
-            opts.cryptoCallbacks!.getDehydrationKey = SecurityCustomisations.getDehydrationKey;
+        const dehydrationKeyCallback = ModuleRunner.instance.extensions.cryptoSetup.getDehydrationKeyCallback();
+        if (dehydrationKeyCallback) {
+            opts.cryptoCallbacks!.getDehydrationKey = dehydrationKeyCallback;
         }
 
         this.matrixClient = createMatrixClient(opts);

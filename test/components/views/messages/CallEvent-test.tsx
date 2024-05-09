@@ -140,7 +140,7 @@ describe("CallEvent", () => {
         renderEvent();
 
         screen.getByText("@alice:example.org started a video call");
-        screen.getByLabelText("2 participants");
+        screen.getByLabelText("2 people joined");
 
         // Test that the join button works
         const dispatcherSpy = jest.fn();
@@ -154,7 +154,7 @@ describe("CallEvent", () => {
             }),
         );
         defaultDispatcher.unregister(dispatcherRef);
-        await act(() => call.connect());
+        await act(() => call.start());
 
         // Test that the leave button works
         fireEvent.click(screen.getByRole("button", { name: "Leave" }));

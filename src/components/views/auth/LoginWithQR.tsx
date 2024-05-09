@@ -19,39 +19,12 @@ import { MSC3906Rendezvous, MSC3906RendezvousPayload, RendezvousFailureReason } 
 import { MSC3886SimpleHttpRendezvousTransport } from "matrix-js-sdk/src/rendezvous/transports";
 import { MSC3903ECDHPayload, MSC3903ECDHv2RendezvousChannel } from "matrix-js-sdk/src/rendezvous/channels";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { HTTPError, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import { wrapRequestWithDialog } from "../../../utils/UserInteractiveAuth";
 import LoginWithQRFlow from "./LoginWithQRFlow";
-
-/**
- * The intention of this enum is to have a mode that scans a QR code instead of generating one.
- */
-export enum Mode {
-    /**
-     * A QR code with be generated and shown
-     */
-    Show = "show",
-}
-
-export enum Phase {
-    Loading,
-    ShowingQR,
-    Connecting,
-    Connected,
-    WaitingForDevice,
-    Verifying,
-    Error,
-}
-
-export enum Click {
-    Cancel,
-    Decline,
-    Approve,
-    TryAgain,
-    Back,
-}
+import { Click, Mode, Phase } from "./LoginWithQR-types";
 
 interface IProps {
     client: MatrixClient;
@@ -63,9 +36,15 @@ interface IState {
     phase: Phase;
     rendezvous?: MSC3906Rendezvous;
     confirmationDigits?: string;
-    failureReason?: RendezvousFailureReason;
+    failureReason?: FailureReason;
     mediaPermissionError?: boolean;
 }
+
+export enum LoginWithQRFailureReason {
+    RateLimited = "rate_limited",
+}
+
+export type FailureReason = RendezvousFailureReason | LoginWithQRFailureReason;
 
 /**
  * A component that allows sign in and E2EE set up with a QR code.
@@ -136,16 +115,27 @@ export default class LoginWithQR extends React.Component<IProps, IState> {
                 // user denied
                 return;
             }
-            if (!this.props.client.crypto) {
+            if (!this.props.client.getCrypto()) {
                 // no E2EE to set up
                 this.props.onFinished(true);
                 return;
             }
             this.setState({ phase: Phase.Verifying });
             await this.state.rendezvous.verifyNewDeviceOnExistingDevice();
+            // clean up our state:
+            try {
+                await this.state.rendezvous.close();
+            } finally {
+                this.setState({ rendezvous: undefined });
+            }
             this.props.onFinished(true);
         } catch (e) {
             logger.error("Error whilst approving sign in", e);
+            if (e instanceof HTTPError && e.httpStatus === 429) {
+                // 429: rate limit
+                this.setState({ phase: Phase.Error, failureReason: LoginWithQRFailureReason.RateLimited });
+                return;
+            }
             this.setState({ phase: Phase.Error, failureReason: RendezvousFailureReason.Unknown });
         }
     };

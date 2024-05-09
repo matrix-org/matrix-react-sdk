@@ -46,7 +46,7 @@ const FacePile: FC<IProps> = ({
         tooltipLabel
             ? (m) => <MemberAvatar key={m.userId} member={m} size={size} hideTitle />
             : (m) => (
-                  <Tooltip key={m.userId} label={m.name} shortcut={tooltipShortcut}>
+                  <Tooltip key={m.userId} label={m.name} caption={tooltipShortcut}>
                       <MemberAvatar
                           member={m}
                           size={size}
@@ -65,14 +65,14 @@ const FacePile: FC<IProps> = ({
     );
 
     const content = (
-        <AccessibleButton className="mx_FacePile" kind="link_inline" onClick={props.onClick ?? null}>
+        <AccessibleButton className="mx_FacePile" onClick={props.onClick ?? null}>
             <AvatarStack>{pileContents}</AvatarStack>
             {children}
         </AccessibleButton>
     );
 
     return tooltipLabel ? (
-        <Tooltip label={tooltipLabel} shortcut={tooltipShortcut}>
+        <Tooltip label={tooltipLabel} caption={tooltipShortcut}>
             {content}
         </Tooltip>
     ) : (

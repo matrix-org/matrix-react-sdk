@@ -19,7 +19,6 @@ limitations under the License.
 import {
     MatrixClient,
     MsgType,
-    IImageInfo,
     HTTPError,
     IEventRelation,
     ISendEventResponse,
@@ -28,19 +27,19 @@ import {
     UploadProgress,
     THREAD_RELATION_TYPE,
 } from "matrix-js-sdk/src/matrix";
+import {
+    ImageInfo,
+    AudioInfo,
+    VideoInfo,
+    EncryptedFile,
+    MediaEventContent,
+    MediaEventInfo,
+} from "matrix-js-sdk/src/types";
 import encrypt from "matrix-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import { logger } from "matrix-js-sdk/src/logger";
 import { removeElement } from "matrix-js-sdk/src/utils";
 
-import {
-    AudioInfo,
-    EncryptedFile,
-    ImageInfo,
-    IMediaEventContent,
-    IMediaEventInfo,
-    VideoInfo,
-} from "./customisations/models/IMediaEventContent";
 import dis from "./dispatcher/dispatcher";
 import { _t } from "./languageHandler";
 import Modal from "./Modal";
@@ -390,7 +389,7 @@ export default class ContentMessages {
         url: string,
         roomId: string,
         threadId: string | null,
-        info: IImageInfo,
+        info: ImageInfo,
         text: string,
         matrixClient: MatrixClient,
     ): Promise<ISendEventResponse> {
@@ -537,7 +536,7 @@ export default class ContentMessages {
         promBefore?: Promise<any>,
     ): Promise<void> {
         const fileName = file.name || _t("common|attachment");
-        const content: Omit<IMediaEventContent, "info"> & { info: Partial<IMediaEventInfo> } = {
+        const content: Omit<MediaEventContent, "info"> & { info: Partial<MediaEventInfo> } = {
             body: fileName,
             info: {
                 size: file.size,
@@ -623,7 +622,7 @@ export default class ContentMessages {
             if (upload.cancelled) throw new UploadCanceledError();
             const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
 
-            const response = await matrixClient.sendMessage(roomId, threadId ?? null, content);
+            const response = await matrixClient.sendMessage(roomId, threadId ?? null, content as MediaEventContent);
 
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
                 sendRoundTripMetric(matrixClient, roomId, response.event_id);

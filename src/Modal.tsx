@@ -20,6 +20,7 @@ import ReactDOM from "react-dom";
 import classNames from "classnames";
 import { defer, sleep } from "matrix-js-sdk/src/utils";
 import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
+import { Glass } from "@vector-im/compound-web";
 
 import dis from "./dispatcher/dispatcher";
 import AsyncWrapper from "./AsyncWrapper";
@@ -374,7 +375,9 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
 
             const staticDialog = (
                 <div className={classes}>
-                    <div className="mx_Dialog">{this.staticModal.elem}</div>
+                    <Glass className="mx_Dialog_border">
+                        <div className="mx_Dialog">{this.staticModal.elem}</div>
+                    </Glass>
                     <div
                         data-testid="dialog-background"
                         className="mx_Dialog_background mx_Dialog_staticBackground"
@@ -397,7 +400,9 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
 
             const dialog = (
                 <div className={classes}>
-                    <div className="mx_Dialog">{modal.elem}</div>
+                    <Glass className="mx_Dialog_border">
+                        <div className="mx_Dialog">{modal.elem}</div>
+                    </Glass>
                     <div
                         data-testid="dialog-background"
                         className="mx_Dialog_background"

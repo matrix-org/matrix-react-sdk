@@ -32,7 +32,8 @@ import { ExtendedDevice } from "../../devices/types";
 import { deleteDevicesWithInteractiveAuth } from "../../devices/deleteDevices";
 import SettingsTab from "../SettingsTab";
 import LoginWithQRSection from "../../devices/LoginWithQRSection";
-import LoginWithQR, { Mode } from "../../../auth/LoginWithQR";
+import LoginWithQR from "../../../auth/LoginWithQR";
+import { Mode } from "../../../auth/LoginWithQR-types";
 import { useAsyncMemo } from "../../../../../hooks/useAsyncMemo";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
 import { FilterVariation } from "../../devices/filter";
@@ -150,6 +151,7 @@ const useSignOut = (
 const SessionManagerTab: React.FC = () => {
     const {
         devices,
+        dehydratedDeviceId,
         pushers,
         localNotificationSettings,
         currentDeviceId,
@@ -173,7 +175,10 @@ const SessionManagerTab: React.FC = () => {
      * delegated auth provider.
      * See https://github.com/matrix-org/matrix-spec-proposals/pull/3824
      */
-    const delegatedAuthAccountUrl = sdkContext.oidcClientStore.accountManagementEndpoint;
+    const delegatedAuthAccountUrl = useAsyncMemo(async () => {
+        await sdkContext.oidcClientStore.readyPromise; // wait for the store to be ready
+        return sdkContext.oidcClientStore.accountManagementEndpoint;
+    }, [sdkContext.oidcClientStore]);
     const disableMultipleSignout = !!delegatedAuthAccountUrl;
 
     const userId = matrixClient?.getUserId();
@@ -194,18 +199,20 @@ const SessionManagerTab: React.FC = () => {
         setFilter(filter);
         clearTimeout(scrollIntoViewTimeoutRef.current);
         // wait a tick for the filtered section to rerender with different height
-        scrollIntoViewTimeoutRef.current = window.setTimeout(
-            () =>
-                filteredDeviceListRef.current?.scrollIntoView({
-                    // align element to top of scrollbox
-                    block: "start",
-                    inline: "nearest",
-                    behavior: "smooth",
-                }),
+        scrollIntoViewTimeoutRef.current = window.setTimeout(() =>
+            filteredDeviceListRef.current?.scrollIntoView({
+                // align element to top of scrollbox
+                block: "start",
+                inline: "nearest",
+                behavior: "smooth",
+            }),
         );
     };
 
     const { [currentDeviceId]: currentDevice, ...otherDevices } = devices;
+    if (dehydratedDeviceId && otherDevices[dehydratedDeviceId]?.isVerified) {
+        delete otherDevices[dehydratedDeviceId];
+    }
     const otherSessionsCount = Object.keys(otherDevices).length;
     const shouldShowOtherSessions = otherSessionsCount > 0;
 
@@ -277,7 +284,13 @@ const SessionManagerTab: React.FC = () => {
 
     return (
         <SettingsTab>
-            <SettingsSection heading={_t("settings|sessions|title")}>
+            <SettingsSection>
+                <LoginWithQRSection
+                    onShowQr={onShowQrClicked}
+                    versions={clientVersions}
+                    capabilities={capabilities}
+                    wellKnown={wellKnown}
+                />
                 <SecurityRecommendations
                     devices={devices}
                     goToFilteredList={onGoToFilteredList}
@@ -331,12 +344,6 @@ const SessionManagerTab: React.FC = () => {
                         />
                     </SettingsSubsection>
                 )}
-                <LoginWithQRSection
-                    onShowQr={onShowQrClicked}
-                    versions={clientVersions}
-                    capabilities={capabilities}
-                    wellKnown={wellKnown}
-                />
             </SettingsSection>
         </SettingsTab>
     );

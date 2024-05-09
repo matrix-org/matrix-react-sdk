@@ -53,7 +53,7 @@ $left-gutter: 64px;
         height: 16px;
 
         &::before {
-            background-color: $tertiary-content;
+            background-color: var(--cpd-color-icon-tertiary);
             mask-repeat: no-repeat;
             mask-position: center;
             mask-size: 16px;
@@ -240,7 +240,7 @@ $left-gutter: 64px;
             > .mx_EventTile_line {
                 /* TODO: ultimately we probably want some transition on here. */
                 box-shadow: inset var(--EventTile-box-shadow-offset-x) 0 0 var(--EventTile-box-shadow-spread-radius)
-                    $accent;
+                    var(--cpd-color-bg-action-primary-rest);
             }
         }
 
@@ -858,12 +858,12 @@ $left-gutter: 64px;
 
     &.mx_EventTile_e2eIcon_normal::after {
         mask-image: url("$(res)/img/e2e/normal.svg"); /* regular shield */
-        background-color: $header-panel-text-primary-color; /* grey */
+        background-color: var(--cpd-color-icon-tertiary); /* grey */
     }
 
     &.mx_EventTile_e2eIcon_decryption_failure::after {
         mask-image: url("$(res)/img/e2e/decryption-failure.svg"); /* key in a circle */
-        background-color: $secondary-content;
+        background-color: var(--cpd-color-icon-tertiary);
     }
 }
 
@@ -1051,23 +1051,6 @@ $left-gutter: 64px;
     &::before {
         inset: 0;
         pointer-events: none; /* ensures the title for the sender name can be correctly displayed */
-    }
-
-    /* Display notification dot */
-    &[data-notification]::before,
-    .mx_NotificationBadge {
-        position: absolute;
-        $notification-inset-block-start: 14px; /* 14px: align the dot with the timestamp row */
-
-        /* !important to fix overly specific CSS selector applied on mx_NotificationBadge */
-        width: $notification-dot-size !important;
-        height: $notification-dot-size !important;
-        border-radius: 50%;
-        inset: $notification-inset-block-start $spacing-8 auto auto;
-    }
-
-    .mx_NotificationBadge_count {
-        display: none;
     }
 
     &[data-notification="total"]::before {
@@ -1440,14 +1423,6 @@ $left-gutter: 64px;
             table {
                 margin-bottom: $spacing-4; /* 1/4 of the non-compact margin-bottom */
             }
-        }
-
-        &[data-shape="ThreadsList"][data-notification]::before,
-        .mx_NotificationBadge {
-            /* stylelint-disable-next-line declaration-colon-space-after */
-            inset-block-start: calc(
-                $notification-inset-block-start - var(--MatrixChat_useCompactLayout_group-padding-top)
-            );
         }
     }
 }

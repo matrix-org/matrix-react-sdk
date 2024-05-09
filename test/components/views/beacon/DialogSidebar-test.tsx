@@ -53,7 +53,6 @@ describe("<DialogSidebar />", () => {
     const getComponent = (props = {}) => (
         <MatrixClientContext.Provider value={client}>
             <DialogSidebar {...defaultProps} {...props} />
-            );
         </MatrixClientContext.Provider>
     );
 

@@ -18,6 +18,7 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RoomType, MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { mocked, Mocked } from "jest-mock";
 
@@ -163,7 +164,7 @@ describe("InviteDialog", () => {
             mkMembership({
                 event: true,
                 room: roomId,
-                mship: "join",
+                mship: KnownMembership.Join,
                 user: aliceId,
                 skey: aliceId,
             }),
@@ -479,7 +480,6 @@ describe("InviteDialog", () => {
     });
 
     it("should not suggest users from other server when room has m.federate=false", async () => {
-        SdkConfig.add({ welcome_user_id: "@bot:example.org" });
         room.currentState.setStateEvents([mkRoomCreateEvent(bobId, roomId, { "m.federate": false })]);
 
         render(

@@ -18,7 +18,7 @@ import React, { useCallback, useContext, useEffect, useMemo, useState } from "re
 import classNames from "classnames";
 import { MenuItem, Tooltip, Separator, ToggleMenuItem, Text, Badge, Heading } from "@vector-im/compound-web";
 import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
-import { Icon as FavouriteIcon } from "@vector-im/compound-design-tokens/icons/favourite-off.svg";
+import { Icon as FavouriteIcon } from "@vector-im/compound-design-tokens/icons/favourite.svg";
 import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add.svg";
 import { Icon as UserProfileSolidIcon } from "@vector-im/compound-design-tokens/icons/user-profile-solid.svg";
 import { Icon as LinkIcon } from "@vector-im/compound-design-tokens/icons/link.svg";
@@ -27,12 +27,12 @@ import { Icon as ExportArchiveIcon } from "@vector-im/compound-design-tokens/ico
 import { Icon as LeaveIcon } from "@vector-im/compound-design-tokens/icons/leave.svg";
 import { Icon as FilesIcon } from "@vector-im/compound-design-tokens/icons/files.svg";
 import { Icon as PollsIcon } from "@vector-im/compound-design-tokens/icons/polls.svg";
-import { Icon as PinIcon } from "@vector-im/compound-design-tokens/icons/pin-off.svg";
-import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock.svg";
+import { Icon as PinIcon } from "@vector-im/compound-design-tokens/icons/pin.svg";
+import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock-solid.svg";
 import { Icon as LockOffIcon } from "@vector-im/compound-design-tokens/icons/lock-off.svg";
 import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
 import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
-import { EventType, JoinRule, Room } from "matrix-js-sdk/src/matrix";
+import { EventType, JoinRule, Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useIsEncrypted } from "../../../hooks/useIsEncrypted";
@@ -49,7 +49,6 @@ import WidgetUtils from "../../../utils/WidgetUtils";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import SettingsStore from "../../../settings/SettingsStore";
 import WidgetAvatar from "../avatars/WidgetAvatar";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
@@ -184,18 +183,17 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
 
     return (
         <div className={classes} ref={handle}>
-            <AccessibleTooltipButton
+            <AccessibleButton
                 className="mx_RoomSummaryCard_icon_app"
                 onClick={onOpenWidgetClick}
                 // only show a tooltip if the widget is pinned
-                title={openTitle}
-                forceHide={!(isPinned || isMaximised)}
+                title={!(isPinned || isMaximised) ? undefined : openTitle}
                 disabled={isPinned || isMaximised}
             >
                 <WidgetAvatar app={app} size="20px" />
                 <span>{name}</span>
                 {subtitle}
-            </AccessibleTooltipButton>
+            </AccessibleButton>
 
             {canModifyWidget && (
                 <ContextMenuTooltipButton
@@ -206,13 +204,13 @@ const AppRow: React.FC<IAppRowProps> = ({ app, room }) => {
                 />
             )}
 
-            <AccessibleTooltipButton
+            <AccessibleButton
                 className="mx_RoomSummaryCard_app_pinToggle"
                 onClick={togglePin}
                 title={pinTitle}
                 disabled={cannotPin}
             />
-            <AccessibleTooltipButton
+            <AccessibleButton
                 className="mx_RoomSummaryCard_app_maximiseToggle"
                 onClick={toggleMaximised}
                 title={maximiseTitle}
@@ -393,6 +391,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
     const roomTags = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () =>
         RoomListStore.instance.getTagsForRoom(room),
     );
+    const canInviteToState = useEventEmitterState(room, RoomStateEvent.Update, () => canInviteTo(room));
     const isFavorite = roomTags.includes(DefaultTagID.Favourite);
 
     return (
@@ -404,7 +403,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 align="center"
                 justify="space-between"
             >
-                <Tooltip label={_t("action|search")} side="right">
+                <Tooltip label={_t("action|search")} placement="right">
                     <button
                         className="mx_RoomSummaryCard_searchBtn"
                         data-testid="summary-search"
@@ -439,7 +438,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
             <MenuItem
                 Icon={UserAddIcon}
                 label={_t("action|invite")}
-                disabled={!canInviteTo(room)}
+                disabled={!canInviteToState}
                 onSelect={() => inviteToRoom(room)}
             />
             <MenuItem Icon={LinkIcon} label={_t("action|copy_link")} onSelect={onShareRoomClick} />

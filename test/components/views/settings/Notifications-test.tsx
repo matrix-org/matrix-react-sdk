@@ -21,7 +21,6 @@ import {
     LOCAL_NOTIFICATION_SETTINGS_PREFIX,
     MatrixEvent,
     Room,
-    NotificationCountType,
     PushRuleActionName,
     TweakName,
     ConditionKind,
@@ -900,8 +899,7 @@ describe("<Notifications />", () => {
                 user: "@alice:example.org",
                 ts: 1,
             });
-            room.addLiveEvents([message]);
-            room.setUnreadNotificationCount(NotificationCountType.Total, 1);
+            await room.addLiveEvents([message]);
 
             const { container } = await getComponentAndWait();
             const clearNotificationEl = getByTestId(container, "clear-notifications");
@@ -909,11 +907,8 @@ describe("<Notifications />", () => {
             fireEvent.click(clearNotificationEl);
 
             expect(clearNotificationEl.className).toContain("mx_AccessibleButton_disabled");
+            await waitFor(() => expect(clearNotificationEl.className).not.toContain("mx_AccessibleButton_disabled"));
             expect(mockClient.sendReadReceipt).toHaveBeenCalled();
-
-            await waitFor(() => {
-                expect(clearNotificationEl).not.toBeInTheDocument();
-            });
         });
     });
 });

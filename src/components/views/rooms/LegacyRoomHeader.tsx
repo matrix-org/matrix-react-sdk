@@ -33,7 +33,6 @@ import RoomHeaderButtons from "../right_panel/LegacyRoomHeaderButtons";
 import E2EIcon from "./E2EIcon";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
 import { E2EStatus } from "../../../utils/ShieldUtils";
@@ -68,7 +67,6 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { SessionDuration } from "../voip/CallDuration";
-import { Alignment } from "../elements/Tooltip";
 import RoomCallBanner from "../beacon/RoomCallBanner";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
@@ -111,12 +109,12 @@ const VoiceCallButton: FC<VoiceCallButtonProps> = ({ room, busy, setBusy, behavi
     }, [behavior, room, setBusy]);
 
     return (
-        <AccessibleTooltipButton
+        <AccessibleButton
             className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_voiceCallButton"
             onClick={onClick}
-            title={_t("voip|voice_call")}
-            tooltip={tooltip ?? _t("voip|voice_call")}
-            alignment={Alignment.Bottom}
+            aria-label={_t("voip|voice_call")}
+            title={tooltip ?? _t("voip|voice_call")}
+            placement="bottom"
             disabled={disabled || busy}
         />
     );
@@ -143,16 +141,20 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
         setBusy(false);
     }, [setBusy, room]);
 
-    const startElementCall = useCallback(() => {
-        setBusy(true);
-        defaultDispatcher.dispatch<ViewRoomPayload>({
-            action: Action.ViewRoom,
-            room_id: room.roomId,
-            view_call: true,
-            metricsTrigger: undefined,
-        });
-        setBusy(false);
-    }, [setBusy, room]);
+    const startElementCall = useCallback(
+        (skipLobby: boolean) => {
+            setBusy(true);
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
+                room_id: room.roomId,
+                view_call: true,
+                skipLobby: skipLobby,
+                metricsTrigger: undefined,
+            });
+            setBusy(false);
+        },
+        [setBusy, room],
+    );
 
     const { onClick, tooltip, disabled } = useMemo(() => {
         if (behavior instanceof DisabledWithReason) {
@@ -173,7 +175,7 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
             return {
                 onClick: async (ev: ButtonEvent): Promise<void> => {
                     ev.preventDefault();
-                    startElementCall();
+                    startElementCall("shiftKey" in ev ? ev.shiftKey : false);
                 },
                 disabled: false,
             };
@@ -202,7 +204,7 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
         (ev: ButtonEvent) => {
             ev.preventDefault();
             closeMenu();
-            startElementCall();
+            startElementCall("shiftKey" in ev ? ev.shiftKey : false);
         },
         [closeMenu, startElementCall],
     );
@@ -233,13 +235,13 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
 
     return (
         <>
-            <AccessibleTooltipButton
+            <AccessibleButton
                 ref={buttonRef}
                 className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_videoCallButton"
                 onClick={onClick}
-                title={_t("voip|video_call")}
-                tooltip={tooltip ?? _t("voip|video_call")}
-                alignment={Alignment.Bottom}
+                aria-label={_t("voip|video_call")}
+                title={tooltip ?? _t("voip|video_call")}
+                placement="bottom"
                 disabled={disabled || busy}
             />
             {menu}
@@ -305,7 +307,7 @@ const CallButtons: FC<CallButtonsProps> = ({ room }) => {
             } else {
                 return makeVideoCallButton(new DisabledWithReason(_t("voip|disabled_no_perms_start_video_call")));
             }
-        } else if (hasLegacyCall || hasJitsiWidget || hasGroupCall) {
+        } else if (hasLegacyCall || hasJitsiWidget) {
             return (
                 <>
                     {makeVoiceCallButton(new DisabledWithReason(_t("voip|disabled_ongoing_call")))}
@@ -438,7 +440,7 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
 
     return (
         <>
-            <AccessibleTooltipButton
+            <AccessibleButton
                 ref={buttonRef}
                 className={classNames("mx_LegacyRoomHeader_button", {
                     "mx_LegacyRoomHeader_layoutButton--freedom": layout === Layout.Tile,
@@ -446,7 +448,7 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
                 })}
                 onClick={onClick}
                 title={_t("room|header|video_call_ec_change_layout")}
-                alignment={Alignment.Bottom}
+                placement="bottom"
                 key="layout"
             />
             {menu}
@@ -596,11 +598,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         if (!this.props.viewingCall && this.props.onForgetClick) {
             startButtons.push(
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_forgetButton"
                     onClick={this.props.onForgetClick}
                     title={_t("room|header|forget_room_button")}
-                    alignment={Alignment.Bottom}
+                    placement="bottom"
                     key="forget"
                 />,
             );
@@ -608,7 +610,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         if (!this.props.viewingCall && this.props.onAppsClick) {
             startButtons.push(
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className={classNames("mx_LegacyRoomHeader_button mx_LegacyRoomHeader_appsButton", {
                         mx_LegacyRoomHeader_appsButton_highlight: this.props.appsShown,
                     })}
@@ -619,7 +621,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                             : _t("room|header|show_widgets_button")
                     }
                     aria-checked={this.props.appsShown}
-                    alignment={Alignment.Bottom}
+                    placement="bottom"
                     key="apps"
                 />,
             );
@@ -627,11 +629,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         if (!this.props.viewingCall && this.props.onSearchClick && this.props.inRoom) {
             startButtons.push(
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_searchButton"
                     onClick={this.props.onSearchClick}
                     title={_t("action|search")}
-                    alignment={Alignment.Bottom}
+                    placement="bottom"
                     key="search"
                 />,
             );
@@ -639,11 +641,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         if (this.props.onInviteClick && (!this.props.viewingCall || isVideoRoom) && this.props.inRoom) {
             startButtons.push(
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_inviteButton"
                     onClick={this.props.onInviteClick}
                     title={_t("action|invite")}
-                    alignment={Alignment.Bottom}
+                    placement="bottom"
                     key="invite"
                 />,
             );
@@ -663,11 +665,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                 );
             } else {
                 endButtons.push(
-                    <AccessibleTooltipButton
+                    <AccessibleButton
                         className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_minimiseButton"
                         onClick={this.onHideCallClick}
                         title={_t("room|header|video_room_view_chat_button")}
-                        alignment={Alignment.Bottom}
+                        placement="bottom"
                         key="minimise"
                     />,
                 );
@@ -750,7 +752,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     onClick={this.onContextMenuOpenClick}
                     isExpanded={!!this.state.contextMenuPosition}
                     title={_t("room|context_menu|title")}
-                    alignment={Alignment.Bottom}
+                    placement="bottom"
                 >
                     {roomName}
                     {this.props.room && <div className="mx_LegacyRoomHeader_chevron" />}
@@ -780,7 +782,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         const icon = this.props.viewingCall ? (
             <div className="mx_LegacyRoomHeader_icon mx_LegacyRoomHeader_icon_video" />
         ) : this.props.e2eStatus ? (
-            <E2EIcon className="mx_LegacyRoomHeader_icon" status={this.props.e2eStatus} tooltipSide="bottom" />
+            <E2EIcon className="mx_LegacyRoomHeader_icon" status={this.props.e2eStatus} tooltipPlacement="bottom" />
         ) : // If we're expecting an E2EE status to come in, but it hasn't
         // yet been loaded, insert a blank div to reserve space
         this.client.isRoomEncrypted(this.props.room.roomId) && this.client.isCryptoEnabled() ? (

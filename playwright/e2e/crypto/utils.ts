@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { type Page, expect, JSHandle } from "@playwright/test";
+import { expect, JSHandle, type Page } from "@playwright/test";
 
 import type { CryptoEvent, ICreateRoomOpts, MatrixClient } from "matrix-js-sdk/src/matrix";
 import type {
+    EmojiMapping,
+    ShowSasCallbacks,
     VerificationRequest,
     Verifier,
-    EmojiMapping,
     VerifierEvent,
-} from "matrix-js-sdk/src/crypto-api/verification";
-import type { ISasEvent } from "matrix-js-sdk/src/crypto/verification/SAS";
+} from "matrix-js-sdk/src/crypto-api";
 import { Credentials, HomeserverInstance } from "../../plugins/homeserver";
 import { Client } from "../../pages/client";
 import { ElementAppPage } from "../../pages/ElementAppPage";
@@ -36,9 +36,7 @@ import { ElementAppPage } from "../../pages/ElementAppPage";
 export async function waitForVerificationRequest(client: Client): Promise<JSHandle<VerificationRequest>> {
     return client.evaluateHandle((cli) => {
         return new Promise<VerificationRequest>((resolve) => {
-            console.log("~~");
             const onVerificationRequestEvent = async (request: VerificationRequest) => {
-                console.log("@@", request);
                 await request.accept();
                 resolve(request);
             };
@@ -65,7 +63,7 @@ export function handleSasVerification(verifier: JSHandle<Verifier>): Promise<Emo
         if (event) return event.sas.emoji;
 
         return new Promise<EmojiMapping[]>((resolve) => {
-            const onShowSas = (event: ISasEvent) => {
+            const onShowSas = (event: ShowSasCallbacks) => {
                 verifier.off("show_sas" as VerifierEvent, onShowSas);
                 event.confirm();
                 resolve(event.sas.emoji);
@@ -150,7 +148,7 @@ export async function logIntoElement(
     // select homeserver
     await page.getByRole("button", { name: "Edit" }).click();
     await page.getByRole("textbox", { name: "Other homeserver" }).fill(homeserver.config.baseUrl);
-    await page.getByRole("button", { name: "Continue" }).click();
+    await page.getByRole("button", { name: "Continue", exact: true }).click();
 
     // wait for the dialog to go away
     await expect(page.locator(".mx_ServerPickerDialog")).not.toBeVisible();
@@ -169,13 +167,38 @@ export async function logIntoElement(
     }
 }
 
-export async function logOutOfElement(page: Page) {
+/**
+ * Click the "sign out" option in Element, and wait for the login page to load
+ *
+ * @param page - Playwright `Page` object.
+ * @param discardKeys - if true, expect a "You'll lose access to your encrypted messages" dialog, and dismiss it.
+ */
+export async function logOutOfElement(page: Page, discardKeys: boolean = false) {
     await page.getByRole("button", { name: "User menu" }).click();
     await page.locator(".mx_UserMenu_contextMenu").getByRole("menuitem", { name: "Sign out" }).click();
-    await page.locator(".mx_Dialog .mx_QuestionDialog").getByRole("button", { name: "Sign out" }).click();
+    if (discardKeys) {
+        await page.getByRole("button", { name: "I don't want my encrypted messages" }).click();
+    } else {
+        await page.locator(".mx_Dialog .mx_QuestionDialog").getByRole("button", { name: "Sign out" }).click();
+    }
 
     // Wait for the login page to load
     await page.getByRole("heading", { name: "Sign in" }).click();
+}
+
+/**
+ * Open the security settings, and verify the current session using the security key.
+ *
+ * @param app - `ElementAppPage` wrapper for the playwright `Page`.
+ * @param securityKey - The security key (i.e., 4S key), set up during a previous session.
+ */
+export async function verifySession(app: ElementAppPage, securityKey: string) {
+    const settings = await app.settings.openUserSettings("Security & Privacy");
+    await settings.getByRole("button", { name: "Verify this session" }).click();
+    await app.page.getByRole("button", { name: "Verify with Security Key" }).click();
+    await app.page.locator(".mx_Dialog").locator('input[type="password"]').fill(securityKey);
+    await app.page.getByRole("button", { name: "Continue", disabled: false }).click();
+    await app.page.getByRole("button", { name: "Done" }).click();
 }
 
 /**
@@ -259,4 +282,41 @@ export async function createSharedRoomWithUser(
     await expect(app.page.getByText(" joined the room", { exact: false })).toBeVisible();
 
     return roomId;
+}
+
+/**
+ * Send a message in the current room
+ * @param page
+ * @param message - The message text to send
+ */
+export async function sendMessageInCurrentRoom(page: Page, message: string): Promise<void> {
+    await page.locator(".mx_MessageComposer").getByRole("textbox").fill(message);
+    await page.getByTestId("sendmessagebtn").click();
+}
+
+/**
+ * Create a room with the given name and encryption status using the room creation dialog.
+ *
+ * @param roomName - The name of the room to create
+ * @param isEncrypted - Whether the room should be encrypted
+ */
+export async function createRoom(page: Page, roomName: string, isEncrypted: boolean): Promise<void> {
+    await page.getByRole("button", { name: "Add room" }).click();
+    await page.locator(".mx_IconizedContextMenu").getByRole("menuitem", { name: "New room" }).click();
+
+    const dialog = page.locator(".mx_Dialog");
+
+    await dialog.getByLabel("Name").fill(roomName);
+
+    if (!isEncrypted) {
+        // it's enabled by default
+        await page.getByLabel("Enable end-to-end encryption").click();
+    }
+
+    await dialog.getByRole("button", { name: "Create room" }).click();
+
+    // Wait for the client to process the encryption event before carrying on (and potentially sending events).
+    if (isEncrypted) {
+        await expect(page.getByText("Encryption enabled")).toBeVisible();
+    }
 }

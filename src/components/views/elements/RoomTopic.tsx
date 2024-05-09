@@ -36,7 +36,7 @@ interface IProps extends React.HTMLProps<HTMLDivElement> {
     room: Room;
 }
 
-export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
+export default function RoomTopic({ room, className, ...props }: IProps): JSX.Element {
     const client = useContext(MatrixClientContext);
     const ref = useRef<HTMLDivElement>(null);
 
@@ -82,7 +82,8 @@ export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
                         <Linkify
                             options={{
                                 attributes: {
-                                    onClick() {
+                                    onClick(e: React.MouseEvent<HTMLDivElement>) {
+                                        onClick(e);
                                         modal.close();
                                     },
                                 },
@@ -110,15 +111,13 @@ export default function RoomTopic({ room, ...props }: IProps): JSX.Element {
         }
     });
 
-    const className = classNames(props.className, "mx_RoomTopic");
-
     return (
         <TooltipTarget
             {...props}
             ref={ref}
             onClick={onClick}
             dir="auto"
-            tooltipTargetClassName={className}
+            tooltipTargetClassName={classNames(className, "mx_RoomTopic")}
             label={_t("room|read_topic")}
             alignment={Alignment.Bottom}
             ignoreHover={ignoreHover}

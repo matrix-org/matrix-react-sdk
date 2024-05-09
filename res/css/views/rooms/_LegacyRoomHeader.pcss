@@ -185,10 +185,10 @@ limitations under the License.
     }
 
     &:hover {
-        background: $accent-300;
+        background: var(--cpd-color-bg-subtle-primary);
 
         &::before {
-            background-color: $accent;
+            background-color: var(--cpd-color-icon-primary);
         }
     }
 }
@@ -212,19 +212,19 @@ limitations under the License.
     top: var(--RoomHeader-indicator-dot-offset);
     margin: 4px;
 
-    &.mx_Indicator_red {
-        background: $alert;
-        box-shadow: $alert;
+    &.mx_Indicator_highlight {
+        background: var(--cpd-color-icon-critical-primary);
+        box-shadow: var(--cpd-color-icon-critical-primary);
     }
 
-    &.mx_Indicator_gray {
-        background: $room-icon-unread-color;
-        box-shadow: $room-icon-unread-color;
+    &.mx_Indicator_notification {
+        background: var(--cpd-color-icon-success-primary);
+        box-shadow: var(--cpd-color-icon-success-primary);
     }
 
-    &.mx_Indicator_bold {
-        background: $primary-content;
-        box-shadow: $primary-content;
+    &.mx_Indicator_activity {
+        background: var(--cpd-color-icon-primary);
+        box-shadow: var(--cpd-color-icon-primary);
     }
 }
 
@@ -234,10 +234,9 @@ limitations under the License.
     }
 }
 
-.mx_LegacyRoomHeader_button--highlight,
-.mx_LegacyRoomHeader_button:hover {
+.mx_LegacyRoomHeader_button--highlight {
     &::before {
-        background-color: $accent !important;
+        background-color: var(--cpd-color-icon-primary) !important;
     }
 }
 

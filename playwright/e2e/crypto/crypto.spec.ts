@@ -15,14 +15,17 @@ limitations under the License.
 */
 
 import type { Page } from "@playwright/test";
-import { test, expect } from "../../element-web-test";
+import { expect, test } from "../../element-web-test";
 import {
+    copyAndContinue,
+    createRoom,
     createSharedRoomWithUser,
     doTwoWaySasVerification,
-    copyAndContinue,
     enableKeyBackup,
     logIntoElement,
     logOutOfElement,
+    sendMessageInCurrentRoom,
+    verifySession,
     waitForVerificationRequest,
 } from "./utils";
 import { Bot } from "../../pages/bot";
@@ -121,9 +124,6 @@ test.describe("Cryptography", function () {
         botCreateOpts: {
             displayName: "Bob",
             autoAcceptInvites: false,
-            // XXX: We use a custom prefix here to coerce the Rust Crypto SDK to prefer `@user` in race resolution
-            // by using a prefix that is lexically after `@user` in the alphabet.
-            userIdPrefix: "zzz_",
         },
     });
 
@@ -151,6 +151,12 @@ test.describe("Cryptography", function () {
                 if (isDeviceVerified) {
                     await app.client.bootstrapCrossSigning(aliceCredentials);
                 }
+
+                await page.route("**/_matrix/client/v3/keys/signatures/upload", async (route) => {
+                    // We delay this API otherwise the `Setting up keys` may happen too quickly and cause flakiness
+                    await new Promise((resolve) => setTimeout(resolve, 500));
+                    await route.continue();
+                });
 
                 await app.settings.openUserSettings("Security & Privacy");
                 await page.getByRole("button", { name: "Set up Secure Backup" }).click();
@@ -336,7 +342,8 @@ test.describe("Cryptography", function () {
             await expect(last).toContainText("Unable to decrypt message");
             const lastE2eIcon = last.locator(".mx_EventTile_e2eIcon");
             await expect(lastE2eIcon).toHaveClass(/mx_EventTile_e2eIcon_decryption_failure/);
-            await expect(lastE2eIcon).toHaveAttribute("aria-label", "This message could not be decrypted");
+            await lastE2eIcon.focus();
+            await expect(page.getByRole("tooltip")).toContainText("This message could not be decrypted");
 
             /* Should show a red padlock for an unencrypted message in an e2e room */
             await bob.evaluate(
@@ -355,7 +362,8 @@ test.describe("Cryptography", function () {
 
             await expect(last).toContainText("test unencrypted");
             await expect(lastE2eIcon).toHaveClass(/mx_EventTile_e2eIcon_warning/);
-            await expect(lastE2eIcon).toHaveAttribute("aria-label", "Not encrypted");
+            await lastE2eIcon.focus();
+            await expect(page.getByRole("tooltip")).toContainText("Not encrypted");
 
             /* Should show no padlock for an unverified user */
             // bob sends a valid event
@@ -387,10 +395,8 @@ test.describe("Cryptography", function () {
             await bobSecondDevice.sendMessage(testRoomId, "test encrypted from unverified");
             await expect(lastTile).toContainText("test encrypted from unverified");
             await expect(lastTileE2eIcon).toHaveClass(/mx_EventTile_e2eIcon_warning/);
-            await expect(lastTileE2eIcon).toHaveAttribute(
-                "aria-label",
-                "Encrypted by a device not verified by its owner.",
-            );
+            await lastTileE2eIcon.focus();
+            await expect(page.getByRole("tooltip")).toContainText("Encrypted by a device not verified by its owner.");
 
             /* Should show a grey padlock for a message from an unknown device */
             // bob deletes his second device
@@ -428,11 +434,11 @@ test.describe("Cryptography", function () {
             } else {
                 await expect(lastE2eIcon).toHaveClass(/mx_EventTile_e2eIcon_normal/);
             }
-            await expect(lastE2eIcon).toHaveAttribute("aria-label", "Encrypted by an unknown or deleted device.");
+            await lastE2eIcon.focus();
+            await expect(page.getByRole("tooltip")).toContainText("Encrypted by an unknown or deleted device.");
         });
 
-        // XXX: Failed since migration to Playwright (https://github.com/element-hq/element-web/issues/26811)
-        test.skip("Should show a grey padlock for a key restored from backup", async ({
+        test("Should show a grey padlock for a key restored from backup", async ({
             page,
             app,
             bot: bob,
@@ -450,8 +456,8 @@ test.describe("Cryptography", function () {
             // no e2e icon
             await expect(lastTileE2eIcon).not.toBeVisible();
 
-            // It can take up to 10 seconds for the key to be backed up. We don't really have much option other than
-            // to wait :/
+            // Workaround for https://github.com/element-hq/element-web/issues/27267. It can take up to 10 seconds for
+            // the key to be backed up.
             await page.waitForTimeout(10000);
 
             /* log out, and back in */
@@ -461,8 +467,16 @@ test.describe("Cryptography", function () {
             /* go back to the test room and find Bob's message again */
             await app.viewRoomById(testRoomId);
             await expect(lastTile).toContainText("test encrypted 1");
-            await expect(lastTileE2eIcon).toHaveClass(/mx_EventTile_e2eIcon_warning/);
-            await expect(lastTileE2eIcon).toHaveAttribute("aria-label", "Encrypted by an unknown or deleted device.");
+            // The gray shield would be a mx_EventTile_e2eIcon_normal. The red shield would be a mx_EventTile_e2eIcon_warning.
+            // No shield would have no div mx_EventTile_e2eIcon at all.
+            await expect(lastTileE2eIcon).toHaveClass(/mx_EventTile_e2eIcon_normal/);
+            await lastTileE2eIcon.hover();
+            // The key is coming from backup, so it is not anymore possible to establish if the claimed device
+            // creator of this key is authentic. The tooltip should be "The authenticity of this encrypted message can't be guaranteed on this device."
+            // It is not "Encrypted by an unknown or deleted device." even if the claimed device is actually deleted.
+            await expect(page.getByRole("tooltip")).toContainText(
+                "The authenticity of this encrypted message can't be guaranteed on this device.",
+            );
         });
 
         test("should show the correct shield on edited e2e events", async ({ page, app, bot: bob, homeserver }) => {
@@ -519,6 +533,71 @@ test.describe("Cryptography", function () {
             await expect(
                 page.locator(".mx_EventTile", { hasText: "Hee!" }).locator(".mx_EventTile_e2eIcon_warning"),
             ).not.toBeVisible();
+        });
+    });
+
+    test.describe("decryption failure messages", () => {
+        test("should handle device-relative historical messages", async ({
+            homeserver,
+            page,
+            app,
+            credentials,
+            user,
+            cryptoBackend,
+        }) => {
+            test.skip(cryptoBackend === "legacy", "Not implemented for legacy crypto");
+            test.setTimeout(60000);
+
+            // Start with a logged-in session, without key backup, and send a message.
+            await createRoom(page, "Test room", true);
+            await sendMessageInCurrentRoom(page, "test test");
+
+            // Log out, discarding the key for the sent message.
+            await logOutOfElement(page, true);
+
+            // Log in again, and see how the message looks.
+            await logIntoElement(page, homeserver, credentials);
+            await app.viewRoomByName("Test room");
+            const lastTile = page.locator(".mx_EventTile").last();
+            await expect(lastTile).toContainText("Historical messages are not available on this device");
+            await expect(lastTile.locator(".mx_EventTile_e2eIcon_decryption_failure")).toBeVisible();
+
+            // Now, we set up key backup, and then send another message.
+            const secretStorageKey = await enableKeyBackup(app);
+            await app.viewRoomByName("Test room");
+            await sendMessageInCurrentRoom(page, "test2 test2");
+
+            // Workaround for https://github.com/element-hq/element-web/issues/27267. It can take up to 10 seconds for
+            // the key to be backed up.
+            await page.waitForTimeout(10000);
+
+            // Finally, log out again, and back in, skipping verification for now, and see what we see.
+            await logOutOfElement(page);
+            await logIntoElement(page, homeserver, credentials);
+            await page.locator(".mx_AuthPage").getByRole("button", { name: "Skip verification for now" }).click();
+            await page.locator(".mx_AuthPage").getByRole("button", { name: "I'll verify later" }).click();
+            await app.viewRoomByName("Test room");
+
+            // There should be two historical events in the timeline
+            const tiles = await page.locator(".mx_EventTile").all();
+            expect(tiles.length).toBeGreaterThanOrEqual(2);
+            // look at the last two tiles only
+            for (const tile of tiles.slice(-2)) {
+                await expect(tile).toContainText("You need to verify this device for access to historical messages");
+                await expect(tile.locator(".mx_EventTile_e2eIcon_decryption_failure")).toBeVisible();
+            }
+
+            // Now verify our device (setting up key backup), and check what happens
+            await verifySession(app, secretStorageKey);
+            const tilesAfterVerify = (await page.locator(".mx_EventTile").all()).slice(-2);
+
+            // The first message still cannot be decrypted, because it was never backed up. It's now a regular UTD though.
+            await expect(tilesAfterVerify[0]).toContainText("Unable to decrypt message");
+            await expect(tilesAfterVerify[0].locator(".mx_EventTile_e2eIcon_decryption_failure")).toBeVisible();
+
+            // The second message should now be decrypted, with a grey shield
+            await expect(tilesAfterVerify[1]).toContainText("test2 test2");
+            await expect(tilesAfterVerify[1].locator(".mx_EventTile_e2eIcon_normal")).toBeVisible();
         });
     });
 });

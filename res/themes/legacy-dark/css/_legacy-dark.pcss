@@ -28,8 +28,9 @@ $light-fg-color: $header-panel-text-secondary-color;
 /* used for focusing form controls */
 $focus-bg-color: $room-highlight-color;
 
-$pill-bg-color: $room-highlight-color;
-$pill-hover-bg-color: #545a66;
+$pill-bg-color: var(--cpd-color-bg-action-primary-rest);
+$pill-hover-bg-color: var(--cpd-color-bg-action-primary-hovered);
+$pill-press-bg-color: var(--cpd-color-bg-action-primary-pressed);
 
 /* informational plinth */
 $info-plinth-bg-color: $header-panel-bg-color;
@@ -72,8 +73,7 @@ $h3-color: $primary-fg-color;
 $icon-button-color: var(--cpd-color-icon-tertiary);
 
 $dialog-title-fg-color: $base-text-color;
-$dialog-backdrop-color: #000;
-$dialog-shadow-color: rgba(0, 0, 0, 0.48);
+$dialog-backdrop-color: #00000080;
 $dialog-close-fg-color: $icon-button-color;
 $dialog-close-external-color: $text-primary-color;
 
@@ -208,9 +208,6 @@ $breadcrumb-placeholder-bg-color: #272c35;
 $voice-record-stop-border-color: #6f7882;
 $voice-record-icon-color: #6f7882;
 
-/* Appearance tab colors */
-$appearance-tab-border-color: $room-highlight-color;
-
 $composer-shadow-color: tranparent;
 
 $codeblock-background-color: #2a3039;
@@ -221,7 +218,6 @@ $inlinecode-background-color: #2a3039;
 $eventbubble-self-bg: #14322e;
 $eventbubble-others-bg: $event-selected-color;
 $eventbubble-bg-hover: #1c2026;
-$eventbubble-reply-color: #c1c6cd;
 
 /* Location sharing */
 /* ******************** */
