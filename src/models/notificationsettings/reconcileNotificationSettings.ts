@@ -107,7 +107,7 @@ function toStandardRules(
     if (supportsIntentionalMentions) {
         standardRules.set(RuleId.IsUserMention, {
             rule_id: RuleId.IsUserMention,
-            kind: PushRuleKind.ContentSpecific,
+            kind: PushRuleKind.Override,
             enabled: true,
             actions: userMentionActions,
         });
