@@ -604,9 +604,6 @@ test.describe("Cryptography", function () {
 
         test.describe("non-joined historical messages", () => {
             test.skip(isDendrite, "does not yet support membership on events");
-            test.use({
-                startHomeserverOpts: "membership-on-events",
-            });
 
             test("should display undecryptable non-joined historical messages with a different message", async ({
                 homeserver,
