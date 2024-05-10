@@ -316,7 +316,6 @@ export const expect = baseExpect.extend({
         name?: `${string}.png`,
         options?: {
             mask?: Array<Locator>;
-            omitBackground?: boolean;
             timeout?: number;
             css?: string;
         },
