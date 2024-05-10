@@ -26,7 +26,7 @@ export class Settings {
      */
     public async openUserMenu(): Promise<Locator> {
         const locator = this.page.locator(".mx_ContextualMenu");
-        if (await locator.isVisible()) return locator;
+        if (await locator.locator(".mx_UserMenu_contextMenu_header").isVisible()) return locator;
         await this.page.getByRole("button", { name: "User menu" }).click();
         await locator.waitFor();
         return locator;
