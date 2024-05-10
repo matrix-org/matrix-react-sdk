@@ -17,7 +17,7 @@ limitations under the License.
 
 import React from "react";
 
-import TabbedView, { Tab } from "../../structures/TabbedView";
+import TabbedView, { Tab, useActiveTabWithDefault } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
 import GeneralUserSettingsTab from "../settings/tabs/user/GeneralUserSettingsTab";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -43,6 +43,38 @@ interface IProps {
     initialTabId?: UserTab;
     sdkContext: SdkContextClass;
     onFinished(): void;
+}
+
+function titleForTabID(tabId: UserTab): React.ReactNode {
+    const subs = {
+        strong: (sub: string) => <strong>{sub}</strong>,
+    };
+    switch (tabId) {
+        case UserTab.General:
+            return _t("settings|general|dialog_title", undefined, subs);
+        case UserTab.SessionManager:
+            return _t("settings|sessions|dialog_title", undefined, subs);
+        case UserTab.Appearance:
+            return _t("settings|appearance|dialog_title", undefined, subs);
+        case UserTab.Notifications:
+            return _t("settings|notifications|dialog_title", undefined, subs);
+        case UserTab.Preferences:
+            return _t("settings|preferences|dialog_title", undefined, subs);
+        case UserTab.Keyboard:
+            return _t("settings|keyboard|dialog_title", undefined, subs);
+        case UserTab.Sidebar:
+            return _t("settings|sidebar|dialog_title", undefined, subs);
+        case UserTab.Voice:
+            return _t("settings|voip|dialog_title", undefined, subs);
+        case UserTab.Security:
+            return _t("settings|security|dialog_title", undefined, subs);
+        case UserTab.Labs:
+            return _t("settings|labs|dialog_title", undefined, subs);
+        case UserTab.Mjolnir:
+            return _t("settings|labs_mjolnir|dialog_title", undefined, subs);
+        case UserTab.Help:
+            return _t("setting|help_about|dialog_title", undefined, subs);
+    }
 }
 
 export default function UserSettingsDialog(props: IProps): JSX.Element {
@@ -173,6 +205,8 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
         return tabs as NonEmptyArray<Tab<UserTab>>;
     };
 
+    const [activeTabId, setActiveTabId] = useActiveTabWithDefault(getTabs(), UserTab.General, props.initialTabId);
+
     return (
         // XXX: SDKContext is provided within the LoggedInView subtree.
         // Modals function outside the MatrixChat React tree, so sdkContext is reprovided here to simulate that.
@@ -182,10 +216,15 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
                 className="mx_UserSettingsDialog"
                 hasCancel={true}
                 onFinished={props.onFinished}
-                title={_t("common|settings")}
+                title={titleForTabID(activeTabId)}
             >
                 <div className="mx_SettingsDialog_content">
-                    <TabbedView tabs={getTabs()} initialTabId={props.initialTabId} screenName="UserSettings" />
+                    <TabbedView
+                        tabs={getTabs()}
+                        activeTabId={activeTabId}
+                        screenName="UserSettings"
+                        onChange={setActiveTabId}
+                    />
                 </div>
             </BaseDialog>
         </SDKContext.Provider>

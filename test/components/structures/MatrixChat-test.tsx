@@ -29,7 +29,7 @@ import { defer, sleep } from "matrix-js-sdk/src/utils";
 import { UserVerificationStatus } from "matrix-js-sdk/src/crypto-api";
 
 import MatrixChat from "../../../src/components/structures/MatrixChat";
-import * as StorageManager from "../../../src/utils/StorageManager";
+import * as StorageAccess from "../../../src/utils/StorageAccess";
 import defaultDispatcher from "../../../src/dispatcher/dispatcher";
 import { Action } from "../../../src/dispatcher/actions";
 import { UserTab } from "../../../src/components/views/dialogs/UserTab";
@@ -220,8 +220,8 @@ describe("<MatrixChat />", () => {
             headers: { "content-type": "application/json" },
         });
 
-        jest.spyOn(StorageManager, "idbLoad").mockReset();
-        jest.spyOn(StorageManager, "idbSave").mockResolvedValue(undefined);
+        jest.spyOn(StorageAccess, "idbLoad").mockReset();
+        jest.spyOn(StorageAccess, "idbSave").mockResolvedValue(undefined);
         jest.spyOn(defaultDispatcher, "dispatch").mockClear();
         jest.spyOn(defaultDispatcher, "fire").mockClear();
 
@@ -284,6 +284,7 @@ describe("<MatrixChat />", () => {
         const tokenResponse: BearerTokenResponse = {
             access_token: accessToken,
             refresh_token: "def456",
+            id_token: "ghi789",
             scope: "test",
             token_type: "Bearer",
             expires_at: 12345,
@@ -459,7 +460,7 @@ describe("<MatrixChat />", () => {
 
         describe("when login succeeds", () => {
             beforeEach(() => {
-                jest.spyOn(StorageManager, "idbLoad").mockImplementation(
+                jest.spyOn(StorageAccess, "idbLoad").mockImplementation(
                     async (_table: string, key: string | string[]) => (key === "mx_access_token" ? accessToken : null),
                 );
                 loginClient.getProfileInfo.mockResolvedValue({
@@ -553,7 +554,7 @@ describe("<MatrixChat />", () => {
 
         beforeEach(async () => {
             await populateStorageForSession();
-            jest.spyOn(StorageManager, "idbLoad").mockImplementation(async (table, key) => {
+            jest.spyOn(StorageAccess, "idbLoad").mockImplementation(async (table, key) => {
                 const safeKey = Array.isArray(key) ? key[0] : key;
                 return mockidb[table]?.[safeKey];
             });
@@ -868,7 +869,7 @@ describe("<MatrixChat />", () => {
 
             mockClient.loginFlows.mockResolvedValue({ flows: [{ type: "m.login.password" }] });
 
-            jest.spyOn(StorageManager, "idbLoad").mockImplementation(async (table, key) => {
+            jest.spyOn(StorageAccess, "idbLoad").mockImplementation(async (table, key) => {
                 const safeKey = Array.isArray(key) ? key[0] : key;
                 return mockidb[table]?.[safeKey];
             });
@@ -1164,7 +1165,7 @@ describe("<MatrixChat />", () => {
 
         describe("when login succeeds", () => {
             beforeEach(() => {
-                jest.spyOn(StorageManager, "idbLoad").mockImplementation(
+                jest.spyOn(StorageAccess, "idbLoad").mockImplementation(
                     async (_table: string, key: string | string[]) => {
                         if (key === "mx_access_token") {
                             return accessToken as any;
