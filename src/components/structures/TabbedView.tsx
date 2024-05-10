@@ -132,8 +132,12 @@ interface IProps<T extends string> {
     onChange: (tabId: T) => void;
     // The screen name to report to Posthog.
     screenName?: ScreenName;
-    // If true, the layout of the tabbed view will be responsive to the viewport size.
-    // Only applies if tabs are on the left. Default: false.
+    /**
+     * If true, the layout of the tabbed view will be responsive to the viewport size (eg, just showing icons
+     * instead of names of tabs).
+     * Only applies if `tabLocation === TabLocation.LEFT`.
+     * Default: false.
+     */
     responsive?: boolean;
 }
 
