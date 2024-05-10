@@ -59,9 +59,8 @@ const INTEGRATION_MANAGER_HTML = `
     </html>
 `;
 
-async function closeIntegrationManager(page: Page, integrationManagerUrl: string) {
-    const iframe = page.frameLocator(`iframe[src*="${integrationManagerUrl}"]`);
-    await iframe.getByRole("button", { name: "Press to close" }).click();
+async function closeIntegrationManager(page: Page) {
+    await page.getByTestId("dialog-background").click();
 }
 
 async function sendActionFromIntegrationManager(
@@ -169,7 +168,7 @@ test.describe("Integration Manager: Kick", () => {
 
         await openIntegrationManager(page);
         await sendActionFromIntegrationManager(page, integrationManagerUrl, room.roomId, targetUser.credentials.userId);
-        await closeIntegrationManager(page, integrationManagerUrl);
+        await closeIntegrationManager(page);
         await expectKickedMessage(page, true);
     });
 
@@ -187,7 +186,7 @@ test.describe("Integration Manager: Kick", () => {
 
         await openIntegrationManager(page);
         await sendActionFromIntegrationManager(page, integrationManagerUrl, room.roomId, targetUser.credentials.userId);
-        await closeIntegrationManager(page, integrationManagerUrl);
+        await closeIntegrationManager(page);
         await expectKickedMessage(page, false);
     });
 
@@ -199,7 +198,7 @@ test.describe("Integration Manager: Kick", () => {
 
         await openIntegrationManager(page);
         await sendActionFromIntegrationManager(page, integrationManagerUrl, room.roomId, targetUser.credentials.userId);
-        await closeIntegrationManager(page, integrationManagerUrl);
+        await closeIntegrationManager(page);
         await expectKickedMessage(page, false);
     });
 
@@ -211,7 +210,7 @@ test.describe("Integration Manager: Kick", () => {
 
         await openIntegrationManager(page);
         await sendActionFromIntegrationManager(page, integrationManagerUrl, room.roomId, targetUser.credentials.userId);
-        await closeIntegrationManager(page, integrationManagerUrl);
+        await closeIntegrationManager(page);
         await expectKickedMessage(page, false);
     });
 
@@ -220,7 +219,7 @@ test.describe("Integration Manager: Kick", () => {
 
         await openIntegrationManager(page);
         await sendActionFromIntegrationManager(page, integrationManagerUrl, room.roomId, targetUser.credentials.userId);
-        await closeIntegrationManager(page, integrationManagerUrl);
+        await closeIntegrationManager(page);
         await expectKickedMessage(page, false);
     });
 });
