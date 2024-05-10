@@ -314,11 +314,10 @@ export default abstract class BasePlatform {
     }
 
     /**
-     * The URL to return to after a successful SSO/OIDC authentication
-     * @param forOidc whether the callback URL is for OIDC or legacy SSO
+     * The URL to return to after a successful SSO authentication
      * @param fragmentAfterLogin optional fragment for specific view to return to
      */
-    public getSSOCallbackUrl(forOidc = false, fragmentAfterLogin = ""): URL {
+    public getSSOCallbackUrl(fragmentAfterLogin = ""): URL {
         const url = new URL(window.location.href);
         url.hash = fragmentAfterLogin;
         return url;
@@ -347,7 +346,7 @@ export default abstract class BasePlatform {
         if (idpId) {
             localStorage.setItem(SSO_IDP_ID_KEY, idpId);
         }
-        const callbackUrl = this.getSSOCallbackUrl(false, fragmentAfterLogin);
+        const callbackUrl = this.getSSOCallbackUrl(fragmentAfterLogin);
         window.location.href = mxClient.getSsoLoginUrl(callbackUrl.toString(), loginType, idpId, action); // redirect to SSO
     }
 
@@ -472,7 +471,7 @@ export default abstract class BasePlatform {
         return {
             clientName: config.brand,
             clientUri: this.baseUrl,
-            redirectUris: [this.getSSOCallbackUrl().href],
+            redirectUris: [this.getOidcCallbackUrl().href],
             logoUri: new URL("vector-icons/1024.png", this.baseUrl).href,
             applicationType: "web",
             // XXX: We break the spec by not consistently supplying these required fields
@@ -490,5 +489,12 @@ export default abstract class BasePlatform {
      */
     public getOidcClientState(): string {
         return "";
+    }
+
+    /**
+     * The URL to return to after a successful OIDC authentication
+     */
+    public getOidcCallbackUrl(): URL {
+        return new URL(window.location.href);
     }
 }
