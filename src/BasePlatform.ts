@@ -462,6 +462,8 @@ export default abstract class BasePlatform {
      * The URL to return to after a successful OIDC authentication
      */
     public getOidcCallbackUrl(): URL {
-        return new URL(window.location.href);
+        const url = new URL(window.location.href);
+        url.hash = "";
+        return url;
     }
 }
