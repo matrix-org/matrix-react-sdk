@@ -471,6 +471,8 @@ export default abstract class BasePlatform {
      */
     public getOidcCallbackUrl(): URL {
         const url = new URL(window.location.href);
+        // The redirect URL has to exactly match that registered at the OIDC server, so
+        // ensure that the fragment part of the URL is empty.
         url.hash = "";
         return url;
     }
