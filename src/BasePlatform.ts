@@ -450,7 +450,7 @@ export default abstract class BasePlatform {
             applicationType: "web",
             // XXX: We break the spec by not consistently supplying these required fields
             // @ts-ignore
-            contacts: config.oidc_metadata?.contacts ?? [],
+            contacts: config.oidc_metadata?.contacts,
             // @ts-ignore
             tosUri: config.oidc_metadata?.tos_uri ?? config.terms_and_conditions_links?.[0]?.url,
             // @ts-ignore
