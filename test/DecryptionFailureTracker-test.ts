@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { mocked, Mocked } from "jest-mock";
-import { CryptoEvent } from "matrix-js-sdk/src/matrix";
+import { CryptoEvent, HttpApiEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
 import { decryptExistingEvent, mkDecryptionFailureMatrixEvent } from "matrix-js-sdk/src/testing";
 import { CryptoApi, DecryptionFailureCode, UserVerificationStatus } from "matrix-js-sdk/src/crypto-api";
 import { sleep } from "matrix-js-sdk/src/utils";
@@ -547,6 +547,57 @@ describe("DecryptionFailureTracker", function () {
         expect(propertiesByErrorCode[error3].timeToDecryptMillis).toEqual(-1);
     });
 
+    it("listens for client events", async () => {
+        // Test that the decryption failure tracker registers the right event
+        // handlers on start, and unregisters them when the client logs out.
+        const client = mocked(stubClient());
+        const mockCrypto = {
+            getVersion: jest.fn().mockReturnValue("Rust SDK 0.7.0 (61b175b), Vodozemac 0.5.1"),
+            getUserVerificationStatus: jest.fn().mockResolvedValue(new UserVerificationStatus(false, false, false)),
+        } as unknown as Mocked<CryptoApi>;
+        client.getCrypto.mockReturnValue(mockCrypto);
+
+        let errorCount: number = 0;
+        // @ts-ignore access to private constructor
+        const tracker = new DecryptionFailureTracker(
+            (errorCode: string, rawError: string, properties: ErrorProperties) => {
+                errorCount++;
+            },
+            (error: string) => error,
+        );
+
+        // Calling .start will start some intervals.  This test shouldn't run
+        // long enough for the timers to fire, but we'll use fake timers just
+        // to be safe.
+        jest.useFakeTimers();
+        tracker.start(client);
+
+        // If the client fails to decrypt, it should get tracked
+        const failedDecryption = await createFailedDecryptionEvent();
+        client.emit(MatrixEventEvent.Decrypted, failedDecryption);
+
+        tracker.checkFailures(Infinity);
+        tracker.trackFailures();
+
+        expect(errorCount).toEqual(1);
+
+        client.emit(HttpApiEvent.SessionLoggedOut, {} as any);
+
+        // After the client has logged out, we shouldn't be listening to events
+        // any more, so even if the client emits an event regarding a failed
+        // decryption, we won't track it.
+        const anotherFailedDecryption = await createFailedDecryptionEvent();
+        client.emit(MatrixEventEvent.Decrypted, anotherFailedDecryption);
+
+        // Pretend "now" is Infinity
+        tracker.checkFailures(Infinity);
+        tracker.trackFailures();
+
+        expect(errorCount).toEqual(1);
+
+        jest.useRealTimers();
+    });
+
     it("tracks client information", async () => {
         const client = mocked(stubClient());
         const mockCrypto = {
@@ -565,7 +616,9 @@ describe("DecryptionFailureTracker", function () {
         );
 
         // @ts-ignore access to private method
-        tracker.setClient(client);
+        await tracker.calculateClientProperties(client);
+        // @ts-ignore access to private method
+        await tracker.registerHandlers(client);
 
         // use three different errors so that we can distinguish the reports
         const error1 = DecryptionFailureCode.MEGOLM_UNKNOWN_INBOUND_SESSION_ID;
@@ -610,7 +663,7 @@ describe("DecryptionFailureTracker", function () {
         client.getDomain.mockReturnValue("example.com");
         mockCrypto.getVersion.mockReturnValue("Olm 0.0.0");
         // @ts-ignore access to private method
-        tracker.setClient(client);
+        await tracker.calculateClientProperties(client);
 
         const anotherFailure = await createFailedDecryptionEvent({
             code: error3,
