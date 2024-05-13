@@ -328,22 +328,26 @@ export class DecryptionFailureTracker {
     }
 
     private registerHandlers(client: MatrixClient): void {
+        // After the client attempts to decrypt an event, we examine it to see
+        // if it needs to be reported.
         const decryptedHandler = (e: MatrixEvent): void => this.eventDecrypted(e, Date.now());
+        // When our keys change, we check if the cross-signing keys are now trusted.
         const keysChangedHandler = (): void => {
             this.handleKeysChanged(client).catch((e) => {
                 console.log("Error handling KeysChanged event", e);
             });
         };
+        // When logging out, remove our handlers and destroy state
+        const loggedOutHandler = (): void => {
+            client.removeListener(MatrixEventEvent.Decrypted, decryptedHandler);
+            client.removeListener(CryptoEvent.KeysChanged, keysChangedHandler);
+            client.removeListener(HttpApiEvent.SessionLoggedOut, loggedOutHandler);
+            self.stop();
+        };
 
         client.on(MatrixEventEvent.Decrypted, decryptedHandler);
         client.on(CryptoEvent.KeysChanged, keysChangedHandler);
-
-        // When logging out, remove our handlers and destroy state
-        client.on(HttpApiEvent.SessionLoggedOut, () => {
-            client.removeListener(MatrixEventEvent.Decrypted, decryptedHandler);
-            client.removeListener(CryptoEvent.KeysChanged, keysChangedHandler);
-            self.stop();
-        });
+        client.on(HttpApiEvent.SessionLoggedOut, loggedOutHandler);
     }
 
     /**
