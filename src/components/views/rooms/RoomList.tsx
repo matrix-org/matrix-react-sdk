@@ -58,12 +58,13 @@ import IconizedContextMenu, {
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ExtraTile from "./ExtraTile";
 import RoomSublist, { IAuxButtonProps } from "./RoomSublist";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import AccessibleButton from "../elements/AccessibleButton";
+
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -87,6 +88,7 @@ export const TAG_ORDER: TagID[] = [
     DefaultTagID.Favourite,
     DefaultTagID.DM,
     DefaultTagID.Untagged,
+    DefaultTagID.Conference,
     DefaultTagID.LowPriority,
     DefaultTagID.ServerNotice,
     DefaultTagID.Suggested,
@@ -162,7 +164,7 @@ const DmAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex, dispatcher = default
                                     showSpaceInvite(activeSpace);
                                 }}
                                 disabled={!canInvite}
-                                tooltip={canInvite ? undefined : _t("spaces|error_no_permission_invite")}
+                                title={canInvite ? undefined : _t("spaces|error_no_permission_invite")}
                             />
                         )}
                     </IconizedContextMenuOptionList>
@@ -187,7 +189,7 @@ const DmAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex, dispatcher = default
         );
     } else if (!activeSpace && showCreateRooms) {
         return (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 tabIndex={tabIndex}
                 onClick={(e) => {
                     dispatcher.dispatch({ action: "view_create_chat" });
@@ -252,7 +254,7 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
                                 PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateRoomItem", e);
                             }}
                             disabled={!canAddRooms}
-                            tooltip={canAddRooms ? undefined : _t("spaces|error_no_permission_create_room")}
+                            title={canAddRooms ? undefined : _t("spaces|error_no_permission_create_room")}
                         />
                         {videoRoomsEnabled && (
                             <IconizedContextMenuOption
@@ -268,7 +270,7 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
                                     );
                                 }}
                                 disabled={!canAddRooms}
-                                tooltip={canAddRooms ? undefined : _t("spaces|error_no_permission_create_room")}
+                                title={canAddRooms ? undefined : _t("spaces|error_no_permission_create_room")}
                             >
                                 <BetaPill />
                             </IconizedContextMenuOption>
@@ -283,7 +285,7 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
                                 showAddExistingRooms(activeSpace);
                             }}
                             disabled={!canAddRooms}
-                            tooltip={canAddRooms ? undefined : _t("spaces|error_no_permission_add_room")}
+                            title={canAddRooms ? undefined : _t("spaces|error_no_permission_add_room")}
                         />
                     </>
                 ) : null}
@@ -389,6 +391,11 @@ const TAG_AESTHETICS: TagAestheticsMap = {
         isInvite: false,
         defaultHidden: false,
         AuxButtonComponent: DmAuxButton,
+    },
+    [DefaultTagID.Conference]: {
+        sectionLabel: _td("voip|metaspace_video_rooms|conference_room_section"),
+        isInvite: false,
+        defaultHidden: false,
     },
     [DefaultTagID.Untagged]: {
         sectionLabel: _td("common|rooms"),
@@ -597,6 +604,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 (this.props.activeSpace === MetaSpace.Favourites && orderedTagId !== DefaultTagID.Favourite) ||
                 (this.props.activeSpace === MetaSpace.People && orderedTagId !== DefaultTagID.DM) ||
                 (this.props.activeSpace === MetaSpace.Orphans && orderedTagId === DefaultTagID.DM) ||
+                (this.props.activeSpace === MetaSpace.VideoRooms && orderedTagId === DefaultTagID.DM) ||
                 (!isMetaSpace(this.props.activeSpace) &&
                     orderedTagId === DefaultTagID.DM &&
                     !SettingsStore.getValue("Spaces.showPeopleInSpace", this.props.activeSpace))

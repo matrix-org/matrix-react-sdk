@@ -43,13 +43,14 @@ type Result = {
  */
 export function useUnreadThreadRooms(forceComputation: boolean): Result {
     const msc3946ProcessDynamicPredecessor = useSettingValue<boolean>("feature_dynamic_room_predecessors");
+    const settingTACOnlyNotifs = useSettingValue<boolean>("Notifications.tac_only_notifications");
     const mxClient = useMatrixClientContext();
 
     const [result, setResult] = useState<Result>({ greatestNotificationLevel: NotificationLevel.None, rooms: [] });
 
     const doUpdate = useCallback(() => {
-        setResult(computeUnreadThreadRooms(mxClient, msc3946ProcessDynamicPredecessor));
-    }, [mxClient, msc3946ProcessDynamicPredecessor]);
+        setResult(computeUnreadThreadRooms(mxClient, msc3946ProcessDynamicPredecessor, settingTACOnlyNotifs));
+    }, [mxClient, msc3946ProcessDynamicPredecessor, settingTACOnlyNotifs]);
 
     // The exhautive deps lint rule can't compute dependencies here since it's not a plain inline func.
     // We make this as simple as possible so its only dep is doUpdate itself.
@@ -83,22 +84,26 @@ export function useUnreadThreadRooms(forceComputation: boolean): Result {
  * @param mxClient - MatrixClient
  * @param msc3946ProcessDynamicPredecessor
  */
-function computeUnreadThreadRooms(mxClient: MatrixClient, msc3946ProcessDynamicPredecessor: boolean): Result {
+function computeUnreadThreadRooms(
+    mxClient: MatrixClient,
+    msc3946ProcessDynamicPredecessor: boolean,
+    settingTACOnlyNotifs: boolean,
+): Result {
     // Only count visible rooms to not torment the user with notification counts in rooms they can't see.
     // This will include highlights from the previous version of the room internally
     const visibleRooms = mxClient.getVisibleRooms(msc3946ProcessDynamicPredecessor);
 
     let greatestNotificationLevel = NotificationLevel.None;
-    const rooms = [];
+    const rooms: Result["rooms"] = [];
 
     for (const room of visibleRooms) {
         // We only care about rooms with unread threads
         if (VisibilityProvider.instance.isRoomVisible(room) && doesRoomHaveUnreadThreads(room)) {
-            // Get the greatest notification level of all rooms
+            // Get the greatest notification level of all threads
             const notificationLevel = getThreadNotificationLevel(room);
 
             // If the room has an activity notification or less, we ignore it
-            if (notificationLevel <= NotificationLevel.Activity) {
+            if (settingTACOnlyNotifs && notificationLevel <= NotificationLevel.Activity) {
                 continue;
             }
 
@@ -110,20 +115,35 @@ function computeUnreadThreadRooms(mxClient: MatrixClient, msc3946ProcessDynamicP
         }
     }
 
-    const sortedRooms = rooms.sort((a, b) => sortRoom(a.notificationLevel, b.notificationLevel));
+    const sortedRooms = rooms.sort((a, b) => sortRoom(a, b));
     return { greatestNotificationLevel, rooms: sortedRooms };
 }
 
 /**
+ * Store the room and its thread notification level
+ */
+type RoomData = Result["rooms"][0];
+
+/**
  * Sort notification level by the most important notification level to the least important
  * Highlight > Notification > Activity
- * @param notificationLevelA - notification level of room A
- * @param notificationLevelB - notification level of room B
+ * If the notification level is the same, we sort by the most recent thread
+ * @param roomDataA - room and notification level of room A
+ * @param roomDataB - room and notification level of room B
  * @returns {number}
  */
-function sortRoom(notificationLevelA: NotificationLevel, notificationLevelB: NotificationLevel): number {
+function sortRoom(roomDataA: RoomData, roomDataB: RoomData): number {
+    const { notificationLevel: notificationLevelA, room: roomA } = roomDataA;
+    const { notificationLevel: notificationLevelB, room: roomB } = roomDataB;
+
+    const timestampA = roomA.getLastThread()?.events.at(-1)?.getTs();
+    const timestampB = roomB.getLastThread()?.events.at(-1)?.getTs();
+
     // NotificationLevel is a numeric enum, so we can compare them directly
     if (notificationLevelA > notificationLevelB) return -1;
     else if (notificationLevelB > notificationLevelA) return 1;
-    else return 0;
+    // Display most recent first
+    else if (!timestampA) return 1;
+    else if (!timestampB) return -1;
+    else return timestampB - timestampA;
 }

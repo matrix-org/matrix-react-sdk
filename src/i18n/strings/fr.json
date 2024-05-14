@@ -249,23 +249,12 @@
             "completing_setup": "Fin de la configuration de votre nouvel appareil",
             "confirm_code_match": "Vérifiez que le code ci-dessous correspond à celui sur votre autre appareil :",
             "connecting": "Connexion…",
-            "devices_connected": "Appareils connectés",
-            "error_device_already_signed_in": "L’autre appareil est déjà connecté.",
-            "error_device_not_signed_in": "L’autre appareil n’est pas connecté.",
-            "error_device_unsupported": "L’appairage avec cet appareil n’est pas pris en charge.",
-            "error_homeserver_lacks_support": "Le serveur d’accueil ne prend pas en charge la connexion d’un autre appareil.",
-            "error_invalid_scanned_code": "Le code scanné est invalide.",
-            "error_linking_incomplete": "L’appairage n’a pas été effectué dans le temps imparti.",
             "error_rate_limited": "Trop de tentatives consécutives. Attendez un peu avant de réessayer.",
-            "error_request_cancelled": "La demande a été annulée.",
-            "error_request_declined": "La requête a été refusée sur l’autre appareil.",
             "error_unexpected": "Une erreur inattendue s’est produite.",
-            "review_and_approve": "Vérifier et autoriser la connexion",
             "scan_code_instruction": "Scannez le QR code ci-dessous avec l’appareil qui n’est pas connecté.",
             "scan_qr_code": "Scanner le QR code",
             "select_qr_code": "Sélectionnez « %(scanQRCode)s »",
             "sign_in_new_device": "Connecter le nouvel appareil",
-            "start_at_sign_in_screen": "Démarrez à l’écran de connexion",
             "waiting_for_device": "En attente de connexion de l’appareil"
         },
         "register_action": "Créer un compte",
@@ -742,7 +731,6 @@
         "notification_state": "L’état des notifications est <strong>%(notificationState)s</strong>",
         "notifications_debug": "Débogage des notifications",
         "number_of_users": "Nombre d’utilisateurs",
-        "observe_only": "Observer uniquement",
         "original_event_source": "Évènement source original",
         "phase": "Phase",
         "phase_cancelled": "Annulé",
@@ -750,7 +738,6 @@
         "phase_requested": "Envoyé",
         "phase_started": "Démarré",
         "phase_transaction": "Transaction",
-        "requester": "Demandeur",
         "room_encrypted": "Le salon est <strong>chiffré ✅</strong>",
         "room_id": "Identifiant du salon : %(roomId)s",
         "room_not_encrypted": "Le salon <strong>n’est pas chiffré 🚨</strong>",
@@ -763,6 +750,7 @@
         "room_notifications_type": "Type : ",
         "room_status": "Statut du salon",
         "room_unread_status_count": {
+            "one": "Statut non-lus du salon : <strong>%(status)s</strong>, total : <strong>%(count)s</strong>",
             "other": "Statut non-lus du salon : <strong>%(status)s</strong>, total : <strong>%(count)s</strong>"
         },
         "save_setting_values": "Enregistrer les valeurs des paramètres",
@@ -1016,7 +1004,7 @@
             "verify_reset_warning_1": "La réinitialisation de vos clés de vérification ne peut pas être annulé. Après la réinitialisation, vous n’aurez plus accès à vos anciens messages chiffrés, et tous les amis que vous aviez précédemment vérifiés verront des avertissement de sécurité jusqu'à ce vous les vérifiiez à nouveau.",
             "verify_reset_warning_2": "Veuillez ne continuer que si vous êtes certain d’avoir perdu tous vos autres appareils et votre Clé de Sécurité.",
             "verify_using_device": "Vérifier avec un autre appareil",
-            "verify_using_key": "Vérifié avec une clé de sécurité",
+            "verify_using_key": "Vérifier avec une clé de sécurité",
             "verify_using_key_or_phrase": "Vérifier avec une clé de sécurité ou une phrase",
             "waiting_for_user_accept": "En attente d’acceptation par %(displayName)s…",
             "waiting_other_device": "En attente de votre vérification sur votre autre appareil…",
@@ -1449,18 +1437,9 @@
         "rust_crypto_optin_warning": "Si vous passez à la cryptographie Rust, cela démarrera un processus de migration qui peut durer plusieurs minutes. Pour la désactiver, vous devrez vous déconnecter et vous reconnecter; à utiliser prudemment !",
         "rust_crypto_requires_logout": "Une fois activée, la cryptographie Rust ne peut être désactivée qu'en se déconnectant et se reconnectant",
         "sliding_sync": "Mode synchronisation progressive",
-        "sliding_sync_checking": "Vérification…",
-        "sliding_sync_configuration": "Configuration de la synchronisation progressive",
         "sliding_sync_description": "En cours de développement, ne peut être désactivé.",
-        "sliding_sync_disable_warning": "Pour la désactiver, vous devrez vous déconnecter et vous reconnecter, faites attention !",
         "sliding_sync_disabled_notice": "Déconnectez et revenez pour désactiver",
-        "sliding_sync_proxy_url_label": "URL du serveur mandataire (proxy)",
-        "sliding_sync_proxy_url_optional_label": "URL du serveur mandataire (proxy – facultatif)",
         "sliding_sync_server_no_support": "Votre serveur manque d’un support natif",
-        "sliding_sync_server_specify_proxy": "Votre serveur manque d’un support natif, vous devez spécifier un serveur mandataire (proxy)",
-        "sliding_sync_server_support": "Votre serveur a un support natif",
-        "threads_activity_centre": "Centre d'activité des fils de discussion (en développement)",
-        "threads_activity_centre_description": "Attention: en cours de développement actif. Recharge %(brand)s",
         "under_active_development": "En cours de développement.",
         "unrealiable_e2e": "Non fiable dans les salons chiffrés",
         "video_rooms": "Salons vidéo",
@@ -1510,14 +1489,6 @@
         "view_rules": "Voir les règles"
     },
     "language_dropdown_label": "Sélection de la langue",
-    "lazy_loading": {
-        "disabled_action": "Vider le cache et resynchroniser",
-        "disabled_description1": "Vous avez utilisé auparavant %(brand)s sur %(host)s avec le chargement différé activé. Dans cette version le chargement différé est désactivé. Comme le cache local n’est pas compatible entre ces deux réglages, %(brand)s doit resynchroniser votre compte.",
-        "disabled_description2": "Si l’autre version de %(brand)s est encore ouverte dans un autre onglet, merci de le fermer car l’utilisation de %(brand)s sur le même hôte avec le chargement différé activé et désactivé à la fois causera des problèmes.",
-        "disabled_title": "Cache local incompatible",
-        "resync_description": "%(brand)s utilise maintenant 3 à 5 fois moins de mémoire, en ne chargeant les informations des autres utilisateurs que quand elles sont nécessaires. Veuillez patienter pendant que l’on se resynchronise avec le serveur !",
-        "resync_title": "Mise à jour de %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "Vous êtes la seule personne ici. Si vous partez, plus personne ne pourra rejoindre cette conversation, y compris vous.",
         "leave_room_question": "Voulez-vous vraiment quitter le salon « %(roomName)s » ?",
@@ -2414,13 +2385,11 @@
             "custom_theme_success": "Thème ajouté !",
             "custom_theme_url": "URL personnalisée pour le thème",
             "font_size": "Taille de la police",
-            "heading": "Personnalisez l’apparence",
             "image_size_default": "Par défaut",
             "image_size_large": "Grande",
             "layout_bubbles": "Message en bulles",
             "layout_irc": "IRC (Expérimental)",
             "match_system_theme": "S’adapter au thème du système",
-            "subheading": "Les paramètres d’apparence affecteront uniquement cette session de %(brand)s.",
             "timeline_image_size": "Taille d’image dans l’historique",
             "use_high_contrast": "Utiliser un contraste élevé"
         },
@@ -2627,6 +2596,7 @@
             "voip": "Appels audio et vidéo"
         },
         "preferences": {
+            "Electron.enableHardwareAcceleration": "Activer l’accélération matérielle (redémarrez %(appName)s pour l'activer)",
             "always_show_menu_bar": "Toujours afficher la barre de menu de la fenêtre",
             "autocomplete_delay": "Délai pour l’autocomplétion (ms)",
             "code_blocks_heading": "Blocs de code",
@@ -3143,8 +3113,7 @@
         "my_threads_description": "Affiche tous les fils de discussion auxquels vous avez participé",
         "open_thread": "Ouvrir le fil de discussion",
         "show_all_threads": "Afficher tous les fils de discussion",
-        "show_thread_filter": "Affiche :",
-        "unable_to_decrypt": "Impossible de déchiffrer le message"
+        "show_thread_filter": "Affiche :"
     },
     "time": {
         "about_day_ago": "il y a environ un jour",
@@ -3187,7 +3156,6 @@
         },
         "creation_summary_dm": "%(creator)s a créé cette conversation privée.",
         "creation_summary_room": "%(creator)s a créé et configuré le salon.",
-        "decryption_failure_blocked": "L’expéditeur a bloqué la réception de votre message",
         "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
         "download_action_decrypting": "Déchiffrement",
         "download_action_downloading": "Téléchargement en cours",
@@ -3196,7 +3164,6 @@
             "tooltip_sub": "Cliquez pour voir les modifications",
             "tooltip_title": "Modifié le %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "Les messages chiffrés avant ce point sont inaccessibles.",
         "error_no_renderer": "Cet évènement n’a pas pu être affiché",
         "error_rendering_message": "Impossible de charger ce message",
         "historical_messages_unavailable": "Vous ne pouvez pas voir les messages plus anciens",
@@ -3488,6 +3455,7 @@
                 "other": "%(severalUsers)s ont changé de nom %(count)s fois",
                 "one": "%(severalUsers)s ont changé de nom"
             },
+            "format": "%(nameList)s %(transitionList)s",
             "hidden_event": {
                 "one": "%(oneUser)s a envoyé un message caché",
                 "other": "%(oneUser)s ont envoyé %(count)s messages cachés"

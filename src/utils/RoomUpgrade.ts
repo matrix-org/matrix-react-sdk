@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { Room, EventType, ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { inviteUsersToRoom } from "../RoomInvite";
@@ -67,7 +68,10 @@ export async function upgradeRoom(
 
     let toInvite: string[] = [];
     if (inviteUsers) {
-        toInvite = [...room.getMembersWithMembership("join"), ...room.getMembersWithMembership("invite")]
+        toInvite = [
+            ...room.getMembersWithMembership(KnownMembership.Join),
+            ...room.getMembersWithMembership(KnownMembership.Invite),
+        ]
             .map((m) => m.userId)
             .filter((m) => m !== cli.getUserId());
     }
@@ -131,7 +135,7 @@ export async function upgradeRoom(
                     EventType.SpaceChild,
                     {
                         ...(currentEv?.getContent() || {}), // copy existing attributes like suggested
-                        via: [cli.getDomain()],
+                        via: [cli.getDomain()!],
                     },
                     newRoomId,
                 );

@@ -24,13 +24,14 @@ import {
     RoomStateEvent,
     PendingEventOrdering,
     ISearchResults,
+    IContent,
 } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
 import EventEmitter from "events";
 import { setupJestCanvasMock } from "jest-canvas-mock";
 import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
-import { TooltipProvider } from "@vector-im/compound-web";
 // eslint-disable-next-line no-restricted-imports
 import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
 // eslint-disable-next-line no-restricted-imports
@@ -111,7 +112,7 @@ describe("LegacyRoomHeader", () => {
                 room: roomId,
                 user: alice.userId,
                 skey: stateKey,
-                content,
+                content: content as IContent,
             });
             room.addLiveEvents([event]);
             return { event_id: event.getId()! };
@@ -224,7 +225,6 @@ describe("LegacyRoomHeader", () => {
                     {...props}
                 />
             </RoomContext.Provider>,
-            { wrapper: TooltipProvider },
         );
     };
 
@@ -868,7 +868,6 @@ function mountHeader(room: Room, propsOverride = {}, roomContext?: Partial<IRoom
         <RoomContext.Provider value={{ ...roomContext, room } as IRoomState}>
             <RoomHeader {...props} />
         </RoomContext.Provider>,
-        { wrapper: TooltipProvider },
     );
 }
 
@@ -906,7 +905,7 @@ function mkJoinEvent(roomId: string, userId: string) {
         room: roomId,
         user: userId,
         content: {
-            membership: "join",
+            membership: KnownMembership.Join,
             avatar_url: "mxc://example.org/" + userId,
         },
     });

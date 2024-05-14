@@ -35,10 +35,10 @@ import {
     ThreadEvent,
     ThreadFilterType,
 } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import React, { createRef } from "react";
 import { Mocked, mocked } from "jest-mock";
 import { forEachRight } from "lodash";
-import { TooltipProvider } from "@vector-im/compound-web";
 
 import TimelinePanel from "../../../src/components/structures/TimelinePanel";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
@@ -211,7 +211,6 @@ describe("TimelinePanel", () => {
                     manageReadReceipts={true}
                     ref={ref}
                 />,
-                { wrapper: TooltipProvider },
             );
             await flushPromises();
             timelinePanel = ref.current!;
@@ -391,7 +390,7 @@ describe("TimelinePanel", () => {
             onEventScrolledIntoView: jest.fn(),
         };
 
-        const { rerender } = render(<TimelinePanel {...props} />, { wrapper: TooltipProvider });
+        const { rerender } = render(<TimelinePanel {...props} />);
         expect(props.onEventScrolledIntoView).toHaveBeenCalledWith(undefined);
         props.eventId = events[1].getId();
         rerender(<TimelinePanel {...props} />);
@@ -408,9 +407,7 @@ describe("TimelinePanel", () => {
         setupPagination(client, timeline, eventsPage1, null);
 
         await withScrollPanelMountSpy(async (mountSpy) => {
-            const { container } = render(<TimelinePanel {...getProps(room, events)} timelineSet={timelineSet} />, {
-                wrapper: TooltipProvider,
-            });
+            const { container } = render(<TimelinePanel {...getProps(room, events)} timelineSet={timelineSet} />, {});
 
             await waitFor(() => expectEvents(container, [events[1]]));
 
@@ -427,7 +424,7 @@ describe("TimelinePanel", () => {
         const [, room, events] = setupTestData();
 
         await withScrollPanelMountSpy(async (mountSpy) => {
-            const { container } = render(<TimelinePanel {...getProps(room, events)} />, { wrapper: TooltipProvider });
+            const { container } = render(<TimelinePanel {...getProps(room, events)} />);
 
             await waitFor(() => expectEvents(container, [events[0], events[1]]));
 
@@ -454,7 +451,7 @@ describe("TimelinePanel", () => {
 
             const paginateSpy = jest.spyOn(TimelineWindow.prototype, "paginate").mockClear();
 
-            render(<TimelinePanel {...props} />, { wrapper: TooltipProvider });
+            render(<TimelinePanel {...props} />);
 
             const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: otherTimeline, liveEvent: true };
@@ -470,7 +467,7 @@ describe("TimelinePanel", () => {
 
             const paginateSpy = jest.spyOn(TimelineWindow.prototype, "paginate").mockClear();
 
-            render(<TimelinePanel {...props} />, { wrapper: TooltipProvider });
+            render(<TimelinePanel {...props} />);
 
             const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: false };
@@ -486,7 +483,7 @@ describe("TimelinePanel", () => {
 
             const paginateSpy = jest.spyOn(TimelineWindow.prototype, "paginate").mockClear();
 
-            render(<TimelinePanel {...props} />, { wrapper: TooltipProvider });
+            render(<TimelinePanel {...props} />);
 
             const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: false };
@@ -503,7 +500,7 @@ describe("TimelinePanel", () => {
 
             const paginateSpy = jest.spyOn(TimelineWindow.prototype, "paginate").mockClear();
 
-            render(<TimelinePanel {...props} />, { wrapper: TooltipProvider });
+            render(<TimelinePanel {...props} />);
 
             const event = new MatrixEvent({ type: RoomEvent.Timeline, origin_server_ts: 0 });
             const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: true };
@@ -526,7 +523,7 @@ describe("TimelinePanel", () => {
 
             const paginateSpy = jest.spyOn(TimelineWindow.prototype, "paginate").mockClear();
 
-            render(<TimelinePanel {...props} />, { wrapper: TooltipProvider });
+            render(<TimelinePanel {...props} />);
 
             await flushPromises();
 
@@ -567,7 +564,6 @@ describe("TimelinePanel", () => {
                     overlayTimelineSet={overlayTimelineSet}
                     overlayTimelineSetFilter={isCallEvent}
                 />,
-                { wrapper: TooltipProvider },
             );
             await waitFor(() =>
                 expectEvents(container, [
@@ -607,7 +603,6 @@ describe("TimelinePanel", () => {
 
             const { container } = render(
                 <TimelinePanel {...getProps(room, events)} overlayTimelineSet={overlayTimelineSet} />,
-                { wrapper: TooltipProvider },
             );
 
             await waitFor(() =>
@@ -639,7 +634,6 @@ describe("TimelinePanel", () => {
 
             const { container } = render(
                 <TimelinePanel {...getProps(room, events)} overlayTimelineSet={overlayTimelineSet} />,
-                { wrapper: TooltipProvider },
             );
 
             await waitFor(() =>
@@ -671,7 +665,6 @@ describe("TimelinePanel", () => {
 
             const { container } = render(
                 <TimelinePanel {...getProps(room, events)} overlayTimelineSet={overlayTimelineSet} />,
-                { wrapper: TooltipProvider },
             );
 
             await waitFor(() =>
@@ -706,7 +699,6 @@ describe("TimelinePanel", () => {
                         timelineSet={timelineSet}
                         overlayTimelineSet={overlayTimelineSet}
                     />,
-                    { wrapper: TooltipProvider },
                 );
 
                 await waitFor(() => expectEvents(container, [overlayEvents[0], events[0]]));
@@ -780,7 +772,6 @@ describe("TimelinePanel", () => {
             await withScrollPanelMountSpy(async (mountSpy) => {
                 const { container } = render(
                     <TimelinePanel {...getProps(room, events)} overlayTimelineSet={overlayTimelineSet} />,
-                    { wrapper: TooltipProvider },
                 );
 
                 await waitFor(() =>
@@ -893,7 +884,6 @@ describe("TimelinePanel", () => {
                 <MatrixClientContext.Provider value={client}>
                     <TimelinePanel timelineSet={allThreads} manageReadReceipts sendReadReceiptOnLoad />
                 </MatrixClientContext.Provider>,
-                { wrapper: TooltipProvider },
             );
             await dom.findByText("RootEvent");
             await dom.findByText("ReplyEvent1");
@@ -947,7 +937,6 @@ describe("TimelinePanel", () => {
                 <MatrixClientContext.Provider value={client}>
                     <TimelinePanel timelineSet={allThreads} manageReadReceipts sendReadReceiptOnLoad />
                 </MatrixClientContext.Provider>,
-                { wrapper: TooltipProvider },
             );
             await dom.findByText("RootEvent");
             await dom.findByText("ReplyEvent1");
@@ -988,8 +977,8 @@ describe("TimelinePanel", () => {
         events.forEach((event) => timelineSet.getLiveTimeline().addEvent(event, { toStartOfTimeline: true }));
 
         const roomMembership = mkMembership({
-            mship: "join",
-            prevMship: "join",
+            mship: KnownMembership.Join,
+            prevMship: KnownMembership.Join,
             user: authorId,
             room: room.roomId,
             event: true,
@@ -999,7 +988,7 @@ describe("TimelinePanel", () => {
         events.push(roomMembership);
 
         const member = new RoomMember(room.roomId, authorId);
-        member.membership = "join";
+        member.membership = KnownMembership.Join;
 
         const roomState = new RoomState(room.roomId);
         jest.spyOn(roomState, "getMember").mockReturnValue(member);
@@ -1016,7 +1005,6 @@ describe("TimelinePanel", () => {
             <MatrixClientContext.Provider value={client}>
                 <TimelinePanel timelineSet={timelineSet} manageReadReceipts={true} sendReadReceiptOnLoad={true} />
             </MatrixClientContext.Provider>,
-            { wrapper: TooltipProvider },
         );
 
         await waitFor(() => expect(screen.queryByRole("progressbar")).toBeNull());

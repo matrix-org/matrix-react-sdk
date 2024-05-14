@@ -1311,7 +1311,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                             <UnreadNotificationBadge
                                 room={room || undefined}
                                 threadId={this.props.mxEvent.getId()}
-                                type="dot"
+                                forceDot={true}
                             />
                         </div>
                         {isRenderingNotification && room ? (
@@ -1546,7 +1546,7 @@ function SentReceipt({ messageState }: ISentReceiptProps): JSX.Element {
     return (
         <div className="mx_EventTile_msgOption">
             <div className="mx_ReadReceiptGroup">
-                <Tooltip label={label} side="top" align="end">
+                <Tooltip label={label} placement="top-end">
                     <div className="mx_ReadReceiptGroup_button">
                         <span className="mx_ReadReceiptGroup_container">
                             <span className={receiptClasses}>{nonCssBadge}</span>
