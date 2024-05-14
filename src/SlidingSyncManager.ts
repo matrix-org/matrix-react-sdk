@@ -359,10 +359,10 @@ export class SlidingSyncManager {
         let proxyUrl: string | undefined;
 
         try {
-            const clientWellKnown = await AutoDiscovery.findClientConfig(client.baseUrl);
+            const clientWellKnown = await AutoDiscovery.findClientConfig(client.getDomain()!);
             proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
         } catch (e) {
-            // client.baseUrl is invalid, `AutoDiscovery.findClientConfig` has thrown
+            // client.getDomain() is invalid, `AutoDiscovery.findClientConfig` has thrown
         }
 
         if (proxyUrl != undefined) {
