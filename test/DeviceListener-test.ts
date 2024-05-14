@@ -28,6 +28,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { CryptoSessionStateChange } from "@matrix-org/analytics-events/types/typescript/CryptoSessionStateChange";
+import { CrossSigningStatus, KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
 
 import DeviceListener from "../src/DeviceListener";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
@@ -42,7 +43,6 @@ import { SettingLevel } from "../src/settings/SettingLevel";
 import { getMockClientWithEventEmitter, mockPlatformPeg } from "./test-utils";
 import { UIFeature } from "../src/settings/UIFeature";
 import { isBulkUnverifiedDeviceReminderSnoozed } from "../src/utils/device/snoozeBulkUnverifiedDeviceReminder";
-import { CrossSigningStatus, KeyBackupInfo } from "../../matrix-js-sdk/src/crypto-api";
 import { PosthogAnalytics } from "../src/PosthogAnalytics";
 
 // don't litter test console with logs
