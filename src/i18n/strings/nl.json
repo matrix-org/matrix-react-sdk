@@ -2022,13 +2022,11 @@
             "custom_theme_success": "Thema toegevoegd!",
             "custom_theme_url": "Aangepaste thema-URL",
             "font_size": "Lettergrootte",
-            "heading": "Weergave aanpassen",
             "image_size_default": "Standaard",
             "image_size_large": "Groot",
             "layout_bubbles": "Berichtenbubbels",
             "layout_irc": "IRC (Experimenteel)",
             "match_system_theme": "Aanpassen aan systeemthema",
-            "subheading": "Weergave-instellingen zijn alleen van toepassing op deze %(brand)s sessie.",
             "timeline_image_size": "Afbeeldingformaat in de tijdlijn",
             "use_high_contrast": "Hoog contrast inschakelen"
         },
@@ -2688,7 +2686,6 @@
             "tooltip_sub": "Klik om bewerkingen te zien",
             "tooltip_title": "Bewerkt op %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "Versleutelde berichten vóór dit punt zijn niet beschikbaar.",
         "error_no_renderer": "Deze gebeurtenis kon niet weergegeven worden",
         "error_rendering_message": "Dit bericht kan niet geladen worden",
         "historical_messages_unavailable": "Je kan eerdere berichten niet zien",

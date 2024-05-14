@@ -2079,13 +2079,11 @@
             "custom_theme_success": "Teema lisätty!",
             "custom_theme_url": "Mukautettu teeman osoite",
             "font_size": "Fontin koko",
-            "heading": "Mukauta ulkoasua",
             "image_size_default": "Oletus",
             "image_size_large": "Suuri",
             "layout_bubbles": "Viestikuplat",
             "layout_irc": "IRC (kokeellinen)",
             "match_system_theme": "Käytä järjestelmän teemaa",
-            "subheading": "Ulkoasuasetukset vaikuttavat vain tähän %(brand)s-istuntoon.",
             "timeline_image_size": "Kuvan koko aikajanalla",
             "use_high_contrast": "Käytä suurta kontrastia"
         },
@@ -2770,7 +2768,6 @@
             "tooltip_sub": "Napsauta nähdäksesi muokkaukset",
             "tooltip_title": "Muokattu %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "Tätä aiemmat salatut viestit eivät ole saatavilla.",
         "error_no_renderer": "Tätä tapahtumaa ei voitu näyttää",
         "error_rendering_message": "Tätä viestiä ei voi ladata",
         "historical_messages_unavailable": "Et voi nähdä aiempia viestejä",
