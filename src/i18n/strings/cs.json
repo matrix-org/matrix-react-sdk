@@ -2397,13 +2397,11 @@
             "custom_theme_url": "URL adresa vlastního vzhledu",
             "font_size": "Velikost písma",
             "font_size_default": "%(fontSize)s (výchozí)",
-            "heading": "Přizpůsobte si vzhled aplikace",
             "image_size_default": "Výchozí",
             "image_size_large": "Velký",
             "layout_bubbles": "Bubliny zpráv",
             "layout_irc": "IRC (experimentální)",
             "match_system_theme": "Nastavit podle vzhledu systému",
-            "subheading": "Nastavení vzhledu působí jen v této relaci programu %(brand)s.",
             "timeline_image_size": "Velikost obrázku na časové ose",
             "use_high_contrast": "Použít vysoký kontrast"
         },
@@ -3185,7 +3183,6 @@
             "tooltip_sub": "Klikněte pro zobrazení úprav",
             "tooltip_title": "Upraveno %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "Šifrované zprávy před tímto bodem nejsou k dispozici.",
         "error_no_renderer": "Tato událost nemohla být zobrazena",
         "error_rendering_message": "Tuto zprávu nelze načíst",
         "historical_messages_unavailable": "Dřívější zprávy nelze zobrazit",

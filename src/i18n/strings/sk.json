@@ -2376,13 +2376,11 @@
             "custom_theme_success": "Vzhľad pridaný!",
             "custom_theme_url": "URL adresa vlastného vzhľadu",
             "font_size": "Veľkosť písma",
-            "heading": "Upravte svoj vzhľad",
             "image_size_default": "Predvolené",
             "image_size_large": "Veľký",
             "layout_bubbles": "Správy v bublinách",
             "layout_irc": "IRC (experimentálne)",
             "match_system_theme": "Prispôsobiť sa vzhľadu systému",
-            "subheading": "Nastavenia vzhľadu ovplyvnia len túto reláciu %(brand)s.",
             "timeline_image_size": "Veľkosť obrázku na časovej osi",
             "use_high_contrast": "Použiť vysoký kontrast"
         },
@@ -3158,7 +3156,6 @@
             "tooltip_sub": "Kliknutím zobrazíte úpravy",
             "tooltip_title": "Upravené %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "Šifrované správy pred týmto bodom nie sú k dispozícii.",
         "error_no_renderer": "Nie je možné zobraziť túto udalosť",
         "error_rendering_message": "Nemožno načítať túto správu",
         "historical_messages_unavailable": "Nemôžete vidieť predchádzajúce správy",

@@ -2392,13 +2392,11 @@
             "custom_theme_success": "Tema tillagt!",
             "custom_theme_url": "Anpassad tema-URL",
             "font_size": "Teckenstorlek",
-            "heading": "Anpassa ditt utseende",
             "image_size_default": "Standard",
             "image_size_large": "Stor",
             "layout_bubbles": "Meddelandebubblor",
             "layout_irc": "IRC (Experimentellt)",
             "match_system_theme": "Matcha systemtema",
-            "subheading": "Utseende inställningar påverkar bara den här %(brand)s-sessionen.",
             "timeline_image_size": "Bildstorlek i tidslinjen",
             "use_high_contrast": "Använd högkontrast"
         },
@@ -3177,7 +3175,6 @@
             "tooltip_sub": "Klicka för att visa redigeringar",
             "tooltip_title": "Redigerat vid %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "Krypterade meddelanden innan den här tidpunkten är otillgängliga.",
         "error_no_renderer": "Den här händelsen kunde inte visas",
         "error_rendering_message": "Kan inte ladda det här meddelandet",
         "historical_messages_unavailable": "Du kan inte se tidigare meddelanden",
