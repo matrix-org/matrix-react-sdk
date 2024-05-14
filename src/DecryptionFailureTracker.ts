@@ -52,7 +52,7 @@ export class DecryptionFailure {
 }
 
 type ErrorCode = ErrorEvent["name"];
-/** Properties associated with errors, for classifying the error. */
+/** Properties associated with decryption errors, for classifying the error. */
 export type ErrorProperties = Omit<ErrorEvent, "eventName" | "domain" | "name" | "context">;
 type TrackingFn = (trackedErrCode: ErrorCode, rawError: string, properties: ErrorProperties) => void;
 export type ErrCodeMapFn = (errcode: DecryptionFailureCode) => ErrorCode;
@@ -88,15 +88,25 @@ export class DecryptionFailureTracker {
         },
     );
 
-    /** Map of event IDs to DecryptionFailure items. */
+    /** Map of event IDs to `DecryptionFailure` items.
+     *
+     * Every `CHECK_INTERVAL_MS`, this map is checked for failures that happened >
+     * `MAXIMUM_LATE_DECRYPTION_PERIOD` ago (considered undecryptable), or
+     * decryptions that took > `GRACE_PERIOD_MS` (considered late decryptions).
+     * These are accumulated in `failuresToReport`.
+     */
     public failures: Map<string, DecryptionFailure> = new Map();
 
-    /** Set of event IDs that have been visible to the user. */
+    /** Set of event IDs that have been visible to the user.
+     *
+     * This will only contain events that are not already in `failures` or in
+     * `trackedEvents`.
+     */
     public visibleEvents: Set<string> = new Set();
 
     /** The failures that will be reported at the next tracking interval.  These are
      * events that we have decided are undecryptable due to exceeding the
-     * MAXIMUM_LATE_DECRYPTION_PERIOD, or that we decrypted but we consider as late
+     * `MAXIMUM_LATE_DECRYPTION_PERIOD`, or that we decrypted but we consider as late
      * decryptions. */
     public failuresToReport: Set<DecryptionFailure> = new Set();
 
@@ -141,10 +151,9 @@ export class DecryptionFailureTracker {
     /**
      * Create a new DecryptionFailureTracker.
      *
-     * Call `start(client)` to start the tracker, and `stop()` to stop
-     * tracking.  The tracker will listen for decryption events on the client
-     * and track decryption failures, and will automatically stop tracking when
-     * the client logs out.
+     * Call `start(client)` to start the tracker.  The tracker will listen for
+     * decryption events on the client and track decryption failures, and will
+     * automatically stop tracking when the client logs out.
      *
      * @param {function} fn The tracking function, which will be called when failures
      * are tracked. The function should have a signature `(trackedErrorCode, rawError, properties) => {...}`,
@@ -208,7 +217,7 @@ export class DecryptionFailureTracker {
         const ts = failure ? failure.ts : nowTs;
 
         const sender = e.getSender();
-        const senderDomain = sender ? sender.replace(/^.*?:/, "") : undefined;
+        const senderDomain = sender?.replace(/^.*?:/, "");
         let isFederated: boolean | undefined;
         if (this.userDomain !== undefined && senderDomain !== undefined) {
             isFederated = this.userDomain !== senderDomain;
@@ -342,7 +351,7 @@ export class DecryptionFailureTracker {
             client.removeListener(MatrixEventEvent.Decrypted, decryptedHandler);
             client.removeListener(CryptoEvent.KeysChanged, keysChangedHandler);
             client.removeListener(HttpApiEvent.SessionLoggedOut, loggedOutHandler);
-            self.stop();
+            this.stop();
         };
 
         client.on(MatrixEventEvent.Decrypted, decryptedHandler);
@@ -353,7 +362,7 @@ export class DecryptionFailureTracker {
     /**
      * Clear state and stop checking for and tracking failures.
      */
-    public stop(): void {
+    private stop(): void {
         if (this.checkInterval) clearInterval(this.checkInterval);
         if (this.trackInterval) clearInterval(this.trackInterval);
 
