@@ -401,7 +401,7 @@ export class SlidingSyncManager {
 
         const proxyUrl = await this.getProxyFromWellKnown(client);
         if (proxyUrl != undefined) {
-            const response = await fetch(proxyUrl + "/client/server.json", {
+            const response = await fetch(new URL("/client/server.json", proxyUrl), {
                 method: Method.Get,
                 signal: timeoutSignal(10 * 1000), // 10s
             });
