@@ -17,6 +17,7 @@ limitations under the License.
 import {
     MatrixEvent,
     ClientEvent,
+    CryptoApi,
     EventType,
     MatrixClient,
     RoomStateEvent,
@@ -25,7 +26,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { CryptoApi, KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
+import { KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
 import { CryptoSessionStateChange } from "@matrix-org/analytics-events/types/typescript/CryptoSessionStateChange";
 
 import { PosthogAnalytics } from "./PosthogAnalytics";
