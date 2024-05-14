@@ -17,7 +17,7 @@ limitations under the License.
 // @ts-ignore - `.ts` is needed here to make TS happy
 import { Request, Response } from "./workers/playback.worker";
 import { WorkerManager } from "./WorkerManager";
-import playbackWorkerFactory from "./workers/blurhashWorkerFactory";
+import playbackWorkerFactory from "./workers/playbackWorkerFactory";
 
 export class PlaybackEncoder {
     private static internalInstance = new PlaybackEncoder();
