@@ -43,12 +43,4 @@ export class WorkerManager<Request extends {}, Response> {
         this.worker.postMessage({ seq, ...request });
         return deferred.promise;
     }
-
-    /**
-     * Terminate the worker.
-     * This will prevent any further messages from being sent to the worker and clean up its resources.
-     */
-    public terminate(): void {
-        this.worker.terminate();
-    }
 }
