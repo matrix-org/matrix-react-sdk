@@ -17,6 +17,7 @@ limitations under the License.
 import { SlidingSync } from "matrix-js-sdk/src/sliding-sync";
 import { mocked } from "jest-mock";
 import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import fetchMockJest from "fetch-mock-jest";
 
 import { SlidingSyncManager } from "../src/SlidingSyncManager";
 import { stubClient } from "./test-utils";
@@ -251,6 +252,25 @@ describe("SlidingSyncManager", () => {
             await manager.checkSupport(client);
             expect(manager.getProxyFromWellKnown).toHaveBeenCalled();
             expect(SlidingSyncController.serverSupportsSlidingSync).toBeTruthy();
+        });
+        it("should query well-known on server_name not baseUrl", async () => {
+            fetchMockJest.get("https://matrix.org/.well-known/matrix/client", {
+                "m.homeserver": {
+                    base_url: "https://matrix-client.matrix.org",
+                    server: "matrix.org",
+                },
+                "org.matrix.msc3575.proxy": {
+                    url: "proxy",
+                },
+            });
+            fetchMockJest.get("https://matrix-client.matrix.org/_matrix/client/versions", { versions: ["v1.4"] });
+
+            mocked(manager.getProxyFromWellKnown).mockRestore();
+            jest.spyOn(manager, "nativeSlidingSyncSupport").mockResolvedValue(false);
+            expect(SlidingSyncController.serverSupportsSlidingSync).toBeFalsy();
+            await manager.checkSupport(client);
+            expect(SlidingSyncController.serverSupportsSlidingSync).toBeTruthy();
+            expect(fetchMockJest).not.toHaveFetched("https://matrix-client.matrix.org/.well-known/matrix/client");
         });
     });
     describe("nativeSlidingSyncSupport", () => {
