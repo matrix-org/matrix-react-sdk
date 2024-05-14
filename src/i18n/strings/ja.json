@@ -2186,13 +2186,11 @@
             "custom_theme_success": "テーマが追加されました！",
             "custom_theme_url": "ユーザー定義のテーマのURL",
             "font_size": "フォントの大きさ",
-            "heading": "外観のカスタマイズ",
             "image_size_default": "既定値",
             "image_size_large": "大",
             "layout_bubbles": "吹き出し",
             "layout_irc": "IRC（実験的）",
             "match_system_theme": "システムテーマに合わせる",
-            "subheading": "外観の設定はこの%(brand)sのセッションにのみ適用されます。",
             "timeline_image_size": "タイムライン上での画像のサイズ",
             "use_high_contrast": "高コントラストを使用"
         },
@@ -2908,7 +2906,6 @@
             "tooltip_sub": "クリックすると変更履歴を表示",
             "tooltip_title": "%(date)sに編集済"
         },
-        "encrypted_historical_messages_unavailable": "これ以前の暗号化されたメッセージは利用できません。",
         "error_no_renderer": "このイベントは表示できませんでした",
         "error_rendering_message": "このメッセージを読み込めません",
         "historical_messages_unavailable": "以前のメッセージは表示できません",
