@@ -17,8 +17,9 @@
  */
 
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { AuthType } from "matrix-js-sdk/src/interactive-auth";
+import userEvent from "@testing-library/user-event";
 
 import { EmailIdentityAuthEntry } from "../../../../src/components/views/auth/InteractiveAuthEntryComponents";
 import { createTestClient } from "../../../test-utils";
@@ -44,5 +45,20 @@ describe("<EmailIdentityAuthEntry/>", () => {
     test("should render", () => {
         const { container } = renderIdentityAuth();
         expect(container).toMatchSnapshot();
+    });
+
+    test("should clear the requested state when the button tooltip is hided", async () => {
+        renderIdentityAuth();
+
+        // After a click on the resend button, the button should display the resent label
+        screen.getByRole("button", { name: "Resend" }).click();
+        await waitFor(() => expect(screen.queryByRole("button", { name: "Resent!" })).not.toBeNull());
+
+        // Hover briefly the button
+        // On unhover, it should display again the resend button
+        const resentButton = screen.getByRole("button", { name: "Resent!" });
+        await userEvent.hover(resentButton);
+        await userEvent.unhover(resentButton);
+        await waitFor(() => expect(screen.queryByRole("button", { name: "Resend" })).not.toBeNull());
     });
 });
