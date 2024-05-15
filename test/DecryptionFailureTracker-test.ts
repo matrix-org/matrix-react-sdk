@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { mocked, Mocked } from "jest-mock";
-import { CryptoEvent, HttpApiEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
+import { CryptoEvent, HttpApiEvent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
 import { decryptExistingEvent, mkDecryptionFailureMatrixEvent } from "matrix-js-sdk/src/testing";
 import { CryptoApi, DecryptionFailureCode, UserVerificationStatus } from "matrix-js-sdk/src/crypto-api";
 import { sleep } from "matrix-js-sdk/src/utils";
@@ -32,6 +32,12 @@ async function createFailedDecryptionEvent(opts: { sender?: string; code?: Decry
     });
 }
 
+// wrap tracker.eventDecrypted so that we don't need to have so many `ts-ignore`s
+function eventDecrypted(tracker: DecryptionFailureTracker, e: MatrixEvent, nowTs: number): void {
+    // @ts-ignore access to private member
+    return tracker.eventDecrypted(e, nowTs);
+}
+
 describe("DecryptionFailureTracker", function () {
     it("tracks a failed decryption for a visible event", async function () {
         const failedDecryptionEvent = await createFailedDecryptionEvent();
@@ -44,7 +50,7 @@ describe("DecryptionFailureTracker", function () {
         );
 
         tracker.addVisibleEvent(failedDecryptionEvent);
-        tracker.eventDecrypted(failedDecryptionEvent, Date.now());
+        eventDecrypted(tracker, failedDecryptionEvent, Date.now());
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -73,7 +79,7 @@ describe("DecryptionFailureTracker", function () {
         );
 
         tracker.addVisibleEvent(failedDecryptionEvent);
-        tracker.eventDecrypted(failedDecryptionEvent, Date.now());
+        eventDecrypted(tracker, failedDecryptionEvent, Date.now());
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -98,7 +104,7 @@ describe("DecryptionFailureTracker", function () {
             () => "UnknownError",
         );
 
-        tracker.eventDecrypted(failedDecryptionEvent, Date.now());
+        eventDecrypted(tracker, failedDecryptionEvent, Date.now());
         tracker.addVisibleEvent(failedDecryptionEvent);
 
         // Pretend "now" is Infinity
@@ -136,9 +142,9 @@ describe("DecryptionFailureTracker", function () {
         tracker.addVisibleEvent(markedVisibleFirst);
 
         const now = Date.now();
-        tracker.eventDecrypted(markedVisibleFirst, now);
-        tracker.eventDecrypted(markedUndecryptableFirst, now);
-        tracker.eventDecrypted(neverVisible, now);
+        eventDecrypted(tracker, markedVisibleFirst, now);
+        eventDecrypted(tracker, markedUndecryptableFirst, now);
+        eventDecrypted(tracker, neverVisible, now);
 
         tracker.addVisibleEvent(markedUndecryptableFirst);
 
@@ -164,14 +170,14 @@ describe("DecryptionFailureTracker", function () {
         );
 
         tracker.addVisibleEvent(decryptedEvent);
-        tracker.eventDecrypted(decryptedEvent, Date.now());
+        eventDecrypted(tracker, decryptedEvent, Date.now());
 
         // Indicate successful decryption.
         await decryptExistingEvent(decryptedEvent, {
             plainType: "m.room.message",
             plainContent: { body: "success" },
         });
-        tracker.eventDecrypted(decryptedEvent, null, Date.now());
+        eventDecrypted(tracker, decryptedEvent, Date.now());
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -194,14 +200,14 @@ describe("DecryptionFailureTracker", function () {
                 () => "UnknownError",
             );
 
-            tracker.eventDecrypted(decryptedEvent, Date.now());
+            eventDecrypted(tracker, decryptedEvent, Date.now());
 
             // Indicate successful decryption.
             await decryptExistingEvent(decryptedEvent, {
                 plainType: "m.room.message",
                 plainContent: { body: "success" },
             });
-            tracker.eventDecrypted(decryptedEvent, Date.now());
+            eventDecrypted(tracker, decryptedEvent, Date.now());
 
             tracker.addVisibleEvent(decryptedEvent);
 
@@ -228,15 +234,15 @@ describe("DecryptionFailureTracker", function () {
 
         // Arbitrary number of failed decryptions for both events
         const now = Date.now();
-        tracker.eventDecrypted(decryptedEvent, now);
-        tracker.eventDecrypted(decryptedEvent, now);
-        tracker.eventDecrypted(decryptedEvent, now);
-        tracker.eventDecrypted(decryptedEvent, now);
-        tracker.eventDecrypted(decryptedEvent, now);
-        tracker.eventDecrypted(decryptedEvent2, now);
-        tracker.eventDecrypted(decryptedEvent2, now);
+        eventDecrypted(tracker, decryptedEvent, now);
+        eventDecrypted(tracker, decryptedEvent, now);
+        eventDecrypted(tracker, decryptedEvent, now);
+        eventDecrypted(tracker, decryptedEvent, now);
+        eventDecrypted(tracker, decryptedEvent, now);
+        eventDecrypted(tracker, decryptedEvent2, now);
+        eventDecrypted(tracker, decryptedEvent2, now);
         tracker.addVisibleEvent(decryptedEvent2);
-        tracker.eventDecrypted(decryptedEvent2, now);
+        eventDecrypted(tracker, decryptedEvent2, now);
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -264,7 +270,7 @@ describe("DecryptionFailureTracker", function () {
         tracker.addVisibleEvent(decryptedEvent);
 
         // Indicate decryption
-        tracker.eventDecrypted(decryptedEvent, Date.now());
+        eventDecrypted(tracker, decryptedEvent, Date.now());
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -272,7 +278,7 @@ describe("DecryptionFailureTracker", function () {
         tracker.trackFailures();
 
         // Indicate a second decryption, after having tracked the failure
-        tracker.eventDecrypted(decryptedEvent, Date.now());
+        eventDecrypted(tracker, decryptedEvent, Date.now());
 
         tracker.trackFailures();
 
@@ -296,7 +302,7 @@ describe("DecryptionFailureTracker", function () {
         tracker.addVisibleEvent(decryptedEvent);
 
         // Indicate decryption
-        tracker.eventDecrypted(decryptedEvent, Date.now());
+        eventDecrypted(tracker, decryptedEvent, Date.now());
 
         // Pretend "now" is Infinity
         // NB: This saves to localStorage specific to DFT
@@ -315,7 +321,7 @@ describe("DecryptionFailureTracker", function () {
 
         //secondTracker.loadTrackedEvents();
 
-        secondTracker.eventDecrypted(decryptedEvent, Date.now());
+        eventDecrypted(secondTracker, decryptedEvent, Date.now());
         secondTracker.checkFailures(Infinity);
         secondTracker.trackFailures();
 
@@ -349,10 +355,10 @@ describe("DecryptionFailureTracker", function () {
 
         // One failure of UNKNOWN_ERROR, and effectively two for MEGOLM_UNKNOWN_INBOUND_SESSION_ID
         const now = Date.now();
-        tracker.eventDecrypted(decryptedEvent1, now);
-        tracker.eventDecrypted(decryptedEvent2, now);
-        tracker.eventDecrypted(decryptedEvent2, now);
-        tracker.eventDecrypted(decryptedEvent3, now);
+        eventDecrypted(tracker, decryptedEvent1, now);
+        eventDecrypted(tracker, decryptedEvent2, now);
+        eventDecrypted(tracker, decryptedEvent2, now);
+        eventDecrypted(tracker, decryptedEvent3, now);
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -387,9 +393,9 @@ describe("DecryptionFailureTracker", function () {
         tracker.addVisibleEvent(decryptedEvent3);
 
         const now = Date.now();
-        tracker.eventDecrypted(decryptedEvent1, now);
-        tracker.eventDecrypted(decryptedEvent2, now);
-        tracker.eventDecrypted(decryptedEvent3, now);
+        eventDecrypted(tracker, decryptedEvent1, now);
+        eventDecrypted(tracker, decryptedEvent2, now);
+        eventDecrypted(tracker, decryptedEvent3, now);
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -412,7 +418,7 @@ describe("DecryptionFailureTracker", function () {
             code: DecryptionFailureCode.OLM_UNKNOWN_MESSAGE_INDEX,
         });
         tracker.addVisibleEvent(decryptedEvent);
-        tracker.eventDecrypted(decryptedEvent, Date.now());
+        eventDecrypted(tracker, decryptedEvent, Date.now());
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -441,43 +447,43 @@ describe("DecryptionFailureTracker", function () {
             code: DecryptionFailureCode.MEGOLM_UNKNOWN_INBOUND_SESSION_ID,
         });
         tracker.addVisibleEvent(event1);
-        tracker.eventDecrypted(event1, now);
+        eventDecrypted(tracker, event1, now);
 
         const event2 = await createFailedDecryptionEvent({
             code: DecryptionFailureCode.OLM_UNKNOWN_MESSAGE_INDEX,
         });
         tracker.addVisibleEvent(event2);
-        tracker.eventDecrypted(event2, now);
+        eventDecrypted(tracker, event2, now);
 
         const event3 = await createFailedDecryptionEvent({
             code: DecryptionFailureCode.HISTORICAL_MESSAGE_NO_KEY_BACKUP,
         });
         tracker.addVisibleEvent(event3);
-        tracker.eventDecrypted(event3, now);
+        eventDecrypted(tracker, event3, now);
 
         const event4 = await createFailedDecryptionEvent({
             code: DecryptionFailureCode.HISTORICAL_MESSAGE_BACKUP_UNCONFIGURED,
         });
         tracker.addVisibleEvent(event4);
-        tracker.eventDecrypted(event4, now);
+        eventDecrypted(tracker, event4, now);
 
         const event5 = await createFailedDecryptionEvent({
             code: DecryptionFailureCode.HISTORICAL_MESSAGE_WORKING_BACKUP,
         });
         tracker.addVisibleEvent(event5);
-        tracker.eventDecrypted(event5, now);
+        eventDecrypted(tracker, event5, now);
 
         const event6 = await createFailedDecryptionEvent({
             code: DecryptionFailureCode.HISTORICAL_MESSAGE_USER_NOT_JOINED,
         });
         tracker.addVisibleEvent(event6);
-        tracker.eventDecrypted(event6, now);
+        eventDecrypted(tracker, event6, now);
 
         const event7 = await createFailedDecryptionEvent({
             code: DecryptionFailureCode.UNKNOWN_ERROR,
         });
         tracker.addVisibleEvent(event7);
-        tracker.eventDecrypted(event7, now);
+        eventDecrypted(tracker, event7, now);
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -522,9 +528,9 @@ describe("DecryptionFailureTracker", function () {
         tracker.addVisibleEvent(neverDecrypted);
 
         const now = Date.now();
-        tracker.eventDecrypted(lateDecryption, now);
-        tracker.eventDecrypted(veryLateDecryption, now);
-        tracker.eventDecrypted(neverDecrypted, now);
+        eventDecrypted(tracker, lateDecryption, now);
+        eventDecrypted(tracker, veryLateDecryption, now);
+        eventDecrypted(tracker, neverDecrypted, now);
 
         await decryptExistingEvent(lateDecryption, {
             plainType: "m.room.message",
@@ -534,8 +540,8 @@ describe("DecryptionFailureTracker", function () {
             plainType: "m.room.message",
             plainContent: { body: "success" },
         });
-        tracker.eventDecrypted(lateDecryption, now + 40000);
-        tracker.eventDecrypted(veryLateDecryption, now + 100000);
+        eventDecrypted(tracker, lateDecryption, now + 40000);
+        eventDecrypted(tracker, veryLateDecryption, now + 100000);
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -639,12 +645,12 @@ describe("DecryptionFailureTracker", function () {
         tracker.addVisibleEvent(localDecryption);
 
         const now = Date.now();
-        tracker.eventDecrypted(federatedDecryption, now);
+        eventDecrypted(tracker, federatedDecryption, now);
 
         mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(true, true, false));
         client.emit(CryptoEvent.KeysChanged, {});
         await sleep(100);
-        tracker.eventDecrypted(localDecryption, now);
+        eventDecrypted(tracker, localDecryption, now);
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);
@@ -669,7 +675,7 @@ describe("DecryptionFailureTracker", function () {
             code: error3,
         });
         tracker.addVisibleEvent(anotherFailure);
-        tracker.eventDecrypted(anotherFailure, now);
+        eventDecrypted(tracker, anotherFailure, now);
         tracker.checkFailures(Infinity);
         tracker.trackFailures();
         expect(propertiesByErrorCode[error3].isMatrixDotOrg).toBe(false);
@@ -691,13 +697,13 @@ describe("DecryptionFailureTracker", function () {
         tracker.addVisibleEvent(failedDecryptionEvent);
 
         const now = Date.now();
-        tracker.eventDecrypted(failedDecryptionEvent, now);
-        tracker.eventDecrypted(failedDecryptionEvent, now + 20000);
+        eventDecrypted(tracker, failedDecryptionEvent, now);
+        eventDecrypted(tracker, failedDecryptionEvent, now + 20000);
         await decryptExistingEvent(failedDecryptionEvent, {
             plainType: "m.room.message",
             plainContent: { body: "success" },
         });
-        tracker.eventDecrypted(failedDecryptionEvent, now + 50000);
+        eventDecrypted(tracker, failedDecryptionEvent, now + 50000);
 
         // Pretend "now" is Infinity
         tracker.checkFailures(Infinity);

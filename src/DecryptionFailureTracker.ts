@@ -191,14 +191,15 @@ export class DecryptionFailureTracker {
 
     /** Callback for when an event is decrypted.
      *
-     * This function should be called after a decryption attempt on an event.  It
-     * should be called whether the decryption is successful or not.
+     * This function is called by our `MatrixEventEvent.Decrypted` event
+     * handler after a decryption attempt on an event, whether the decryption
+     * is successful or not.
      *
      * @param matrixEvent the event that was decrypted
      *
      * @param nowTs the current timestamp
      */
-    public eventDecrypted(e: MatrixEvent, nowTs: number): void {
+    private eventDecrypted(e: MatrixEvent, nowTs: number): void {
         // for now we only track megolm decryption failures
         if (e.getWireContent().algorithm != "m.megolm.v1.aes-sha2") {
             return;
