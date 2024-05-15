@@ -121,9 +121,6 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
 
         this.props.submitAuthDict({
             type: AuthType.Password,
-            // TODO: Remove `user` once servers support proper UIA
-            // See https://github.com/vector-im/element-web/issues/10312
-            user: this.props.matrixClient.credentials.userId ?? undefined,
             identifier: {
                 type: "m.id.user",
                 user: this.props.matrixClient.credentials.userId,
