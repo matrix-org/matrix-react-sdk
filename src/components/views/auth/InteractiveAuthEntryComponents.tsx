@@ -634,11 +634,7 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
                 };
                 this.props.submitAuthDict({
                     type: AuthType.Msisdn,
-                    // TODO: Remove `threepid_creds` once servers support proper UIA
-                    // See https://github.com/vector-im/element-web/issues/10312
-                    // See https://github.com/matrix-org/matrix-doc/issues/2220
                     threepid_creds: creds,
-                    threepidCreds: creds,
                 });
             } else {
                 this.setState({
