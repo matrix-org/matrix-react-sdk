@@ -106,6 +106,7 @@ type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> &
      * Callback for when the tooltip is opened or closed.
      */
     onTooltipOpenChange?: TooltipProps["onOpenChange"];
+
     /**
      * Whether the tooltip should be disabled.
      */
