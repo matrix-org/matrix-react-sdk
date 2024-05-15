@@ -89,10 +89,10 @@ describe("RoomList", () => {
                 const { rerender } = render(getComponent());
 
                 const roomsList = screen.getByRole("group", { name: "Rooms" });
-                const getAddRoomButton = () => within(roomsList).getByRole("button", { name: "Add room" });
+                const addRoomButton = within(roomsList).getByRole("button", { name: "Add room" });
                 expect(screen.queryByRole("menu")).not.toBeInTheDocument();
 
-                await userEvent.click(getAddRoomButton());
+                await userEvent.click(addRoomButton);
 
                 const menu = screen.getByRole("menu");
 
@@ -102,7 +102,7 @@ describe("RoomList", () => {
                 disabled = [UIComponent.CreateRooms];
                 rerender(getComponent());
 
-                expect(getAddRoomButton()).toBeInTheDocument();
+                expect(addRoomButton).toBeInTheDocument();
                 expect(menu).toBeInTheDocument();
                 expect(within(menu).queryByRole("menuitem", { name: "New room" })).not.toBeInTheDocument();
                 expect(within(menu).getByRole("menuitem", { name: "Explore public rooms" })).toBeInTheDocument();
@@ -110,7 +110,7 @@ describe("RoomList", () => {
                 disabled = [UIComponent.ExploreRooms];
                 rerender(getComponent());
 
-                expect(getAddRoomButton()).toBeInTheDocument();
+                expect(addRoomButton).toBeInTheDocument();
                 expect(menu).toBeInTheDocument();
                 expect(within(menu).getByRole("menuitem", { name: "New room" })).toBeInTheDocument();
                 expect(within(menu).queryByRole("menuitem", { name: "Explore public rooms" })).not.toBeInTheDocument();
@@ -163,10 +163,10 @@ describe("RoomList", () => {
                 const { rerender } = render(getComponent());
 
                 const roomsList = screen.getByRole("group", { name: "Rooms" });
-                const getAddRoomButton = () => within(roomsList).getByRole("button", { name: "Add room" });
+                const addRoomButton = within(roomsList).getByRole("button", { name: "Add room" });
                 expect(screen.queryByRole("menu")).not.toBeInTheDocument();
 
-                await userEvent.click(getAddRoomButton());
+                await userEvent.click(addRoomButton);
 
                 const menu = screen.getByRole("menu");
 
@@ -177,7 +177,7 @@ describe("RoomList", () => {
                 disabled = [UIComponent.CreateRooms];
                 rerender(getComponent());
 
-                expect(getAddRoomButton()).toBeInTheDocument();
+                expect(addRoomButton).toBeInTheDocument();
                 expect(menu).toBeInTheDocument();
                 expect(within(menu).getByRole("menuitem", { name: "Explore rooms" })).toBeInTheDocument();
                 expect(within(menu).queryByRole("menuitem", { name: "New room" })).not.toBeInTheDocument();
@@ -186,7 +186,7 @@ describe("RoomList", () => {
                 disabled = [UIComponent.ExploreRooms];
                 rerender(getComponent());
 
-                expect(getAddRoomButton()).toBeInTheDocument();
+                expect(addRoomButton).toBeInTheDocument();
                 expect(menu).toBeInTheDocument();
                 expect(within(menu).queryByRole("menuitem", { name: "Explore rooms" })).toBeInTheDocument();
                 expect(within(menu).getByRole("menuitem", { name: "New room" })).toBeInTheDocument();
