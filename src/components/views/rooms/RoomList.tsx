@@ -19,7 +19,6 @@ import React, { ComponentType, createRef, ReactComponentElement, SyntheticEvent 
 
 import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { Action } from "../../../dispatcher/actions";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -64,6 +63,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import AccessibleButton from "../elements/AccessibleButton";
+import { Landmark, navigateLandmark } from "../../../accessibility/KeyboardLandmarkUtils";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -658,23 +658,14 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                         onKeyDown={(ev) => {
                             const navAction = getKeyBindingsManager().getNavigationAction(ev);
                             if (navAction === KeyBindingAction.NextLandmark) {
-                                // The next landmark is the message composer or the thread message composer.
-                                const inThread = !!document.activeElement?.closest(".mx_ThreadView");
-                                defaultDispatcher.dispatch(
-                                    {
-                                        action: Action.FocusSendMessageComposer,
-                                        context: inThread ? TimelineRenderingType.Thread : TimelineRenderingType.Room,
-                                    },
-                                    true,
-                                );
+                                navigateLandmark(Landmark.ROOM_LIST);
                                 ev.stopPropagation();
                                 ev.preventDefault();
                                 return;
                             }
 
                             if (navAction === KeyBindingAction.PreviousLandmark) {
-                                // The previous landmark is the room search input.
-                                document.querySelector<HTMLElement>(".mx_RoomSearch")?.focus();
+                                navigateLandmark(Landmark.ROOM_LIST, true);
                                 ev.stopPropagation();
                                 ev.preventDefault();
                                 return;

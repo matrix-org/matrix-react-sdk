@@ -51,7 +51,6 @@ import {
     UPDATE_STATUS_INDICATOR,
 } from "../../../stores/notifications/RoomNotificationStateStore";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
-import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import IconizedContextMenu, {
     IconizedContextMenuCheckbox,
     IconizedContextMenuOptionList,
@@ -75,6 +74,7 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { UIComponent } from "../../../settings/UIFeature";
 import { ThreadsActivityCentre } from "./threads-activity-centre/";
 import AccessibleButton from "../elements/AccessibleButton";
+import { Landmark, navigateLandmark } from "../../../accessibility/KeyboardLandmarkUtils";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -389,22 +389,13 @@ const SpacePanel: React.FC = () => {
                         onKeyDown={(ev) => {
                             const navAction = getKeyBindingsManager().getNavigationAction(ev);
                             if (navAction === KeyBindingAction.PreviousLandmark) {
-                                // The previous landmark is the message composer or the thread message composer.
-                                const inThread = !!document.activeElement?.closest(".mx_ThreadView");
-                                defaultDispatcher.dispatch(
-                                    {
-                                        action: Action.FocusSendMessageComposer,
-                                        context: inThread ? TimelineRenderingType.Thread : TimelineRenderingType.Room,
-                                    },
-                                    true,
-                                );
+                                navigateLandmark(Landmark.ACTIVE_SPACE_BUTTON, true);
                                 ev.stopPropagation();
                                 ev.preventDefault();
                                 return;
                             }
                             if (navAction === KeyBindingAction.NextLandmark) {
-                                // The next landmark is the room search input.
-                                document.querySelector<HTMLElement>(".mx_RoomSearch")?.focus();
+                                navigateLandmark(Landmark.ACTIVE_SPACE_BUTTON);
                                 ev.stopPropagation();
                                 ev.preventDefault();
                                 return;

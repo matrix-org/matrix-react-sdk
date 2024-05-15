@@ -75,6 +75,7 @@ import { PipContainer } from "./PipContainer";
 import { monitorSyncedPushRules } from "../../utils/pushRules/monitorSyncedPushRules";
 import { ConfigOptions } from "../../SdkConfig";
 import { MatrixClientContextProvider } from "./MatrixClientContextProvider";
+import { Landmark, navigateLandmark } from "../../accessibility/KeyboardLandmarkUtils";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -473,8 +474,11 @@ class LoggedInView extends React.Component<IProps, IState> {
         const navAction = getKeyBindingsManager().getNavigationAction(ev);
         switch (navAction) {
             case KeyBindingAction.NextLandmark:
-                // This is reached when no landmark area is selected, so we start at the first landmark.
-                document.querySelector<HTMLElement>(".mx_SpaceButton_active")?.focus();
+                navigateLandmark(Landmark.HOME);
+                handled = true;
+                break;
+            case KeyBindingAction.PreviousLandmark:
+                navigateLandmark(Landmark.HOME, true);
                 handled = true;
                 break;
             case KeyBindingAction.FilterRooms:
@@ -633,7 +637,6 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     public render(): React.ReactNode {
         let pageElement;
-
         switch (this.props.page_type) {
             case PageTypes.RoomView:
                 pageElement = (

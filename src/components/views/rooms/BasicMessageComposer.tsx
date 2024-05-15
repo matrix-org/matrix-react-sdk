@@ -51,6 +51,7 @@ import { _t } from "../../../languageHandler";
 import { linkify } from "../../../linkify-matrix";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { Landmark, navigateLandmark } from "../../../accessibility/KeyboardLandmarkUtils";
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp("(?:^|\\s)(" + EMOTICON_REGEX.source + ")\\s|:^$");
@@ -539,13 +540,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         const navAction = getKeyBindingsManager().getNavigationAction(event);
         switch (navAction) {
             case KeyBindingAction.PreviousLandmark:
-                // The previous landmark is the selected room (we know a room is selected because we're in its message composer).
-                document.querySelector<HTMLElement>(".mx_RoomTile_selected")?.focus();
+                navigateLandmark(Landmark.MESSAGE_COMPOSER, true);
                 handled = true;
                 break;
             case KeyBindingAction.NextLandmark:
-                // The next landmark completes the cycle, back to the active space button.
-                document.querySelector<HTMLElement>(".mx_SpaceButton_active")?.focus();
+                navigateLandmark(Landmark.MESSAGE_COMPOSER);
                 handled = true;
                 break;
         }
