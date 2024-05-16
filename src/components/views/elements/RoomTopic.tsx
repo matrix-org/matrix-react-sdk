@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useRef } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { Room, EventType } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
+import { Tooltip } from "@vector-im/compound-web";
 
 import { useTopic } from "../../../hooks/room/useTopic";
-import { Alignment } from "./Tooltip";
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -28,11 +28,10 @@ import InfoDialog from "../dialogs/InfoDialog";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton from "./AccessibleButton";
-import TooltipTarget from "./TooltipTarget";
 import { Linkify, topicToHtml } from "../../../HtmlUtils";
 import { tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
 
-interface IProps extends React.HTMLProps<HTMLDivElement> {
+interface IProps extends React.HTMLProps<HTMLButtonElement> {
     room: Room;
 }
 
@@ -49,13 +48,13 @@ export function onRoomTopicLinkClick(e: React.MouseEvent): void {
 
 export default function RoomTopic({ room, className, ...props }: IProps): JSX.Element {
     const client = useContext(MatrixClientContext);
-    const ref = useRef<HTMLDivElement>(null);
+    const [disableTooltip, setDisableTooltip] = useState(false);
 
     const topic = useTopic(room);
-    const body = topicToHtml(topic?.text, topic?.html, ref);
+    const body = topicToHtml(topic?.text, topic?.html);
 
     const onClick = useCallback(
-        (e: React.MouseEvent<HTMLDivElement>) => {
+        (e: React.MouseEvent<HTMLButtonElement>) => {
             props.onClick?.(e);
 
             const target = e.target as HTMLElement;
@@ -70,14 +69,14 @@ export default function RoomTopic({ room, className, ...props }: IProps): JSX.El
         [props],
     );
 
-    const ignoreHover = (ev: React.MouseEvent): boolean => {
-        return (ev.target as HTMLElement).tagName.toUpperCase() === "A";
+    const onHover = (ev: React.MouseEvent | React.FocusEvent): void => {
+        setDisableTooltip((ev.target as HTMLElement).tagName.toUpperCase() === "A");
     };
 
     useDispatcher(dis, (payload) => {
         if (payload.action === Action.ShowRoomTopic) {
             const canSetTopic = room.currentState.maySendStateEvent(EventType.RoomTopic, client.getSafeUserId());
-            const body = topicToHtml(topic?.text, topic?.html, ref, true);
+            const body = topicToHtml(topic?.text, topic?.html, undefined, true);
 
             const modal = Modal.createDialog(InfoDialog, {
                 title: room.name,
@@ -86,7 +85,7 @@ export default function RoomTopic({ room, className, ...props }: IProps): JSX.El
                         <Linkify
                             options={{
                                 attributes: {
-                                    onClick(e: React.MouseEvent<HTMLDivElement>) {
+                                    onClick(e: React.MouseEvent<HTMLButtonElement>) {
                                         onClick(e);
                                         modal.close();
                                     },
@@ -116,17 +115,18 @@ export default function RoomTopic({ room, className, ...props }: IProps): JSX.El
     });
 
     return (
-        <TooltipTarget
-            {...props}
-            ref={ref}
-            onClick={onClick}
-            dir="auto"
-            tooltipTargetClassName={classNames(className, "mx_RoomTopic")}
-            label={_t("room|read_topic")}
-            alignment={Alignment.Bottom}
-            ignoreHover={ignoreHover}
-        >
-            <Linkify>{body}</Linkify>
-        </TooltipTarget>
+        <Tooltip label={_t("room|read_topic")} disabled={disableTooltip}>
+            <button
+                {...props}
+                type="button"
+                onClick={onClick}
+                className={classNames(className, "mx_RoomTopic")}
+                onMouseOver={onHover}
+                onFocus={onHover}
+                aria-label={_t("room|read_topic")}
+            >
+                <Linkify>{body}</Linkify>
+            </button>
+        </Tooltip>
     );
 }
