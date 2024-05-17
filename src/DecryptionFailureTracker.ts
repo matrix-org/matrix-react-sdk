@@ -100,8 +100,7 @@ export class DecryptionFailureTracker {
 
     /** Set of event IDs that have been visible to the user.
      *
-     * This will only contain events that are not already in `failures` or in
-     * `reportedEvents`.
+     * This will only contain events that are not already in `reportedEvents`.
      */
     public visibleEvents: Set<string> = new Set();
 
