@@ -17,7 +17,7 @@
  */
 
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, act } from "@testing-library/react";
 import { AuthType } from "matrix-js-sdk/src/interactive-auth";
 import userEvent from "@testing-library/user-event";
 
@@ -52,13 +52,16 @@ describe("<EmailIdentityAuthEntry/>", () => {
 
         // After a click on the resend button, the button should display the resent label
         screen.getByRole("button", { name: "Resend" }).click();
-        await waitFor(() => expect(screen.queryByRole("button", { name: "Resent!" })).not.toBeNull());
+        await waitFor(() => expect(screen.queryByRole("button", { name: "Resent!" })).toBeInTheDocument());
+        expect(screen.queryByRole("button", { name: "Resend" })).toBeNull();
 
-        // Hover briefly the button
-        // On unhover, it should display again the resend button
         const resentButton = screen.getByRole("button", { name: "Resent!" });
+        // Hover briefly the button and wait for the tooltip to be displayed
         await userEvent.hover(resentButton);
-        await userEvent.unhover(resentButton);
-        await waitFor(() => expect(screen.queryByRole("button", { name: "Resend" })).not.toBeNull());
+        await waitFor(() => expect(screen.getByRole("tooltip", { name: "Resent!" })).toBeInTheDocument());
+
+        // On unhover, it should display again the resend button
+        await act(() => userEvent.unhover(resentButton));
+        await waitFor(() => expect(screen.queryByRole("button", { name: "Resend" })).toBeInTheDocument());
     });
 });
