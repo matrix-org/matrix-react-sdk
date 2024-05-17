@@ -14,9 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { fileinput } from "modernizr";
 
 import AvatarSetting from "../../../../src/components/views/settings/AvatarSetting";
 import { stubClient } from "../../../test-utils";
