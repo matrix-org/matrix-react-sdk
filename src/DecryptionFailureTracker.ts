@@ -195,7 +195,7 @@ export class DecryptionFailureTracker {
      * handler after a decryption attempt on an event, whether the decryption
      * is successful or not.
      *
-     * @param matrixEvent the event that was decrypted
+     * @param e the event that was decrypted
      *
      * @param nowTs the current timestamp
      */
@@ -213,6 +213,11 @@ export class DecryptionFailureTracker {
 
         const eventId = e.getId()!;
 
+        // if it's already reported, we don't need to do anything
+        if (this.trackedEvents.has(eventId)) {
+            return;
+        }
+
         // if we already have a record of this event, use the previously-recorded timestamp
         const failure = this.failures.get(eventId);
         const ts = failure ? failure.ts : nowTs;
@@ -223,8 +228,10 @@ export class DecryptionFailureTracker {
         if (this.userDomain !== undefined && senderDomain !== undefined) {
             isFederated = this.userDomain !== senderDomain;
         }
+
         const wasVisibleToUser = this.visibleEvents.has(eventId);
-        this.addDecryptionFailure(
+        this.failures.set(
+            eventId,
             new DecryptionFailure(eventId, errCode, ts, isFederated, wasVisibleToUser, this.userTrustsOwnIdentity),
         );
     }
@@ -245,16 +252,6 @@ export class DecryptionFailureTracker {
         }
 
         this.visibleEvents.add(eventId);
-    }
-
-    public addDecryptionFailure(failure: DecryptionFailure): void {
-        const eventId = failure.failedEventId;
-
-        if (this.trackedEvents.has(eventId)) {
-            return;
-        }
-
-        this.failures.set(eventId, failure);
     }
 
     public removeDecryptionFailuresForEvent(e: MatrixEvent, nowTs: number): void {
