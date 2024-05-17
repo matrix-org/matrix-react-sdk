@@ -102,17 +102,15 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
     );
     if (avatarURL) {
         avatarElement = (
-            <>
-                <AccessibleButton
-                    element="img"
-                    className="mx_AvatarSetting_avatarDisplay"
-                    src={avatarURL}
-                    alt={avatarAltText}
-                    onClick={uploadAvatar}
-                    // Inhibit tab stop as we have explicit upload/remove buttons
-                    tabIndex={-1}
-                />
-            </>
+            <AccessibleButton
+                element="img"
+                className="mx_AvatarSetting_avatarDisplay"
+                src={avatarURL}
+                alt={avatarAltText}
+                onClick={uploadAvatar}
+                // Inhibit tab stop as we have explicit upload/remove buttons
+                tabIndex={-1}
+            />
         );
     }
 
