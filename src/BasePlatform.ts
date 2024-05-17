@@ -315,7 +315,7 @@ export default abstract class BasePlatform {
     }
 
     /**
-     * The URL to return to after a successful SSO/OIDC authentication
+     * The URL to return to after a successful SSO authentication
      * @param fragmentAfterLogin optional fragment for specific view to return to
      */
     public getSSOCallbackUrl(fragmentAfterLogin = ""): URL {
@@ -431,22 +431,30 @@ export default abstract class BasePlatform {
     }
 
     /**
+     * Fallback Client URI to use for OIDC client registration for if one is not specified in config.json
+     */
+    public get defaultOidcClientUri(): string {
+        return window.location.origin;
+    }
+
+    /**
      * Metadata to use for dynamic OIDC client registrations
      */
     public async getOidcClientMetadata(): Promise<OidcRegistrationClientMetadata> {
         const config = SdkConfig.get();
         return {
             clientName: config.brand,
-            clientUri: this.baseUrl,
-            redirectUris: [this.getSSOCallbackUrl().href],
-            logoUri: new URL("vector-icons/1024.png", this.baseUrl).href,
+            clientUri: config.oidc_metadata?.client_uri ?? this.defaultOidcClientUri,
+            redirectUris: [this.getOidcCallbackUrl().href],
+            logoUri: config.oidc_metadata?.logo_uri ?? new URL("vector-icons/1024.png", this.baseUrl).href,
             applicationType: "web",
             // XXX: We break the spec by not consistently supplying these required fields
-            // contacts: [],
             // @ts-ignore
-            tosUri: config.terms_and_conditions_links?.[0]?.url,
+            contacts: config.oidc_metadata?.contacts,
             // @ts-ignore
-            policyUri: config.privacy_policy_url,
+            tosUri: config.oidc_metadata?.tos_uri ?? config.terms_and_conditions_links?.[0]?.url,
+            // @ts-ignore
+            policyUri: config.oidc_metadata?.policy_uri ?? config.privacy_policy_url,
         };
     }
 
@@ -456,5 +464,16 @@ export default abstract class BasePlatform {
      */
     public getOidcClientState(): string {
         return "";
+    }
+
+    /**
+     * The URL to return to after a successful OIDC authentication
+     */
+    public getOidcCallbackUrl(): URL {
+        const url = new URL(window.location.href);
+        // The redirect URL has to exactly match that registered at the OIDC server, so
+        // ensure that the fragment part of the URL is empty.
+        url.hash = "";
+        return url;
     }
 }

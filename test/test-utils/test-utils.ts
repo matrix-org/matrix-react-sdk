@@ -271,6 +271,7 @@ export function createTestClient(): MatrixClient {
         getMediaConfig: jest.fn(),
         baseUrl: "https://matrix-client.matrix.org",
         matrixRTC: createStubMatrixRTC(),
+        isFallbackICEServerAllowed: jest.fn().mockReturnValue(false),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -640,7 +641,6 @@ export function mkStubRoom(
         roomId,
         setBlacklistUnverifiedDevices: jest.fn(),
         setUnreadNotificationCount: jest.fn(),
-        shouldUpgradeToVersion: (() => null) as () => string | null,
         tags: {},
         timeline: [],
     } as unknown as Room;

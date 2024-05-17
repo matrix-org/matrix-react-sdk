@@ -284,6 +284,7 @@ describe("<MatrixChat />", () => {
         const tokenResponse: BearerTokenResponse = {
             access_token: accessToken,
             refresh_token: "def456",
+            id_token: "ghi789",
             scope: "test",
             token_type: "Bearer",
             expires_at: 12345,
@@ -954,6 +955,7 @@ describe("<MatrixChat />", () => {
         describe("post login setup", () => {
             beforeEach(() => {
                 const mockCrypto = {
+                    getVersion: jest.fn().mockReturnValue("Version 0"),
                     getVerificationRequestsToDeviceInProgress: jest.fn().mockReturnValue([]),
                     getUserDeviceInfo: jest.fn().mockResolvedValue(new Map()),
                     getUserVerificationStatus: jest
