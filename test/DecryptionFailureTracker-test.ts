@@ -541,7 +541,7 @@ describe("DecryptionFailureTracker", function () {
         // long enough for the timers to fire, but we'll use fake timers just
         // to be safe.
         jest.useFakeTimers();
-        tracker.start(client);
+        await tracker.start(client);
 
         // If the client fails to decrypt, it should get tracked
         const failedDecryption = await createFailedDecryptionEvent();

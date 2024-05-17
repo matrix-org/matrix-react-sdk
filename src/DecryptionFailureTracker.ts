@@ -289,8 +289,8 @@ export class DecryptionFailureTracker {
     /**
      * Start checking for and tracking failures.
      */
-    public start(client: MatrixClient): void {
-        this.calculateClientProperties(client);
+    public async start(client: MatrixClient): Promise<void> {
+        await this.calculateClientProperties(client);
         this.registerHandlers(client);
         this.checkInterval = window.setInterval(
             () => this.checkFailures(Date.now()),
