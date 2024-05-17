@@ -101,12 +101,12 @@ export class DecryptionFailureTracker {
     /** Set of event IDs that have been visible to the user.
      *
      * This will only contain events that are not already in `failures` or in
-     * `trackedEvents`.
+     * `reportedEvents`.
      */
     public visibleEvents: Set<string> = new Set();
 
-    /** Event IDs of failures that were tracked previously */
-    public trackedEvents: Set<string> = new Set();
+    /** Event IDs of failures that were reported previously */
+    private reportedEvents: Set<string> = new Set();
 
     /** Set to an interval ID when `start` is called */
     public checkInterval: number | null = null;
@@ -173,12 +173,12 @@ export class DecryptionFailureTracker {
         return DecryptionFailureTracker.internalInstance;
     }
 
-    // loadTrackedEvents() {
-    //     this.trackedEvents = new Set(JSON.parse(localStorage.getItem('mx-decryption-failure-event-ids')) || []);
+    // loadReportedEvents() {
+    //     this.reportedEvents = new Set(JSON.parse(localStorage.getItem('mx-decryption-failure-event-ids')) || []);
     // }
 
-    // saveTrackedEvents() {
-    //     localStorage.setItem('mx-decryption-failure-event-ids', JSON.stringify([...this.trackedEvents]));
+    // saveReportedEvents() {
+    //     localStorage.setItem('mx-decryption-failure-event-ids', JSON.stringify([...this.reportedEvents]));
     // }
 
     /** Callback for when an event is decrypted.
@@ -206,7 +206,7 @@ export class DecryptionFailureTracker {
         const eventId = e.getId()!;
 
         // if it's already reported, we don't need to do anything
-        if (this.trackedEvents.has(eventId)) {
+        if (this.reportedEvents.has(eventId)) {
             return;
         }
 
@@ -232,7 +232,7 @@ export class DecryptionFailureTracker {
         const eventId = e.getId()!;
 
         // if it's already reported, we don't need to do anything
-        if (this.trackedEvents.has(eventId)) {
+        if (this.reportedEvents.has(eventId)) {
             return;
         }
 
@@ -388,13 +388,14 @@ export class DecryptionFailureTracker {
 
         // Commented out for now for expediency, we need to consider unbound nature of storing
         // this in localStorage
-        // this.saveTrackedEvents();
+        // this.saveReportedEvents();
     }
 
     private addFailure(eventId: string, failure: DecryptionFailure): void {
         this.reportFailure(failure);
-        this.trackedEvents.add(eventId);
-        // once we've added it to trackedEvents, we won't check
+
+        this.reportedEvents.add(eventId);
+        // once we've added it to reportedEvents, we won't check
         // visibleEvents for it any more
         this.visibleEvents.delete(eventId);
     }
