@@ -377,7 +377,7 @@ export class DecryptionFailureTracker {
                 // - we haven't decrypted yet and it's past the time for it to be
                 //   considered a "late" decryption, so we count it as
                 //   undecryptable.
-                this.addFailure(eventId, failure);
+                this.reportFailure(failure);
             } else {
                 // the event isn't old enough, so we still need to keep track of it
                 failuresNotReady.set(eventId, failure);
@@ -388,15 +388,6 @@ export class DecryptionFailureTracker {
         // Commented out for now for expediency, we need to consider unbound nature of storing
         // this in localStorage
         // this.saveReportedEvents();
-    }
-
-    private addFailure(eventId: string, failure: DecryptionFailure): void {
-        this.reportFailure(failure);
-
-        this.reportedEvents.add(eventId);
-        // once we've added it to reportedEvents, we won't check
-        // visibleEvents for it any more
-        this.visibleEvents.delete(eventId);
     }
 
     /**
@@ -420,5 +411,10 @@ export class DecryptionFailureTracker {
             Object.assign(properties, this.baseProperties);
         }
         this.fn(trackedErrorCode, errorCode, properties);
+
+        this.reportedEvents.add(failure.failedEventId);
+        // once we've added it to reportedEvents, we won't check
+        // visibleEvents for it any more
+        this.visibleEvents.delete(failure.failedEventId);
     }
 }
