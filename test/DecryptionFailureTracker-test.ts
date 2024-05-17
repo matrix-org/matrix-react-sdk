@@ -39,6 +39,10 @@ function eventDecrypted(tracker: DecryptionFailureTracker, e: MatrixEvent, nowTs
 }
 
 describe("DecryptionFailureTracker", function () {
+    afterEach(() => {
+        localStorage.clear();
+    });
+
     it("tracks a failed decryption for a visible event", async function () {
         const failedDecryptionEvent = await createFailedDecryptionEvent();
 
@@ -265,9 +269,6 @@ describe("DecryptionFailureTracker", function () {
     });
 
     it("should not track a failure for an event that was tracked in a previous session", async () => {
-        // This test uses localStorage, clear it beforehand
-        localStorage.clear();
-
         const decryptedEvent = await createFailedDecryptionEvent();
 
         let count = 0;
