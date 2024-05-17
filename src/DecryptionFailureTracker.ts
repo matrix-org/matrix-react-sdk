@@ -170,8 +170,6 @@ export class DecryptionFailureTracker {
         if (typeof errorCodeMapFn !== "function") {
             throw new Error("DecryptionFailureTracker second constructor argument should be a function");
         }
-
-        this.loadReportedEvents();
     }
 
     public static get instance(): DecryptionFailureTracker {
@@ -304,6 +302,7 @@ export class DecryptionFailureTracker {
      * Start checking for and tracking failures.
      */
     public async start(client: MatrixClient): Promise<void> {
+        this.loadReportedEvents();
         await this.calculateClientProperties(client);
         this.registerHandlers(client);
         this.checkInterval = window.setInterval(
