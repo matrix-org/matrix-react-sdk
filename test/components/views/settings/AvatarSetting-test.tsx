@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 import AvatarSetting from "../../../../src/components/views/settings/AvatarSetting";
 import { stubClient } from "../../../test-utils";
+
+const BASE64_GIF = "R0lGODlhAQABAAAAACw=";
 
 describe("<AvatarSetting />", () => {
     beforeEach(() => {
@@ -51,5 +53,20 @@ describe("<AvatarSetting />", () => {
 
         const removeButton = queryByText("Remove");
         expect(removeButton).toBeNull();
+    });
+
+    it("render a file as the avatar when supplied", async () => {
+        const imgData = Uint8Array.from(atob(BASE64_GIF), (c) => c.charCodeAt(0));
+
+        render(
+            <AvatarSetting
+                avatarAltText="Avatar of Peter Fox"
+                avatar={new File([imgData], "avatar.png", { type: "image/gif" })}
+            />,
+        );
+
+        const imgElement = await screen.findByRole("button", { name: "Avatar of Peter Fox" });
+        expect(imgElement).toBeInTheDocument();
+        expect(imgElement).toHaveAttribute("src", "data:image/gif;base64," + BASE64_GIF);
     });
 });
