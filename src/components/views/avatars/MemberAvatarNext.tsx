@@ -15,36 +15,30 @@ limitations under the License.
 */
 
 import React, { forwardRef, Ref } from "react";
+
 import BaseAvatar from "./BaseAvatar";
 import { _t } from "../../../languageHandler";
 import { RoomMember } from "../../../models/rooms/RoomMember";
 import { AvatarThumbnailData, avatarUrl } from "../../../models/rooms/AvatarThumbnailData";
 
 interface IProps {
-    member:  RoomMember;
+    member: RoomMember;
     size: string;
     resizeMethod?: "crop" | "scale";
 }
 
-function MemberAvatarNext(
-    {
-        size,
-        resizeMethod = "crop",
-        member,
-    }: IProps,
-    ref: Ref<HTMLElement>,
-): JSX.Element {
-    let imageUrl = null
-    const avatarThumbnailUrl = member.avatarThumbnailUrl
+function MemberAvatarNext({ size, resizeMethod = "crop", member }: IProps, ref: Ref<HTMLElement>): JSX.Element {
+    let imageUrl = null;
+    const avatarThumbnailUrl = member.avatarThumbnailUrl;
 
-    if(!!avatarThumbnailUrl) {
-        let data: AvatarThumbnailData = {
+    if (!!avatarThumbnailUrl) {
+        const data: AvatarThumbnailData = {
             src: avatarThumbnailUrl,
             width: parseInt(size, 10),
             height: parseInt(size, 10),
-            resizeMethod: resizeMethod
-        }
-        imageUrl = avatarUrl(data)
+            resizeMethod: resizeMethod,
+        };
+        imageUrl = avatarUrl(data);
     }
 
     return (

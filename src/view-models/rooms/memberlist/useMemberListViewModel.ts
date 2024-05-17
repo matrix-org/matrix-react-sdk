@@ -13,22 +13,151 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import { throttle } from "lodash";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { useContext, useMemo } from "react";
-import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
-import MemberListViewModel, { IMemberListViewModel } from "./MemberListViewModel";
-import { SDKContext } from "../../../contexts/SDKContext";
-import { useEventEmitterState } from "../../../hooks/useEventEmitter";
-import { canInviteTo } from "../../../utils/room/canInviteTo";
-import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
-import { MemberService } from "../../../services/rooms/memberlist/MemberSerice";
+import { RoomMember } from "../../../models/rooms/RoomMember";
+import { IMemberService } from "../../../services/rooms/memberlist/IMemberService";
+import { ThreePIDInvite } from "../../../models/rooms/ThreePIDInvite";
 
+const INITIAL_LOAD_NUM_MEMBERS = 30;
+const INITIAL_LOAD_NUM_INVITED = 5;
+const SHOW_MORE_INCREMENT = 100;
 
-export function useMemberListViewModel(roomId: string): IMemberListViewModel {
-    const cli = useMatrixClientContext()
-    const room = cli.getRoom(roomId);
-    const sdkContext = useContext(SDKContext);
-    const canInviteToState = !!room ? useEventEmitterState(room, RoomStateEvent.Update, () =>  canInviteTo(room)) : false;
-    const memberService = useMemo(() => new MemberService(roomId, cli, sdkContext.memberListStore), [roomId]);
-    return MemberListViewModel(canInviteToState, room?.isSpaceRoom() ?? false, memberService)
+export type MemberState = {
+    joinedMembers: RoomMember[];
+    invitedMembers: Array<RoomMember | ThreePIDInvite>;
+};
+
+export interface IMemberListViewModel extends MemberState {
+    load(): Promise<void>;
+    unload(): void;
+    loading: boolean;
+    truncateAtJoined: number;
+    truncateAtInvited: number;
+    shouldShowInvite: boolean;
+    canInvite: boolean;
+    isSpaceRoom: boolean;
+    showPresence: boolean;
+    searchQuery?: string;
+    onSearchQueryChanged(query: string): Promise<void>;
+    showMoreJoinedMemberList(): void;
+    showMoreInvitedMemberList(): void;
+}
+
+export default function useMemberListViewModel(
+    canInvite: boolean,
+    isSpaceRoom: boolean,
+    memberService?: IMemberService,
+): IMemberListViewModel {
+    const [memberState, setMemberState] = useState<MemberState>({
+        joinedMembers: [],
+        invitedMembers: [],
+    });
+    const [searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
+    const [showPresence, setShowPresence] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [truncateAtJoined, setTruncateAtJoined] = useState(INITIAL_LOAD_NUM_MEMBERS);
+    const [truncateAtInvited, setTruncateAtInvited] = useState(INITIAL_LOAD_NUM_INVITED);
+
+    const loadMembersNow = useCallback(
+        async (showLoadingSpinner: boolean, query?: string): Promise<void> => {
+            if (!memberService) return;
+
+            if (showLoadingSpinner) {
+                setLoading(true);
+            }
+            const { joined, invited } = await memberService.loadMembers(query);
+            setLoading(false);
+            setMemberState({
+                joinedMembers: joined,
+                invitedMembers: invited,
+            });
+        },
+        [memberService],
+    );
+
+    const throttleLoadMembers = useMemo(
+        () =>
+            throttle(
+                (query?: string) => {
+                    loadMembersNow(false, query);
+                },
+                500,
+                { leading: true, trailing: true },
+            ),
+        [loadMembersNow],
+    );
+
+    const onMembersUpdated = useCallback(
+        (reload: boolean) => {
+            if (reload) {
+                loadMembersNow(true, searchQuery);
+            } else {
+                throttleLoadMembers(searchQuery);
+            }
+        },
+        [loadMembersNow, throttleLoadMembers, searchQuery],
+    );
+
+    const onPresenceUpdated = useCallback(
+        (userId: string) => {
+            throttleLoadMembers(searchQuery);
+        },
+        [throttleLoadMembers, searchQuery],
+    );
+
+    const load = useCallback(async (): Promise<void> => {
+        if (!memberService) return;
+        memberService.setOnMemberListUpdated(onMembersUpdated);
+        memberService.setOnPresenceUpdated(onPresenceUpdated);
+        memberService.load();
+        setShowPresence(memberService.showPresence());
+        await loadMembersNow(true);
+        // Including these dependencies casues the function to update and the effect to be called again.
+        // Not quite sure how to lay things out.
+    }, [memberService]); //, onPresenceUpdated, onMembersUpdated]);
+
+    const unload = useCallback(() => {
+        throttleLoadMembers.cancel();
+        memberService?.unload();
+    }, [memberService, throttleLoadMembers]);
+
+    useEffect(() => {
+        load();
+        return () => {
+            unload();
+        };
+    }, [load, unload]);
+
+    async function onSearchQueryChanged(query: string): Promise<void> {
+        setSearchQuery(query);
+        loadMembersNow(false, query);
+    }
+
+    function showMoreJoinedMemberList(): void {
+        setTruncateAtJoined(truncateAtJoined + SHOW_MORE_INCREMENT);
+    }
+
+    function showMoreInvitedMemberList(): void {
+        setTruncateAtInvited(truncateAtInvited + SHOW_MORE_INCREMENT);
+    }
+
+    return {
+        ...memberState,
+        truncateAtInvited,
+        truncateAtJoined,
+        loading,
+        invitedMembers: memberState.invitedMembers.concat(memberService?.getThreePIDInvites() ?? []),
+        load,
+        unload,
+        shouldShowInvite: memberService?.shouldShowInvite() ?? false,
+        canInvite,
+        isSpaceRoom,
+        showPresence,
+        searchQuery,
+        onSearchQueryChanged,
+        showMoreJoinedMemberList,
+        showMoreInvitedMemberList,
+    };
 }

@@ -19,5 +19,5 @@ export enum E2EState {
     Warning = "warning",
     Unknown = "unknown",
     Normal = "normal",
-    Unauthenticated = "unauthenticated"
+    Unauthenticated = "unauthenticated",
 }

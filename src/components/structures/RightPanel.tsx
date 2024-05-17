@@ -77,7 +77,7 @@ export default class RightPanel extends React.Component<Props, IState> {
     public constructor(props: Props, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
-        this.state = { };
+        this.state = {};
     }
 
     private readonly delayedUpdate = throttle(
@@ -155,8 +155,8 @@ export default class RightPanel extends React.Component<Props, IState> {
     };
 
     private onThreePIDInviteClick = (eventId: string): void => {
-        const inviteEvent = this.props.room?.findEventById(eventId)
-        if(!inviteEvent) return
+        const inviteEvent = this.props.room?.findEventById(eventId);
+        if (!inviteEvent) return;
         dis.dispatch({
             action: Action.View3pidInvite,
             event: inviteEvent,
@@ -179,11 +179,11 @@ export default class RightPanel extends React.Component<Props, IState> {
                 if (!!roomId) {
                     card = (
                         <MemberList
-                        roomId={roomId}
-                        key={roomId}
-                        onClose={this.onClose}
-                        onThreePIDInviteClick={this.onThreePIDInviteClick}
-                        onInviteButtonClick={this.onInviteButtonClick}
+                            roomId={roomId}
+                            key={roomId}
+                            onClose={this.onClose}
+                            onThreePIDInviteClick={this.onThreePIDInviteClick}
+                            onInviteButtonClick={this.onInviteButtonClick}
                         />
                     );
                 }
@@ -195,12 +195,12 @@ export default class RightPanel extends React.Component<Props, IState> {
                     const spaceHeader = room ? <SpaceScopeHeader room={room} /> : undefined;
                     card = (
                         <MemberList
-                        roomId={cardState?.spaceId ?? roomId!}
-                        header={spaceHeader}
-                        key={cardState?.spaceId ?? roomId!}
-                        onClose={this.onClose}
-                        onThreePIDInviteClick={this.onThreePIDInviteClick}
-                        onInviteButtonClick={this.onInviteButtonClick}
+                            roomId={cardState?.spaceId ?? roomId!}
+                            header={spaceHeader}
+                            key={cardState?.spaceId ?? roomId!}
+                            onClose={this.onClose}
+                            onThreePIDInviteClick={this.onThreePIDInviteClick}
+                            onInviteButtonClick={this.onInviteButtonClick}
                         />
                     );
                 }

@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import { Button, Tooltip } from "@vector-im/compound-web";
 import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add-solid.svg";
 
@@ -33,7 +33,7 @@ import BaseAvatar from "../avatars/BaseAvatar";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { RoomMember } from "../../../models/rooms/RoomMember";
 import { ThreePIDInvite } from "../../../models/rooms/ThreePIDInvite";
-import { useMemberListViewModel } from "../../../view-models/rooms/memberlist/useMemberListViewModel";
+import { useMemberListViewModelFactory } from "../../../view-models/rooms/memberlist/useMemberListViewModelFactory";
 
 interface IProps {
     roomId: string;
@@ -44,15 +44,8 @@ interface IProps {
 }
 
 const MemberList: React.FC<IProps> = (propsIn: IProps) => {
-
-    let viewModel = useMemberListViewModel(propsIn.roomId)
-    let props = {...propsIn, ...viewModel}
-    useEffect(() => {
-        viewModel.load()
-        return () => { 
-            viewModel.unload()
-        };
-    }, []); 
+    const viewModel = useMemberListViewModelFactory(propsIn.roomId);
+    const props = { ...propsIn, ...viewModel };
 
     const createOverflowTileJoined = (overflowCount: number, totalCount: number): JSX.Element => {
         return createOverflowTile(overflowCount, totalCount, props.showMoreJoinedMemberList);
@@ -82,13 +75,7 @@ const MemberList: React.FC<IProps> = (propsIn: IProps) => {
         return members.map((m) => {
             if ("userId" in m) {
                 // Is a Matrix invite
-                return (
-                    <MemberTile
-                        key={m.userId}
-                        member={m}
-                        showPresence={props.showPresence}
-                    />
-                );
+                return <MemberTile key={m.userId} member={m} showPresence={props.showPresence} />;
             } else {
                 // Is a 3pid invite
                 return (
@@ -114,12 +101,12 @@ const MemberList: React.FC<IProps> = (propsIn: IProps) => {
     };
 
     const getChildCountInvited = (): number => {
-        return props.invitedMembers.length
+        return props.invitedMembers.length;
     };
 
     const onInviteButtonClick = (ev: ButtonEvent): void => {
         PosthogTrackers.trackInteraction("WebRightPanelMemberListInviteButton", ev);
-        props.onInviteButtonClick(props.roomId)
+        props.onInviteButtonClick(props.roomId);
     };
 
     if (props.loading) {
@@ -202,4 +189,4 @@ const MemberList: React.FC<IProps> = (propsIn: IProps) => {
     );
 };
 
-export default MemberList
+export default MemberList;

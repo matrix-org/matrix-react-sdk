@@ -25,8 +25,8 @@ import UserIdentifier from "../../../customisations/UserIdentifier";
 interface DisambiguatedMemberInfo {
     userId: string;
     roomId: string;
-    rawDisplayName?: string
-    disambiguate: boolean
+    rawDisplayName?: string;
+    disambiguate: boolean;
 }
 
 interface IProps {
