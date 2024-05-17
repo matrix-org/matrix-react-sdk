@@ -131,6 +131,7 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
                     onClick={chromeFileInputFix}
                     onChange={onFileChanged}
                     accept="image/*"
+                    alt={_t("action|upload")}
                 />
             </>
         );
