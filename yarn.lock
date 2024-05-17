@@ -2907,10 +2907,10 @@
   resolved "https://registry.yarnpkg.com/@types/sdp-transform/-/sdp-transform-2.4.9.tgz#26ef39f487a6909b0512f580b80920a366b27f52"
   integrity sha512-bVr+/OoZZy7wrHlNcEAAa6PAgKA4BoXPYVN2EijMC5WnGgQ4ZEuixmKnVs2roiAvr7RhIFVH17QD27cojgIZCg==
 
-"@types/seedrandom@^3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@types/seedrandom/-/seedrandom-3.0.8.tgz#61cc8ed88f93a3c31289c295e6df8ca40be42bdf"
-  integrity sha512-TY1eezMU2zH2ozQoAFAQFOPpvP15g+ZgSfTZt31AUUH/Rxtnz3H+A/Sv1Snw2/amp//omibc+AEkTaA8KUeOLQ==
+"@types/seedrandom@<3.0.5":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@types/seedrandom/-/seedrandom-3.0.4.tgz#e4a8d0fca0168cacc7dba2af0e4a4ea645d3a190"
+  integrity sha512-/rWdxeiuZenlawrHU+XV6ZHMTKOqrC2hMfeDfLTIWJhDZP5aVqXRysduYHBbhD7CeJO6FJr/D2uBVXB7GT6v7w==
 
 "@types/semver@^7.5.8":
   version "7.5.8"
