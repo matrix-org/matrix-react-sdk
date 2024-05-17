@@ -17,15 +17,16 @@ import React from "react";
 import { render } from "@testing-library/react";
 
 import AvatarSetting from "../../../../src/components/views/settings/AvatarSetting";
+import { stubClient } from "../../../test-utils";
 
 describe("<AvatarSetting />", () => {
+    beforeEach(() => {
+        stubClient();
+    });
+
     it("renders avatar with specified alt text", async () => {
         const { queryByAltText } = render(
-            <AvatarSetting
-                avatarName="Peter Fox"
-                avatarAltText="Avatar of Peter Fox"
-                avatarUrl="https://avatar.fictional/my-avatar"
-            />,
+            <AvatarSetting avatarAltText="Avatar of Peter Fox" avatar="https://avatar.fictional/my-avatar" />,
         );
 
         const imgElement = queryByAltText("Avatar of Peter Fox");
@@ -35,9 +36,8 @@ describe("<AvatarSetting />", () => {
     it("renders avatar with remove button", async () => {
         const { queryByText } = render(
             <AvatarSetting
-                avatarName="Peter Fox"
                 avatarAltText="Avatar of Peter Fox"
-                avatarUrl="https://avatar.fictional/my-avatar"
+                avatar="https://avatar.fictional/my-avatar"
                 removeAvatar={jest.fn()}
             />,
         );
@@ -47,7 +47,7 @@ describe("<AvatarSetting />", () => {
     });
 
     it("renders avatar without remove button", async () => {
-        const { queryByText } = render(<AvatarSetting avatarName="Peter Fox" avatarAltText="Avatar of Peter Fox" />);
+        const { queryByText } = render(<AvatarSetting disabled={true} avatarAltText="Avatar of Peter Fox" />);
 
         const removeButton = queryByText("Remove");
         expect(removeButton).toBeNull();
