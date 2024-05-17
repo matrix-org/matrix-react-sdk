@@ -1,5 +1,4 @@
 /*
- *
  * Copyright 2024 The Matrix.org Foundation C.I.C.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * /
  */
 
 import React from "react";
@@ -47,7 +45,7 @@ describe("<EmailIdentityAuthEntry/>", () => {
         expect(container).toMatchSnapshot();
     });
 
-    test("should clear the requested state when the button tooltip is hided", async () => {
+    test("should clear the requested state when the button tooltip is hidden", async () => {
         renderIdentityAuth();
 
         // After a click on the resend button, the button should display the resent label
