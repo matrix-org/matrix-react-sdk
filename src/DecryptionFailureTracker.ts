@@ -93,7 +93,8 @@ export class DecryptionFailureTracker {
      * Every `CHECK_INTERVAL_MS`, this map is checked for failures that happened >
      * `MAXIMUM_LATE_DECRYPTION_PERIOD` ago (considered undecryptable), or
      * decryptions that took > `GRACE_PERIOD_MS` (considered late decryptions).
-     * These are accumulated in `failuresToReport`.
+     *
+     * Any such events are then reported via the `TrackingFn`.
      */
     public failures: Map<string, DecryptionFailure> = new Map();
 
@@ -104,21 +105,12 @@ export class DecryptionFailureTracker {
      */
     public visibleEvents: Set<string> = new Set();
 
-    /** The failures that will be reported at the next tracking interval.  These are
-     * events that we have decided are undecryptable due to exceeding the
-     * `MAXIMUM_LATE_DECRYPTION_PERIOD`, or that we decrypted but we consider as late
-     * decryptions. */
-    public failuresToReport: Set<DecryptionFailure> = new Set();
-
     /** Event IDs of failures that were tracked previously */
     public trackedEvents: Set<string> = new Set();
 
     /** Set to an interval ID when `start` is called */
     public checkInterval: number | null = null;
     public trackInterval: number | null = null;
-
-    /** Spread the load on `Analytics` by tracking at a low frequency, `TRACK_INTERVAL_MS`. */
-    public static TRACK_INTERVAL_MS = 60000;
 
     /** Call `checkFailures` every `CHECK_INTERVAL_MS`. */
     public static CHECK_INTERVAL_MS = 40000;
@@ -271,7 +263,7 @@ export class DecryptionFailureTracker {
                 // undecryptable, and leave timeToDecryptMillis undefined
                 failure.timeToDecryptMillis = timeToDecryptMillis;
             }
-            this.failuresToReport.add(failure);
+            this.reportFailure(failure);
         }
     }
 
@@ -305,8 +297,6 @@ export class DecryptionFailureTracker {
             () => this.checkFailures(Date.now()),
             DecryptionFailureTracker.CHECK_INTERVAL_MS,
         );
-
-        this.trackInterval = window.setInterval(() => this.trackFailures(), DecryptionFailureTracker.TRACK_INTERVAL_MS);
     }
 
     private async calculateClientProperties(client: MatrixClient): Promise<void> {
@@ -367,7 +357,6 @@ export class DecryptionFailureTracker {
         this.userTrustsOwnIdentity = undefined;
         this.failures = new Map();
         this.visibleEvents = new Set();
-        this.failuresToReport = new Set();
     }
 
     /**
@@ -403,7 +392,7 @@ export class DecryptionFailureTracker {
     }
 
     private addFailure(eventId: string, failure: DecryptionFailure): void {
-        this.failuresToReport.add(failure);
+        this.reportFailure(failure);
         this.trackedEvents.add(eventId);
         // once we've added it to trackedEvents, we won't check
         // visibleEvents for it any more
@@ -414,25 +403,22 @@ export class DecryptionFailureTracker {
      * If there are failures that should be tracked, call the given trackDecryptionFailure
      * function with the failures that should be tracked.
      */
-    public trackFailures(): void {
-        for (const failure of this.failuresToReport) {
-            const errorCode = failure.errorCode;
-            const trackedErrorCode = this.errorCodeMapFn(errorCode);
-            const properties: ErrorProperties = {
-                timeToDecryptMillis: failure.timeToDecryptMillis ?? -1,
-                wasVisibleToUser: failure.wasVisibleToUser,
-            };
-            if (failure.isFederated !== undefined) {
-                properties.isFederated = failure.isFederated;
-            }
-            if (failure.userTrustsOwnIdentity !== undefined) {
-                properties.userTrustsOwnIdentity = failure.userTrustsOwnIdentity;
-            }
-            if (this.baseProperties) {
-                Object.assign(properties, this.baseProperties);
-            }
-            this.fn(trackedErrorCode, errorCode, properties);
+    private reportFailure(failure: DecryptionFailure): void {
+        const errorCode = failure.errorCode;
+        const trackedErrorCode = this.errorCodeMapFn(errorCode);
+        const properties: ErrorProperties = {
+            timeToDecryptMillis: failure.timeToDecryptMillis ?? -1,
+            wasVisibleToUser: failure.wasVisibleToUser,
+        };
+        if (failure.isFederated !== undefined) {
+            properties.isFederated = failure.isFederated;
         }
-        this.failuresToReport = new Set();
+        if (failure.userTrustsOwnIdentity !== undefined) {
+            properties.userTrustsOwnIdentity = failure.userTrustsOwnIdentity;
+        }
+        if (this.baseProperties) {
+            Object.assign(properties, this.baseProperties);
+        }
+        this.fn(trackedErrorCode, errorCode, properties);
     }
 }
