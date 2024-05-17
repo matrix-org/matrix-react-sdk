@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React, { createRef, useCallback, useEffect, useRef, useState } from "react";
-import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -76,11 +75,6 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
         }
     }, [avatar]);
 
-    const [isHovering, setIsHovering] = useState(false);
-    const hoveringProps = {
-        onMouseEnter: () => setIsHovering(true),
-        onMouseLeave: () => setIsHovering(false),
-    };
     // TODO: Use useId() as soon as we're using React 18.
     // Prevents ID collisions when this component is used more than once on the same page.
     const a11yId = useRef(`hover-text-${Math.random()}`);
@@ -100,11 +94,10 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
         <AccessibleButton
             element="div"
             onClick={uploadAvatar}
-            className="mx_AvatarSetting_avatarPlaceholder"
+            className="mx_AvatarSetting_avatarPlaceholder mx_AvatarSetting_avatarDisplay"
             aria-labelledby={disabled ? undefined : a11yId.current}
             // Inhibit tab stop as we have explicit upload/remove buttons
             tabIndex={-1}
-            {...hoveringProps}
         />
     );
     if (avatarURL) {
@@ -112,12 +105,12 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
             <>
                 <AccessibleButton
                     element="img"
+                    className="mx_AvatarSetting_avatarDisplay"
                     src={avatarURL}
                     alt={avatarAltText}
                     onClick={uploadAvatar}
                     // Inhibit tab stop as we have explicit upload/remove buttons
                     tabIndex={-1}
-                    {...hoveringProps}
                 />
             </>
         );
@@ -132,7 +125,6 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
                     onClick={uploadAvatar}
                     className="mx_AvatarSetting_uploadButton"
                     aria-labelledby={a11yId.current}
-                    {...hoveringProps}
                 />
                 <input
                     type="file"
@@ -155,12 +147,8 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
         );
     }
 
-    const avatarClasses = classNames({
-        mx_AvatarSetting_avatar: true,
-        mx_AvatarSetting_avatar_hovering: isHovering && uploadAvatar,
-    });
     return (
-        <div className={avatarClasses} role="group" aria-label={avatarAltText}>
+        <div className="mx_AvatarSetting_avatar" role="group" aria-label={avatarAltText}>
             {avatarElement}
             <div className="mx_AvatarSetting_hover" aria-hidden="true">
                 <div className="mx_AvatarSetting_hoverBg" />
