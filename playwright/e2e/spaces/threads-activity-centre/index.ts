@@ -30,30 +30,30 @@ import { ElementAppPage } from "../../../pages/ElementAppPage";
  * - Invite the bot to both rooms and ensure that it has joined
  */
 export const test = base.extend<{
-    roomAlphaName?: string;
-    roomAlpha: { name: string; roomId: string };
-    roomBetaName?: string;
-    roomBeta: { name: string; roomId: string };
+    room1Name?: string;
+    room1: { name: string; roomId: string };
+    room2Name?: string;
+    room2: { name: string; roomId: string };
     msg: MessageBuilder;
     util: Helpers;
 }>({
     displayName: "Mae",
     botCreateOpts: { displayName: "Other User" },
 
-    roomAlphaName: "Room Alpha",
-    roomAlpha: async ({ roomAlphaName: name, app, user, bot }, use) => {
+    room1Name: "Room 1",
+    room1: async ({ room1Name: name, app, user, bot }, use) => {
         const roomId = await app.client.createRoom({ name, invite: [bot.credentials.userId] });
         await use({ name, roomId });
     },
-    roomBetaName: "Room Beta",
-    roomBeta: async ({ roomBetaName: name, app, user, bot }, use) => {
+    room2Name: "Room 2",
+    room2: async ({ room2Name: name, app, user, bot }, use) => {
         const roomId = await app.client.createRoom({ name, invite: [bot.credentials.userId] });
         await use({ name, roomId });
     },
     msg: async ({ page, app, util }, use) => {
         await use(new MessageBuilder(page, app, util));
     },
-    util: async ({ roomAlpha, roomBeta, page, app, bot }, use) => {
+    util: async ({ room1, room2, page, app, bot }, use) => {
         await use(new Helpers(page, app, bot));
     },
 });
@@ -266,6 +266,13 @@ export class Helpers {
     }
 
     /**
+     * Hover over the Threads Activity Centre button
+     */
+    hoverTacButton() {
+        return this.getTacButton().hover();
+    }
+
+    /**
      * Click on a room in the Threads Activity Centre
      * @param name - room name
      */
@@ -276,8 +283,12 @@ export class Helpers {
     /**
      * Assert that the threads activity centre button has no indicator
      */
-    assertNoTacIndicator() {
-        return expect(this.getTacButton()).toMatchScreenshot("tac-no-indicator.png");
+    async assertNoTacIndicator() {
+        // Assert by checkng neither of the known indicators are visible first. This will wait
+        // if it takes a little time to disappear, but the screenshot comparison won't.
+        await expect(this.getTacButton().locator("[data-indicator='success']")).not.toBeVisible();
+        await expect(this.getTacButton().locator("[data-indicator='critical']")).not.toBeVisible();
+        await expect(this.getTacButton()).toMatchScreenshot("tac-no-indicator.png");
     }
 
     /**
@@ -326,27 +337,40 @@ export class Helpers {
     }
 
     /**
+     * Assert that the thread panel is focused (actually the 'close' button, specifically)
+     */
+    assertThreadPanelFocused() {
+        return expect(
+            this.page.locator(".mx_ThreadPanel").locator(".mx_BaseCard_header").getByLabel("Close"),
+        ).toBeFocused();
+    }
+
+    /**
      * Populate the rooms with messages and threads
      * @param room1
      * @param room2
      * @param msg - MessageBuilder
+     * @param hasMention - whether to include a mention in the first message
      */
     async populateThreads(
         room1: { name: string; roomId: string },
         room2: { name: string; roomId: string },
         msg: MessageBuilder,
+        hasMention = true,
     ) {
-        await this.receiveMessages(room2, [
-            "Msg1",
-            msg.threadedOff("Msg1", {
-                "body": "User",
-                "format": "org.matrix.custom.html",
-                "formatted_body": "<a href='https://matrix.to/#/@user:localhost'>User</a>",
-                "m.mentions": {
-                    user_ids: ["@user:localhost"],
-                },
-            }),
-        ]);
+        if (hasMention) {
+            await this.receiveMessages(room2, [
+                "Msg1",
+                msg.threadedOff("Msg1", {
+                    "body": "User",
+                    "format": "org.matrix.custom.html",
+                    "formatted_body": "<a href='https://matrix.to/#/@user:localhost'>User</a>",
+                    "m.mentions": {
+                        user_ids: ["@user:localhost"],
+                    },
+                }),
+            ]);
+        }
         await this.receiveMessages(room2, ["Msg2", msg.threadedOff("Msg2", "Resp2")]);
         await this.receiveMessages(room1, ["Msg3", msg.threadedOff("Msg3", "Resp3")]);
     }
@@ -363,6 +387,13 @@ export class Helpers {
      */
     expandSpacePanel() {
         return this.page.getByRole("button", { name: "Expand" }).click();
+    }
+
+    /**
+     * Clicks the button to mark all threads as read in the current room
+     */
+    clickMarkAllThreadsRead() {
+        return this.page.getByLabel("Mark all as read").click();
     }
 }
 

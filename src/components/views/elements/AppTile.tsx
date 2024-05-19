@@ -21,6 +21,7 @@ import React, { ContextType, createRef, CSSProperties, MutableRefObject, ReactNo
 import classNames from "classnames";
 import { IWidget, MatrixCapabilities } from "matrix-widget-api";
 import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ApprovalOpts, WidgetLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/WidgetLifecycle";
 
@@ -217,7 +218,10 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private onMyMembership = (room: Room, membership: string): void => {
-        if ((membership === "leave" || membership === "ban") && room.roomId === this.props.room?.roomId) {
+        if (
+            (membership === KnownMembership.Leave || membership === KnownMembership.Ban) &&
+            room.roomId === this.props.room?.roomId
+        ) {
             this.onUserLeftRoom();
         }
     };
@@ -249,8 +253,9 @@ export default class AppTile extends React.Component<IProps, IState> {
     private getNewState(newProps: IProps): IState {
         return {
             initialising: true, // True while we are mangling the widget URL
-            // True while the iframe content is loading
-            loading: this.props.waitForIframeLoad && !PersistedElement.isMounted(this.persistKey),
+            // Don't show loading at all if the widget is ready once the IFrame is loaded (waitForIframeLoad = true).
+            // We only need the loading screen if the widget sends a contentLoaded event (waitForIframeLoad = false).
+            loading: !this.props.waitForIframeLoad && !PersistedElement.isMounted(this.persistKey),
             // Assume that widget has permission to load if we are the user who
             // added it to the room, or if explicitly granted by the user
             hasPermissionToLoad: this.hasPermissionToLoad(newProps),
@@ -312,7 +317,6 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (this.props.room) {
             this.context.on(RoomEvent.MyMembership, this.onMyMembership);
         }
-
         this.allowedWidgetsWatchRef = SettingsStore.watchSetting("allowedWidgets", null, this.onAllowedWidgetsChange);
         // Widget action listeners
         this.dispatcherRef = dis.register(this.onAction);
@@ -352,7 +356,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private setupSgListeners(): void {
-        this.sgWidget?.on("preparing", this.onWidgetPreparing);
+        this.sgWidget?.on("ready", this.onWidgetReady);
         this.sgWidget?.on("error:preparing", this.updateRequiresClient);
         // emits when the capabilities have been set up or changed
         this.sgWidget?.on("capabilitiesNotified", this.updateRequiresClient);
@@ -360,7 +364,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private stopSgListeners(): void {
         if (!this.sgWidget) return;
-        this.sgWidget.off("preparing", this.onWidgetPreparing);
+        this.sgWidget?.off("ready", this.onWidgetReady);
         this.sgWidget.off("error:preparing", this.updateRequiresClient);
         this.sgWidget.off("capabilitiesNotified", this.updateRequiresClient);
     }
@@ -446,8 +450,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         this.sgWidget?.stopMessaging({ forceDestroy: true });
     }
-
-    private onWidgetPreparing = (): void => {
+    private onWidgetReady = (): void => {
         this.setState({ loading: false });
     };
 
@@ -534,7 +537,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         return (
             <span>
                 <WidgetAvatar app={this.props.app} size="20px" />
-                <b>{name}</b>
+                <h3>{name}</h3>
                 <span>
                     {title ? titleSpacer : ""}
                     {title}

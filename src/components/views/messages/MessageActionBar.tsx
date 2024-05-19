@@ -129,6 +129,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
                 ref={button}
                 onFocus={onFocus}
                 tabIndex={isActive ? 0 : -1}
+                placement="left"
             >
                 <ContextMenuIcon />
             </ContextMenuTooltipButton>
@@ -186,6 +187,7 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
                 ref={button}
                 onFocus={onFocus}
                 tabIndex={isActive ? 0 : -1}
+                placement="left"
             >
                 <EmojiIcon />
             </ContextMenuTooltipButton>
@@ -229,22 +231,16 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
         }
     };
 
+    const title = !hasARelation ? _t("action|reply_in_thread") : _t("threads|error_start_thread_existing_relation");
+
     return (
         <RovingAccessibleTooltipButton
             className="mx_MessageActionBar_iconButton mx_MessageActionBar_threadButton"
             disabled={hasARelation}
-            tooltip={
-                <>
-                    <div className="mx_Tooltip_title">
-                        {!hasARelation
-                            ? _t("action|reply_in_thread")
-                            : _t("threads|error_start_thread_existing_relation")}
-                    </div>
-                </>
-            }
-            title={!hasARelation ? _t("action|reply_in_thread") : _t("threads|error_start_thread_existing_relation")}
+            title={title}
             onClick={onClick}
             onContextMenu={onClick}
+            placement="left"
         >
             <ThreadIcon />
         </RovingAccessibleTooltipButton>
@@ -397,6 +393,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     onClick={this.onEditClick}
                     onContextMenu={this.onEditClick}
                     key="edit"
+                    placement="left"
                 >
                     <EditIcon />
                 </RovingAccessibleTooltipButton>,
@@ -410,6 +407,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 onClick={this.onCancelClick}
                 onContextMenu={this.onCancelClick}
                 key="cancel"
+                placement="left"
             >
                 <TrashcanIcon />
             </RovingAccessibleTooltipButton>
@@ -435,6 +433,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     onClick={this.onResendClick}
                     onContextMenu={this.onResendClick}
                     key="resend"
+                    placement="left"
                 >
                     <ResendIcon />
                 </RovingAccessibleTooltipButton>,
@@ -461,6 +460,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                             onClick={this.onReplyClick}
                             onContextMenu={this.onReplyClick}
                             key="reply"
+                            placement="left"
                         >
                             <ReplyIcon />
                         </RovingAccessibleTooltipButton>,
@@ -509,18 +509,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     mx_MessageActionBar_iconButton: true,
                     mx_MessageActionBar_expandCollapseMessageButton: true,
                 });
-                const tooltip = (
-                    <>
-                        <div className="mx_Tooltip_title">
-                            {this.props.isQuoteExpanded
-                                ? _t("timeline|mab|collapse_reply_chain")
-                                : _t("timeline|mab|expand_reply_chain")}
-                        </div>
-                        <div className="mx_Tooltip_sub">
-                            {_t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + " + _t("action|click")}
-                        </div>
-                    </>
-                );
+
                 toolbarOpts.push(
                     <RovingAccessibleTooltipButton
                         className={expandClassName}
@@ -529,9 +518,10 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                                 ? _t("timeline|mab|collapse_reply_chain")
                                 : _t("timeline|mab|expand_reply_chain")
                         }
-                        tooltip={tooltip}
+                        caption={_t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + " + _t("action|click")}
                         onClick={this.props.toggleThreadExpanded}
                         key="expand"
+                        placement="left"
                     >
                         {this.props.isQuoteExpanded ? <CollapseMessageIcon /> : <ExpandMessageIcon />}
                     </RovingAccessibleTooltipButton>,

@@ -20,7 +20,6 @@ import React, { ComponentProps } from "react";
 import { getByText, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { NotificationCountType, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
-import { TooltipProvider } from "@vector-im/compound-web";
 
 import { ThreadsActivityCentre } from "../../../../src/components/views/spaces/threads-activity-centre";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -28,6 +27,8 @@ import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { stubClient } from "../../../test-utils";
 import { populateThread } from "../../../test-utils/threads";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
+import SettingsStore from "../../../../src/settings/SettingsStore";
+import { SettingLevel } from "../../../../src/settings/SettingLevel";
 
 describe("ThreadsActivityCentre", () => {
     const getTACButton = () => {
@@ -47,7 +48,6 @@ describe("ThreadsActivityCentre", () => {
             <MatrixClientContext.Provider value={cli}>
                 <ThreadsActivityCentre {...props} />
             </MatrixClientContext.Provider>,
-            { wrapper: TooltipProvider },
         );
     };
 
@@ -59,15 +59,22 @@ describe("ThreadsActivityCentre", () => {
     });
     roomWithActivity.name = "Just activity";
 
-    const roomWithNotif = new Room("!room:server", cli, cli.getSafeUserId(), {
+    const roomWithNotif = new Room("!room2:server", cli, cli.getSafeUserId(), {
         pendingEventOrdering: PendingEventOrdering.Detached,
     });
     roomWithNotif.name = "A notification";
 
-    const roomWithHighlight = new Room("!room:server", cli, cli.getSafeUserId(), {
+    const roomWithHighlight = new Room("!room3:server", cli, cli.getSafeUserId(), {
         pendingEventOrdering: PendingEventOrdering.Detached,
     });
     roomWithHighlight.name = "This is a real highlight";
+
+    const getDefaultThreadArgs = (room: Room) => ({
+        room: room,
+        client: cli,
+        authorId: "@foo:bar",
+        participantUserIds: ["@fee:bar"],
+    });
 
     beforeAll(async () => {
         jest.spyOn(MatrixClientPeg, "get").mockReturnValue(cli);
@@ -77,26 +84,15 @@ describe("ThreadsActivityCentre", () => {
         jest.spyOn(dmRoomMap, "getUserIdForRoomId");
         jest.spyOn(DMRoomMap, "shared").mockReturnValue(dmRoomMap);
 
-        await populateThread({
-            room: roomWithActivity,
-            client: cli,
-            authorId: "@foo:bar",
-            participantUserIds: ["@fee:bar"],
-        });
+        await populateThread(getDefaultThreadArgs(roomWithActivity));
 
-        const notifThreadInfo = await populateThread({
-            room: roomWithNotif,
-            client: cli,
-            authorId: "@foo:bar",
-            participantUserIds: ["@fee:bar"],
-        });
+        const notifThreadInfo = await populateThread(getDefaultThreadArgs(roomWithNotif));
         roomWithNotif.setThreadUnreadNotificationCount(notifThreadInfo.thread.id, NotificationCountType.Total, 1);
 
         const highlightThreadInfo = await populateThread({
-            room: roomWithHighlight,
-            client: cli,
-            authorId: "@foo:bar",
-            participantUserIds: ["@fee:bar"],
+            ...getDefaultThreadArgs(roomWithHighlight),
+            // timestamp
+            ts: 5,
         });
         roomWithHighlight.setThreadUnreadNotificationCount(
             highlightThreadInfo.thread.id,
@@ -105,9 +101,42 @@ describe("ThreadsActivityCentre", () => {
         );
     });
 
+    beforeEach(async () => {
+        await SettingsStore.setValue("feature_release_announcement", null, SettingLevel.DEVICE, false);
+    });
+
     it("should render the threads activity centre button", async () => {
         renderTAC();
         expect(getTACButton()).toBeInTheDocument();
+    });
+
+    it("should render the release announcement", async () => {
+        // Enable release announcement
+        await SettingsStore.setValue("feature_release_announcement", null, SettingLevel.DEVICE, true);
+
+        renderTAC();
+        expect(document.body).toMatchSnapshot();
+    });
+
+    it("should render not display the tooltip when the release announcement is displayed", async () => {
+        // Enable release announcement
+        await SettingsStore.setValue("feature_release_announcement", null, SettingLevel.DEVICE, true);
+
+        renderTAC();
+
+        // The tooltip should not be displayed
+        await userEvent.hover(getTACButton());
+        expect(screen.queryByRole("tooltip")).toBeNull();
+    });
+
+    it("should close the release announcement when the TAC button is clicked", async () => {
+        // Enable release announcement
+        await SettingsStore.setValue("feature_release_announcement", null, SettingLevel.DEVICE, true);
+
+        renderTAC();
+        await userEvent.click(getTACButton());
+        expect(getTACMenu()).toBeInTheDocument();
+        expect(document.body).toMatchSnapshot();
     });
 
     it("should render the threads activity centre button and the display label", async () => {
@@ -181,6 +210,52 @@ describe("ThreadsActivityCentre", () => {
         expect(screen.getByRole("menu")).toMatchSnapshot();
     });
 
+    it("should order the room with the same notification level by most recent", async () => {
+        // Generate two new rooms with threads
+        const secondRoomWithHighlight = new Room("!room4:server", cli, cli.getSafeUserId(), {
+            pendingEventOrdering: PendingEventOrdering.Detached,
+        });
+        secondRoomWithHighlight.name = "This is a second real highlight";
+
+        const secondHighlightThreadInfo = await populateThread({
+            ...getDefaultThreadArgs(secondRoomWithHighlight),
+            // timestamp
+            ts: 1,
+        });
+        secondRoomWithHighlight.setThreadUnreadNotificationCount(
+            secondHighlightThreadInfo.thread.id,
+            NotificationCountType.Highlight,
+            1,
+        );
+
+        const thirdRoomWithHighlight = new Room("!room5:server", cli, cli.getSafeUserId(), {
+            pendingEventOrdering: PendingEventOrdering.Detached,
+        });
+        thirdRoomWithHighlight.name = "This is a third real highlight";
+
+        const thirdHighlightThreadInfo = await populateThread({
+            ...getDefaultThreadArgs(thirdRoomWithHighlight),
+            // timestamp
+            ts: 7,
+        });
+        thirdRoomWithHighlight.setThreadUnreadNotificationCount(
+            thirdHighlightThreadInfo.thread.id,
+            NotificationCountType.Highlight,
+            1,
+        );
+
+        cli.getVisibleRooms = jest
+            .fn()
+            .mockReturnValue([roomWithHighlight, secondRoomWithHighlight, thirdRoomWithHighlight]);
+
+        renderTAC();
+        await userEvent.click(getTACButton());
+
+        // The room should be ordered by the most recent thread
+        // thirdHighlightThreadInfo (timestamp 7) > highlightThreadInfo (timestamp 5) > secondHighlightThreadInfo (timestamp 1)
+        expect(screen.getByRole("menu")).toMatchSnapshot();
+    });
+
     it("should block Ctrl/CMD + k shortcut", async () => {
         cli.getVisibleRooms = jest.fn().mockReturnValue([roomWithHighlight]);
 
@@ -195,7 +270,6 @@ describe("ThreadsActivityCentre", () => {
                     <ThreadsActivityCentre />
                 </MatrixClientContext.Provider>
             </div>,
-            { wrapper: TooltipProvider },
         );
         await userEvent.click(getTACButton());
 

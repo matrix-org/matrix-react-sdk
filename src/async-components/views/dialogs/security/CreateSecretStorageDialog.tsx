@@ -19,10 +19,9 @@ import React, { createRef } from "react";
 import FileSaver from "file-saver";
 import { logger } from "matrix-js-sdk/src/logger";
 import { AuthDict, CrossSigningKeys, MatrixError, UIAFlow, UIAResponse } from "matrix-js-sdk/src/matrix";
-import { IRecoveryKey } from "matrix-js-sdk/src/crypto/api";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import classNames from "classnames";
-import { BackupTrustInfo, KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
+import { BackupTrustInfo, GeneratedSecretStorageKey, KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t, _td } from "../../../../languageHandler";
@@ -41,7 +40,7 @@ import {
     isSecureBackupRequired,
     SecureBackupSetupMethod,
 } from "../../../../utils/WellKnownUtils";
-import SecurityCustomisations from "../../../../customisations/Security";
+import { ModuleRunner } from "../../../../modules/ModuleRunner";
 import Field from "../../../../components/views/elements/Field";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import Spinner from "../../../../components/views/elements/Spinner";
@@ -49,6 +48,7 @@ import InteractiveAuthDialog from "../../../../components/views/dialogs/Interact
 import { IValidationResult } from "../../../../components/views/elements/Validation";
 import { Icon as CheckmarkIcon } from "../../../../../res/img/element-icons/check.svg";
 import PassphraseConfirmField from "../../../../components/views/auth/PassphraseConfirmField";
+import { initialiseDehydration } from "../../../../utils/device/dehydration";
 
 // I made a mistake while converting this and it has to be fixed!
 enum Phase {
@@ -122,7 +122,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
         hasCancel: true,
         forceReset: false,
     };
-    private recoveryKey?: IRecoveryKey;
+    private recoveryKey?: GeneratedSecretStorageKey;
     private backupKey?: Uint8Array;
     private recoveryKeyNode = createRef<HTMLElement>();
     private passphraseField = createRef<Field>();
@@ -181,9 +181,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
     }
 
     private getInitialPhase(): void {
-        const keyFromCustomisations = SecurityCustomisations.createSecretStorageKey?.();
+        const keyFromCustomisations = ModuleRunner.instance.extensions.cryptoSetup.createSecretStorageKey();
         if (keyFromCustomisations) {
-            logger.log("Created key via customisations, jumping to bootstrap step");
+            logger.log("CryptoSetupExtension: Created key via extension, jumping to bootstrap step");
             this.recoveryKey = {
                 privateKey: keyFromCustomisations,
             };
@@ -398,6 +398,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     },
                 });
             }
+            await initialiseDehydration(true);
 
             this.setState({
                 phase: Phase.Stored,
