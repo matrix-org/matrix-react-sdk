@@ -31,7 +31,7 @@ import AccessibleButton from "./AccessibleButton";
 import { Linkify, topicToHtml } from "../../../HtmlUtils";
 import { tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
 
-interface IProps extends React.HTMLProps<HTMLButtonElement> {
+interface IProps extends React.HTMLProps<HTMLDivElement> {
     room: Room;
 }
 
@@ -54,7 +54,7 @@ export default function RoomTopic({ room, className, ...props }: IProps): JSX.El
     const body = topicToHtml(topic?.text, topic?.html);
 
     const onClick = useCallback(
-        (e: React.MouseEvent<HTMLButtonElement>) => {
+        (e: React.MouseEvent<HTMLDivElement>) => {
             props.onClick?.(e);
 
             const target = e.target as HTMLElement;
@@ -85,7 +85,7 @@ export default function RoomTopic({ room, className, ...props }: IProps): JSX.El
                         <Linkify
                             options={{
                                 attributes: {
-                                    onClick(e: React.MouseEvent<HTMLButtonElement>) {
+                                    onClick(e: React.MouseEvent<HTMLDivElement>) {
                                         onClick(e);
                                         modal.close();
                                     },
@@ -114,11 +114,16 @@ export default function RoomTopic({ room, className, ...props }: IProps): JSX.El
         }
     });
 
+    // Do not render the tooltip if the topic is empty
+    // We still need to have a div for the header buttons to be displayed correctly
+    if (!body) return <div className={classNames(className, "mx_RoomTopic")} />;
+
     return (
         <Tooltip label={_t("room|read_topic")} disabled={disableTooltip}>
-            <button
+            <div
                 {...props}
-                type="button"
+                tabIndex={0}
+                role="button"
                 onClick={onClick}
                 className={classNames(className, "mx_RoomTopic")}
                 onMouseOver={onHover}
@@ -126,7 +131,7 @@ export default function RoomTopic({ room, className, ...props }: IProps): JSX.El
                 aria-label={_t("room|read_topic")}
             >
                 <Linkify>{body}</Linkify>
-            </button>
+            </div>
         </Tooltip>
     );
 }

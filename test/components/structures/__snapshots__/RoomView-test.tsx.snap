@@ -42,10 +42,8 @@ exports[`RoomView for a local room in state CREATING should match the snapshot 1
             @user:example.com
           </div>
         </div>
-        <button
-          aria-label="Click to read topic"
+        <div
           class="mx_LegacyRoomHeader_topic mx_RoomTopic"
-          type="button"
         />
       </div>
     </header>
@@ -119,10 +117,8 @@ exports[`RoomView for a local room in state ERROR should match the snapshot 1`] 
             @user:example.com
           </div>
         </div>
-        <button
-          aria-label="Click to read topic"
+        <div
           class="mx_LegacyRoomHeader_topic mx_RoomTopic"
-          type="button"
         />
       </div>
     </header>
@@ -281,10 +277,8 @@ exports[`RoomView for a local room in state NEW should match the snapshot 1`] = 
             @user:example.com
           </div>
         </div>
-        <button
-          aria-label="Click to read topic"
+        <div
           class="mx_LegacyRoomHeader_topic mx_RoomTopic"
-          type="button"
         />
       </div>
     </header>
@@ -527,10 +521,8 @@ exports[`RoomView for a local room in state NEW that is encrypted should match t
             @user:example.com
           </div>
         </div>
-        <button
-          aria-label="Click to read topic"
+        <div
           class="mx_LegacyRoomHeader_topic mx_RoomTopic"
-          type="button"
         />
       </div>
     </header>
