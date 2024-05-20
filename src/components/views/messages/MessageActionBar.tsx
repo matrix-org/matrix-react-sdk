@@ -43,7 +43,7 @@ import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } fr
 import { isContentActionable, canEditContent, editEvent, canCancel } from "../../../utils/EventUtils";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
-import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
+import { RovingAccessibleButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import MessageContextMenu from "../context_menus/MessageContextMenu";
 import Resend from "../../../Resend";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -129,6 +129,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
                 ref={button}
                 onFocus={onFocus}
                 tabIndex={isActive ? 0 : -1}
+                placement="left"
             >
                 <ContextMenuIcon />
             </ContextMenuTooltipButton>
@@ -186,6 +187,7 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
                 ref={button}
                 onFocus={onFocus}
                 tabIndex={isActive ? 0 : -1}
+                placement="left"
             >
                 <EmojiIcon />
             </ContextMenuTooltipButton>
@@ -232,7 +234,7 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
     const title = !hasARelation ? _t("action|reply_in_thread") : _t("threads|error_start_thread_existing_relation");
 
     return (
-        <RovingAccessibleTooltipButton
+        <RovingAccessibleButton
             className="mx_MessageActionBar_iconButton mx_MessageActionBar_threadButton"
             disabled={hasARelation}
             title={title}
@@ -241,7 +243,7 @@ const ReplyInThreadButton: React.FC<IReplyInThreadButton> = ({ mxEvent }) => {
             placement="left"
         >
             <ThreadIcon />
-        </RovingAccessibleTooltipButton>
+        </RovingAccessibleButton>
     );
 };
 
@@ -385,28 +387,30 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         const toolbarOpts: JSX.Element[] = [];
         if (canEditContent(MatrixClientPeg.safeGet(), this.props.mxEvent)) {
             toolbarOpts.push(
-                <RovingAccessibleTooltipButton
+                <RovingAccessibleButton
                     className="mx_MessageActionBar_iconButton"
                     title={_t("action|edit")}
                     onClick={this.onEditClick}
                     onContextMenu={this.onEditClick}
                     key="edit"
+                    placement="left"
                 >
                     <EditIcon />
-                </RovingAccessibleTooltipButton>,
+                </RovingAccessibleButton>,
             );
         }
 
         const cancelSendingButton = (
-            <RovingAccessibleTooltipButton
+            <RovingAccessibleButton
                 className="mx_MessageActionBar_iconButton"
                 title={_t("action|delete")}
                 onClick={this.onCancelClick}
                 onContextMenu={this.onCancelClick}
                 key="cancel"
+                placement="left"
             >
                 <TrashcanIcon />
-            </RovingAccessibleTooltipButton>
+            </RovingAccessibleButton>
         );
 
         const threadTooltipButton = <ReplyInThreadButton mxEvent={this.props.mxEvent} key="reply_thread" />;
@@ -423,15 +427,16 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             toolbarOpts.splice(
                 0,
                 0,
-                <RovingAccessibleTooltipButton
+                <RovingAccessibleButton
                     className="mx_MessageActionBar_iconButton"
                     title={_t("action|retry")}
                     onClick={this.onResendClick}
                     onContextMenu={this.onResendClick}
                     key="resend"
+                    placement="left"
                 >
                     <ResendIcon />
-                </RovingAccessibleTooltipButton>,
+                </RovingAccessibleButton>,
             );
 
             // The delete button should appear last, so we can just drop it at the end
@@ -449,15 +454,16 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     toolbarOpts.splice(
                         0,
                         0,
-                        <RovingAccessibleTooltipButton
+                        <RovingAccessibleButton
                             className="mx_MessageActionBar_iconButton"
                             title={_t("action|reply")}
                             onClick={this.onReplyClick}
                             onContextMenu={this.onReplyClick}
                             key="reply"
+                            placement="left"
                         >
                             <ReplyIcon />
-                        </RovingAccessibleTooltipButton>,
+                        </RovingAccessibleButton>,
                     );
                 }
                 // We hide the react button in search results as we don't show reactions in results
@@ -505,7 +511,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 });
 
                 toolbarOpts.push(
-                    <RovingAccessibleTooltipButton
+                    <RovingAccessibleButton
                         className={expandClassName}
                         title={
                             this.props.isQuoteExpanded
@@ -518,7 +524,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                         placement="left"
                     >
                         {this.props.isQuoteExpanded ? <CollapseMessageIcon /> : <ExpandMessageIcon />}
-                    </RovingAccessibleTooltipButton>,
+                    </RovingAccessibleButton>,
                 );
             }
 
