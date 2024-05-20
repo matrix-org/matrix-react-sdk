@@ -102,7 +102,7 @@ exports[`<UserInfo /> with crypto enabled renders <BasicUserInfo /> 1`] = `
             class="mx_UserInfo_avatar_transition_child"
           >
             <button
-              aria-label="@user:example.com"
+              aria-label=""
               aria-live="off"
               class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
               data-color="3"
