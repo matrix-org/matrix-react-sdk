@@ -44,15 +44,15 @@ import { PresenceState } from "../../../models/rooms/PresenceState";
 
 export class MemberService implements IMemberService {
     private roomId: string;
-    private matixClient: MatrixClient;
+    private matrixClient: MatrixClient;
     private memberListStore: MemberListStore;
     private membershipType?: string;
     private onMemberListUpdated?: (reload: boolean) => void;
     private onPresenceUpdated?: (userId: string) => void;
 
-    public constructor(roomId: string, matixClient: MatrixClient, memberListStore: MemberListStore) {
+    public constructor(roomId: string, matrixClient: MatrixClient, memberListStore: MemberListStore) {
         this.roomId = roomId;
-        this.matixClient = matixClient;
+        this.matrixClient = matrixClient;
         this.memberListStore = memberListStore;
     }
 
@@ -65,25 +65,25 @@ export class MemberService implements IMemberService {
     }
 
     public load(): void {
-        this.matixClient.on(RoomStateEvent.Update, this.onRoomStateUpdate);
-        this.matixClient.on(RoomMemberEvent.Name, this.onRoomMemberName);
-        this.matixClient.on(RoomStateEvent.Events, this.onRoomStateEvent);
-        this.matixClient.on(ClientEvent.Room, this.onRoom); // invites & joining after peek
-        this.matixClient.on(RoomEvent.MyMembership, this.onMyMembership);
-        this.matixClient.on(UserEvent.LastPresenceTs, this.onUserPresenceChange);
-        this.matixClient.on(UserEvent.Presence, this.onUserPresenceChange);
-        this.matixClient.on(UserEvent.CurrentlyActive, this.onUserPresenceChange);
+        this.matrixClient.on(RoomStateEvent.Update, this.onRoomStateUpdate);
+        this.matrixClient.on(RoomMemberEvent.Name, this.onRoomMemberName);
+        this.matrixClient.on(RoomStateEvent.Events, this.onRoomStateEvent);
+        this.matrixClient.on(ClientEvent.Room, this.onRoom); // invites & joining after peek
+        this.matrixClient.on(RoomEvent.MyMembership, this.onMyMembership);
+        this.matrixClient.on(UserEvent.LastPresenceTs, this.onUserPresenceChange);
+        this.matrixClient.on(UserEvent.Presence, this.onUserPresenceChange);
+        this.matrixClient.on(UserEvent.CurrentlyActive, this.onUserPresenceChange);
     }
 
     public unload(): void {
-        this.matixClient.off(RoomStateEvent.Update, this.onRoomStateUpdate);
-        this.matixClient.off(RoomMemberEvent.Name, this.onRoomMemberName);
-        this.matixClient.off(RoomStateEvent.Events, this.onRoomStateEvent);
-        this.matixClient.off(ClientEvent.Room, this.onRoom);
-        this.matixClient.off(RoomEvent.MyMembership, this.onMyMembership);
-        this.matixClient.off(UserEvent.LastPresenceTs, this.onUserPresenceChange);
-        this.matixClient.off(UserEvent.Presence, this.onUserPresenceChange);
-        this.matixClient.off(UserEvent.CurrentlyActive, this.onUserPresenceChange);
+        this.matrixClient.off(RoomStateEvent.Update, this.onRoomStateUpdate);
+        this.matrixClient.off(RoomMemberEvent.Name, this.onRoomMemberName);
+        this.matrixClient.off(RoomStateEvent.Events, this.onRoomStateEvent);
+        this.matrixClient.off(ClientEvent.Room, this.onRoom);
+        this.matrixClient.off(RoomEvent.MyMembership, this.onMyMembership);
+        this.matrixClient.off(UserEvent.LastPresenceTs, this.onUserPresenceChange);
+        this.matrixClient.off(UserEvent.Presence, this.onUserPresenceChange);
+        this.matrixClient.off(UserEvent.CurrentlyActive, this.onUserPresenceChange);
     }
 
     public async loadMembers(searchQuery?: string): Promise<Record<"joined" | "invited", RoomMember[]>> {
@@ -182,7 +182,7 @@ export class MemberService implements IMemberService {
         // The HS may have already converted these into m.room.member invites so
         // we shouldn't add them if the 3pid invite state key (token) is in the
         // member invite (content.third_party_invite.signed.token)
-        const room = this.matixClient.getRoom(this.roomId);
+        const room = this.matrixClient.getRoom(this.roomId);
 
         if (room) {
             return room.currentState
@@ -214,7 +214,7 @@ export class MemberService implements IMemberService {
     }
 
     public shouldShowInvite(): boolean {
-        const room = this.matixClient.getRoom(this.roomId);
+        const room = this.matrixClient.getRoom(this.roomId);
         return room?.getMyMembership() == KnownMembership.Join && shouldShowComponent(UIComponent.InviteUsers);
     }
 

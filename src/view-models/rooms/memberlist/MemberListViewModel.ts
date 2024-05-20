@@ -24,7 +24,7 @@ import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 import { SDKContext } from "../../../contexts/SDKContext";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { canInviteTo } from "../../../utils/room/canInviteTo";
-import { MemberService } from "../../../services/rooms/memberlist/MemberSerice";
+import { MemberService } from "../../../services/rooms/memberlist/MemberService";
 import { RoomMember } from "../../../models/rooms/RoomMember";
 import { ThreePIDInvite } from "../../../models/rooms/ThreePIDInvite";
 
