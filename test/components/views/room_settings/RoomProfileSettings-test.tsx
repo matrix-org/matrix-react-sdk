@@ -38,9 +38,6 @@ describe("RoomProfileSetting", () => {
         client = stubClient();
         room = mkStubRoom(ROOM_ID, "Test room", client);
 
-        /*room = new Room(ROOM_ID, client, "@alice:example.org", {
-            pendingEventOrdering: PendingEventOrdering.Detached,
-        });*/
     });
 
     it("uploads a room avatar", async () => {
