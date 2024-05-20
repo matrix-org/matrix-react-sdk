@@ -127,7 +127,7 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
                 <input
                     type="file"
                     ref={fileInputRef}
-                    className="mx_ProfileSettings_avatarUpload"
+                    className="mx_AvatarSetting_avatarUpload"
                     onClick={chromeFileInputFix}
                     onChange={onFileChanged}
                     accept="image/*"
