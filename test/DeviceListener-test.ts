@@ -825,7 +825,7 @@ describe("DeviceListener", () => {
                     ];
 
                     it.each(partialTestCases)(
-                        "Should report recovery state as Incomplete if when %s",
+                        "Should report recovery state as Incomplete when %s",
                         async (_, status) => {
                             mockClient.secretStorage.getDefaultKeyId.mockResolvedValue("00");
 
@@ -847,6 +847,37 @@ describe("DeviceListener", () => {
                             expect(trackEventSpy).toHaveBeenCalledWith(expectedTrackedEvent);
                         },
                     );
+
+                    it("Should report recovery state as Incomplete when some secrets are not in 4S", async () => {
+                        mockClient.secretStorage.getDefaultKeyId.mockResolvedValue("00");
+
+                        // Some missing secret in 4S
+                        mockCrypto.isSecretStorageReady.mockResolvedValue(false);
+
+                        // Session trusted and secrets known locally.
+                        mockCrypto!.getCrossSigningStatus.mockResolvedValue({
+                            publicKeysOnDevice: true,
+                            privateKeysCachedLocally: {
+                                masterKey: true,
+                                selfSigningKey: true,
+                                userSigningKey: true,
+                            },
+                        } as unknown as CrossSigningStatus);
+
+                        await createAndStart();
+
+                        // Should have updated user properties
+                        expect(setPropertySpy).toHaveBeenCalledWith("verificationState", "Verified");
+                        expect(setPropertySpy).toHaveBeenCalledWith("recoveryState", "Incomplete");
+
+                        // Should have reported a status change event
+                        const expectedTrackedEvent: CryptoSessionStateChange = {
+                            eventName: "CryptoSessionState",
+                            verificationState: "Verified",
+                            recoveryState: "Incomplete",
+                        };
+                        expect(trackEventSpy).toHaveBeenCalledWith(expectedTrackedEvent);
+                    });
                 });
 
                 describe("When Room Key Backup is enabled", () => {

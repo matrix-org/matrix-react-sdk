@@ -452,7 +452,7 @@ export default class DeviceListener {
                 }
             } else {
                 // No backup. Just consider cross-signing secrets.
-                if (allCrossSigningSecretsCached && crossSigningStatus.privateKeysInSecretStorage) {
+                if (secretStorageReady && allCrossSigningSecretsCached) {
                     recoveryState = "Enabled";
                 } else {
                     recoveryState = "Incomplete";
