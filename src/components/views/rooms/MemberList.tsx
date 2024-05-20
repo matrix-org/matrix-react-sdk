@@ -33,7 +33,7 @@ import BaseAvatar from "../avatars/BaseAvatar";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { RoomMember } from "../../../models/rooms/RoomMember";
 import { ThreePIDInvite } from "../../../models/rooms/ThreePIDInvite";
-import { useMemberListViewModelFactory } from "../../../view-models/rooms/memberlist/useMemberListViewModelFactory";
+import { useMemberListViewModel } from "../../../view-models/rooms/memberlist/MemberListViewModel";
 
 interface IProps {
     roomId: string;
@@ -44,7 +44,7 @@ interface IProps {
 }
 
 const MemberList: React.FC<IProps> = (propsIn: IProps) => {
-    const viewModel = useMemberListViewModelFactory(propsIn.roomId);
+    const viewModel = useMemberListViewModel(propsIn.roomId);
     const props = { ...propsIn, ...viewModel };
 
     const createOverflowTileJoined = (overflowCount: number, totalCount: number): JSX.Element => {

@@ -14,14 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { RenderResult, act, renderHook } from "@testing-library/react-hooks";
+import { Observable, lastValueFrom, take } from "rxjs";
 
-import useMemberListViewModelFactory, {
-    IMemberListViewModel,
-} from "../../src/view-models/rooms/memberlist/useMemberListViewModel";
 import { RoomMember } from "../../src/models/rooms/RoomMember";
 import { ThreePIDInvite } from "../../src/models/rooms/ThreePIDInvite";
 import { MockMemberService } from "../../src/services/rooms/memberlist/MockMemberService";
+import { MemberListViewModel } from "../../src/view-models/rooms/memberlist/MemberListViewModel";
 
 const roomId = "!room:server.org";
 const userId1 = "@alice:server.org";
@@ -58,38 +56,40 @@ const threePIDInvite: ThreePIDInvite = {
 
 describe("MemberListViewModel", () => {
     let memberListService: MockMemberService;
+    let viewModel: MemberListViewModel;
 
     beforeEach(() => {
         memberListService = new MockMemberService([member1], [member2], [threePIDInvite]);
+        viewModel = new MemberListViewModel(memberListService);
     });
 
-    async function loadViewModel(): Promise<RenderResult<IMemberListViewModel>> {
-        const vm = renderHook(() => useMemberListViewModelFactory(true, true, memberListService));
-        const { result } = vm;
-        await act(async () => await result.current.load());
-        return result;
+    function getLast<T>(observable: Observable<T>, from = 1): Promise<T> {
+        return lastValueFrom(observable.pipe(take(from)));
     }
 
     it("initial loaded states", async () => {
-        const result = await loadViewModel();
-        expect(result.current.loading).toBe(false);
-        expect(result.current.joinedMembers[0].userId).toBe(userId1);
-        expect(result.current.invitedMembers[0]).toEqual(expect.objectContaining({ userId: userId2 }));
-        expect(result.current.invitedMembers[1]).toEqual(expect.objectContaining({ displayName: "charlie@email.org" }));
+        await viewModel.load();
+        await expect(getLast(viewModel.loading)).resolves.toBe(false);
+        const memberState = await getLast(viewModel.memberState);
+        expect(memberState.joinedMembers[0].userId).toBe(userId1);
+        expect(memberState.invitedMembers[0]).toEqual(expect.objectContaining({ userId: userId2 }));
+        expect(memberState.invitedMembers[1]).toEqual(expect.objectContaining({ displayName: "charlie@email.org" }));
     });
 
     it("member name updated", async () => {
-        const result = await loadViewModel();
+        await viewModel.load();
         const member1Updated: RoomMember = { ...member1, name: "Alice Updated" };
-        await act(async () => memberListService.updateJoinedMember(member1Updated));
-        expect(result.current.joinedMembers[0].name).toBe(member1Updated.name);
+        memberListService.updateJoinedMember(member1Updated);
+        const memberState = await getLast(viewModel.memberState, 2);
+        expect(memberState.joinedMembers[0].name).toBe(member1Updated.name);
     });
 
     it("filter members", async () => {
-        const result = await loadViewModel();
-        await act(async () => await result.current.onSearchQueryChanged("Alic"));
-        expect(result.current.joinedMembers.length).toBe(1);
-        expect(result.current.invitedMembers.length).toBe(1); // Bob Filtered out, 3PIDs are not.
-        expect(result.current.joinedMembers[0]).toEqual(expect.objectContaining({ name: "Alice" }));
+        await viewModel.load();
+        await viewModel.onSearchQueryChanged("Alic");
+        const memberState = await getLast(viewModel.memberState, 1); // Not sure why there are not more emissions here
+        expect(memberState.joinedMembers.length).toBe(1);
+        expect(memberState.invitedMembers.length).toBe(1); // Bob Filtered out, 3PIDs are not.
+        expect(memberState.joinedMembers[0]).toEqual(expect.objectContaining({ name: "Alice" }));
     });
 });
