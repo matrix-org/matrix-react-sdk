@@ -21,6 +21,9 @@ import { DecryptionFailureCode } from "matrix-js-sdk/src/crypto-api";
 
 import { PosthogAnalytics } from "./PosthogAnalytics";
 
+/** The key that we use to store the `reportedEvents` bloom filter in localstorage */
+const DECRYPTION_FAILURE_STORAGE_KEY = "mx_decryption_failure_event_ids";
+
 export class DecryptionFailure {
     /**
      * The time between our initial failure to decrypt and our successful
@@ -140,9 +143,6 @@ export class DecryptionFailureTracker {
      * we were already checking, so the result could be out of date. */
     private retryVerificationStatus: boolean = false;
 
-    // The key that we use for storing
-    public static DECRYPTION_FAILURE_STORAGE_KEY = "mx_decryption_failure_event_ids";
-
     /**
      * Create a new DecryptionFailureTracker.
      *
@@ -177,7 +177,7 @@ export class DecryptionFailureTracker {
     }
 
     private loadReportedEvents(): void {
-        const storedFailures = localStorage.getItem(DecryptionFailureTracker.DECRYPTION_FAILURE_STORAGE_KEY);
+        const storedFailures = localStorage.getItem(DECRYPTION_FAILURE_STORAGE_KEY);
         if (storedFailures) {
             this.reportedEvents = ScalableBloomFilter.fromJSON(JSON.parse(storedFailures));
         } else {
@@ -186,10 +186,7 @@ export class DecryptionFailureTracker {
     }
 
     private saveReportedEvents(): void {
-        localStorage.setItem(
-            DecryptionFailureTracker.DECRYPTION_FAILURE_STORAGE_KEY,
-            JSON.stringify(this.reportedEvents.saveAsJSON()),
-        );
+        localStorage.setItem(DECRYPTION_FAILURE_STORAGE_KEY, JSON.stringify(this.reportedEvents.saveAsJSON()));
     }
 
     /** Callback for when an event is decrypted.
