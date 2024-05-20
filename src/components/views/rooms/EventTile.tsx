@@ -1071,12 +1071,8 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         size={avatarSize}
                         viewUserOnClick={viewUserOnClick}
                         forceHistorical={this.props.mxEvent.getType() === EventType.RoomMember}
+                        includePauseInAriaLabel={true}
                     />
-                    {/**
-                     * The li elements rendered below include the div above in its aria-labelledby.
-                     * We render a hidden colon here so that screen readers will read out: `name : message` instead of `name message`.
-                     */}
-                    <span className="mx_EventTile_hiddenAvatarColon">:</span>
                 </div>
             );
         }

@@ -40,6 +40,8 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
     forceHistorical?: boolean; // true to deny `useOnlyCurrentProfiles` usage. Default false.
     hideTitle?: boolean;
     children?: ReactNode;
+    // Will append a dot to the aria-label if true
+    includePauseInAriaLabel?: boolean;
 }
 
 function MemberAvatar(
@@ -51,6 +53,7 @@ function MemberAvatar(
         fallbackUserId,
         hideTitle,
         member: propsMember,
+        includePauseInAriaLabel,
         ...props
     }: IProps,
     ref: Ref<HTMLElement>,
@@ -83,6 +86,13 @@ function MemberAvatar(
         }
     }
 
+    /**
+     * If this avatar is rendered in the event tile before the message, we append a dot to the
+     * aria-label so that assistive technologies read out `name <pause> message-content` instead
+     * of `name message-content`.
+     */
+    const ariaLabel = includePauseInAriaLabel ? `${member?.name}. ` : member?.name;
+
     return (
         <BaseAvatar
             {...props}
@@ -103,7 +113,7 @@ function MemberAvatar(
                       }
                     : props.onClick
             }
-            aria-label={name ?? ""}
+            aria-label={ariaLabel ?? ""}
             altText={_t("common|user_avatar")}
             ref={ref}
         />
