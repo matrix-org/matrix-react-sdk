@@ -17,7 +17,6 @@ limitations under the License.
 import {
     MatrixEvent,
     ClientEvent,
-    CryptoApi,
     EventType,
     MatrixClient,
     RoomStateEvent,
@@ -308,7 +307,7 @@ export default class DeviceListener {
         const crossSigningReady = await crypto.isCrossSigningReady();
         const secretStorageReady = await crypto.isSecretStorageReady();
         const allSystemsReady = crossSigningReady && secretStorageReady;
-        await this.reportCryptoSessionStateToAnalytics(crypto, cli, secretStorageReady);
+        await this.reportCryptoSessionStateToAnalytics(cli);
 
         if (this.dismissedThisDeviceToast || allSystemsReady) {
             hideSetupEncryptionToast();
@@ -417,24 +416,22 @@ export default class DeviceListener {
 
     /**
      * Reports current recovery state to analytics.
-     * Checks if the session is verified and if the recovery is correctly setup (i.e all secrets known locally and in 4S).
-     * @param crypto - the crypto module
+     * Checks if the session is verified and if the recovery is correctly set up (i.e all secrets known locally and in 4S).
      * @param cli - the matrix client
-     * @param secretStorageReady - if the secret storage is ready
      * @private
      */
-    private async reportCryptoSessionStateToAnalytics(
-        crypto: CryptoApi,
-        cli: MatrixClient,
-        secretStorageReady: boolean,
-    ): Promise<void> {
-        //
+    private async reportCryptoSessionStateToAnalytics(cli: MatrixClient): Promise<void> {
+        const crypto = cli.getCrypto()!;
+        const secretStorageReady = await crypto.isSecretStorageReady();
         const crossSigningStatus = await crypto.getCrossSigningStatus();
-        // const backupInfo = await crypto.getActiveSessionBackupVersion();
         const backupInfo = await this.getKeyBackupInfo();
         const is4SEnabled = (await cli.secretStorage.getDefaultKeyId()) != null;
+        const deviceVerificationStatus = await crypto.getDeviceVerificationStatus(cli.getUserId()!, cli.getDeviceId()!);
 
-        const verificationState = crossSigningStatus.publicKeysOnDevice ? "Verified" : "NotVerified";
+        const verificationState =
+            !!deviceVerificationStatus?.signedByOwner && !!deviceVerificationStatus?.crossSigningVerified
+                ? "Verified"
+                : "NotVerified";
 
         let recoveryState: "Disabled" | "Enabled" | "Incomplete";
         if (!is4SEnabled) {
@@ -445,8 +442,8 @@ export default class DeviceListener {
                 crossSigningStatus.privateKeysCachedLocally.selfSigningKey &&
                 crossSigningStatus.privateKeysCachedLocally.userSigningKey;
             if (backupInfo != null) {
-                // there is a backup check that all secrets are stored in 4s and known locally
-                // if they are not, the backup is incomplete
+                // There is a backup. Check that all secrets are stored in 4S and known locally.
+                // If they are not, recovery is incomplete.
                 const backupPrivateKeyIsInCache = (await crypto.getSessionBackupPrivateKey()) != null;
                 if (secretStorageReady && allCrossSigningSecretsCached && backupPrivateKeyIsInCache) {
                     recoveryState = "Enabled";
@@ -454,7 +451,7 @@ export default class DeviceListener {
                     recoveryState = "Incomplete";
                 }
             } else {
-                // no backup just consider cross-signing secrets
+                // No backup. Just consider cross-signing secrets.
                 if (allCrossSigningSecretsCached && crossSigningStatus.privateKeysInSecretStorage) {
                     recoveryState = "Enabled";
                 } else {

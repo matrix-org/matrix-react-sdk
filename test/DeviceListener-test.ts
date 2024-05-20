@@ -580,11 +580,41 @@ describe("DeviceListener", () => {
             });
 
             describe("Report crypto verification state to analytics", () => {
-                type VerificationTestCases = [string, Partial<CrossSigningStatus>, "Verified" | "NotVerified"];
+                type VerificationTestCases = [string, Partial<DeviceVerificationStatus>, "Verified" | "NotVerified"];
 
                 const testCases: VerificationTestCases[] = [
-                    ["Session is verified and all secrets cached", { publicKeysOnDevice: true }, "Verified"],
-                    ["Session is not verified", { publicKeysOnDevice: false }, "NotVerified"],
+                    [
+                        "Identity trusted and device is signed by owner",
+                        {
+                            signedByOwner: true,
+                            crossSigningVerified: true,
+                        },
+                        "Verified",
+                    ],
+                    [
+                        "Identity is trusted, but device is not signed",
+                        {
+                            signedByOwner: false,
+                            crossSigningVerified: true,
+                        },
+                        "NotVerified",
+                    ],
+                    [
+                        "Identity is not trusted, device not signed",
+                        {
+                            signedByOwner: false,
+                            crossSigningVerified: false,
+                        },
+                        "NotVerified",
+                    ],
+                    [
+                        "Identity is not trusted, and device signed",
+                        {
+                            signedByOwner: true,
+                            crossSigningVerified: false,
+                        },
+                        "NotVerified",
+                    ],
                 ];
 
                 beforeEach(() => {
@@ -593,7 +623,7 @@ describe("DeviceListener", () => {
                 });
 
                 it.each(testCases)("Does report session verification state when %s", async (_, status, expected) => {
-                    mockCrypto!.getCrossSigningStatus.mockResolvedValue(status as unknown as CrossSigningStatus);
+                    mockCrypto!.getDeviceVerificationStatus.mockResolvedValue(status as DeviceVerificationStatus);
                     await createAndStart();
 
                     // Should have updated user properties
@@ -609,9 +639,11 @@ describe("DeviceListener", () => {
                 });
 
                 it("should not report a status event if no changes", async () => {
-                    mockCrypto!.getCrossSigningStatus.mockResolvedValue({
-                        publicKeysOnDevice: true,
-                    } as unknown as CrossSigningStatus);
+                    mockCrypto!.getDeviceVerificationStatus.mockResolvedValue({
+                        signedByOwner: true,
+                        crossSigningVerified: true,
+                    } as unknown as DeviceVerificationStatus);
+
                     await createAndStart();
 
                     const expectedTrackedEvent: CryptoSessionStateChange = {
@@ -628,9 +660,10 @@ describe("DeviceListener", () => {
                     expect(trackEventSpy).toHaveBeenCalledTimes(1);
 
                     // Now simulate a change
-                    mockCrypto!.getCrossSigningStatus.mockResolvedValue({
-                        publicKeysOnDevice: false,
-                    } as unknown as CrossSigningStatus);
+                    mockCrypto!.getDeviceVerificationStatus.mockResolvedValue({
+                        signedByOwner: false,
+                        crossSigningVerified: true,
+                    } as unknown as DeviceVerificationStatus);
 
                     // simulate a recheck
                     mockClient.emit(CryptoEvent.DevicesUpdated, [userId], false);
@@ -640,6 +673,14 @@ describe("DeviceListener", () => {
             });
 
             describe("Report crypto recovery state to analytics", () => {
+                beforeEach(() => {
+                    // During all these tests we want verification state to be verified.
+                    mockCrypto!.getDeviceVerificationStatus.mockResolvedValue({
+                        signedByOwner: true,
+                        crossSigningVerified: true,
+                    } as unknown as DeviceVerificationStatus);
+                });
+
                 describe("When Room Key Backup is not enabled", () => {
                     beforeEach(() => {
                         // no backup
