@@ -37,7 +37,6 @@ describe("RoomProfileSetting", () => {
     beforeEach(() => {
         client = stubClient();
         room = mkStubRoom(ROOM_ID, "Test room", client);
-
     });
 
     it("uploads a room avatar", async () => {
