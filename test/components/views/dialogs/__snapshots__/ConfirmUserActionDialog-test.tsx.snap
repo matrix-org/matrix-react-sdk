@@ -41,12 +41,14 @@ exports[`ConfirmUserActionDialog renders 1`] = `
           class="mx_ConfirmUserActionDialog_avatar"
         >
           <span
+            aria-label="@user:test.com"
             class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
             data-color="3"
             data-testid="avatar-img"
             data-type="round"
             role="presentation"
             style="--cpd-avatar-size: 48px;"
+            tabindex="-1"
             title="@user:test.com"
           >
             u

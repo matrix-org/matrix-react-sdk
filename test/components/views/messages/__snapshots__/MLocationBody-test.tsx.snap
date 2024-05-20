@@ -83,12 +83,14 @@ exports[`MLocationBody <MLocationBody> without error renders marker correctly fo
               class="mx_Marker_border"
             >
               <span
+                aria-label="@user:server"
                 class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
                 data-color="3"
                 data-testid="avatar-img"
                 data-type="round"
                 role="presentation"
                 style="--cpd-avatar-size: 36px;"
+                tabindex="-1"
                 title="@user:server"
               >
                 u

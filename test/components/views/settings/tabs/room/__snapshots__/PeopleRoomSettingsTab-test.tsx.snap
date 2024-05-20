@@ -16,17 +16,19 @@ exports[`PeopleRoomSettingsTab with requests to join renders requests fully 1`] 
       class="mx_PeopleRoomSettingsTab_knock"
     >
       <span
-        aria-label="Profile picture"
+        aria-label="Albert Einstein"
         class="_avatar_mcap2_17 mx_BaseAvatar mx_PeopleRoomSettingsTab_avatar"
         data-color="4"
         data-testid="avatar-img"
         data-type="round"
         style="--cpd-avatar-size: 42px;"
+        tabindex="-1"
         title="@albert.einstein:example.org"
       >
         <img
           alt=""
           class="_image_mcap2_50"
+          crossorigin="anonymous"
           data-type="round"
           height="42px"
           loading="lazy"
@@ -109,12 +111,14 @@ exports[`PeopleRoomSettingsTab with requests to join renders requests reduced 1`
       class="mx_PeopleRoomSettingsTab_knock"
     >
       <span
+        aria-label="albert.einstein"
         class="_avatar_mcap2_17 mx_BaseAvatar mx_PeopleRoomSettingsTab_avatar _avatar-imageless_mcap2_61"
         data-color="4"
         data-testid="avatar-img"
         data-type="round"
         role="presentation"
         style="--cpd-avatar-size: 42px;"
+        tabindex="-1"
         title="@albert.einstein:example.org"
       >
         a

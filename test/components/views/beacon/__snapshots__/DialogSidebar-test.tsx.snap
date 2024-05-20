@@ -32,12 +32,14 @@ exports[`<DialogSidebar /> renders sidebar correctly with beacons 1`] = `
         class="mx_BeaconListItem"
       >
         <span
+          aria-label=""
           class="_avatar_mcap2_17 mx_BaseAvatar mx_BeaconListItem_avatar _avatar-imageless_mcap2_61"
           data-color="1"
           data-testid="avatar-img"
           data-type="round"
           role="presentation"
           style="--cpd-avatar-size: 32px;"
+          tabindex="-1"
         >
           
         </span>
