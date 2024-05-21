@@ -366,7 +366,7 @@ export class SlidingSyncManager {
             const clientWellKnown = await AutoDiscovery.findClientConfig(clientDomain);
             proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
         } catch (e) {
-            // client.getDomain() is null, we've thrown
+            // Either client.getDomain() is null so we've shorted out, or is invalid so `AutoDiscovery.findClientConfig` has thrown
         }
 
         if (proxyUrl != undefined) {
