@@ -910,6 +910,10 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
         );
     }
 
+    public focus(): void {
+        this.ref.current?.focus();
+    }
+
     public render(): ReactNode {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType();
