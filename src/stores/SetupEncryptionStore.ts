@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020, 2024 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,10 +17,9 @@ limitations under the License.
 import EventEmitter from "events";
 import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { Device } from "matrix-js-sdk/src/matrix";
+import { Device, SecretStorage } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { AccessCancelledError, accessSecretStorage } from "../SecurityManager";
@@ -29,6 +28,7 @@ import InteractiveAuthDialog from "../components/views/dialogs/InteractiveAuthDi
 import { _t } from "../languageHandler";
 import { SdkContextClass } from "../contexts/SDKContext";
 import { asyncSome } from "../utils/arrays";
+import { initialiseDehydration } from "../utils/device/dehydration";
 
 export enum Phase {
     Loading = 0,
@@ -48,7 +48,7 @@ export class SetupEncryptionStore extends EventEmitter {
     // ID of the key that the secrets we want are encrypted with
     public keyId: string | null = null;
     // Descriptor of the key that the secrets we want are encrypted with
-    public keyInfo: ISecretStorageKeyInfo | null = null;
+    public keyInfo: SecretStorage.SecretStorageKeyDescription | null = null;
     public hasDevicesToVerifyAgainst?: boolean;
 
     public static sharedInstance(): SetupEncryptionStore {
@@ -112,8 +112,12 @@ export class SetupEncryptionStore extends EventEmitter {
         const userDevices: Iterable<Device> =
             (await crypto.getUserDeviceInfo([ownUserId])).get(ownUserId)?.values() ?? [];
         this.hasDevicesToVerifyAgainst = await asyncSome(userDevices, async (device) => {
-            // ignore the dehydrated device
+            // Ignore dehydrated devices.  `dehydratedDevice` is set by the
+            // implementation of MSC2697, whereas MSC3814 proposes that devices
+            // should set a `dehydrated` flag in the device key.  We ignore
+            // both types of dehydrated devices.
             if (dehydratedDevice && device.deviceId == dehydratedDevice?.device_id) return false;
+            if (device.dehydrated) return false;
 
             // ignore devices without an identity key
             if (!device.getIdentityKey()) return false;
@@ -145,11 +149,17 @@ export class SetupEncryptionStore extends EventEmitter {
             await new Promise((resolve: (value?: unknown) => void, reject: (reason?: any) => void) => {
                 accessSecretStorage(async (): Promise<void> => {
                     await cli.checkOwnCrossSigningTrust();
+
+                    // The remaining tasks (device dehydration and restoring
+                    // key backup) may take some time due to processing many
+                    // to-device messages in the case of device dehydration, or
+                    // having many keys to restore in the case of key backups,
+                    // so we allow the dialog to advance before this.
                     resolve();
+
+                    await initialiseDehydration();
+
                     if (backupInfo) {
-                        // A complete restore can take many minutes for large
-                        // accounts / slow servers, so we allow the dialog
-                        // to advance before this.
                         await cli.restoreKeyBackupWithSecretStorage(backupInfo);
                     }
                 }).catch(reject);
@@ -256,6 +266,9 @@ export class SetupEncryptionStore extends EventEmitter {
                     },
                     setupNewCrossSigning: true,
                 });
+
+                await initialiseDehydration(true);
+
                 this.phase = Phase.Finished;
             }, true);
         } catch (e) {

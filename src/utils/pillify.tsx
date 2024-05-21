@@ -17,11 +17,10 @@ limitations under the License.
 import React from "react";
 import ReactDOM from "react-dom";
 import { PushProcessor } from "matrix-js-sdk/src/pushprocessor";
-import { MatrixEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
-import { TooltipProvider } from "@vector-im/compound-web";
+import { MatrixClient, MatrixEvent, RuleId } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "../settings/SettingsStore";
-import { Pill, PillType, pillRoomNotifLen, pillRoomNotifPos } from "../components/views/elements/Pill";
+import { Pill, pillRoomNotifLen, pillRoomNotifPos, PillType } from "../components/views/elements/Pill";
 import { parsePermalink } from "./permalinks/Permalinks";
 import { PermalinkParts } from "./permalinks/PermalinkConstructor";
 
@@ -84,9 +83,7 @@ export function pillifyLinks(
                 const pillContainer = document.createElement("span");
 
                 const pill = (
-                    <TooltipProvider>
-                        <Pill url={href} inMessage={true} room={room} shouldShowPillAvatar={shouldShowPillAvatar} />
-                    </TooltipProvider>
+                    <Pill url={href} inMessage={true} room={room} shouldShowPillAvatar={shouldShowPillAvatar} />
                 );
 
                 ReactDOM.render(pill, pillContainer);
@@ -127,7 +124,9 @@ export function pillifyLinks(
 
             if (roomNotifTextNodes.length > 0) {
                 const pushProcessor = new PushProcessor(matrixClient);
-                const atRoomRule = pushProcessor.getPushRuleById(".m.rule.roomnotif");
+                const atRoomRule = pushProcessor.getPushRuleById(
+                    mxEvent.getContent()["m.mentions"] !== undefined ? RuleId.IsRoomMention : RuleId.AtRoomNotification,
+                );
                 if (atRoomRule && pushProcessor.ruleMatchesEvent(atRoomRule, mxEvent)) {
                     // Now replace all those nodes with Pills
                     for (const roomNotifTextNode of roomNotifTextNodes) {
@@ -139,14 +138,12 @@ export function pillifyLinks(
 
                         const pillContainer = document.createElement("span");
                         const pill = (
-                            <TooltipProvider>
-                                <Pill
-                                    type={PillType.AtRoomMention}
-                                    inMessage={true}
-                                    room={room}
-                                    shouldShowPillAvatar={shouldShowPillAvatar}
-                                />
-                            </TooltipProvider>
+                            <Pill
+                                type={PillType.AtRoomMention}
+                                inMessage={true}
+                                room={room}
+                                shouldShowPillAvatar={shouldShowPillAvatar}
+                            />
                         );
 
                         ReactDOM.render(pill, pillContainer);

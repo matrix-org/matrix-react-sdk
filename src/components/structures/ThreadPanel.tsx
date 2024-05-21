@@ -17,14 +17,17 @@ limitations under the License.
 import { Optional } from "matrix-events-sdk";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { EventTimelineSet, Room, Thread } from "matrix-js-sdk/src/matrix";
+import { IconButton, Tooltip } from "@vector-im/compound-web";
+import { logger } from "matrix-js-sdk/src/logger";
 
+import { Icon as MarkAllThreadsReadIcon } from "../../../res/img/element-icons/check-all.svg";
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from "../../utils/ResizeNotifier";
-import MatrixClientContext from "../../contexts/MatrixClientContext";
+import MatrixClientContext, { useMatrixClientContext } from "../../contexts/MatrixClientContext";
 import { _t } from "../../languageHandler";
 import { ContextMenuButton } from "../../accessibility/context_menu/ContextMenuButton";
 import ContextMenu, { ChevronFace, MenuItemRadio, useContextMenu } from "./ContextMenu";
-import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
+import RoomContext, { TimelineRenderingType, useRoomContext } from "../../contexts/RoomContext";
 import TimelinePanel from "./TimelinePanel";
 import { Layout } from "../../settings/enums/Layout";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
@@ -33,6 +36,10 @@ import PosthogTrackers from "../../PosthogTrackers";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
 import Spinner from "../views/elements/Spinner";
 import Heading from "../views/typography/Heading";
+import { clearRoomNotification } from "../../utils/notifications";
+import { useDispatcher } from "../../hooks/useDispatcher";
+import dis from "../../dispatcher/dispatcher";
+import { Action } from "../../dispatcher/actions";
 
 interface IProps {
     roomId: string;
@@ -71,6 +78,8 @@ export const ThreadPanelHeader: React.FC<{
     setFilterOption: (filterOption: ThreadFilterType) => void;
     empty: boolean;
 }> = ({ filterOption, setFilterOption, empty }) => {
+    const mxClient = useMatrixClientContext();
+    const roomContext = useRoomContext();
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu<HTMLElement>();
     const options: readonly ThreadPanelHeaderOption[] = [
         {
@@ -109,6 +118,26 @@ export const ThreadPanelHeader: React.FC<{
             {contextMenuOptions}
         </ContextMenu>
     ) : null;
+
+    const onMarkAllThreadsReadClick = React.useCallback(
+        (e) => {
+            PosthogTrackers.trackInteraction("WebThreadsMarkAllReadButton", e);
+            if (!roomContext.room) {
+                logger.error("No room in context to mark all threads read");
+                return;
+            }
+            // This actually clears all room notifications by sending an unthreaded read receipt.
+            // We'd have to loop over all unread threads (pagninating back to find any we don't
+            // know about yet) and send threaded receipts for all of them... or implement a
+            // specific API for it. In practice, the user will have to be viewing the room to
+            // see this button, so will have marked the room itself read anyway.
+            clearRoomNotification(roomContext.room, mxClient).catch((e) => {
+                logger.error("Failed to mark all threads read", e);
+            });
+        },
+        [roomContext.room, mxClient],
+    );
+
     return (
         <div className="mx_BaseCard_header_title">
             <Heading size="4" className="mx_BaseCard_header_title_heading">
@@ -116,6 +145,16 @@ export const ThreadPanelHeader: React.FC<{
             </Heading>
             {!empty && (
                 <>
+                    <Tooltip label={_t("threads|mark_all_read")}>
+                        <IconButton
+                            onClick={onMarkAllThreadsReadClick}
+                            aria-label={_t("threads|mark_all_read")}
+                            size="24px"
+                        >
+                            <MarkAllThreadsReadIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <div className="mx_ThreadPanel_vertical_separator" />
                     <ContextMenuButton
                         className="mx_ThreadPanel_dropdown"
                         ref={button}
@@ -193,6 +232,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     const roomContext = useContext(RoomContext);
     const timelinePanel = useRef<TimelinePanel | null>(null);
     const card = useRef<HTMLDivElement | null>(null);
+    const closeButonRef = useRef<HTMLDivElement | null>(null);
 
     const [filterOption, setFilterOption] = useState<ThreadFilterType>(ThreadFilterType.All);
     const [room, setRoom] = useState<Room | null>(null);
@@ -219,6 +259,14 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
         }
     }, [timelineSet, timelinePanel]);
 
+    useDispatcher(dis, (payload) => {
+        // This actually foucses the close button on the threads panel, as its the only interactive element,
+        // but at least it puts the user in the right area of the app.
+        if (payload.action === Action.FocusThreadsPanel) {
+            closeButonRef.current?.focus();
+        }
+    });
+
     return (
         <RoomContext.Provider
             value={{
@@ -240,6 +288,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                 onClose={onClose}
                 withoutScrollContainer={true}
                 ref={card}
+                closeButtonRef={closeButonRef}
             >
                 {card.current && <Measured sensor={card.current} onMeasurement={setNarrow} />}
                 {timelineSet ? (

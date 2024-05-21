@@ -14,8 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DeviceVerificationStatus, ICryptoCallbacks, MatrixClient, encodeBase64 } from "matrix-js-sdk/src/matrix";
-import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
+import {
+    DeviceVerificationStatus,
+    ICryptoCallbacks,
+    MatrixClient,
+    encodeBase64,
+    SecretStorage,
+} from "matrix-js-sdk/src/matrix";
 import { deriveKey } from "matrix-js-sdk/src/crypto/key_passphrase";
 import { decodeRecoveryKey } from "matrix-js-sdk/src/crypto/recoverykey";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -28,7 +33,7 @@ import { isSecureBackupRequired } from "./utils/WellKnownUtils";
 import AccessSecretStorageDialog, { KeyParams } from "./components/views/dialogs/security/AccessSecretStorageDialog";
 import RestoreKeyBackupDialog from "./components/views/dialogs/security/RestoreKeyBackupDialog";
 import SettingsStore from "./settings/SettingsStore";
-import SecurityCustomisations from "./customisations/Security";
+import { ModuleRunner } from "./modules/ModuleRunner";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDialog";
 
@@ -38,14 +43,14 @@ import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDia
 // single secret storage operation, as it will clear the cached keys once the
 // operation ends.
 let secretStorageKeys: Record<string, Uint8Array> = {};
-let secretStorageKeyInfo: Record<string, ISecretStorageKeyInfo> = {};
+let secretStorageKeyInfo: Record<string, SecretStorage.SecretStorageKeyDescription> = {};
 let secretStorageBeingAccessed = false;
 
 let nonInteractive = false;
 
 let dehydrationCache: {
     key?: Uint8Array;
-    keyInfo?: ISecretStorageKeyInfo;
+    keyInfo?: SecretStorage.SecretStorageKeyDescription;
 } = {};
 
 function isCachingAllowed(): boolean {
@@ -80,7 +85,9 @@ async function confirmToDismiss(): Promise<boolean> {
     return !sure;
 }
 
-function makeInputToKey(keyInfo: ISecretStorageKeyInfo): (keyParams: KeyParams) => Promise<Uint8Array> {
+function makeInputToKey(
+    keyInfo: SecretStorage.SecretStorageKeyDescription,
+): (keyParams: KeyParams) => Promise<Uint8Array> {
     return async ({ passphrase, recoveryKey }): Promise<Uint8Array> => {
         if (passphrase) {
             return deriveKey(passphrase, keyInfo.passphrase.salt, keyInfo.passphrase.iterations);
@@ -94,11 +101,11 @@ function makeInputToKey(keyInfo: ISecretStorageKeyInfo): (keyParams: KeyParams) 
 async function getSecretStorageKey({
     keys: keyInfos,
 }: {
-    keys: Record<string, ISecretStorageKeyInfo>;
+    keys: Record<string, SecretStorage.SecretStorageKeyDescription>;
 }): Promise<[string, Uint8Array]> {
     const cli = MatrixClientPeg.safeGet();
     let keyId = await cli.getDefaultSecretStorageKeyId();
-    let keyInfo!: ISecretStorageKeyInfo;
+    let keyInfo!: SecretStorage.SecretStorageKeyDescription;
     if (keyId) {
         // use the default SSSS key if set
         keyInfo = keyInfos[keyId];
@@ -130,9 +137,9 @@ async function getSecretStorageKey({
         }
     }
 
-    const keyFromCustomisations = SecurityCustomisations.getSecretStorageKey?.();
+    const keyFromCustomisations = ModuleRunner.instance.extensions.cryptoSetup.getSecretStorageKey();
     if (keyFromCustomisations) {
-        logger.log("Using key from security customisations (secret storage)");
+        logger.log("CryptoSetupExtension: Using key from extension (secret storage)");
         cacheSecretStorageKey(keyId, keyInfo, keyFromCustomisations);
         return [keyId, keyFromCustomisations];
     }
@@ -177,12 +184,12 @@ async function getSecretStorageKey({
 }
 
 export async function getDehydrationKey(
-    keyInfo: ISecretStorageKeyInfo,
+    keyInfo: SecretStorage.SecretStorageKeyDescription,
     checkFunc: (data: Uint8Array) => void,
 ): Promise<Uint8Array> {
-    const keyFromCustomisations = SecurityCustomisations.getSecretStorageKey?.();
+    const keyFromCustomisations = ModuleRunner.instance.extensions.cryptoSetup.getSecretStorageKey();
     if (keyFromCustomisations) {
-        logger.log("Using key from security customisations (dehydration)");
+        logger.log("CryptoSetupExtension: Using key from extension (dehydration)");
         return keyFromCustomisations;
     }
 
@@ -226,7 +233,11 @@ export async function getDehydrationKey(
     return key;
 }
 
-function cacheSecretStorageKey(keyId: string, keyInfo: ISecretStorageKeyInfo, key: Uint8Array): void {
+function cacheSecretStorageKey(
+    keyId: string,
+    keyInfo: SecretStorage.SecretStorageKeyDescription,
+    key: Uint8Array,
+): void {
     if (isCachingAllowed()) {
         secretStorageKeys[keyId] = key;
         secretStorageKeyInfo[keyId] = keyInfo;
@@ -419,7 +430,7 @@ async function doAccessSecretStorage(func: () => Promise<void>, forceReset: bool
         // inner operation completes.
         return await func();
     } catch (e) {
-        SecurityCustomisations.catchAccessSecretStorageError?.(e);
+        ModuleRunner.instance.extensions.cryptoSetup.catchAccessSecretStorageError(e as Error);
         logger.error(e);
         // Re-throw so that higher level logic can abort as needed
         throw e;

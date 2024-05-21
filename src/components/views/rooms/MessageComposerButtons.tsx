@@ -19,12 +19,11 @@ import { IEventRelation, Room, MatrixClient, THREAD_RELATION_TYPE, M_POLL_START 
 import React, { createContext, ReactElement, ReactNode, useContext, useRef } from "react";
 
 import { _t } from "../../../languageHandler";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { CollapsibleButton } from "./CollapsibleButton";
 import { MenuProps } from "../../structures/ContextMenu";
 import dis from "../../../dispatcher/dispatcher";
 import ErrorDialog from "../dialogs/ErrorDialog";
-import LocationButton from "../location/LocationButton";
+import { LocationButton } from "../location";
 import Modal from "../../../Modal";
 import PollCreateDialog from "../elements/PollCreateDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -37,7 +36,7 @@ import IconizedContextMenu, { IconizedContextMenuOptionList } from "../context_m
 import { EmojiButton } from "./EmojiButton";
 import { filterBoolean } from "../../../utils/arrays";
 import { useSettingValue } from "../../../hooks/useSettings";
-import { ButtonEvent } from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -128,7 +127,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         <UploadButtonContextProvider roomId={room.roomId} relation={props.relation}>
             {mainButtons}
             {moreButtons.length > 0 && (
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className={moreOptionsClasses}
                     onClick={props.toggleButtonMenu}
                     title={_t("quick_settings|sidebar_settings")}

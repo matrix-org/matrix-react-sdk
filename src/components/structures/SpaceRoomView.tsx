@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { EventType, RoomType, JoinRule, Preset, Room, RoomEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 import React, { useCallback, useContext, useRef, useState } from "react";
 
@@ -59,7 +60,6 @@ import {
     defaultRoomsRenderer,
 } from "../views/dialogs/AddExistingToSpaceDialog";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
-import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import ErrorBoundary from "../views/elements/ErrorBoundary";
 import Field from "../views/elements/Field";
 import RoomFacePile from "../views/elements/RoomFacePile";
@@ -237,7 +237,7 @@ const SpaceLanding: React.FC<{ space: Room }> = ({ space }) => {
     }
 
     const hasAddRoomPermissions =
-        myMembership === "join" && space.currentState.maySendStateEvent(EventType.SpaceChild, userId);
+        myMembership === KnownMembership.Join && space.currentState.maySendStateEvent(EventType.SpaceChild, userId);
 
     let addRoomButton;
     if (hasAddRoomPermissions) {
@@ -247,12 +247,13 @@ const SpaceLanding: React.FC<{ space: Room }> = ({ space }) => {
     let settingsButton;
     if (shouldShowSpaceSettings(space)) {
         settingsButton = (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 className="mx_SpaceRoomView_landing_settingsButton"
                 onClick={() => {
                     showSpaceSettings(space);
                 }}
                 title={_t("common|settings")}
+                placement="bottom"
             />
         );
     }
@@ -678,7 +679,7 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
     private renderBody(): JSX.Element {
         switch (this.state.phase) {
             case Phase.Landing:
-                if (this.state.myMembership === "join") {
+                if (this.state.myMembership === KnownMembership.Join) {
                     return <SpaceLanding space={this.props.space} />;
                 } else {
                     return (

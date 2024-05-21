@@ -17,8 +17,8 @@ limitations under the License.
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { EventType, MatrixEvent, Room, MatrixClient, JoinRule } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { mocked, MockedObject } from "jest-mock";
-import { TooltipProvider } from "@vector-im/compound-web";
 
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import RoomSummaryCard from "../../../../src/components/views/right_panel/RoomSummaryCard";
@@ -56,9 +56,7 @@ describe("<RoomSummaryCard />", () => {
 
         return render(<RoomSummaryCard {...defaultProps} {...props} />, {
             wrapper: ({ children }) => (
-                <MatrixClientContext.Provider value={mockClient}>
-                    <TooltipProvider>{children}</TooltipProvider>
-                </MatrixClientContext.Provider>
+                <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
             ),
         });
     };
@@ -86,7 +84,7 @@ describe("<RoomSummaryCard />", () => {
             state_key: "",
         });
         room.currentState.setStateEvents([roomCreateEvent]);
-        room.updateMyMembership("join");
+        room.updateMyMembership(KnownMembership.Join);
 
         jest.spyOn(Modal, "createDialog");
         jest.spyOn(RightPanelStore.instance, "pushCard");
@@ -106,6 +104,40 @@ describe("<RoomSummaryCard />", () => {
 
     it("renders the room summary", () => {
         const { container } = getComponent();
+        expect(container).toMatchSnapshot();
+    });
+
+    it("renders the room topic in the summary", () => {
+        room.currentState.setStateEvents([
+            new MatrixEvent({
+                type: "m.room.topic",
+                room_id: roomId,
+                sender: userId,
+                content: {
+                    topic: "This is the room's topic.",
+                },
+                state_key: "",
+            }),
+        ]);
+        const { container } = getComponent();
+        expect(container).toMatchSnapshot();
+    });
+
+    it("has button to edit topic when expanded", () => {
+        room.currentState.setStateEvents([
+            new MatrixEvent({
+                type: "m.room.topic",
+                room_id: roomId,
+                sender: userId,
+                content: {
+                    topic: "This is the room's topic.",
+                },
+                state_key: "",
+            }),
+        ]);
+        const { container, getByText } = getComponent();
+        fireEvent.click(screen.getByText("This is the room's topic."));
+        expect(getByText("Edit")).toBeInTheDocument();
         expect(container).toMatchSnapshot();
     });
 

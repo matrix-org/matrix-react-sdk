@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React, {
-    ComponentProps,
     Dispatch,
     KeyboardEvent,
     KeyboardEventHandler,
@@ -41,11 +40,13 @@ import {
     HistoryVisibility,
     HierarchyRelation,
     HierarchyRoom,
+    JoinRule,
 } from "matrix-js-sdk/src/matrix";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
 import classNames from "classnames";
 import { sortBy, uniqBy } from "lodash";
 import { logger } from "matrix-js-sdk/src/logger";
+import { KnownMembership, SpaceChildEventContent } from "matrix-js-sdk/src/types";
 
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { _t } from "../../languageHandler";
@@ -60,7 +61,6 @@ import InfoTooltip from "../views/elements/InfoTooltip";
 import TextWithTooltip from "../views/elements/TextWithTooltip";
 import { useStateToggle } from "../../hooks/useStateToggle";
 import { getChildOrder } from "../../stores/spaces/SpaceStore";
-import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { Linkify, topicToHtml } from "../../HtmlUtils";
 import { useDispatcher } from "../../hooks/useDispatcher";
 import { Action } from "../../dispatcher/actions";
@@ -73,7 +73,6 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { JoinRoomReadyPayload } from "../../dispatcher/payloads/JoinRoomReadyPayload";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
-import { Alignment } from "../views/elements/Tooltip";
 import { getTopic } from "../../hooks/room/useTopic";
 import { SdkContextClass } from "../../contexts/SDKContext";
 import { getDisplayAliasForAliasSet } from "../../Rooms";
@@ -112,7 +111,7 @@ const Tile: React.FC<ITileProps> = ({
     const cli = useContext(MatrixClientContext);
     const joinedRoom = useTypedEventEmitterState(cli, ClientEvent.Room, () => {
         const cliRoom = cli?.getRoom(room.room_id);
-        return cliRoom?.getMyMembership() === "join" ? cliRoom : undefined;
+        return cliRoom?.getMyMembership() === KnownMembership.Join ? cliRoom : undefined;
     });
     const joinedRoomName = useTypedEventEmitterState(joinedRoom, RoomEvent.Name, (room) => room?.name);
     const name =
@@ -135,17 +134,18 @@ const Tile: React.FC<ITileProps> = ({
         setBusy(true);
         ev.preventDefault();
         ev.stopPropagation();
-        onJoinRoomClick()
-            .then(() => awaitRoomDownSync(cli, room.room_id))
-            .finally(() => {
-                setBusy(false);
-            });
+        try {
+            await onJoinRoomClick();
+            await awaitRoomDownSync(cli, room.room_id);
+        } finally {
+            setBusy(false);
+        }
     };
 
     let button: ReactElement;
     if (busy) {
         button = (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 disabled={true}
                 onClick={onJoinClick}
                 kind="primary_outline"
@@ -154,9 +154,11 @@ const Tile: React.FC<ITileProps> = ({
                 title={_t("space|joining_space")}
             >
                 <Spinner w={24} h={24} />
-            </AccessibleTooltipButton>
+            </AccessibleButton>
         );
-    } else if (joinedRoom) {
+    } else if (joinedRoom || room.join_rule === JoinRule.Knock) {
+        // If the room is knockable, show the "View" button even if we are not a member; that
+        // allows us to reuse the "request to join" UX in RoomView.
         button = (
             <AccessibleButton
                 onClick={onPreviewClick}
@@ -417,7 +419,8 @@ export const joinRoom = async (cli: MatrixClient, hierarchy: RoomHierarchy, room
             );
         }
 
-        return;
+        // rethrow error so that the caller can handle react to it too
+        throw err;
     }
 
     defaultDispatcher.dispatch<JoinRoomReadyPayload>({
@@ -664,25 +667,16 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
 
     const disabled = !selectedRelations.length || removing || saving;
 
-    let Button: React.ComponentType<React.ComponentProps<typeof AccessibleButton>> = AccessibleButton;
-    let props: Partial<ComponentProps<typeof AccessibleTooltipButton>> = {};
-    if (!selectedRelations.length) {
-        Button = AccessibleTooltipButton;
-        props = {
-            tooltip: _t("space|select_room_below"),
-            alignment: Alignment.Top,
-        };
-    }
-
     let buttonText = _t("common|saving");
     if (!saving) {
         buttonText = selectionAllSuggested ? _t("space|unmark_suggested") : _t("space|mark_suggested");
     }
 
+    const title = !selectedRelations.length ? _t("space|select_room_below") : undefined;
+
     return (
         <>
-            <Button
-                {...props}
+            <AccessibleButton
                 onClick={async (): Promise<void> => {
                     setRemoving(true);
                     try {
@@ -713,11 +707,13 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
                 }}
                 kind="danger_outline"
                 disabled={disabled}
+                aria-label={removing ? _t("redact|ongoing") : _t("action|remove")}
+                title={title}
+                placement="top"
             >
                 {removing ? _t("redact|ongoing") : _t("action|remove")}
-            </Button>
-            <Button
-                {...props}
+            </AccessibleButton>
+            <AccessibleButton
                 onClick={async (): Promise<void> => {
                     setSaving(true);
                     try {
@@ -726,7 +722,7 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
                             const existingContent = hierarchy.getRelation(parentId, childId)?.content;
                             if (!existingContent || existingContent.suggested === suggested) continue;
 
-                            const content = {
+                            const content: SpaceChildEventContent = {
                                 ...existingContent,
                                 suggested: !selectionAllSuggested,
                             };
@@ -744,9 +740,12 @@ const ManageButtons: React.FC<IManageButtonsProps> = ({ hierarchy, selected, set
                 }}
                 kind="primary_outline"
                 disabled={disabled}
+                aria-label={buttonText}
+                title={title}
+                placement="top"
             >
                 {buttonText}
-            </Button>
+            </AccessibleButton>
         </>
     );
 };
@@ -828,7 +827,7 @@ const SpaceHierarchy: React.FC<IProps> = ({ space, initialText = "", showRoom, a
                     content = <Spinner />;
                 } else {
                     const hasPermissions =
-                        space?.getMyMembership() === "join" &&
+                        space?.getMyMembership() === KnownMembership.Join &&
                         space.currentState.maySendStateEvent(EventType.SpaceChild, cli.getSafeUserId());
 
                     const root = hierarchy.roomMap.get(space.roomId);
@@ -846,7 +845,7 @@ const SpaceHierarchy: React.FC<IProps> = ({ space, initialText = "", showRoom, a
                                     onViewRoomClick={(roomId, roomType) => showRoom(cli, hierarchy, roomId, roomType)}
                                     onJoinRoomClick={async (roomId, parents) => {
                                         for (const parent of parents) {
-                                            if (cli.getRoom(parent)?.getMyMembership() !== "join") {
+                                            if (cli.getRoom(parent)?.getMyMembership() !== KnownMembership.Join) {
                                                 await joinRoom(cli, hierarchy, parent);
                                             }
                                         }

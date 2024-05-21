@@ -18,8 +18,8 @@ limitations under the License.
 import React from "react";
 import { EventEmitter } from "events";
 import { MatrixEvent, Room, RoomMember, Thread, ReceiptType } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { render } from "@testing-library/react";
-import { TooltipProvider } from "@vector-im/compound-web";
 
 import MessagePanel, { shouldFormContinuation } from "../../../src/components/structures/MessagePanel";
 import SettingsStore from "../../../src/settings/SettingsStore";
@@ -98,9 +98,7 @@ describe("MessagePanel", function () {
     const getComponent = (props = {}, roomContext: Partial<IRoomState> = {}) => (
         <MatrixClientContext.Provider value={client}>
             <RoomContext.Provider value={{ ...defaultRoomContext, ...roomContext }}>
-                <TooltipProvider>
-                    <MessagePanel {...defaultProps} {...props} />
-                </TooltipProvider>
+                <MessagePanel {...defaultProps} {...props} />
             </RoomContext.Provider>
         </MatrixClientContext.Provider>
     );
@@ -171,8 +169,8 @@ describe("MessagePanel", function () {
                     user: "@user:id",
                     target: bobMember,
                     ts: ts0 + i * 1000,
-                    mship: "join",
-                    prevMship: "join",
+                    mship: KnownMembership.Join,
+                    prevMship: KnownMembership.Join,
                     name: "A user",
                 }),
             );
@@ -205,8 +203,8 @@ describe("MessagePanel", function () {
                     user: "@user:id",
                     target: bobMember,
                     ts: ts0 + i * 1000,
-                    mship: "join",
-                    prevMship: "join",
+                    mship: KnownMembership.Join,
+                    prevMship: KnownMembership.Join,
                     name: "A user",
                 }),
             );
@@ -245,7 +243,7 @@ describe("MessagePanel", function () {
                 user: alice,
                 target: aliceMember,
                 ts: ts0 + 1,
-                mship: "join",
+                mship: KnownMembership.Join,
                 name: "Alice",
             }),
             mkEvent({
@@ -285,7 +283,7 @@ describe("MessagePanel", function () {
                 skey: "@bob:example.org",
                 target: bobMember,
                 ts: ts0 + 5,
-                mship: "invite",
+                mship: KnownMembership.Invite,
                 name: "Bob",
             }),
         ];
@@ -542,8 +540,8 @@ describe("MessagePanel", function () {
                 user: "@user:id",
                 target: bobMember,
                 ts: Date.now(),
-                mship: "join",
-                prevMship: "join",
+                mship: KnownMembership.Join,
+                prevMship: KnownMembership.Join,
                 name: "A user",
             }),
         ];
@@ -571,8 +569,8 @@ describe("MessagePanel", function () {
                 user: "@user:id",
                 target: bobMember,
                 ts: Date.now(),
-                mship: "join",
-                prevMship: "join",
+                mship: KnownMembership.Join,
+                prevMship: KnownMembership.Join,
                 name: "A user",
             }),
             ...events,
@@ -695,8 +693,8 @@ describe("MessagePanel", function () {
         for (let i = 0; i < 100; i++) {
             events.push(
                 TestUtilsMatrix.mkMembership({
-                    mship: "join",
-                    prevMship: "join",
+                    mship: KnownMembership.Join,
+                    prevMship: KnownMembership.Join,
                     room: "!room:id",
                     user: "@user:id",
                     event: true,
@@ -716,8 +714,8 @@ describe("MessagePanel", function () {
         for (let i = 0; i < 100; i++) {
             events.push(
                 TestUtilsMatrix.mkMembership({
-                    mship: "join",
-                    prevMship: "join",
+                    mship: KnownMembership.Join,
+                    prevMship: KnownMembership.Join,
                     room: "!room:id",
                     user: "@user:id",
                     event: true,
