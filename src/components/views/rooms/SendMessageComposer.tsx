@@ -312,10 +312,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const navAction = getKeyBindingsManager().getNavigationAction(event);
         switch (navAction) {
             case KeyBindingAction.SelectPrevMessage:
-                (
-                    document.querySelector<HTMLElement>(".mx_EventTile_selected") ||
-                    document.querySelector<HTMLElement>(".mx_EventTile_last")
-                )?.focus();
+                dis.dispatch({ action: Action.FocusLastTile });
                 event.preventDefault();
                 event.stopPropagation();
                 return;

@@ -57,6 +57,7 @@ import { CreationGrouper } from "./grouper/CreationGrouper";
 import { _t } from "../../languageHandler";
 import { getLateEventInfo } from "./grouper/LateEventGrouper";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import { ActionPayload } from "../../dispatcher/payloads";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
@@ -261,6 +262,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     private readonly showTypingNotificationsWatcherRef: string;
     private eventTiles: Record<string, UnwrappedEventTile> = {};
 
+    private dispatcherRef: string;
+
     // A map to allow groupers to maintain consistent keys even if their first event is uprooted due to back-pagination.
     public grouperKeyMap = new WeakMap<MatrixEvent, string>();
 
@@ -285,7 +288,21 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             null,
             this.onShowTypingNotificationsChange,
         );
+        this.dispatcherRef = defaultDispatcher.register(this.onAction);
     }
+
+    private onAction = (payload: ActionPayload): void => {
+        if (payload.action === Action.FocusLastTile) {
+            for (let i = this.props.events.length - 1; i >= 0; --i) {
+                const event = this.props.events[i];
+                if (this.shouldShowEvent(event)) {
+                    const id = event.getId();
+                    this.getTileForEventId(id)?.focus();
+                    return;
+                }
+            }
+        }
+    };
 
     public componentDidMount(): void {
         this.calculateRoomMembersCount();
@@ -294,6 +311,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
+        defaultDispatcher.unregister(this.dispatcherRef);
         this.isMounted = false;
         this.props.room?.currentState.off(RoomStateEvent.Update, this.calculateRoomMembersCount);
         SettingsStore.unwatchSetting(this.showTypingNotificationsWatcherRef);

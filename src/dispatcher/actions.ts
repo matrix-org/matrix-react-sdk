@@ -97,6 +97,11 @@ export enum Action {
     FocusThreadsPanel = "focus_threads_panel",
 
     /**
+     * Focuses last event tile in the timeline.
+     */
+    FocusLastTile = "focus_last_tile",
+
+    /**
      * Opens the user menu (previously known as the top left menu). No additional payload information required.
      */
     ToggleUserMenu = "toggle_user_menu",
