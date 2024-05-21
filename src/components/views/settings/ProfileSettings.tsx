@@ -34,6 +34,7 @@ interface IState {
     displayName: string;
     originalAvatarUrl: string | null;
     avatarFile?: File | null;
+    // If true, the user has indicated that they wish to remove the avatar and this should happen on save.
     avatarRemovalPending: boolean;
     enableProfileSave?: boolean;
 }
