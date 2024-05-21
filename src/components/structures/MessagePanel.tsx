@@ -449,8 +449,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                 return { event, shouldShow: this.shouldShowEvent(event) };
             });
             const currentEventId =
-                this.focusedEventId ||
-                this.props.highlightedEventId ||
+                this.focusedEventId ??
+                this.props.highlightedEventId ??
                 events
                     .reduce(
                         // Get the id of the last event in the list that's shown.
