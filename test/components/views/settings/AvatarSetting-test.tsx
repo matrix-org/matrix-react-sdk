@@ -59,7 +59,7 @@ describe("<AvatarSetting />", () => {
         expect(removeButton).toBeNull();
     });
 
-    it("render a file as the avatar when supplied", async () => {
+    it("renders a file as the avatar when supplied", async () => {
         render(<AvatarSetting avatarAltText="Avatar of Peter Fox" avatar={AVATAR_FILE} />);
 
         const imgElement = await screen.findByRole("button", { name: "Avatar of Peter Fox" });
@@ -67,7 +67,7 @@ describe("<AvatarSetting />", () => {
         expect(imgElement).toHaveAttribute("src", "data:image/gif;base64," + BASE64_GIF);
     });
 
-    it("uploading a file triggers onchange", async () => {
+    it("calls onChange when a file is uploaded", async () => {
         const onChange = jest.fn();
         const user = userEvent.setup();
 

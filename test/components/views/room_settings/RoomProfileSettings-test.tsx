@@ -39,7 +39,7 @@ describe("RoomProfileSetting", () => {
         room = mkStubRoom(ROOM_ID, "Test room", client);
     });
 
-    it("uploads a room avatar", async () => {
+    it("handles uploading a room avatar", async () => {
         const user = userEvent.setup();
         mocked(client.uploadContent).mockResolvedValue({ content_uri: "mxc://matrix.org/1234" });
 
