@@ -429,7 +429,7 @@ export default class DeviceListener {
         const deviceVerificationStatus = await crypto.getDeviceVerificationStatus(cli.getUserId()!, cli.getDeviceId()!);
 
         const verificationState =
-            !!deviceVerificationStatus?.signedByOwner && !!deviceVerificationStatus?.crossSigningVerified
+            deviceVerificationStatus?.signedByOwner && deviceVerificationStatus?.crossSigningVerified
                 ? "Verified"
                 : "NotVerified";
 
