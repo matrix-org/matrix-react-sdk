@@ -19,38 +19,13 @@ limitations under the License.
 
     .mx_ProfileSettings_profile {
         display: flex;
+        margin-top: var(--cpd-space-6x);
+        gap: 16px;
+        // This is temporary until the 'Remove' link is replaced by a context menu.
+        margin-bottom: 20px;
 
-        .mx_ProfileSettings_profile_controls {
+        .mx_ProfileSettings_profile_displayName {
             flex-grow: 1;
-            margin-inline-end: 54px;
-
-            .mx_Field {
-                margin-top: $spacing-8;
-            }
-
-            .mx_ProfileSettings_profile_controls_topic {
-                margin-top: $spacing-8;
-
-                & > textarea {
-                    font-family: inherit;
-                    resize: vertical;
-                }
-
-                &.mx_ProfileSettings_profile_controls_topic--room textarea {
-                    min-height: 4em;
-                }
-            }
-
-            .mx_ProfileSettings_profile_controls_userId {
-                margin-inline-end: $spacing-20;
-            }
         }
-    }
-
-    .mx_ProfileSettings_buttons {
-        display: flex;
-        gap: var(--cpd-space-4x);
-        margin-top: 10px; /* 18px is already accounted for by the <p> above the buttons */
-        margin-bottom: $spacing-28;
     }
 }

@@ -597,7 +597,10 @@ legend {
  * Elements that should not be styled like a dialog button are mentioned in a :not() pseudo-class.
  * For the widest browser support, we use multiple :not pseudo-classes instead of :not(.a, .b).
  */
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton),
+.mx_Dialog
+    button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton):not(
+        .mx_ProfileSettings button
+    ),
 .mx_Dialog input[type="submit"],
 .mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton),
 .mx_Dialog_buttons input[type="submit"] {

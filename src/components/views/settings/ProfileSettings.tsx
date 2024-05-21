@@ -14,185 +14,74 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
+import { EditInPlace } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import Field from "../elements/Field";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
-import Modal from "../../../Modal";
-import ErrorDialog from "../dialogs/ErrorDialog";
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import AvatarSetting from "./AvatarSetting";
-import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 import PosthogTrackers from "../../../PosthogTrackers";
-import { SettingsSubsectionHeading } from "./shared/SettingsSubsectionHeading";
 
-interface IState {
-    originalDisplayName: string;
-    displayName: string;
-    originalAvatarUrl: string | null;
-    avatarFile?: File | null;
-    // If true, the user has indicated that they wish to remove the avatar and this should happen on save.
-    avatarRemovalPending: boolean;
-    enableProfileSave?: boolean;
-}
+const ProfileSettings: React.FC = () => {
+    const [avatarURL, setAvatarURL] = useState(OwnProfileStore.instance.avatarMxc);
+    const [displayName, setDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
+    const [initialDisplayName, setInitialDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
 
-export default class ProfileSettings extends React.Component<{}, IState> {
-    private readonly userId: string;
-    private avatarUpload: React.RefObject<HTMLInputElement> = createRef();
+    const onAvatarRemove = useCallback(async () => {
+        // xxx show progress
+        await MatrixClientPeg.safeGet().setAvatarUrl(""); // use empty string as Synapse 500s on undefined
+        setAvatarURL("");
+    }, []);
 
-    public constructor(props: {}) {
-        super(props);
-
-        this.userId = MatrixClientPeg.safeGet().getSafeUserId();
-        const avatarUrl = OwnProfileStore.instance.avatarMxc;
-        this.state = {
-            originalDisplayName: OwnProfileStore.instance.displayName ?? "",
-            displayName: OwnProfileStore.instance.displayName ?? "",
-            originalAvatarUrl: avatarUrl,
-            avatarFile: null,
-            avatarRemovalPending: false,
-            enableProfileSave: false,
-        };
-    }
-
-    private onChange = (file: File): void => {
+    const onAvatarChange = useCallback(async (avatarFile: File) => {
         PosthogTrackers.trackInteraction("WebProfileSettingsAvatarUploadButton");
-        this.setState({
-            avatarFile: file,
-            avatarRemovalPending: false,
-            enableProfileSave: true,
-        });
-    };
+        logger.log(`Uploading new avatar, ${avatarFile.name} of type ${avatarFile.type}, (${avatarFile.size}) bytes`);
+        // xxx show progress
+        const client = MatrixClientPeg.safeGet();
+        const { content_uri: uri } = await client.uploadContent(avatarFile);
+        await client.setAvatarUrl(uri);
+        setAvatarURL(uri);
+    }, []);
 
-    private removeAvatar = (): void => {
-        // clear file upload field so same file can be selected
-        if (this.avatarUpload.current) {
-            this.avatarUpload.current.value = "";
-        }
-        this.setState({
-            avatarFile: null,
-            avatarRemovalPending: true,
-            enableProfileSave: true,
-        });
-    };
+    const onDisplayNameChanged = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        setDisplayName(e.target.value);
+    }, []);
 
-    private cancelProfileChanges = async (e: ButtonEvent): Promise<void> => {
-        e.stopPropagation();
-        e.preventDefault();
+    const onDisplayNameCancel = useCallback(() => {
+        setDisplayName(OwnProfileStore.instance.displayName ?? "");
+    }, []);
 
-        if (!this.state.enableProfileSave) return;
-        this.setState({
-            enableProfileSave: false,
-            displayName: this.state.originalDisplayName,
-            avatarFile: null,
-            avatarRemovalPending: false,
-        });
-    };
+    const onDisplayNameSave = useCallback(async (): Promise<void> => {
+        await MatrixClientPeg.safeGet().setDisplayName(displayName);
+        setInitialDisplayName(displayName);
+        return Promise.resolve();
+    }, [displayName]);
 
-    private saveProfile = async (e: ButtonEvent): Promise<void> => {
-        e.stopPropagation();
-        e.preventDefault();
+    return (
+        <div className="mx_ProfileSettings">
+            <h2>{_t("common|profile")}</h2>
+            <div>{_t("settings|general|profile_subtitle")}</div>
+            <div className="mx_ProfileSettings_profile">
+                <AvatarSetting
+                    avatar={avatarURL ?? undefined}
+                    avatarAltText={_t("common|user_avatar")}
+                    onChange={onAvatarChange}
+                    removeAvatar={onAvatarRemove}
+                />
+                <EditInPlace
+                    className="mx_ProfileSettings_profile_displayName"
+                    label={_t("settings|general|display_name")}
+                    value={displayName}
+                    initialValue={initialDisplayName}
+                    onChange={onDisplayNameChanged}
+                    onCancel={onDisplayNameCancel}
+                    onSave={onDisplayNameSave}
+                />
+            </div>
+        </div>
+    );
+};
 
-        if (!this.state.enableProfileSave) return;
-        this.setState({ enableProfileSave: false });
-
-        const newState: Partial<IState> = {};
-
-        const displayName = this.state.displayName.trim();
-        try {
-            const client = MatrixClientPeg.safeGet();
-            if (this.state.originalDisplayName !== this.state.displayName) {
-                await client.setDisplayName(displayName);
-                newState.originalDisplayName = displayName;
-                newState.displayName = displayName;
-            }
-
-            if (this.state.avatarFile) {
-                logger.log(
-                    `Uploading new avatar, ${this.state.avatarFile.name} of type ${this.state.avatarFile.type},` +
-                        ` (${this.state.avatarFile.size}) bytes`,
-                );
-                const { content_uri: uri } = await client.uploadContent(this.state.avatarFile);
-                await client.setAvatarUrl(uri);
-                newState.originalAvatarUrl = uri;
-                newState.avatarFile = null;
-            } else if (this.state.avatarRemovalPending) {
-                await client.setAvatarUrl(""); // use empty string as Synapse 500s on undefined
-                newState.originalAvatarUrl = null;
-                newState.avatarRemovalPending = false;
-            }
-        } catch (err) {
-            logger.log("Failed to save profile", err);
-            Modal.createDialog(ErrorDialog, {
-                title: _t("settings|general|error_saving_profile_title"),
-                description: err instanceof Error ? err.message : _t("settings|general|error_saving_profile"),
-            });
-        }
-
-        this.setState<any>(newState);
-    };
-
-    private onDisplayNameChanged = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        this.setState({
-            displayName: e.target.value,
-            enableProfileSave: true,
-        });
-    };
-
-    public render(): React.ReactNode {
-        const userIdentifier = UserIdentifierCustomisations.getDisplayUserIdentifier(this.userId, {
-            withDisplayName: true,
-        });
-
-        return (
-            <form onSubmit={this.saveProfile} autoComplete="off" noValidate={true} className="mx_ProfileSettings">
-                <div className="mx_ProfileSettings_profile">
-                    <div className="mx_ProfileSettings_profile_controls">
-                        <SettingsSubsectionHeading heading={_t("common|profile")} />
-                        <Field
-                            label={_t("common|display_name")}
-                            type="text"
-                            value={this.state.displayName}
-                            autoComplete="off"
-                            onChange={this.onDisplayNameChanged}
-                        />
-                        <p>
-                            {userIdentifier && (
-                                <span className="mx_ProfileSettings_profile_controls_userId">{userIdentifier}</span>
-                            )}
-                        </p>
-                    </div>
-                    <AvatarSetting
-                        avatar={
-                            this.state.avatarRemovalPending
-                                ? undefined
-                                : this.state.avatarFile ?? this.state.originalAvatarUrl ?? undefined
-                        }
-                        avatarAltText={_t("common|user_avatar")}
-                        onChange={this.onChange}
-                        removeAvatar={this.removeAvatar}
-                    />
-                </div>
-                <div className="mx_ProfileSettings_buttons">
-                    <AccessibleButton
-                        onClick={this.cancelProfileChanges}
-                        kind="primary_outline"
-                        disabled={!this.state.enableProfileSave}
-                    >
-                        {_t("action|cancel")}
-                    </AccessibleButton>
-                    <AccessibleButton
-                        onClick={this.saveProfile}
-                        kind="primary"
-                        disabled={!this.state.enableProfileSave}
-                    >
-                        {_t("action|save")}
-                    </AccessibleButton>
-                </div>
-            </form>
-        );
-    }
-}
+export default ProfileSettings;
