@@ -47,6 +47,7 @@ import { getParentEventId } from "../../../utils/Reply";
 import { EditWysiwygComposer } from "../rooms/wysiwyg_composer";
 import { IEventTileOps } from "../rooms/EventTile";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { getIdForBody } from "./shared/getIdForBody";
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
@@ -612,7 +613,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
 
         let widgets;
-        const id = "mx_EventTile_content_" + mxEvent.getId();
+        const id = getIdForBody(mxEvent);
         if (this.state.links.length && !this.state.widgetHidden && this.props.showUrlPreview) {
             widgets = (
                 <LinkPreviewGroup

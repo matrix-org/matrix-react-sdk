@@ -85,6 +85,7 @@ import { ElementCall } from "../../../models/Call";
 import { UnreadNotificationBadge } from "./NotificationBadge/UnreadNotificationBadge";
 import { EventTileThreadToolbar } from "./EventTile/EventTileThreadToolbar";
 import { getLateEventInfo } from "../../structures/grouper/LateEventGrouper";
+import { getIdForBody } from "../messages/shared/getIdForBody";
 
 export type GetRelationsForEvent = (
     eventId: string,
@@ -279,6 +280,15 @@ export function isEligibleForSpecialReceipt(event: MatrixEvent): boolean {
 
     // Default case
     return true;
+}
+
+/**
+ * Get an id for the avatar div
+ * @param event Event from which id is derived
+ * @returns The id that was created
+ */
+function getIdForAvatar(event: MatrixEvent): string {
+    return `mx_EventTile_avatar_${event.getTxnId() ?? event.getId()}`;
 }
 
 // MUST be rendered within a RoomContext with a set timelineRenderingType
@@ -1061,11 +1071,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                     this.context.timelineRenderingType,
                 );
             avatar = (
-                <div
-                    className="mx_EventTile_avatar"
-                    id={"mx_EventTile_avatar_" + this.props.mxEvent.getId()}
-                    tabIndex={-1}
-                >
+                <div className="mx_EventTile_avatar" id={getIdForAvatar(this.props.mxEvent)} tabIndex={-1}>
                     <MemberAvatar
                         member={member}
                         size={avatarSize}
@@ -1215,7 +1221,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         "className": classes,
                         "tabIndex": 0,
                         "aria-live": ariaLive,
-                        "aria-labelledby": `mx_EventTile_avatar_${this.props.mxEvent.getId()} mx_EventTile_content_${this.props.mxEvent.getId()}`,
+                        "aria-labelledby": `${getIdForAvatar(this.props.mxEvent)} ${getIdForBody(this.props.mxEvent)}`,
                         "aria-atomic": true,
                         "data-scroll-tokens": scrollToken,
                         "data-has-reply": !!replyChain,
@@ -1271,7 +1277,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         "className": classes,
                         "tabindex": 0,
                         "aria-live": ariaLive,
-                        "aria-labelledby": `mx_EventTile_avatar_${this.props.mxEvent.getId()} mx_EventTile_content_${this.props.mxEvent.getId()}`,
+                        "aria-labelledby": `${getIdForAvatar(this.props.mxEvent)} ${getIdForBody(this.props.mxEvent)}`,
                         "aria-atomic": "true",
                         "data-scroll-tokens": scrollToken,
                         "data-layout": this.props.layout,
@@ -1406,7 +1412,7 @@ export class UnwrappedEventTile extends React.Component<EventTileProps, IState> 
                         "className": classes,
                         "tabindex": 0,
                         "aria-live": ariaLive,
-                        "aria-labelledby": `mx_EventTile_avatar_${this.props.mxEvent.getId()} mx_EventTile_content_${this.props.mxEvent.getId()}`,
+                        "aria-labelledby": `${getIdForAvatar(this.props.mxEvent)} ${getIdForBody(this.props.mxEvent)}`,
                         "aria-atomic": "true",
                         "data-scroll-tokens": scrollToken,
                         "data-layout": this.props.layout,
