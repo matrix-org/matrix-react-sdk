@@ -62,6 +62,8 @@ export default class DeviceListener {
     private dispatcherRef?: string;
     // device IDs for which the user has dismissed the verify toast ('Later')
     private dismissed = new Set<string>();
+    /** Have we shown the user an encryption setup toast? */
+    private shownThisDeviceToast = false;
     // has the user dismissed any of the various nag toasts to setup encryption on this device?
     private dismissedThisDeviceToast = false;
     /** Cache of the info about the current key backup on the server. */
@@ -134,6 +136,7 @@ export default class DeviceListener {
             this.dispatcherRef = undefined;
         }
         this.dismissed.clear();
+        this.shownThisDeviceToast = false;
         this.dismissedThisDeviceToast = false;
         this.keyBackupInfo = null;
         this.keyBackupFetchedAt = null;
@@ -313,7 +316,7 @@ export default class DeviceListener {
             hideSetupEncryptionToast();
 
             this.checkKeyBackupStatus();
-        } else if (this.shouldShowSetupEncryptionToast()) {
+        } else if (this.shouldShowSetupEncryptionToast() && !this.shownThisDeviceToast) {
             // make sure our keys are finished downloading
             await crypto.getUserDeviceInfo([cli.getSafeUserId()]);
 
@@ -341,6 +344,7 @@ export default class DeviceListener {
                     }
                 }
             }
+            this.shownThisDeviceToast = true;
         }
 
         // This needs to be done after awaiting on getUserDeviceInfo() above, so
