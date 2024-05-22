@@ -2451,6 +2451,8 @@
             "add_msisdn_dialog_title": "Add Phone Number",
             "add_msisdn_instructions": "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.",
             "add_msisdn_misconfigured": "The add / bind with MSISDN flow is misconfigured",
+            "avatar_upload_error_text": "Images must be in .JPG, .PNG, or .SVG format.",
+            "avatar_upload_error_title": "Avatar image could not be uploaded",
             "confirm_adding_email_body": "Click the button below to confirm adding this email address.",
             "confirm_adding_email_title": "Confirm adding email",
             "deactivate_confirm_body": "Are you sure you want to deactivate your account? This is irreversible.",

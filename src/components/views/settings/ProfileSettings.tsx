@@ -17,6 +17,7 @@ limitations under the License.
 import React, { ChangeEvent, useCallback, useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EditInPlace } from "@vector-im/compound-web";
+import { Alert } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -28,6 +29,7 @@ const ProfileSettings: React.FC = () => {
     const [avatarURL, setAvatarURL] = useState(OwnProfileStore.instance.avatarMxc);
     const [displayName, setDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
     const [initialDisplayName, setInitialDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
+    const [avatarError, setAvatarError] = useState<boolean>(false);
 
     const onAvatarRemove = useCallback(async () => {
         // xxx show progress
@@ -39,10 +41,15 @@ const ProfileSettings: React.FC = () => {
         PosthogTrackers.trackInteraction("WebProfileSettingsAvatarUploadButton");
         logger.log(`Uploading new avatar, ${avatarFile.name} of type ${avatarFile.type}, (${avatarFile.size}) bytes`);
         // xxx show progress
-        const client = MatrixClientPeg.safeGet();
-        const { content_uri: uri } = await client.uploadContent(avatarFile);
-        await client.setAvatarUrl(uri);
-        setAvatarURL(uri);
+        try {
+            setAvatarError(false);
+            const client = MatrixClientPeg.safeGet();
+            const { content_uri: uri } = await client.uploadContent(avatarFile);
+            await client.setAvatarUrl(uri);
+            setAvatarURL(uri);
+        } catch (e) {
+            setAvatarError(true);
+        }
     }, []);
 
     const onDisplayNameChanged = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +87,11 @@ const ProfileSettings: React.FC = () => {
                     onSave={onDisplayNameSave}
                 />
             </div>
+            {avatarError && (
+                <Alert title={_t("settings|general|avatar_upload_error_title")} type="critical">
+                    {_t("settings|general|avatar_upload_error_text")}
+                </Alert>
+            )}
         </div>
     );
 };
