@@ -577,6 +577,11 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("settings|preferences|show_polls_button"),
         default: true,
     },
+    "MessageComposerInput.showVoiceRecordingButton": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("settings|preferences|show_voice_message_button"),
+        default: true,
+    },
     "MessageComposerInput.insertTrailingColon": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("settings|insert_trailing_colon_mentions"),

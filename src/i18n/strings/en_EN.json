@@ -2662,6 +2662,7 @@
             "show_avatars_pills": "Show avatars in user, room and event mentions",
             "show_checklist_shortcuts": "Show shortcut to welcome checklist above the room list",
             "show_polls_button": "Show polls button",
+            "show_voice_message_button": "Show voice message button",
             "surround_text": "Surround selected text when typing special characters",
             "time_heading": "Displaying time"
         },
