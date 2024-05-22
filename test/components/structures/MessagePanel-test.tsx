@@ -37,6 +37,8 @@ import {
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
 import { IRoomState } from "../../../src/components/structures/RoomView";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
+import defaultDispatcher from "../../../src/dispatcher/dispatcher";
+import { Action } from "../../../src/dispatcher/actions";
 
 jest.mock("../../../src/utils/beacon", () => ({
     useBeacon: jest.fn(),
@@ -373,6 +375,23 @@ describe("MessagePanel", function () {
 
         // read marker should be visible given props and not at the last event
         expect(isReadMarkerVisible(rm)).toBeTruthy();
+    });
+
+    it("FocusLastTile action works", function () {
+        const events = mkEvents();
+        const ref = React.createRef<MessagePanel>();
+        render(
+            getComponent({
+                events,
+                readMarkerEventId: events[4].getId(),
+                readMarkerVisible: true,
+                ref,
+            }),
+        );
+        const lastTile = document.querySelector('.mx_EventTile[data-event-id="' + events[9].getId() + '"]');
+        expect(lastTile).not.toHaveFocus();
+        defaultDispatcher.fire(Action.FocusLastTile, true);
+        expect(lastTile).toHaveFocus();
     });
 
     it("Should be able to navigate between events using keyboard", function () {
