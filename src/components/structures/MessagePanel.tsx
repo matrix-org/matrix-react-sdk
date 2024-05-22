@@ -438,56 +438,59 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     /**
+     * Gives focus to next/previous tile in timeline depending of navAction
+     * @param navAction: KeyBindingAction that determines whether the next or previous message should be focused
+     */
+    private handleNavigationAction(
+        navAction: KeyBindingAction.SelectPrevMessage | KeyBindingAction.SelectNextMessage,
+    ): void {
+        // 1. We only care about events that are rendered in the timeline
+        const events = this.props.events.filter((event) => this.shouldShowEvent(event));
+        const lastEvent = events[events.length - 1];
+
+        // 2. Which event has the focus currently?
+        const currentEventId = this.focusedEventId ?? this.props.highlightedEventId ?? lastEvent?.getId();
+        const currentEventIndex = events.findIndex((e) => e.getId() === currentEventId);
+        if (currentEventIndex === -1) {
+            throw new Error(`Event with id ${currentEventId} not in list of events.`);
+        }
+
+        // 3. Next event to get focus is either to the left or right of the currently focused event
+        const nextIndex =
+            navAction === KeyBindingAction.SelectPrevMessage ? currentEventIndex - 1 : currentEventIndex + 1;
+
+        if (nextIndex >= 0 && nextIndex < events.length) {
+            // 4. Focus the next tile if it is within the array bounds
+            const id = events[nextIndex].getId();
+            this.getTileForEventId(id)?.focus();
+            this.focusedEventId = id;
+        } else if (navAction === KeyBindingAction.SelectNextMessage) {
+            // 5. If not within array bounds but action is next message, focus the composer
+            defaultDispatcher.dispatch(
+                {
+                    action: Action.FocusSendMessageComposer,
+                    context: TimelineRenderingType.Room,
+                },
+                true,
+            );
+        }
+        return;
+    }
+
+    /**
+     * Handle keyboard events:
      * Scroll up/down in response to a scroll key
-     *
+     * Ctrl+UP/DOWN  to move to previous/next tile
      * @param {KeyboardEvent} ev: the keyboard event to handle
      */
     public handleScrollKey(ev: React.KeyboardEvent | KeyboardEvent): void {
         const navAction = getKeyBindingsManager().getNavigationAction(ev);
         if (navAction === KeyBindingAction.SelectPrevMessage || navAction === KeyBindingAction.SelectNextMessage) {
-            const events: WrappedEvent[] = this.props.events.map((event) => {
-                return { event, shouldShow: this.shouldShowEvent(event) };
-            });
-            const currentEventId =
-                this.focusedEventId ??
-                this.props.highlightedEventId ??
-                events
-                    .reduce(
-                        // Get the id of the last event in the list that's shown.
-                        (prev: WrappedEvent, wrappedEvent: WrappedEvent): WrappedEvent =>
-                            wrappedEvent?.shouldShow ? wrappedEvent : prev,
-                    )
-                    ?.event?.getId();
-            if (navAction === KeyBindingAction.SelectPrevMessage) {
-                events.reverse();
-            }
-            let previousEventId = null;
-            for (let i = events.length - 1; i >= 0; i--) {
-                const { event, shouldShow } = events[i];
-                if (!shouldShow) {
-                    continue;
-                }
-                const eventId = event.getId()!;
-                if (previousEventId && eventId === currentEventId) {
-                    this.getTileForEventId(previousEventId)?.focus();
-                    this.focusedEventId = previousEventId;
-                    ev.preventDefault();
-                    return;
-                }
-                previousEventId = eventId;
-            }
-            if (navAction === KeyBindingAction.SelectNextMessage) {
-                defaultDispatcher.dispatch(
-                    {
-                        action: Action.FocusSendMessageComposer,
-                        context: TimelineRenderingType.Room,
-                    },
-                    true,
-                );
-            }
+            ev.preventDefault();
+            this.handleNavigationAction(navAction);
+        } else {
+            this.scrollPanel.current?.handleScrollKey(ev);
         }
-
-        this.scrollPanel.current?.handleScrollKey(ev);
     }
 
     /* jump to the given event id.
