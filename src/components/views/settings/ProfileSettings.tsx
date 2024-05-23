@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, useCallback, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EditInPlace } from "@vector-im/compound-web";
 import { Alert } from "@vector-im/compound-web";
@@ -24,12 +24,25 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 import AvatarSetting from "./AvatarSetting";
 import PosthogTrackers from "../../../PosthogTrackers";
+import { formatBytes } from "../../../utils/FormattingUtils";
 
 const ProfileSettings: React.FC = () => {
     const [avatarURL, setAvatarURL] = useState(OwnProfileStore.instance.avatarMxc);
     const [displayName, setDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
     const [initialDisplayName, setInitialDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
     const [avatarError, setAvatarError] = useState<boolean>(false);
+    const [maxUploadSize, setMaxUploadSize] = useState<number | undefined>();
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const mediaConfig = await MatrixClientPeg.safeGet().getMediaConfig();
+                setMaxUploadSize(mediaConfig["m.upload.size"]);
+            } catch (e) {
+                logger.warn("Failed to get media config", e);
+            }
+        })();
+    }, []);
 
     const onAvatarRemove = useCallback(async () => {
         // xxx show progress
@@ -89,7 +102,9 @@ const ProfileSettings: React.FC = () => {
             </div>
             {avatarError && (
                 <Alert title={_t("settings|general|avatar_upload_error_title")} type="critical">
-                    {_t("settings|general|avatar_upload_error_text")}
+                    {maxUploadSize === undefined
+                        ? _t("settings|general|avatar_upload_error_text_generic")
+                        : _t("settings|general|avatar_upload_error_text", { size: formatBytes(maxUploadSize) })}
                 </Alert>
             )}
         </div>
