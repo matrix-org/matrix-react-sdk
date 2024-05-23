@@ -1914,7 +1914,8 @@
 
 "@matrix-org/matrix-sdk-crypto-wasm@^4.9.0":
   version "4.9.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-rust-sdk-crypto-wasm/tar.gz/90b63b84df65c19161f94049d83218cb4dfff97d"
+  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-sdk-crypto-wasm/-/matrix-sdk-crypto-wasm-4.9.0.tgz#9dfed83e33f760650596c4e5c520e5e4c53355d2"
+  integrity sha512-/bgA4QfE7qkK6GFr9hnhjAvRSebGrmEJxukU0ukbudZcYvbzymoBBM8j3HeULXZT8kbw8WH6z63txYTMCBSDOA==
 
 "@matrix-org/matrix-wysiwyg@2.17.0":
   version "2.17.0"
