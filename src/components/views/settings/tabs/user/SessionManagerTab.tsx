@@ -192,9 +192,13 @@ const SessionManagerTab: React.FC<{
     const capabilities = useAsyncMemo(async () => matrixClient?.getCapabilities(), [matrixClient]);
     const wellKnown = useMemo(() => matrixClient?.getClientWellKnown(), [matrixClient]);
     const oidcClientConfig = useAsyncMemo(async () => {
-        const authIssuer = await matrixClient?.getAuthIssuer();
-        if (authIssuer) {
-            return discoverAndValidateOIDCIssuerWellKnown(authIssuer.issuer);
+        try {
+            const authIssuer = await matrixClient?.getAuthIssuer();
+            if (authIssuer) {
+                return discoverAndValidateOIDCIssuerWellKnown(authIssuer.issuer);
+            }
+        } catch (e) {
+            logger.error("Failed to discover OIDC metadata", e);
         }
     }, [matrixClient]);
     const isCrossSigningReady = useAsyncMemo(

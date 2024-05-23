@@ -180,4 +180,5 @@ export const mockClientMethodsCrypto = (): Partial<
 
 export const mockClientMethodsRooms = (rooms: Room[] = []): Partial<Record<MethodLikeKeys<MatrixClient>, unknown>> => ({
     getRooms: jest.fn().mockReturnValue(rooms),
+    getRoom: jest.fn((roomId) => rooms.find((r) => r.roomId === roomId) ?? null),
 });
