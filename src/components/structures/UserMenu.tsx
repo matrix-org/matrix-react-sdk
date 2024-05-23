@@ -30,7 +30,7 @@ import Modal from "../../Modal";
 import LogoutDialog from "../views/dialogs/LogoutDialog";
 import SettingsStore from "../../settings/SettingsStore";
 import { findHighContrastTheme, getCustomTheme, isHighContrastTheme } from "../../theme";
-import { RovingAccessibleTooltipButton } from "../../accessibility/RovingTabIndex";
+import { RovingAccessibleButton } from "../../accessibility/RovingTabIndex";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import SdkConfig from "../../SdkConfig";
 import { getHomePageUrl } from "../../utils/pages";
@@ -479,7 +479,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                         </span>
                     </div>
 
-                    <RovingAccessibleTooltipButton
+                    <RovingAccessibleButton
                         className="mx_UserMenu_contextMenu_themeButton"
                         onClick={this.onSwitchThemeClick}
                         title={
@@ -494,7 +494,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                             alt=""
                             width={16}
                         />
-                    </RovingAccessibleTooltipButton>
+                    </RovingAccessibleButton>
                 </div>
                 {topSection}
                 {primaryOptionList}

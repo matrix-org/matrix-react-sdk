@@ -1056,7 +1056,6 @@ describe("<SessionManagerTab />", () => {
                     },
                     password: "",
                     type: "m.login.password",
-                    user: aliceId,
                 });
                 // devices refreshed
                 expect(mockClient.getDevices).toHaveBeenCalled();
