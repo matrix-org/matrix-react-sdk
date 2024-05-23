@@ -184,6 +184,7 @@
         "@types/react-transition-group": "^4.4.0",
         "@types/sanitize-html": "2.11.0",
         "@types/sdp-transform": "^2.4.6",
+        "@types/seedrandom": "3.0.4",
         "@types/tar-js": "^0.3.2",
         "@types/ua-parser-js": "^0.7.36",
         "@types/uuid": "^9.0.2",
