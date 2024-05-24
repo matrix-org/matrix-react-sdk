@@ -32,6 +32,7 @@ const ProfileSettings: React.FC = () => {
     const [initialDisplayName, setInitialDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
     const [avatarError, setAvatarError] = useState<boolean>(false);
     const [maxUploadSize, setMaxUploadSize] = useState<number | undefined>();
+    const [displayNameError, setDisplayNameError] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
@@ -74,9 +75,13 @@ const ProfileSettings: React.FC = () => {
     }, []);
 
     const onDisplayNameSave = useCallback(async (): Promise<void> => {
-        await MatrixClientPeg.safeGet().setDisplayName(displayName);
-        setInitialDisplayName(displayName);
-        return Promise.resolve();
+        try {
+            setDisplayNameError(false);
+            await MatrixClientPeg.safeGet().setDisplayName(displayName);
+            setInitialDisplayName(displayName);
+        } catch (e) {
+            setDisplayNameError(true);
+        }
     }, [displayName]);
 
     return (
@@ -94,10 +99,14 @@ const ProfileSettings: React.FC = () => {
                     className="mx_ProfileSettings_profile_displayName"
                     label={_t("settings|general|display_name")}
                     value={displayName}
-                    initialValue={initialDisplayName}
+                    disableSaveButton={displayName === initialDisplayName}
+                    saveButtonLabel={_t("common|save")}
+                    cancelButtonLabel={_t("common|cancel")}
+                    savedLabel={_t("common|saved")}
                     onChange={onDisplayNameChanged}
                     onCancel={onDisplayNameCancel}
                     onSave={onDisplayNameSave}
+                    error={displayNameError ? _t("settings|general|display_name_error") : undefined}
                 />
             </div>
             {avatarError && (
