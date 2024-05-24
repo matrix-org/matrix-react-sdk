@@ -1412,7 +1412,6 @@ const BasicUserInfo: React.FC<{
 
     // We don't need a perfect check here, just something to pass as "probably not our homeserver". If
     // someone does figure out how to bypass this check the worst that happens is an error.
-    // FIXME this should be using cli instead of MatrixClientPeg.matrixClient
     if (isSynapseAdmin && member.userId.endsWith(`:${cli.getDomain()}`)) {
         synapseDeactivateButton = (
             <AccessibleButton
