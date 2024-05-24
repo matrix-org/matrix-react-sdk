@@ -25,6 +25,15 @@ import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 import AvatarSetting from "./AvatarSetting";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { formatBytes } from "../../../utils/FormattingUtils";
+import { useToastContext } from "../../../contexts/ToastContext";
+import InlineSpinner from "../elements/InlineSpinner";
+
+const SpinnerToast: React.FC = ({ children }) => (
+    <>
+        <InlineSpinner />
+        {children}
+    </>
+);
 
 const ProfileSettings: React.FC = () => {
     const [avatarURL, setAvatarURL] = useState(OwnProfileStore.instance.avatarMxc);
@@ -33,6 +42,8 @@ const ProfileSettings: React.FC = () => {
     const [avatarError, setAvatarError] = useState<boolean>(false);
     const [maxUploadSize, setMaxUploadSize] = useState<number | undefined>();
     const [displayNameError, setDisplayNameError] = useState<boolean>(false);
+
+    const toastRack = useToastContext();
 
     useEffect(() => {
         (async () => {
@@ -46,25 +57,40 @@ const ProfileSettings: React.FC = () => {
     }, []);
 
     const onAvatarRemove = useCallback(async () => {
-        // xxx show progress
-        await MatrixClientPeg.safeGet().setAvatarUrl(""); // use empty string as Synapse 500s on undefined
-        setAvatarURL("");
-    }, []);
-
-    const onAvatarChange = useCallback(async (avatarFile: File) => {
-        PosthogTrackers.trackInteraction("WebProfileSettingsAvatarUploadButton");
-        logger.log(`Uploading new avatar, ${avatarFile.name} of type ${avatarFile.type}, (${avatarFile.size}) bytes`);
-        // xxx show progress
+        const removeToast = toastRack.displayToast(
+            <SpinnerToast>{_t("settings|general|avatar_remove_progress")}</SpinnerToast>,
+        );
         try {
-            setAvatarError(false);
-            const client = MatrixClientPeg.safeGet();
-            const { content_uri: uri } = await client.uploadContent(avatarFile);
-            await client.setAvatarUrl(uri);
-            setAvatarURL(uri);
-        } catch (e) {
-            setAvatarError(true);
+            await MatrixClientPeg.safeGet().setAvatarUrl(""); // use empty string as Synapse 500s on undefined
+            setAvatarURL("");
+        } finally {
+            removeToast();
         }
-    }, []);
+    }, [toastRack]);
+
+    const onAvatarChange = useCallback(
+        async (avatarFile: File) => {
+            PosthogTrackers.trackInteraction("WebProfileSettingsAvatarUploadButton");
+            logger.log(
+                `Uploading new avatar, ${avatarFile.name} of type ${avatarFile.type}, (${avatarFile.size}) bytes`,
+            );
+            const removeToast = toastRack.displayToast(
+                <SpinnerToast>{_t("settings|general|avatar_save_progress")}</SpinnerToast>,
+            );
+            try {
+                setAvatarError(false);
+                const client = MatrixClientPeg.safeGet();
+                const { content_uri: uri } = await client.uploadContent(avatarFile);
+                await client.setAvatarUrl(uri);
+                setAvatarURL(uri);
+            } catch (e) {
+                setAvatarError(true);
+            } finally {
+                removeToast();
+            }
+        },
+        [toastRack],
+    );
 
     const onDisplayNameChanged = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setDisplayName(e.target.value);

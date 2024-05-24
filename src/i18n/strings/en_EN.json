@@ -2454,6 +2454,8 @@
             "add_msisdn_dialog_title": "Add Phone Number",
             "add_msisdn_instructions": "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.",
             "add_msisdn_misconfigured": "The add / bind with MSISDN flow is misconfigured",
+            "avatar_remove_progress": "Removing image...",
+            "avatar_save_progress": "Uploading image...",
             "avatar_upload_error_text": "The file format is not supported or the image is larger than %(size)s.",
             "avatar_upload_error_text_generic": "The file format may not be supported.",
             "avatar_upload_error_title": "Avatar image could not be uploaded",
