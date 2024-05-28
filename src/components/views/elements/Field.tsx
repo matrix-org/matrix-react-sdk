@@ -27,6 +27,7 @@ import { debounce } from "lodash";
 
 import { IFieldState, IValidationResult } from "./Validation";
 import Tooltip from "./Tooltip";
+import { Key } from "../../../Keyboard";
 
 // Invoke validation from user input (when typing, etc.) at most once every N ms.
 const VALIDATION_THROTTLE_MS = 200;
@@ -242,7 +243,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
     private onKeyDown = (evt: KeyboardEvent<HTMLDivElement>): void => {
         // If the tooltip is displayed to show a feedback and Escape is pressed
         // The tooltip is hided
-        if (this.state.feedbackVisible && evt.key === "Escape") {
+        if (this.state.feedbackVisible && evt.key === Key.ESCAPE) {
             evt.preventDefault();
             evt.stopPropagation();
             this.setState({
