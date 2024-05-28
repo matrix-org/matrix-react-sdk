@@ -53,6 +53,7 @@ import { VoiceBroadcastRecording, VoiceBroadcastRecordingsStoreEvent } from "../
 import { SDKContext } from "../../contexts/SDKContext";
 import { shouldShowFeedback } from "../../utils/Feedback";
 import { shouldShowQr } from "../views/settings/devices/LoginWithQRSection";
+import { Features } from "../../settings/Settings";
 
 interface IProps {
     isPanelCollapsed: boolean;
@@ -147,7 +148,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
     }
 
     private checkQrLoginSupport = async (): Promise<void> => {
-        if (!this.context.client) return;
+        if (!this.context.client || !SettingsStore.getValue(Features.OidcNativeFlow)) return;
 
         const { issuer } = await this.context.client.getAuthIssuer().catch(() => ({ issuer: undefined }));
         if (issuer) {
