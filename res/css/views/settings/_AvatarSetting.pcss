@@ -93,26 +93,21 @@ limitations under the License.
     }
 
     .mx_AvatarSetting_uploadButton {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
         border-radius: 32px;
-        background-color: $secondary-content;
+        border: 1px solid var(--cpd-color-bg-canvas-default);
+        background-color: var(--cpd-color-bg-subtle-primary);
 
         position: absolute;
         bottom: 0;
         right: 0;
-    }
+        text-align: center;
 
-    .mx_AvatarSetting_uploadButton::before {
-        content: "";
-        display: block;
-        width: 100%;
-        height: 100%;
-        mask-repeat: no-repeat;
-        mask-position: center;
-        mask-size: 55%;
-        background-color: $quinary-content;
-        mask-image: url("$(res)/img/feather-customised/edit.svg");
+        svg {
+            position: relative;
+            top: 3px;
+        }
     }
 }
 

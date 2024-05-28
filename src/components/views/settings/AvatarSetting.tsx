@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, useCallback, useEffect, useRef, useState } from "react";
+import { Icon as EditIcon } from "@vector-im/compound-design-tokens/icons/edit.svg";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -123,7 +124,9 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
                     onClick={uploadAvatar}
                     className="mx_AvatarSetting_uploadButton"
                     aria-labelledby={a11yId.current}
-                />
+                >
+                    <EditIcon width="20px" height="20px" />
+                </AccessibleButton>
                 <input
                     type="file"
                     style={{ display: "none" }}
