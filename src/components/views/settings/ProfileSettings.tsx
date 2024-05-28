@@ -27,6 +27,7 @@ import PosthogTrackers from "../../../PosthogTrackers";
 import { formatBytes } from "../../../utils/FormattingUtils";
 import { useToastContext } from "../../../contexts/ToastContext";
 import InlineSpinner from "../elements/InlineSpinner";
+import BaseAvatar from "../avatars/BaseAvatar";
 
 const SpinnerToast: React.FC = ({ children }) => (
     <>
@@ -120,6 +121,8 @@ const ProfileSettings: React.FC = () => {
                     avatarAltText={_t("common|user_avatar")}
                     onChange={onAvatarChange}
                     removeAvatar={onAvatarRemove}
+                    placeholderName={displayName}
+                    placeholderId={MatrixClientPeg.safeGet().getUserId() ?? ""}
                 />
                 <EditInPlace
                     className="mx_ProfileSettings_profile_displayName"

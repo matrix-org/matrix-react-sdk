@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, useCallback, useEffect, useRef, useState } from "react";
+import React, { ReactNode, createRef, useCallback, useEffect, useRef, useState } from "react";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
+import BaseAvatar from "../avatars/BaseAvatar";
 
 interface IProps {
     /**
@@ -50,12 +51,30 @@ interface IProps {
      * The alt text for the avatar
      */
     avatarAltText: string;
+
+    /**
+     * String to use for computing the colour of the placeholder avatar if no avatar is set
+     */
+    placeholderId: string;
+
+    /**
+     * String to use for the placeholder display if no avatar is set
+     */
+    placeholderName: string;
 }
 
 /**
  * Component for setting or removing an avatar on something (eg. a user or a room)
  */
-const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, removeAvatar, disabled }) => {
+const AvatarSetting: React.FC<IProps> = ({
+    avatar,
+    avatarAltText,
+    onChange,
+    removeAvatar,
+    disabled,
+    placeholderId,
+    placeholderName,
+}) => {
     const fileInputRef = createRef<HTMLInputElement>();
 
     // Real URL that we can supply to the img element, either a data URL or whatever mediaFromMxc gives
@@ -90,16 +109,7 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
         fileInputRef.current?.click();
     }, [fileInputRef]);
 
-    let avatarElement = (
-        <AccessibleButton
-            element="div"
-            onClick={uploadAvatar}
-            className="mx_AvatarSetting_avatarPlaceholder mx_AvatarSetting_avatarDisplay"
-            aria-labelledby={disabled ? undefined : a11yId.current}
-            // Inhibit tab stop as we have explicit upload/remove buttons
-            tabIndex={-1}
-        />
-    );
+    let avatarElement = <BaseAvatar idName={placeholderId} name={placeholderName} size="90px" />;
     if (avatarURL) {
         avatarElement = (
             <AccessibleButton
