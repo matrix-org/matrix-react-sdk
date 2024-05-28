@@ -47,7 +47,7 @@ describe("ReleaseAnnouncement", () => {
         renderReleaseAnnouncement();
 
         // The release announcement is displayed
-        expect(screen.queryByRole("dialog", { name: "header" })).toBeDefined();
+        expect(screen.queryByRole("dialog", { name: "header" })).toBeVisible();
         // Click on the close button in the release announcement
         screen.getByRole("button", { name: "close" }).click();
         // The release announcement should be hidden after the close button is clicked
