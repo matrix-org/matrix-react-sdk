@@ -17,11 +17,19 @@
  */
 
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 
 import { ReleaseAnnouncement } from "../../../src/components/structures/ReleaseAnnouncement";
+import Modal, { ModalManagerEvent } from "../../../src/Modal";
+import { ReleaseAnnouncementStore } from "../../../src/stores/ReleaseAnnouncementStore";
 
 describe("ReleaseAnnouncement", () => {
+    beforeEach(async () => {
+        // Reset the singleton instance of the ReleaseAnnouncementStore
+        // @ts-ignore
+        ReleaseAnnouncementStore.internalInstance = new ReleaseAnnouncementStore();
+    });
+
     function renderReleaseAnnouncement() {
         return render(
             <ReleaseAnnouncement
@@ -44,5 +52,25 @@ describe("ReleaseAnnouncement", () => {
         screen.getByRole("button", { name: "close" }).click();
         // The release announcement should be hidden after the close button is clicked
         await waitFor(() => expect(screen.queryByRole("dialog", { name: "header" })).toBeNull());
+    });
+
+    test("when a dialog is opened, the release announcement should not be displayed", async () => {
+        renderReleaseAnnouncement();
+        // The release announcement is displayed
+        expect(screen.queryByRole("dialog", { name: "header" })).toBeVisible();
+
+        // Open a dialog
+        act(() => {
+            Modal.emit(ModalManagerEvent.Opened);
+        });
+        // The release announcement should be hidden after the dialog is opened
+        expect(screen.queryByRole("dialog", { name: "header" })).toBeNull();
+
+        // Close the dialog
+        act(() => {
+            Modal.emit(ModalManagerEvent.Closed);
+        });
+        // The release announcement should be displayed after the dialog is closed
+        expect(screen.queryByRole("dialog", { name: "header" })).toBeVisible();
     });
 });
