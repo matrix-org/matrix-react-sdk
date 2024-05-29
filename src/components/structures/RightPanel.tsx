@@ -42,6 +42,7 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { IRightPanelCard, IRightPanelCardState } from "../../stores/right-panel/RightPanelStoreIPanelState";
 import { Action } from "../../dispatcher/actions";
 import { XOR } from "../../@types/common";
+import MemberListNext from "../views/rooms/MemberListNext";
 
 interface BaseProps {
     overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
@@ -167,13 +168,14 @@ export default class RightPanel extends React.Component<Props, IState> {
             case RightPanelPhases.RoomMemberList:
                 if (!!roomId) {
                     card = (
-                        <MemberList
-                            roomId={roomId}
-                            key={roomId}
-                            onClose={this.onClose}
-                            searchQuery={this.state.searchQuery}
-                            onSearchQueryChanged={this.onSearchQueryChanged}
-                        />
+                        <MemberListNext roomId={roomId} />
+                        // <MemberList
+                        //     roomId={roomId}
+                        //     key={roomId}
+                        //     onClose={this.onClose}
+                        //     onThreePIDInviteClick={this.onThreePIDInviteClick}
+                        //     onInviteButtonClick={this.onInviteButtonClick}
+                        // />
                     );
                 }
                 break;
