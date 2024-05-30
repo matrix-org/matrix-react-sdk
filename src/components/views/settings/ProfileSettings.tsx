@@ -16,8 +16,7 @@ limitations under the License.
 
 import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EditInPlace } from "@vector-im/compound-web";
-import { Alert } from "@vector-im/compound-web";
+import { EditInPlace, Alert } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
