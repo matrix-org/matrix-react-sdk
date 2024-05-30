@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ChangeEvent } from "react";
 import { act, render, screen } from "@testing-library/react";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, UploadResponse } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
 import ProfileSettings from "../../../../src/components/views/settings/ProfileSettings";
@@ -110,6 +110,40 @@ describe("ProfileSettings", () => {
 
         expect(client.uploadContent).toHaveBeenCalledWith(fileSentinel);
         expect(client.setAvatarUrl).toHaveBeenCalledWith(returnedMxcUri);
+    });
+
+    it("displays toast while uploading avatar", async () => {
+        render(
+            <ToastContext.Provider value={toastRack}>
+                <ProfileSettings />
+            </ToastContext.Provider>,
+        );
+
+        const clearToastFn = jest.fn();
+        mocked(toastRack.displayToast!).mockReturnValue(clearToastFn);
+
+        expect(await screen.findByText("Mocked AvatarSetting")).toBeInTheDocument();
+        expect(changeAvatarFn).toBeDefined();
+
+        let resolveUploadPromise = (r: UploadResponse) => {};
+        const uploadPromise = new Promise<UploadResponse>((r) => {
+            resolveUploadPromise = r;
+        });
+        mocked(client).uploadContent.mockReturnValue(uploadPromise);
+
+        const fileSentinel = {};
+        const changeAvatarActPromise = act(async () => {
+            await changeAvatarFn(fileSentinel as File);
+        });
+
+        expect(toastRack.displayToast).toHaveBeenCalled();
+
+        act(() => {
+            resolveUploadPromise({ content_uri: "bloop" });
+        });
+        await changeAvatarActPromise;
+
+        expect(clearToastFn).toHaveBeenCalled();
     });
 
     it("changes display name", async () => {
