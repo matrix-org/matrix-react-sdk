@@ -14,13 +14,41 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, useCallback, useEffect, useRef, useState } from "react";
+import React, { ReactNode, createRef, useCallback, useEffect, useState } from "react";
 import { Icon as EditIcon } from "@vector-im/compound-design-tokens/icons/edit.svg";
+import { Icon as UploadIcon } from "@vector-im/compound-design-tokens/icons/share.svg";
+import { Icon as DeleteIcon } from "@vector-im/compound-design-tokens/icons/delete.svg";
+import { Menu, MenuItem } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
-import AccessibleButton from "../elements/AccessibleButton";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
+
+interface MenuProps {
+    trigger: ReactNode;
+    onUploadSelect: () => void;
+    onRemoveSelect?: () => void;
+}
+
+const AvatarSettingContextMenu: React.FC<MenuProps> = ({ trigger, onUploadSelect, onRemoveSelect }) => (
+    <Menu trigger={trigger} title={_t("action|set_avatar")} showTitle={false}>
+        <MenuItem
+            as="div"
+            Icon={<UploadIcon width="24px" height="24px" />}
+            label={_t("action|upload_file")}
+            onSelect={onUploadSelect}
+        />
+        {onRemoveSelect && (
+            <MenuItem
+                as="div"
+                Icon={<DeleteIcon width="24px" height="24px" />}
+                className="mx_AvatarSetting_removeMenuItem"
+                label={_t("action|remove")}
+                onSelect={onRemoveSelect}
+            />
+        )}
+    </Menu>
+);
 
 interface IProps {
     /**
@@ -76,10 +104,6 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
         }
     }, [avatar]);
 
-    // TODO: Use useId() as soon as we're using React 18.
-    // Prevents ID collisions when this component is used more than once on the same page.
-    const a11yId = useRef(`hover-text-${Math.random()}`);
-
     const onFileChanged = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             if (e.target.files) onChange?.(e.target.files[0]);
@@ -91,42 +115,37 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
         fileInputRef.current?.click();
     }, [fileInputRef]);
 
-    let avatarElement = (
-        <AccessibleButton
-            element="div"
-            onClick={uploadAvatar}
-            className="mx_AvatarSetting_avatarPlaceholder mx_AvatarSetting_avatarDisplay"
-            aria-labelledby={disabled ? undefined : a11yId.current}
-            // Inhibit tab stop as we have explicit upload/remove buttons
-            tabIndex={-1}
-        />
-    );
+    let avatarElement = <div className="mx_AvatarSetting_avatarPlaceholder mx_AvatarSetting_avatarDisplay" />;
     if (avatarURL) {
-        avatarElement = (
-            <AccessibleButton
-                element="img"
-                className="mx_AvatarSetting_avatarDisplay"
-                src={avatarURL}
-                alt={avatarAltText}
-                onClick={uploadAvatar}
-                // Inhibit tab stop as we have explicit upload/remove buttons
-                tabIndex={-1}
-            />
-        );
+        avatarElement = <img className="mx_AvatarSetting_avatarDisplay" src={avatarURL} alt={avatarAltText} />;
     }
 
     let uploadAvatarBtn: JSX.Element | undefined;
-    if (uploadAvatar) {
-        // insert an empty div to be the host for a css mask containing the upload.svg
+    if (!disabled) {
         uploadAvatarBtn = (
+            <div className="mx_AvatarSetting_uploadButton">
+                <EditIcon width="20px" height="20px" />
+            </div>
+        );
+    }
+
+    const content = (
+        <div className="mx_AvatarSetting_avatar" role="group" aria-label={avatarAltText}>
+            {avatarElement}
+            {uploadAvatarBtn}
+        </div>
+    );
+
+    if (disabled) {
+        return content;
+    } else {
+        return (
             <>
-                <AccessibleButton
-                    onClick={uploadAvatar}
-                    className="mx_AvatarSetting_uploadButton"
-                    aria-labelledby={a11yId.current}
-                >
-                    <EditIcon width="20px" height="20px" />
-                </AccessibleButton>
+                <AvatarSettingContextMenu
+                    trigger={content}
+                    onUploadSelect={uploadAvatar}
+                    onRemoveSelect={removeAvatar}
+                />
                 <input
                     type="file"
                     style={{ display: "none" }}
@@ -139,27 +158,6 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
             </>
         );
     }
-
-    let removeAvatarBtn: JSX.Element | undefined;
-    if (avatarURL && removeAvatar && !disabled) {
-        removeAvatarBtn = (
-            <AccessibleButton onClick={removeAvatar} kind="link_sm">
-                {_t("action|remove")}
-            </AccessibleButton>
-        );
-    }
-
-    return (
-        <div className="mx_AvatarSetting_avatar" role="group" aria-label={avatarAltText}>
-            {avatarElement}
-            <div className="mx_AvatarSetting_hover" aria-hidden="true">
-                <div className="mx_AvatarSetting_hoverBg" />
-                {!disabled && <span id={a11yId.current}>{_t("action|upload")}</span>}
-            </div>
-            {uploadAvatarBtn}
-            {removeAvatarBtn}
-        </div>
-    );
 };
 
 export default AvatarSetting;

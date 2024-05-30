@@ -253,7 +253,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                         avatarAltText={_t("room_settings|general|avatar_field_label")}
                         disabled={!this.state.canSetAvatar}
                         onChange={this.onAvatarChanged}
-                        removeAvatar={this.removeAvatar}
+                        removeAvatar={this.state.originalAvatarUrl ? this.removeAvatar : undefined}
                     />
                 </div>
                 {profileSettingsButtons}

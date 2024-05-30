@@ -119,7 +119,7 @@ const ProfileSettings: React.FC = () => {
                     avatar={avatarURL ?? undefined}
                     avatarAltText={_t("common|user_avatar")}
                     onChange={onAvatarChange}
-                    removeAvatar={onAvatarRemove}
+                    removeAvatar={avatarURL && onAvatarRemove}
                 />
                 <EditInPlace
                     className="mx_ProfileSettings_profile_displayName"
