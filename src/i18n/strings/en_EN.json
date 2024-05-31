@@ -269,7 +269,7 @@
             "error_unsupported_protocol_title": "Other device not compatible",
             "error_user_cancelled": "The sign in was cancelled on the other device.",
             "error_user_cancelled_title": "Sign in request cancelled",
-            "error_user_declined": "You declined the request from your other device to sign in.",
+            "error_user_declined": "You or the account provider declined the sign in request.",
             "error_user_declined_title": "Sign in declined",
             "follow_remaining_instructions": "Follow the remaining instructions",
             "open_element_other_device": "Open %(brand)s on your other device",
