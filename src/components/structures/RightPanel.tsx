@@ -26,7 +26,6 @@ import MatrixClientContext from "../../contexts/MatrixClientContext";
 import RoomSummaryCard from "../views/right_panel/RoomSummaryCard";
 import WidgetCard from "../views/right_panel/WidgetCard";
 import SettingsStore from "../../settings/SettingsStore";
-import MemberList from "../views/rooms/MemberList";
 import UserInfo from "../views/right_panel/UserInfo";
 import ThirdPartyMemberInfo from "../views/rooms/ThirdPartyMemberInfo";
 import FilePanel from "./FilePanel";
@@ -42,7 +41,11 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { IRightPanelCard, IRightPanelCardState } from "../../stores/right-panel/RightPanelStoreIPanelState";
 import { Action } from "../../dispatcher/actions";
 import { XOR } from "../../@types/common";
-import MemberListNext from "../views/rooms/MemberListNext";
+import MemberListNext, { MockMemberListViewModelHook } from "../views/rooms/MemberListNext";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
+import { inviteToRoom } from "../../utils/room/inviteToRoom";
+import MemberList from "../views/rooms/MemberList";
+import { SpaceScopeHeader } from "../views/rooms/SpaceScopeHeader";
 
 interface BaseProps {
     overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
@@ -65,7 +68,6 @@ type Props = XOR<RoomlessProps, RoomProps>;
 
 interface IState {
     phase?: RightPanelPhases;
-    searchQuery: string;
     cardState?: IRightPanelCardState;
 }
 
@@ -76,9 +78,7 @@ export default class RightPanel extends React.Component<Props, IState> {
     public constructor(props: Props, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
-        this.state = {
-            searchQuery: "",
-        };
+        this.state = {};
     }
 
     private readonly delayedUpdate = throttle(
@@ -155,8 +155,19 @@ export default class RightPanel extends React.Component<Props, IState> {
         }
     };
 
-    private onSearchQueryChanged = (searchQuery: string): void => {
-        this.setState({ searchQuery });
+    private onThreePIDInviteClick = (eventId: string): void => {
+        const inviteEvent = this.props.room?.findEventById(eventId);
+        if (!inviteEvent) return;
+        dis.dispatch({
+            action: Action.View3pidInvite,
+            event: inviteEvent,
+        });
+    };
+
+    private onInviteButtonClick = (roomId: string): void => {
+        const cli = MatrixClientPeg.safeGet();
+        const room = cli.getRoom(roomId)!;
+        inviteToRoom(room);
     };
 
     public render(): React.ReactNode {
@@ -168,7 +179,7 @@ export default class RightPanel extends React.Component<Props, IState> {
             case RightPanelPhases.RoomMemberList:
                 if (!!roomId) {
                     card = (
-                        <MemberListNext roomId={roomId} />
+                        <MemberListNext viewModel={new MockMemberListViewModelHook()} />
                         // <MemberList
                         //     roomId={roomId}
                         //     key={roomId}
@@ -181,13 +192,17 @@ export default class RightPanel extends React.Component<Props, IState> {
                 break;
             case RightPanelPhases.SpaceMemberList:
                 if (!!cardState?.spaceId || !!roomId) {
+                    const cli = MatrixClientPeg.safeGet();
+                    const room = cli.getRoom(roomId);
+                    const spaceHeader = room ? <SpaceScopeHeader room={room} /> : undefined;
                     card = (
                         <MemberList
                             roomId={cardState?.spaceId ?? roomId!}
+                            header={spaceHeader}
                             key={cardState?.spaceId ?? roomId!}
                             onClose={this.onClose}
-                            searchQuery={this.state.searchQuery}
-                            onSearchQueryChanged={this.onSearchQueryChanged}
+                            onThreePIDInviteClick={this.onThreePIDInviteClick}
+                            onInviteButtonClick={this.onInviteButtonClick}
                         />
                     );
                 }

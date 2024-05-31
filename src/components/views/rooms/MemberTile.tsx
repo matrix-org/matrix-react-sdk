@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { RoomMember, RoomStateEvent, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
+import { RoomStateEvent, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
@@ -25,13 +25,14 @@ import dis from "../../../dispatcher/dispatcher";
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { Action } from "../../../dispatcher/actions";
-import EntityTile, { PowerStatus, PresenceState } from "./EntityTile";
-import MemberAvatar from "./../avatars/MemberAvatar";
+import EntityTile, { PowerStatus } from "./EntityTile";
 import DisambiguatedProfile from "../messages/DisambiguatedProfile";
 import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
-import { E2EState } from "./E2EIcon";
+import { E2EState } from "../../../models/rooms/E2EState";
 import { asyncSome } from "../../../utils/arrays";
 import { getUserDeviceIds } from "../../../utils/crypto/deviceInfo";
+import { RoomMember } from "../../../models/rooms/RoomMember";
+import MemberAvatarNext from "../avatars/MemberAvatarNext";
 
 interface IProps {
     member: RoomMember;
@@ -143,14 +144,14 @@ export default class MemberTile extends React.Component<IProps, IState> {
     public shouldComponentUpdate(nextProps: IProps, nextState: IState): boolean {
         if (
             this.memberLastModifiedTime === undefined ||
-            this.memberLastModifiedTime < nextProps.member.getLastModifiedTime()
+            this.memberLastModifiedTime < nextProps.member.lastModifiedTime
         ) {
             return true;
         }
         if (
-            nextProps.member.user &&
+            nextProps.member.presence &&
             (this.userLastModifiedTime === undefined ||
-                this.userLastModifiedTime < nextProps.member.user.getLastModifiedTime())
+                this.userLastModifiedTime < nextProps.member.presence.lastModifiedTime)
         ) {
             return true;
         }
@@ -184,14 +185,13 @@ export default class MemberTile extends React.Component<IProps, IState> {
     public render(): React.ReactNode {
         const member = this.props.member;
         const name = this.getDisplayName();
-        const presenceState = member.user?.presence as PresenceState | undefined;
 
-        const av = <MemberAvatar member={member} size="36px" aria-hidden="true" />;
+        const av = <MemberAvatarNext member={member} size="36px" aria-hidden="true" />;
 
-        if (member.user) {
-            this.userLastModifiedTime = member.user.getLastModifiedTime();
+        if (member.presence) {
+            this.userLastModifiedTime = member.presence.lastModifiedTime;
         }
-        this.memberLastModifiedTime = member.getLastModifiedTime();
+        this.memberLastModifiedTime = member.lastModifiedTime;
 
         const powerStatusMap = new Map([
             [100, PowerStatus.Admin],
@@ -219,10 +219,10 @@ export default class MemberTile extends React.Component<IProps, IState> {
         return (
             <EntityTile
                 {...this.props}
-                presenceState={presenceState}
-                presenceLastActiveAgo={member.user ? member.user.lastActiveAgo : 0}
-                presenceLastTs={member.user ? member.user.lastPresenceTs : 0}
-                presenceCurrentlyActive={member.user ? member.user.currentlyActive : false}
+                presenceState={member.presence?.state}
+                presenceLastActiveAgo={member.presence?.lastActiveAgo || 0}
+                presenceLastTs={member.presence?.lastPresenceTime || 0}
+                presenceCurrentlyActive={member.presence?.currentlyActive || false}
                 avatarJsx={av}
                 title={this.getPowerLabel()}
                 name={name}
