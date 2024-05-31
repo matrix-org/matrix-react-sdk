@@ -785,7 +785,7 @@ exports[`<LoginWithQRFlow /> errors renders user_declined 1`] = `
       <p
         data-testid="cancellation-message"
       >
-        You declined the request from your other device to sign in.
+        You or the account provider declined the sign in request.
       </p>
     </div>
     <div
@@ -819,7 +819,7 @@ exports[`<LoginWithQRFlow /> errors renders user_declined 2`] = `
       <p
         data-testid="cancellation-message"
       >
-        You declined the request from your other device to sign in.
+        You or the account provider declined the sign in request.
       </p>
     </div>
     <div
