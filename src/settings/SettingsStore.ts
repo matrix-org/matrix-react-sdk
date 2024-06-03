@@ -349,7 +349,7 @@ export default class SettingsStore {
         const setting = SETTINGS[settingName];
         const levelOrder = getLevelOrder(setting);
 
-        return SettingsStore.getValueAt(levelOrder[0], settingName, roomId, false, excludeDefault);
+        return SettingsStore.getValueAt<T>(levelOrder[0], settingName, roomId, false, excludeDefault);
     }
 
     /**
@@ -363,13 +363,13 @@ export default class SettingsStore {
      * @param {boolean} excludeDefault True to disable using the default value.
      * @return {*} The value, or null if not found.
      */
-    public static getValueAt(
+    public static getValueAt<T = any>(
         level: SettingLevel,
         settingName: string,
         roomId: string | null = null,
         explicit = false,
         excludeDefault = false,
-    ): any {
+    ): T {
         // Verify that the setting is actually a setting
         const setting = SETTINGS[settingName];
         if (!setting) {
