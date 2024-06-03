@@ -826,7 +826,7 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     const clientPegOpts: MatrixClientPegAssignOpts = {};
     if (credentials.pickleKey) {
         // The pickleKey, if provided, is probably a base64-encoded 256-bit key, so can be used for the crypto store.
-        if (credentials.pickleKey.length == 43) {
+        if (credentials.pickleKey.length === 43) {
             clientPegOpts.rustCryptoStoreKey = decodeBase64(credentials.pickleKey);
         } else {
             // We have some legacy pickle key. Continue using it as a password.
