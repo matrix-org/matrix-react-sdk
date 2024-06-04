@@ -32,6 +32,8 @@ import { OidcClientStore } from "../src/stores/oidc/OidcClientStore";
 import { makeDelegatedAuthConfig } from "./test-utils/oidc";
 import { persistOidcAuthenticatedSettings } from "../src/utils/oidc/persistOidcSettings";
 import { Action } from "../src/dispatcher/actions";
+import PlatformPeg from "../src/PlatformPeg";
+import { persistAccessTokenInStorage, persistRefreshTokenInStorage } from "../src/utils/tokens/tokens";
 
 const webCrypto = new Crypto();
 
@@ -220,22 +222,18 @@ describe("Lifecycle", () => {
         });
 
         describe("when session is found in storage", () => {
-            beforeEach(() => {
-                initLocalStorageMock(localStorageSession);
-                initIdbMock(idbStorageSession);
-            });
-
             describe("guest account", () => {
-                it("should ignore guest accounts when ignoreGuest is true", async () => {
+                beforeEach(() => {
                     initLocalStorageMock({ ...localStorageSession, mx_is_guest: "true" });
+                    initIdbMock(idbStorageSession);
+                });
 
+                it("should ignore guest accounts when ignoreGuest is true", async () => {
                     expect(await restoreFromLocalStorage({ ignoreGuest: true })).toEqual(false);
                     expect(logger.log).toHaveBeenCalledWith(`Ignoring stored guest account: ${userId}`);
                 });
 
                 it("should restore guest accounts when ignoreGuest is false", async () => {
-                    initLocalStorageMock({ ...localStorageSession, mx_is_guest: "true" });
-
                     expect(await restoreFromLocalStorage({ ignoreGuest: false })).toEqual(true);
 
                     expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith(
@@ -250,6 +248,11 @@ describe("Lifecycle", () => {
             });
 
             describe("without a pickle key", () => {
+                beforeEach(() => {
+                    initLocalStorageMock(localStorageSession);
+                    initIdbMock(idbStorageSession);
+                });
+
                 it("should persist credentials", async () => {
                     expect(await restoreFromLocalStorage()).toEqual(true);
 
@@ -342,11 +345,19 @@ describe("Lifecycle", () => {
             });
 
             describe("with a pickle key", () => {
+                let pickleKey: string;
+
                 beforeEach(async () => {
-                    initLocalStorageMock({});
+                    initLocalStorageMock(localStorageSession);
                     initIdbMock({});
-                    // setup storage with a session with encrypted token
-                    await setLoggedIn(credentials);
+
+                    // Create a pickle key, and store it, encrypted, in IDB.
+                    pickleKey = (await PlatformPeg.get()!.createPickleKey(credentials.userId, credentials.deviceId))!;
+
+                    // Indicate that we should have a pickle key
+                    localStorage.setItem("mx_has_pickle_key", "true");
+
+                    await persistAccessTokenInStorage(credentials.accessToken, pickleKey);
                 });
 
                 it("should persist credentials", async () => {
@@ -394,9 +405,9 @@ describe("Lifecycle", () => {
                             homeserverUrl,
                             identityServerUrl,
                             deviceId,
-                            freshLogin: true,
+                            freshLogin: false,
                             guest: false,
-                            pickleKey: expect.any(String),
+                            pickleKey,
                         },
                         undefined,
                     );
@@ -404,13 +415,7 @@ describe("Lifecycle", () => {
 
                 describe("with a refresh token", () => {
                     beforeEach(async () => {
-                        initLocalStorageMock({});
-                        initIdbMock({});
-                        // setup storage with a session with encrypted token
-                        await setLoggedIn({
-                            ...credentials,
-                            refreshToken,
-                        });
+                        await persistRefreshTokenInStorage(refreshToken, pickleKey);
                     });
 
                     it("should persist credentials", async () => {
@@ -439,7 +444,7 @@ describe("Lifecycle", () => {
                                 deviceId,
                                 freshLogin: false,
                                 guest: false,
-                                pickleKey: expect.any(String),
+                                pickleKey: pickleKey,
                             },
                             undefined,
                         );
@@ -448,6 +453,8 @@ describe("Lifecycle", () => {
             });
 
             it("should proceed if server is not accessible", async () => {
+                initLocalStorageMock(localStorageSession);
+                initIdbMock(idbStorageSession);
                 mockClient.isVersionSupported.mockRejectedValue(new Error("Oh, noes, the server is down!"));
 
                 expect(await restoreFromLocalStorage()).toEqual(true);
