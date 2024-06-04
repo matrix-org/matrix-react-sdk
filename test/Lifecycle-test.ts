@@ -17,9 +17,10 @@ limitations under the License.
 import { Crypto } from "@peculiar/webcrypto";
 import { logger } from "matrix-js-sdk/src/logger";
 import * as MatrixJs from "matrix-js-sdk/src/matrix";
+import { decodeBase64, encodeUnpaddedBase64 } from "matrix-js-sdk/src/matrix";
 import { setCrypto } from "matrix-js-sdk/src/crypto/crypto";
 import * as MatrixCryptoAes from "matrix-js-sdk/src/crypto/aes";
-import { MockedObject } from "jest-mock";
+import { mocked, MockedObject } from "jest-mock";
 import fetchMock from "fetch-mock-jest";
 
 import StorageEvictedDialog from "../src/components/views/dialogs/StorageEvictedDialog";
@@ -27,6 +28,7 @@ import { logout, restoreFromLocalStorage, setLoggedIn } from "../src/Lifecycle";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
 import Modal from "../src/Modal";
 import * as StorageAccess from "../src/utils/StorageAccess";
+import { idbSave } from "../src/utils/StorageAccess";
 import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser, mockPlatformPeg } from "./test-utils";
 import { OidcClientStore } from "../src/stores/oidc/OidcClientStore";
 import { makeDelegatedAuthConfig } from "./test-utils/oidc";
@@ -34,6 +36,7 @@ import { persistOidcAuthenticatedSettings } from "../src/utils/oidc/persistOidcS
 import { Action } from "../src/dispatcher/actions";
 import PlatformPeg from "../src/PlatformPeg";
 import { persistAccessTokenInStorage, persistRefreshTokenInStorage } from "../src/utils/tokens/tokens";
+import { encryptPickleKey } from "../src/utils/tokens/pickling";
 
 const webCrypto = new Crypto();
 
@@ -275,7 +278,7 @@ describe("Lifecycle", () => {
                     expect(localStorage.setItem).toHaveBeenCalledWith("mx_access_token", accessToken);
                 });
 
-                it("should create new matrix client with credentials", async () => {
+                it("should create and start new matrix client with credentials", async () => {
                     expect(await restoreFromLocalStorage()).toEqual(true);
 
                     expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith(
@@ -291,6 +294,8 @@ describe("Lifecycle", () => {
                         },
                         undefined,
                     );
+
+                    expect(MatrixClientPeg.start).toHaveBeenCalledWith({});
                 });
 
                 it("should remove fresh login flag from session storage", async () => {
@@ -344,7 +349,7 @@ describe("Lifecycle", () => {
                 });
             });
 
-            describe("with a pickle key", () => {
+            describe("with a normal pickle key", () => {
                 let pickleKey: string;
 
                 beforeEach(async () => {
@@ -394,9 +399,17 @@ describe("Lifecycle", () => {
                     expect(localStorage.setItem).toHaveBeenCalledWith("mx_access_token", accessToken);
                 });
 
-                it("should create new matrix client with credentials", async () => {
+                it("should create and start new matrix client with credentials", async () => {
+                    // Check that the rust crypto key is as expected. We have to do this during the call, as
+                    // the buffer is cleared afterwards.
+                    mocked(MatrixClientPeg.start).mockImplementation(async (opts) => {
+                        expect(opts?.rustCryptoStoreKey).toEqual(decodeBase64(pickleKey));
+                    });
+
+                    // Perform the restore
                     expect(await restoreFromLocalStorage()).toEqual(true);
 
+                    // Ensure that the expected calls were made
                     expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith(
                         {
                             userId,
@@ -411,6 +424,8 @@ describe("Lifecycle", () => {
                         },
                         undefined,
                     );
+
+                    expect(MatrixClientPeg.start).toHaveBeenCalledWith({ rustCryptoStoreKey: expect.any(Buffer) });
                 });
 
                 describe("with a refresh token", () => {
@@ -449,6 +464,57 @@ describe("Lifecycle", () => {
                             undefined,
                         );
                     });
+                });
+            });
+
+            describe("with a non-standard pickle key", () => {
+                // Most pickle keys are 43 bytes of base64. Test what happens when it is something else.
+                let pickleKey: string;
+
+                beforeEach(async () => {
+                    initLocalStorageMock(localStorageSession);
+                    initIdbMock({});
+
+                    // Generate the pickle key. I don't *think* it's possible for there to be a pickle key
+                    // which is not some amount of base64.
+                    const rawPickleKey = new Uint8Array(10);
+                    crypto.getRandomValues(rawPickleKey);
+                    pickleKey = encodeUnpaddedBase64(rawPickleKey);
+
+                    // Store it, encrypted, in the db
+                    await idbSave(
+                        "pickleKey",
+                        [userId, deviceId],
+                        (await encryptPickleKey(rawPickleKey, userId, deviceId))!,
+                    );
+
+                    // Indicate that we should have a pickle key
+                    localStorage.setItem("mx_has_pickle_key", "true");
+
+                    await persistAccessTokenInStorage(credentials.accessToken, pickleKey);
+                });
+
+                it("should create and start new matrix client with credentials", async () => {
+                    // Perform the restore
+                    expect(await restoreFromLocalStorage()).toEqual(true);
+
+                    // Ensure that the expected calls were made
+                    expect(MatrixClientPeg.replaceUsingCreds).toHaveBeenCalledWith(
+                        {
+                            userId,
+                            // decrypted accessToken
+                            accessToken,
+                            homeserverUrl,
+                            identityServerUrl,
+                            deviceId,
+                            freshLogin: false,
+                            guest: false,
+                            pickleKey,
+                        },
+                        undefined,
+                    );
+
+                    expect(MatrixClientPeg.start).toHaveBeenCalledWith({ rustCryptoStorePassword: pickleKey });
                 });
             });
 
