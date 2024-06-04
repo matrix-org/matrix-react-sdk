@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EditInPlace, Alert } from "@vector-im/compound-web";
 
@@ -26,6 +26,9 @@ import PosthogTrackers from "../../../PosthogTrackers";
 import { formatBytes } from "../../../utils/FormattingUtils";
 import { useToastContext } from "../../../contexts/ToastContext";
 import InlineSpinner from "../elements/InlineSpinner";
+import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
+import { useId } from "../../../utils/useId";
+import CopyableText from "../elements/CopyableText";
 
 const SpinnerToast: React.FC = ({ children }) => (
     <>
@@ -33,6 +36,22 @@ const SpinnerToast: React.FC = ({ children }) => (
         {children}
     </>
 );
+
+interface UsernameBoxProps {
+    username: string;
+}
+
+const UsernameBox: React.FC<UsernameBoxProps> = ({ username }) => {
+    const labelId = useId();
+    return (
+        <div className="mx_ProfileSettings_profile_controls_userId">
+            <div className="mx_ProfileSettings_profile_controls_userId_label" id={labelId}>
+                {_t("settings|general|username")}
+            </div>
+            <CopyableText getTextToCopy={() => username}>{username}</CopyableText>
+        </div>
+    );
+};
 
 const ProfileSettings: React.FC = () => {
     const [avatarURL, setAvatarURL] = useState(OwnProfileStore.instance.avatarMxc);
@@ -109,6 +128,14 @@ const ProfileSettings: React.FC = () => {
         }
     }, [displayName]);
 
+    const userIdentifier = useMemo(
+        () =>
+            UserIdentifierCustomisations.getDisplayUserIdentifier(MatrixClientPeg.safeGet().getSafeUserId(), {
+                withDisplayName: true,
+            }),
+        [],
+    );
+
     return (
         <div className="mx_ProfileSettings">
             <h2>{_t("common|profile")}</h2>
@@ -141,6 +168,7 @@ const ProfileSettings: React.FC = () => {
                         : _t("settings|general|avatar_upload_error_text", { size: formatBytes(maxUploadSize) })}
                 </Alert>
             )}
+            {userIdentifier && <UsernameBox username={userIdentifier} />}
         </div>
     );
 };

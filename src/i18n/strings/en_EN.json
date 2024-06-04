@@ -2523,7 +2523,8 @@
             "remove_email_prompt": "Remove %(email)s?",
             "remove_msisdn_prompt": "Remove %(phone)s?",
             "spell_check_locale_placeholder": "Choose a locale",
-            "spell_check_section": "Spell check"
+            "spell_check_section": "Spell check",
+            "username": "Username"
         },
         "image_thumbnails": "Show previews/thumbnails for images",
         "inline_url_previews_default": "Enable inline URL previews by default",
