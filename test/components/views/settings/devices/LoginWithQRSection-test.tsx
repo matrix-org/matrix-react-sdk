@@ -149,7 +149,7 @@ describe("<LoginWithQRSection />", () => {
             });
 
             test("no support in crypto", async () => {
-                mocked(client.getCrypto()!.supportsSecretsForQrLogin).mockReturnValue(false);
+                client.getCrypto()!.exportSecretsBundle = undefined;
                 const { container } = render(getComponent({ client }));
                 expect(container.textContent).toBe(""); // show nothing
             });

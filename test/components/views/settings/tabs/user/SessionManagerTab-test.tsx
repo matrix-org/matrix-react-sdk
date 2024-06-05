@@ -1732,7 +1732,7 @@ describe("<SessionManagerTab />", () => {
                 },
             });
             mockClient.getAuthIssuer.mockResolvedValue({ issuer });
-            mockCrypto.supportsSecretsForQrLogin.mockReturnValue(true);
+            mockCrypto.exportSecretsBundle = jest.fn();
             fetchMock.mock(`${issuer}/.well-known/openid-configuration`, {
                 ...openIdConfiguration,
                 grant_types_supported: [

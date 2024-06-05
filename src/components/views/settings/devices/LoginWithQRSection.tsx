@@ -75,7 +75,7 @@ export function shouldShowQr(
         deviceAuthorizationGrantSupported &&
         msc4108Supported &&
         SettingsStore.getValue(Features.OidcNativeFlow) &&
-        cli.getCrypto()?.supportsSecretsForQrLogin() &&
+        !!cli.getCrypto()?.exportSecretsBundle &&
         isCrossSigningReady
     );
 }

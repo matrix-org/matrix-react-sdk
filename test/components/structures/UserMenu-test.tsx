@@ -16,7 +16,8 @@ limitations under the License.
 
 import React from "react";
 import { act, render, RenderResult, screen, waitFor } from "@testing-library/react";
-import { CryptoApi, DEVICE_CODE_SCOPE, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import { DEVICE_CODE_SCOPE, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import { CryptoApi } from "matrix-js-sdk/src/crypto-api";
 import { mocked } from "jest-mock";
 import fetchMock from "fetch-mock-jest";
 
