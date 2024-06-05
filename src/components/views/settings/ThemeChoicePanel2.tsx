@@ -35,8 +35,6 @@ import { findHighContrastTheme, getOrderedThemes } from "../../../theme";
 interface ThemeState {
     /* The theme */
     theme: string;
-    /* The apparent selected theme */
-    apparentSelectedTheme?: string;
     /* Whether the system theme is activated */
     systemThemeActivated: boolean;
 }
@@ -67,6 +65,7 @@ export function ThemeChoicePanel(): JSX.Element {
             )}
             <ThemeSelectors
                 theme={themeState.theme}
+                disabled={themeState.systemThemeActivated}
                 onChange={(theme) => setThemeState((_themeState) => ({ ..._themeState, theme }))}
             />
         </SettingsSubsection>
@@ -112,6 +111,8 @@ function SystemTheme({ systemThemeActivated, onChange }: SystemThemeProps): JSX.
 interface ThemeSelectorProps {
     /* The current theme */
     theme: string;
+    /* The theme can't be selected */
+    disabled: boolean;
     /* Callback when the theme is changed */
     onChange: (theme: string) => void;
 }
@@ -119,7 +120,7 @@ interface ThemeSelectorProps {
 /**
  * Component to select the theme
  */
-function ThemeSelectors({ theme, onChange }: ThemeSelectorProps): JSX.Element {
+function ThemeSelectors({ theme, disabled, onChange }: ThemeSelectorProps): JSX.Element {
     const orderedThemes = useRef(getThemes());
 
     return (
@@ -153,7 +154,8 @@ function ThemeSelectors({ theme, onChange }: ThemeSelectorProps): JSX.Element {
             {orderedThemes.current.map((_theme) => (
                 <InlineField
                     className={classNames("mx_ThemeChoicePanel_themeSelector", {
-                        [`mx_ThemeChoicePanel_themeSelector_enabled`]: theme === _theme.id,
+                        [`mx_ThemeChoicePanel_themeSelector_enabled`]: !disabled && theme === _theme.id,
+                        [`mx_ThemeChoicePanel_themeSelector_disabled`]: disabled,
                         // We need to force the compound theme to be light or dark
                         // The theme selection doesn't depend on the current theme
                         // For example when the light theme is used, the dark theme selector should be dark
@@ -161,12 +163,12 @@ function ThemeSelectors({ theme, onChange }: ThemeSelectorProps): JSX.Element {
                         "cpd-theme-dark": _theme.id.includes("dark"),
                     })}
                     name="themeSelector"
-                    key={_theme.id}
+                    key={`${_theme.id}_${disabled}`}
                     control={
                         <RadioControl
                             name="themeSelector"
-                            defaultChecked={theme === _theme.id}
-                            disabled={false}
+                            defaultChecked={!disabled && theme === _theme.id}
+                            disabled={disabled}
                             value={_theme.id}
                         />
                     }
