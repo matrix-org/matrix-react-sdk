@@ -208,7 +208,7 @@ describe("<UserMenu>", () => {
         mocked(sdkContext.client.waitForClientWellKnown).mockResolvedValue({});
         mocked(sdkContext.client.getCrypto).mockReturnValue({
             isCrossSigningReady: jest.fn().mockResolvedValue(true),
-            supportsSecretsForQrLogin: jest.fn().mockResolvedValue(true),
+            exportSecretsBundle: jest.fn().mockResolvedValue({}),
         } as unknown as CryptoApi);
         await SettingsStore.setValue(Features.OidcNativeFlow, null, SettingLevel.DEVICE, true);
         const spy = jest.spyOn(defaultDispatcher, "dispatch");
