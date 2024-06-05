@@ -19,7 +19,7 @@ import { act, render, screen } from "@testing-library/react";
 import { MatrixClient, UploadResponse } from "matrix-js-sdk/src/matrix";
 import { mocked } from "jest-mock";
 
-import ProfileSettings from "../../../../src/components/views/settings/ProfileSettings";
+import UserProfileSettings from "../../../../src/components/views/settings/UserProfileSettings";
 import { stubClient } from "../../../test-utils";
 import { ToastContext, ToastRack } from "../../../../src/contexts/ToastContext";
 import { OwnProfileStore } from "../../../../src/stores/OwnProfileStore";
@@ -76,7 +76,7 @@ describe("ProfileSettings", () => {
     it("removes avatar", async () => {
         render(
             <ToastContext.Provider value={toastRack}>
-                <ProfileSettings />
+                <UserProfileSettings />
             </ToastContext.Provider>,
         );
 
@@ -93,7 +93,7 @@ describe("ProfileSettings", () => {
     it("changes avatar", async () => {
         render(
             <ToastContext.Provider value={toastRack}>
-                <ProfileSettings />
+                <UserProfileSettings />
             </ToastContext.Provider>,
         );
 
@@ -115,7 +115,7 @@ describe("ProfileSettings", () => {
     it("displays toast while uploading avatar", async () => {
         render(
             <ToastContext.Provider value={toastRack}>
-                <ProfileSettings />
+                <UserProfileSettings />
             </ToastContext.Provider>,
         );
 
@@ -151,7 +151,7 @@ describe("ProfileSettings", () => {
 
         render(
             <ToastContext.Provider value={toastRack}>
-                <ProfileSettings />
+                <UserProfileSettings />
             </ToastContext.Provider>,
         );
 
@@ -176,7 +176,7 @@ describe("ProfileSettings", () => {
 
         render(
             <ToastContext.Provider value={toastRack}>
-                <ProfileSettings />
+                <UserProfileSettings />
             </ToastContext.Provider>,
         );
 

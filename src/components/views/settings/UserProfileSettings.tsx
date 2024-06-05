@@ -44,8 +44,8 @@ interface UsernameBoxProps {
 const UsernameBox: React.FC<UsernameBoxProps> = ({ username }) => {
     const labelId = useId();
     return (
-        <div className="mx_ProfileSettings_profile_controls_userId">
-            <div className="mx_ProfileSettings_profile_controls_userId_label" id={labelId}>
+        <div className="mx_UserProfileSettings_profile_controls_userId">
+            <div className="mx_UserProfileSettings_profile_controls_userId_label" id={labelId}>
                 {_t("settings|general|username")}
             </div>
             <CopyableText getTextToCopy={() => username} aria-labelledby={labelId}>
@@ -55,7 +55,10 @@ const UsernameBox: React.FC<UsernameBoxProps> = ({ username }) => {
     );
 };
 
-const ProfileSettings: React.FC = () => {
+/**
+ * A group of settings views to allow the user to set their profile information.
+ */
+const UserProfileSettings: React.FC = () => {
     const [avatarURL, setAvatarURL] = useState(OwnProfileStore.instance.avatarMxc);
     const [displayName, setDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
     const [initialDisplayName, setInitialDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
@@ -139,10 +142,10 @@ const ProfileSettings: React.FC = () => {
     );
 
     return (
-        <div className="mx_ProfileSettings">
+        <div className="mx_UserProfileSettings">
             <h2>{_t("common|profile")}</h2>
             <div>{_t("settings|general|profile_subtitle")}</div>
-            <div className="mx_ProfileSettings_profile">
+            <div className="mx_UserProfileSettings_profile">
                 <AvatarSetting
                     avatar={avatarURL ?? undefined}
                     avatarAltText={_t("common|user_avatar")}
@@ -150,7 +153,7 @@ const ProfileSettings: React.FC = () => {
                     removeAvatar={onAvatarRemove}
                 />
                 <EditInPlace
-                    className="mx_ProfileSettings_profile_displayName"
+                    className="mx_UserProfileSettings_profile_displayName"
                     label={_t("settings|general|display_name")}
                     value={displayName}
                     disableSaveButton={displayName === initialDisplayName}
@@ -175,4 +178,4 @@ const ProfileSettings: React.FC = () => {
     );
 };
 
-export default ProfileSettings;
+export default UserProfileSettings;

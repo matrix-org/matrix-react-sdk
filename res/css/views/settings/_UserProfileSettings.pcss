@@ -14,27 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_ProfileSettings {
+.mx_UserProfileSettings {
     border-bottom: 1px solid $quinary-content;
 
-    .mx_ProfileSettings_profile {
+    .mx_UserProfileSettings_profile {
         display: flex;
         margin-top: var(--cpd-space-6x);
         gap: 16px;
         /* This is temporary until the 'Remove' link is replaced by a context menu. */
         margin-bottom: 20px;
 
-        .mx_ProfileSettings_profile_displayName {
+        .mx_UserProfileSettings_profile_displayName {
             flex-grow: 1;
             width: 100%;
         }
     }
 
-    .mx_ProfileSettings_profile_controls {
+    .mx_UserProfileSettings_profile_controls {
         flex-grow: 1;
     }
 
-    .mx_ProfileSettings_profile_controls_userId {
+    .mx_UserProfileSettings_profile_controls_userId {
         width: 100%;
         .mx_CopyableText {
             margin-top: var(--cpd-space-1x);
@@ -43,14 +43,14 @@ limitations under the License.
         }
     }
 
-    .mx_ProfileSettings_profile_controls_userId_label {
+    .mx_UserProfileSettings_profile_controls_userId_label {
         font-size: 15px;
         font-weight: 500;
     }
 }
 
 @media (max-width: 768px) {
-    .mx_ProfileSettings_profile {
+    .mx_UserProfileSettings_profile {
         flex-direction: column;
         align-items: center;
         gap: 30px;
