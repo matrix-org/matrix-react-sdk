@@ -710,7 +710,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         id={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}`}
                         className="mx_SpotlightDialog_result_multiline"
                         key={`${Section[result.section]}-${result.publicRoom.room_id}`}
-                        onClick={listener}
                         endAdornment={
                             <AccessibleButton
                                 kind={showViewButton ? "primary_outline" : "primary"}
