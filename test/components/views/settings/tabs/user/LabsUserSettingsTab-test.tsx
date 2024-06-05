@@ -76,13 +76,13 @@ describe("<LabsUserSettingsTab />", () => {
             const copyOfGetValueAt = SettingsStore.getValueAt;
 
             beforeEach(() => {
-                SettingsStore.getValueAt = (
+                SettingsStore.getValueAt = <T,>(
                     level: SettingLevel,
                     name: string,
                     roomId?: string,
                     isExplicit?: boolean,
-                ) => {
-                    if (level == SettingLevel.CONFIG && name === "feature_rust_crypto") return false;
+                ): T => {
+                    if (level == SettingLevel.CONFIG && name === "feature_rust_crypto") return false as T;
                     return copyOfGetValueAt(level, name, roomId, isExplicit);
                 };
             });
