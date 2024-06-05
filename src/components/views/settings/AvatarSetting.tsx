@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode, createRef, useCallback, useEffect, useRef, useState } from "react";
+import React, { createRef, useCallback, useEffect, useState } from "react";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
+import { useId } from "../../../utils/useId";
 import BaseAvatar from "../avatars/BaseAvatar";
 
 interface IProps {
@@ -94,9 +95,8 @@ const AvatarSetting: React.FC<IProps> = ({
         }
     }, [avatar]);
 
-    // TODO: Use useId() as soon as we're using React 18.
     // Prevents ID collisions when this component is used more than once on the same page.
-    const a11yId = useRef(`hover-text-${Math.random()}`);
+    const a11yId = useId();
 
     const onFileChanged = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,7 +109,18 @@ const AvatarSetting: React.FC<IProps> = ({
         fileInputRef.current?.click();
     }, [fileInputRef]);
 
-    let avatarElement = <BaseAvatar idName={placeholderId} name={placeholderName} size="90px" />;
+    let avatarElement = (
+        <AccessibleButton
+            element="div"
+            onClick={uploadAvatar}
+            className="mx_AvatarSetting_avatarPlaceholder mx_AvatarSetting_avatarDisplay"
+            aria-labelledby={disabled ? undefined : a11yId}
+            // Inhibit tab stop as we have explicit upload/remove buttons
+            tabIndex={-1}
+        >
+            <BaseAvatar idName={placeholderId} name={placeholderName} size="90px" />
+        </AccessibleButton>
+    );
     if (avatarURL) {
         avatarElement = (
             <AccessibleButton
@@ -132,7 +143,7 @@ const AvatarSetting: React.FC<IProps> = ({
                 <AccessibleButton
                     onClick={uploadAvatar}
                     className="mx_AvatarSetting_uploadButton"
-                    aria-labelledby={a11yId.current}
+                    aria-labelledby={a11yId}
                 />
                 <input
                     type="file"
@@ -161,7 +172,7 @@ const AvatarSetting: React.FC<IProps> = ({
             {avatarElement}
             <div className="mx_AvatarSetting_hover" aria-hidden="true">
                 <div className="mx_AvatarSetting_hoverBg" />
-                {!disabled && <span id={a11yId.current}>{_t("action|upload")}</span>}
+                {!disabled && <span id={a11yId}>{_t("action|upload")}</span>}
             </div>
             {uploadAvatarBtn}
             {removeAvatarBtn}

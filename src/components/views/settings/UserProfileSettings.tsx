@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EditInPlace } from "@vector-im/compound-web";
-import { Alert } from "@vector-im/compound-web";
+import { EditInPlace, Alert } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -27,7 +26,9 @@ import PosthogTrackers from "../../../PosthogTrackers";
 import { formatBytes } from "../../../utils/FormattingUtils";
 import { useToastContext } from "../../../contexts/ToastContext";
 import InlineSpinner from "../elements/InlineSpinner";
-import BaseAvatar from "../avatars/BaseAvatar";
+import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
+import { useId } from "../../../utils/useId";
+import CopyableText from "../elements/CopyableText";
 
 const SpinnerToast: React.FC = ({ children }) => (
     <>
@@ -36,7 +37,28 @@ const SpinnerToast: React.FC = ({ children }) => (
     </>
 );
 
-const ProfileSettings: React.FC = () => {
+interface UsernameBoxProps {
+    username: string;
+}
+
+const UsernameBox: React.FC<UsernameBoxProps> = ({ username }) => {
+    const labelId = useId();
+    return (
+        <div className="mx_UserProfileSettings_profile_controls_userId">
+            <div className="mx_UserProfileSettings_profile_controls_userId_label" id={labelId}>
+                {_t("settings|general|username")}
+            </div>
+            <CopyableText getTextToCopy={() => username} aria-labelledby={labelId}>
+                {username}
+            </CopyableText>
+        </div>
+    );
+};
+
+/**
+ * A group of settings views to allow the user to set their profile information.
+ */
+const UserProfileSettings: React.FC = () => {
     const [avatarURL, setAvatarURL] = useState(OwnProfileStore.instance.avatarMxc);
     const [displayName, setDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
     const [initialDisplayName, setInitialDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
@@ -111,11 +133,19 @@ const ProfileSettings: React.FC = () => {
         }
     }, [displayName]);
 
+    const userIdentifier = useMemo(
+        () =>
+            UserIdentifierCustomisations.getDisplayUserIdentifier(MatrixClientPeg.safeGet().getSafeUserId(), {
+                withDisplayName: true,
+            }),
+        [],
+    );
+
     return (
-        <div className="mx_ProfileSettings">
+        <div className="mx_UserProfileSettings">
             <h2>{_t("common|profile")}</h2>
             <div>{_t("settings|general|profile_subtitle")}</div>
-            <div className="mx_ProfileSettings_profile">
+            <div className="mx_UserProfileSettings_profile">
                 <AvatarSetting
                     avatar={avatarURL ?? undefined}
                     avatarAltText={_t("common|user_avatar")}
@@ -125,7 +155,7 @@ const ProfileSettings: React.FC = () => {
                     placeholderId={MatrixClientPeg.safeGet().getUserId() ?? ""}
                 />
                 <EditInPlace
-                    className="mx_ProfileSettings_profile_displayName"
+                    className="mx_UserProfileSettings_profile_displayName"
                     label={_t("settings|general|display_name")}
                     value={displayName}
                     disableSaveButton={displayName === initialDisplayName}
@@ -145,8 +175,9 @@ const ProfileSettings: React.FC = () => {
                         : _t("settings|general|avatar_upload_error_text", { size: formatBytes(maxUploadSize) })}
                 </Alert>
             )}
+            {userIdentifier && <UsernameBox username={userIdentifier} />}
         </div>
     );
 };
 
-export default ProfileSettings;
+export default UserProfileSettings;

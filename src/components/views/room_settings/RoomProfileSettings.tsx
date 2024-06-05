@@ -203,7 +203,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
         let profileSettingsButtons;
         if (this.state.canSetName || this.state.canSetTopic || this.state.canSetAvatar) {
             profileSettingsButtons = (
-                <div className="mx_ProfileSettings_buttons">
+                <div className="mx_RoomProfileSettings_buttons">
                     <AccessibleButton
                         onClick={this.cancelProfileChanges}
                         kind="primary_outline"
@@ -219,9 +219,9 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
         }
 
         return (
-            <form onSubmit={this.saveProfile} autoComplete="off" noValidate={true} className="mx_ProfileSettings">
-                <div className="mx_ProfileSettings_profile">
-                    <div className="mx_ProfileSettings_profile_controls">
+            <form onSubmit={this.saveProfile} autoComplete="off" noValidate={true} className="mx_RoomProfileSettings">
+                <div className="mx_RoomProfileSettings_profile">
+                    <div className="mx_RoomProfileSettings_profile_controls">
                         <Field
                             label={_t("room_settings|general|name_field_label")}
                             type="text"
@@ -232,8 +232,8 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                         />
                         <Field
                             className={classNames(
-                                "mx_ProfileSettings_profile_controls_topic",
-                                "mx_ProfileSettings_profile_controls_topic--room",
+                                "mx_RoomProfileSettings_profile_controls_topic",
+                                "mx_RoomProfileSettings_profile_controls_topic--room",
                             )}
                             id="profileTopic" // See: NewRoomIntro.tsx
                             label={_t("room_settings|general|topic_field_label")}
