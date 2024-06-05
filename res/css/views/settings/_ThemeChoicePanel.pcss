@@ -62,34 +62,23 @@ limitations under the License.
 
 .mx_ThemeChoicePanel_ThemeSelectors {
     display: flex;
-    /* Form style */
+    /* Override form default style */
     flex-direction: row !important;
     gap: var(--cpd-space-4x) !important;
 
     .mx_ThemeChoicePanel_themeSelector {
-        border: 1px solid;
+        border: 1px solid var(--cpd-color-border-interactive-secondary);
         border-radius: var(--cpd-space-1-5x);
         padding: var(--cpd-space-3x) var(--cpd-space-5x);
         gap: var(--cpd-space-2x);
+        background-color: var(--cpd-color-bg-canvas-default);
 
-        /* TODO use correct token color for border and background
-         * https://www.figma.com/design/qTWRfItpO3RdCjnTKPu4mL/Settings?node-id=119-21045&t=cFg3nY6FwxW4naAe-0
-         * The compound token is not available in the design system yet
-         * We need to use directly --light or --dark directly because we they are independent of the current theme
-         */
-        &.mx_ThemeChoicePanel_themeSelector_dark {
-            background-color: #101317;
-            border-color: var(--cpd-color-gray-600);
-            color: #ebeef2;
-        }
-
-        &.mx_ThemeChoicePanel_themeSelector_light {
-            background-color: #ffffff;
-            border-color: var(--cpd-color-gray-800);
-            color: #1b1d22;
+        &.mx_ThemeChoicePanel_themeSelector_enabled {
+            border-color: var(--cpd-color-border-interactive-primary);
         }
 
         .mx_ThemeChoicePanel_themeSelector_Label {
+            color: var(--cpd-color-text-primary);
             font: var(--cpd-font-body-md-semibold);
         }
     }

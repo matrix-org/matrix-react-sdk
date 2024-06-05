@@ -27,7 +27,29 @@ import dis from "../../../dispatcher/dispatcher";
 import { RecheckThemePayload } from "../../../dispatcher/payloads/RecheckThemePayload";
 import { Action } from "../../../dispatcher/actions";
 import { useTheme } from "../../../hooks/useTheme";
-import { getOrderedThemes } from "../../../theme";
+import { findHighContrastTheme, getOrderedThemes } from "../../../theme";
+
+/**
+ * Interface for the theme state
+ */
+interface ThemeState {
+    /* The theme */
+    theme: string;
+    /* The apparent selected theme */
+    apparentSelectedTheme?: string;
+    /* Whether the system theme is activated */
+    systemThemeActivated: boolean;
+}
+
+/**
+ * Hook to fetch the value of the theme and dynamically update when it changes
+ */
+function useThemeState(): [ThemeState, Dispatch<React.SetStateAction<ThemeState>>] {
+    const theme = useTheme();
+    const [themeState, setThemeState] = useState<ThemeState>(theme);
+
+    return [themeState, setThemeState];
+}
 
 export function ThemeChoicePanel(): JSX.Element {
     const [themeState, setThemeState] = useThemeState();
@@ -43,29 +65,12 @@ export function ThemeChoicePanel(): JSX.Element {
                     }
                 />
             )}
-            <ThemeSelectors theme={themeState.theme} />
+            <ThemeSelectors
+                theme={themeState.theme}
+                onChange={(theme) => setThemeState((_themeState) => ({ ..._themeState, theme }))}
+            />
         </SettingsSubsection>
     );
-}
-
-/**
- * Interface for the theme state
- */
-interface ThemeState {
-    /* The theme */
-    theme: string;
-    /* Whether the system theme is activated */
-    systemThemeActivated: boolean;
-}
-
-/**
- * Hook to fetch the value of the theme and dynamically update when it changes
- */
-function useThemeState(): [ThemeState, Dispatch<React.SetStateAction<ThemeState>>] {
-    const theme = useTheme();
-    const [themeState, setThemeState] = useState(theme);
-
-    return [themeState, setThemeState];
 }
 
 /**
@@ -85,13 +90,10 @@ function SystemTheme({ systemThemeActivated, onChange }: SystemThemeProps): JSX.
     return (
         <Root
             onChange={async (evt) => {
-                // Needed to be able to have access to the `checked` attribute
-                if (evt.target instanceof HTMLInputElement) {
-                    const { checked } = evt.target;
-                    onChange(checked);
-                    await SettingsStore.setValue("use_system_theme", null, SettingLevel.DEVICE, checked);
-                    dis.dispatch<RecheckThemePayload>({ action: Action.RecheckTheme });
-                }
+                const checked = new FormData(evt.currentTarget).get("systemTheme") === "on";
+                onChange(checked);
+                await SettingsStore.setValue("use_system_theme", null, SettingLevel.DEVICE, checked);
+                dis.dispatch<RecheckThemePayload>({ action: Action.RecheckTheme });
             }}
         >
             <InlineField
@@ -110,29 +112,88 @@ function SystemTheme({ systemThemeActivated, onChange }: SystemThemeProps): JSX.
 interface ThemeSelectorProps {
     /* The current theme */
     theme: string;
+    /* Callback when the theme is changed */
+    onChange: (theme: string) => void;
 }
 
 /**
  * Component to select the theme
  */
-function ThemeSelectors({ theme }: ThemeSelectorProps): JSX.Element {
-    const orderedThemes = useRef(getOrderedThemes());
+function ThemeSelectors({ theme, onChange }: ThemeSelectorProps): JSX.Element {
+    const orderedThemes = useRef(getThemes());
 
     return (
-        <Root className="mx_ThemeChoicePanel_ThemeSelectors">
+        <Root
+            className="mx_ThemeChoicePanel_ThemeSelectors"
+            onChange={async (evt) => {
+                // We don't have any file in the form, we can cast it as string safely
+                const newTheme = new FormData(evt.currentTarget).get("themeSelector") as string | null;
+
+                // Do nothing if the same theme is selected
+                if (!newTheme || theme === newTheme) return;
+
+                // doing getValue in the .catch will still return the value we failed to set,
+                // so remember what the value was before we tried to set it so we can revert
+                const oldTheme = SettingsStore.getValue<string>("theme");
+                SettingsStore.setValue("theme", null, SettingLevel.DEVICE, newTheme).catch(() => {
+                    dis.dispatch<RecheckThemePayload>({ action: Action.RecheckTheme });
+                    onChange(oldTheme);
+                });
+
+                onChange(newTheme);
+                // The settings watcher doesn't fire until the echo comes back from the
+                // server, so to make the theme change immediately we need to manually
+                // do the dispatch now
+                // XXX: The local echoed value appears to be unreliable, in particular
+                // when settings custom themes(!) so adding forceTheme to override
+                // the value from settings.
+                dis.dispatch<RecheckThemePayload>({ action: Action.RecheckTheme, forceTheme: newTheme });
+            }}
+        >
             {orderedThemes.current.map((_theme) => (
                 <InlineField
-                    className={classNames(
-                        "mx_ThemeChoicePanel_themeSelector",
-                        `mx_ThemeChoicePanel_themeSelector_${_theme.id}`,
-                    )}
+                    className={classNames("mx_ThemeChoicePanel_themeSelector", {
+                        [`mx_ThemeChoicePanel_themeSelector_enabled`]: theme === _theme.id,
+                        // We need to force the compound theme to be light or dark
+                        // The theme selection doesn't depend on the current theme
+                        // For example when the light theme is used, the dark theme selector should be dark
+                        "cpd-theme-light": _theme.id.includes("light"),
+                        "cpd-theme-dark": _theme.id.includes("dark"),
+                    })}
                     name="themeSelector"
                     key={_theme.id}
-                    control={<RadioControl defaultChecked={theme === _theme.id} disabled={false} />}
+                    control={
+                        <RadioControl
+                            name="themeSelector"
+                            defaultChecked={theme === _theme.id}
+                            disabled={false}
+                            value={_theme.id}
+                        />
+                    }
                 >
                     <Label className="mx_ThemeChoicePanel_themeSelector_Label">{_theme.name}</Label>
                 </InlineField>
             ))}
         </Root>
     );
+}
+
+/**
+ * Get the themes
+ * @returns The themes
+ */
+function getThemes(): ReturnType<typeof getOrderedThemes> {
+    const themes = getOrderedThemes();
+
+    // Currently only light theme has a high contrast theme
+    const lightHighContrastId = findHighContrastTheme("light");
+    if (lightHighContrastId) {
+        const lightHighContrast = {
+            name: _t("settings|appearance|high_contrast"),
+            id: lightHighContrastId,
+        };
+        themes.push(lightHighContrast);
+    }
+
+    return themes;
 }
