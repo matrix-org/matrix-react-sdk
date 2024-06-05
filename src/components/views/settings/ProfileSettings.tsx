@@ -48,7 +48,9 @@ const UsernameBox: React.FC<UsernameBoxProps> = ({ username }) => {
             <div className="mx_ProfileSettings_profile_controls_userId_label" id={labelId}>
                 {_t("settings|general|username")}
             </div>
-            <CopyableText getTextToCopy={() => username}>{username}</CopyableText>
+            <CopyableText getTextToCopy={() => username} aria-labelledby={labelId}>
+                {username}
+            </CopyableText>
         </div>
     );
 };

@@ -17,8 +17,7 @@ limitations under the License.
 import React from "react";
 
 const getUniqueId = (() => {
-    let index = 1;
-    return () => `:r${index++}:`;
+    return () => `:r${Math.random()}:`;
 })();
 
 // Replace this with React's own useId once we switch to React 18

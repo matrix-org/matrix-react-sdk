@@ -21,8 +21,6 @@ const USER_NAME_NEW = "Alice";
 const IntegrationManager = "scalar.vector.im";
 
 test.describe("General user settings tab", () => {
-    let userId: string;
-
     test.use({
         displayName: USER_NAME,
         config: {
@@ -34,7 +32,7 @@ test.describe("General user settings tab", () => {
         },
     });
 
-    test("should be rendered properly", async ({ uut }) => {
+    test("should be rendered properly", async ({ uut, user }) => {
         await expect(uut).toMatchScreenshot("general.png");
 
         // Assert that the top heading is rendered
@@ -45,7 +43,7 @@ test.describe("General user settings tab", () => {
         await expect(profile.getByRole("textbox", { name: "Display Name" })).toHaveValue(USER_NAME);
 
         // Assert that a userId is rendered
-        await expect(profile.locator(".mx_ProfileSettings_profile_controls_userId", { hasText: userId })).toBeVisible();
+        expect(uut.getByLabel("Username")).toHaveText(user.userId);
 
         // Check avatar setting
         const avatar = profile.locator(".mx_AvatarSetting_avatar");
