@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, KeyboardEvent, SyntheticEvent } from "react";
-import EMOJI_REGEX from "emojibase-regex";
+import EMOJI_REGEX from "emojibase-regex/emoji";
 import {
     IContent,
     MatrixEvent,

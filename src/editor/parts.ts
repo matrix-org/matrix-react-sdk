@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EMOJIBASE_REGEX from "emojibase-regex";
+import EMOJIBASE_REGEX from "emojibase-regex/emoji";
 import { MatrixClient, RoomMember, Room } from "matrix-js-sdk/src/matrix";
 import GraphemeSplitter from "graphemer";
 

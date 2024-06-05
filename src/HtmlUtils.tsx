@@ -20,7 +20,7 @@ limitations under the License.
 import React, { LegacyRef, ReactNode } from "react";
 import sanitizeHtml from "sanitize-html";
 import classNames from "classnames";
-import EMOJIBASE_REGEX from "emojibase-regex";
+import EMOJIBASE_REGEX from "emojibase-regex/emoji";
 import katex from "katex";
 import { decode } from "html-entities";
 import { IContent } from "matrix-js-sdk/src/matrix";
@@ -46,8 +46,8 @@ const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
 const SYMBOL_PATTERN = /([\u2100-\u2bff])/;
 
 // Regex pattern for non-emoji characters that can appear in an "all-emoji" message
-// (Zero-Width Joiner, Zero-Width Space, Emoji presentation character, other whitespace)
-const EMOJI_SEPARATOR_REGEX = /[\u200D\u200B\s]|\uFE0F/g;
+// (Zero-Width Space, other whitespace)
+const EMOJI_SEPARATOR_REGEX = /[\u200B\s]/g;
 
 const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, "i");
 
