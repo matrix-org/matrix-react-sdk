@@ -15,12 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import EMOJIBASE_REGEX from "emojibase-regex";
 import { MatrixClient, RoomMember, Room } from "matrix-js-sdk/src/matrix";
 import GraphemeSplitter from "graphemer";
 
 import AutocompleteWrapperModel, { GetAutocompleterComponent, UpdateCallback, UpdateQuery } from "./autocomplete";
-import { unicodeToShortcode } from "../HtmlUtils";
+import { EMOJI_REGEX, unicodeToShortcode } from "../HtmlUtils";
 import * as Avatar from "../Avatar";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
@@ -198,7 +197,7 @@ abstract class BasePart {
 
 abstract class PlainBasePart extends BasePart {
     protected acceptsInsertion(chr: string, offset: number, inputType: string): boolean {
-        if (chr === "\n" || EMOJIBASE_REGEX.test(chr)) {
+        if (chr === "\n" || EMOJI_REGEX.test(chr)) {
             return false;
         }
         // when not pasting or dropping text, reject characters that should start a pill candidate
@@ -376,7 +375,7 @@ class NewlinePart extends BasePart implements IBasePart {
 
 export class EmojiPart extends BasePart implements IBasePart {
     protected acceptsInsertion(chr: string, offset: number): boolean {
-        return EMOJIBASE_REGEX.test(chr);
+        return EMOJI_REGEX.test(chr);
     }
 
     protected acceptsRemoval(position: number, chr: string): boolean {
@@ -574,7 +573,7 @@ export class PartCreator {
             case "\n":
                 return new NewlinePart();
             default:
-                if (EMOJIBASE_REGEX.test(getFirstGrapheme(input))) {
+                if (EMOJI_REGEX.test(getFirstGrapheme(input))) {
                     return new EmojiPart();
                 }
                 return new PlainPart();
@@ -652,7 +651,7 @@ export class PartCreator {
 
         const splitter = new GraphemeSplitter();
         for (const char of splitter.iterateGraphemes(text)) {
-            if (EMOJIBASE_REGEX.test(char)) {
+            if (EMOJI_REGEX.test(char)) {
                 if (plainText) {
                     parts.push(this.plain(plainText));
                     plainText = "";
