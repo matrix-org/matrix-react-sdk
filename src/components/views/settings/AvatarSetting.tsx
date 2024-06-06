@@ -23,6 +23,8 @@ import { Menu, MenuItem } from "@vector-im/compound-web";
 import { _t } from "../../../languageHandler";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
+import { useId } from "../../../utils/useId";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface MenuProps {
     trigger: ReactNode;
@@ -104,6 +106,9 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
         }
     }, [avatar]);
 
+    // Prevents ID collisions when this component is used more than once on the same page.
+    const a11yId = useId();
+
     const onFileChanged = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             if (e.target.files) onChange?.(e.target.files[0]);
@@ -115,7 +120,16 @@ const AvatarSetting: React.FC<IProps> = ({ avatar, avatarAltText, onChange, remo
         fileInputRef.current?.click();
     }, [fileInputRef]);
 
-    let avatarElement = <div className="mx_AvatarSetting_avatarPlaceholder mx_AvatarSetting_avatarDisplay" />;
+    let avatarElement = (
+        <AccessibleButton
+            element="div"
+            onClick={uploadAvatar}
+            className="mx_AvatarSetting_avatarPlaceholder mx_AvatarSetting_avatarDisplay"
+            aria-labelledby={disabled ? undefined : a11yId}
+            // Inhibit tab stop as we have explicit upload/remove buttons
+            tabIndex={-1}
+        />
+    );
     if (avatarURL) {
         avatarElement = <img className="mx_AvatarSetting_avatarDisplay" src={avatarURL} alt={avatarAltText} />;
     }
