@@ -87,6 +87,7 @@ import { useFeatureEnabled } from "../../../../hooks/useSettings";
 import { filterBoolean } from "../../../../utils/arrays";
 import { transformSearchTerm } from "../../../../utils/SearchInput";
 import { Filter } from "./Filter";
+import { Key } from "../../../../Keyboard";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -698,6 +699,15 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     );
                 };
 
+                const keyboardListener = (ev: ButtonEvent): void => {
+                    const event = ev as React.KeyboardEvent;
+                    // We want to be able to interact with the content of the row without joining automatically a room
+                    // But we want to keep the listener for keyboard action
+                    if (event.key === Key.ENTER) {
+                        listener(ev);
+                    }
+                };
+
                 let buttonLabel;
                 if (showViewButton) {
                     buttonLabel = _t("action|view");
@@ -710,8 +720,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                         id={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}`}
                         className="mx_SpotlightDialog_result_multiline"
                         key={`${Section[result.section]}-${result.publicRoom.room_id}`}
+                        onClick={keyboardListener}
                         endAdornment={
-                            <AccessibleButton kind={showViewButton ? "primary_outline" : "primary"} onClick={listener}>
+                            <AccessibleButton
+                                kind={showViewButton ? "primary_outline" : "primary"}
+                                onClick={listener}
+                                tabIndex={-1}
+                            >
                                 {buttonLabel}
                             </AccessibleButton>
                         }
