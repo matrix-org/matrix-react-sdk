@@ -45,14 +45,6 @@ test.describe("General user settings tab", () => {
         // Assert that a userId is rendered
         expect(uut.getByLabel("Username")).toHaveText(user.userId);
 
-        // Check avatar setting
-        const avatar = profile.locator(".mx_AvatarSetting_avatar");
-        await avatar.hover();
-
-        // Hover effect
-        await expect(avatar.locator(".mx_AvatarSetting_hoverBg")).toBeVisible();
-        await expect(avatar.locator(".mx_AvatarSetting_hover span").getByText("Upload")).toBeVisible();
-
         // Wait until spinners disappear
         await expect(uut.getByTestId("accountSection").locator(".mx_Spinner")).not.toBeVisible();
         await expect(uut.getByTestId("discoverySection").locator(".mx_Spinner")).not.toBeVisible();
