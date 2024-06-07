@@ -256,7 +256,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                         onChange={this.onAvatarChanged}
                         removeAvatar={this.state.originalAvatarUrl ? this.removeAvatar : undefined}
                         placeholderId={idNameForRoom(MatrixClientPeg.safeGet().getRoom(this.props.roomId)!)}
-                        placeholderName={this.state.displayName}
+                        placeholderName={MatrixClientPeg.safeGet().getRoom(this.props.roomId)!.name}
                     />
                 </div>
                 {profileSettingsButtons}
