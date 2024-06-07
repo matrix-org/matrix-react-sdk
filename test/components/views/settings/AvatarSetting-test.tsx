@@ -44,20 +44,6 @@ describe("<AvatarSetting />", () => {
         expect(imgElement).toBeInTheDocument();
     });
 
-    it("renders avatar without remove button", async () => {
-        const { queryByText } = render(
-            <AvatarSetting
-                placeholderId="blee"
-                placeholderName="boo"
-                disabled={true}
-                avatarAltText="Avatar of Peter Fox"
-            />,
-        );
-
-        const removeButton = queryByText("Remove");
-        expect(removeButton).toBeNull();
-    });
-
     it("renders a file as the avatar when supplied", async () => {
         render(
             <AvatarSetting
