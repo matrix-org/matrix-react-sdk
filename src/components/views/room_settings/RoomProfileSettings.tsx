@@ -218,6 +218,10 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
             );
         }
 
+        const canRemove = this.state.profileFieldsTouched.avatar
+            ? Boolean(this.state.avatarFile)
+            : Boolean(this.state.originalAvatarUrl);
+
         return (
             <form onSubmit={this.saveProfile} autoComplete="off" noValidate={true} className="mx_RoomProfileSettings">
                 <div className="mx_RoomProfileSettings_profile">
@@ -254,7 +258,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                         avatarAltText={_t("room_settings|general|avatar_field_label")}
                         disabled={!this.state.canSetAvatar}
                         onChange={this.onAvatarChanged}
-                        removeAvatar={this.state.originalAvatarUrl ? this.removeAvatar : undefined}
+                        removeAvatar={canRemove ? this.removeAvatar : undefined}
                         placeholderId={idNameForRoom(MatrixClientPeg.safeGet().getRoom(this.props.roomId)!)}
                         placeholderName={MatrixClientPeg.safeGet().getRoom(this.props.roomId)!.name}
                     />
