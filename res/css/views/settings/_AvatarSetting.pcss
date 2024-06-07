@@ -38,28 +38,12 @@ limitations under the License.
     }
 
     & > img {
-        cursor: pointer;
-        object-fit: cover;
-    }
-
-    & > img,
-    .mx_AvatarSetting_avatarPlaceholder {
         display: block;
         height: 90px;
         width: inherit;
         border-radius: 90px;
         cursor: pointer;
-    }
-
-    .mx_AvatarSetting_avatarPlaceholder::before {
-        background-color: $quinary-content;
-        mask: url("$(res)/img/feather-customised/user.svg");
-        mask-repeat: no-repeat;
-        mask-size: 36px;
-        mask-position: center;
-        content: "";
-        position: absolute;
-        inset: 0;
+        object-fit: cover;
     }
 
     .mx_AvatarSetting_uploadButton {
@@ -80,10 +64,6 @@ limitations under the License.
             top: 3px;
         }
     }
-}
-
-.mx_AvatarSetting_avatar .mx_AvatarSetting_avatarPlaceholder {
-    background-color: $system;
 }
 
 .mx_AvatarSetting_removeMenuItem svg,
