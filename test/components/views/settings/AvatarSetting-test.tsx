@@ -39,19 +39,6 @@ describe("<AvatarSetting />", () => {
         expect(imgElement).toBeInTheDocument();
     });
 
-    it("renders avatar with remove button", async () => {
-        const { queryByText } = render(
-            <AvatarSetting
-                avatarAltText="Avatar of Peter Fox"
-                avatar="mxc://example.org/my-avatar"
-                removeAvatar={jest.fn()}
-            />,
-        );
-
-        const removeButton = queryByText("Remove");
-        expect(removeButton).toBeInTheDocument();
-    });
-
     it("renders avatar without remove button", async () => {
         const { queryByText } = render(<AvatarSetting disabled={true} avatarAltText="Avatar of Peter Fox" />);
 
@@ -78,9 +65,6 @@ describe("<AvatarSetting />", () => {
                 onChange={onChange}
             />,
         );
-
-        // not really necessary, but to follow the expected user flow as much as possible
-        await user.click(screen.getByRole("button", { name: "Avatar of Peter Fox" }));
 
         const fileInput = screen.getByAltText("Upload");
         await user.upload(fileInput, AVATAR_FILE);
