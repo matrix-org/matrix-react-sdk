@@ -33,25 +33,39 @@ interface MenuProps {
     onRemoveSelect?: () => void;
 }
 
-const AvatarSettingContextMenu: React.FC<MenuProps> = ({ trigger, onUploadSelect, onRemoveSelect }) => (
-    <Menu trigger={trigger} title={_t("action|set_avatar")} showTitle={false}>
-        <MenuItem
-            as="div"
-            Icon={<UploadIcon width="24px" height="24px" />}
-            label={_t("action|upload_file")}
-            onSelect={onUploadSelect}
-        />
-        {onRemoveSelect && (
+const AvatarSettingContextMenu: React.FC<MenuProps> = ({ trigger, onUploadSelect, onRemoveSelect }) => {
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const onOpenChange = useCallback((newOpen: boolean) => {
+        setMenuOpen(newOpen);
+    }, []);
+
+    return (
+        <Menu
+            trigger={trigger}
+            title={_t("action|set_avatar")}
+            showTitle={false}
+            open={menuOpen}
+            onOpenChange={onOpenChange}
+        >
             <MenuItem
                 as="div"
-                Icon={<DeleteIcon width="24px" height="24px" />}
-                className="mx_AvatarSetting_removeMenuItem"
-                label={_t("action|remove")}
-                onSelect={onRemoveSelect}
+                Icon={<UploadIcon width="24px" height="24px" />}
+                label={_t("action|upload_file")}
+                onSelect={onUploadSelect}
             />
-        )}
-    </Menu>
-);
+            {onRemoveSelect && (
+                <MenuItem
+                    as="div"
+                    Icon={<DeleteIcon width="24px" height="24px" />}
+                    className="mx_AvatarSetting_removeMenuItem"
+                    label={_t("action|remove")}
+                    onSelect={onRemoveSelect}
+                />
+            )}
+        </Menu>
+    );
+};
 
 interface IProps {
     /**
