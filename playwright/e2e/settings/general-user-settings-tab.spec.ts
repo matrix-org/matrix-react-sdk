@@ -128,21 +128,20 @@ test.describe("General user settings tab", () => {
         await expect(uut).toMatchScreenshot("general-smallscreen.png");
     });
 
-    test("should support adding and removing a profile picture", async ({ uut }) => {
+    test("should support adding and removing a profile picture", async ({ uut, page }) => {
         const profileSettings = uut.locator(".mx_UserProfileSettings");
         // Upload a picture
         await profileSettings.getByAltText("Upload").setInputFiles("playwright/sample-files/riot.png");
 
-        // Find and click "Remove" link button
-        await profileSettings
-            .locator(".mx_UserProfileSettings_profile")
-            .getByRole("button", { name: "Remove" })
-            .click();
+        // Image should be visible
+        await expect(profileSettings.locator(".mx_AvatarSetting_avatar img")).toBeVisible();
 
-        // Assert that the link button disappeared
-        await expect(
-            profileSettings.locator(".mx_AvatarSetting_avatar .mx_AccessibleButton_kind_link_sm"),
-        ).not.toBeVisible();
+        // Open the menu & click remove
+        await profileSettings.getByRole("button", { name: "Profile Picture" }).click();
+        await page.getByRole("menuitem", { name: "Remove" }).click();
+
+        // Assert that the image disappeared
+        await expect(profileSettings.locator(".mx_AvatarSetting_avatar img")).not.toBeVisible();
     });
 
     test("should set a country calling code based on default_country_code", async ({ uut }) => {
