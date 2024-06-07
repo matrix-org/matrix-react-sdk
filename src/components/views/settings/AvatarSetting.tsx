@@ -197,26 +197,22 @@ const AvatarSetting: React.FC<IProps> = ({
 
     if (disabled) {
         return content;
-    } else {
-        return (
-            <>
-                <AvatarSettingContextMenu
-                    trigger={content}
-                    onUploadSelect={uploadAvatar}
-                    onRemoveSelect={removeAvatar}
-                />
-                <input
-                    type="file"
-                    style={{ display: "none" }}
-                    ref={fileInputRef}
-                    onClick={chromeFileInputFix}
-                    onChange={onFileChanged}
-                    accept="image/*"
-                    alt={_t("action|upload")}
-                />
-            </>
-        );
     }
+
+    return (
+        <>
+            <AvatarSettingContextMenu trigger={content} onUploadSelect={uploadAvatar} onRemoveSelect={removeAvatar} />
+            <input
+                type="file"
+                style={{ display: "none" }}
+                ref={fileInputRef}
+                onClick={chromeFileInputFix}
+                onChange={onFileChanged}
+                accept="image/*"
+                alt={_t("action|upload")}
+            />
+        </>
+    );
 };
 
 export default AvatarSetting;
