@@ -15,9 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { RefObject, createRef, useCallback, useEffect, useRef } from "react";
 import { Room, RoomState, RoomStateEvent, RoomMember, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { throttle } from "lodash";
+import { NavBar, NavItem } from "@vector-im/compound-web";
 
 import dis from "../../dispatcher/dispatcher";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
@@ -42,6 +43,8 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { IRightPanelCard, IRightPanelCardState } from "../../stores/right-panel/RightPanelStoreIPanelState";
 import { Action } from "../../dispatcher/actions";
 import { XOR } from "../../@types/common";
+import { CommonRoomInformationCard } from "../views/right_panel/CommonRoomInformationCard";
+import { RightPanelTabs, TabsWithRoomInformation, shouldShowTabsForPhase } from "../views/right_panel/RightPanelTabs";
 
 interface BaseProps {
     overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
@@ -71,6 +74,8 @@ interface IState {
 export default class RightPanel extends React.Component<Props, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
+    private rightPanelRef = createRef<HTMLElement>();
+    private roomInfoRef = createRef<HTMLElement>();
 
     public constructor(props: Props, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
@@ -310,7 +315,8 @@ export default class RightPanel extends React.Component<Props, IState> {
         }
 
         return (
-            <aside className="mx_RightPanel" id="mx_RightPanel">
+            <aside className="mx_RightPanel" id="mx_RightPanel" ref={this.rightPanelRef}>
+                <TabsWithRoomInformation phase={phase!} rightPanelRef={this.rightPanelRef} room={this.props.room!} />
                 {card}
             </aside>
         );

@@ -423,6 +423,7 @@ export default class MemberList extends React.Component<IProps, IState> {
                 header={<React.Fragment>{scopeHeader}</React.Fragment>}
                 footer={footer}
                 onClose={this.props.onClose}
+                disableBackButton={true}
             >
                 {inviteButton}
                 <div className="mx_MemberList_wrapper">

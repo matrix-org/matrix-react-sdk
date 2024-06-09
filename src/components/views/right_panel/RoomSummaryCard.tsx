@@ -518,9 +518,9 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 />
             </Flex>
 
-            {header}
+            {/* {header} */}
 
-            <Separator />
+            {/* <Separator /> */}
 
             <ToggleMenuItem
                 Icon={FavouriteIcon}

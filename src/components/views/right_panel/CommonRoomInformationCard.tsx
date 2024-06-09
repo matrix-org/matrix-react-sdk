@@ -16,7 +16,7 @@
  * /
  */
 
-import React, { JSX, SyntheticEvent, useContext, useEffect, useState } from "react";
+import React, { JSX, Ref, SyntheticEvent, forwardRef, useContext, useEffect, useState } from "react";
 import { EventType, JoinRule, Room } from "matrix-js-sdk/src/matrix";
 import { Badge, Heading, IconButton, Link, Text } from "@vector-im/compound-web";
 import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock-solid.svg";
@@ -44,6 +44,8 @@ import { onRoomTopicLinkClick } from "../elements/RoomTopic";
 
 interface Props {
     room: Room;
+    height: number;
+    isDragging: boolean;
 }
 
 const RoomTopic: React.FC<Pick<Props, "room">> = ({ room }): JSX.Element | null => {
@@ -124,8 +126,11 @@ const RoomTopic: React.FC<Pick<Props, "room">> = ({ room }): JSX.Element | null 
     );
 };
 
-export function CommonRoomInformationCard({ room }: Props): JSX.Element {
-    const name = useRoomName();
+export const CommonRoomInformationCard = forwardRef(function (
+    { room, isDragging, height }: Props,
+    ref: Ref<HTMLElement>,
+): JSX.Element {
+    const name = useRoomName(room);
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
 
     const cli = useContext(MatrixClientContext);
@@ -145,7 +150,11 @@ export function CommonRoomInformationCard({ room }: Props): JSX.Element {
     }, [room, directRoomsList]);
 
     const header = (
-        <header className="mx_CommonRoomInformationCard_container">
+        <header
+            className={`mx_CommonRoomInformationCard_container ${isDragging ? "dragging" : ""}`}
+            ref={ref}
+            style={{ height: `${height}px` }}
+        >
             <RoomAvatar room={room} size="80px" viewAvatarOnClick />
             <Heading
                 as="h1"
@@ -200,9 +209,8 @@ export function CommonRoomInformationCard({ room }: Props): JSX.Element {
                     </Badge>
                 )}
             </Flex>
-
             <RoomTopic room={room} />
         </header>
     );
     return header;
-}
+});

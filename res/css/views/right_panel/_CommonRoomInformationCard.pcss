@@ -17,6 +17,14 @@ limitations under the License.
 .mx_CommonRoomInformationCard_container {
     text-align: center;
     margin: $spacing-20 var(--cpd-space-4x) 0;
+    height: 0;
+    max-height: 260px;
+    overflow: hidden;
+    transition: height 0.6s ease;
+
+    &.dragging {
+        transition: height 0s ease;
+    }
 }
 
 .mx_CommonRoomInformationCard_roomName,
