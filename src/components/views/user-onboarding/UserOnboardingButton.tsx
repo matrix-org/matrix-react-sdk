@@ -79,7 +79,7 @@ function UserOnboardingButtonInternal({ selected, minimized }: Props): JSX.Eleme
                         <AccessibleButton
                             className="mx_UserOnboardingButton_close"
                             onClick={onDismiss}
-                            aria-label={_t("onboarding|room_list_dismiss")}
+                            aria-label={_t("action|dismiss")}
                         />
                     </div>
                 </>
