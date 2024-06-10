@@ -370,6 +370,13 @@ export default class SettingsStore {
         explicit = false,
         excludeDefault = false,
     ): any {
+        let finalLevel: SettingLevel = level;
+        // For some config settings (mostly: non-beta features), a value in config.json overrides the local setting
+        // (ie: we force them as enabled or disabled). In this case we such read the value from the
+        if (level !== SettingLevel.CONFIG && this.doesConfigOverrideSetting(settingName, roomId)) {
+            finalLevel = SettingLevel.CONFIG;
+        }
+
         // Verify that the setting is actually a setting
         const setting = SETTINGS[settingName];
         if (!setting) {
@@ -379,8 +386,8 @@ export default class SettingsStore {
         const levelOrder = getLevelOrder(setting);
         if (!levelOrder.includes(SettingLevel.DEFAULT)) levelOrder.push(SettingLevel.DEFAULT); // always include default
 
-        const minIndex = levelOrder.indexOf(level);
-        if (minIndex === -1) throw new Error(`Level "${level}" for setting "${settingName}" is not prioritized`);
+        const minIndex = levelOrder.indexOf(finalLevel);
+        if (minIndex === -1) throw new Error(`Level "${finalLevel}" for setting "${settingName}" is not prioritized`);
 
         const handlers = SettingsStore.getHandlers(settingName);
 
@@ -392,12 +399,12 @@ export default class SettingsStore {
         }
 
         if (explicit) {
-            const handler = handlers[level];
+            const handler = handlers[finalLevel];
             if (!handler) {
-                return SettingsStore.getFinalValue(setting, level, roomId, null, null);
+                return SettingsStore.getFinalValue(setting, finalLevel, roomId, null, null);
             }
             const value = handler.getValue(settingName, roomId);
-            return SettingsStore.getFinalValue(setting, level, roomId, value, level);
+            return SettingsStore.getFinalValue(setting, finalLevel, roomId, value, finalLevel);
         }
 
         for (let i = minIndex; i < levelOrder.length; i++) {
@@ -407,10 +414,10 @@ export default class SettingsStore {
 
             const value = handler.getValue(settingName, roomId);
             if (value === null || value === undefined) continue;
-            return SettingsStore.getFinalValue(setting, level, roomId, value, levelOrder[i]);
+            return SettingsStore.getFinalValue(setting, finalLevel, roomId, value, levelOrder[i]);
         }
 
-        return SettingsStore.getFinalValue(setting, level, roomId, null, null);
+        return SettingsStore.getFinalValue(setting, finalLevel, roomId, null, null);
     }
 
     /**
@@ -529,8 +536,11 @@ export default class SettingsStore {
         }
 
         // For some config settings (mostly: non-beta features), a value in config.json overrides the local setting
-        // (ie: we force them as enabled or disabled).
-        if (SETTINGS[settingName]?.configDisablesSetting) {
+        // (ie: we force them as enabled or disabled). In this case we such not let the user change the setting.
+        if (this.doesConfigOverrideSetting(settingName, roomId)) {
+            return false;
+        }
+        if (SETTINGS[settingName]?.configOverridesSetting) {
             const configVal = SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, roomId, true, true);
             if (configVal === true || configVal === false) return false;
         }
@@ -538,6 +548,20 @@ export default class SettingsStore {
         const handler = SettingsStore.getHandler(settingName, level);
         if (!handler) return false;
         return handler.canSetValue(settingName, roomId);
+    }
+
+    /**
+     * Determines if the given setting's config should override other levels
+     * @param settingName
+     * @param roomId
+     * @returns
+     */
+    private static doesConfigOverrideSetting(settingName: string, roomId: string | null) {
+        if (SETTINGS[settingName]?.configOverridesSetting) {
+            const configVal = SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, roomId, true, true);
+            if (configVal === true || configVal === false) return true;
+        }
+        return false;
     }
 
     /**
