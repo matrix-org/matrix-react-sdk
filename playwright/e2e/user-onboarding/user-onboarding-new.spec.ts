@@ -30,7 +30,7 @@ test.describe("User Onboarding (new user)", () => {
 
     test.beforeEach(async ({ page, user }) => {
         await expect(page.locator(".mx_UserOnboardingPage")).toBeVisible();
-        await expect(page.getByRole("button", { name: "Welcome", exact: true })).toBeVisible();
+        await expect(page.getByRole("button", { name: "Welcome" })).toBeVisible();
         await expect(page.locator(".mx_UserOnboardingList")).toBeVisible();
     });
 
@@ -75,7 +75,7 @@ test.describe("User Onboarding (new user)", () => {
 
         await page.goto("/#/home");
         await expect(page.locator(".mx_UserOnboardingPage")).toBeVisible();
-        await expect(page.getByRole("button", { name: "Welcome", exact: true })).toBeVisible();
+        await expect(page.getByRole("button", { name: "Welcome" })).toBeVisible();
         await expect(page.locator(".mx_UserOnboardingList")).toBeVisible();
 
         await page.waitForTimeout(500); // await progress bar animation
