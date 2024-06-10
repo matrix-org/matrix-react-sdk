@@ -134,7 +134,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
 
     /**
-     * If true, then the presence of this setting in `config.json` take precence over settings at other levels and will disable the option in the UI.
+     * If true, then the presence of this setting in `config.json` will cause the config level to take precedence over settings at other levels and will disable the option in the UI.
      *
      * In other words, we prevent the user overriding the setting if an explicit value is given in `config.json`.
      *
