@@ -370,12 +370,12 @@ export default class SettingsStore {
         explicit = false,
         excludeDefault = false,
     ): any {
-        let finalLevel: SettingLevel = level;
         // For some config settings (mostly: non-beta features), a value in config.json overrides the local setting
-        // (ie: we force them as enabled or disabled). In this case we such read the value from the
-        if (level !== SettingLevel.CONFIG && this.doesConfigOverrideSetting(settingName, roomId)) {
-            finalLevel = SettingLevel.CONFIG;
-        }
+        // (ie: we force them as enabled or disabled). In this case we should read the value from the config.
+        const finalLevel: SettingLevel =
+            level !== SettingLevel.CONFIG && this.doesConfigOverrideSetting(settingName, roomId)
+                ? SettingLevel.CONFIG
+                : level;
 
         // Verify that the setting is actually a setting
         const setting = SETTINGS[settingName];
