@@ -144,7 +144,7 @@ export const reducer: Reducer<IState, Action> = (state: IState, action: Action) 
                 }
                 if (document.activeElement === document.body) {
                     // if the focus got reverted to the body then the user was likely focused on the unmounted element
-                    state.activeRef?.current?.focus();
+                    setTimeout(() => state.activeRef?.current?.focus(), 0);
                 }
             }
 
