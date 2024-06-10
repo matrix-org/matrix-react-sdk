@@ -356,6 +356,13 @@ export default class SettingsStore {
      * Gets a setting's value at a particular level, ignoring all levels that are more specific.
      * @param {SettingLevel|"config"|"default"} level The
      * level to look at.
+     *
+     *  This takes into account the value of {@link IBaseSetting#configOverridesSetting} of the `SettingController`.
+     *  If {@link IBaseSetting#configOverridesSetting} is true, and the config level contains a valid value,
+     *  this value will be read from config level rather than level passed.
+     *  However the `explicit` paramter is respected, in that if true the value will only be read from the level specified.
+     *  In this case it is therefore the responsibilty of the calling code to ensure the config level setting is respected.
+     *
      * @param {string} settingName The name of the setting to read.
      * @param {String} roomId The room ID to read the setting value in, may be null.
      * @param {boolean} explicit If true, this method will not consider other levels, just the one
@@ -373,7 +380,7 @@ export default class SettingsStore {
         // For some config settings (mostly: non-beta features), a value in config.json overrides the local setting
         // (ie: we force them as enabled or disabled). In this case we should read the value from the config.
         const finalLevel: SettingLevel =
-            level !== SettingLevel.CONFIG && this.doesConfigOverrideSetting(settingName, roomId)
+            !explicit && level !== SettingLevel.CONFIG && this.doesConfigOverrideSetting(settingName, roomId)
                 ? SettingLevel.CONFIG
                 : level;
 
