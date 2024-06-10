@@ -512,7 +512,7 @@ export default class SettingsStore {
      * set for a particular room, otherwise it should be supplied.
      *
      * This takes into account both the value of {@link SettingController#settingDisabled} of the
-     * `SettingController`, if any; and, for settings where {@link IBaseSetting#configDisablesSetting} is true,
+     * `SettingController`, if any; and, for settings where {@link IBaseSetting#configOverridesSetting} is true,
      * whether the setting has been given a value in `config.json`.
      *
      * Typically, if the user cannot set the setting, it should be hidden, to declutter the UI;
@@ -556,7 +556,7 @@ export default class SettingsStore {
      * @param roomId
      * @returns
      */
-    private static doesConfigOverrideSetting(settingName: string, roomId: string | null) {
+    private static doesConfigOverrideSetting(settingName: string, roomId: string | null): boolean {
         if (SETTINGS[settingName]?.configOverridesSetting) {
             const configVal = SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, roomId, true, true);
             if (configVal === true || configVal === false) return true;
