@@ -28,7 +28,9 @@ const TEST_DATA = [
     },
 ];
 
-// An existing setting that has configOverridesSetting set to true.
+/**
+ * An existing setting that has {@link IBaseSetting#supportedLevelsAreOrdered} set to true.
+ */
 const SETTING_NAME_WITH_CONFIG_OVERRIDE = "feature_new_room_decoration_ui";
 
 describe("SettingsStore", () => {
@@ -67,18 +69,17 @@ describe("SettingsStore", () => {
             });
         });
 
-        it(`configOverridesSetting correctly overrides setting`, async () => {
+        it(`supportedLevelsAreOrdered correctly overrides setting`, async () => {
             SdkConfig.put({
                 features: {
                     [SETTING_NAME_WITH_CONFIG_OVERRIDE]: false,
                 },
             });
-
             await SettingsStore.setValue(SETTING_NAME_WITH_CONFIG_OVERRIDE, null, SettingLevel.DEVICE, true);
-            expect(SettingsStore.getValueAt(SettingLevel.DEVICE, SETTING_NAME_WITH_CONFIG_OVERRIDE)).toBe(false);
+            expect(SettingsStore.getValue(SETTING_NAME_WITH_CONFIG_OVERRIDE)).toBe(false);
         });
 
-        it(`configOverridesSetting doesn't incorrectly override setting`, async () => {
+        it(`supportedLevelsAreOrdered doesn't incorrectly override setting`, async () => {
             await SettingsStore.setValue(SETTING_NAME_WITH_CONFIG_OVERRIDE, null, SettingLevel.DEVICE, true);
             expect(SettingsStore.getValueAt(SettingLevel.DEVICE, SETTING_NAME_WITH_CONFIG_OVERRIDE)).toBe(true);
         });

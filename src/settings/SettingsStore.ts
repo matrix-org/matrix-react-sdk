@@ -356,13 +356,6 @@ export default class SettingsStore {
      * Gets a setting's value at a particular level, ignoring all levels that are more specific.
      * @param {SettingLevel|"config"|"default"} level The
      * level to look at.
-     *
-     *  This takes into account the value of {@link IBaseSetting#configOverridesSetting} of the `SettingController`.
-     *  If {@link IBaseSetting#configOverridesSetting} is true, and the config level contains a valid value,
-     *  this value will be read from config level rather than level passed.
-     *  However the `explicit` paramter is respected, in that if true the value will only be read from the level specified.
-     *  In this case it is therefore the responsibilty of the calling code to ensure the config level setting is respected.
-     *
      * @param {string} settingName The name of the setting to read.
      * @param {String} roomId The room ID to read the setting value in, may be null.
      * @param {boolean} explicit If true, this method will not consider other levels, just the one
@@ -377,13 +370,6 @@ export default class SettingsStore {
         explicit = false,
         excludeDefault = false,
     ): any {
-        // For some config settings (mostly: non-beta features), a value in config.json overrides the local setting
-        // (ie: we force them as enabled or disabled). In this case we should read the value from the config.
-        const finalLevel: SettingLevel =
-            !explicit && level !== SettingLevel.CONFIG && this.doesConfigOverrideSetting(settingName, roomId)
-                ? SettingLevel.CONFIG
-                : level;
-
         // Verify that the setting is actually a setting
         const setting = SETTINGS[settingName];
         if (!setting) {
@@ -393,8 +379,8 @@ export default class SettingsStore {
         const levelOrder = getLevelOrder(setting);
         if (!levelOrder.includes(SettingLevel.DEFAULT)) levelOrder.push(SettingLevel.DEFAULT); // always include default
 
-        const minIndex = levelOrder.indexOf(finalLevel);
-        if (minIndex === -1) throw new Error(`Level "${finalLevel}" for setting "${settingName}" is not prioritized`);
+        const minIndex = levelOrder.indexOf(level);
+        if (minIndex === -1) throw new Error(`Level "${level}" for setting "${settingName}" is not prioritized`);
 
         const handlers = SettingsStore.getHandlers(settingName);
 
@@ -406,12 +392,12 @@ export default class SettingsStore {
         }
 
         if (explicit) {
-            const handler = handlers[finalLevel];
+            const handler = handlers[level];
             if (!handler) {
-                return SettingsStore.getFinalValue(setting, finalLevel, roomId, null, null);
+                return SettingsStore.getFinalValue(setting, level, roomId, null, null);
             }
             const value = handler.getValue(settingName, roomId);
-            return SettingsStore.getFinalValue(setting, finalLevel, roomId, value, finalLevel);
+            return SettingsStore.getFinalValue(setting, level, roomId, value, level);
         }
 
         for (let i = minIndex; i < levelOrder.length; i++) {
@@ -421,10 +407,10 @@ export default class SettingsStore {
 
             const value = handler.getValue(settingName, roomId);
             if (value === null || value === undefined) continue;
-            return SettingsStore.getFinalValue(setting, finalLevel, roomId, value, levelOrder[i]);
+            return SettingsStore.getFinalValue(setting, level, roomId, value, levelOrder[i]);
         }
 
-        return SettingsStore.getFinalValue(setting, finalLevel, roomId, null, null);
+        return SettingsStore.getFinalValue(setting, level, roomId, null, null);
     }
 
     /**
@@ -519,8 +505,8 @@ export default class SettingsStore {
      * set for a particular room, otherwise it should be supplied.
      *
      * This takes into account both the value of {@link SettingController#settingDisabled} of the
-     * `SettingController`, if any; and, for settings where {@link IBaseSetting#configOverridesSetting} is true,
-     * whether the setting has been given a value in `config.json`.
+     * `SettingController`, if any; and, for settings where {@link IBaseSetting#supportedLevelsAreOrdered} is true,
+     * checks whether a level of higher precedence is set.
      *
      * Typically, if the user cannot set the setting, it should be hidden, to declutter the UI;
      * however some settings (typically, the labs flags) are exposed but greyed out, to unveil
@@ -528,26 +514,23 @@ export default class SettingsStore {
      *
      * @param {string} settingName The name of the setting to check.
      * @param {String} roomId The room ID to check in, may be null.
-     * @param {SettingLevel} level The level to
-     * check at.
+     * @param {SettingLevel} level The level to check at.
      * @return {boolean} True if the user may set the setting, false otherwise.
      */
     public static canSetValue(settingName: string, roomId: string | null, level: SettingLevel): boolean {
+        const setting = SETTINGS[settingName];
         // Verify that the setting is actually a setting
-        if (!SETTINGS[settingName]) {
+        if (!setting) {
             throw new Error("Setting '" + settingName + "' does not appear to be a setting.");
         }
 
-        if (SETTINGS[settingName].controller?.settingDisabled) {
+        if (setting.controller?.settingDisabled) {
             return false;
         }
 
-        // For some config settings (mostly: non-beta features), a value in config.json overrides the local setting
-        // (ie: we force them as enabled or disabled). In this case we such not let the user change the setting.
-        if (this.doesConfigOverrideSetting(settingName, roomId)) {
-            return false;
-        }
-        if (SETTINGS[settingName]?.configOverridesSetting) {
+        // // For some config settings (mostly: non-beta features), a value in config.json overrides the local setting
+        // // (ie: we force them as enabled or disabled). In this case we should not let the user change the setting.
+        if (setting?.supportedLevelsAreOrdered && this.settingIsOveriddenAtAHigherLevel(settingName, roomId, level)) {
             const configVal = SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, roomId, true, true);
             if (configVal === true || configVal === false) return false;
         }
@@ -558,15 +541,29 @@ export default class SettingsStore {
     }
 
     /**
-     * Determines if the given setting's config should override other levels
-     * @param settingName
-     * @param roomId
+     * Determines if the setting at the specified level is overidden by one at a higher level in the level order.
+     * @param settingName The name of the setting to check.
+     * @param roomId The room ID to check in, may be null.
+     * @param level The level to check at.
      * @returns
      */
-    private static doesConfigOverrideSetting(settingName: string, roomId: string | null): boolean {
-        if (SETTINGS[settingName]?.configOverridesSetting) {
-            const configVal = SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, roomId, true, true);
-            if (configVal === true || configVal === false) return true;
+    public static settingIsOveriddenAtAHigherLevel(
+        settingName: string,
+        roomId: string | null,
+        level: SettingLevel,
+    ): boolean {
+        const setting = SETTINGS[settingName];
+        const levelOrders = getLevelOrder(setting);
+        const maxLevel = levelOrders.indexOf(level);
+        if (maxLevel === -1) throw new Error(`Level "${level}" for setting "${settingName}" is not prioritized`);
+
+        const handlers = SettingsStore.getHandlers(settingName);
+        for (let i = 0; i < maxLevel; i++) {
+            const handler = handlers[levelOrders[i]];
+            if (!handler) continue;
+            const value = handler.getValue(settingName, roomId);
+            if (value === null || value === undefined) continue;
+            return true;
         }
         return false;
     }
