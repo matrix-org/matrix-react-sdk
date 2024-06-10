@@ -18,7 +18,7 @@ import React, {
     createContext,
     useCallback,
     useContext,
-    useLayoutEffect,
+    useEffect,
     useMemo,
     useRef,
     useReducer,
@@ -362,7 +362,7 @@ export const useRovingTabIndex = <T extends HTMLElement>(
     }
 
     // setup (after refs)
-    useLayoutEffect(() => {
+    useEffect(() => {
         context.dispatch({
             type: Type.Register,
             payload: { ref },
