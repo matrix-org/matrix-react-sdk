@@ -14,34 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * The intention of this enum is to have a mode that scans a QR code instead of generating one.
- */
-export enum Mode {
-    /**
-     * A QR code with be generated and shown
-     */
-    Show = "show",
-}
+import React from "react";
 
-export enum Phase {
-    Loading,
-    ShowingQR,
-    // The following are specific to MSC4108
-    OutOfBandConfirmation,
-    WaitingForDevice,
-    Verifying,
-    Error,
-    /**
-     * @deprecated the MSC3906 implementation is deprecated in favour of MSC4108.
-     */
-    LegacyConnected,
-}
+const getUniqueId = (() => {
+    return () => `:r${Math.random()}:`;
+})();
 
-export enum Click {
-    Cancel,
-    Decline,
-    Approve,
-    Back,
-    ShowQr,
-}
+// Replace this with React's own useId once we switch to React 18
+export const useId = (): string => React.useMemo(getUniqueId, []);
