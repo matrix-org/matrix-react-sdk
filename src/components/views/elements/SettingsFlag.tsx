@@ -62,7 +62,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
     }
 
     private getSettingValue(): boolean {
-        // If a level defined in props is overridden by level at a high presenence, it gets disabled
+        // If a level defined in props is overridden by a level at a high presedence, it gets disabled
         // and we should show the overridding value.
         if (
             !!SettingsStore.settingIsOveriddenAtAHigherLevel(
@@ -107,6 +107,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
 
     public render(): React.ReactNode {
         const disabled = !SettingsStore.canSetValue(this.props.name, this.props.roomId ?? null, this.props.level);
+
         if (disabled && this.props.hideIfCannotSet) return null;
 
         const label = this.props.label ?? SettingsStore.getDisplayName(this.props.name, this.props.level);
