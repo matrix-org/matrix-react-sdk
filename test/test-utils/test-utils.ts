@@ -210,6 +210,8 @@ export function createTestClient(): MatrixClient {
         getPushers: jest.fn().mockResolvedValue({ pushers: [] }),
         getThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
         bulkLookupThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
+        setAvatarUrl: jest.fn().mockResolvedValue(undefined),
+        setDisplayName: jest.fn().mockResolvedValue(undefined),
         setPusher: jest.fn().mockResolvedValue(undefined),
         setPushRuleEnabled: jest.fn().mockResolvedValue(undefined),
         setPushRuleActions: jest.fn().mockResolvedValue(undefined),
@@ -272,6 +274,7 @@ export function createTestClient(): MatrixClient {
         baseUrl: "https://matrix-client.matrix.org",
         matrixRTC: createStubMatrixRTC(),
         isFallbackICEServerAllowed: jest.fn().mockReturnValue(false),
+        getAuthIssuer: jest.fn(),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);

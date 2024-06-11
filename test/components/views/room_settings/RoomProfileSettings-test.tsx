@@ -22,6 +22,7 @@ import { EventType, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/ma
 
 import { mkStubRoom, stubClient } from "../../../test-utils";
 import RoomProfileSettings from "../../../../src/components/views/room_settings/RoomProfileSettings";
+import DMRoomMap from "../../../../src/utils/DMRoomMap";
 
 const BASE64_GIF = "R0lGODlhAQABAAAAACw=";
 const AVATAR_FILE = new File([Uint8Array.from(atob(BASE64_GIF), (c) => c.charCodeAt(0))], "avatar.gif", {
@@ -35,6 +36,11 @@ describe("RoomProfileSetting", () => {
     let room: Room;
 
     beforeEach(() => {
+        const dmRoomMap = {
+            getUserIdForRoomId: jest.fn(),
+        } as unknown as DMRoomMap;
+        jest.spyOn(DMRoomMap, "shared").mockReturnValue(dmRoomMap);
+
         client = stubClient();
         room = mkStubRoom(ROOM_ID, "Test room", client);
     });
@@ -79,7 +85,8 @@ describe("RoomProfileSetting", () => {
 
         render(<RoomProfileSettings roomId="!floob:itty" />);
 
-        await user.click(screen.getByRole("button", { name: "Remove" }));
+        await user.click(screen.getByRole("button", { name: "Room avatar" }));
+        await user.click(screen.getByRole("menuitem", { name: "Remove" }));
         await user.click(screen.getByRole("button", { name: "Save" }));
 
         await waitFor(() =>
