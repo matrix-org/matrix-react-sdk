@@ -530,7 +530,10 @@ export default class SettingsStore {
 
         // For some config settings (mostly: non-beta features), a value in config.json overrides the local setting
         // (ie: we force them as enabled or disabled). In this case we should not let the user change the setting.
-        if (setting?.supportedLevelsAreOrdered && this.settingIsOveriddenAtAHigherLevel(settingName, roomId, level)) {
+        if (
+            setting?.supportedLevelsAreOrdered &&
+            SettingsStore.settingIsOveriddenAtAHigherLevel(settingName, roomId, level)
+        ) {
             const configVal = SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, roomId, true, true);
             if (configVal === true || configVal === false) return false;
         }
