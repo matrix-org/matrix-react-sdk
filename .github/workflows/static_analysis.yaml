@@ -24,6 +24,7 @@ jobs:
 
             - uses: actions/setup-node@v4
               with:
+                  node-version: lts/* # Latest LTS
                   cache: "yarn"
 
             - name: Install Deps
@@ -82,6 +83,7 @@ jobs:
 
             - uses: actions/setup-node@v4
               with:
+                  node-version: lts/* # Latest LTS
                   cache: "yarn"
 
             # Does not need branch matching as only analyses this layer
@@ -99,6 +101,7 @@ jobs:
 
             - uses: actions/setup-node@v4
               with:
+                  node-version: lts/* # Latest LTS
                   cache: "yarn"
 
             # Does not need branch matching as only analyses this layer
@@ -116,6 +119,7 @@ jobs:
 
             - uses: actions/setup-node@v4
               with:
+                  node-version: lts/* # Latest LTS
                   cache: "yarn"
 
             # Does not need branch matching as only analyses this layer
@@ -133,6 +137,7 @@ jobs:
 
             - uses: actions/setup-node@v4
               with:
+                  node-version: lts/* # Latest LTS
                   cache: "yarn"
 
             - name: Install Deps
