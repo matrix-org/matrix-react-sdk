@@ -149,6 +149,7 @@ export const sanitizeHtmlParams: IExtendedSanitizeOptions = {
     allowedTags: [
         "font", // custom to matrix for IRC-style font coloring
         "del", // for markdown
+        "s", // for markdown
         "h1",
         "h2",
         "h3",
