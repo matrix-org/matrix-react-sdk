@@ -71,15 +71,16 @@ export async function sendMessage(
         isEditing: false,
         messageType: "Text",
         isReply: Boolean(replyToEvent),
-        // TODO thread
         inThread: relation?.rel_type === THREAD_RELATION_TYPE.name,
+        isLocation: false,
+        editor: isHTML ? "RteFormatting" : "RtePlain",
+        isMarkdownEnabled: false,
     };
 
-    // TODO thread
-    /*if (posthogEvent.inThread) {
-        const threadRoot = room.findEventById(relation?.event_id);
+    if (posthogEvent.inThread) {
+        const threadRoot = room.findEventById(relation?.event_id ?? "");
         posthogEvent.startsThread = threadRoot?.getThread()?.events.length === 1;
-    }*/
+    }
     PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
 
     let content: RoomMessageEventContent | null = null;
@@ -208,6 +209,9 @@ export async function editMessage(
         messageType: "Text",
         inThread: Boolean(editedEvent?.getThread()),
         isReply: Boolean(editedEvent.replyEventId),
+        isLocation: false,
+        editor: "RteFormatting", // it is always the rich text mode when editing a message
+        isMarkdownEnabled: false,
     });
 
     // TODO emoji
