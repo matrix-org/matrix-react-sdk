@@ -21,7 +21,7 @@ limitations under the License.
  * @param text the plaintext to put in the user's clipboard
  */
 import { logger } from "matrix-js-sdk/src/logger";
-import GraphemeSplitter from "graphemer";
+import { graphemeSegments } from "unicode-segmenter";
 
 export async function copyPlaintext(text: string): Promise<boolean> {
     try {
@@ -92,7 +92,7 @@ export function getSelectedText(): string {
  * @returns the first grapheme or an empty string if given an empty string
  */
 export function getFirstGrapheme(str: string): string {
-    const splitter = new GraphemeSplitter();
-    const result = splitter.iterateGraphemes(str).next();
-    return result.done ? "" : result.value;
+    const segments = graphemeSegments(str);
+    const result = segments.next();
+    return result.done ? "" : result.value.segment;
 }

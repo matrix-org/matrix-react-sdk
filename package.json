@@ -95,7 +95,6 @@
         "filesize": "10.1.2",
         "github-markdown-css": "^5.5.1",
         "glob-to-regexp": "^0.4.1",
-        "graphemer": "^1.4.0",
         "highlight.js": "^11.3.1",
         "html-entities": "^2.0.0",
         "is-ip": "^3.1.0",
@@ -133,6 +132,7 @@
         "sanitize-html": "2.13.0",
         "tar-js": "^0.3.0",
         "ua-parser-js": "^1.0.2",
+        "unicode-segmenter": "^0.9.0",
         "uuid": "^10.0.0",
         "what-input": "^5.2.10"
     },

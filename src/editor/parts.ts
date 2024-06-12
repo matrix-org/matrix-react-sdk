@@ -17,7 +17,7 @@ limitations under the License.
 
 import EMOJIBASE_REGEX from "emojibase-regex";
 import { MatrixClient, RoomMember, Room } from "matrix-js-sdk/src/matrix";
-import GraphemeSplitter from "graphemer";
+import { GraphemeCategory, graphemeSegments } from "unicode-segmenter/grapheme";
 
 import AutocompleteWrapperModel, { GetAutocompleterComponent, UpdateCallback, UpdateQuery } from "./autocomplete";
 import { unicodeToShortcode } from "../HtmlUtils";
@@ -641,28 +641,22 @@ export class PartCreator {
         return new UserPillPart(userId, displayName, member || undefined);
     }
 
-    private static isRegionalIndicator(c: string): boolean {
-        const codePoint = c.codePointAt(0) ?? 0;
-        return codePoint != 0 && c.length == 2 && 0x1f1e6 <= codePoint && codePoint <= 0x1f1ff;
-    }
-
     public plainWithEmoji(text: string): (PlainPart | EmojiPart)[] {
         const parts: (PlainPart | EmojiPart)[] = [];
         let plainText = "";
 
-        const splitter = new GraphemeSplitter();
-        for (const char of splitter.iterateGraphemes(text)) {
-            if (EMOJIBASE_REGEX.test(char)) {
+        for (const { segment, _catBegin } of graphemeSegments(text)) {
+            if (_catBegin === GraphemeCategory.Extended_Pictographic || _catBegin === GraphemeCategory.Regional_Indicator) {
                 if (plainText) {
                     parts.push(this.plain(plainText));
                     plainText = "";
                 }
-                parts.push(this.emoji(char));
-                if (PartCreator.isRegionalIndicator(text)) {
+                parts.push(this.emoji(segment));
+                if (_catBegin === GraphemeCategory.Regional_Indicator) {
                     parts.push(this.plain(REGIONAL_EMOJI_SEPARATOR));
                 }
             } else {
-                plainText += char;
+                plainText += segment;
             }
         }
         if (plainText) {
