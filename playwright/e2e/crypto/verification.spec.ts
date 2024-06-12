@@ -212,7 +212,7 @@ test.describe("Device verification", () => {
         // it should contain the device ID of the requesting device
         await expect(toast.getByText(`${aliceBotClient.credentials.deviceId} from `)).toBeVisible();
         // Accept
-        await toast.getByRole("button", { name: "Verify User" }).click();
+        await toast.getByRole("button", { name: "Verify Session" }).click();
 
         /* Click 'Start' to start SAS verification */
         await page.getByRole("button", { name: "Start" }).click();
