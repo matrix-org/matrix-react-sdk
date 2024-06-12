@@ -212,7 +212,7 @@ test.describe("Device verification", () => {
         // it should contain the device ID of the requesting device
         await expect(toast.getByText(`${aliceBotClient.credentials.deviceId} from `)).toBeVisible();
         // Accept
-        await toast.getByRole("button", { name: "Verify Session" }).click();
+        await toast.getByRole("button", { name: "Verify User" }).click();
 
         /* Click 'Start' to start SAS verification */
         await page.getByRole("button", { name: "Start" }).click();
@@ -280,7 +280,7 @@ test.describe("User verification", () => {
         // it should contain the details of the requesting user
         await expect(toast.getByText(`Bob (${bob.credentials.userId})`)).toBeVisible();
         // Accept
-        await toast.getByRole("button", { name: "Verify Session" }).click();
+        await toast.getByRole("button", { name: "Verify User" }).click();
 
         // request verification by emoji
         await page.locator("#mx_RightPanel").getByRole("button", { name: "Verify by emoji" }).click();
@@ -324,7 +324,7 @@ test.describe("User verification", () => {
 
         // Accept verification via toast
         const toast = await toasts.getToast("Verification requested");
-        await toast.getByRole("button", { name: "Verify Session" }).click();
+        await toast.getByRole("button", { name: "Verify User" }).click();
 
         // request verification by emoji
         await page.locator("#mx_RightPanel").getByRole("button", { name: "Verify by emoji" }).click();
