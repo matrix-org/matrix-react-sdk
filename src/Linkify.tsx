@@ -147,6 +147,7 @@ export const transformTags: NonNullable<IExtendedSanitizeOptions["transformTags"
 
 export const sanitizeHtmlParams: IExtendedSanitizeOptions = {
     allowedTags: [
+        // These tags are suggested by the spec https://spec.matrix.org/v1.10/client-server-api/#mroommessage-msgtypes
         "font", // custom to matrix for IRC-style font coloring
         "del", // for markdown
         "s", // for markdown
