@@ -66,8 +66,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         }
         this.matrixClient.on(GroupCallEventHandlerEvent.Incoming, this.onGroupCall);
         this.matrixClient.on(GroupCallEventHandlerEvent.Outgoing, this.onGroupCall);
-        this.matrixClient.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionStarted, this.onRTCSession);
-        this.matrixClient.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSession);
+        this.matrixClient.matrixRTC.on(MatrixRTCSessionManagerEvents.SessionStarted, this.onRTCSessionStart);
         WidgetStore.instance.on(UPDATE_EVENT, this.onWidgets);
 
         // If the room ID of a previously connected call is still in settings at
@@ -101,8 +100,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
             this.matrixClient.off(GroupCallEventHandlerEvent.Incoming, this.onGroupCall);
             this.matrixClient.off(GroupCallEventHandlerEvent.Outgoing, this.onGroupCall);
             this.matrixClient.off(GroupCallEventHandlerEvent.Ended, this.onGroupCall);
-            this.matrixClient.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionStarted, this.onRTCSession);
-            this.matrixClient.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSession);
+            this.matrixClient.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionStarted, this.onRTCSessionStart);
         }
         WidgetStore.instance.off(UPDATE_EVENT, this.onWidgets);
     }
@@ -200,7 +198,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
     };
 
     private onGroupCall = (groupCall: GroupCall): void => this.updateRoom(groupCall.room);
-    private onRTCSession = (roomId: string, session: MatrixRTCSession): void => {
+    private onRTCSessionStart = (roomId: string, session: MatrixRTCSession): void => {
         this.updateRoom(session.room);
     };
 }
