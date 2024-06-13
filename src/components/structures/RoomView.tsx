@@ -1533,7 +1533,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         // If crypto is not currently enabled, we aren't tracking devices at all,
         // so we don't know what the answer is. Let's error on the safe side and show
-        // a warning for this case.t
+        // a warning for this case.
         let e2eStatus = RoomView.e2eStatusCache.get(room.roomId) ?? E2EStatus.Warning;
         // set the state immediately then update, so we don't scare the user into thinking the room is unencrypted
         this.setState({ e2eStatus });
