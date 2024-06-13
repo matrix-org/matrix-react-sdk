@@ -532,10 +532,9 @@ export default class SettingsStore {
         // (ie: we force them as enabled or disabled). In this case we should not let the user change the setting.
         if (
             setting?.supportedLevelsAreOrdered &&
-            SettingsStore.settingIsOveriddenAtAHigherLevel(settingName, roomId, level)
+            SettingsStore.settingIsOveriddenAtConfigLevel(settingName, roomId, level)
         ) {
-            const configVal = SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, roomId, true, true);
-            if (configVal === true || configVal === false) return false;
+            return false;
         }
 
         const handler = SettingsStore.getHandler(settingName, level);
@@ -544,31 +543,30 @@ export default class SettingsStore {
     }
 
     /**
-     * Determines if the setting at the specified level is overidden by one at a higher level in the level order.
+     * Determines if the setting at the specified level is overidden by one at a config level.
      * @param settingName The name of the setting to check.
      * @param roomId The room ID to check in, may be null.
      * @param level The level to check at.
      * @returns
      */
-    public static settingIsOveriddenAtAHigherLevel(
+    public static settingIsOveriddenAtConfigLevel(
         settingName: string,
         roomId: string | null,
         level: SettingLevel,
     ): boolean {
         const setting = SETTINGS[settingName];
         const levelOrders = getLevelOrder(setting);
-        const maxLevel = levelOrders.indexOf(level);
-        if (maxLevel === -1) throw new Error(`Level "${level}" for setting "${settingName}" is not prioritized`);
-
-        const handlers = SettingsStore.getHandlers(settingName);
-        for (let i = 0; i < maxLevel; i++) {
-            const handler = handlers[levelOrders[i]];
-            if (!handler) continue;
-            const value = handler.getValue(settingName, roomId);
-            if (value === null || value === undefined) continue;
-            return true;
+        const configIndex = levelOrders.indexOf(SettingLevel.CONFIG);
+        const levelIndex = levelOrders.indexOf(level);
+        console.log("settingIsOveriddenAtConfigLevel");
+        console.log(settingName);
+        console.log(configIndex);
+        console.log(levelIndex);
+        if (configIndex === -1 || levelIndex === -1 || configIndex >= levelIndex) {
+            return false;
         }
-        return false;
+        const configVal = SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, roomId, true, true);
+        return configVal === true || configVal === false;
     }
 
     /**
