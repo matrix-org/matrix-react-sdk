@@ -490,7 +490,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         WidgetEchoStore.on(UPDATE_EVENT, this.onWidgetEchoStoreUpdate);
         context.widgetStore.on(UPDATE_EVENT, this.onWidgetStoreUpdate);
 
-        CallStore.instance.on(CallStoreEvent.ActiveCalls, this.onActiveCalls);
+        CallStore.instance.on(CallStoreEvent.ConnectedCalls, this.onConnectedCalls);
 
         this.props.resizeNotifier.on("isResizing", this.onIsResizing);
 
@@ -811,7 +811,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
     };
 
-    private onActiveCalls = (): void => {
+    private onConnectedCalls = (): void => {
         if (this.state.roomId === undefined) return;
         const activeCall = CallStore.instance.getActiveCall(this.state.roomId);
         if (activeCall === null) {
@@ -1052,7 +1052,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             );
         }
 
-        CallStore.instance.off(CallStoreEvent.ActiveCalls, this.onActiveCalls);
+        CallStore.instance.off(CallStoreEvent.ConnectedCalls, this.onConnectedCalls);
         this.context.legacyCallHandler.off(LegacyCallHandlerEvent.CallState, this.onCallState);
 
         // cancel any pending calls to the throttled updated

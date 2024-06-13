@@ -34,7 +34,7 @@ export enum CallStoreEvent {
     // Signals a change in the call associated with a given room
     Call = "call",
     // Signals a change in the active calls
-    ActiveCalls = "active_calls",
+    ConnectedCalls = "connected_calls",
 }
 
 export class CallStore extends AsyncStoreWithClient<{}> {
@@ -94,7 +94,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         }
         this.callListeners.clear();
         this.calls.clear();
-        this._activeCalls.clear();
+        this._connectedCalls.clear();
 
         if (this.matrixClient) {
             this.matrixClient.off(GroupCallEventHandlerEvent.Incoming, this.onGroupCall);
@@ -105,16 +105,16 @@ export class CallStore extends AsyncStoreWithClient<{}> {
         WidgetStore.instance.off(UPDATE_EVENT, this.onWidgets);
     }
 
-    private _activeCalls: Set<Call> = new Set();
+    private _connectedCalls: Set<Call> = new Set();
     /**
      * The calls to which the user is currently connected.
      */
-    public get activeCalls(): Set<Call> {
-        return this._activeCalls;
+    public get connectedCalls(): Set<Call> {
+        return this._connectedCalls;
     }
-    private set activeCalls(value: Set<Call>) {
-        this._activeCalls = value;
-        this.emit(CallStoreEvent.ActiveCalls, value);
+    private set connectedCalls(value: Set<Call>) {
+        this._connectedCalls = value;
+        this.emit(CallStoreEvent.ConnectedCalls, value);
 
         // The room IDs are persisted to settings so we can detect unclean disconnects
         SettingsStore.setValue(
@@ -135,9 +135,9 @@ export class CallStore extends AsyncStoreWithClient<{}> {
             if (call) {
                 const onConnectionState = (state: ConnectionState): void => {
                     if (state === ConnectionState.Connected) {
-                        this.activeCalls = new Set([...this.activeCalls, call]);
+                        this.connectedCalls = new Set([...this.connectedCalls, call]);
                     } else if (state === ConnectionState.Disconnected) {
-                        this.activeCalls = new Set([...this.activeCalls].filter((c) => c !== call));
+                        this.connectedCalls = new Set([...this.connectedCalls].filter((c) => c !== call));
                     }
                 };
                 const onDestroy = (): void => {
@@ -179,7 +179,7 @@ export class CallStore extends AsyncStoreWithClient<{}> {
      */
     public getActiveCall(roomId: string): Call | null {
         const call = this.getCall(roomId);
-        return call !== null && this.activeCalls.has(call) ? call : null;
+        return call !== null && this.connectedCalls.has(call) ? call : null;
     }
 
     private onWidgets = (roomId: string | null): void => {
