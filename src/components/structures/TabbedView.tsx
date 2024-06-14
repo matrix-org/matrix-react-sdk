@@ -163,6 +163,7 @@ export default function TabbedView<T extends string>(props: IProps<T>): JSX.Elem
             tab={tab}
             isActive={tab.id === props.activeTabId}
             onClick={() => props.onChange(tab.id)}
+            // This should be the same as the the CSS breakpoint at which the tab labels are hidden
             showToolip={windowWidth < 1024 && tabLocation == TabLocation.LEFT}
         />
     ));

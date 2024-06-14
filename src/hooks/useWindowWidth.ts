@@ -18,6 +18,11 @@ import React from "react";
 
 import UIStore, { UI_EVENTS } from "../stores/UIStore";
 
+/**
+ * Hook that gets the width of the viewport using UIStore
+ *
+ * @returns the current window width
+ */
 export const useWindowWidth = (): number => {
     const [width, setWidth] = React.useState(UIStore.instance.windowWidth);
 
