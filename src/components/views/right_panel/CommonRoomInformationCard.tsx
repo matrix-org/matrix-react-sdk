@@ -41,11 +41,12 @@ import { useTopic } from "../../../hooks/room/useTopic";
 import { Linkify, topicToHtml } from "../../../HtmlUtils";
 import { Box } from "../../utils/Box";
 import { onRoomTopicLinkClick } from "../elements/RoomTopic";
+import { ExpandState } from "./RightPanelTabs";
 
 interface Props {
     room: Room;
     height: number;
-    isDragging: boolean;
+    expandState: ExpandState;
 }
 
 const RoomTopic: React.FC<Pick<Props, "room">> = ({ room }): JSX.Element | null => {
@@ -126,8 +127,19 @@ const RoomTopic: React.FC<Pick<Props, "room">> = ({ room }): JSX.Element | null 
     );
 };
 
+function expandStateToClassname(expandState: ExpandState): string {
+    switch (expandState) {
+        case ExpandState.Collapsed:
+            return "collapsed";
+        case ExpandState.Dragging:
+            return "dragging";
+        case ExpandState.Expanded:
+            return "expanded";
+    }
+}
+
 export const CommonRoomInformationCard = forwardRef(function (
-    { room, isDragging, height }: Props,
+    { room, expandState, height }: Props,
     ref: Ref<HTMLElement>,
 ): JSX.Element {
     const name = useRoomName(room);
@@ -151,7 +163,7 @@ export const CommonRoomInformationCard = forwardRef(function (
 
     const header = (
         <header
-            className={`mx_CommonRoomInformationCard_container ${isDragging ? "dragging" : ""}`}
+            className={`mx_CommonRoomInformationCard_container ${expandStateToClassname(expandState)}`}
             ref={ref}
             style={{ height: `${height}px` }}
         >
