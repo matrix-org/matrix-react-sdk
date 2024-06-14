@@ -558,10 +558,6 @@ export default class SettingsStore {
         const levelOrders = getLevelOrder(setting);
         const configIndex = levelOrders.indexOf(SettingLevel.CONFIG);
         const levelIndex = levelOrders.indexOf(level);
-        console.log("settingIsOveriddenAtConfigLevel");
-        console.log(settingName);
-        console.log(configIndex);
-        console.log(levelIndex);
         if (configIndex === -1 || levelIndex === -1 || configIndex >= levelIndex) {
             return false;
         }
