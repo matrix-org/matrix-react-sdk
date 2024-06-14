@@ -164,7 +164,7 @@ export default function TabbedView<T extends string>(props: IProps<T>): JSX.Elem
             tab={tab}
             isActive={tab.id === props.activeTabId}
             onClick={() => props.onChange(tab.id)}
-            showToolip={windowWidth < 1024}
+            showToolip={windowWidth < 1024 && tabLocation == TabLocation.LEFT}
         />
     ));
     const tab = getTabById(props.activeTabId);
