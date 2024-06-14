@@ -15,8 +15,9 @@ limitations under the License.
 */
 
 import { renderHook } from "@testing-library/react-hooks";
+import { act } from "@testing-library/react";
 
-import UIStore from "../../src/stores/UIStore";
+import UIStore, { UI_EVENTS } from "../../src/stores/UIStore";
 import { useWindowWidth } from "../../src/hooks/useWindowWidth";
 
 describe("useWindowWidth", () => {
@@ -28,5 +29,16 @@ describe("useWindowWidth", () => {
         const { result } = renderHook(() => useWindowWidth());
 
         expect(result.current).toBe(768);
+    });
+
+    it("should update the value when UIStore's value changes", () => {
+        const { result } = renderHook(() => useWindowWidth());
+
+        act(() => {
+            UIStore.instance.windowWidth = 1024;
+            UIStore.instance.emit(UI_EVENTS.Resize);
+        });
+
+        expect(result.current).toBe(1024);
     });
 });
