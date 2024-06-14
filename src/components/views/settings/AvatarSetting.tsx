@@ -14,14 +14,61 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, useCallback, useEffect, useState } from "react";
+import React, { ReactNode, createRef, useCallback, useEffect, useState } from "react";
+import { Icon as EditIcon } from "@vector-im/compound-design-tokens/icons/edit.svg";
+import { Icon as UploadIcon } from "@vector-im/compound-design-tokens/icons/share.svg";
+import { Icon as DeleteIcon } from "@vector-im/compound-design-tokens/icons/delete.svg";
+import { Menu, MenuItem } from "@vector-im/compound-web";
+import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
-import AccessibleButton from "../elements/AccessibleButton";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import { useId } from "../../../utils/useId";
+import AccessibleButton from "../elements/AccessibleButton";
 import BaseAvatar from "../avatars/BaseAvatar";
+
+interface MenuProps {
+    trigger: ReactNode;
+    onUploadSelect: () => void;
+    onRemoveSelect?: () => void;
+    menuOpen: boolean;
+    onOpenChange: (newOpen: boolean) => void;
+}
+
+const AvatarSettingContextMenu: React.FC<MenuProps> = ({
+    trigger,
+    onUploadSelect,
+    onRemoveSelect,
+    menuOpen,
+    onOpenChange,
+}) => {
+    return (
+        <Menu
+            trigger={trigger}
+            title={_t("action|set_avatar")}
+            showTitle={false}
+            open={menuOpen}
+            onOpenChange={onOpenChange}
+        >
+            <MenuItem
+                as="div"
+                Icon={<UploadIcon width="24px" height="24px" />}
+                label={_t("action|upload_file")}
+                onSelect={onUploadSelect}
+            />
+            {onRemoveSelect && (
+                <MenuItem
+                    as="div"
+                    Icon={<DeleteIcon width="24px" height="24px" />}
+                    className="mx_AvatarSetting_removeMenuItem"
+                    label={_t("action|remove")}
+                    onSelect={onRemoveSelect}
+                />
+            )}
+        </Menu>
+    );
+};
 
 interface IProps {
     /**
@@ -109,6 +156,12 @@ const AvatarSetting: React.FC<IProps> = ({
         fileInputRef.current?.click();
     }, [fileInputRef]);
 
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const onOpenChange = useCallback((newOpen: boolean) => {
+        setMenuOpen(newOpen);
+    }, []);
+
     let avatarElement = (
         <AccessibleButton
             element="div"
@@ -136,47 +189,47 @@ const AvatarSetting: React.FC<IProps> = ({
     }
 
     let uploadAvatarBtn: JSX.Element | undefined;
-    if (uploadAvatar) {
-        // insert an empty div to be the host for a css mask containing the upload.svg
+    if (!disabled) {
+        const uploadButtonClasses = classNames("mx_AvatarSetting_uploadButton", {
+            mx_AvatarSetting_uploadButton_active: menuOpen,
+        });
         uploadAvatarBtn = (
-            <>
-                <AccessibleButton
-                    onClick={uploadAvatar}
-                    className="mx_AvatarSetting_uploadButton"
-                    aria-labelledby={a11yId}
-                />
-                <input
-                    type="file"
-                    style={{ display: "none" }}
-                    ref={fileInputRef}
-                    onClick={chromeFileInputFix}
-                    onChange={onFileChanged}
-                    accept="image/*"
-                    alt={_t("action|upload")}
-                />
-            </>
+            <div className={uploadButtonClasses}>
+                <EditIcon width="20px" height="20px" />
+            </div>
         );
     }
 
-    let removeAvatarBtn: JSX.Element | undefined;
-    if (avatarURL && removeAvatar && !disabled) {
-        removeAvatarBtn = (
-            <AccessibleButton onClick={removeAvatar} kind="link_sm">
-                {_t("action|remove")}
-            </AccessibleButton>
-        );
+    const content = (
+        <div className="mx_AvatarSetting_avatar" role="group" aria-label={avatarAltText}>
+            {avatarElement}
+            {uploadAvatarBtn}
+        </div>
+    );
+
+    if (disabled) {
+        return content;
     }
 
     return (
-        <div className="mx_AvatarSetting_avatar" role="group" aria-label={avatarAltText}>
-            {avatarElement}
-            <div className="mx_AvatarSetting_hover" aria-hidden="true">
-                <div className="mx_AvatarSetting_hoverBg" />
-                {!disabled && <span id={a11yId}>{_t("action|upload")}</span>}
-            </div>
-            {uploadAvatarBtn}
-            {removeAvatarBtn}
-        </div>
+        <>
+            <AvatarSettingContextMenu
+                trigger={content}
+                onUploadSelect={uploadAvatar}
+                onRemoveSelect={removeAvatar}
+                menuOpen={menuOpen}
+                onOpenChange={onOpenChange}
+            />
+            <input
+                type="file"
+                style={{ display: "none" }}
+                ref={fileInputRef}
+                onClick={chromeFileInputFix}
+                onChange={onFileChanged}
+                accept="image/*"
+                alt={_t("action|upload")}
+            />
+        </>
     );
 };
 

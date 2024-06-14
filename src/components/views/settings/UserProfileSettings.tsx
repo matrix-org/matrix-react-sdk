@@ -131,6 +131,7 @@ const UserProfileSettings: React.FC = () => {
             setInitialDisplayName(displayName);
         } catch (e) {
             setDisplayNameError(true);
+            throw e;
         }
     }, [displayName, client]);
 
@@ -151,7 +152,7 @@ const UserProfileSettings: React.FC = () => {
                     avatar={avatarURL ?? undefined}
                     avatarAltText={_t("common|user_avatar")}
                     onChange={onAvatarChange}
-                    removeAvatar={onAvatarRemove}
+                    removeAvatar={avatarURL ? onAvatarRemove : undefined}
                     placeholderName={displayName}
                     placeholderId={client.getUserId() ?? ""}
                 />
@@ -163,6 +164,7 @@ const UserProfileSettings: React.FC = () => {
                     saveButtonLabel={_t("common|save")}
                     cancelButtonLabel={_t("common|cancel")}
                     savedLabel={_t("common|saved")}
+                    savingLabel={_t("common|updating")}
                     onChange={onDisplayNameChanged}
                     onCancel={onDisplayNameCancel}
                     onSave={onDisplayNameSave}
