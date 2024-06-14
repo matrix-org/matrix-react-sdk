@@ -18,7 +18,6 @@ limitations under the License.
 
 import * as React from "react";
 import classNames from "classnames";
-import { Tooltip } from "@vector-im/compound-web";
 
 import { _t, TranslationKey } from "../../languageHandler";
 import AutoHideScrollbar from "./AutoHideScrollbar";
