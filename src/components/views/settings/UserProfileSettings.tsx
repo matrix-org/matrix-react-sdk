@@ -131,6 +131,7 @@ const UserProfileSettings: React.FC = () => {
             setInitialDisplayName(displayName);
         } catch (e) {
             setDisplayNameError(true);
+            throw e;
         }
     }, [displayName, client]);
 
@@ -163,6 +164,7 @@ const UserProfileSettings: React.FC = () => {
                     saveButtonLabel={_t("common|save")}
                     cancelButtonLabel={_t("common|cancel")}
                     savedLabel={_t("common|saved")}
+                    savingLabel={_t("common|updating")}
                     onChange={onDisplayNameChanged}
                     onCancel={onDisplayNameCancel}
                     onSave={onDisplayNameSave}
