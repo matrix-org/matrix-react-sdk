@@ -164,9 +164,6 @@ jobs:
         if: always()
         runs-on: ubuntu-latest
         steps:
-            - if: needs.playwright.result != 'skipped' && needs.playwright.result != 'success'
-              run: exit 1
-
             - uses: actions/checkout@v4
               if: inputs.skip != true
               with:
@@ -195,7 +192,7 @@ jobs:
               run: yarn playwright merge-reports --reporter=html,./playwright/flaky-reporter.ts ./all-blob-reports
               env:
                   # Only pass creds to the flaky-reporter on main branch runs
-                  GITHUB_TOKEN: ${{ github.event.workflow_run.head_branch == 'develop' && secrets.ELEMENT_BOT_TOKEN || '' }}
+                  GITHUB_TOKEN: ${{ github.ref_name == 'develop' && secrets.ELEMENT_BOT_TOKEN || '' }}
 
             - name: Upload HTML report
               if: inputs.skip != true
@@ -204,3 +201,6 @@ jobs:
                   name: html-report
                   path: playwright-report
                   retention-days: 14
+
+            - if: needs.playwright.result != 'skipped' && needs.playwright.result != 'success'
+              run: exit 1
