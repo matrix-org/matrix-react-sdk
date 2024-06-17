@@ -97,9 +97,14 @@ export enum Features {
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
     NotificationSettings2 = "feature_notification_settings2",
     OidcNativeFlow = "feature_oidc_native_flow",
-    // If true, every new login will use the new rust crypto implementation
-    RustCrypto = "feature_rust_crypto",
     ReleaseAnnouncement = "feature_release_announcement",
+
+    /** If true, use the Rust crypto implementation.
+     *
+     * This is no longer read, but we continue to populate it on all devices, to guard against people rolling back to
+     * old versions of EW that do not use rust crypto by default.
+     */
+    RustCrypto = "feature_rust_crypto",
 }
 
 export const labGroupNames: Record<LabGroup, TranslationKey> = {
