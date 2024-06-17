@@ -497,13 +497,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: true,
         controller: new RustCryptoSdkController(),
     },
-    // Must be set under `setting_defaults` in config.json.
-    // If set to 100 in conjunction with `feature_rust_crypto`, all existing users will migrate to the new crypto.
-    // Default is 0, meaning no existing users on legacy crypto will migrate.
-    "RustCrypto.staged_rollout_percent": {
-        supportedLevels: [SettingLevel.CONFIG],
-        default: 0,
-    },
     /**
      * @deprecated in favor of {@link fontSizeDelta}
      */
