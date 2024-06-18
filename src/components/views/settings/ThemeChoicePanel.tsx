@@ -27,6 +27,7 @@ import {
 } from "@vector-im/compound-web";
 import { Icon as DeleteIcon } from "@vector-im/compound-design-tokens/icons/delete.svg";
 import classNames from "classnames";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import SettingsSubsection from "./shared/SettingsSubsection";
@@ -39,7 +40,6 @@ import { Action } from "../../../dispatcher/actions";
 import { useTheme } from "../../../hooks/useTheme";
 import { findHighContrastTheme, getOrderedThemes, CustomTheme as CustomThemeType, ITheme } from "../../../theme";
 import { useSettingValue } from "../../../hooks/useSettings";
-import { logger } from "../../../../../matrix-js-sdk/src/logger";
 
 /**
  * Interface for the theme state

@@ -18,7 +18,7 @@ import React from "react";
 import { render } from "@testing-library/react";
 
 import * as TestUtils from "../../../test-utils";
-import ThemeChoicePanel from "../../../../src/components/views/settings/ThemeChoicePanel";
+import { ThemeChoicePanel } from "../../../../src/components/views/settings/ThemeChoicePanel";
 
 describe("ThemeChoicePanel", () => {
     it("renders the theme choice UI", () => {
