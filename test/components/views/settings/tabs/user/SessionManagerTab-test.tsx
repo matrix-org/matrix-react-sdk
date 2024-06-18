@@ -1684,7 +1684,7 @@ describe("<SessionManagerTab />", () => {
                     "org.matrix.msc3886": true,
                 },
             });
-            mockClient.getCapabilities.mockResolvedValue({
+            mockClient.getCachedCapabilities.mockReturnValue({
                 [GET_LOGIN_TOKEN_CAPABILITY.name]: {
                     enabled: true,
                 },
@@ -1726,7 +1726,7 @@ describe("<SessionManagerTab />", () => {
                     "org.matrix.msc4108": true,
                 },
             });
-            mockClient.getCapabilities.mockResolvedValue({
+            mockClient.getCachedCapabilities.mockReturnValue({
                 [GET_LOGIN_TOKEN_CAPABILITY.name]: {
                     enabled: true,
                 },
