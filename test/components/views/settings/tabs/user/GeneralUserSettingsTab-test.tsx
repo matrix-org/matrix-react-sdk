@@ -40,7 +40,7 @@ describe("<GeneralUserSettingsTab />", () => {
     const mockClient = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
         ...mockClientMethodsServer(),
-        getCapabilities: jest.fn(),
+        getCachedCapabilities: jest.fn(),
         getThreePids: jest.fn(),
         getIdentityServerUrl: jest.fn(),
         deleteThreePid: jest.fn(),
@@ -63,7 +63,7 @@ describe("<GeneralUserSettingsTab />", () => {
         jest.spyOn(SettingsStore, "getValue").mockRestore();
         jest.spyOn(logger, "error").mockRestore();
 
-        mockClient.getCapabilities.mockResolvedValue({});
+        mockClient.getCachedCapabilities.mockReturnValue({});
         mockClient.getThreePids.mockResolvedValue({
             threepids: [],
         });
@@ -198,7 +198,7 @@ describe("<GeneralUserSettingsTab />", () => {
 
     describe("3pids", () => {
         beforeEach(() => {
-            mockClient.getCapabilities.mockResolvedValue({
+            mockClient.getCachedCapabilities.mockReturnValue({
                 "m.3pid_changes": {
                     enabled: true,
                 },
@@ -300,7 +300,7 @@ describe("<GeneralUserSettingsTab />", () => {
         it("should allow 3pid changes when capabilities does not have 3pid_changes", async () => {
             // We support as far back as v1.1 which doesn't have m.3pid_changes
             // so the behaviour for when it is missing has to be assume true
-            mockClient.getCapabilities.mockResolvedValue({});
+            mockClient.getCachedCapabilities.mockReturnValue({});
 
             render(getComponent());
 
@@ -315,7 +315,7 @@ describe("<GeneralUserSettingsTab />", () => {
 
         describe("when 3pid changes capability is disabled", () => {
             beforeEach(() => {
-                mockClient.getCapabilities.mockResolvedValue({
+                mockClient.getCachedCapabilities.mockReturnValue({
                     "m.3pid_changes": {
                         enabled: false,
                     },
