@@ -203,12 +203,12 @@ function ThemeSelectors({ theme, disabled, onChange }: ThemeSelectorProps): JSX.
  * Return all the available themes
  */
 function useThemes(): Array<ITheme & { isDark: boolean }> {
-    const customThemes = useSettingValue<CustomThemeType[] | undefined>("custom_themes");
+    const customThemes = useSettingValue<CustomThemeType[] | undefined>("custom_themes") || [];
     return useMemo(() => {
         const themes = getOrderedThemes();
         // Put the custom theme into a map
         // To easily find the theme by name when going through the themes list
-        const customThemeMap = customThemes?.reduce(
+        const customThemeMap = customThemes.reduce(
             (map, theme) => map.set(theme.name, theme),
             new Map<string, CustomThemeType>(),
         );
