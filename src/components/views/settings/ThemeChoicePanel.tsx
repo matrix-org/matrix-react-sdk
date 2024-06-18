@@ -203,12 +203,13 @@ function ThemeSelectors({ theme, disabled, onChange }: ThemeSelectorProps): JSX.
  * Return all the available themes
  */
 function useThemes(): Array<ITheme & { isDark: boolean }> {
-    const customThemes = useSettingValue<CustomThemeType[] | undefined>("custom_themes") || [];
+    const customThemes = useSettingValue<CustomThemeType[] | undefined>("custom_themes");
     return useMemo(() => {
         const themes = getOrderedThemes();
         // Put the custom theme into a map
         // To easily find the theme by name when going through the themes list
-        const customThemeMap = customThemes.reduce(
+        const checkedCustomThemes = customThemes || [];
+        const customThemeMap = checkedCustomThemes.reduce(
             (map, theme) => map.set(theme.name, theme),
             new Map<string, CustomThemeType>(),
         );
@@ -262,7 +263,6 @@ function CustomTheme(): JSX.Element {
                     className="mx_ThemeChoicePanel_CustomTheme_EditInPlace"
                     label={_t("settings|appearance|custom_theme_add")}
                     saveButtonLabel={_t("settings|appearance|custom_theme_add")}
-                    // TODO
                     savingLabel={_t("settings|appearance|custom_theme_downloading")}
                     helpLabel={_t("settings|appearance|custom_theme_help")}
                     error={error}
