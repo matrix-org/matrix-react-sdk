@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { HTMLProps } from "react";
-import { Temporal } from "proposal-temporal";
+import { Temporal } from "temporal-polyfill";
 
 import { formatSeconds } from "../../../DateUtils";
 
