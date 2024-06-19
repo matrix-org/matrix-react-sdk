@@ -396,33 +396,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             );
         }
 
-        let externalAccountManagement: JSX.Element | undefined;
-        if (this.state.externalAccountManagementUrl) {
-            const { hostname } = new URL(this.state.externalAccountManagementUrl);
-
-            externalAccountManagement = (
-                <>
-                    <SettingsSubsectionText data-testid="external-account-management-outer">
-                        {_t(
-                            "settings|general|external_account_management",
-                            { hostname },
-                            { code: (sub) => <code>{sub}</code> },
-                        )}
-                    </SettingsSubsectionText>
-                    <AccessibleButton
-                        onClick={null}
-                        element="a"
-                        kind="primary"
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        href={this.state.externalAccountManagementUrl}
-                        data-testid="external-account-management-link"
-                    >
-                        {_t("settings|general|oidc_manage_button")}
-                    </AccessibleButton>
-                </>
-            );
-        }
         return (
             <>
                 <SettingsSubsection
@@ -430,7 +403,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     stretchContent
                     data-testid="accountSection"
                 >
-                    {externalAccountManagement}
                     {passwordChangeSection}
                 </SettingsSubsection>
                 {threepidSection}
@@ -576,6 +548,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             <SettingsTab data-testid="mx_GeneralUserSettingsTab">
                 <SettingsSection>
                     <UserProfileSettings
+                        externalAccountManagementUrl={this.state.externalAccountManagementUrl}
                         canSetDisplayName={this.state.canSetDisplayName}
                         canSetAvatar={this.state.canSetAvatar}
                     />
