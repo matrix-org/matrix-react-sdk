@@ -42,6 +42,7 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { IRightPanelCard, IRightPanelCardState } from "../../stores/right-panel/RightPanelStoreIPanelState";
 import { Action } from "../../dispatcher/actions";
 import { XOR } from "../../@types/common";
+import { TabbedNavigation } from "../views/right_panel/TabbedNavigation";
 
 interface BaseProps {
     overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
@@ -311,6 +312,7 @@ export default class RightPanel extends React.Component<Props, IState> {
 
         return (
             <aside className="mx_RightPanel" id="mx_RightPanel">
+                <TabbedNavigation phase={phase!} />
                 {card}
             </aside>
         );
