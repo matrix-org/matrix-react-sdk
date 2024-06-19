@@ -58,9 +58,11 @@ limitations under the License.
     gap: var(--cpd-space-4x);
 
     .mx_ThemeChoicePanel_CustomTheme_EditInPlace input:focus {
-        // When the input is focused, the border is growing
-        // We need to move it a bit to avoid the left border to be under the left panel
-        margin-left: 2px;
+        /*
+         * When the input is focused, the border is growing
+         * We need to move it a bit to avoid the left border to be under the left panel
+         */
+        margin-left: var(--cpd-space-0-5x);
     }
 
     .mx_ThemeChoicePanel_CustomThemeList {
