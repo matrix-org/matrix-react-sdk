@@ -21,7 +21,6 @@ import {
     Label,
     Root,
     RadioControl,
-    Text,
     EditInPlace,
     IconButton,
 } from "@vector-im/compound-web";
@@ -254,64 +253,59 @@ function CustomTheme(): JSX.Element {
     const [error, setError] = useState<string>();
 
     return (
-        <>
-            <Text className="mx_ThemeChoicePanel_CustomTheme_header" as="h4" size="lg" weight="semibold">
-                {_t("settings|appearance|custom_themes")}
-            </Text>
-            <div className="mx_ThemeChoicePanel_CustomTheme_container">
-                <EditInPlace
-                    className="mx_ThemeChoicePanel_CustomTheme_EditInPlace"
-                    label={_t("settings|appearance|custom_theme_add")}
-                    saveButtonLabel={_t("settings|appearance|custom_theme_add")}
-                    savingLabel={_t("settings|appearance|custom_theme_downloading")}
-                    helpLabel={_t("settings|appearance|custom_theme_help")}
-                    error={error}
-                    value={customTheme}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                        setError(undefined);
-                        setCustomTheme(e.target.value);
-                    }}
-                    onSave={async () => {
-                        // The field empty is empty
-                        if (!customTheme) return;
+        <div className="mx_ThemeChoicePanel_CustomTheme">
+            <EditInPlace
+                className="mx_ThemeChoicePanel_CustomTheme_EditInPlace"
+                label={_t("settings|appearance|custom_theme_add")}
+                saveButtonLabel={_t("settings|appearance|custom_theme_add")}
+                savingLabel={_t("settings|appearance|custom_theme_downloading")}
+                helpLabel={_t("settings|appearance|custom_theme_help")}
+                error={error}
+                value={customTheme}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    setError(undefined);
+                    setCustomTheme(e.target.value);
+                }}
+                onSave={async () => {
+                    // The field empty is empty
+                    if (!customTheme) return;
 
-                        // Get the custom themes and do a cheap clone
-                        // To avoid to mutate the original array in the settings
-                        const currentThemes =
-                            SettingsStore.getValue<CustomThemeType[]>("custom_themes").map((t) => t) || [];
+                    // Get the custom themes and do a cheap clone
+                    // To avoid to mutate the original array in the settings
+                    const currentThemes =
+                        SettingsStore.getValue<CustomThemeType[]>("custom_themes").map((t) => t) || [];
 
-                        try {
-                            const r = await fetch(customTheme);
-                            // XXX: need some schema for this
-                            const themeInfo = await r.json();
-                            if (
-                                !themeInfo ||
-                                typeof themeInfo["name"] !== "string" ||
-                                typeof themeInfo["colors"] !== "object"
-                            ) {
-                                setError(_t("settings|appearance|custom_theme_invalid"));
-                                return;
-                            }
-                            currentThemes.push(themeInfo);
-                        } catch (e) {
-                            logger.error(e);
-                            setError(_t("settings|appearance|custom_theme_error_downloading"));
+                    try {
+                        const r = await fetch(customTheme);
+                        // XXX: need some schema for this
+                        const themeInfo = await r.json();
+                        if (
+                            !themeInfo ||
+                            typeof themeInfo["name"] !== "string" ||
+                            typeof themeInfo["colors"] !== "object"
+                        ) {
+                            setError(_t("settings|appearance|custom_theme_invalid"));
                             return;
                         }
+                        currentThemes.push(themeInfo);
+                    } catch (e) {
+                        logger.error(e);
+                        setError(_t("settings|appearance|custom_theme_error_downloading"));
+                        return;
+                    }
 
-                        // Reset the error
-                        setError(undefined);
-                        setCustomTheme("");
-                        await SettingsStore.setValue("custom_themes", null, SettingLevel.ACCOUNT, currentThemes);
-                    }}
-                    onCancel={() => {
-                        setError(undefined);
-                        setCustomTheme("");
-                    }}
-                />
-                <CustomThemeList />
-            </div>
-        </>
+                    // Reset the error
+                    setError(undefined);
+                    setCustomTheme("");
+                    await SettingsStore.setValue("custom_themes", null, SettingLevel.ACCOUNT, currentThemes);
+                }}
+                onCancel={() => {
+                    setError(undefined);
+                    setCustomTheme("");
+                }}
+            />
+            <CustomThemeList />
+        </div>
     );
 }
 
