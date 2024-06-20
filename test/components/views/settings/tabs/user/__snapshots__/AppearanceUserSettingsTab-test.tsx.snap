@@ -17,6 +17,7 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
         >
           <div
             class="mx_SettingsSubsection mx_SettingsSubsection_newUi"
+            data-testid="themePanel"
           >
             <div
               class="mx_SettingsSubsectionHeading"

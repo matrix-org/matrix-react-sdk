@@ -4,6 +4,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
 <DocumentFragment>
   <div
     class="mx_SettingsSubsection mx_SettingsSubsection_newUi"
+    data-testid="themePanel"
   >
     <div
       class="mx_SettingsSubsectionHeading"
@@ -305,6 +306,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
 <DocumentFragment>
   <div
     class="mx_SettingsSubsection mx_SettingsSubsection_newUi"
+    data-testid="themePanel"
   >
     <div
       class="mx_SettingsSubsectionHeading"
@@ -606,6 +608,7 @@ exports[`<ThemeChoicePanel /> renders the theme choice UI 1`] = `
 <DocumentFragment>
   <div
     class="mx_SettingsSubsection mx_SettingsSubsection_newUi"
+    data-testid="themePanel"
   >
     <div
       class="mx_SettingsSubsectionHeading"
