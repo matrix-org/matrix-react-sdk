@@ -25,7 +25,6 @@ import { IntegrationManagerInstance, Kind } from "./IntegrationManagerInstance";
 import IntegrationsImpossibleDialog from "../components/views/dialogs/IntegrationsImpossibleDialog";
 import IntegrationsDisabledDialog from "../components/views/dialogs/IntegrationsDisabledDialog";
 import WidgetUtils from "../utils/WidgetUtils";
-import { MatrixClientPeg } from "../MatrixClientPeg";
 
 const KIND_PREFERENCE = [
     // Ordered: first is most preferred, last is least preferred.
@@ -52,9 +51,9 @@ export class IntegrationManagers {
         this.compileManagers();
     }
 
-    public startWatching(): void {
+    public startWatching(client: MatrixClient): void {
         this.stopWatching();
-        this.client = MatrixClientPeg.safeGet();
+        this.client = client;
         this.client.on(ClientEvent.AccountData, this.onAccountData);
         this.client.on(ClientEvent.ClientWellKnown, this.setupHomeserverManagers);
         this.compileManagers();

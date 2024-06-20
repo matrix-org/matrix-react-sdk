@@ -995,12 +995,12 @@ async function startMatrixClient(
     ToastStore.sharedInstance().reset();
 
     DialogOpener.instance.prepare(client);
-    Notifier.start();
+    Notifier.start(client);
     UserActivity.sharedInstance().start();
     DMRoomMap.makeShared(client).start();
-    IntegrationManagers.sharedInstance().startWatching();
-    ActiveWidgetStore.instance.start();
-    LegacyCallHandler.instance.start();
+    IntegrationManagers.sharedInstance().startWatching(client);
+    ActiveWidgetStore.instance.start(client);
+    LegacyCallHandler.instance.start(client);
 
     // Start Mjolnir even though we haven't checked the feature flag yet. Starting
     // the thing just wastes CPU cycles, but should result in no actual functionality
