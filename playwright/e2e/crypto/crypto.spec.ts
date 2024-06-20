@@ -472,6 +472,8 @@ test.describe("Cryptography", function () {
             // Reload to work around a Rust crypto bug where it can hold onto the indexeddb even after logout
             // https://github.com/element-hq/element-web/issues/25779
             await page.addInitScript(() => {
+                // Clear localStorage as the user/pageWithCredentials fixtures will re-inject them on reload otherwise
+                // and by logging out we just invalidated the token that will be injected, causing a 401 unauth error.
                 window.localStorage.clear();
             });
             await page.reload();
