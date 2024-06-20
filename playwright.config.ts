@@ -44,10 +44,6 @@ export default defineConfig<TestOptions>({
     reporter: process.env.CI ? [["blob"], ["github"]] : [["html", { outputFolder: "playwright/html-report" }]],
     projects: [
         {
-            name: "Legacy Crypto",
-            use: { cryptoBackend: "legacy" },
-        },
-        {
             name: "Rust Crypto",
             use: { cryptoBackend: "rust" },
         },
