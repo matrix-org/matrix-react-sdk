@@ -66,14 +66,6 @@ export const TabbedNavigation: React.FC<Props> = ({ phase }): JSX.Element | null
                 >
                     Threads
                 </NavItem>
-                <NavItem
-                    onClick={() => {
-                        RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, true);
-                    }}
-                    active={phase === RightPanelPhases.FilePanel}
-                >
-                    Files
-                </NavItem>
             </NavBar>
         </div>
     );
