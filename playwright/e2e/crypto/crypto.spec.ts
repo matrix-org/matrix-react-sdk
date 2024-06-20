@@ -468,6 +468,9 @@ test.describe("Cryptography", function () {
 
             /* log out, and back in */
             await logOutOfElement(page);
+            // Reload to work around a Rust crypto bug where it can hold onto the indexeddb even after logout
+            // https://github.com/element-hq/element-web/issues/25779
+            await page.reload();
             await logIntoElement(page, homeserver, aliceCredentials, securityKey);
 
             /* go back to the test room and find Bob's message again */
