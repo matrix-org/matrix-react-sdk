@@ -42,11 +42,6 @@ export default defineConfig<TestOptions>({
     workers: 1,
     retries: process.env.CI ? 2 : 0,
     reporter: process.env.CI ? [["blob"], ["github"]] : [["html", { outputFolder: "playwright/html-report" }]],
-    projects: [
-        {
-            name: "Rust Crypto",
-        },
-    ],
     snapshotDir: "playwright/snapshots",
     snapshotPathTemplate: "{snapshotDir}/{testFilePath}/{arg}-{platform}{ext}",
 });
