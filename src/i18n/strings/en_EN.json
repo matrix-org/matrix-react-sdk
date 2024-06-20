@@ -2426,7 +2426,7 @@
             "custom_font_name": "System font name",
             "custom_font_size": "Use custom size",
             "custom_theme_add": "Add custom theme",
-            "custom_theme_downloading": "Downloading custom theme...",
+            "custom_theme_downloading": "Downloading custom theme…",
             "custom_theme_error_downloading": "Error downloading theme",
             "custom_theme_help": "Enter the URL of a custom theme you want to apply.",
             "custom_theme_invalid": "Invalid theme schema.",
