@@ -22,9 +22,10 @@ import { defer, sleep } from "matrix-js-sdk/src/utils";
 import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
 import { Glass } from "@vector-im/compound-web";
 
-import dis from "./dispatcher/dispatcher";
+import dis, { defaultDispatcher } from "./dispatcher/dispatcher";
 import AsyncWrapper from "./AsyncWrapper";
 import { Defaultize } from "./@types/common";
+import { ActionPayload } from "./dispatcher/payloads";
 
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
 const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";
@@ -110,6 +111,19 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
 
         return container;
     }
+
+    public constructor() {
+        super();
+
+        // We never unregister this: it's a singleton. An instance could be instantiated, in theory...
+        defaultDispatcher.register(this.onAction);
+    }
+
+    private onAction = (payload: ActionPayload): void => {
+        if (payload.action === "logout") {
+            this.closeCurrentModal();
+        }
+    };
 
     public toggleCurrentDialogVisibility(): void {
         const modal = this.getCurrentModal();
