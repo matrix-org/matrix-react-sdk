@@ -317,10 +317,10 @@ function CustomThemeList(): JSX.Element {
     const customThemes = useSettingValue<CustomThemeType[]>("custom_themes") || [];
 
     return (
-        <>
+        <ul className="mx_ThemeChoicePanel_CustomThemeList">
             {customThemes.map((theme) => {
                 return (
-                    <div key={theme.name} className="mx_ThemeChoicePanel_CustomThemeList">
+                    <li key={theme.name} className="mx_ThemeChoicePanel_CustomThemeList_theme" aria-label={theme.name}>
                         <span className="mx_ThemeChoicePanel_CustomThemeList_name">{theme.name}</span>
                         <IconButton
                             onClick={async () => {
@@ -336,9 +336,9 @@ function CustomThemeList(): JSX.Element {
                         >
                             <DeleteIcon className="mx_ThemeChoicePanel_CustomThemeList_delete" />
                         </IconButton>
-                    </div>
+                    </li>
                 );
             })}
-        </>
+        </ul>
     );
 }

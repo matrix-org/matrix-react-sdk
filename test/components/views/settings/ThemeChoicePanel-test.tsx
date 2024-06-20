@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { mocked, MockedObject } from "jest-mock";
+import userEvent from "@testing-library/user-event";
+import fetchMock from "fetch-mock-jest";
 
 import { ThemeChoicePanel } from "../../../../src/components/views/settings/ThemeChoicePanel";
 import SettingsStore from "../../../../src/settings/SettingsStore";
@@ -31,6 +33,12 @@ describe("<ThemeChoicePanel />", () => {
                 isSystemThemeSupported: jest.fn().mockReturnValue(true),
             } as unknown as MockedObject<ThemeWatcher>;
         });
+    });
+
+    afterEach(() => {
+        jest.spyOn(SettingsStore, "getValue").mockRestore();
+        jest.spyOn(SettingsStore, "getValueAt").mockRestore();
+        jest.spyOn(SettingsStore, "setValue").mockRestore();
     });
 
     it("renders the theme choice UI", () => {
@@ -48,10 +56,6 @@ describe("<ThemeChoicePanel />", () => {
                 if (settingName === "use_system_theme") return enable;
             });
         }
-
-        beforeEach(() => {
-            jest.spyOn(SettingsStore, "getValue").mockRestore();
-        });
 
         describe("system theme", () => {
             it("should disable Match system theme", () => {
@@ -144,5 +148,51 @@ describe("<ThemeChoicePanel />", () => {
         });
     });
 
-    describe("custom theme", () => {});
+    describe("custom theme", () => {
+        const aliceTheme = { name: "Alice theme", is_dark: true, colors: {} };
+        const bobTheme = { name: "Bob theme", is_dark: false, colors: {} };
+
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValueAt").mockImplementation((level, settingName) => {
+                if (settingName === "feature_custom_themes") return "true";
+                if (settingName === "custom_themes") return [aliceTheme];
+            });
+        });
+
+        it("should render the custom theme section", () => {
+            const { asFragment } = render(<ThemeChoicePanel />);
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+        it("should add a custom theme", async () => {
+            jest.spyOn(SettingsStore, "setValue");
+            // Respond to the theme request
+            fetchMock.get("http://bob.theme", {
+                body: bobTheme,
+            });
+
+            render(<ThemeChoicePanel />);
+
+            // Add the new custom theme
+            const customThemeInput = screen.getByRole("textbox", { name: "Add custom theme" });
+            await userEvent.type(customThemeInput, "http://bob.theme");
+            screen.getByRole("button", { name: "Add custom theme" }).click();
+
+            // The new custom theme is added to the user's themes
+            await waitFor(() =>
+                expect(SettingsStore.setValue).toHaveBeenCalledWith("custom_themes", null, "account", [
+                    aliceTheme,
+                    bobTheme,
+                ]),
+            );
+        });
+
+        it("should display custom theme", () => {
+            const { asFragment } = render(<ThemeChoicePanel />);
+
+            expect(screen.getByRole("radio", { name: aliceTheme.name })).toBeInTheDocument();
+            expect(screen.getByRole("listitem", { name: aliceTheme.name })).toBeInTheDocument();
+            expect(asFragment()).toMatchSnapshot();
+        });
+    });
 });
