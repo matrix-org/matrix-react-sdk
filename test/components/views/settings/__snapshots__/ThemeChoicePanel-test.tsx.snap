@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ThemeChoicePanel renders the theme choice UI 1`] = `
+exports[`<ThemeChoicePanel /> renders the theme choice UI 1`] = `
 <DocumentFragment>
   <div
     class="mx_SettingsSubsection mx_SettingsSubsection_newUi"
@@ -18,105 +18,142 @@ exports[`ThemeChoicePanel renders the theme choice UI 1`] = `
       class="mx_SettingsSubsection_content mx_SettingsSubsection_content_newUi"
     >
       <form
-        class="_root_578ve_24 mx_ThemeChoicePanel_ThemeSelectors"
+        class="_root_148br_24"
       >
         <div
-          class="_inline-field_578ve_40 mx_ThemeChoicePanel_themeSelector mx_ThemeChoicePanel_themeSelector_disabled cpd-theme-light"
+          class="_inline-field_148br_40"
         >
           <div
-            class="_inline-field-control_578ve_52"
+            class="_inline-field-control_148br_52"
           >
             <div
-              class="_container_bdln6_18"
+              class="_container_qnvru_18"
             >
               <input
-                class="_input_bdln6_26"
-                disabled=""
+                checked=""
+                class="_input_qnvru_32"
                 id="radix-0"
+                name="systemTheme"
+                title=""
+                type="checkbox"
+              />
+              <div
+                class="_ui_qnvru_42"
+              />
+            </div>
+          </div>
+          <div
+            class="_inline-field-body_148br_46"
+          >
+            <label
+              class="_label_148br_67"
+              for="radix-0"
+            >
+              Match system theme
+            </label>
+          </div>
+        </div>
+      </form>
+      <form
+        class="_root_148br_24 mx_ThemeChoicePanel_ThemeSelectors"
+      >
+        <div
+          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector mx_ThemeChoicePanel_themeSelector_disabled cpd-theme-light"
+        >
+          <div
+            class="_inline-field-control_148br_52"
+          >
+            <div
+              class="_container_1vw5h_18"
+            >
+              <input
+                class="_input_1vw5h_26"
+                disabled=""
+                id="radix-1"
                 name="themeSelector"
                 title=""
                 type="radio"
                 value="light"
               />
               <div
-                class="_ui_bdln6_27"
+                class="_ui_1vw5h_27"
               />
             </div>
           </div>
           <div
-            class="_inline-field-body_578ve_46"
+            class="_inline-field-body_148br_46"
           >
             <label
-              class="_label_578ve_67 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-0"
+              class="_label_148br_67 mx_ThemeChoicePanel_themeSelector_Label"
+              for="radix-1"
             >
               Light
             </label>
           </div>
         </div>
         <div
-          class="_inline-field_578ve_40 mx_ThemeChoicePanel_themeSelector mx_ThemeChoicePanel_themeSelector_disabled cpd-theme-dark"
+          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector mx_ThemeChoicePanel_themeSelector_disabled cpd-theme-dark"
         >
           <div
-            class="_inline-field-control_578ve_52"
+            class="_inline-field-control_148br_52"
           >
             <div
-              class="_container_bdln6_18"
+              class="_container_1vw5h_18"
             >
               <input
-                class="_input_bdln6_26"
+                class="_input_1vw5h_26"
                 disabled=""
-                id="radix-1"
+                id="radix-2"
                 name="themeSelector"
                 title=""
                 type="radio"
                 value="dark"
               />
               <div
-                class="_ui_bdln6_27"
+                class="_ui_1vw5h_27"
               />
             </div>
           </div>
           <div
-            class="_inline-field-body_578ve_46"
+            class="_inline-field-body_148br_46"
           >
             <label
-              class="_label_578ve_67 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-1"
+              class="_label_148br_67 mx_ThemeChoicePanel_themeSelector_Label"
+              for="radix-2"
             >
               Dark
             </label>
           </div>
         </div>
         <div
-          class="_inline-field_578ve_40 mx_ThemeChoicePanel_themeSelector mx_ThemeChoicePanel_themeSelector_disabled cpd-theme-light"
+          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector mx_ThemeChoicePanel_themeSelector_disabled cpd-theme-light"
         >
           <div
-            class="_inline-field-control_578ve_52"
+            class="_inline-field-control_148br_52"
           >
             <div
-              class="_container_bdln6_18"
+              class="_container_1vw5h_18"
             >
               <input
-                class="_input_bdln6_26"
+                class="_input_1vw5h_26"
                 disabled=""
-                id="radix-2"
+                id="radix-3"
                 name="themeSelector"
                 title=""
                 type="radio"
                 value="light-high-contrast"
               />
               <div
-                class="_ui_bdln6_27"
+                class="_ui_1vw5h_27"
               />
             </div>
           </div>
           <div
-            class="_inline-field-body_578ve_46"
+            class="_inline-field-body_148br_46"
           >
             <label
-              class="_label_578ve_67 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-2"
+              class="_label_148br_67 mx_ThemeChoicePanel_themeSelector_Label"
+              for="radix-3"
             >
               High contrast
             </label>

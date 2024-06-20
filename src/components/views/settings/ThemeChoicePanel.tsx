@@ -55,7 +55,7 @@ interface ThemeState {
  */
 function useThemeState(): [ThemeState, Dispatch<React.SetStateAction<ThemeState>>] {
     const theme = useTheme();
-    const [themeState, setThemeState] = useState<ThemeState>(theme);
+    const [themeState, setThemeState] = useState(theme);
 
     return [themeState, setThemeState];
 }
@@ -204,7 +204,6 @@ function ThemeSelectors({ theme, disabled, onChange }: ThemeSelectorProps): JSX.
 function useThemes(): Array<ITheme & { isDark: boolean }> {
     const customThemes = useSettingValue<CustomThemeType[] | undefined>("custom_themes");
     return useMemo(() => {
-        const themes = getOrderedThemes();
         // Put the custom theme into a map
         // To easily find the theme by name when going through the themes list
         const checkedCustomThemes = customThemes || [];
@@ -213,10 +212,11 @@ function useThemes(): Array<ITheme & { isDark: boolean }> {
             new Map<string, CustomThemeType>(),
         );
 
+        const themes = getOrderedThemes();
         // Separate the built-in themes from the custom themes
         // To insert the high contrast theme between them
-        const builtInThemes = themes.filter((theme) => !customThemeMap?.has(theme.name));
-        const otherThemes = themes.filter((theme) => customThemeMap?.has(theme.name));
+        const builtInThemes = themes.filter((theme) => !customThemeMap.has(theme.name));
+        const otherThemes = themes.filter((theme) => customThemeMap.has(theme.name));
 
         const highContrastTheme = makeHighContrastTheme();
         if (highContrastTheme) builtInThemes.push(highContrastTheme);
@@ -225,7 +225,7 @@ function useThemes(): Array<ITheme & { isDark: boolean }> {
 
         // Check if the themes are dark
         return allThemes.map((theme) => {
-            const customTheme = customThemeMap?.get(theme.name);
+            const customTheme = customThemeMap.get(theme.name);
             const isDark = (customTheme ? customTheme.is_dark : theme.id.includes("dark")) || false;
             return { ...theme, isDark };
         });
