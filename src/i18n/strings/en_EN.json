@@ -2430,7 +2430,6 @@
             "custom_theme_error_downloading": "Error downloading theme",
             "custom_theme_help": "Enter the URL of a custom theme you want to apply.",
             "custom_theme_invalid": "Invalid theme schema.",
-            "custom_themes": "Custom themes",
             "dialog_title": "<strong>Settings:</strong> Appearance",
             "font_size": "Font size",
             "font_size_default": "%(fontSize)s (default)",
