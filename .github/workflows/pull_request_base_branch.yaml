@@ -1,3 +1,4 @@
+name: Pull Request Base Branch
 on:
     pull_request:
         types: [opened, edited, synchronize]
