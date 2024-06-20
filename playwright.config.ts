@@ -45,7 +45,6 @@ export default defineConfig<TestOptions>({
     projects: [
         {
             name: "Rust Crypto",
-            use: { cryptoBackend: "rust" },
         },
     ],
     snapshotDir: "playwright/snapshots",

@@ -63,9 +63,7 @@ const CONFIG_JSON: Partial<IConfigOptions> = {
     },
 };
 
-export type TestOptions = {
-    cryptoBackend: "legacy" | "rust";
-};
+export type TestOptions = {};
 
 interface CredentialsWithDisplayName extends Credentials {
     displayName: string;
@@ -138,9 +136,8 @@ export const test = base.extend<
         webserver: Webserver;
     }
 >({
-    cryptoBackend: ["legacy", { option: true }],
     config: CONFIG_JSON,
-    page: async ({ context, page, config, cryptoBackend, labsFlags }, use) => {
+    page: async ({ context, page, config, labsFlags }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
             const json = { ...CONFIG_JSON, ...config };
             json["features"] = {
@@ -151,10 +148,6 @@ export const test = base.extend<
                     return obj;
                 }, {}),
             };
-            // the default is to use rust now, so set to `false` if on legacy backend
-            if (cryptoBackend === "legacy") {
-                json.features.feature_rust_crypto = false;
-            }
             await route.fulfill({ json });
         });
         await use(page);
