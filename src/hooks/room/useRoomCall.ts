@@ -31,7 +31,7 @@ import { placeCall } from "../../utils/room/placeCall";
 import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutStore";
 import { useRoomState } from "../useRoomState";
 import { _t } from "../../languageHandler";
-import { isManagedHybridWidget } from "../../widgets/ManagedHybrid";
+import { isManagedHybridWidget, isManagedHybridWidgetEnabled } from "../../widgets/ManagedHybrid";
 import { IApp } from "../../stores/WidgetStore";
 import { SdkContextClass } from "../../contexts/SDKContext";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
@@ -85,6 +85,7 @@ export const useRoomCall = (
     isConnectedToCall: boolean;
     hasActiveCallSession: boolean;
     callOptions: PlatformCallType[];
+    showVoiceCallButton: boolean;
 } => {
     // settings
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
@@ -270,6 +271,10 @@ export const useRoomCall = (
         });
     }, [isViewingCall, room.roomId]);
 
+    // We hide the voice call button if it'd have the same effect as the video call button
+    const hideVoiceCallButton =
+        isManagedHybridWidgetEnabled(room.roomId) || !callOptions.includes(PlatformCallType.LegacyCall);
+
     /**
      * We've gone through all the steps
      */
@@ -283,5 +288,6 @@ export const useRoomCall = (
         isConnectedToCall: isConnectedToCall,
         hasActiveCallSession: hasActiveCallSession,
         callOptions,
+        showVoiceCallButton: !hideVoiceCallButton,
     };
 };
