@@ -193,5 +193,25 @@ test.describe("Appearance user settings tab", () => {
 
             await expect(util.getThemePanel()).toMatchScreenshot("theme-panel-dark.png");
         });
+
+        test.describe("custom theme", () => {
+            test.use({
+                labsFlags: ["feature_custom_themes"],
+            });
+
+            test("should render the custom theme section", async ({ page, app, util }) => {
+                await expect(util.getThemePanel()).toMatchScreenshot("theme-panel-custom-theme.png");
+            });
+
+            test("should be able to add and remove a custom theme", async ({ page, app, util }) => {
+                await util.addCustomTheme();
+
+                await expect(util.getCustomTheme()).not.toBeChecked();
+                await expect(util.getThemePanel()).toMatchScreenshot("theme-panel-custom-theme-added.png");
+
+                await util.removeCustomTheme();
+                await expect(util.getThemePanel()).toMatchScreenshot("theme-panel-custom-theme.png");
+            });
+        });
     });
 });

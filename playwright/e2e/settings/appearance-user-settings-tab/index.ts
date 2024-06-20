@@ -38,6 +38,13 @@ export const test = base.extend<{
  * The goal is to make easier to get and interact with the button, input, or other elements of the appearance tab
  */
 class Helpers {
+    private CUSTOM_THEME_URL = "http://custom.theme";
+    private CUSTOM_THEME = {
+        name: "Custom theme",
+        isDark: false,
+        colors: {},
+    };
+
     constructor(
         private page: Page,
         private app: ElementAppPage,
@@ -97,9 +104,36 @@ class Helpers {
     }
 
     /**
+     * Return the custom theme radio button
+     */
+    getCustomTheme() {
+        return this.getThemeRadio(this.CUSTOM_THEME.name);
+    }
+
+    /**
      * Return the high contrast theme radio button
      */
     getHighContrastTheme() {
         return this.getThemeRadio("High contrast");
+    }
+
+    /**
+     * Add a custom theme
+     * Mock the request to the custom and return a fake local custom theme
+     */
+    async addCustomTheme() {
+        await this.page.route(this.CUSTOM_THEME_URL, (route) =>
+            route.fulfill({ body: JSON.stringify(this.CUSTOM_THEME) }),
+        );
+        await this.page.getByRole("textbox", { name: "Add custom theme" }).fill(this.CUSTOM_THEME_URL);
+        await this.page.getByRole("button", { name: "Add custom theme" }).click();
+        await this.page.unroute(this.CUSTOM_THEME_URL);
+    }
+
+    /**
+     * Remove the custom theme
+     */
+    removeCustomTheme() {
+        return this.getThemePanel().getByRole("listitem", { name: this.CUSTOM_THEME.name }).getByRole("button").click();
     }
 }
