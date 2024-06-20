@@ -16,11 +16,9 @@ limitations under the License.
 
 import { defineConfig } from "@playwright/test";
 
-import { TestOptions } from "./playwright/element-web-test";
-
 const baseURL = process.env["BASE_URL"] ?? "http://localhost:8080";
 
-export default defineConfig<TestOptions>({
+export default defineConfig({
     use: {
         viewport: { width: 1280, height: 720 },
         ignoreHTTPSErrors: true,
