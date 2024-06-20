@@ -92,10 +92,13 @@ describe("<GeneralUserSettingsTab />", () => {
         } as unknown as OidcClientStore;
         jest.spyOn(stores, "oidcClientStore", "get").mockReturnValue(mockOidcClientStore);
 
-        render(getComponent());
+        const { getByTestId } = render(getComponent());
 
-        const manageAccountLink = await screen.findByRole("button", { name: "Manage account" });
-        expect(manageAccountLink.getAttribute("href")).toMatch(accountManagementLink);
+        // wait for well-known call to settle
+        await flushPromises();
+
+        expect(getByTestId("external-account-management-outer").textContent).toMatch(/.*id\.server\.org/);
+        expect(getByTestId("external-account-management-link").getAttribute("href")).toMatch(accountManagementLink);
     });
 
     describe("Manage integrations", () => {
