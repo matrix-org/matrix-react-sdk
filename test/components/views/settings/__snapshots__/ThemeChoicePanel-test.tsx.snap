@@ -274,6 +274,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
               Alice theme
             </span>
             <button
+              aria-label="Delete"
               class="_icon-button_16nk7_17"
               role="button"
               style="--cpd-icon-button-size: 32px;"
@@ -576,6 +577,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
               Alice theme
             </span>
             <button
+              aria-label="Delete"
               class="_icon-button_16nk7_17"
               role="button"
               style="--cpd-icon-button-size: 32px;"

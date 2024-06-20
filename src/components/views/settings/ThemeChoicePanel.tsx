@@ -323,6 +323,7 @@ function CustomThemeList(): JSX.Element {
                     <li key={theme.name} className="mx_ThemeChoicePanel_CustomThemeList_theme" aria-label={theme.name}>
                         <span className="mx_ThemeChoicePanel_CustomThemeList_name">{theme.name}</span>
                         <IconButton
+                            aria-label={_t("action|delete")}
                             onClick={async () => {
                                 // Get the custom themes and do a cheap clone
                                 // To avoid to mutate the original array in the settings
