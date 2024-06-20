@@ -256,7 +256,47 @@ describe("RoomHeader", () => {
         expect(queryByLabelText(container, "Voice call")).not.toBeInTheDocument();
     });
 
+    describe("UIFeature.Widgets enabled (default)", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => feature == UIFeature.Widgets);
+        });
+
+        it("should show call buttons in a room with 2 members", () => {
+            mockRoomMembers(room, 2);
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            expect(getByLabelText(container, "Video call")).toBeInTheDocument();
+        });
+
+        it("should show call buttons in a room with more than 2 members", () => {
+            mockRoomMembers(room, 3);
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            expect(getByLabelText(container, "Video call")).toBeInTheDocument();
+        });
+    });
+
+    describe("UIFeature.Widgets disabled", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => false);
+        });
+
+        it("should show call buttons in a room with 2 members", () => {
+            mockRoomMembers(room, 2);
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            expect(getByLabelText(container, "Video call")).toBeInTheDocument();
+        });
+
+        it("should not show call buttons in a room with more than 2 members", () => {
+            mockRoomMembers(room, 3);
+            const { container } = render(<RoomHeader room={room} />, getWrapper());
+            expect(queryByLabelText(container, "Video call")).not.toBeInTheDocument();
+        });
+    });
+
     describe("groups call disabled", () => {
+        beforeEach(() => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => feature == UIFeature.Widgets);
+        });
+
         it("you can't call if you're alone", () => {
             mockRoomMembers(room, 1);
             const { container } = render(<RoomHeader room={room} />, getWrapper());
@@ -356,7 +396,7 @@ describe("RoomHeader", () => {
 
         it("clicking on ongoing (unpinned) call re-pins it", () => {
             mockRoomMembers(room, 3);
-            jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => feature == UIFeature.Widgets);
             // allow calls
             jest.spyOn(room.currentState, "mayClientSendStateEvent").mockReturnValue(true);
             jest.spyOn(WidgetLayoutStore.instance, "isInContainer").mockReturnValue(false);

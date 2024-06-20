@@ -85,6 +85,7 @@ export const useRoomCall = (
     isConnectedToCall: boolean;
     hasActiveCallSession: boolean;
     callOptions: PlatformCallType[];
+    showVideoCallButton: boolean;
     showVoiceCallButton: boolean;
 } => {
     // settings
@@ -92,7 +93,6 @@ export const useRoomCall = (
     const useElementCallExclusively = useMemo(() => {
         return SdkConfig.get("element_call").use_exclusively;
     }, []);
-    const widgetsEnabled = SettingsStore.getValue(UIFeature.Widgets);
 
     const hasLegacyCall = useEventEmitterState(
         LegacyCallHandler.instance,
@@ -131,10 +131,10 @@ export const useRoomCall = (
         const options: PlatformCallType[] = [];
         if (memberCount <= 2) {
             options.push(PlatformCallType.LegacyCall);
-        } else if ((mayEditWidgets || hasJitsiWidget) && widgetsEnabled) {
+        } else if (mayEditWidgets || hasJitsiWidget) {
             options.push(PlatformCallType.JitsiCall);
         }
-        if (groupCallsEnabled && widgetsEnabled) {
+        if (groupCallsEnabled) {
             if (hasGroupCall || mayCreateElementCalls) {
                 options.push(PlatformCallType.ElementCall);
             }
@@ -156,7 +156,6 @@ export const useRoomCall = (
         mayCreateElementCalls,
         useElementCallExclusively,
         groupCall?.widget.type,
-        widgetsEnabled,
     ]);
 
     let widget: IApp | undefined;
@@ -272,8 +271,14 @@ export const useRoomCall = (
     }, [isViewingCall, room.roomId]);
 
     // We hide the voice call button if it'd have the same effect as the video call button
-    const hideVoiceCallButton =
+    let hideVoiceCallButton =
         isManagedHybridWidgetEnabled(room.roomId) || !callOptions.includes(PlatformCallType.LegacyCall);
+    let hideVideoCallButton = false;
+    // We hide both buttons if they require widgets but widgets are disabled.
+    if (memberCount > 2 && !SettingsStore.getValue(UIFeature.Widgets)) {
+        hideVoiceCallButton = true;
+        hideVideoCallButton = true;
+    }
 
     /**
      * We've gone through all the steps
@@ -289,5 +294,6 @@ export const useRoomCall = (
         hasActiveCallSession: hasActiveCallSession,
         callOptions,
         showVoiceCallButton: !hideVoiceCallButton,
+        showVideoCallButton: !hideVideoCallButton,
     };
 };
