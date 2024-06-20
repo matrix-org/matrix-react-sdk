@@ -69,7 +69,7 @@ export function ThemeChoicePanel(): JSX.Element {
     const customThemeEnabled = useSettingValue<boolean>("feature_custom_themes");
 
     return (
-        <SettingsSubsection heading={_t("common|theme")} newUi={true}>
+        <SettingsSubsection heading={_t("common|theme")} newUi={true} data-testid="themePanel">
             {themeWatcher.current.isSystemThemeSupported() && (
                 <SystemTheme
                     systemThemeActivated={themeState.systemThemeActivated}
