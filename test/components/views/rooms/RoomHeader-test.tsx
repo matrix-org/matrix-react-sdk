@@ -60,6 +60,7 @@ import { _t } from "../../../../src/languageHandler";
 import * as UseCall from "../../../../src/hooks/useCall";
 import { SdkContextClass } from "../../../../src/contexts/SDKContext";
 import WidgetStore, { IApp } from "../../../../src/stores/WidgetStore";
+import { UIFeature } from "../../../../src/settings/UIFeature";
 
 jest.mock("../../../../src/utils/ShieldUtils");
 
@@ -294,7 +295,9 @@ describe("RoomHeader", () => {
 
     describe("group call enabled", () => {
         beforeEach(() => {
-            jest.spyOn(SettingsStore, "getValue").mockImplementation((feature) => feature === "feature_group_calls");
+            jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                (feature) => feature === "feature_group_calls" || feature == UIFeature.Widgets,
+            );
         });
 
         it("renders only the video call element", async () => {
