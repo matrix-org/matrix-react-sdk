@@ -41,6 +41,8 @@ import { Action } from "../../dispatcher/actions";
 import { CallStore, CallStoreEvent } from "../../stores/CallStore";
 import { isVideoRoom } from "../../utils/video-rooms";
 import { useGuestAccessInformation } from "./useGuestAccessInformation";
+import SettingsStore from "../../settings/SettingsStore";
+import { UIFeature } from "../../settings/UIFeature";
 
 export enum PlatformCallType {
     ElementCall,
@@ -89,6 +91,7 @@ export const useRoomCall = (
     const useElementCallExclusively = useMemo(() => {
         return SdkConfig.get("element_call").use_exclusively;
     }, []);
+    const widgetsEnabled = SettingsStore.getValue(UIFeature.Widgets);
 
     const hasLegacyCall = useEventEmitterState(
         LegacyCallHandler.instance,
@@ -124,13 +127,13 @@ export const useRoomCall = (
     // The options provided to the RoomHeader.
     // If there are multiple options, the user will be prompted to choose.
     const callOptions = useMemo((): PlatformCallType[] => {
-        const options = [];
+        const options: PlatformCallType[] = [];
         if (memberCount <= 2) {
             options.push(PlatformCallType.LegacyCall);
-        } else if (mayEditWidgets || hasJitsiWidget) {
+        } else if ((mayEditWidgets || hasJitsiWidget) && widgetsEnabled) {
             options.push(PlatformCallType.JitsiCall);
         }
-        if (groupCallsEnabled) {
+        if (groupCallsEnabled && widgetsEnabled) {
             if (hasGroupCall || mayCreateElementCalls) {
                 options.push(PlatformCallType.ElementCall);
             }
@@ -152,6 +155,7 @@ export const useRoomCall = (
         mayCreateElementCalls,
         useElementCallExclusively,
         groupCall?.widget.type,
+        widgetsEnabled,
     ]);
 
     let widget: IApp | undefined;
