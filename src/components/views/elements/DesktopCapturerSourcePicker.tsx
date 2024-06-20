@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import classNames from "classnames";
 
-import { _t } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 import BaseDialog from "..//dialogs/BaseDialog";
 import DialogButtons from "./DialogButtons";
 import AccessibleButton from "./AccessibleButton";
@@ -79,13 +79,11 @@ export class ExistingSource extends React.Component<ExistingSourceIProps> {
 export interface PickerIState {
     selectedTab: Tabs;
     sources: Array<DesktopCapturerSource>;
-    selectedSource: DesktopCapturerSource | null;
+    selectedSource?: DesktopCapturerSource;
 }
 export interface PickerIProps {
-    onFinished(sourceId?: string): void;
+    onFinished(source?: DesktopCapturerSource): void;
 }
-
-type TabId = "screen" | "window";
 
 export default class DesktopCapturerSourcePicker extends React.Component<PickerIProps, PickerIState> {
     public interval?: number;
@@ -96,7 +94,6 @@ export default class DesktopCapturerSourcePicker extends React.Component<PickerI
         this.state = {
             selectedTab: Tabs.Screens,
             sources: [],
-            selectedSource: null,
         };
     }
 
@@ -125,18 +122,18 @@ export default class DesktopCapturerSourcePicker extends React.Component<PickerI
     };
 
     private onShare = (): void => {
-        this.props.onFinished(this.state.selectedSource?.id);
+        this.props.onFinished(this.state.selectedSource);
     };
 
-    private onTabChange = (): void => {
-        this.setState({ selectedSource: null });
+    private onTabChange = (tab: Tabs): void => {
+        this.setState({ selectedSource: undefined, selectedTab: tab });
     };
 
     private onCloseClick = (): void => {
         this.props.onFinished();
     };
 
-    private getTab(type: TabId, label: string): Tab<TabId> {
+    private getTab(type: Tabs, label: TranslationKey): Tab<Tabs> {
         const sources = this.state.sources
             .filter((source) => source.id.startsWith(type))
             .map((source) => {
@@ -154,20 +151,25 @@ export default class DesktopCapturerSourcePicker extends React.Component<PickerI
     }
 
     public render(): React.ReactNode {
-        const tabs: NonEmptyArray<Tab<TabId>> = [
-            this.getTab("screen", _t("Share entire screen")),
-            this.getTab("window", _t("Application window")),
+        const tabs: NonEmptyArray<Tab<Tabs>> = [
+            this.getTab(Tabs.Screens, _td("voip|screenshare_monitor")),
+            this.getTab(Tabs.Windows, _td("voip|screenshare_window")),
         ];
 
         return (
             <BaseDialog
                 className="mx_desktopCapturerSourcePicker"
                 onFinished={this.onCloseClick}
-                title={_t("Share content")}
+                title={_t("voip|screenshare_title")}
             >
-                <TabbedView tabs={tabs} tabLocation={TabLocation.TOP} onChange={this.onTabChange} />
+                <TabbedView
+                    tabs={tabs}
+                    tabLocation={TabLocation.TOP}
+                    activeTabId={this.state.selectedTab}
+                    onChange={this.onTabChange}
+                />
                 <DialogButtons
-                    primaryButton={_t("Share")}
+                    primaryButton={_t("action|share")}
                     hasCancel={true}
                     onCancel={this.onCloseClick}
                     onPrimaryButtonClick={this.onShare}

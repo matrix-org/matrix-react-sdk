@@ -20,24 +20,23 @@ import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
 import { copyPlaintext } from "../../../utils/strings";
-import { ButtonEvent } from "./AccessibleButton";
-import AccessibleTooltipButton from "./AccessibleTooltipButton";
+import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
 
-interface IProps {
+interface IProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
     getTextToCopy: () => string | null;
     border?: boolean;
     className?: string;
 }
 
-const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border = true, className }) => {
+const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border = true, className, ...props }) => {
     const [tooltip, setTooltip] = useState<string | undefined>(undefined);
 
     const onCopyClickInternal = async (e: ButtonEvent): Promise<void> => {
         e.preventDefault();
         const text = getTextToCopy();
         const successful = !!text && (await copyPlaintext(text));
-        setTooltip(successful ? _t("Copied!") : _t("Failed to copy"));
+        setTooltip(successful ? _t("common|copied") : _t("error|failed_copy"));
     };
 
     const onHideTooltip = (): void => {
@@ -51,13 +50,15 @@ const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border = true
     });
 
     return (
-        <div className={combinedClassName}>
+        <div className={combinedClassName} {...props}>
             {children}
-            <AccessibleTooltipButton
-                title={tooltip ?? _t("Copy")}
+            <AccessibleButton
+                title={tooltip ?? _t("action|copy")}
                 onClick={onCopyClickInternal}
                 className="mx_CopyableText_copyButton"
-                onHideTooltip={onHideTooltip}
+                onTooltipOpenChange={(open) => {
+                    if (!open) onHideTooltip();
+                }}
             />
         </div>
     );

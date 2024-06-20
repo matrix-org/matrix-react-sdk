@@ -21,7 +21,8 @@ import SetupEncryptionDialog from "../components/views/dialogs/security/SetupEnc
 import { accessSecretStorage } from "../SecurityManager";
 import ToastStore from "../stores/ToastStore";
 import GenericToast from "../components/views/toasts/GenericToast";
-import SecurityCustomisations from "../customisations/Security";
+import { ModuleRunner } from "../modules/ModuleRunner";
+import { SetupEncryptionStore } from "../stores/SetupEncryptionStore";
 import Spinner from "../components/views/elements/Spinner";
 
 const TOAST_KEY = "setupencryption";
@@ -29,11 +30,11 @@ const TOAST_KEY = "setupencryption";
 const getTitle = (kind: Kind): string => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
-            return _t("Set up Secure Backup");
+            return _t("encryption|set_up_toast_title");
         case Kind.UPGRADE_ENCRYPTION:
-            return _t("Encryption upgrade available");
+            return _t("encryption|upgrade_toast_title");
         case Kind.VERIFY_THIS_SESSION:
-            return _t("Verify this session");
+            return _t("encryption|verify_toast_title");
     }
 };
 
@@ -50,11 +51,11 @@ const getIcon = (kind: Kind): string => {
 const getSetupCaption = (kind: Kind): string => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
-            return _t("Continue");
+            return _t("action|continue");
         case Kind.UPGRADE_ENCRYPTION:
-            return _t("Upgrade");
+            return _t("action|upgrade");
         case Kind.VERIFY_THIS_SESSION:
-            return _t("Verify");
+            return _t("action|verify");
     }
 };
 
@@ -62,9 +63,9 @@ const getDescription = (kind: Kind): string => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
         case Kind.UPGRADE_ENCRYPTION:
-            return _t("Safeguard against losing access to encrypted messages & data");
+            return _t("encryption|set_up_toast_description");
         case Kind.VERIFY_THIS_SESSION:
-            return _t("Other users may not trust it");
+            return _t("encryption|verify_toast_description");
     }
 };
 
@@ -79,7 +80,12 @@ const onReject = (): void => {
 };
 
 export const showToast = (kind: Kind): void => {
-    if (SecurityCustomisations.setupEncryptionNeeded?.(kind)) {
+    if (
+        ModuleRunner.instance.extensions.cryptoSetup.setupEncryptionNeeded({
+            kind: kind as any,
+            storeProvider: { getInstance: () => SetupEncryptionStore.sharedInstance() },
+        })
+    ) {
         return;
     }
 
@@ -110,7 +116,7 @@ export const showToast = (kind: Kind): void => {
             description: getDescription(kind),
             acceptLabel: getSetupCaption(kind),
             onAccept,
-            rejectLabel: _t("Later"),
+            rejectLabel: _t("encryption|verification|unverified_sessions_toast_reject"),
             onReject,
         },
         component: GenericToast,

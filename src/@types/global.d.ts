@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+// eslint-disable-next-line no-restricted-imports
 import "matrix-js-sdk/src/@types/global"; // load matrix-js-sdk's type extensions first
 import "@types/modernizr";
 
@@ -57,9 +58,6 @@ declare global {
     interface Window {
         matrixChat: ReturnType<Renderer>;
         mxMatrixClientPeg: IMatrixClientPeg;
-        Olm: {
-            init: () => Promise<void>;
-        };
         mxReactSdkConfig: DeepReadonly<IConfigOptions>;
 
         // Needed for Safari, unknown to TypeScript
@@ -153,16 +151,10 @@ declare global {
 
     interface HTMLAudioElement {
         type?: string;
-        // sinkId & setSinkId are experimental and typescript doesn't know about them
-        sinkId: string;
-        setSinkId(outputId: string): void;
     }
 
     interface HTMLVideoElement {
         type?: string;
-        // sinkId & setSinkId are experimental and typescript doesn't know about them
-        sinkId: string;
-        setSinkId(outputId: string): void;
     }
 
     // Add Chrome-specific `instant` ScrollBehaviour

@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { ClientEvent, MatrixClient, Room } from "matrix-js-sdk/src/matrix";
-import { SyncState } from "matrix-js-sdk/src/sync";
+import { ClientEvent, MatrixClient, Room, SyncState } from "matrix-js-sdk/src/matrix";
 
 import { createTestClient, setupAsyncStoreWithClient } from "../test-utils";
 import {
@@ -126,6 +125,7 @@ describe("RoomNotificationStateStore", function () {
         ret.getPendingEvents = jest.fn().mockReturnValue([]);
         ret.isSpaceRoom = jest.fn().mockReturnValue(false);
         ret.getUnreadNotificationCount = jest.fn().mockReturnValue(numUnreads);
+        ret.getRoomUnreadNotificationCount = jest.fn().mockReturnValue(numUnreads);
         return ret;
     }
 });

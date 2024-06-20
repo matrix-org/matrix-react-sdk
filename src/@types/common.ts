@@ -14,46 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { JSXElementConstructor } from "react";
+import { JSXElementConstructor } from "react";
 
-// Based on https://stackoverflow.com/a/53229857/3532235
-export type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
-export type XOR<T, U> = T | U extends object ? (Without<T, U> & U) | (Without<U, T> & T) : T | U;
-export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
+export type { NonEmptyArray, XOR, Writeable } from "matrix-js-sdk/src/matrix";
 
 export type ComponentClass = keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
-export type ReactAnyComponent = React.Component | React.ExoticComponent;
 
-// Utility type for string dot notation for accessing nested object properties
-// Based on https://stackoverflow.com/a/58436959
-type Join<K, P> = K extends string | number
-    ? P extends string | number
-        ? `${K}${"" extends P ? "" : "."}${P}`
-        : never
-    : never;
-
-type Prev = [never, 0, 1, 2, 3, ...0[]];
-
-export type Leaves<T, D extends number = 3> = [D] extends [never]
-    ? never
-    : T extends object
-    ? { [K in keyof T]-?: Join<K, Leaves<T[K], Prev[D]>> }[keyof T]
-    : "";
+export type { Leaves } from "matrix-web-i18n";
 
 export type RecursivePartial<T> = {
     [P in keyof T]?: T[P] extends (infer U)[]
         ? RecursivePartial<U>[]
         : T[P] extends object
-        ? RecursivePartial<T[P]>
-        : T[P];
+          ? RecursivePartial<T[P]>
+          : T[P];
 };
 
 export type KeysStartingWith<Input extends object, Str extends string> = {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     [P in keyof Input]: P extends `${Str}${infer _X}` ? P : never; // we don't use _X
 }[keyof Input];
-
-export type NonEmptyArray<T> = [T, ...T[]];
 
 export type Defaultize<P, D> = P extends any
     ? string extends keyof P
@@ -66,10 +46,10 @@ export type Defaultize<P, D> = P extends any
 export type DeepReadonly<T> = T extends (infer R)[]
     ? DeepReadonlyArray<R>
     : T extends Function
-    ? T
-    : T extends object
-    ? DeepReadonlyObject<T>
-    : T;
+      ? T
+      : T extends object
+        ? DeepReadonlyObject<T>
+        : T;
 
 interface DeepReadonlyArray<T> extends ReadonlyArray<DeepReadonly<T>> {}
 

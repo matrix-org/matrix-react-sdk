@@ -16,16 +16,15 @@ limitations under the License.
 */
 
 import React from "react";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { ThreepidMedium, MatrixError } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Field from "../../elements/Field";
 import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 import * as Email from "../../../../email";
-import AddThreepid from "../../../../AddThreepid";
+import AddThreepid, { ThirdPartyIdentifier } from "../../../../AddThreepid";
 import Modal from "../../../../Modal";
 import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
 
@@ -42,8 +41,12 @@ that is available.
  */
 
 interface IExistingEmailAddressProps {
-    email: IThreepid;
-    onRemoved: (emails: IThreepid) => void;
+    email: ThirdPartyIdentifier;
+    onRemoved: (emails: ThirdPartyIdentifier) => void;
+    /**
+     * Disallow removal of this email address when truthy
+     */
+    disabled?: boolean;
 }
 
 interface IExistingEmailAddressState {
@@ -85,8 +88,8 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
             .catch((err) => {
                 logger.error("Unable to remove contact information: " + err);
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Unable to remove contact information"),
-                    description: err && err.message ? err.message : _t("Operation failed"),
+                    title: _t("settings|general|error_remove_3pid"),
+                    description: err && err.message ? err.message : _t("invite|failed_generic"),
                 });
             });
     };
@@ -96,21 +99,21 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
             return (
                 <div className="mx_GeneralUserSettingsTab_section--discovery_existing">
                     <span className="mx_GeneralUserSettingsTab_section--discovery_existing_promptText">
-                        {_t("Remove %(email)s?", { email: this.props.email.address })}
+                        {_t("settings|general|remove_email_prompt", { email: this.props.email.address })}
                     </span>
                     <AccessibleButton
                         onClick={this.onActuallyRemove}
                         kind="danger_sm"
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
-                        {_t("Remove")}
+                        {_t("action|remove")}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.onDontRemove}
                         kind="link_sm"
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     >
-                        {_t("Cancel")}
+                        {_t("action|cancel")}
                     </AccessibleButton>
                 </div>
             );
@@ -121,8 +124,8 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
                 <span className="mx_GeneralUserSettingsTab_section--discovery_existing_address">
                     {this.props.email.address}
                 </span>
-                <AccessibleButton onClick={this.onRemove} kind="danger_sm">
-                    {_t("Remove")}
+                <AccessibleButton onClick={this.onRemove} kind="danger_sm" disabled={this.props.disabled}>
+                    {_t("action|remove")}
                 </AccessibleButton>
             </div>
         );
@@ -130,8 +133,12 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
 }
 
 interface IProps {
-    emails: IThreepid[];
-    onEmailsChange: (emails: Partial<IThreepid>[]) => void;
+    emails: ThirdPartyIdentifier[];
+    onEmailsChange: (emails: ThirdPartyIdentifier[]) => void;
+    /**
+     * Adding or removing emails is disabled when truthy
+     */
+    disabled?: boolean;
 }
 
 interface IState {
@@ -153,7 +160,7 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
         };
     }
 
-    private onRemoved = (address: IThreepid): void => {
+    private onRemoved = (address: ThirdPartyIdentifier): void => {
         const emails = this.props.emails.filter((e) => e !== address);
         this.props.onEmailsChange(emails);
     };
@@ -175,8 +182,8 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
         // TODO: Inline field validation
         if (!Email.looksValid(email)) {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Invalid Email Address"),
-                description: _t("This doesn't appear to be a valid email address"),
+                title: _t("settings|general|error_invalid_email"),
+                description: _t("settings|general|error_invalid_email_detail"),
             });
             return;
         }
@@ -192,8 +199,8 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
                 logger.error("Unable to add email address " + email + " " + err);
                 this.setState({ verifying: false, continueDisabled: false, addTask: null });
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Unable to add email address"),
-                    description: extractErrorMessageFromError(err, _t("Operation failed")),
+                    title: _t("settings|general|error_add_email"),
+                    description: extractErrorMessageFromError(err, _t("invite|failed_generic")),
                 });
             });
     };
@@ -232,15 +239,13 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
 
                 if (underlyingError instanceof MatrixError && underlyingError.errcode === "M_THREEPID_AUTH_FAILED") {
                     Modal.createDialog(ErrorDialog, {
-                        title: _t("Your email address hasn't been verified yet"),
-                        description: _t(
-                            "Click the link in the email you received to verify and then click continue again.",
-                        ),
+                        title: _t("settings|general|email_not_verified"),
+                        description: _t("settings|general|email_verification_instructions"),
                     });
                 } else {
                     Modal.createDialog(ErrorDialog, {
-                        title: _t("Unable to verify email address."),
-                        description: extractErrorMessageFromError(err, _t("Operation failed")),
+                        title: _t("settings|general|error_email_verification"),
+                        description: extractErrorMessageFromError(err, _t("invite|failed_generic")),
                     });
                 }
             });
@@ -248,28 +253,31 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
 
     public render(): React.ReactNode {
         const existingEmailElements = this.props.emails.map((e) => {
-            return <ExistingEmailAddress email={e} onRemoved={this.onRemoved} key={e.address} />;
+            return (
+                <ExistingEmailAddress
+                    email={e}
+                    onRemoved={this.onRemoved}
+                    key={e.address}
+                    disabled={this.props.disabled}
+                />
+            );
         });
 
         let addButton = (
-            <AccessibleButton onClick={this.onAddClick} kind="primary">
-                {_t("Add")}
+            <AccessibleButton onClick={this.onAddClick} kind="primary" disabled={this.props.disabled}>
+                {_t("action|add")}
             </AccessibleButton>
         );
         if (this.state.verifying) {
             addButton = (
                 <div>
-                    <div>
-                        {_t(
-                            "We've sent you an email to verify your address. Please follow the instructions there and then click the button below.",
-                        )}
-                    </div>
+                    <div>{_t("settings|general|add_email_instructions")}</div>
                     <AccessibleButton
                         onClick={this.onContinueClick}
                         kind="primary"
                         disabled={this.state.continueDisabled}
                     >
-                        {_t("Continue")}
+                        {_t("action|continue")}
                     </AccessibleButton>
                 </div>
             );
@@ -281,9 +289,9 @@ export default class EmailAddresses extends React.Component<IProps, IState> {
                 <form onSubmit={this.onAddClick} autoComplete="off" noValidate={true}>
                     <Field
                         type="text"
-                        label={_t("Email Address")}
+                        label={_t("settings|general|email_address_label")}
                         autoComplete="email"
-                        disabled={this.state.verifying}
+                        disabled={this.props.disabled || this.state.verifying}
                         value={this.state.newEmailAddress}
                         onChange={this.onChangeNewEmailAddress}
                     />

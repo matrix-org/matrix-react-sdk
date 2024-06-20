@@ -16,17 +16,18 @@ limitations under the License.
 
 import { Optional } from "matrix-events-sdk";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
-import { Thread } from "matrix-js-sdk/src/models/thread";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { EventTimelineSet, Room, Thread } from "matrix-js-sdk/src/matrix";
+import { IconButton, Tooltip } from "@vector-im/compound-web";
+import { logger } from "matrix-js-sdk/src/logger";
 
+import { Icon as MarkAllThreadsReadIcon } from "../../../res/img/element-icons/check-all.svg";
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from "../../utils/ResizeNotifier";
-import MatrixClientContext from "../../contexts/MatrixClientContext";
+import MatrixClientContext, { useMatrixClientContext } from "../../contexts/MatrixClientContext";
 import { _t } from "../../languageHandler";
 import { ContextMenuButton } from "../../accessibility/context_menu/ContextMenuButton";
 import ContextMenu, { ChevronFace, MenuItemRadio, useContextMenu } from "./ContextMenu";
-import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
+import RoomContext, { TimelineRenderingType, useRoomContext } from "../../contexts/RoomContext";
 import TimelinePanel from "./TimelinePanel";
 import { Layout } from "../../settings/enums/Layout";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
@@ -35,6 +36,10 @@ import PosthogTrackers from "../../PosthogTrackers";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
 import Spinner from "../views/elements/Spinner";
 import Heading from "../views/typography/Heading";
+import { clearRoomNotification } from "../../utils/notifications";
+import { useDispatcher } from "../../hooks/useDispatcher";
+import dis from "../../dispatcher/dispatcher";
+import { Action } from "../../dispatcher/actions";
 
 interface IProps {
     roomId: string;
@@ -73,16 +78,18 @@ export const ThreadPanelHeader: React.FC<{
     setFilterOption: (filterOption: ThreadFilterType) => void;
     empty: boolean;
 }> = ({ filterOption, setFilterOption, empty }) => {
+    const mxClient = useMatrixClientContext();
+    const roomContext = useRoomContext();
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu<HTMLElement>();
     const options: readonly ThreadPanelHeaderOption[] = [
         {
-            label: _t("All threads"),
-            description: _t("Shows all threads from current room"),
+            label: _t("threads|all_threads"),
+            description: _t("threads|all_threads_description"),
             key: ThreadFilterType.All,
         },
         {
-            label: _t("My threads"),
-            description: _t("Shows all threads you've participated in"),
+            label: _t("threads|my_threads"),
+            description: _t("threads|my_threads_description"),
             key: ThreadFilterType.My,
         },
     ];
@@ -111,23 +118,53 @@ export const ThreadPanelHeader: React.FC<{
             {contextMenuOptions}
         </ContextMenu>
     ) : null;
+
+    const onMarkAllThreadsReadClick = React.useCallback(
+        (e) => {
+            PosthogTrackers.trackInteraction("WebThreadsMarkAllReadButton", e);
+            if (!roomContext.room) {
+                logger.error("No room in context to mark all threads read");
+                return;
+            }
+            // This actually clears all room notifications by sending an unthreaded read receipt.
+            // We'd have to loop over all unread threads (pagninating back to find any we don't
+            // know about yet) and send threaded receipts for all of them... or implement a
+            // specific API for it. In practice, the user will have to be viewing the room to
+            // see this button, so will have marked the room itself read anyway.
+            clearRoomNotification(roomContext.room, mxClient).catch((e) => {
+                logger.error("Failed to mark all threads read", e);
+            });
+        },
+        [roomContext.room, mxClient],
+    );
+
     return (
         <div className="mx_BaseCard_header_title">
-            <Heading size="h4" className="mx_BaseCard_header_title_heading">
-                {_t("Threads")}
+            <Heading size="4" className="mx_BaseCard_header_title_heading">
+                {_t("common|threads")}
             </Heading>
             {!empty && (
                 <>
+                    <Tooltip label={_t("threads|mark_all_read")}>
+                        <IconButton
+                            onClick={onMarkAllThreadsReadClick}
+                            aria-label={_t("threads|mark_all_read")}
+                            size="24px"
+                        >
+                            <MarkAllThreadsReadIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <div className="mx_ThreadPanel_vertical_separator" />
                     <ContextMenuButton
                         className="mx_ThreadPanel_dropdown"
-                        inputRef={button}
+                        ref={button}
                         isExpanded={menuDisplayed}
                         onClick={(ev: ButtonEvent) => {
                             openMenu();
                             PosthogTrackers.trackInteraction("WebRightPanelThreadPanelFilterDropdown", ev);
                         }}
                     >
-                        {`${_t("Show:")} ${value?.label}`}
+                        {`${_t("threads|show_thread_filter")} ${value?.label}`}
                     </ContextMenuButton>
                     {contextMenu}
                 </>
@@ -148,18 +185,14 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
         body = (
             <>
                 <p>
-                    {_t(
-                        "Reply to an ongoing thread or use “%(replyInThread)s” " +
-                            "when hovering over a message to start a new one.",
-                        {
-                            replyInThread: _t("Reply in thread"),
-                        },
-                    )}
+                    {_t("threads|empty_has_threads_tip", {
+                        replyInThread: _t("action|reply_in_thread"),
+                    })}
                 </p>
                 <p>
                     {/* Always display that paragraph to prevent layout shift when hiding the button */}
                     {filterOption === ThreadFilterType.My ? (
-                        <button onClick={showAllThreadsCallback}>{_t("Show all threads")}</button>
+                        <button onClick={showAllThreadsCallback}>{_t("threads|show_all_threads")}</button>
                     ) : (
                         <>&nbsp;</>
                     )}
@@ -169,12 +202,12 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
     } else {
         body = (
             <>
-                <p>{_t("Threads help keep your conversations on-topic and easy to track.")}</p>
+                <p>{_t("threads|empty_explainer")}</p>
                 <p className="mx_ThreadPanel_empty_tip">
                     {_t(
-                        "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.",
+                        "threads|empty_tip",
                         {
-                            replyInThread: _t("Reply in thread"),
+                            replyInThread: _t("action|reply_in_thread"),
                         },
                         {
                             b: (sub) => <b>{sub}</b>,
@@ -186,11 +219,11 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
     }
 
     return (
-        <aside className="mx_ThreadPanel_empty">
+        <div className="mx_ThreadPanel_empty">
             <div className="mx_ThreadPanel_largeIcon" />
-            <h2>{_t("Keep discussions organised with threads")}</h2>
+            <h2>{_t("threads|empty_heading")}</h2>
             {body}
-        </aside>
+        </div>
     );
 };
 
@@ -199,6 +232,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     const roomContext = useContext(RoomContext);
     const timelinePanel = useRef<TimelinePanel | null>(null);
     const card = useRef<HTMLDivElement | null>(null);
+    const closeButonRef = useRef<HTMLDivElement | null>(null);
 
     const [filterOption, setFilterOption] = useState<ThreadFilterType>(ThreadFilterType.All);
     const [room, setRoom] = useState<Room | null>(null);
@@ -210,7 +244,8 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
 
     useEffect(() => {
         const room = mxClient.getRoom(roomId);
-        room?.createThreadsTimelineSets()
+        room
+            ?.createThreadsTimelineSets()
             .then(() => room.fetchRoomThreads())
             .then(() => {
                 setFilterOption(ThreadFilterType.All);
@@ -223,6 +258,14 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
             timelinePanel.current?.refreshTimeline();
         }
     }, [timelineSet, timelinePanel]);
+
+    useDispatcher(dis, (payload) => {
+        // This actually foucses the close button on the threads panel, as its the only interactive element,
+        // but at least it puts the user in the right area of the app.
+        if (payload.action === Action.FocusThreadsPanel) {
+            closeButonRef.current?.focus();
+        }
+    });
 
     return (
         <RoomContext.Provider
@@ -245,6 +288,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                 onClose={onClose}
                 withoutScrollContainer={true}
                 ref={card}
+                closeButtonRef={closeButonRef}
             >
                 {card.current && <Measured sensor={card.current} onMeasurement={setNarrow} />}
                 {timelineSet ? (

@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { AriaRole } from "react";
 import classNames from "classnames";
 import { Resizable, Size } from "re-resizable";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { IWidget } from "matrix-widget-api";
 
 import AppTile from "../elements/AppTile";
@@ -28,7 +28,7 @@ import WidgetUtils from "../../../utils/WidgetUtils";
 import WidgetEchoStore from "../../../stores/WidgetEchoStore";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import ResizeHandle from "../elements/ResizeHandle";
-import Resizer from "../../../resizer/resizer";
+import Resizer, { IConfig } from "../../../resizer/resizer";
 import PercentageDistributor from "../../../resizer/distributors/percentage";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { clamp, percentageOf, percentageWithin } from "../../../utils/numbers";
@@ -42,6 +42,7 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     showApps?: boolean; // Should apps be rendered
     maxHeight: number;
+    role?: AriaRole;
 }
 
 interface IState {
@@ -58,7 +59,7 @@ interface IState {
 export default class AppsDrawer extends React.Component<IProps, IState> {
     private unmounted = false;
     private resizeContainer?: HTMLDivElement;
-    private resizer: Resizer;
+    private resizer: Resizer<IConfig>;
     private dispatcherRef?: string;
     public static defaultProps: Partial<IProps> = {
         showApps: true,
@@ -104,7 +105,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         }
     };
 
-    private createResizer(): Resizer {
+    private createResizer(): Resizer<IConfig> {
         // This is the horizontal one, changing the distribution of the width between the app tiles
         // (ie. a vertical resize handle because, the handle itself is vertical...)
         const classNames = {
@@ -294,7 +295,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
         }
 
         return (
-            <div className={classes}>
+            <div role={this.props.role} className={classes}>
                 {drawer}
                 {spinner}
             </div>

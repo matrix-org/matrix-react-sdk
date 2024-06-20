@@ -16,7 +16,6 @@ exports[`MessagePanel should handle large numbers of hidden events quickly 1`] =
       />
     </div>
   </div>
-  );
 </DocumentFragment>
 `;
 
@@ -39,8 +38,8 @@ exports[`MessagePanel should handle lots of membership events quickly 1`] = `
           data-testid="__testid__"
         >
           <div
-            aria-label="Thu, Jan 1 1970"
-            class="mx_DateSeparator"
+            aria-label="Thu, Jan 1, 1970"
+            class="mx_TimelineSeparator"
             role="separator"
           >
             <hr
@@ -53,7 +52,7 @@ exports[`MessagePanel should handle lots of membership events quickly 1`] = `
                 aria-hidden="true"
                 class="mx_DateSeparator_dateHeading"
               >
-                Thu, Jan 1 1970
+                Thu, Jan 1, 1970
               </h2>
             </div>
             <hr
@@ -83,7 +82,7 @@ exports[`MessagePanel should handle lots of membership events quickly 1`] = `
             role="button"
             tabindex="0"
           >
-            expand
+            Expand
           </div>
           <div
             class="mx_EventTile_line"
@@ -95,26 +94,15 @@ exports[`MessagePanel should handle lots of membership events quickly 1`] = `
                 class="mx_GenericEventListSummary_avatars"
               >
                 <span
-                  class="mx_BaseAvatar"
+                  class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+                  data-color="1"
+                  data-testid="avatar-img"
+                  data-type="round"
                   role="presentation"
+                  style="--cpd-avatar-size: 14px;"
+                  title="@user:id"
                 >
-                  <span
-                    aria-hidden="true"
-                    class="mx_BaseAvatar_initial"
-                    style="font-size: 9.1px; width: 14px; line-height: 14px;"
-                  >
-                    U
-                  </span>
-                  <img
-                    alt=""
-                    aria-hidden="true"
-                    class="mx_BaseAvatar_image"
-                    data-testid="avatar-img"
-                    loading="lazy"
-                    src="data:image/png;base64,00"
-                    style="width: 14px; height: 14px;"
-                    title="@user:id"
-                  />
+                  u
                 </span>
               </span>
               <span
@@ -130,7 +118,6 @@ exports[`MessagePanel should handle lots of membership events quickly 1`] = `
       </ol>
     </div>
   </div>
-  );
 </DocumentFragment>
 `;
 
@@ -150,6 +137,5 @@ exports[`MessagePanel should handle lots of room creation events quickly 1`] = `
       />
     </div>
   </div>
-  );
 </DocumentFragment>
 `;

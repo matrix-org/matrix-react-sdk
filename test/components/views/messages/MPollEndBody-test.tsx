@@ -16,9 +16,8 @@ limitations under the License.
 
 import React from "react";
 import { render } from "@testing-library/react";
-import { EventTimeline, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import { EventTimeline, MatrixEvent, Room, M_TEXT } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
 
 import { IBodyProps } from "../../../../src/components/views/messages/IBodyProps";
 import { MPollEndBody } from "../../../../src/components/views/messages/MPollEndBody";
@@ -97,7 +96,7 @@ describe("<MPollEndBody />", () => {
         mockClient.relations.mockResolvedValue({
             events: [],
         });
-        mockClient.fetchRoomEvent.mockResolvedValue(pollStartEvent.toJSON());
+        mockClient.fetchRoomEvent.mockResolvedValue(pollStartEvent.getEffectiveEvent());
     });
 
     afterEach(() => {

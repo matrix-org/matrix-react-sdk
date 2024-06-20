@@ -61,20 +61,20 @@ export class EditableItem extends React.Component<IItemProps, IItemState> {
         if (this.state.verifyRemove) {
             return (
                 <div className="mx_EditableItem">
-                    <span className="mx_EditableItem_promptText">{_t("Are you sure?")}</span>
+                    <span className="mx_EditableItem_promptText">{_t("common|are_you_sure")}</span>
                     <AccessibleButton
                         onClick={this.onActuallyRemove}
                         kind="primary_sm"
                         className="mx_EditableItem_confirmBtn"
                     >
-                        {_t("Yes")}
+                        {_t("action|yes")}
                     </AccessibleButton>
                     <AccessibleButton
                         onClick={this.onDontRemove}
                         kind="danger_sm"
                         className="mx_EditableItem_confirmBtn"
                     >
-                        {_t("No")}
+                        {_t("action|no")}
                     </AccessibleButton>
                 </div>
             );
@@ -82,7 +82,12 @@ export class EditableItem extends React.Component<IItemProps, IItemState> {
 
         return (
             <div className="mx_EditableItem">
-                <div onClick={this.onRemove} className="mx_EditableItem_delete" title={_t("Remove")} role="button" />
+                <div
+                    onClick={this.onRemove}
+                    className="mx_EditableItem_delete"
+                    title={_t("action|remove")}
+                    role="button"
+                />
                 <span className="mx_EditableItem_item">{this.props.value}</span>
             </div>
         );
@@ -142,7 +147,7 @@ export default class EditableItemList<P = {}> extends React.PureComponent<IProps
                     type="submit"
                     disabled={!this.props.newItem}
                 >
-                    {_t("Add")}
+                    {_t("action|add")}
                 </AccessibleButton>
             </form>
         );

@@ -38,13 +38,13 @@ export const MapError: React.FC<MapErrorProps> = ({ error, isMinimised, classNam
         onClick={onClick}
     >
         <WarningBadge className="mx_MapError_icon" />
-        <Heading className="mx_MapError_heading" size="h3">
-            {_t("Unable to load map")}
+        <Heading className="mx_MapError_heading" size="3">
+            {_t("location_sharing|failed_load_map")}
         </Heading>
         <p className="mx_MapError_message">{getLocationShareErrorMessage(error)}</p>
         {onFinished && (
             <AccessibleButton element="button" kind="primary" onClick={onFinished}>
-                {_t("OK")}
+                {_t("action|ok")}
             </AccessibleButton>
         )}
     </div>

@@ -26,6 +26,7 @@ import {
     mockClientMethodsDevice,
     mockPlatformPeg,
 } from "../../../../../test-utils";
+import { SDKContext, SdkContextClass } from "../../../../../../src/contexts/SDKContext";
 
 describe("<SecurityUserSettingsTab />", () => {
     const defaultProps = {
@@ -41,11 +42,17 @@ describe("<SecurityUserSettingsTab />", () => {
         ...mockClientMethodsCrypto(),
         getRooms: jest.fn().mockReturnValue([]),
         getIgnoredUsers: jest.fn(),
+        getKeyBackupVersion: jest.fn(),
     });
+
+    const sdkContext = new SdkContextClass();
+    sdkContext.client = mockClient;
 
     const getComponent = () => (
         <MatrixClientContext.Provider value={mockClient}>
-            <SecurityUserSettingsTab {...defaultProps} />
+            <SDKContext.Provider value={sdkContext}>
+                <SecurityUserSettingsTab {...defaultProps} />
+            </SDKContext.Provider>
         </MatrixClientContext.Provider>
     );
 

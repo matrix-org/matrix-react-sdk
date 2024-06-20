@@ -19,13 +19,6 @@ import React from "react";
 
 import LabelledCheckbox from "../../../../src/components/views/elements/LabelledCheckbox";
 
-// Fake random strings to give a predictable snapshot for checkbox IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => {
-    return {
-        randomString: () => "abdefghi",
-    };
-});
-
 describe("<LabelledCheckbox />", () => {
     type CompProps = React.ComponentProps<typeof LabelledCheckbox>;
     const getComponent = (props: CompProps) => <LabelledCheckbox {...props} />;
@@ -95,5 +88,17 @@ describe("<LabelledCheckbox />", () => {
         checkbox = getCheckbox();
         expect(checkbox).toBeChecked();
         expect(checkbox).toBeDisabled();
+    });
+
+    it("should render with a custom class name", () => {
+        const className = "some class name";
+        const props: CompProps = {
+            label: "Hello world",
+            value: false,
+            onChange: jest.fn(),
+            className,
+        };
+        const { container } = render(getComponent(props));
+        expect(container.firstElementChild?.className).toContain(className);
     });
 });

@@ -44,8 +44,7 @@ limitations under the License.
  *                      list ops)
  */
 
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { MatrixClient, EventType, AutoDiscovery, Method, timeoutSignal } from "matrix-js-sdk/src/matrix";
 import {
     MSC3575Filter,
     MSC3575List,
@@ -55,7 +54,10 @@ import {
     SlidingSync,
 } from "matrix-js-sdk/src/sliding-sync";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IDeferred, defer, sleep } from "matrix-js-sdk/src/utils";
+import { defer, sleep } from "matrix-js-sdk/src/utils";
+
+import SettingsStore from "./settings/SettingsStore";
+import SlidingSyncController from "./settings/controllers/SlidingSyncController";
 
 // how long to long poll for
 const SLIDING_SYNC_TIMEOUT_MS = 20 * 1000;
@@ -117,14 +119,10 @@ export class SlidingSyncManager {
     public static readonly ListSearch = "search_list";
     private static readonly internalInstance = new SlidingSyncManager();
 
-    public slidingSync: SlidingSync;
+    public slidingSync?: SlidingSync;
     private client?: MatrixClient;
 
-    private configureDefer: IDeferred<void>;
-
-    public constructor() {
-        this.configureDefer = defer<void>();
-    }
+    private configureDefer = defer<void>();
 
     public static get instance(): SlidingSyncManager {
         return SlidingSyncManager.internalInstance;
@@ -185,7 +183,7 @@ export class SlidingSyncManager {
     public async ensureListRegistered(listKey: string, updateArgs: PartialSlidingSyncRequest): Promise<MSC3575List> {
         logger.debug("ensureListRegistered:::", listKey, updateArgs);
         await this.configureDefer.promise;
-        let list = this.slidingSync.getListParams(listKey);
+        let list = this.slidingSync!.getListParams(listKey);
         if (!list) {
             list = {
                 ranges: [[0, 20]],
@@ -224,19 +222,19 @@ export class SlidingSyncManager {
         try {
             // if we only have range changes then call a different function so we don't nuke the list from before
             if (updateArgs.ranges && Object.keys(updateArgs).length === 1) {
-                await this.slidingSync.setListRanges(listKey, updateArgs.ranges);
+                await this.slidingSync!.setListRanges(listKey, updateArgs.ranges);
             } else {
-                await this.slidingSync.setList(listKey, list);
+                await this.slidingSync!.setList(listKey, list);
             }
         } catch (err) {
             logger.debug("ensureListRegistered: update failed txn_id=", err);
         }
-        return this.slidingSync.getListParams(listKey)!;
+        return this.slidingSync!.getListParams(listKey)!;
     }
 
     public async setRoomVisible(roomId: string, visible: boolean): Promise<string> {
         await this.configureDefer.promise;
-        const subscriptions = this.slidingSync.getRoomSubscriptions();
+        const subscriptions = this.slidingSync!.getRoomSubscriptions();
         if (visible) {
             subscriptions.add(roomId);
         } else {
@@ -253,9 +251,9 @@ export class SlidingSyncManager {
         logger.log("SlidingSync setRoomVisible:", roomId, visible, "shouldLazyLoad:", shouldLazyLoad);
         if (shouldLazyLoad) {
             // lazy load this room
-            this.slidingSync.useCustomSubscription(roomId, UNENCRYPTED_SUBSCRIPTION_NAME);
+            this.slidingSync!.useCustomSubscription(roomId, UNENCRYPTED_SUBSCRIPTION_NAME);
         }
-        const p = this.slidingSync.modifyRoomSubscriptions(subscriptions);
+        const p = this.slidingSync!.modifyRoomSubscriptions(subscriptions);
         if (room) {
             return roomId; // we have data already for this room, show immediately e.g it's in a list
         }
@@ -287,7 +285,7 @@ export class SlidingSyncManager {
                     [startIndex, endIndex],
                 ];
                 if (firstTime) {
-                    await this.slidingSync.setList(SlidingSyncManager.ListSearch, {
+                    await this.slidingSync!.setList(SlidingSyncManager.ListSearch, {
                         // e.g [0,19] [20,39] then [0,19] [40,59]. We keep [0,20] constantly to ensure
                         // any changes to the list whilst spidering are caught.
                         ranges: ranges,
@@ -313,7 +311,7 @@ export class SlidingSyncManager {
                         },
                     });
                 } else {
-                    await this.slidingSync.setListRanges(SlidingSyncManager.ListSearch, ranges);
+                    await this.slidingSync!.setListRanges(SlidingSyncManager.ListSearch, ranges);
                 }
             } catch (err) {
                 // do nothing, as we reject only when we get interrupted but that's fine as the next
@@ -322,10 +320,99 @@ export class SlidingSyncManager {
                 // gradually request more over time, even on errors.
                 await sleep(gapBetweenRequestsMs);
             }
-            const listData = this.slidingSync.getListData(SlidingSyncManager.ListSearch)!;
+            const listData = this.slidingSync!.getListData(SlidingSyncManager.ListSearch)!;
             hasMore = endIndex + 1 < listData.joinedCount;
             startIndex += batchSize;
             firstTime = false;
+        }
+    }
+
+    /**
+     * Set up the Sliding Sync instance; configures the end point and starts spidering.
+     * The sliding sync endpoint is derived the following way:
+     *   1. The user-defined sliding sync proxy URL (legacy, for backwards compatibility)
+     *   2. The client `well-known` sliding sync proxy URL [declared at the unstable prefix](https://github.com/matrix-org/matrix-spec-proposals/blob/kegan/sync-v3/proposals/3575-sync.md#unstable-prefix)
+     *   3. The homeserver base url (for native server support)
+     * @param client The MatrixClient to use
+     * @returns A working Sliding Sync or undefined
+     */
+    public async setup(client: MatrixClient): Promise<SlidingSync | undefined> {
+        const baseUrl = client.baseUrl;
+        const proxyUrl = SettingsStore.getValue("feature_sliding_sync_proxy_url");
+        const wellKnownProxyUrl = await this.getProxyFromWellKnown(client);
+
+        const slidingSyncEndpoint = proxyUrl || wellKnownProxyUrl || baseUrl;
+
+        this.configure(client, slidingSyncEndpoint);
+        logger.info("Sliding sync activated at", slidingSyncEndpoint);
+        this.startSpidering(100, 50); // 100 rooms at a time, 50ms apart
+
+        return this.slidingSync;
+    }
+
+    /**
+     * Get the sliding sync proxy URL from the client well known
+     * @param client The MatrixClient to use
+     * @return The proxy url
+     */
+    public async getProxyFromWellKnown(client: MatrixClient): Promise<string | undefined> {
+        let proxyUrl: string | undefined;
+
+        try {
+            const clientDomain = await client.getDomain();
+            if (clientDomain === null) {
+                throw new RangeError("Homeserver domain is null");
+            }
+            const clientWellKnown = await AutoDiscovery.findClientConfig(clientDomain);
+            proxyUrl = clientWellKnown?.["org.matrix.msc3575.proxy"]?.url;
+        } catch (e) {
+            // Either client.getDomain() is null so we've shorted out, or is invalid so `AutoDiscovery.findClientConfig` has thrown
+        }
+
+        if (proxyUrl != undefined) {
+            logger.log("getProxyFromWellKnown: client well-known declares sliding sync proxy at", proxyUrl);
+        }
+        return proxyUrl;
+    }
+
+    /**
+     * Check if the server "natively" supports sliding sync (with an unstable endpoint).
+     * @param client The MatrixClient to use
+     * @return Whether the "native" (unstable) endpoint is supported
+     */
+    public async nativeSlidingSyncSupport(client: MatrixClient): Promise<boolean> {
+        // Per https://github.com/matrix-org/matrix-spec-proposals/pull/3575/files#r1589542561
+        // `client` can be undefined/null in tests for some reason.
+        const support = await client?.doesServerSupportUnstableFeature("org.matrix.msc3575");
+        if (support) {
+            logger.log("nativeSlidingSyncSupport: sliding sync advertised as unstable");
+        }
+        return support;
+    }
+
+    /**
+     * Check whether our homeserver has sliding sync support, that the endpoint is up, and
+     * is a sliding sync endpoint.
+     *
+     * Sets static member `SlidingSyncController.serverSupportsSlidingSync`
+     * @param client The MatrixClient to use
+     */
+    public async checkSupport(client: MatrixClient): Promise<void> {
+        if (await this.nativeSlidingSyncSupport(client)) {
+            SlidingSyncController.serverSupportsSlidingSync = true;
+            return;
+        }
+
+        const proxyUrl = await this.getProxyFromWellKnown(client);
+        if (proxyUrl != undefined) {
+            const response = await fetch(new URL("/client/server.json", proxyUrl), {
+                method: Method.Get,
+                signal: timeoutSignal(10 * 1000), // 10s
+            });
+            if (response.status === 200) {
+                logger.log("checkSupport: well-known sliding sync proxy is up at", proxyUrl);
+                SlidingSyncController.serverSupportsSlidingSync = true;
+            }
         }
     }
 }

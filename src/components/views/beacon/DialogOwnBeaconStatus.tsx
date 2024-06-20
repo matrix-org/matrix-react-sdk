@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { useContext } from "react";
-import { Room, Beacon } from "matrix-js-sdk/src/matrix";
-import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
+import { Room, Beacon, LocationAssetType } from "matrix-js-sdk/src/matrix";
 
 import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../../stores/OwnBeaconStore";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
@@ -55,12 +54,7 @@ const DialogOwnBeaconStatus: React.FC<Props> = ({ roomId }) => {
     return (
         <div className="mx_DialogOwnBeaconStatus">
             {isSelfLocation ? (
-                <MemberAvatar
-                    className="mx_DialogOwnBeaconStatus_avatar"
-                    member={beaconMember}
-                    height={32}
-                    width={32}
-                />
+                <MemberAvatar className="mx_DialogOwnBeaconStatus_avatar" member={beaconMember} size="32px" />
             ) : (
                 <StyledLiveBeaconIcon className="mx_DialogOwnBeaconStatus_avatarIcon" />
             )}

@@ -15,9 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { ClientEvent, MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { defer } from "matrix-js-sdk/src/utils";
+import { isEqual } from "lodash";
 
 import MatrixClientBackedSettingsHandler from "./MatrixClientBackedSettingsHandler";
 import { objectClone, objectKeyChanges } from "../../utils/objects";
@@ -169,7 +169,7 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
         // which race between different lines.
         const deferred = defer<void>();
         const handler = (event: MatrixEvent): void => {
-            if (event.getType() !== eventType || event.getContent()[field] !== value) return;
+            if (event.getType() !== eventType || !isEqual(event.getContent()[field], value)) return;
             this.client.off(ClientEvent.AccountData, handler);
             deferred.resolve();
         };

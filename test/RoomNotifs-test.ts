@@ -15,20 +15,29 @@ limitations under the License.
 */
 
 import { mocked } from "jest-mock";
-import { PushRuleActionName, TweakName } from "matrix-js-sdk/src/@types/PushRules";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
-import { EventStatus, EventType, MatrixEvent, PendingEventOrdering } from "matrix-js-sdk/src/matrix";
+import {
+    PushRuleActionName,
+    TweakName,
+    NotificationCountType,
+    Room,
+    EventStatus,
+    EventType,
+    MatrixEvent,
+    PendingEventOrdering,
+} from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { mkEvent, mkRoom, muteRoom, stubClient, upsertRoomStateEvents } from "./test-utils";
+import { mkEvent, mkRoom, mkRoomMember, muteRoom, stubClient, upsertRoomStateEvents } from "./test-utils";
 import {
     getRoomNotifsState,
     RoomNotifState,
     getUnreadNotificationCount,
     determineUnreadState,
 } from "../src/RoomNotifs";
-import { NotificationColor } from "../src/stores/notifications/NotificationColor";
+import { NotificationLevel } from "../src/stores/notifications/NotificationLevel";
 import SettingsStore from "../src/settings/SettingsStore";
+import { MatrixClientPeg } from "../src/MatrixClientPeg";
 
 describe("RoomNotifs test", () => {
     let client: jest.Mocked<MatrixClient>;
@@ -64,6 +73,13 @@ describe("RoomNotifs test", () => {
         expect(getRoomNotifsState(client, room.roomId)).toBe(RoomNotifState.Mute);
     });
 
+    it("getRoomNotifsState handles mute state for legacy DontNotify action", () => {
+        const room = mkRoom(client, "!roomId:server");
+        muteRoom(room);
+        client.pushRules!.global.override![0]!.actions = [PushRuleActionName.DontNotify];
+        expect(getRoomNotifsState(client, room.roomId)).toBe(RoomNotifState.Mute);
+    });
+
     it("getRoomNotifsState handles mentions only", () => {
         (client as any).getRoomPushRule = () => ({
             rule_id: "!roomId:server",
@@ -94,16 +110,16 @@ describe("RoomNotifs test", () => {
         });
 
         it("counts room notification type", () => {
-            expect(getUnreadNotificationCount(room, NotificationCountType.Total)).toBe(0);
-            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight)).toBe(0);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Total, false)).toBe(0);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, false)).toBe(0);
         });
 
         it("counts notifications type", () => {
             room.setUnreadNotificationCount(NotificationCountType.Total, 2);
             room.setUnreadNotificationCount(NotificationCountType.Highlight, 1);
 
-            expect(getUnreadNotificationCount(room, NotificationCountType.Total)).toBe(2);
-            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight)).toBe(1);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Total, false)).toBe(2);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, false)).toBe(1);
         });
 
         describe("when there is a room predecessor", () => {
@@ -141,8 +157,8 @@ describe("RoomNotifs test", () => {
                 it("and there is a predecessor in the create event, it should count predecessor highlight", () => {
                     room.addLiveEvents([mkCreateEvent(OLD_ROOM_ID)]);
 
-                    expect(getUnreadNotificationCount(room, NotificationCountType.Total)).toBe(8);
-                    expect(getUnreadNotificationCount(room, NotificationCountType.Highlight)).toBe(7);
+                    expect(getUnreadNotificationCount(room, NotificationCountType.Total, false)).toBe(8);
+                    expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, false)).toBe(7);
                 });
             };
 
@@ -152,8 +168,8 @@ describe("RoomNotifs test", () => {
                     room.addLiveEvents([mkCreateEvent(OLD_ROOM_ID)]);
                     upsertRoomStateEvents(room, [mkPredecessorEvent(OLD_ROOM_ID)]);
 
-                    expect(getUnreadNotificationCount(room, NotificationCountType.Total)).toBe(8);
-                    expect(getUnreadNotificationCount(room, NotificationCountType.Highlight)).toBe(7);
+                    expect(getUnreadNotificationCount(room, NotificationCountType.Total, false)).toBe(8);
+                    expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, false)).toBe(7);
                 });
             };
 
@@ -180,8 +196,8 @@ describe("RoomNotifs test", () => {
                     room.addLiveEvents([mkCreateEvent()]);
                     upsertRoomStateEvents(room, [mkPredecessorEvent(OLD_ROOM_ID)]);
 
-                    expect(getUnreadNotificationCount(room, NotificationCountType.Total)).toBe(2);
-                    expect(getUnreadNotificationCount(room, NotificationCountType.Highlight)).toBe(1);
+                    expect(getUnreadNotificationCount(room, NotificationCountType.Total, false)).toBe(2);
+                    expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, false)).toBe(1);
                 });
             });
 
@@ -199,31 +215,31 @@ describe("RoomNotifs test", () => {
                     room.addLiveEvents([mkCreateEvent()]);
                     upsertRoomStateEvents(room, [mkPredecessorEvent(OLD_ROOM_ID)]);
 
-                    expect(getUnreadNotificationCount(room, NotificationCountType.Total)).toBe(8);
-                    expect(getUnreadNotificationCount(room, NotificationCountType.Highlight)).toBe(7);
+                    expect(getUnreadNotificationCount(room, NotificationCountType.Total, false)).toBe(8);
+                    expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, false)).toBe(7);
                 });
 
                 it("and there is an unknown room in the predecessor event, it should not count predecessor highlight", () => {
                     room.addLiveEvents([mkCreateEvent()]);
                     upsertRoomStateEvents(room, [mkPredecessorEvent("!unknon:example.com")]);
 
-                    expect(getUnreadNotificationCount(room, NotificationCountType.Total)).toBe(2);
-                    expect(getUnreadNotificationCount(room, NotificationCountType.Highlight)).toBe(1);
+                    expect(getUnreadNotificationCount(room, NotificationCountType.Total, false)).toBe(2);
+                    expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, false)).toBe(1);
                 });
             });
         });
 
         it("counts thread notification type", () => {
-            expect(getUnreadNotificationCount(room, NotificationCountType.Total, THREAD_ID)).toBe(0);
-            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, THREAD_ID)).toBe(0);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Total, false, THREAD_ID)).toBe(0);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, false, THREAD_ID)).toBe(0);
         });
 
         it("counts thread notifications type", () => {
             room.setThreadUnreadNotificationCount(THREAD_ID, NotificationCountType.Total, 2);
             room.setThreadUnreadNotificationCount(THREAD_ID, NotificationCountType.Highlight, 1);
 
-            expect(getUnreadNotificationCount(room, NotificationCountType.Total, THREAD_ID)).toBe(2);
-            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, THREAD_ID)).toBe(1);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Total, false, THREAD_ID)).toBe(2);
+            expect(getUnreadNotificationCount(room, NotificationCountType.Highlight, false, THREAD_ID)).toBe(1);
         });
     });
 
@@ -237,10 +253,10 @@ describe("RoomNotifs test", () => {
         });
 
         it("shows nothing by default", async () => {
-            const { color, symbol, count } = determineUnreadState(room);
+            const { level, symbol, count } = determineUnreadState(room);
 
             expect(symbol).toBe(null);
-            expect(color).toBe(NotificationColor.None);
+            expect(level).toBe(NotificationLevel.None);
             expect(count).toBe(0);
         });
 
@@ -254,20 +270,41 @@ describe("RoomNotifs test", () => {
             event.status = EventStatus.NOT_SENT;
             room.addPendingEvent(event, "txn");
 
-            const { color, symbol, count } = determineUnreadState(room);
+            const { level, symbol, count } = determineUnreadState(room);
 
             expect(symbol).toBe("!");
-            expect(color).toBe(NotificationColor.Unsent);
+            expect(level).toBe(NotificationLevel.Unsent);
             expect(count).toBeGreaterThan(0);
         });
 
         it("indicates the user has been invited to a channel", async () => {
-            room.updateMyMembership("invite");
+            room.updateMyMembership(KnownMembership.Invite);
 
-            const { color, symbol, count } = determineUnreadState(room);
+            const { level, symbol, count } = determineUnreadState(room);
 
             expect(symbol).toBe("!");
-            expect(color).toBe(NotificationColor.Red);
+            expect(level).toBe(NotificationLevel.Highlight);
+            expect(count).toBeGreaterThan(0);
+        });
+
+        it("indicates the user knock has been denied", async () => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name) => {
+                return name === "feature_ask_to_join";
+            });
+            const roomMember = mkRoomMember(
+                room.roomId,
+                MatrixClientPeg.get()!.getSafeUserId(),
+                KnownMembership.Leave,
+                true,
+                {
+                    membership: KnownMembership.Knock,
+                },
+            );
+            jest.spyOn(room, "getMember").mockReturnValue(roomMember);
+            const { level, symbol, count } = determineUnreadState(room);
+
+            expect(symbol).toBe("!");
+            expect(level).toBe(NotificationLevel.Highlight);
             expect(count).toBeGreaterThan(0);
         });
 
@@ -276,27 +313,27 @@ describe("RoomNotifs test", () => {
             room.setUnreadNotificationCount(NotificationCountType.Total, 99);
             muteRoom(room);
 
-            const { color, count } = determineUnreadState(room);
+            const { level, count } = determineUnreadState(room);
 
-            expect(color).toBe(NotificationColor.None);
+            expect(level).toBe(NotificationLevel.None);
             expect(count).toBe(0);
         });
 
         it("uses the correct number of unreads", async () => {
             room.setUnreadNotificationCount(NotificationCountType.Total, 999);
 
-            const { color, count } = determineUnreadState(room);
+            const { level, count } = determineUnreadState(room);
 
-            expect(color).toBe(NotificationColor.Grey);
+            expect(level).toBe(NotificationLevel.Notification);
             expect(count).toBe(999);
         });
 
         it("uses the correct number of highlights", async () => {
             room.setUnreadNotificationCount(NotificationCountType.Highlight, 888);
 
-            const { color, count } = determineUnreadState(room);
+            const { level, count } = determineUnreadState(room);
 
-            expect(color).toBe(NotificationColor.Red);
+            expect(level).toBe(NotificationLevel.Highlight);
             expect(count).toBe(888);
         });
     });

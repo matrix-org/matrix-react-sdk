@@ -16,9 +16,9 @@ limitations under the License.
 */
 
 import React from "react";
+import { getEmojiFromUnicode, Emoji as IEmoji } from "@matrix-org/emojibase-bindings";
 
 import { _t } from "../../../languageHandler";
-import { getEmojiFromUnicode, IEmoji } from "../../../emoji";
 import Emoji from "./Emoji";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import Toolbar from "../../../accessibility/Toolbar";
@@ -64,7 +64,7 @@ class QuickReactions extends React.Component<IProps, IState> {
             <section className="mx_EmojiPicker_footer mx_EmojiPicker_quick mx_EmojiPicker_category">
                 <h2 className="mx_EmojiPicker_quick_header mx_EmojiPicker_category_label">
                     {!this.state.hover ? (
-                        _t("Quick Reactions")
+                        _t("emoji|quick_reactions")
                     ) : (
                         <React.Fragment>
                             <span className="mx_EmojiPicker_name">{this.state.hover.label}</span>
@@ -72,7 +72,7 @@ class QuickReactions extends React.Component<IProps, IState> {
                         </React.Fragment>
                     )}
                 </h2>
-                <Toolbar className="mx_EmojiPicker_list" aria-label={_t("Quick Reactions")}>
+                <Toolbar className="mx_EmojiPicker_list" aria-label={_t("emoji|quick_reactions")}>
                     {QUICK_REACTIONS.map((emoji) => (
                         <Emoji
                             key={emoji.hexcode}

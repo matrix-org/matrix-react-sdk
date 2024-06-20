@@ -15,14 +15,19 @@ limitations under the License.
 */
 
 import { mocked, MockedObject } from "jest-mock";
-import { PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { PendingEventOrdering, Room, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { Widget } from "matrix-widget-api";
 
-import type { MatrixClient } from "matrix-js-sdk/src/client";
+import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import type { ClientWidgetApi } from "matrix-widget-api";
-import { stubClient, setupAsyncStoreWithClient, useMockedCalls, MockedCall } from "../../../test-utils";
+import {
+    stubClient,
+    setupAsyncStoreWithClient,
+    useMockedCalls,
+    MockedCall,
+    useMockMediaDevices,
+} from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { DefaultTagID } from "../../../../src/stores/room-list/models";
@@ -39,6 +44,7 @@ describe("Algorithm", () => {
     let algorithm: Algorithm;
 
     beforeEach(() => {
+        useMockMediaDevices();
         stubClient();
         client = mocked(MatrixClientPeg.safeGet());
         DMRoomMap.makeShared(client);
@@ -77,7 +83,7 @@ describe("Algorithm", () => {
         client.reEmitter.reEmit(room, [RoomStateEvent.Events]);
         client.reEmitter.reEmit(roomWithCall, [RoomStateEvent.Events]);
 
-        for (const room of client.getRooms()) jest.spyOn(room, "getMyMembership").mockReturnValue("join");
+        for (const room of client.getRooms()) jest.spyOn(room, "getMyMembership").mockReturnValue(KnownMembership.Join);
         algorithm.setKnownRooms(client.getRooms());
 
         setupAsyncStoreWithClient(CallStore.instance, client);
@@ -95,7 +101,7 @@ describe("Algorithm", () => {
         // End of setup
 
         expect(algorithm.getOrderedRooms()[DefaultTagID.Untagged]).toEqual([room, roomWithCall]);
-        await call.connect();
+        await call.start();
         expect(algorithm.getOrderedRooms()[DefaultTagID.Untagged]).toEqual([roomWithCall, room]);
         await call.disconnect();
         expect(algorithm.getOrderedRooms()[DefaultTagID.Untagged]).toEqual([room, roomWithCall]);

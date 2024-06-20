@@ -29,7 +29,6 @@ import Spinner from "../../../components/views/elements/Spinner";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../../dispatcher/actions";
 import dis from "../../../dispatcher/dispatcher";
-import AccessibleTooltipButton from "../../../components/views/elements/AccessibleTooltipButton";
 
 interface VoiceBroadcastHeaderProps {
     linkToRoom?: boolean;
@@ -63,7 +62,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     const broadcast = showBroadcast && (
         <div className="mx_VoiceBroadcastHeader_line">
             <LiveIcon className="mx_Icon mx_Icon_16" />
-            {_t("Voice broadcast")}
+            {_t("voice_broadcast|action")}
         </div>
     );
 
@@ -85,7 +84,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     const bufferingLine = showBuffering && bufferingPosition === "line" && (
         <div className="mx_VoiceBroadcastHeader_line">
             <Spinner w={14} h={14} />
-            {_t("Buffering…")}
+            {_t("voice_broadcast|buffering")}
         </div>
     );
 
@@ -95,14 +94,14 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
     });
 
     const microphoneLine = microphoneLabel && (
-        <AccessibleTooltipButton
+        <AccessibleButton
             className={microphoneLineClasses}
             onClick={onMicrophoneLineClick}
-            title={_t("Change input device")}
+            title={_t("voip|change_input_device")}
         >
             <MicrophoneIcon className="mx_Icon mx_Icon_16" />
             <span>{microphoneLabel}</span>
-        </AccessibleTooltipButton>
+        </AccessibleButton>
     );
 
     const onRoomAvatarOrNameClick = (): void => {
@@ -113,7 +112,7 @@ export const VoiceBroadcastHeader: React.FC<VoiceBroadcastHeaderProps> = ({
         });
     };
 
-    let roomAvatar = <RoomAvatar room={room} width={32} height={32} />;
+    let roomAvatar = <RoomAvatar room={room} size="32px" />;
     let roomName = (
         <div className="mx_VoiceBroadcastHeader_room_wrapper">
             <div className="mx_VoiceBroadcastHeader_room">{room.name}</div>

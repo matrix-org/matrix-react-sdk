@@ -16,8 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { render, RenderResult } from "@testing-library/react";
-import { RoomMember } from "matrix-js-sdk/src/matrix";
-import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
+import { RoomMember, LocationAssetType } from "matrix-js-sdk/src/matrix";
 
 import LocationViewDialog from "../../../../src/components/views/location/LocationViewDialog";
 import { TILE_SERVER_WK_KEY } from "../../../../src/utils/WellKnownUtils";
@@ -51,6 +50,6 @@ describe("<LocationViewDialog />", () => {
         // @ts-ignore cheat assignment to property
         selfShareEvent.sender = member;
         const { container } = getComponent({ mxEvent: selfShareEvent });
-        expect(container.querySelector(".mx_BaseAvatar_image")?.getAttribute("title")).toEqual(userId);
+        expect(container.querySelector(".mx_BaseAvatar")?.getAttribute("title")).toEqual(userId);
     });
 });

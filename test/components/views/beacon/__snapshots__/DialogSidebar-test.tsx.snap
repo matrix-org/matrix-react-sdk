@@ -11,14 +11,14 @@ exports[`<DialogSidebar /> renders sidebar correctly with beacons 1`] = `
       <h4
         class="mx_Heading_h4"
       >
-        View List
+        View list
       </h4>
       <div
+        aria-label="Close sidebar"
         class="mx_AccessibleButton mx_DialogSidebar_closeButton"
         data-testid="dialog-sidebar-close"
         role="button"
         tabindex="0"
-        title="Close sidebar"
       >
         <div
           class="mx_DialogSidebar_closeButtonIcon"
@@ -31,13 +31,16 @@ exports[`<DialogSidebar /> renders sidebar correctly with beacons 1`] = `
       <li
         class="mx_BeaconListItem"
       >
-        <img
-          alt=""
-          class="mx_BaseAvatar mx_BaseAvatar_image mx_BeaconListItem_avatar"
+        <span
+          class="_avatar_mcap2_17 mx_BaseAvatar mx_BeaconListItem_avatar _avatar-imageless_mcap2_61"
+          data-color="1"
           data-testid="avatar-img"
-          loading="lazy"
-          style="width: 32px; height: 32px;"
-        />
+          data-type="round"
+          role="presentation"
+          style="--cpd-avatar-size: 32px;"
+        >
+          
+        </span>
         <div
           class="mx_BeaconListItem_info"
         >
@@ -61,21 +64,16 @@ exports[`<DialogSidebar /> renders sidebar correctly with beacons 1`] = `
             <div
               class="mx_BeaconListItem_interactions"
             >
-              <div
-                aria-describedby="mx_TooltipTarget_abdefghi"
-                tabindex="0"
+              <a
+                data-testid="open-location-in-osm"
+                href="https://www.openstreetmap.org/?mlat=51&mlon=41#map=16/51/41"
+                rel="noreferrer noopener"
+                target="_blank"
               >
-                <a
-                  data-testid="open-location-in-osm"
-                  href="https://www.openstreetmap.org/?mlat=51&mlon=41#map=16/51/41"
-                  rel="noreferrer noopener"
-                  target="_blank"
-                >
-                  <div
-                    class="mx_ShareLatestLocation_icon"
-                  />
-                </a>
-              </div>
+                <div
+                  class="mx_ShareLatestLocation_icon"
+                />
+              </a>
               <div
                 class="mx_CopyableText mx_ShareLatestLocation_copy"
               >
@@ -97,7 +95,6 @@ exports[`<DialogSidebar /> renders sidebar correctly with beacons 1`] = `
       </li>
     </ol>
   </div>
-  );
 </div>
 `;
 
@@ -112,14 +109,14 @@ exports[`<DialogSidebar /> renders sidebar correctly without beacons 1`] = `
       <h4
         class="mx_Heading_h4"
       >
-        View List
+        View list
       </h4>
       <div
+        aria-label="Close sidebar"
         class="mx_AccessibleButton mx_DialogSidebar_closeButton"
         data-testid="dialog-sidebar-close"
         role="button"
         tabindex="0"
-        title="Close sidebar"
       >
         <div
           class="mx_DialogSidebar_closeButtonIcon"
@@ -132,6 +129,5 @@ exports[`<DialogSidebar /> renders sidebar correctly without beacons 1`] = `
       No live locations
     </div>
   </div>
-  );
 </div>
 `;

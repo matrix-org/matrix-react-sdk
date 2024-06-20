@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import { Mocked, mocked } from "jest-mock";
-import { MatrixEvent, Room, MatrixClient, DeviceVerificationStatus, CryptoApi } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, Room, MatrixClient, Device, ClientStoppedError } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { Device } from "matrix-js-sdk/src/models/device";
+import { CryptoSessionStateChange } from "@matrix-org/analytics-events/types/typescript/CryptoSessionStateChange";
+import { CrossSigningStatus, CryptoApi, DeviceVerificationStatus, KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
 
 import DeviceListener from "../src/DeviceListener";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
@@ -35,6 +35,7 @@ import { SettingLevel } from "../src/settings/SettingLevel";
 import { getMockClientWithEventEmitter, mockPlatformPeg } from "./test-utils";
 import { UIFeature } from "../src/settings/UIFeature";
 import { isBulkUnverifiedDeviceReminderSnoozed } from "../src/utils/device/snoozeBulkUnverifiedDeviceReminder";
+import { PosthogAnalytics } from "../src/PosthogAnalytics";
 
 // don't litter test console with logs
 jest.mock("matrix-js-sdk/src/logger");
@@ -62,17 +63,18 @@ describe("DeviceListener", () => {
     let mockClient: Mocked<MatrixClient>;
     let mockCrypto: Mocked<CryptoApi>;
 
-    // spy on various toasts' hide and show functions
-    // easier than mocking
-    jest.spyOn(SetupEncryptionToast, "showToast");
-    jest.spyOn(SetupEncryptionToast, "hideToast");
-    jest.spyOn(BulkUnverifiedSessionsToast, "showToast");
-    jest.spyOn(BulkUnverifiedSessionsToast, "hideToast");
-    jest.spyOn(UnverifiedSessionToast, "showToast");
-    jest.spyOn(UnverifiedSessionToast, "hideToast");
-
     beforeEach(() => {
         jest.resetAllMocks();
+
+        // spy on various toasts' hide and show functions
+        // easier than mocking
+        jest.spyOn(SetupEncryptionToast, "showToast").mockReturnValue(undefined);
+        jest.spyOn(SetupEncryptionToast, "hideToast").mockReturnValue(undefined);
+        jest.spyOn(BulkUnverifiedSessionsToast, "showToast").mockReturnValue(undefined);
+        jest.spyOn(BulkUnverifiedSessionsToast, "hideToast").mockReturnValue(undefined);
+        jest.spyOn(UnverifiedSessionToast, "showToast").mockResolvedValue(undefined);
+        jest.spyOn(UnverifiedSessionToast, "hideToast").mockReturnValue(undefined);
+
         mockPlatformPeg({
             getAppVersion: jest.fn().mockResolvedValue("1.2.3"),
         });
@@ -84,6 +86,18 @@ describe("DeviceListener", () => {
             getUserDeviceInfo: jest.fn().mockResolvedValue(new Map()),
             isCrossSigningReady: jest.fn().mockResolvedValue(true),
             isSecretStorageReady: jest.fn().mockResolvedValue(true),
+            userHasCrossSigningKeys: jest.fn(),
+            getActiveSessionBackupVersion: jest.fn(),
+            getCrossSigningStatus: jest.fn().mockReturnValue({
+                publicKeysOnDevice: true,
+                privateKeysInSecretStorage: true,
+                privateKeysCachedLocally: {
+                    masterKey: true,
+                    selfSigningKey: true,
+                    userSigningKey: true,
+                },
+            }),
+            getSessionBackupPrivateKey: jest.fn(),
         } as unknown as Mocked<CryptoApi>;
         mockClient = getMockClientWithEventEmitter({
             isGuest: jest.fn(),
@@ -93,8 +107,6 @@ describe("DeviceListener", () => {
             getRooms: jest.fn().mockReturnValue([]),
             isVersionSupported: jest.fn().mockResolvedValue(true),
             isInitialSyncComplete: jest.fn().mockReturnValue(true),
-            getKeyBackupEnabled: jest.fn(),
-            getStoredCrossSigningForUser: jest.fn(),
             waitForClientWellKnown: jest.fn(),
             isRoomEncrypted: jest.fn(),
             getClientWellKnown: jest.fn(),
@@ -103,6 +115,10 @@ describe("DeviceListener", () => {
             getAccountData: jest.fn(),
             deleteAccountData: jest.fn(),
             getCrypto: jest.fn().mockReturnValue(mockCrypto),
+            secretStorage: {
+                isStored: jest.fn().mockReturnValue(null),
+                getDefaultKeyId: jest.fn().mockReturnValue("00"),
+            },
         });
         jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
         jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
@@ -257,6 +273,20 @@ describe("DeviceListener", () => {
 
             expect(mockCrypto!.isCrossSigningReady).not.toHaveBeenCalled();
         });
+        it("correctly handles the client being stopped", async () => {
+            mockCrypto!.isCrossSigningReady.mockImplementation(() => {
+                throw new ClientStoppedError();
+            });
+            await createAndStart();
+            expect(logger.error).not.toHaveBeenCalled();
+        });
+        it("correctly handles other errors", async () => {
+            mockCrypto!.isCrossSigningReady.mockImplementation(() => {
+                throw new Error("blah");
+            });
+            await createAndStart();
+            expect(logger.error).toHaveBeenCalledTimes(1);
+        });
 
         describe("set up encryption", () => {
             const rooms = [{ roomId: "!room1" }, { roomId: "!room2" }] as unknown as Room[];
@@ -302,7 +332,7 @@ describe("DeviceListener", () => {
                 });
 
                 it("shows verify session toast when account has cross signing", async () => {
-                    mockClient!.getStoredCrossSigningForUser.mockReturnValue(new CrossSigningInfo(userId));
+                    mockCrypto!.userHasCrossSigningKeys.mockResolvedValue(true);
                     await createAndStart();
 
                     expect(mockCrypto!.getUserDeviceInfo).toHaveBeenCalled();
@@ -313,10 +343,10 @@ describe("DeviceListener", () => {
 
                 it("checks key backup status when when account has cross signing", async () => {
                     mockCrypto!.getCrossSigningKeyId.mockResolvedValue(null);
-                    mockClient!.getStoredCrossSigningForUser.mockReturnValue(new CrossSigningInfo(userId));
+                    mockCrypto!.userHasCrossSigningKeys.mockResolvedValue(true);
                     await createAndStart();
 
-                    expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalled();
+                    expect(mockCrypto!.getActiveSessionBackupVersion).toHaveBeenCalled();
                 });
             });
 
@@ -341,8 +371,7 @@ describe("DeviceListener", () => {
             it("checks keybackup status when cross signing and secret storage are ready", async () => {
                 // default mocks set cross signing and secret storage to ready
                 await createAndStart();
-                expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalled();
-                expect(mockDispatcher.dispatch).not.toHaveBeenCalled();
+                expect(mockCrypto.getActiveSessionBackupVersion).toHaveBeenCalled();
             });
 
             it("checks keybackup status when setup encryption toast has been dismissed", async () => {
@@ -352,40 +381,25 @@ describe("DeviceListener", () => {
                 instance.dismissEncryptionSetup();
                 await flushPromises();
 
-                expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalled();
-            });
-
-            it("does not dispatch keybackup event when key backup check is not finished", async () => {
-                // returns null when key backup status hasn't finished being checked
-                mockClient!.getKeyBackupEnabled.mockReturnValue(null);
-                await createAndStart();
-                expect(mockDispatcher.dispatch).not.toHaveBeenCalled();
+                expect(mockCrypto.getActiveSessionBackupVersion).toHaveBeenCalled();
             });
 
             it("dispatches keybackup event when key backup is not enabled", async () => {
-                mockClient!.getKeyBackupEnabled.mockReturnValue(false);
+                mockCrypto.getActiveSessionBackupVersion.mockResolvedValue(null);
                 await createAndStart();
                 expect(mockDispatcher.dispatch).toHaveBeenCalledWith({ action: Action.ReportKeyBackupNotEnabled });
             });
 
             it("does not check key backup status again after check is complete", async () => {
-                mockClient!.getKeyBackupEnabled.mockReturnValue(null);
+                mockCrypto.getActiveSessionBackupVersion.mockResolvedValue("1");
                 const instance = await createAndStart();
-                expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalled();
-
-                // keyback check now complete
-                mockClient!.getKeyBackupEnabled.mockReturnValue(true);
+                expect(mockCrypto.getActiveSessionBackupVersion).toHaveBeenCalled();
 
                 // trigger a recheck
                 instance.dismissEncryptionSetup();
                 await flushPromises();
-                expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalledTimes(2);
-
-                // trigger another recheck
-                instance.dismissEncryptionSetup();
-                await flushPromises();
                 // not called again, check was complete last time
-                expect(mockClient!.getKeyBackupEnabled).toHaveBeenCalledTimes(2);
+                expect(mockCrypto.getActiveSessionBackupVersion).toHaveBeenCalledTimes(1);
             });
         });
 
@@ -544,6 +558,363 @@ describe("DeviceListener", () => {
                     // individual nags are shown for new unverified devices
                     expect(BulkUnverifiedSessionsToast.hideToast).toHaveBeenCalledTimes(2);
                     expect(BulkUnverifiedSessionsToast.showToast).not.toHaveBeenCalled();
+                });
+            });
+        });
+
+        describe("Report verification and recovery state to Analytics", () => {
+            let setPropertySpy: jest.SpyInstance;
+            let trackEventSpy: jest.SpyInstance;
+
+            beforeEach(() => {
+                setPropertySpy = jest.spyOn(PosthogAnalytics.instance, "setProperty");
+                trackEventSpy = jest.spyOn(PosthogAnalytics.instance, "trackEvent");
+            });
+
+            describe("Report crypto verification state to analytics", () => {
+                type VerificationTestCases = [string, Partial<DeviceVerificationStatus>, "Verified" | "NotVerified"];
+
+                const testCases: VerificationTestCases[] = [
+                    [
+                        "Identity trusted and device is signed by owner",
+                        {
+                            signedByOwner: true,
+                            crossSigningVerified: true,
+                        },
+                        "Verified",
+                    ],
+                    [
+                        "Identity is trusted, but device is not signed",
+                        {
+                            signedByOwner: false,
+                            crossSigningVerified: true,
+                        },
+                        "NotVerified",
+                    ],
+                    [
+                        "Identity is not trusted, device not signed",
+                        {
+                            signedByOwner: false,
+                            crossSigningVerified: false,
+                        },
+                        "NotVerified",
+                    ],
+                    [
+                        "Identity is not trusted, and device signed",
+                        {
+                            signedByOwner: true,
+                            crossSigningVerified: false,
+                        },
+                        "NotVerified",
+                    ],
+                ];
+
+                beforeEach(() => {
+                    mockClient.secretStorage.getDefaultKeyId.mockResolvedValue(null);
+                    mockCrypto.isSecretStorageReady.mockResolvedValue(false);
+                });
+
+                it.each(testCases)("Does report session verification state when %s", async (_, status, expected) => {
+                    mockCrypto!.getDeviceVerificationStatus.mockResolvedValue(status as DeviceVerificationStatus);
+                    await createAndStart();
+
+                    // Should have updated user properties
+                    expect(setPropertySpy).toHaveBeenCalledWith("verificationState", expected);
+
+                    // Should have reported a status change event
+                    const expectedTrackedEvent: CryptoSessionStateChange = {
+                        eventName: "CryptoSessionState",
+                        verificationState: expected,
+                        recoveryState: "Disabled",
+                    };
+                    expect(trackEventSpy).toHaveBeenCalledWith(expectedTrackedEvent);
+                });
+
+                it("should not report a status event if no changes", async () => {
+                    mockCrypto!.getDeviceVerificationStatus.mockResolvedValue({
+                        signedByOwner: true,
+                        crossSigningVerified: true,
+                    } as unknown as DeviceVerificationStatus);
+
+                    await createAndStart();
+
+                    const expectedTrackedEvent: CryptoSessionStateChange = {
+                        eventName: "CryptoSessionState",
+                        verificationState: "Verified",
+                        recoveryState: "Disabled",
+                    };
+                    expect(trackEventSpy).toHaveBeenCalledTimes(1);
+                    expect(trackEventSpy).toHaveBeenCalledWith(expectedTrackedEvent);
+
+                    // simulate a recheck
+                    mockClient.emit(CryptoEvent.DevicesUpdated, [userId], false);
+                    await flushPromises();
+                    expect(trackEventSpy).toHaveBeenCalledTimes(1);
+
+                    // Now simulate a change
+                    mockCrypto!.getDeviceVerificationStatus.mockResolvedValue({
+                        signedByOwner: false,
+                        crossSigningVerified: true,
+                    } as unknown as DeviceVerificationStatus);
+
+                    // simulate a recheck
+                    mockClient.emit(CryptoEvent.DevicesUpdated, [userId], false);
+                    await flushPromises();
+                    expect(trackEventSpy).toHaveBeenCalledTimes(2);
+                });
+            });
+
+            describe("Report crypto recovery state to analytics", () => {
+                beforeEach(() => {
+                    // During all these tests we want verification state to be verified.
+                    mockCrypto!.getDeviceVerificationStatus.mockResolvedValue({
+                        signedByOwner: true,
+                        crossSigningVerified: true,
+                    } as unknown as DeviceVerificationStatus);
+                });
+
+                describe("When Room Key Backup is not enabled", () => {
+                    beforeEach(() => {
+                        // no backup
+                        mockClient.getKeyBackupVersion.mockResolvedValue(null);
+                    });
+
+                    it("Should report recovery state as Enabled", async () => {
+                        // 4S is enabled
+                        mockClient.secretStorage.getDefaultKeyId.mockResolvedValue("00");
+
+                        // Session trusted and cross signing secrets in 4S and stored locally
+                        mockCrypto!.getCrossSigningStatus.mockResolvedValue({
+                            publicKeysOnDevice: true,
+                            privateKeysInSecretStorage: true,
+                            privateKeysCachedLocally: {
+                                masterKey: true,
+                                selfSigningKey: true,
+                                userSigningKey: true,
+                            },
+                        });
+
+                        await createAndStart();
+
+                        // Should have updated user properties
+                        expect(setPropertySpy).toHaveBeenCalledWith("verificationState", "Verified");
+                        expect(setPropertySpy).toHaveBeenCalledWith("recoveryState", "Enabled");
+
+                        // Should have reported a status change event
+                        const expectedTrackedEvent: CryptoSessionStateChange = {
+                            eventName: "CryptoSessionState",
+                            verificationState: "Verified",
+                            recoveryState: "Enabled",
+                        };
+                        expect(trackEventSpy).toHaveBeenCalledWith(expectedTrackedEvent);
+                    });
+
+                    it("Should report recovery state as Incomplete if secrets not cached locally", async () => {
+                        // 4S is enabled
+                        mockClient.secretStorage.getDefaultKeyId.mockResolvedValue("00");
+
+                        // Session trusted and cross signing secrets in 4S and stored locally
+                        mockCrypto!.getCrossSigningStatus.mockResolvedValue({
+                            publicKeysOnDevice: true,
+                            privateKeysInSecretStorage: true,
+                            privateKeysCachedLocally: {
+                                masterKey: false,
+                                selfSigningKey: true,
+                                userSigningKey: true,
+                            },
+                        });
+
+                        // no backup
+                        mockClient.getKeyBackupVersion.mockResolvedValue(null);
+
+                        await createAndStart();
+
+                        // Should have updated user properties
+                        expect(setPropertySpy).toHaveBeenCalledWith("verificationState", "Verified");
+                        expect(setPropertySpy).toHaveBeenCalledWith("recoveryState", "Incomplete");
+
+                        // Should have reported a status change event
+                        const expectedTrackedEvent: CryptoSessionStateChange = {
+                            eventName: "CryptoSessionState",
+                            verificationState: "Verified",
+                            recoveryState: "Incomplete",
+                        };
+                        expect(trackEventSpy).toHaveBeenCalledWith(expectedTrackedEvent);
+                    });
+
+                    const baseState: CrossSigningStatus = {
+                        publicKeysOnDevice: true,
+                        privateKeysInSecretStorage: true,
+                        privateKeysCachedLocally: {
+                            masterKey: true,
+                            selfSigningKey: true,
+                            userSigningKey: true,
+                        },
+                    };
+                    type MissingSecretsInCacheTestCases = [string, CrossSigningStatus];
+
+                    const partialTestCases: MissingSecretsInCacheTestCases[] = [
+                        [
+                            "MSK not cached",
+                            {
+                                ...baseState,
+                                privateKeysCachedLocally: { ...baseState.privateKeysCachedLocally, masterKey: false },
+                            },
+                        ],
+                        [
+                            "SSK not cached",
+                            {
+                                ...baseState,
+                                privateKeysCachedLocally: {
+                                    ...baseState.privateKeysCachedLocally,
+                                    selfSigningKey: false,
+                                },
+                            },
+                        ],
+                        [
+                            "USK not cached",
+                            {
+                                ...baseState,
+                                privateKeysCachedLocally: {
+                                    ...baseState.privateKeysCachedLocally,
+                                    userSigningKey: false,
+                                },
+                            },
+                        ],
+                        [
+                            "MSK/USK not cached",
+                            {
+                                ...baseState,
+                                privateKeysCachedLocally: {
+                                    ...baseState.privateKeysCachedLocally,
+                                    masterKey: false,
+                                    userSigningKey: false,
+                                },
+                            },
+                        ],
+                        [
+                            "MSK/SSK not cached",
+                            {
+                                ...baseState,
+                                privateKeysCachedLocally: {
+                                    ...baseState.privateKeysCachedLocally,
+                                    masterKey: false,
+                                    selfSigningKey: false,
+                                },
+                            },
+                        ],
+                        [
+                            "USK/SSK not cached",
+                            {
+                                ...baseState,
+                                privateKeysCachedLocally: {
+                                    ...baseState.privateKeysCachedLocally,
+                                    userSigningKey: false,
+                                    selfSigningKey: false,
+                                },
+                            },
+                        ],
+                    ];
+
+                    it.each(partialTestCases)(
+                        "Should report recovery state as Incomplete when %s",
+                        async (_, status) => {
+                            mockClient.secretStorage.getDefaultKeyId.mockResolvedValue("00");
+
+                            // Session trusted and cross signing secrets in 4S and stored locally
+                            mockCrypto!.getCrossSigningStatus.mockResolvedValue(status);
+
+                            await createAndStart();
+
+                            // Should have updated user properties
+                            expect(setPropertySpy).toHaveBeenCalledWith("verificationState", "Verified");
+                            expect(setPropertySpy).toHaveBeenCalledWith("recoveryState", "Incomplete");
+
+                            // Should have reported a status change event
+                            const expectedTrackedEvent: CryptoSessionStateChange = {
+                                eventName: "CryptoSessionState",
+                                verificationState: "Verified",
+                                recoveryState: "Incomplete",
+                            };
+                            expect(trackEventSpy).toHaveBeenCalledWith(expectedTrackedEvent);
+                        },
+                    );
+
+                    it("Should report recovery state as Incomplete when some secrets are not in 4S", async () => {
+                        mockClient.secretStorage.getDefaultKeyId.mockResolvedValue("00");
+
+                        // Some missing secret in 4S
+                        mockCrypto.isSecretStorageReady.mockResolvedValue(false);
+
+                        // Session trusted and secrets known locally.
+                        mockCrypto!.getCrossSigningStatus.mockResolvedValue({
+                            publicKeysOnDevice: true,
+                            privateKeysCachedLocally: {
+                                masterKey: true,
+                                selfSigningKey: true,
+                                userSigningKey: true,
+                            },
+                        } as unknown as CrossSigningStatus);
+
+                        await createAndStart();
+
+                        // Should have updated user properties
+                        expect(setPropertySpy).toHaveBeenCalledWith("verificationState", "Verified");
+                        expect(setPropertySpy).toHaveBeenCalledWith("recoveryState", "Incomplete");
+
+                        // Should have reported a status change event
+                        const expectedTrackedEvent: CryptoSessionStateChange = {
+                            eventName: "CryptoSessionState",
+                            verificationState: "Verified",
+                            recoveryState: "Incomplete",
+                        };
+                        expect(trackEventSpy).toHaveBeenCalledWith(expectedTrackedEvent);
+                    });
+                });
+
+                describe("When Room Key Backup is enabled", () => {
+                    beforeEach(() => {
+                        // backup enabled - just need a mock object
+                        mockClient.getKeyBackupVersion.mockResolvedValue({} as KeyBackupInfo);
+                    });
+
+                    const testCases = [
+                        ["as Incomplete if backup key not cached locally", false],
+                        ["as Enabled if backup key is cached locally", true],
+                    ];
+                    it.each(testCases)("Should report recovery state as %s", async (_, isCached) => {
+                        // 4S is enabled
+                        mockClient.secretStorage.getDefaultKeyId.mockResolvedValue("00");
+
+                        // Session trusted and cross signing secrets in 4S and stored locally
+                        mockCrypto!.getCrossSigningStatus.mockResolvedValue({
+                            publicKeysOnDevice: true,
+                            privateKeysInSecretStorage: true,
+                            privateKeysCachedLocally: {
+                                masterKey: true,
+                                selfSigningKey: true,
+                                userSigningKey: true,
+                            },
+                        });
+
+                        mockCrypto.getSessionBackupPrivateKey.mockResolvedValue(isCached ? new Uint8Array() : null);
+
+                        await createAndStart();
+
+                        expect(setPropertySpy).toHaveBeenCalledWith("verificationState", "Verified");
+                        expect(setPropertySpy).toHaveBeenCalledWith(
+                            "recoveryState",
+                            isCached ? "Enabled" : "Incomplete",
+                        );
+
+                        // Should have reported a status change event
+                        const expectedTrackedEvent: CryptoSessionStateChange = {
+                            eventName: "CryptoSessionState",
+                            verificationState: "Verified",
+                            recoveryState: isCached ? "Enabled" : "Incomplete",
+                        };
+                        expect(trackEventSpy).toHaveBeenCalledWith(expectedTrackedEvent);
+                    });
                 });
             });
         });

@@ -24,9 +24,11 @@ import {
     RoomMember,
     RoomState,
     RoomStateEvent,
+    ContentHelpers,
+    MBeaconInfoEventContent,
+    M_BEACON,
 } from "matrix-js-sdk/src/matrix";
-import { BeaconInfoState, makeBeaconContent, makeBeaconInfoContent } from "matrix-js-sdk/src/content-helpers";
-import { MBeaconInfoEventContent, M_BEACON } from "matrix-js-sdk/src/@types/beacon";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import defaultDispatcher from "../dispatcher/dispatcher";
@@ -40,8 +42,8 @@ import {
     sortBeaconsByLatestCreation,
     TimedGeoUri,
     watchPosition,
+    getCurrentPosition,
 } from "../utils/beacon";
-import { getCurrentPosition } from "../utils/beacon";
 import { doMaybeLocalRoomAction } from "../utils/local-room";
 import SettingsStore from "../settings/SettingsStore";
 
@@ -105,14 +107,13 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * Reset on successful publish of location
      */
     public readonly beaconLocationPublishErrorCounts = new Map<BeaconIdentifier, number>();
-    public readonly beaconUpdateErrors = new Map<BeaconIdentifier, Error>();
+    public readonly beaconUpdateErrors = new Map<BeaconIdentifier, unknown>();
     /**
      * ids of live beacons
      * ordered by creation time descending
      */
     private liveBeaconIds: BeaconIdentifier[] = [];
     private locationInterval?: number;
-    private geolocationError?: GeolocationError;
     private clearPositionWatch?: ClearWatchCallback;
     /**
      * Track when the last position was published
@@ -313,7 +314,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         // in PSF-797
 
         // stop watching beacons in rooms where user is no longer a member
-        if (member.membership === "leave" || member.membership === "ban") {
+        if (member.membership === KnownMembership.Leave || member.membership === KnownMembership.Ban) {
             this.beaconsByRoomId.get(roomState.roomId)?.forEach(this.removeBeacon);
             this.beaconsByRoomId.delete(roomState.roomId);
         }
@@ -462,7 +463,11 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         try {
             this.clearPositionWatch = watchPosition(this.onWatchedPosition, this.onGeolocationError);
         } catch (error) {
-            this.onGeolocationError(error?.message);
+            if (error instanceof Error) {
+                this.onGeolocationError(error.message as GeolocationError);
+            } else {
+                console.error("Unexpected error", error);
+            }
             // don't set locationInterval if geolocation failed to setup
             return;
         }
@@ -485,7 +490,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         clearInterval(this.locationInterval);
         this.locationInterval = undefined;
         this.lastPublishedPositionTimestamp = undefined;
-        this.geolocationError = undefined;
 
         if (this.clearPositionWatch) {
             this.clearPositionWatch();
@@ -507,8 +511,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     };
 
     private onGeolocationError = async (error: GeolocationError): Promise<void> => {
-        this.geolocationError = error;
-        logger.error("Geolocation failed", this.geolocationError);
+        logger.error("Geolocation failed", error);
 
         // other errors are considered non-fatal
         // and self recovering
@@ -531,7 +534,11 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             const position = await getCurrentPosition();
             this.publishLocationToBeacons(mapGeolocationPositionToTimedGeo(position));
         } catch (error) {
-            this.onGeolocationError(error?.message);
+            if (error instanceof Error) {
+                this.onGeolocationError(error.message as GeolocationError);
+            } else {
+                console.error("Unexpected error", error);
+            }
         }
     };
 
@@ -544,13 +551,16 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * Records error in beaconUpdateErrors
      * rethrows
      */
-    private updateBeaconEvent = async (beacon: Beacon, update: Partial<BeaconInfoState>): Promise<void> => {
+    private updateBeaconEvent = async (
+        beacon: Beacon,
+        update: Partial<ContentHelpers.BeaconInfoState>,
+    ): Promise<void> => {
         const { description, timeout, timestamp, live, assetType } = {
             ...beacon.beaconInfo,
             ...update,
         };
 
-        const updateContent = makeBeaconInfoContent(timeout, live, description, assetType, timestamp);
+        const updateContent = ContentHelpers.makeBeaconInfoContent(timeout, live, description, assetType, timestamp);
 
         try {
             await this.matrixClient!.unstable_setLiveBeacon(beacon.roomId, updateContent);
@@ -588,7 +598,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * Sends m.location event to referencing given beacon
      */
     private sendLocationToBeacon = async (beacon: Beacon, { geoUri, timestamp }: TimedGeoUri): Promise<void> => {
-        const content = makeBeaconContent(geoUri, timestamp, beacon.beaconInfoId);
+        const content = ContentHelpers.makeBeaconContent(geoUri, timestamp, beacon.beaconInfoId);
         try {
             await this.matrixClient!.sendEvent(beacon.roomId, M_BEACON.name, content);
             this.incrementBeaconLocationPublishErrorCount(beacon.identifier, false);

@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { VerificationPhase, VerificationRequest, VerificationRequestEvent } from "matrix-js-sdk/src/crypto-api";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { User } from "matrix-js-sdk/src/models/user";
+import { RoomMember, User } from "matrix-js-sdk/src/matrix";
 
 import EncryptionInfo from "./EncryptionInfo";
 import VerificationPanel from "./VerificationPanel";
@@ -70,24 +69,28 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
             awaitPromise();
         }
     }, [verificationRequestPromise]);
+    // Use a ref to track whether we are already showing the mismatch modal as state may not update fast enough
+    // if two change events are fired in quick succession like can happen with rust crypto.
+    const isShowingMismatchModal = useRef(false);
     const changeHandler = useCallback(() => {
         // handle transitions -> cancelled for mismatches which fire a modal instead of showing a card
         if (
-            request &&
-            request.phase === VerificationPhase.Cancelled &&
+            !isShowingMismatchModal.current &&
+            request?.phase === VerificationPhase.Cancelled &&
             MISMATCHES.includes(request.cancellationCode ?? "")
         ) {
+            isShowingMismatchModal.current = true;
             Modal.createDialog(ErrorDialog, {
                 headerImage: require("../../../../res/img/e2e/warning-deprecated.svg").default,
-                title: _t("Your messages are not secure"),
+                title: _t("encryption|messages_not_secure|title"),
                 description: (
                     <div>
-                        {_t("One of the following may be compromised:")}
+                        {_t("encryption|messages_not_secure|heading")}
                         <ul>
-                            <li>{_t("Your homeserver")}</li>
-                            <li>{_t("The homeserver the user you're verifying is connected to")}</li>
-                            <li>{_t("Yours, or the other users' internet connection")}</li>
-                            <li>{_t("Yours, or the other users' session")}</li>
+                            <li>{_t("encryption|messages_not_secure|cause_1")}</li>
+                            <li>{_t("encryption|messages_not_secure|cause_2")}</li>
+                            <li>{_t("encryption|messages_not_secure|cause_3")}</li>
+                            <li>{_t("encryption|messages_not_secure|cause_4")}</li>
                         </ul>
                     </div>
                 ),
@@ -111,15 +114,15 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
             if (!roomId) {
                 throw new Error("Unable to create Room for verification");
             }
-            verificationRequest_ = await cli.requestVerificationDM(member.userId, roomId);
+            verificationRequest_ = await cli.getCrypto()!.requestVerificationDM(member.userId, roomId);
         } catch (e) {
             console.error("Error starting verification", e);
             setRequesting(false);
 
             Modal.createDialog(ErrorDialog, {
                 headerImage: require("../../../../res/img/e2e/warning.svg").default,
-                title: _t("Error starting verification"),
-                description: _t("We were unable to start a chat with the other user."),
+                title: _t("encryption|verification|error_starting_title"),
+                description: _t("encryption|verification|error_starting_description"),
             });
             return;
         }

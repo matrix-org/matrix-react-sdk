@@ -15,10 +15,17 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { IAnnotatedPushRule, IPusher, PushRuleAction, PushRuleKind, RuleId } from "matrix-js-sdk/src/@types/PushRules";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import {
+    IAnnotatedPushRule,
+    IPusher,
+    PushRuleAction,
+    PushRuleKind,
+    RuleId,
+    IThreepid,
+    ThreepidMedium,
+    LocalNotificationSettings,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
 
 import Spinner from "../elements/Spinner";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -50,6 +57,8 @@ import {
 import { Caption } from "../typography/Caption";
 import { SettingsSubsectionHeading } from "./shared/SettingsSubsectionHeading";
 import SettingsSubsection from "./shared/SettingsSubsection";
+import { doesRoomHaveUnreadMessages } from "../../../Unread";
+import SettingsFlag from "../elements/SettingsFlag";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -192,6 +201,18 @@ const maximumVectorState = (
     return vectorState;
 };
 
+const NotificationActivitySettings = (): JSX.Element => {
+    return (
+        <div>
+            <SettingsFlag name="Notifications.showbold" level={SettingLevel.DEVICE} />
+            <SettingsFlag name="Notifications.tac_only_notifications" level={SettingLevel.DEVICE} />
+        </div>
+    );
+};
+
+/**
+ * The old, deprecated notifications tab view, only displayed if the user has the labs flag disabled.
+ */
 export default class Notifications extends React.PureComponent<IProps, IState> {
     private settingWatchers: string[];
 
@@ -374,7 +395,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             if (category === KEYWORD_RULE_CATEGORY) {
                 preparedNewState.vectorPushRules[category]!.push({
                     ruleId: KEYWORD_RULE_ID,
-                    description: _t("Messages containing keywords"),
+                    description: _t("settings|notifications|messages_containing_keywords"),
                     vectorState: preparedNewState.vectorKeywordRuleInfo.vectorState,
                 });
             }
@@ -393,8 +414,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
     private showSaveError(): void {
         Modal.createDialog(ErrorDialog, {
-            title: _t("Error saving notification preferences"),
-            description: _t("An error occurred whilst saving your notification preferences."),
+            title: _t("settings|notifications|error_saving"),
+            description: _t("settings|notifications|error_saving_detail"),
         });
     }
 
@@ -654,8 +675,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             <LabelledToggleSwitch
                 data-testid="notif-master-switch"
                 value={!this.isInhibited}
-                label={_t("Enable notifications for this account")}
-                caption={_t("Turn off to disable notifications on all your devices and sessions")}
+                label={_t("settings|notifications|enable_notifications_account")}
+                caption={_t("settings|notifications|enable_notifications_account_detail")}
                 onChange={this.onMasterRuleChanged}
                 disabled={this.state.phase === Phase.Persisting}
             />
@@ -673,7 +694,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     data-testid="notif-email-switch"
                     key={e.address}
                     value={!!this.state.pushers?.some((p) => p.kind === "email" && p.pushkey === e.address)}
-                    label={_t("Enable email notifications for %(email)s", { email: e.address })}
+                    label={_t("settings|notifications|enable_email_notifications", { email: e.address })}
                     onChange={this.onEmailNotificationsChanged.bind(this, e.address)}
                     disabled={this.state.phase === Phase.Persisting}
                 />
@@ -686,7 +707,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 <LabelledToggleSwitch
                     data-testid="notif-device-switch"
                     value={this.state.deviceNotificationsEnabled}
-                    label={_t("Enable notifications for this device")}
+                    label={_t("settings|notifications|enable_notifications_device")}
                     onChange={(checked) => this.updateDeviceNotifications(checked)}
                     disabled={this.state.phase === Phase.Persisting}
                 />
@@ -697,21 +718,21 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                             data-testid="notif-setting-notificationsEnabled"
                             value={this.state.desktopNotifications}
                             onChange={this.onDesktopNotificationsChanged}
-                            label={_t("Enable desktop notifications for this session")}
+                            label={_t("settings|notifications|enable_desktop_notifications_session")}
                             disabled={this.state.phase === Phase.Persisting}
                         />
                         <LabelledToggleSwitch
                             data-testid="notif-setting-notificationBodyEnabled"
                             value={this.state.desktopShowBody}
                             onChange={this.onDesktopShowBodyChanged}
-                            label={_t("Show message in desktop notification")}
+                            label={_t("settings|notifications|show_message_desktop_notification")}
                             disabled={this.state.phase === Phase.Persisting}
                         />
                         <LabelledToggleSwitch
                             data-testid="notif-setting-audioNotificationsEnabled"
                             value={this.state.audioNotifications}
                             onChange={this.onAudioNotificationsChanged}
-                            label={_t("Enable audible notifications for this session")}
+                            label={_t("settings|notifications|enable_audible_notifications_session")}
                             disabled={this.state.phase === Phase.Persisting}
                         />
                     </>
@@ -723,41 +744,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
     }
 
     private renderCategory(category: RuleClass): ReactNode {
-        if (category !== RuleClass.VectorOther && this.isInhibited) {
+        if (this.isInhibited) {
             return null; // nothing to show for the section
-        }
-
-        let clearNotifsButton: JSX.Element | undefined;
-        if (
-            category === RuleClass.VectorOther &&
-            MatrixClientPeg.safeGet()
-                .getRooms()
-                .some((r) => r.getUnreadNotificationCount() > 0)
-        ) {
-            clearNotifsButton = (
-                <AccessibleButton
-                    onClick={this.onClearNotificationsClicked}
-                    disabled={this.state.clearingNotifications}
-                    kind="danger"
-                    className="mx_UserNotifSettings_clearNotifsButton"
-                    data-testid="clear-notifications"
-                >
-                    {_t("Mark all as read")}
-                </AccessibleButton>
-            );
-        }
-
-        if (category === RuleClass.VectorOther && this.isInhibited) {
-            // only render the utility buttons (if needed)
-            if (clearNotifsButton) {
-                return (
-                    <div className="mx_UserNotifSettings_floatingSection">
-                        <div>{_t("Other")}</div>
-                        {clearNotifsButton}
-                    </div>
-                );
-            }
-            return null;
         }
 
         let keywordComposer: JSX.Element | undefined;
@@ -769,16 +757,16 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     onAdd={this.onKeywordAdd}
                     onRemove={this.onKeywordRemove}
                     disabled={this.state.phase === Phase.Persisting}
-                    label={_t("Keyword")}
-                    placeholder={_t("New keyword")}
+                    label={_t("notifications|keyword")}
+                    placeholder={_t("notifications|keyword_new")}
                 />
             );
         }
 
         const VectorStateToLabel = {
-            [VectorState.On]: _t("On"),
-            [VectorState.Off]: _t("Off"),
-            [VectorState.Loud]: _t("Noisy"),
+            [VectorState.On]: _t("common|on"),
+            [VectorState.Off]: _t("common|off"),
+            [VectorState.Loud]: _t("settings|notifications|noisy"),
         };
 
         const makeRadio = (r: IVectorPushRule, s: VectorState): JSX.Element => (
@@ -804,11 +792,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 {makeRadio(r, VectorState.Loud)}
                 {this.state.ruleIdsWithError[r.ruleId] && (
                     <div className="mx_UserNotifSettings_gridRowError">
-                        <Caption isError>
-                            {_t(
-                                "An error occurred when updating your notification preferences. Please try to toggle your option again.",
-                            )}
-                        </Caption>
+                        <Caption isError>{_t("settings|notifications|error_updating")}</Caption>
                     </div>
                 )}
             </fieldset>
@@ -817,13 +801,13 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         let sectionName: string;
         switch (category) {
             case RuleClass.VectorGlobal:
-                sectionName = _t("Global");
+                sectionName = _t("notifications|class_global");
                 break;
             case RuleClass.VectorMentions:
-                sectionName = _t("Mentions & keywords");
+                sectionName = _t("notifications|mentions_keywords");
                 break;
             case RuleClass.VectorOther:
-                sectionName = _t("Other");
+                sectionName = _t("notifications|class_other");
                 break;
             default:
                 throw new Error("Developer error: Unnamed notifications section: " + category);
@@ -838,7 +822,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     <span className="mx_UserNotifSettings_gridColumnLabel">{VectorStateToLabel[VectorState.Loud]}</span>
                     {fieldsetRows}
                 </div>
-                {clearNotifsButton}
                 {keywordComposer}
             </div>
         );
@@ -858,7 +841,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
         return (
             <div className="mx_UserNotifSettings_floatingSection">
-                <div>{_t("Notification targets")}</div>
+                <div>{_t("settings|notifications|push_targets")}</div>
                 <table>
                     <tbody>{rows}</tbody>
                 </table>
@@ -871,7 +854,26 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             // Ends up default centered
             return <Spinner />;
         } else if (this.state.phase === Phase.Error) {
-            return <p data-testid="error-message">{_t("There was an error loading your notification settings.")}</p>;
+            return <p data-testid="error-message">{_t("settings|notifications|error_loading")}</p>;
+        }
+
+        let clearNotifsButton: JSX.Element | undefined;
+        if (
+            MatrixClientPeg.safeGet()
+                .getRooms()
+                .some((r) => doesRoomHaveUnreadMessages(r, true))
+        ) {
+            clearNotifsButton = (
+                <AccessibleButton
+                    onClick={this.onClearNotificationsClicked}
+                    disabled={this.state.clearingNotifications}
+                    kind="danger"
+                    className="mx_UserNotifSettings_clearNotifsButton"
+                    data-testid="clear-notifications"
+                >
+                    {_t("notifications|mark_all_read")}
+                </AccessibleButton>
+            );
         }
 
         return (
@@ -881,6 +883,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 {this.renderCategory(RuleClass.VectorMentions)}
                 {this.renderCategory(RuleClass.VectorOther)}
                 {this.renderTargets()}
+                <NotificationActivitySettings />
+                {clearNotifsButton}
             </>
         );
     }

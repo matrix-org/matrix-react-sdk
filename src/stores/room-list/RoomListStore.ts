@@ -14,11 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient, Room, RoomState, EventType } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { RoomState } from "matrix-js-sdk/src/matrix";
 
 import SettingsStore from "../../settings/SettingsStore";
 import { DefaultTagID, OrderedDefaultTagIDs, RoomUpdateCause, TagID } from "./models";
@@ -28,7 +26,7 @@ import defaultDispatcher, { MatrixDispatcher } from "../../dispatcher/dispatcher
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import { FILTER_CHANGED, IFilterCondition } from "./filters/IFilterCondition";
 import { Algorithm, LIST_UPDATED_EVENT } from "./algorithms/Algorithm";
-import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
+import { EffectiveMembership, getEffectiveMembership, getEffectiveMembershipTag } from "../../utils/membership";
 import RoomListLayoutStore from "./RoomListLayoutStore";
 import { MarkedExecution } from "../../utils/MarkedExecution";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -185,7 +183,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
 
         // We do this to intentionally break out of the current event loop task, allowing
         // us to instead wait for a more convenient time to run our updates.
-        setImmediate(() => this.onDispatchAsync(payload));
+        setTimeout(() => this.onDispatchAsync(payload));
     }
 
     protected async onDispatchAsync(payload: ActionPayload): Promise<void> {
@@ -236,7 +234,12 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
                         return;
                     }
                 }
-                await this.handleRoomUpdate(updatedRoom, RoomUpdateCause.Timeline);
+                // If the join rule changes we need to update the tags for the room.
+                // A conference tag is determined by the room public join rule.
+                if (eventPayload.event.getType() === EventType.RoomJoinRules)
+                    await this.handleRoomUpdate(updatedRoom, RoomUpdateCause.PossibleTagChange);
+                else await this.handleRoomUpdate(updatedRoom, RoomUpdateCause.Timeline);
+
                 this.updateFn.trigger();
             };
             if (!room) {
@@ -311,7 +314,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
     public async onDispatchMyMembership(membershipPayload: any): Promise<void> {
         // TODO: Type out the dispatcher types so membershipPayload is not any
         const oldMembership = getEffectiveMembership(membershipPayload.oldMembership);
-        const newMembership = getEffectiveMembership(membershipPayload.membership);
+        const newMembership = getEffectiveMembershipTag(membershipPayload.room, membershipPayload.membership);
         if (oldMembership !== EffectiveMembership.Join && newMembership === EffectiveMembership.Join) {
             // If we're joining an upgraded room, we'll want to make sure we don't proliferate
             // the dead room in the list.
@@ -353,7 +356,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
     }
 
     private async handleRoomUpdate(room: Room, cause: RoomUpdateCause): Promise<any> {
-        if (cause === RoomUpdateCause.NewRoom && room.getMyMembership() === "invite") {
+        if (cause === RoomUpdateCause.NewRoom && room.getMyMembership() === KnownMembership.Invite) {
             // Let the visibility provider know that there is a new invited room. It would be nice
             // if this could just be an event that things listen for but the point of this is that
             // we delay doing anything about this room until the VoipUserMapper had had a chance
@@ -580,10 +583,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
      * @param {IFilterCondition} filter The filter condition to add.
      */
     public async addFilter(filter: IFilterCondition): Promise<void> {
-        let promise = Promise.resolve();
         filter.on(FILTER_CHANGED, this.onPrefilterUpdated);
         this.prefilterConditions.push(filter);
-        promise = this.recalculatePrefiltering();
+        const promise = this.recalculatePrefiltering();
         promise.then(() => this.updateFn.trigger());
     }
 

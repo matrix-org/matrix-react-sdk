@@ -17,13 +17,19 @@ limitations under the License.
 import React from "react";
 import "jest-mock";
 import { screen, act, render } from "@testing-library/react";
-import { MatrixEvent, MsgType, RelationType } from "matrix-js-sdk/src/matrix";
-import { PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
-import { EventStatus } from "matrix-js-sdk/src/models/event-status";
-import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
+import {
+    MatrixEvent,
+    MsgType,
+    RelationType,
+    NotificationCountType,
+    Room,
+    EventStatus,
+    PendingEventOrdering,
+    ReceiptType,
+} from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 
-import type { MatrixClient } from "matrix-js-sdk/src/client";
+import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { mkThread } from "../../../../test-utils/threads";
 import { UnreadNotificationBadge } from "../../../../../src/components/views/rooms/NotificationBadge/UnreadNotificationBadge";
 import { mkEvent, mkMessage, muteRoom, stubClient } from "../../../../test-utils/test-utils";
@@ -87,26 +93,26 @@ describe("UnreadNotificationBadge", () => {
         const { container } = render(getComponent());
 
         expect(container.querySelector(".mx_NotificationBadge_visible")).toBeTruthy();
-        expect(container.querySelector(".mx_NotificationBadge_highlighted")).toBeFalsy();
+        expect(container.querySelector(".mx_NotificationBadge_level_highlight")).toBeFalsy();
 
         act(() => {
             room.setUnreadNotificationCount(NotificationCountType.Highlight, 1);
         });
 
-        expect(container.querySelector(".mx_NotificationBadge_highlighted")).toBeTruthy();
+        expect(container.querySelector(".mx_NotificationBadge_level_highlight")).toBeTruthy();
     });
 
     it("renders unread thread notification badge", () => {
         const { container } = render(getComponent(THREAD_ID));
 
         expect(container.querySelector(".mx_NotificationBadge_visible")).toBeTruthy();
-        expect(container.querySelector(".mx_NotificationBadge_highlighted")).toBeFalsy();
+        expect(container.querySelector(".mx_NotificationBadge_level_highlight")).toBeFalsy();
 
         act(() => {
             room.setThreadUnreadNotificationCount(THREAD_ID, NotificationCountType.Highlight, 1);
         });
 
-        expect(container.querySelector(".mx_NotificationBadge_highlighted")).toBeTruthy();
+        expect(container.querySelector(".mx_NotificationBadge_level_highlight")).toBeTruthy();
     });
 
     it("hides unread notification badge", () => {
@@ -135,7 +141,7 @@ describe("UnreadNotificationBadge", () => {
     });
 
     it("adds a warning for invites", () => {
-        room.updateMyMembership("invite");
+        room.updateMyMembership(KnownMembership.Invite);
         render(getComponent());
         expect(screen.queryByText("!")).not.toBeNull();
     });
@@ -172,6 +178,6 @@ describe("UnreadNotificationBadge", () => {
         const { container } = render(getComponent(THREAD_ID));
         expect(container.querySelector(".mx_NotificationBadge_dot")).toBeTruthy();
         expect(container.querySelector(".mx_NotificationBadge_visible")).toBeTruthy();
-        expect(container.querySelector(".mx_NotificationBadge_highlighted")).toBeFalsy();
+        expect(container.querySelector(".mx_NotificationBadge_level_highlight")).toBeFalsy();
     });
 });

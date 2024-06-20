@@ -22,9 +22,8 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { IS_MAC, Key } from "../../Keyboard";
 import { _t } from "../../languageHandler";
-import Modal from "../../Modal";
-import SpotlightDialog from "../views/dialogs/spotlight/SpotlightDialog";
 import AccessibleButton from "../views/elements/AccessibleButton";
+import { Action } from "../../dispatcher/actions";
 
 interface IProps {
     isMinimized: boolean;
@@ -44,7 +43,7 @@ export default class RoomSearch extends React.PureComponent<IProps> {
     }
 
     private openSpotlight(): void {
-        Modal.createDialog(SpotlightDialog, {}, "mx_SpotlightDialog_wrapper", false, true);
+        defaultDispatcher.fire(Action.OpenSpotlight);
     }
 
     private onAction = (payload: ActionPayload): void => {
@@ -73,7 +72,9 @@ export default class RoomSearch extends React.PureComponent<IProps> {
         return (
             <AccessibleButton onClick={this.openSpotlight} className={classes}>
                 {icon}
-                {!this.props.isMinimized && <div className="mx_RoomSearch_spotlightTriggerText">{_t("Search")}</div>}
+                {!this.props.isMinimized && (
+                    <div className="mx_RoomSearch_spotlightTriggerText">{_t("action|search")}</div>
+                )}
                 {shortcutPrompt}
             </AccessibleButton>
         );

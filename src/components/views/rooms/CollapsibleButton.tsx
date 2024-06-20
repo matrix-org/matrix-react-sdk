@@ -17,31 +17,33 @@ limitations under the License.
 import React, { ComponentProps, useContext } from "react";
 import classNames from "classnames";
 
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { MenuItem } from "../../structures/ContextMenu";
+import AccessibleButton from "../elements/AccessibleButton";
 import { OverflowMenuContext } from "./MessageComposerButtons";
 import { IconizedContextMenuOption } from "../context_menus/IconizedContextMenu";
+import { Ref } from "../../../accessibility/roving/types";
 
-interface ICollapsibleButtonProps extends ComponentProps<typeof MenuItem> {
+interface Props extends Omit<ComponentProps<typeof AccessibleButton>, "element"> {
+    inputRef?: Ref;
     title: string;
     iconClassName: string;
 }
 
-export const CollapsibleButton: React.FC<ICollapsibleButtonProps> = ({
+export const CollapsibleButton: React.FC<Props> = ({
     title,
     children,
     className,
     iconClassName,
+    inputRef,
     ...props
 }) => {
     const inOverflowMenu = !!useContext(OverflowMenuContext);
     if (inOverflowMenu) {
-        return <IconizedContextMenuOption {...props} iconClassName={iconClassName} label={title} />;
+        return <IconizedContextMenuOption {...props} iconClassName={iconClassName} label={title} inputRef={inputRef} />;
     }
 
     return (
-        <AccessibleTooltipButton {...props} title={title} className={classNames(className, iconClassName)}>
+        <AccessibleButton {...props} title={title} className={classNames(className, iconClassName)} ref={inputRef}>
             {children}
-        </AccessibleTooltipButton>
+        </AccessibleButton>
     );
 };

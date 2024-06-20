@@ -32,6 +32,7 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
     >
       <div
         aria-disabled="true"
+        aria-label="Remove"
         class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_outline mx_AccessibleButton_disabled"
         disabled=""
         role="button"
@@ -41,6 +42,7 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
       </div>
       <div
         aria-disabled="true"
+        aria-label="Mark as not suggested"
         class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline mx_AccessibleButton_disabled"
         disabled=""
         role="button"
@@ -71,25 +73,14 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
             class="mx_SpaceHierarchy_roomTile_avatar"
           >
             <span
-              class="mx_BaseAvatar"
+              class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+              data-color="5"
+              data-testid="avatar-img"
+              data-type="round"
               role="presentation"
+              style="--cpd-avatar-size: 20px;"
             >
-              <span
-                aria-hidden="true"
-                class="mx_BaseAvatar_initial"
-                style="font-size: 13px; width: 20px; line-height: 20px;"
-              >
-                U
-              </span>
-              <img
-                alt=""
-                aria-hidden="true"
-                class="mx_BaseAvatar_image"
-                data-testid="avatar-img"
-                loading="lazy"
-                src="data:image/png;base64,00"
-                style="width: 20px; height: 20px;"
-              />
+              U
             </span>
           </div>
           <div
@@ -117,12 +108,12 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
             class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
           >
             <input
-              id="checkbox_abdefghi"
+              id="checkbox_vY7Q4uEh9K"
               tabindex="0"
               type="checkbox"
             />
             <label
-              for="checkbox_abdefghi"
+              for="checkbox_vY7Q4uEh9K"
             >
               <div
                 class="mx_Checkbox_background"
@@ -152,25 +143,14 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
             class="mx_SpaceHierarchy_roomTile_avatar"
           >
             <span
-              class="mx_BaseAvatar"
+              class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+              data-color="6"
+              data-testid="avatar-img"
+              data-type="round"
               role="presentation"
+              style="--cpd-avatar-size: 20px;"
             >
-              <span
-                aria-hidden="true"
-                class="mx_BaseAvatar_initial"
-                style="font-size: 13px; width: 20px; line-height: 20px;"
-              >
-                U
-              </span>
-              <img
-                alt=""
-                aria-hidden="true"
-                class="mx_BaseAvatar_image"
-                data-testid="avatar-img"
-                loading="lazy"
-                src="data:image/png;base64,00"
-                style="width: 20px; height: 20px;"
-              />
+              U
             </span>
           </div>
           <div
@@ -198,12 +178,82 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
             class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
           >
             <input
-              id="checkbox_abdefghi"
+              id="checkbox_38QgU2Pomx"
               tabindex="-1"
               type="checkbox"
             />
             <label
-              for="checkbox_abdefghi"
+              for="checkbox_38QgU2Pomx"
+            >
+              <div
+                class="mx_Checkbox_background"
+              >
+                <div
+                  class="mx_Checkbox_checkmark"
+                />
+              </div>
+            </label>
+          </span>
+        </div>
+      </div>
+    </li>
+    <li
+      class="mx_SpaceHierarchy_roomTileWrapper"
+      role="treeitem"
+    >
+      <div
+        class="mx_AccessibleButton mx_SpaceHierarchy_roomTile"
+        role="button"
+        tabindex="-1"
+      >
+        <div
+          class="mx_SpaceHierarchy_roomTile_item"
+        >
+          <div
+            class="mx_SpaceHierarchy_roomTile_avatar"
+          >
+            <span
+              class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+              data-color="6"
+              data-testid="avatar-img"
+              data-type="round"
+              role="presentation"
+              style="--cpd-avatar-size: 20px;"
+            >
+              K
+            </span>
+          </div>
+          <div
+            class="mx_SpaceHierarchy_roomTile_name"
+          >
+            Knock room
+          </div>
+          <div
+            class="mx_SpaceHierarchy_roomTile_info"
+          >
+            3 members
+          </div>
+        </div>
+        <div
+          class="mx_SpaceHierarchy_actions"
+        >
+          <div
+            class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline"
+            role="button"
+            tabindex="-1"
+          >
+            View
+          </div>
+          <span
+            class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+          >
+            <input
+              id="checkbox_wKpa6hpi3Y"
+              tabindex="-1"
+              type="checkbox"
+            />
+            <label
+              for="checkbox_wKpa6hpi3Y"
             >
               <div
                 class="mx_Checkbox_background"
@@ -234,25 +284,14 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
             class="mx_SpaceHierarchy_roomTile_avatar"
           >
             <span
-              class="mx_BaseAvatar"
+              class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+              data-color="2"
+              data-testid="avatar-img"
+              data-type="round"
               role="presentation"
+              style="--cpd-avatar-size: 20px;"
             >
-              <span
-                aria-hidden="true"
-                class="mx_BaseAvatar_initial"
-                style="font-size: 13px; width: 20px; line-height: 20px;"
-              >
-                N
-              </span>
-              <img
-                alt=""
-                aria-hidden="true"
-                class="mx_BaseAvatar_image"
-                data-testid="avatar-img"
-                loading="lazy"
-                src="data:image/png;base64,00"
-                style="width: 20px; height: 20px;"
-              />
+              N
             </span>
           </div>
           <div
@@ -280,12 +319,12 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
             class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
           >
             <input
-              id="checkbox_abdefghi"
+              id="checkbox_EetmBG4yVC"
               tabindex="-1"
               type="checkbox"
             />
             <label
-              for="checkbox_abdefghi"
+              for="checkbox_EetmBG4yVC"
             >
               <div
                 class="mx_Checkbox_background"
@@ -322,25 +361,14 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
             class="mx_SpaceHierarchy_roomTile_avatar"
           >
             <span
-              class="mx_BaseAvatar"
+              class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+              data-color="2"
+              data-testid="avatar-img"
+              data-type="round"
               role="presentation"
+              style="--cpd-avatar-size: 20px;"
             >
-              <span
-                aria-hidden="true"
-                class="mx_BaseAvatar_initial"
-                style="font-size: 13px; width: 20px; line-height: 20px;"
-              >
-                N
-              </span>
-              <img
-                alt=""
-                aria-hidden="true"
-                class="mx_BaseAvatar_image"
-                data-testid="avatar-img"
-                loading="lazy"
-                src="data:image/png;base64,00"
-                style="width: 20px; height: 20px;"
-              />
+              N
             </span>
           </div>
           <div
@@ -364,9 +392,7 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
           >
             Join
           </div>
-          <div
-            aria-describedby="mx_TooltipTarget_abdefghi"
-            class="mx_TextWithTooltip_target"
+          <span
             tabindex="0"
           >
             <span
@@ -374,12 +400,12 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
             >
               <input
                 disabled=""
-                id="checkbox_abdefghi"
+                id="checkbox_eEefiPqpMR"
                 tabindex="-1"
                 type="checkbox"
               />
               <label
-                for="checkbox_abdefghi"
+                for="checkbox_eEefiPqpMR"
               >
                 <div
                   class="mx_Checkbox_background"
@@ -390,11 +416,10 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
                 </div>
               </label>
             </span>
-          </div>
+          </span>
         </div>
       </div>
     </li>
   </ul>
-  ;
 </DocumentFragment>
 `;

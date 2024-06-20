@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent, ClientEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
-import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import SettingsStore from "../settings/SettingsStore";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
@@ -92,7 +92,7 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
                 // The tests might not result in a valid room object.
                 const room = this.matrixClient.getRoom(payload.room_id);
                 const membership = room?.getMyMembership();
-                if (room && membership === "join") await this.appendRoom(room);
+                if (room && membership === KnownMembership.Join) await this.appendRoom(room);
             }
         } else if (payload.action === Action.JoinRoom) {
             const room = this.matrixClient.getRoom(payload.roomId);

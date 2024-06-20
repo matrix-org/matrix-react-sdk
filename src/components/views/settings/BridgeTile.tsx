@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -90,7 +89,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
             creator = (
                 <li>
                     {_t(
-                        "This bridge was provisioned by <user />.",
+                        "labs|bridge_state_creator",
                         {},
                         {
                             user: () => (
@@ -110,7 +109,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
         const bot = (
             <li>
                 {_t(
-                    "This bridge is managed by <user />.",
+                    "labs|bridge_state_manager",
                     {},
                     {
                         user: () => (
@@ -134,9 +133,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
             networkIcon = (
                 <BaseAvatar
                     className="mx_RoomSettingsDialog_protocolIcon"
-                    width={48}
-                    height={48}
-                    resizeMethod="crop"
+                    size="48px"
                     name={protocolName}
                     idName={protocolName}
                     url={avatarUrl}
@@ -157,7 +154,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
                 );
             }
             networkItem = _t(
-                "Workspace: <networkLink/>",
+                "labs|bridge_state_workspace",
                 {},
                 {
                     networkLink: () => networkLink,
@@ -184,7 +181,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
                         {networkItem}
                         <span className="mx_RoomSettingsDialog_channel">
                             {_t(
-                                "Channel: <channelLink/>",
+                                "labs|bridge_state_channel",
                                 {},
                                 {
                                     channelLink: () => channelLink,

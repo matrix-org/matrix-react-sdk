@@ -14,8 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IMatrixProfile, IEventWithRoomId as IMatrixEvent, IResultRoomEvents } from "matrix-js-sdk/src/@types/search";
-import { Direction } from "matrix-js-sdk/src/matrix";
+import {
+    IMatrixProfile,
+    IEventWithRoomId as IMatrixEvent,
+    IResultRoomEvents,
+    Direction,
+} from "matrix-js-sdk/src/matrix";
 
 // The following interfaces take their names and member names from seshat and the spec
 /* eslint-disable camelcase */
@@ -105,13 +109,6 @@ export default abstract class BaseEventIndexManager {
     }
 
     public async isEventIndexEmpty(): Promise<boolean> {
-        throw new Error("Unimplemented");
-    }
-
-    /**
-     * Check if our event index is empty.
-     */
-    public indexIsEmpty(): Promise<boolean> {
         throw new Error("Unimplemented");
     }
 

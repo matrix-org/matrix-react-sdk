@@ -134,12 +134,12 @@ const useMapWithStyle = ({
 const onGeolocateError = (e: GeolocationPositionError): void => {
     logger.error("Could not fetch location", e);
     Modal.createDialog(ErrorDialog, {
-        title: _t("Could not fetch location"),
+        title: _t("location_sharing|error_fetch_location"),
         description: positionFailureMessage(e.code) ?? "",
     });
 };
 
-interface MapProps {
+export interface MapProps {
     id: string;
     interactive?: boolean;
     /**

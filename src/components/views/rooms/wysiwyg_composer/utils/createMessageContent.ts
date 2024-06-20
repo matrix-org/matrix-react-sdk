@@ -16,6 +16,7 @@ limitations under the License.
 
 import { richToPlain, plainToRich } from "@matrix-org/matrix-wysiwyg";
 import { IContent, IEventRelation, MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
+import { ReplacementEvent, RoomMessageEventContent, RoomMessageTextEventContent } from "matrix-js-sdk/src/types";
 
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { parsePermalink, RoomPermalinkCreator } from "../../../../../utils/permalinks/Permalinks";
@@ -76,7 +77,7 @@ export async function createMessageContent(
         includeReplyLegacyFallback = true,
         editedEvent,
     }: CreateMessageContentParams,
-): Promise<IContent> {
+): Promise<RoomMessageEventContent> {
     const isEditing = isMatrixEvent(editedEvent);
     const isReply = isEditing ? Boolean(editedEvent.replyEventId) : isMatrixEvent(replyToEvent);
     const isReplyAndEditing = isEditing && isReply;
@@ -96,19 +97,19 @@ export async function createMessageContent(
 
     // if we're editing rich text, the message content is pure html
     // BUT if we're not, the message content will be plain text where we need to convert the mentions
-    const body = isHTML ? await richToPlain(message) : convertPlainTextToBody(message);
+    const body = isHTML ? await richToPlain(message, false) : convertPlainTextToBody(message);
     const bodyPrefix = (isReplyAndEditing && getTextReplyFallback(editedEvent)) || "";
     const formattedBodyPrefix = (isReplyAndEditing && getHtmlReplyFallback(editedEvent)) || "";
 
-    const content: IContent = {
+    const content = {
         msgtype: isEmote ? MsgType.Emote : MsgType.Text,
         body: isEditing ? `${bodyPrefix} * ${body}` : body,
-    };
+    } as RoomMessageTextEventContent & ReplacementEvent<RoomMessageTextEventContent>;
 
     // TODO markdown support
 
     const isMarkdownEnabled = SettingsStore.getValue<boolean>("MessageComposerInput.useMarkdown");
-    const formattedBody = isHTML ? message : isMarkdownEnabled ? await plainToRich(message) : null;
+    const formattedBody = isHTML ? message : isMarkdownEnabled ? await plainToRich(message, true) : null;
 
     if (formattedBody) {
         content.format = "org.matrix.custom.html";

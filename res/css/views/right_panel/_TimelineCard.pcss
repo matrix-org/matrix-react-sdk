@@ -66,6 +66,10 @@ limitations under the License.
                 .mx_EventTile_avatar {
                     inset-inline-start: 18px;
                 }
+
+                /* Info events should have the same size as state events, those
+                 * are usually wrapped in a generic event list summary */
+                font: var(--cpd-font-body-sm-regular);
             }
 
             .mx_EventTile_avatar {
@@ -134,7 +138,7 @@ limitations under the License.
 
             &.mx_EventTile_info .mx_MessageActionBar {
                 /* 1px: border width */
-                inset-inline-end: calc(var(--container-gap-width) + var(--BaseCard_padding-inline) + 1px);
+                inset-inline-end: calc(var(--container-gap-width) + 1px);
             }
 
             .mx_ReactionsRow {

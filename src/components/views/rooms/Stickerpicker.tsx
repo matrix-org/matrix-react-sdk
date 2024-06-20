@@ -15,12 +15,11 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, ClientEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IWidget } from "matrix-widget-api";
-import { ClientEvent } from "matrix-js-sdk/src/client";
 
-import { _t, _td } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 import AppTile from "../elements/AppTile";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
@@ -95,7 +94,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                     return this.scalarClient;
                 })
                 .catch((e) => {
-                    this.imError(_td("Failed to connect to integration manager"), e);
+                    this.imError(_td("integration_manager|error_connecting_heading"), e);
                 });
         } else {
             IntegrationManagers.sharedInstance().openNoManagerDialog();
@@ -160,7 +159,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         this.sendVisibilityToWidget(this.props.isStickerPickerOpen);
     }
 
-    private imError(errorMsg: string, e: Error): void {
+    private imError(errorMsg: TranslationKey, e: Error): void {
         logger.error(errorMsg, e);
         this.setState({
             imError: _t(errorMsg),
@@ -214,8 +213,8 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
     private defaultStickerpickerContent(): JSX.Element {
         return (
             <AccessibleButton onClick={this.launchManageIntegrations} className="mx_Stickers_contentPlaceholder">
-                <p>{_t("You don't currently have any stickerpacks enabled")}</p>
-                <p className="mx_Stickers_addLink">{_t("Add some now")}</p>
+                <p>{_t("stickers|empty")}</p>
+                <p className="mx_Stickers_addLink">{_t("stickers|empty_add_prompt")}</p>
                 <img src={require("../../../../res/img/stickerpack-placeholder.png")} alt="" />
             </AccessibleButton>
         );
@@ -262,7 +261,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         // Load stickerpack content
         if (!!stickerpickerWidget?.content?.url) {
             // Set default name
-            stickerpickerWidget.content.name = stickerpickerWidget.content.name || _t("Stickerpack");
+            stickerpickerWidget.content.name = stickerpickerWidget.content.name || _t("common|stickerpack");
 
             // FIXME: could this use the same code as other apps?
             const stickerApp: IWidget = {
@@ -357,6 +356,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                 menuPaddingLeft={0}
                 menuPaddingRight={0}
                 zIndex={STICKERPICKER_Z_INDEX}
+                mountAsChild={true}
                 {...this.props.menuPosition}
             >
                 <GenericElementContextMenu element={this.getStickerpickerContent()} onResize={this.onFinished} />

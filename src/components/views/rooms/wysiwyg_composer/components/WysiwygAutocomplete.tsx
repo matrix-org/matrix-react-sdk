@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ForwardedRef, forwardRef } from "react";
+import React, { ForwardedRef, forwardRef, FunctionComponent } from "react";
 import { FormattingFunctions, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { useRoomContext } from "../../../../../contexts/RoomContext";
 import Autocomplete from "../../Autocomplete";
@@ -97,22 +98,28 @@ const WysiwygAutocomplete = forwardRef(
             }
         }
 
+        if (!room) return null;
+
+        const autoCompleteQuery = buildQuery(suggestion);
+        // debug for https://github.com/vector-im/element-web/issues/26037
+        logger.log(`## 26037 ## Rendering Autocomplete for WysiwygAutocomplete with query: "${autoCompleteQuery}"`);
+
         // TODO - determine if we show all of the /command suggestions, there are some options in the
         // list which don't seem to make sense in this context, specifically /html and /plain
-        return room ? (
+        return (
             <div className="mx_WysiwygComposer_AutoCompleteWrapper" data-testid="autocomplete-wrapper">
                 <Autocomplete
                     ref={ref}
-                    query={buildQuery(suggestion)}
+                    query={autoCompleteQuery}
                     onConfirm={handleConfirm}
                     selection={{ start: 0, end: 0 }}
                     room={room}
                 />
             </div>
-        ) : null;
+        );
     },
 );
 
-WysiwygAutocomplete.displayName = "WysiwygAutocomplete";
+(WysiwygAutocomplete as FunctionComponent).displayName = "WysiwygAutocomplete";
 
 export { WysiwygAutocomplete };

@@ -16,11 +16,16 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render, RenderResult } from "@testing-library/react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { M_POLL_KIND_DISCLOSED, M_POLL_KIND_UNDISCLOSED, M_POLL_START } from "matrix-js-sdk/src/@types/polls";
+import {
+    Room,
+    MatrixEvent,
+    M_POLL_KIND_DISCLOSED,
+    M_POLL_KIND_UNDISCLOSED,
+    M_POLL_START,
+    M_TEXT,
+} from "matrix-js-sdk/src/matrix";
 import { PollStartEvent } from "matrix-js-sdk/src/extensible_events_v1/PollStartEvent";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
+import { ReplacementEvent } from "matrix-js-sdk/src/types";
 
 import { getMockClientWithEventEmitter } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -269,7 +274,9 @@ describe("PollCreateDialog", () => {
         const [, , eventType, sentEventContent] = mockClient.sendEvent.mock.calls[0];
         expect(M_POLL_START.matches(eventType)).toBeTruthy();
         // didnt change
-        expect(sentEventContent["m.new_content"][M_POLL_START.name].kind).toEqual(M_POLL_KIND_DISCLOSED.name);
+        expect((sentEventContent as ReplacementEvent<any>)["m.new_content"][M_POLL_START.name].kind).toEqual(
+            M_POLL_KIND_DISCLOSED.name,
+        );
     });
 });
 

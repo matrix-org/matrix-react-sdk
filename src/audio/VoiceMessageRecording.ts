@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IEncryptedFile, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { EncryptedFile } from "matrix-js-sdk/src/types";
 import { SimpleObservable } from "matrix-widget-api";
 
 import { uploadFile } from "../ContentMessages";
@@ -26,7 +27,7 @@ import { IRecordingUpdate, RecordingState, VoiceRecording } from "./VoiceRecordi
 
 export interface IUpload {
     mxc?: string; // for unencrypted uploads
-    encrypted?: IEncryptedFile;
+    encrypted?: EncryptedFile;
 }
 
 /**
@@ -37,7 +38,10 @@ export class VoiceMessageRecording implements IDestroyable {
     private buffer = new Uint8Array(0); // use this.audioBuffer to access
     private playback?: Playback;
 
-    public constructor(private matrixClient: MatrixClient, private voiceRecording: VoiceRecording) {
+    public constructor(
+        private matrixClient: MatrixClient,
+        private voiceRecording: VoiceRecording,
+    ) {
         this.voiceRecording.onDataAvailable = this.onDataAvailable;
     }
 

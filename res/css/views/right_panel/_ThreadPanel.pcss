@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021,2024 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,9 +20,20 @@ limitations under the License.
 
     .mx_BaseCard_header {
         .mx_BaseCard_header_title {
+            .mx_BaseCard_header_title_heading {
+                margin-right: auto;
+            }
+
             .mx_AccessibleButton {
                 font-size: 12px;
                 color: $secondary-content;
+            }
+
+            .mx_ThreadPanel_vertical_separator {
+                height: 16px;
+                margin-left: var(--cpd-space-3x);
+                margin-right: var(--cpd-space-1x);
+                border-left: 1px solid var(--cpd-color-gray-400);
             }
 
             .mx_ThreadPanel_dropdown {
@@ -112,7 +123,7 @@ limitations under the License.
         /* Account for scrollbar when hovering */
         padding-top: 0;
 
-        .mx_DateSeparator {
+        .mx_TimelineSeparator {
             display: none;
         }
 
@@ -130,7 +141,7 @@ limitations under the License.
     }
 
     .mx_MessageTimestamp {
-        color: var(--MessageTimestamp-color); /* TODO: check whether needed or not */
+        color: $secondary-content;
     }
 
     .mx_BaseCard_footer {
@@ -174,7 +185,7 @@ limitations under the License.
 
     h2 {
         color: $primary-content;
-        font-weight: var(--font-semi-bold);
+        font-weight: var(--cpd-font-weight-semibold);
         font-size: $font-18px;
         margin-top: 24px;
         margin-bottom: 10px;
@@ -204,7 +215,7 @@ limitations under the License.
         line-height: $font-15px;
 
         > b {
-            font-weight: var(--font-semi-bold);
+            font-weight: var(--cpd-font-weight-semibold);
         }
     }
 }

@@ -15,10 +15,8 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, Room, EventType } from "matrix-js-sdk/src/matrix";
 import { render, type RenderResult } from "@testing-library/react";
-import { Room } from "matrix-js-sdk/src/models/room";
 
 import { stubClient } from "../../../test-utils";
 import SearchResultTile from "../../../../src/components/views/rooms/SearchResultTile";
@@ -95,12 +93,12 @@ describe("SearchResultTile", () => {
                         room_id: ROOM_ID,
                         content: { body: `Message #${i}` },
                         event_id: `$${i}:server`,
-                        origin_server_ts: undefined,
+                        origin_server_ts: i,
                     }),
             ),
         });
 
-        const separators = container.querySelectorAll(".mx_DateSeparator");
+        const separators = container.querySelectorAll(".mx_TimelineSeparator");
         // One separator is always rendered at the top, we don't want any
         // between messages.
         expect(separators.length).toBe(1);

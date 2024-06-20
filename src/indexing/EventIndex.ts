@@ -15,20 +15,32 @@ limitations under the License.
 */
 
 import { EventEmitter } from "events";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { Direction, EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
-import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { TimelineIndex, TimelineWindow } from "matrix-js-sdk/src/timeline-window";
+import {
+    RoomMember,
+    Room,
+    RoomEvent,
+    RoomState,
+    RoomStateEvent,
+    MatrixEvent,
+    Direction,
+    EventTimeline,
+    EventTimelineSet,
+    IRoomTimelineData,
+    EventType,
+    ClientEvent,
+    MatrixClient,
+    HTTPError,
+    IEventWithRoomId,
+    IMatrixProfile,
+    IResultRoomEvents,
+    SyncStateData,
+    SyncState,
+    TimelineIndex,
+    TimelineWindow,
+} from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { IEventWithRoomId, IMatrixProfile, IResultRoomEvents } from "matrix-js-sdk/src/@types/search";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
-import { HTTPError } from "matrix-js-sdk/src/http-api";
 
 import PlatformPeg from "../PlatformPeg";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -161,7 +173,7 @@ export default class EventIndex extends EventEmitter {
      *     - Every other sync, tell the event index to commit all the queued up
      *         live events
      */
-    private onSync = async (state: SyncState, prevState: SyncState | null, data?: ISyncStateData): Promise<void> => {
+    private onSync = async (state: SyncState, prevState: SyncState | null, data?: SyncStateData): Promise<void> => {
         const indexManager = PlatformPeg.get()?.getEventIndexingManager();
         if (!indexManager) return;
 
@@ -298,8 +310,7 @@ export default class EventIndex extends EventEmitter {
     }
 
     private eventToJson(ev: MatrixEvent): IEventWithRoomId {
-        const jsonEvent: any = ev.toJSON();
-        const e = ev.isEncrypted() ? jsonEvent.decrypted : jsonEvent;
+        const e = ev.getEffectiveEvent() as any;
 
         if (ev.isEncrypted()) {
             // Let us store some additional data so we can re-verify the event.
@@ -523,7 +534,7 @@ export default class EventIndex extends EventEmitter {
             const profiles: Record<string, IMatrixProfile> = {};
 
             stateEvents.forEach((ev) => {
-                if (ev.getContent().membership === "join") {
+                if (ev.getContent().membership === KnownMembership.Join) {
                     profiles[ev.getSender()!] = {
                         displayname: ev.getContent().displayname,
                         avatar_url: ev.getContent().avatar_url,
@@ -534,10 +545,7 @@ export default class EventIndex extends EventEmitter {
             const decryptionPromises = matrixEvents
                 .filter((event) => event.isEncrypted())
                 .map((event) => {
-                    return client.decryptEventIfNeeded(event, {
-                        isRetry: true,
-                        emit: false,
-                    });
+                    return client.decryptEventIfNeeded(event, { emit: false });
                 });
 
             // Let us wait for all the events to get decrypted.
@@ -747,7 +755,7 @@ export default class EventIndex extends EventEmitter {
             // This is sets the avatar URL.
             const memberEvent = eventMapper({
                 content: {
-                    membership: "join",
+                    membership: KnownMembership.Join,
                     avatar_url: e.profile.avatar_url,
                     displayname: e.profile.displayname,
                 },

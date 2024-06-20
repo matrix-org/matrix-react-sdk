@@ -15,21 +15,21 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { MatrixError, ConnectionError } from "matrix-js-sdk/src/http-api";
+import { MatrixError, ConnectionError } from "matrix-js-sdk/src/matrix";
 
-import { _t, _td, Tags, TranslatedString } from "../languageHandler";
+import { _t, _td, lookupString, Tags, TranslatedString, TranslationKey } from "../languageHandler";
 import SdkConfig from "../SdkConfig";
 import { ValidatedServerConfig } from "./ValidatedServerConfig";
 import ExternalLink from "../components/views/elements/ExternalLink";
 
 export const resourceLimitStrings = {
-    "monthly_active_user": _td("This homeserver has hit its Monthly Active User limit."),
-    "hs_blocked": _td("This homeserver has been blocked by its administrator."),
-    "": _td("This homeserver has exceeded one of its resource limits."),
+    "monthly_active_user": _td("error|mau"),
+    "hs_blocked": _td("error|hs_blocked"),
+    "": _td("error|resource_limits"),
 };
 
 export const adminContactStrings = {
-    "": _td("Please <a>contact your service administrator</a> to continue using this service."),
+    "": _td("error|admin_contact"),
 };
 
 /**
@@ -49,7 +49,7 @@ export const adminContactStrings = {
 export function messageForResourceLimitError(
     limitType: string | undefined,
     adminContact: string | undefined,
-    strings: Record<string, string>,
+    strings: Record<string, TranslationKey>,
     extraTranslations?: Tags,
 ): TranslatedString {
     let errString = limitType ? strings[limitType] : undefined;
@@ -67,7 +67,7 @@ export function messageForResourceLimitError(
         }
     };
 
-    if (errString.includes("<a>")) {
+    if (lookupString(errString).includes("<a>")) {
         return _t(errString, {}, Object.assign({ a: linkSub }, extraTranslations));
     } else {
         return _t(errString, {}, extraTranslations!);
@@ -93,7 +93,7 @@ export function messageForSyncError(err: Error): ReactNode {
             </div>
         );
     } else {
-        return <div>{_t("Unable to connect to Homeserver. Retrying…")}</div>;
+        return <div>{_t("error|sync")}</div>;
     }
 }
 
@@ -120,20 +120,20 @@ export function messageForLoginError(
         );
     } else if (err.httpStatus === 401 || err.httpStatus === 403) {
         if (err.errcode === "M_USER_DEACTIVATED") {
-            return _t("This account has been deactivated.");
+            return _t("auth|account_deactivated");
         } else if (SdkConfig.get("disable_custom_urls")) {
             return (
                 <div>
-                    <div>{_t("Incorrect username and/or password.")}</div>
+                    <div>{_t("auth|incorrect_credentials")}</div>
                     <div className="mx_Login_smallError">
-                        {_t("Please note you are logging into the %(hs)s server, not matrix.org.", {
+                        {_t("auth|incorrect_credentials_detail", {
                             hs: serverConfig.hsName,
                         })}
                     </div>
                 </div>
             );
         } else {
-            return _t("Incorrect username and/or password.");
+            return _t("auth|incorrect_credentials");
         }
     } else {
         return messageForConnectionError(err, serverConfig);
@@ -144,7 +144,7 @@ export function messageForConnectionError(
     err: Error,
     serverConfig: Pick<ValidatedServerConfig, "hsName" | "hsUrl">,
 ): ReactNode {
-    let errorText = _t("There was a problem communicating with the homeserver, please try again later.");
+    let errorText = _t("error|connection");
 
     if (err instanceof ConnectionError) {
         if (
@@ -154,8 +154,7 @@ export function messageForConnectionError(
             return (
                 <span>
                     {_t(
-                        "Can't connect to homeserver via HTTP when an HTTPS URL is in your browser bar. " +
-                            "Either use HTTPS or <a>enable unsafe scripts</a>.",
+                        "error|mixed_content",
                         {},
                         {
                             a: (sub) => {
@@ -178,9 +177,7 @@ export function messageForConnectionError(
         return (
             <span>
                 {_t(
-                    "Can't connect to homeserver - please check your connectivity, ensure your " +
-                        "<a>homeserver's SSL certificate</a> is trusted, and that a browser extension " +
-                        "is not blocking requests.",
+                    "error|tls",
                     {},
                     {
                         a: (sub) => (

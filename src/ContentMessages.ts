@@ -16,24 +16,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
-import encrypt from "matrix-encrypt-attachment";
-import extractPngChunks from "png-chunks-extract";
-import { IImageInfo } from "matrix-js-sdk/src/@types/partials";
-import { logger } from "matrix-js-sdk/src/logger";
 import {
+    MatrixClient,
+    MsgType,
     HTTPError,
     IEventRelation,
     ISendEventResponse,
     MatrixEvent,
     UploadOpts,
     UploadProgress,
+    THREAD_RELATION_TYPE,
 } from "matrix-js-sdk/src/matrix";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import {
+    ImageInfo,
+    AudioInfo,
+    VideoInfo,
+    EncryptedFile,
+    MediaEventContent,
+    MediaEventInfo,
+} from "matrix-js-sdk/src/types";
+import encrypt from "matrix-encrypt-attachment";
+import extractPngChunks from "png-chunks-extract";
+import { logger } from "matrix-js-sdk/src/logger";
 import { removeElement } from "matrix-js-sdk/src/utils";
 
-import { IEncryptedFile, IMediaEventContent, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
 import dis from "./dispatcher/dispatcher";
 import { _t } from "./languageHandler";
 import Modal from "./Modal";
@@ -146,11 +152,7 @@ const ALWAYS_INCLUDE_THUMBNAIL = ["image/avif", "image/webp"];
  * @param {File} imageFile The image to read and thumbnail.
  * @return {Promise} A promise that resolves with the attachment info.
  */
-async function infoForImageFile(
-    matrixClient: MatrixClient,
-    roomId: string,
-    imageFile: File,
-): Promise<Partial<IMediaEventInfo>> {
+async function infoForImageFile(matrixClient: MatrixClient, roomId: string, imageFile: File): Promise<ImageInfo> {
     let thumbnailType = "image/png";
     if (imageFile.type === "image/jpeg") {
         thumbnailType = "image/jpeg";
@@ -185,15 +187,58 @@ async function infoForImageFile(
 }
 
 /**
+ * Load a file into a newly created audio element and load the metadata
+ *
+ * @param {File} audioFile The file to load in an audio element.
+ * @return {Promise} A promise that resolves with the audio element.
+ */
+function loadAudioElement(audioFile: File): Promise<HTMLAudioElement> {
+    return new Promise((resolve, reject) => {
+        // Load the file into a html element
+        const audio = document.createElement("audio");
+        audio.preload = "metadata";
+        audio.muted = true;
+
+        const reader = new FileReader();
+
+        reader.onload = function (ev): void {
+            audio.onloadedmetadata = async function (): Promise<void> {
+                resolve(audio);
+            };
+            audio.onerror = function (e): void {
+                reject(e);
+            };
+
+            audio.src = ev.target?.result as string;
+        };
+        reader.onerror = function (e): void {
+            reject(e);
+        };
+        reader.readAsDataURL(audioFile);
+    });
+}
+
+/**
+ * Read the metadata for an audio file.
+ *
+ * @param {File} audioFile The audio to read.
+ * @return {Promise} A promise that resolves with the attachment info.
+ */
+async function infoForAudioFile(audioFile: File): Promise<AudioInfo> {
+    const audio = await loadAudioElement(audioFile);
+    return { duration: Math.ceil(audio.duration * 1000) };
+}
+
+/**
  * Load a file into a newly created video element and pull some strings
  * in an attempt to guarantee the first frame will be showing.
  *
- * @param {File} videoFile The file to load in an video element.
- * @return {Promise} A promise that resolves with the video image element.
+ * @param {File} videoFile The file to load in a video element.
+ * @return {Promise} A promise that resolves with the video element.
  */
 function loadVideoElement(videoFile: File): Promise<HTMLVideoElement> {
     return new Promise((resolve, reject) => {
-        // Load the file into an html element
+        // Load the file into a html element
         const video = document.createElement("video");
         video.preload = "metadata";
         video.playsInline = true;
@@ -237,20 +282,17 @@ function loadVideoElement(videoFile: File): Promise<HTMLVideoElement> {
  * @param {File} videoFile The video to read and thumbnail.
  * @return {Promise} A promise that resolves with the attachment info.
  */
-function infoForVideoFile(
-    matrixClient: MatrixClient,
-    roomId: string,
-    videoFile: File,
-): Promise<Partial<IMediaEventInfo>> {
+function infoForVideoFile(matrixClient: MatrixClient, roomId: string, videoFile: File): Promise<VideoInfo> {
     const thumbnailType = "image/jpeg";
 
-    let videoInfo: Partial<IMediaEventInfo>;
+    const videoInfo: VideoInfo = {};
     return loadVideoElement(videoFile)
         .then((video) => {
+            videoInfo.duration = Math.ceil(video.duration * 1000);
             return createThumbnail(video, video.videoWidth, video.videoHeight, thumbnailType);
         })
         .then((result) => {
-            videoInfo = result.info;
+            Object.assign(videoInfo, result.info);
             return uploadFile(matrixClient, roomId, result.thumbnail);
         })
         .then((result) => {
@@ -299,7 +341,7 @@ export async function uploadFile(
     file: File | Blob,
     progressHandler?: UploadOpts["progressHandler"],
     controller?: AbortController,
-): Promise<{ url?: string; file?: IEncryptedFile }> {
+): Promise<{ url?: string; file?: EncryptedFile }> {
     const abortController = controller ?? new AbortController();
 
     // If the room is encrypted then encrypt the file before uploading it.
@@ -329,7 +371,7 @@ export async function uploadFile(
             file: {
                 ...encryptResult.info,
                 url,
-            } as IEncryptedFile,
+            } as EncryptedFile,
         };
     } else {
         const { content_uri: url } = await matrixClient.uploadContent(file, { progressHandler, abortController });
@@ -347,7 +389,7 @@ export default class ContentMessages {
         url: string,
         roomId: string,
         threadId: string | null,
-        info: IImageInfo,
+        info: ImageInfo,
         text: string,
         matrixClient: MatrixClient,
     ): Promise<ISendEventResponse> {
@@ -493,8 +535,8 @@ export default class ContentMessages {
         replyToEvent: MatrixEvent | undefined,
         promBefore?: Promise<any>,
     ): Promise<void> {
-        const fileName = file.name || _t("Attachment");
-        const content: Omit<IMediaEventContent, "info"> & { info: Partial<IMediaEventInfo> } = {
+        const fileName = file.name || _t("common|attachment");
+        const content: Omit<MediaEventContent, "info"> & { info: Partial<MediaEventInfo> } = {
             body: fileName,
             info: {
                 size: file.size,
@@ -546,6 +588,14 @@ export default class ContentMessages {
                 }
             } else if (file.type.indexOf("audio/") === 0) {
                 content.msgtype = MsgType.Audio;
+                try {
+                    const audioInfo = await infoForAudioFile(file);
+                    Object.assign(content.info, audioInfo);
+                } catch (e) {
+                    // Failed to process audio file, fall back to uploading an m.file
+                    logger.error(e);
+                    content.msgtype = MsgType.File;
+                }
             } else if (file.type.indexOf("video/") === 0) {
                 content.msgtype = MsgType.Video;
                 try {
@@ -572,7 +622,7 @@ export default class ContentMessages {
             if (upload.cancelled) throw new UploadCanceledError();
             const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
 
-            const response = await matrixClient.sendMessage(roomId, threadId ?? null, content);
+            const response = await matrixClient.sendMessage(roomId, threadId ?? null, content as MediaEventContent);
 
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
                 sendRoundTripMetric(matrixClient, roomId, response.event_id);
@@ -588,14 +638,14 @@ export default class ContentMessages {
             }
 
             if (!upload.cancelled) {
-                let desc = _t("The file '%(fileName)s' failed to upload.", { fileName: upload.fileName });
+                let desc = _t("upload_failed_generic", { fileName: upload.fileName });
                 if (error instanceof HTTPError && error.httpStatus === 413) {
-                    desc = _t("The file '%(fileName)s' exceeds this homeserver's size limit for uploads", {
+                    desc = _t("upload_failed_size", {
                         fileName: upload.fileName,
                     });
                 }
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Upload Failed"),
+                    title: _t("upload_failed_title"),
                     description: desc,
                 });
                 dis.dispatch<UploadErrorPayload>({ action: Action.UploadFailed, upload, error });

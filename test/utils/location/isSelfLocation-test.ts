@@ -14,21 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
 import {
+    M_TEXT,
     ILocationContent,
     LocationAssetType,
     M_ASSET,
     M_LOCATION,
     M_TIMESTAMP,
-} from "matrix-js-sdk/src/@types/location";
-import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
+    ContentHelpers,
+} from "matrix-js-sdk/src/matrix";
 
 import { isSelfLocation } from "../../../src/utils/location";
 
 describe("isSelfLocation", () => {
     it("Returns true for a full m.asset event", () => {
-        const content = makeLocationContent("", "0", Date.now());
+        const content = ContentHelpers.makeLocationContent("", "0", Date.now());
         expect(isSelfLocation(content)).toBe(true);
     });
 
@@ -61,7 +61,7 @@ describe("isSelfLocation", () => {
     });
 
     it("Returns false for an unknown asset type", () => {
-        const content = makeLocationContent(
+        const content = ContentHelpers.makeLocationContent(
             undefined /* text */,
             "geo:foo",
             0,

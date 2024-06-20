@@ -17,8 +17,7 @@ limitations under the License.
 import React, { SyntheticEvent } from "react";
 import maplibregl, { MapMouseEvent } from "maplibre-gl";
 import { logger } from "matrix-js-sdk/src/logger";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { ClientEvent, IClientWellKnown } from "matrix-js-sdk/src/client";
+import { RoomMember, ClientEvent, IClientWellKnown } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -183,7 +182,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         if (isSharingOwnLocation(this.props.shareType)) {
             this.props.onFinished();
             Modal.createDialog(ErrorDialog, {
-                title: _t("Could not fetch location"),
+                title: _t("location_sharing|error_fetch_location"),
                 description: positionFailureMessage(e.code),
             });
         }
@@ -225,7 +224,11 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
 
                 {this.props.shareType === LocationShareType.Pin && (
                     <div className="mx_LocationPicker_pinText">
-                        <span>{this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin")}</span>
+                        <span>
+                            {this.state.position
+                                ? _t("location_sharing|click_move_pin")
+                                : _t("location_sharing|click_drop_pin")}
+                        </span>
                     </div>
                 )}
                 <div className="mx_LocationPicker_footer">
@@ -242,7 +245,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                             disabled={!this.state.position}
                             onClick={this.onOk}
                         >
-                            {_t("Share location")}
+                            {_t("location_sharing|share_button")}
                         </AccessibleButton>
                     </form>
                 </div>

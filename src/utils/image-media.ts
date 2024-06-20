@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { EncryptedFile } from "matrix-js-sdk/src/types";
+
 import { BlurhashEncoder } from "../BlurhashEncoder";
-import { IEncryptedFile } from "../customisations/models/IMediaEventContent";
 
 type ThumbnailableElement = HTMLImageElement | HTMLVideoElement;
 
@@ -33,7 +34,7 @@ interface IThumbnail {
         h: number;
         [BLURHASH_FIELD]?: string;
         thumbnail_url?: string;
-        thumbnail_file?: IEncryptedFile;
+        thumbnail_file?: EncryptedFile;
     };
     thumbnail: Blob;
 }

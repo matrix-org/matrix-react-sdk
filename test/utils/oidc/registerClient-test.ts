@@ -16,57 +16,70 @@ limitations under the License.
 
 import fetchMockJest from "fetch-mock-jest";
 import { OidcError } from "matrix-js-sdk/src/oidc/error";
+import { OidcClientConfig } from "matrix-js-sdk/src/matrix";
 
 import { getOidcClientId } from "../../../src/utils/oidc/registerClient";
+import { mockPlatformPeg } from "../../test-utils";
+import PlatformPeg from "../../../src/PlatformPeg";
+import { makeDelegatedAuthConfig } from "../../test-utils/oidc";
 
 describe("getOidcClientId()", () => {
     const issuer = "https://auth.com/";
-    const registrationEndpoint = "https://auth.com/register";
     const clientName = "Element";
     const baseUrl = "https://just.testing";
     const dynamicClientId = "xyz789";
     const staticOidcClients = {
-        [issuer]: "abc123",
+        [issuer]: {
+            client_id: "abc123",
+        },
     };
-    const delegatedAuthConfig = {
-        issuer,
-        registrationEndpoint,
-        authorizationEndpoint: issuer + "auth",
-        tokenEndpoint: issuer + "token",
-    };
+    const delegatedAuthConfig = makeDelegatedAuthConfig(issuer);
 
     beforeEach(() => {
         fetchMockJest.mockClear();
         fetchMockJest.resetBehavior();
+        mockPlatformPeg();
+        Object.defineProperty(PlatformPeg.get(), "baseUrl", {
+            get(): string {
+                return baseUrl;
+            },
+        });
+        Object.defineProperty(PlatformPeg.get(), "defaultOidcClientUri", {
+            get(): string {
+                return baseUrl;
+            },
+        });
+        Object.defineProperty(PlatformPeg.get(), "getOidcCallbackUrl", {
+            value: () => ({
+                href: baseUrl,
+            }),
+        });
     });
 
     it("should return static clientId when configured", async () => {
-        expect(await getOidcClientId(delegatedAuthConfig, clientName, baseUrl, staticOidcClients)).toEqual(
-            staticOidcClients[issuer],
-        );
+        expect(await getOidcClientId(delegatedAuthConfig, staticOidcClients)).toEqual("abc123");
         // didn't try to register
         expect(fetchMockJest).toHaveFetchedTimes(0);
     });
 
     it("should throw when no static clientId is configured and no registration endpoint", async () => {
-        const authConfigWithoutRegistration = {
-            ...delegatedAuthConfig,
-            issuer: "https://issuerWithoutStaticClientId.org/",
-            registrationEndpoint: undefined,
-        };
-        expect(
-            async () => await getOidcClientId(authConfigWithoutRegistration, clientName, baseUrl, staticOidcClients),
-        ).rejects.toThrow(OidcError.DynamicRegistrationNotSupported);
+        const authConfigWithoutRegistration: OidcClientConfig = makeDelegatedAuthConfig(
+            "https://issuerWithoutStaticClientId.org/",
+        );
+        authConfigWithoutRegistration.registrationEndpoint = undefined;
+        await expect(getOidcClientId(authConfigWithoutRegistration, staticOidcClients)).rejects.toThrow(
+            OidcError.DynamicRegistrationNotSupported,
+        );
         // didn't try to register
         expect(fetchMockJest).toHaveFetchedTimes(0);
     });
 
     it("should handle when staticOidcClients object is falsy", async () => {
-        const authConfigWithoutRegistration = {
+        const authConfigWithoutRegistration: OidcClientConfig = {
             ...delegatedAuthConfig,
             registrationEndpoint: undefined,
         };
-        expect(async () => await getOidcClientId(authConfigWithoutRegistration, clientName, baseUrl)).rejects.toThrow(
+        await expect(getOidcClientId(authConfigWithoutRegistration)).rejects.toThrow(
             OidcError.DynamicRegistrationNotSupported,
         );
         // didn't try to register
@@ -74,19 +87,24 @@ describe("getOidcClientId()", () => {
     });
 
     it("should make correct request to register client", async () => {
-        fetchMockJest.post(registrationEndpoint, {
+        fetchMockJest.post(delegatedAuthConfig.registrationEndpoint!, {
             status: 200,
             body: JSON.stringify({ client_id: dynamicClientId }),
         });
-        expect(await getOidcClientId(delegatedAuthConfig, clientName, baseUrl)).toEqual(dynamicClientId);
+        expect(await getOidcClientId(delegatedAuthConfig)).toEqual(dynamicClientId);
         // didn't try to register
-        expect(fetchMockJest).toHaveBeenCalledWith(registrationEndpoint, {
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            method: "POST",
-            body: JSON.stringify({
+        expect(fetchMockJest).toHaveBeenCalledWith(
+            delegatedAuthConfig.registrationEndpoint!,
+            expect.objectContaining({
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+                method: "POST",
+            }),
+        );
+        expect(JSON.parse(fetchMockJest.mock.calls[0][1]!.body as string)).toEqual(
+            expect.objectContaining({
                 client_name: clientName,
                 client_uri: baseUrl,
                 response_types: ["code"],
@@ -95,27 +113,24 @@ describe("getOidcClientId()", () => {
                 id_token_signed_response_alg: "RS256",
                 token_endpoint_auth_method: "none",
                 application_type: "web",
+                logo_uri: `${baseUrl}/vector-icons/1024.png`,
             }),
-        });
-    });
-
-    it("should throw when registration request fails", async () => {
-        fetchMockJest.post(registrationEndpoint, {
-            status: 500,
-        });
-        expect(() => getOidcClientId(delegatedAuthConfig, clientName, baseUrl)).rejects.toThrow(
-            OidcError.DynamicRegistrationFailed,
         );
     });
 
+    it("should throw when registration request fails", async () => {
+        fetchMockJest.post(delegatedAuthConfig.registrationEndpoint!, {
+            status: 500,
+        });
+        await expect(getOidcClientId(delegatedAuthConfig)).rejects.toThrow(OidcError.DynamicRegistrationFailed);
+    });
+
     it("should throw when registration response is invalid", async () => {
-        fetchMockJest.post(registrationEndpoint, {
+        fetchMockJest.post(delegatedAuthConfig.registrationEndpoint!, {
             status: 200,
             // no clientId in response
             body: "{}",
         });
-        expect(() => getOidcClientId(delegatedAuthConfig, clientName, baseUrl)).rejects.toThrow(
-            OidcError.DynamicRegistrationInvalid,
-        );
+        await expect(getOidcClientId(delegatedAuthConfig)).rejects.toThrow(OidcError.DynamicRegistrationInvalid);
     });
 });

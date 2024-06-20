@@ -19,13 +19,12 @@ import {
     ICreateClientOpts,
     MemoryCryptoStore,
     MemoryStore,
+    IndexedDBCryptoStore,
+    IndexedDBStore,
+    LocalStorageCryptoStore,
 } from "matrix-js-sdk/src/matrix";
-import { IndexedDBCryptoStore } from "matrix-js-sdk/src/crypto/store/indexeddb-crypto-store";
-import { IndexedDBStore } from "matrix-js-sdk/src/store/indexeddb";
-import { LocalStorageCryptoStore } from "matrix-js-sdk/src/crypto/store/localStorage-crypto-store";
 
-// @ts-ignore - `.ts` is needed here to make TS happy
-import IndexedDBWorker from "../workers/indexeddb.worker.ts";
+import indexeddbWorkerFactory from "../workers/indexeddbWorkerFactory";
 
 const localStorage = window.localStorage;
 
@@ -55,7 +54,7 @@ export default function createMatrixClient(opts: ICreateClientOpts): MatrixClien
             indexedDB: indexedDB,
             dbName: "riot-web-sync",
             localStorage,
-            workerFactory: () => new IndexedDBWorker(),
+            workerFactory: indexeddbWorkerFactory,
         });
     } else if (localStorage) {
         storeOpts.store = new MemoryStore({ localStorage });

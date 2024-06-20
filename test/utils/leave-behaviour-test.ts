@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import { mocked, Mocked } from "jest-mock";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixClient, Room } from "matrix-js-sdk/src/matrix";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import { mkRoom, resetAsyncStoreWithClient, setupAsyncStoreWithClient, stubClient } from "../test-utils";
@@ -79,7 +79,7 @@ describe("leaveRoomBehaviour", () => {
     const expectDispatch = async <T extends ActionPayload>(payload: T) => {
         const dispatcherSpy = jest.fn();
         const dispatcherRef = defaultDispatcher.register(dispatcherSpy);
-        await new Promise<void>((resolve) => setImmediate(resolve)); // Flush the dispatcher
+        await sleep(0);
         expect(dispatcherSpy).toHaveBeenCalledWith(payload);
         defaultDispatcher.unregister(dispatcherRef);
     };

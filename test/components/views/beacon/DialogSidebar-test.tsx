@@ -27,11 +27,6 @@ import {
     mockClientMethodsUser,
 } from "../../../test-utils";
 
-// Fake random strings to give a predictable snapshot for IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: () => "abdefghi",
-}));
-
 describe("<DialogSidebar />", () => {
     const defaultProps: ComponentProps<typeof DialogSidebar> = {
         beacons: [],
@@ -58,7 +53,6 @@ describe("<DialogSidebar />", () => {
     const getComponent = (props = {}) => (
         <MatrixClientContext.Provider value={client}>
             <DialogSidebar {...defaultProps} {...props} />
-            );
         </MatrixClientContext.Provider>
     );
 

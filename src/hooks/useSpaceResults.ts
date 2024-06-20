@@ -15,15 +15,15 @@ limitations under the License.
 */
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Room, RoomType } from "matrix-js-sdk/src/matrix";
-import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
+import { Room, RoomType, HierarchyRoom } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
 import { normalize } from "matrix-js-sdk/src/utils";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 
-export const useSpaceResults = (space: Room | undefined, query: string): [IHierarchyRoom[], boolean] => {
-    const [rooms, setRooms] = useState<IHierarchyRoom[]>([]);
+export const useSpaceResults = (space: Room | undefined, query: string): [HierarchyRoom[], boolean] => {
+    const [rooms, setRooms] = useState<HierarchyRoom[]>([]);
     const [hierarchy, setHierarchy] = useState<RoomHierarchy>();
 
     const resetHierarchy = useCallback(() => {
@@ -58,7 +58,7 @@ export const useSpaceResults = (space: Room | undefined, query: string): [IHiera
         return rooms?.filter((r) => {
             return (
                 r.room_type !== RoomType.Space &&
-                cli.getRoom(r.room_id)?.getMyMembership() !== "join" &&
+                cli.getRoom(r.room_id)?.getMyMembership() !== KnownMembership.Join &&
                 (normalize(r.name || "").includes(normalizedQuery) || (r.canonical_alias || "").includes(lcQuery))
             );
         });

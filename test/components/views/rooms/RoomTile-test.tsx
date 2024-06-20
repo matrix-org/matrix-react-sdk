@@ -17,14 +17,18 @@ limitations under the License.
 import React from "react";
 import { render, screen, act, RenderResult } from "@testing-library/react";
 import { mocked, Mocked } from "jest-mock";
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import {
+    MatrixClient,
+    PendingEventOrdering,
+    Room,
+    MatrixEvent,
+    RoomStateEvent,
+    Thread,
+} from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { Widget } from "matrix-widget-api";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { Thread } from "matrix-js-sdk/src/models/thread";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import type { ClientWidgetApi } from "matrix-widget-api";
 import {
     stubClient,
@@ -35,6 +39,7 @@ import {
     filterConsole,
     flushPromises,
     mkMessage,
+    useMockMediaDevices,
 } from "../../../test-utils";
 import { CallStore } from "../../../../src/stores/CallStore";
 import RoomTile from "../../../../src/components/views/rooms/RoomTile";
@@ -50,6 +55,9 @@ import { SDKContext } from "../../../../src/contexts/SDKContext";
 import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
 import { UIComponent } from "../../../../src/settings/UIFeature";
 import { MessagePreviewStore } from "../../../../src/stores/room-list/MessagePreviewStore";
+import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import SettingsStore from "../../../../src/settings/SettingsStore";
+import { ConnectionState } from "../../../../src/models/Call";
 
 jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
     shouldShowComponent: jest.fn(),
@@ -131,6 +139,7 @@ describe("RoomTile", () => {
     };
 
     beforeEach(() => {
+        useMockMediaDevices();
         sdkContext = new TestSdkContext();
 
         client = mocked(stubClient());
@@ -149,14 +158,15 @@ describe("RoomTile", () => {
     afterEach(() => {
         // @ts-ignore
         MessagePreviewStore.instance.previews = new Map<string, Map<TagID | TAG_ANY, MessagePreview | null>>();
-        jest.restoreAllMocks();
+        jest.clearAllMocks();
     });
 
     describe("when message previews are not enabled", () => {
         it("should render the room", () => {
             mocked(shouldShowComponent).mockReturnValue(true);
-            const renderResult = renderRoomTile();
-            expect(renderResult.container).toMatchSnapshot();
+            const { container } = renderRoomTile();
+            expect(container).toMatchSnapshot();
+            expect(container.querySelector(".mx_RoomTile_sticky")).not.toBeInTheDocument();
         });
 
         it("does not render the room options context menu when UIComponent customisations disable room options", () => {
@@ -171,6 +181,37 @@ describe("RoomTile", () => {
             renderRoomTile();
             expect(shouldShowComponent).toHaveBeenCalledWith(UIComponent.RoomOptionsMenu);
             expect(screen.queryByRole("button", { name: "Room options" })).toBeInTheDocument();
+        });
+
+        it("does not render the room options context menu when knocked to the room", () => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name) => {
+                return name === "feature_ask_to_join";
+            });
+            mocked(shouldShowComponent).mockReturnValue(true);
+            jest.spyOn(room, "getMyMembership").mockReturnValue(KnownMembership.Knock);
+            const { container } = renderRoomTile();
+            expect(container.querySelector(".mx_RoomTile_sticky")).toBeInTheDocument();
+            expect(screen.queryByRole("button", { name: "Room options" })).not.toBeInTheDocument();
+        });
+
+        it("does not render the room options context menu when knock has been denied", () => {
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((name) => {
+                return name === "feature_ask_to_join";
+            });
+            mocked(shouldShowComponent).mockReturnValue(true);
+            const roomMember = mkRoomMember(
+                room.roomId,
+                MatrixClientPeg.get()!.getSafeUserId(),
+                KnownMembership.Leave,
+                true,
+                {
+                    membership: KnownMembership.Knock,
+                },
+            );
+            jest.spyOn(room, "getMember").mockReturnValue(roomMember);
+            const { container } = renderRoomTile();
+            expect(container.querySelector(".mx_RoomTile_sticky")).toBeInTheDocument();
+            expect(screen.queryByRole("button", { name: "Room options" })).not.toBeInTheDocument();
         });
 
         describe("when a call starts", () => {
@@ -202,20 +243,37 @@ describe("RoomTile", () => {
                 renderRoomTile();
                 screen.getByText("Video");
 
+                let completeWidgetLoading: () => void = () => {};
+                const widgetLoadingCompleted = new Promise<void>((resolve) => (completeWidgetLoading = resolve));
+
                 // Insert an await point in the connection method so we can inspect
                 // the intermediate connecting state
                 let completeConnection: () => void = () => {};
                 const connectionCompleted = new Promise<void>((resolve) => (completeConnection = resolve));
-                jest.spyOn(call, "performConnection").mockReturnValue(connectionCompleted);
+
+                let completeLobby: () => void = () => {};
+                const lobbyCompleted = new Promise<void>((resolve) => (completeLobby = resolve));
+
+                jest.spyOn(call, "performConnection").mockImplementation(async () => {
+                    call.setConnectionState(ConnectionState.WidgetLoading);
+                    await widgetLoadingCompleted;
+                    call.setConnectionState(ConnectionState.Lobby);
+                    await lobbyCompleted;
+                    call.setConnectionState(ConnectionState.Connecting);
+                    await connectionCompleted;
+                });
 
                 await Promise.all([
                     (async () => {
+                        await screen.findByText("Loading…");
+                        completeWidgetLoading();
+                        await screen.findByText("Lobby");
+                        completeLobby();
                         await screen.findByText("Joining…");
-                        const joinedFound = screen.findByText("Joined");
                         completeConnection();
-                        await joinedFound;
+                        await screen.findByText("Joined");
                     })(),
-                    call.connect(),
+                    call.start(),
                 ]);
 
                 await Promise.all([screen.findByText("Video"), call.disconnect()]);
@@ -241,12 +299,12 @@ describe("RoomTile", () => {
                 act(() => {
                     call.participants = new Map([alice]);
                 });
-                expect(screen.getByLabelText("1 participant").textContent).toBe("1");
+                expect(screen.getByLabelText("1 person joined").textContent).toBe("1");
 
                 act(() => {
                     call.participants = new Map([alice, bob, carol]);
                 });
-                expect(screen.getByLabelText("4 participants").textContent).toBe("4");
+                expect(screen.getByLabelText("4 people joined").textContent).toBe("4");
 
                 act(() => {
                     call.participants = new Map();
@@ -345,6 +403,7 @@ describe("RoomTile", () => {
                     {
                         lastReply: () => null,
                         timeline: [],
+                        findEventById: () => {},
                     } as Thread,
                 ]);
             });

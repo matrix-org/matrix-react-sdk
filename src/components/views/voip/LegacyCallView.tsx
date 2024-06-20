@@ -30,12 +30,9 @@ import VideoFeed from "./VideoFeed";
 import RoomAvatar from "../avatars/RoomAvatar";
 import AccessibleButton from "../elements/AccessibleButton";
 import { avatarUrlForMember } from "../../../Avatar";
-import DesktopCapturerSourcePicker from "../elements/DesktopCapturerSourcePicker";
-import Modal from "../../../Modal";
 import LegacyCallViewSidebar from "./LegacyCallViewSidebar";
 import LegacyCallViewHeader from "./LegacyCallView/LegacyCallViewHeader";
 import LegacyCallViewButtons from "./LegacyCallView/LegacyCallViewButtons";
-import PlatformPeg from "../../../PlatformPeg";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
@@ -289,17 +286,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
         if (this.state.screensharing) {
             isScreensharing = await this.props.call.setScreensharingEnabled(false);
         } else {
-            if (PlatformPeg.get()?.supportsDesktopCapturer()) {
-                const { finished } = Modal.createDialog(DesktopCapturerSourcePicker);
-                const [source] = await finished;
-                if (!source) return;
-
-                isScreensharing = await this.props.call.setScreensharingEnabled(true, {
-                    desktopCapturerSourceId: source,
-                });
-            } else {
-                isScreensharing = await this.props.call.setScreensharingEnabled(true);
-            }
+            isScreensharing = await this.props.call.setScreensharingEnabled(true);
         }
 
         this.setState({
@@ -417,11 +404,9 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
         const sharerName = primaryFeed?.getMember()?.name;
         if (!sharerName) return null;
 
-        let text = isScreensharing ? _t("You are presenting") : _t("%(sharerName)s is presenting", { sharerName });
+        let text = isScreensharing ? _t("voip|you_are_presenting") : _t("voip|user_is_presenting", { sharerName });
         if (!sidebarShown) {
-            text +=
-                " • " +
-                (call.isLocalVideoMuted() ? _t("Your camera is turned off") : _t("Your camera is still enabled"));
+            text += " • " + (call.isLocalVideoMuted() ? _t("voip|camera_disabled") : _t("voip|camera_enabled"));
         }
 
         return <div className="mx_LegacyCallView_toast">{text}</div>;
@@ -433,7 +418,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
 
         const callRoomId = LegacyCallHandler.instance.roomIdForCall(call);
         const callRoom = (callRoomId ? MatrixClientPeg.safeGet().getRoom(callRoomId) : undefined) ?? undefined;
-        const avatarSize = pipMode ? 76 : 160;
+        const avatarSize = pipMode ? "76px" : "160px";
         const transfereeCall = LegacyCallHandler.instance.getTransfereeForCallId(call.callId);
         const isOnHold = isLocalOnHold || isRemoteOnHold;
 
@@ -455,15 +440,15 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
                 const cli = MatrixClientPeg.safeGet();
                 const callRoomId = LegacyCallHandler.instance.roomIdForCall(call);
                 const transferTargetRoom = callRoomId ? cli.getRoom(callRoomId) : null;
-                const transferTargetName = transferTargetRoom ? transferTargetRoom.name : _t("unknown person");
+                const transferTargetName = transferTargetRoom ? transferTargetRoom.name : _t("voip|unknown_person");
                 const transfereeCallRoomId = LegacyCallHandler.instance.roomIdForCall(transfereeCall);
                 const transfereeRoom = transfereeCallRoomId ? cli.getRoom(transfereeCallRoomId) : null;
-                const transfereeName = transfereeRoom ? transfereeRoom.name : _t("unknown person");
+                const transfereeName = transfereeRoom ? transfereeRoom.name : _t("voip|unknown_person");
 
                 holdTransferContent = (
                     <div className="mx_LegacyCallView_status">
                         {_t(
-                            "Consulting with %(transferTarget)s. <a>Transfer to %(transferee)s</a>",
+                            "voip|consulting",
                             {
                                 transferTarget: transferTargetName,
                                 transferee: transfereeName,
@@ -483,8 +468,8 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
                 if (isRemoteOnHold) {
                     onHoldText = _t(
                         LegacyCallHandler.instance.hasAnyUnheldCall()
-                            ? _td("You held the call <a>Switch</a>")
-                            : _td("You held the call <a>Resume</a>"),
+                            ? _td("voip|call_held_switch")
+                            : _td("voip|call_held_resume"),
                         {},
                         {
                             a: (sub) => (
@@ -495,7 +480,7 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
                         },
                     );
                 } else if (isLocalOnHold) {
-                    onHoldText = _t("%(peerName)s held the call", {
+                    onHoldText = _t("voip|call_held", {
                         peerName: call.getOpponentMember()?.name,
                     });
                 }
@@ -520,10 +505,10 @@ export default class LegacyCallView extends React.Component<IProps, IState> {
                             className="mx_LegacyCallView_avatarContainer"
                             style={{ width: avatarSize, height: avatarSize }}
                         >
-                            <RoomAvatar room={callRoom} height={avatarSize} width={avatarSize} />
+                            <RoomAvatar room={callRoom} size={avatarSize} />
                         </div>
                     </div>
-                    <div className="mx_LegacyCallView_status">{_t("Connecting")}</div>
+                    <div className="mx_LegacyCallView_status">{_t("voip|connecting")}</div>
                     {secondaryFeedElement}
                 </div>
             );

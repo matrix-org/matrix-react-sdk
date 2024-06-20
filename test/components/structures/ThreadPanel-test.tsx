@@ -15,11 +15,16 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import "focus-visible"; // to fix context menus
+import { render, screen, fireEvent, waitFor, getByRole } from "@testing-library/react";
 import { mocked } from "jest-mock";
-import { MatrixClient, MatrixEvent, PendingEventOrdering, Room } from "matrix-js-sdk/src/matrix";
-import { FeatureSupport, Thread } from "matrix-js-sdk/src/models/thread";
+import {
+    MatrixClient,
+    MatrixEvent,
+    PendingEventOrdering,
+    Room,
+    FeatureSupport,
+    Thread,
+} from "matrix-js-sdk/src/matrix";
 
 import ThreadPanel, { ThreadFilterType, ThreadPanelHeader } from "../../../src/components/structures/ThreadPanel";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
@@ -28,8 +33,11 @@ import { _t } from "../../../src/languageHandler";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { RoomPermalinkCreator } from "../../../src/utils/permalinks/Permalinks";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
-import { getRoomContext, mockPlatformPeg, stubClient } from "../../test-utils";
+import { createTestClient, getRoomContext, mkRoom, mockPlatformPeg, stubClient } from "../../test-utils";
 import { mkThread } from "../../test-utils/threads";
+import { IRoomState } from "../../../src/components/structures/RoomView";
+import defaultDispatcher from "../../../src/dispatcher/dispatcher";
+import { Action } from "../../../src/dispatcher/actions";
 
 jest.mock("../../../src/utils/Feedback");
 
@@ -51,6 +59,17 @@ describe("ThreadPanel", () => {
                 <ThreadPanelHeader
                     empty={false}
                     filterOption={ThreadFilterType.My}
+                    setFilterOption={() => undefined}
+                />,
+            );
+            expect(asFragment()).toMatchSnapshot();
+        });
+
+        it("matches snapshot when no threads", () => {
+            const { asFragment } = render(
+                <ThreadPanelHeader
+                    empty={true}
+                    filterOption={ThreadFilterType.All}
                     setFilterOption={() => undefined}
                 />,
             );
@@ -85,9 +104,86 @@ describe("ThreadPanel", () => {
             expect(found).toHaveLength(2);
             const foundButton = screen.queryByRole("menuitemradio", { checked: true });
             expect(foundButton?.textContent).toEqual(
-                `${_t("All threads")}${_t("Shows all threads from current room")}`,
+                `${_t("threads|all_threads")}${_t("threads|all_threads_description")}`,
             );
             expect(foundButton).toMatchSnapshot();
+        });
+
+        it("sends an unthreaded read receipt when the Mark All Threads Read button is clicked", async () => {
+            const mockClient = createTestClient();
+            const mockEvent = {} as MatrixEvent;
+            const mockRoom = mkRoom(mockClient, "!roomId:example.org");
+            mockRoom.getLastLiveEvent.mockReturnValue(mockEvent);
+            const roomContextObject = {
+                room: mockRoom,
+            } as unknown as IRoomState;
+            const { container } = render(
+                <RoomContext.Provider value={roomContextObject}>
+                    <MatrixClientContext.Provider value={mockClient}>
+                        <ThreadPanelHeader
+                            empty={false}
+                            filterOption={ThreadFilterType.All}
+                            setFilterOption={() => undefined}
+                        />
+                    </MatrixClientContext.Provider>
+                </RoomContext.Provider>,
+            );
+            fireEvent.click(getByRole(container, "button", { name: "Mark all as read" }));
+            await waitFor(() =>
+                expect(mockClient.sendReadReceipt).toHaveBeenCalledWith(mockEvent, expect.anything(), true),
+            );
+        });
+
+        it("doesn't send a receipt if no room is in context", async () => {
+            const mockClient = createTestClient();
+            const { container } = render(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <ThreadPanelHeader
+                        empty={false}
+                        filterOption={ThreadFilterType.All}
+                        setFilterOption={() => undefined}
+                    />
+                </MatrixClientContext.Provider>,
+            );
+            fireEvent.click(getByRole(container, "button", { name: "Mark all as read" }));
+            await waitFor(() => expect(mockClient.sendReadReceipt).not.toHaveBeenCalled());
+        });
+
+        it("focuses the close button on FocusThreadsPanel dispatch", () => {
+            const ROOM_ID = "!roomId:example.org";
+
+            stubClient();
+            mockPlatformPeg();
+            const mockClient = mocked(MatrixClientPeg.safeGet());
+
+            const room = new Room(ROOM_ID, mockClient, mockClient.getUserId() ?? "", {
+                pendingEventOrdering: PendingEventOrdering.Detached,
+            });
+
+            render(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <RoomContext.Provider
+                        value={getRoomContext(room, {
+                            canSendMessages: true,
+                        })}
+                    >
+                        <ThreadPanel
+                            roomId={ROOM_ID}
+                            onClose={jest.fn()}
+                            resizeNotifier={new ResizeNotifier()}
+                            permalinkCreator={new RoomPermalinkCreator(room)}
+                        />
+                    </RoomContext.Provider>
+                </MatrixClientContext.Provider>,
+            );
+
+            // Unfocus it first so we know it's not just focused by coincidence
+            screen.getByTestId("base-card-close-button").blur();
+            expect(screen.getByTestId("base-card-close-button")).not.toHaveFocus();
+
+            defaultDispatcher.dispatch({ action: Action.FocusThreadsPanel }, true);
+
+            expect(screen.getByTestId("base-card-close-button")).toHaveFocus();
         });
     });
 
@@ -141,8 +237,8 @@ describe("ThreadPanel", () => {
             const found = screen.queryAllByRole("menuitemradio");
             expect(found).toHaveLength(2);
 
-            const allThreadsContent = `${_t("All threads")}${_t("Shows all threads from current room")}`;
-            const myThreadsContent = `${_t("My threads")}${_t("Shows all threads you've participated in")}`;
+            const allThreadsContent = `${_t("threads|all_threads")}${_t("threads|all_threads_description")}`;
+            const myThreadsContent = `${_t("threads|my_threads")}${_t("threads|my_threads_description")}`;
 
             const allThreadsOption = found.find((it) => it.textContent === allThreadsContent);
             const myThreadsOption = found.find((it) => it.textContent === myThreadsContent);

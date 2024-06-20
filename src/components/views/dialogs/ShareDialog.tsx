@@ -16,10 +16,7 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { User } from "matrix-js-sdk/src/models/user";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomMember, MatrixEvent, User } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../languageHandler";
 import QRCode from "../elements/QRCode";
@@ -65,11 +62,28 @@ const socials = [
 ];
 
 interface BaseProps {
+    /**
+     * A function that is called when the dialog is dismissed
+     */
     onFinished(): void;
+    /**
+     * An optional string to use as the dialog title.
+     * If not provided, an appropriate title for the target type will be used.
+     */
+    customTitle?: string;
+    /**
+     * An optional string to use as the dialog subtitle
+     */
+    subtitle?: string;
 }
 
 interface Props extends BaseProps {
-    target: Room | User | RoomMember;
+    /**
+     * The target to link to.
+     * This can be a Room, User, RoomMember, or MatrixEvent or an already computed URL.
+     * A <u>matrix.to</u> link will be generated out of it if it's not already a url.
+     */
+    target: Room | User | RoomMember | URL;
     permalinkCreator?: RoomPermalinkCreator;
 }
 
@@ -112,7 +126,9 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
     };
 
     private getUrl(): string {
-        if (this.props.target instanceof Room) {
+        if (this.props.target instanceof URL) {
+            return this.props.target.toString();
+        } else if (this.props.target instanceof Room) {
             if (this.state.linkSpecificEvent) {
                 const events = this.props.target.getLiveTimeline().getEvents();
                 return this.state.permalinkCreator!.forEvent(events[events.length - 1].getId()!);
@@ -132,8 +148,10 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
         let title: string | undefined;
         let checkbox: JSX.Element | undefined;
 
-        if (this.props.target instanceof Room) {
-            title = _t("Share Room");
+        if (this.props.target instanceof URL) {
+            title = this.props.customTitle ?? _t("share|title_link");
+        } else if (this.props.target instanceof Room) {
+            title = this.props.customTitle ?? _t("share|title_room");
 
             const events = this.props.target.getLiveTimeline().getEvents();
             if (events.length > 0) {
@@ -143,22 +161,22 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
                             checked={this.state.linkSpecificEvent}
                             onChange={this.onLinkSpecificEventCheckboxClick}
                         >
-                            {_t("Link to most recent message")}
+                            {_t("share|permalink_most_recent")}
                         </StyledCheckbox>
                     </div>
                 );
             }
         } else if (this.props.target instanceof User || this.props.target instanceof RoomMember) {
-            title = _t("Share User");
+            title = this.props.customTitle ?? _t("share|title_user");
         } else if (this.props.target instanceof MatrixEvent) {
-            title = _t("Share Room Message");
+            title = this.props.customTitle ?? _t("share|title_message");
             checkbox = (
                 <div>
                     <StyledCheckbox
                         checked={this.state.linkSpecificEvent}
                         onChange={this.onLinkSpecificEventCheckboxClick}
                     >
-                        {_t("Link to selected message")}
+                        {_t("share|permalink_message")}
                     </StyledCheckbox>
                 </div>
             );
@@ -209,9 +227,10 @@ export default class ShareDialog extends React.PureComponent<XOR<Props, EventPro
                 contentId="mx_Dialog_content"
                 onFinished={this.props.onFinished}
             >
+                {this.props.subtitle && <p>{this.props.subtitle}</p>}
                 <div className="mx_ShareDialog_content">
                     <CopyableText getTextToCopy={() => matrixToUrl}>
-                        <a title={_t("Link to room")} href={matrixToUrl} onClick={ShareDialog.onLinkClick}>
+                        <a title={_t("share|link_title")} href={matrixToUrl} onClick={ShareDialog.onLinkClick}>
                             {matrixToUrl}
                         </a>
                     </CopyableText>

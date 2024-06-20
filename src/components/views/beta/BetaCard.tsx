@@ -27,7 +27,6 @@ import SdkConfig from "../../../SdkConfig";
 import SettingsFlag from "../elements/SettingsFlag";
 import { useFeatureEnabled } from "../../../hooks/useSettings";
 import InlineSpinner from "../elements/InlineSpinner";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { shouldShowFeedback } from "../../../utils/Feedback";
 
 // XXX: Keep this around for re-use in future Betas
@@ -45,28 +44,24 @@ interface IBetaPillProps {
 
 export const BetaPill: React.FC<IBetaPillProps> = ({
     onClick,
-    tooltipTitle = _t("This is a beta feature"),
-    tooltipCaption = _t("Click for more info"),
+    tooltipTitle = _t("labs|beta_feature"),
+    tooltipCaption = _t("labs|click_for_info"),
 }) => {
     if (onClick) {
         return (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 className="mx_BetaCard_betaPill"
-                title={`${tooltipTitle} ${tooltipCaption}`}
-                tooltip={
-                    <div>
-                        <div className="mx_Tooltip_title">{tooltipTitle}</div>
-                        <div className="mx_Tooltip_sub">{tooltipCaption}</div>
-                    </div>
-                }
+                aria-label={`${tooltipTitle} ${tooltipCaption}`}
+                title={tooltipTitle}
+                caption={tooltipCaption}
                 onClick={onClick}
             >
-                {_t("Beta")}
-            </AccessibleTooltipButton>
+                {_t("common|beta")}
+            </AccessibleButton>
         );
     }
 
-    return <span className="mx_BetaCard_betaPill">{_t("Beta")}</span>;
+    return <span className="mx_BetaCard_betaPill">{_t("common|beta")}</span>;
 };
 
 const BetaCard: React.FC<IProps> = ({ title: titleOverride, featureId }) => {
@@ -86,7 +81,7 @@ const BetaCard: React.FC<IProps> = ({ title: titleOverride, featureId }) => {
                 }}
                 kind="primary"
             >
-                {_t("Feedback")}
+                {_t("common|feedback")}
             </AccessibleButton>
         );
     }
@@ -94,18 +89,16 @@ const BetaCard: React.FC<IProps> = ({ title: titleOverride, featureId }) => {
     let refreshWarning: string | undefined;
     if (requiresRefresh) {
         const brand = SdkConfig.get().brand;
-        refreshWarning = value
-            ? _t("Leaving the beta will reload %(brand)s.", { brand })
-            : _t("Joining the beta will reload %(brand)s.", { brand });
+        refreshWarning = value ? _t("labs|leave_beta_reload", { brand }) : _t("labs|join_beta_reload", { brand });
     }
 
     let content: ReactNode;
     if (busy) {
         content = <InlineSpinner />;
     } else if (value) {
-        content = _t("Leave the beta");
+        content = _t("labs|leave_beta");
     } else {
-        content = _t("Join the beta");
+        content = _t("labs|join_beta");
     }
 
     return (

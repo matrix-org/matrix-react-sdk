@@ -14,13 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import {
+    MatrixEvent,
+    ClientEvent,
+    EventType,
+    MatrixClient,
+    RoomStateEvent,
+    SyncState,
+    ClientStoppedError,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { ClientEvent, EventType, MatrixClient, RoomStateEvent } from "matrix-js-sdk/src/matrix";
-import { SyncState } from "matrix-js-sdk/src/sync";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
+import { CryptoSessionStateChange } from "@matrix-org/analytics-events/types/typescript/CryptoSessionStateChange";
 
+import { PosthogAnalytics } from "./PosthogAnalytics";
 import dis from "./dispatcher/dispatcher";
 import {
     hideToast as hideBulkUnverifiedSessionsToast,
@@ -46,6 +54,7 @@ import { recordClientInformation, removeClientInformation } from "./utils/device
 import SettingsStore, { CallbackFn } from "./settings/SettingsStore";
 import { UIFeature } from "./settings/UIFeature";
 import { isBulkUnverifiedDeviceReminderSnoozed } from "./utils/device/snoozeBulkUnverifiedDeviceReminder";
+import { getUserDeviceIds } from "./utils/crypto/deviceInfo";
 
 const KEY_BACKUP_POLL_INTERVAL = 5 * 60 * 1000;
 
@@ -55,10 +64,10 @@ export default class DeviceListener {
     private dismissed = new Set<string>();
     // has the user dismissed any of the various nag toasts to setup encryption on this device?
     private dismissedThisDeviceToast = false;
-    // cache of the key backup info
-    private keyBackupInfo: IKeyBackupInfo | null = null;
+    /** Cache of the info about the current key backup on the server. */
+    private keyBackupInfo: KeyBackupInfo | null = null;
+    /** When `keyBackupInfo` was last updated */
     private keyBackupFetchedAt: number | null = null;
-    private keyBackupStatusChecked = false;
     // We keep a list of our own device IDs so we can batch ones that were already
     // there the last time the app launched into a single toast, but display new
     // ones in their own toasts.
@@ -71,6 +80,10 @@ export default class DeviceListener {
     private shouldRecordClientInformation = false;
     private enableBulkUnverifiedSessionsReminder = true;
     private deviceClientInformationSettingWatcherRef: string | undefined;
+
+    // Remember the current analytics state to avoid sending the same event multiple times.
+    private analyticsVerificationState?: string;
+    private analyticsRecoveryState?: string;
 
     public static sharedInstance(): DeviceListener {
         if (!window.mxDeviceListener) window.mxDeviceListener = new DeviceListener();
@@ -161,12 +174,8 @@ export default class DeviceListener {
      */
     private async getDeviceIds(): Promise<Set<string>> {
         const cli = this.client;
-        const crypto = cli?.getCrypto();
-        if (crypto === undefined) return new Set();
-
-        const userId = cli!.getSafeUserId();
-        const devices = await crypto.getUserDeviceInfo([userId]);
-        return new Set(devices.get(userId)?.keys() ?? []);
+        if (!cli) return new Set();
+        return await getUserDeviceIds(cli, cli.getSafeUserId());
     }
 
     private onWillUpdateDevices = async (users: string[], initialFetch?: boolean): Promise<void> => {
@@ -240,9 +249,14 @@ export default class DeviceListener {
         this.updateClientInformation();
     };
 
-    // The server doesn't tell us when key backup is set up, so we poll
-    // & cache the result
-    private async getKeyBackupInfo(): Promise<IKeyBackupInfo | null> {
+    /**
+     * Fetch the key backup information from the server.
+     *
+     * The result is cached for `KEY_BACKUP_POLL_INTERVAL` ms to avoid repeated API calls.
+     *
+     * @returns The key backup info from the server, or `null` if there is no key backup.
+     */
+    private async getKeyBackupInfo(): Promise<KeyBackupInfo | null> {
         if (!this.client) return null;
         const now = new Date().getTime();
         if (
@@ -265,7 +279,17 @@ export default class DeviceListener {
         return cli?.getRooms().some((r) => cli.isRoomEncrypted(r.roomId)) ?? false;
     }
 
-    private async recheck(): Promise<void> {
+    private recheck(): void {
+        this.doRecheck().catch((e) => {
+            if (e instanceof ClientStoppedError) {
+                // the client was stopped while recheck() was running. Nothing left to do.
+            } else {
+                logger.error("Error during `DeviceListener.recheck`", e);
+            }
+        });
+    }
+
+    private async doRecheck(): Promise<void> {
         if (!this.running || !this.client) return; // we have been stopped
         const cli = this.client;
 
@@ -283,6 +307,7 @@ export default class DeviceListener {
         const crossSigningReady = await crypto.isCrossSigningReady();
         const secretStorageReady = await crypto.isSecretStorageReady();
         const allSystemsReady = crossSigningReady && secretStorageReady;
+        await this.reportCryptoSessionStateToAnalytics(cli);
 
         if (this.dismissedThisDeviceToast || allSystemsReady) {
             hideSetupEncryptionToast();
@@ -294,7 +319,7 @@ export default class DeviceListener {
 
             // cross signing isn't enabled - nag to enable it
             // There are 3 different toasts for:
-            if (!(await crypto.getCrossSigningKeyId()) && cli.getStoredCrossSigningForUser(cli.getSafeUserId())) {
+            if (!(await crypto.getCrossSigningKeyId()) && (await crypto.userHasCrossSigningKeys())) {
                 // Cross-signing on account but this device doesn't trust the master key (verify this session)
                 showSetupEncryptionToast(SetupKind.VERIFY_THIS_SESSION);
                 this.checkKeyBackupStatus();
@@ -389,18 +414,87 @@ export default class DeviceListener {
         this.displayingToastsForDeviceIds = newUnverifiedDeviceIds;
     }
 
+    /**
+     * Reports current recovery state to analytics.
+     * Checks if the session is verified and if the recovery is correctly set up (i.e all secrets known locally and in 4S).
+     * @param cli - the matrix client
+     * @private
+     */
+    private async reportCryptoSessionStateToAnalytics(cli: MatrixClient): Promise<void> {
+        const crypto = cli.getCrypto()!;
+        const secretStorageReady = await crypto.isSecretStorageReady();
+        const crossSigningStatus = await crypto.getCrossSigningStatus();
+        const backupInfo = await this.getKeyBackupInfo();
+        const is4SEnabled = (await cli.secretStorage.getDefaultKeyId()) != null;
+        const deviceVerificationStatus = await crypto.getDeviceVerificationStatus(cli.getUserId()!, cli.getDeviceId()!);
+
+        const verificationState =
+            deviceVerificationStatus?.signedByOwner && deviceVerificationStatus?.crossSigningVerified
+                ? "Verified"
+                : "NotVerified";
+
+        let recoveryState: "Disabled" | "Enabled" | "Incomplete";
+        if (!is4SEnabled) {
+            recoveryState = "Disabled";
+        } else {
+            const allCrossSigningSecretsCached =
+                crossSigningStatus.privateKeysCachedLocally.masterKey &&
+                crossSigningStatus.privateKeysCachedLocally.selfSigningKey &&
+                crossSigningStatus.privateKeysCachedLocally.userSigningKey;
+            if (backupInfo != null) {
+                // There is a backup. Check that all secrets are stored in 4S and known locally.
+                // If they are not, recovery is incomplete.
+                const backupPrivateKeyIsInCache = (await crypto.getSessionBackupPrivateKey()) != null;
+                if (secretStorageReady && allCrossSigningSecretsCached && backupPrivateKeyIsInCache) {
+                    recoveryState = "Enabled";
+                } else {
+                    recoveryState = "Incomplete";
+                }
+            } else {
+                // No backup. Just consider cross-signing secrets.
+                if (secretStorageReady && allCrossSigningSecretsCached) {
+                    recoveryState = "Enabled";
+                } else {
+                    recoveryState = "Incomplete";
+                }
+            }
+        }
+
+        if (this.analyticsVerificationState === verificationState && this.analyticsRecoveryState === recoveryState) {
+            // No changes, no need to send the event nor update the user properties
+            return;
+        }
+        this.analyticsRecoveryState = recoveryState;
+        this.analyticsVerificationState = verificationState;
+
+        // Update user properties
+        PosthogAnalytics.instance.setProperty("recoveryState", recoveryState);
+        PosthogAnalytics.instance.setProperty("verificationState", verificationState);
+
+        PosthogAnalytics.instance.trackEvent<CryptoSessionStateChange>({
+            eventName: "CryptoSessionState",
+            verificationState: verificationState,
+            recoveryState: recoveryState,
+        });
+    }
+
+    /**
+     * Check if key backup is enabled, and if not, raise an `Action.ReportKeyBackupNotEnabled` event (which will
+     * trigger an auto-rageshake).
+     */
     private checkKeyBackupStatus = async (): Promise<void> => {
         if (this.keyBackupStatusChecked || !this.client) {
             return;
         }
-        // returns null when key backup status hasn't finished being checked
-        const isKeyBackupEnabled = this.client.getKeyBackupEnabled();
-        this.keyBackupStatusChecked = isKeyBackupEnabled !== null;
+        const activeKeyBackupVersion = await this.client.getCrypto()?.getActiveSessionBackupVersion();
+        // if key backup is enabled, no need to check this ever again (XXX: why only when it is enabled?)
+        this.keyBackupStatusChecked = !!activeKeyBackupVersion;
 
-        if (isKeyBackupEnabled === false) {
+        if (!activeKeyBackupVersion) {
             dis.dispatch({ action: Action.ReportKeyBackupNotEnabled });
         }
     };
+    private keyBackupStatusChecked = false;
 
     private onRecordClientInformationSettingChange: CallbackFn = (
         _originalSettingName,

@@ -21,15 +21,15 @@ import {
     LOCAL_NOTIFICATION_SETTINGS_PREFIX,
     MatrixEvent,
     Room,
-    NotificationCountType,
     PushRuleActionName,
     TweakName,
     ConditionKind,
     IPushRuleCondition,
     PushRuleKind,
+    IThreepid,
+    ThreepidMedium,
 } from "matrix-js-sdk/src/matrix";
 import { randomString } from "matrix-js-sdk/src/randomstring";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { act, fireEvent, getByTestId, render, screen, waitFor, within } from "@testing-library/react";
 import { mocked } from "jest-mock";
 import userEvent from "@testing-library/user-event";
@@ -44,11 +44,6 @@ jest.mock("matrix-js-sdk/src/logger");
 
 // Avoid indirectly importing any eagerly created stores that would require extra setup
 jest.mock("../../../../src/Notifier");
-
-// Fake random strings to give a predictable snapshot for IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: jest.fn(),
-}));
 
 const masterRule: IPushRule = {
     actions: [PushRuleActionName.DontNotify],
@@ -904,8 +899,7 @@ describe("<Notifications />", () => {
                 user: "@alice:example.org",
                 ts: 1,
             });
-            room.addLiveEvents([message]);
-            room.setUnreadNotificationCount(NotificationCountType.Total, 1);
+            await room.addLiveEvents([message]);
 
             const { container } = await getComponentAndWait();
             const clearNotificationEl = getByTestId(container, "clear-notifications");
@@ -913,11 +907,8 @@ describe("<Notifications />", () => {
             fireEvent.click(clearNotificationEl);
 
             expect(clearNotificationEl.className).toContain("mx_AccessibleButton_disabled");
+            await waitFor(() => expect(clearNotificationEl.className).not.toContain("mx_AccessibleButton_disabled"));
             expect(mockClient.sendReadReceipt).toHaveBeenCalled();
-
-            await waitFor(() => {
-                expect(clearNotificationEl).not.toBeInTheDocument();
-            });
         });
     });
 });

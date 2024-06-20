@@ -16,6 +16,7 @@ limitations under the License.
 
 import { MEGOLM_ALGORITHM } from "matrix-js-sdk/src/crypto/olmlib";
 import { EventType, KNOWN_SAFE_ROOM_VERSION, MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../src/models/LocalRoom";
 import { determineCreateRoomEncryptionOption, Member } from "../../../src/utils/direct-messages";
@@ -45,7 +46,6 @@ export async function createDmLocalRoom(client: MatrixClient, targets: Member[])
                 room_version: KNOWN_SAFE_ROOM_VERSION,
             },
             state_key: "",
-            user_id: userId,
             sender: userId,
             room_id: localRoom.roomId,
             origin_server_ts: Date.now(),
@@ -61,7 +61,6 @@ export async function createDmLocalRoom(client: MatrixClient, targets: Member[])
                 content: {
                     algorithm: MEGOLM_ALGORITHM,
                 },
-                user_id: userId,
                 sender: userId,
                 state_key: "",
                 room_id: localRoom.roomId,
@@ -76,10 +75,9 @@ export async function createDmLocalRoom(client: MatrixClient, targets: Member[])
             type: EventType.RoomMember,
             content: {
                 displayname: userId,
-                membership: "join",
+                membership: KnownMembership.Join,
             },
             state_key: userId,
-            user_id: userId,
             sender: userId,
             room_id: localRoom.roomId,
         }),
@@ -93,7 +91,7 @@ export async function createDmLocalRoom(client: MatrixClient, targets: Member[])
                 content: {
                     displayname: target.name,
                     avatar_url: target.getMxcAvatarUrl() ?? undefined,
-                    membership: "invite",
+                    membership: KnownMembership.Invite,
                     isDirect: true,
                 },
                 state_key: target.userId,
@@ -108,7 +106,7 @@ export async function createDmLocalRoom(client: MatrixClient, targets: Member[])
                 content: {
                     displayname: target.name,
                     avatar_url: target.getMxcAvatarUrl() ?? undefined,
-                    membership: "join",
+                    membership: KnownMembership.Join,
                 },
                 state_key: target.userId,
                 sender: target.userId,
@@ -118,7 +116,7 @@ export async function createDmLocalRoom(client: MatrixClient, targets: Member[])
     });
 
     localRoom.targets = targets;
-    localRoom.updateMyMembership("join");
+    localRoom.updateMyMembership(KnownMembership.Join);
     localRoom.addLiveEvents(events);
     localRoom.currentState.setStateEvents(events);
     localRoom.name = localRoom.getDefaultRoomName(client.getUserId()!);

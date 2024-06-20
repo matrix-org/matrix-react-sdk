@@ -21,8 +21,12 @@ import counterpart from "counterpart";
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
-import { MapWithDefault, safeSet } from "matrix-js-sdk/src/utils";
+import { MapWithDefault } from "matrix-js-sdk/src/utils";
+import { normalizeLanguageKey, TranslationKey as _TranslationKey, KEY_SEPARATOR } from "matrix-web-i18n";
+import { TranslationStringsObject } from "@matrix-org/react-sdk-module-api";
+import _ from "lodash";
 
+import type Translations from "./i18n/strings/en_EN.json";
 import SettingsStore from "./settings/SettingsStore";
 import PlatformPeg from "./PlatformPeg";
 import { SettingLevel } from "./settings/SettingLevel";
@@ -33,6 +37,8 @@ import { ModuleRunner } from "./modules/ModuleRunner";
 // @ts-ignore - $webapp is a webpack resolve alias pointing to the output directory, see webpack config
 import webpackLangJsonUrl from "$webapp/i18n/languages.json";
 
+export { normalizeLanguageKey, getNormalizedLanguageKeys } from "matrix-web-i18n";
+
 const i18nFolder = "i18n/";
 
 // Control whether to also return original, untranslated strings
@@ -40,13 +46,13 @@ const i18nFolder = "i18n/";
 const ANNOTATE_STRINGS = false;
 
 // We use english strings as keys, some of which contain full stops
-counterpart.setSeparator("|");
+counterpart.setSeparator(KEY_SEPARATOR);
 
 // see `translateWithFallback` for an explanation of fallback handling
 const FALLBACK_LOCALE = "en";
 counterpart.setFallbackLocale(FALLBACK_LOCALE);
 
-interface ErrorOptions {
+export interface ErrorOptions {
     // Because we're mixing the subsitution variables and `cause` into the same object
     // below, we want them to always explicitly say whether there is an underlying error
     // or not to avoid typos of "cause" slipping through unnoticed.
@@ -72,12 +78,11 @@ interface ErrorOptions {
 export class UserFriendlyError extends Error {
     public readonly translatedMessage: string;
 
-    public constructor(message: string, substitutionVariablesAndCause?: IVariables & ErrorOptions) {
+    public constructor(message: TranslationKey, substitutionVariablesAndCause?: IVariables & ErrorOptions) {
         const errorOptions = {
             cause: substitutionVariablesAndCause?.cause,
         };
-        // Prevent "Could not find /%\(cause\)s/g in x" logs to the console by removing
-        // it from the list
+        // Prevent "Could not find /%\(cause\)s/g in x" logs to the console by removing it from the list
         const substitutionVariables = { ...substitutionVariablesAndCause };
         delete substitutionVariables["cause"];
 
@@ -93,17 +98,27 @@ export class UserFriendlyError extends Error {
 
 export function getUserLanguage(): string {
     const language = SettingsStore.getValue("language", null, /*excludeDefault:*/ true);
-    if (language) {
+    if (typeof language === "string" && language !== "") {
         return language;
     } else {
         return normalizeLanguageKey(getLanguageFromBrowser());
     }
 }
 
+/**
+ * A type representing the union of possible keys into the translation file using `|` delimiter to access nested fields.
+ * @example `common|error` to access `error` within the `common` sub-object.
+ * {
+ *     "common": {
+ *         "error": "Error"
+ *     }
+ * }
+ */
+export type TranslationKey = _TranslationKey<typeof Translations>;
+
 // Function which only purpose is to mark that a string is translatable
 // Does not actually do anything. It's helpful for automatic extraction of translatable strings
-export function _td(s: string): string {
-    // eslint-disable-line @typescript-eslint/naming-convention
+export function _td(s: TranslationKey): TranslationKey {
     return s;
 }
 
@@ -176,6 +191,9 @@ function safeCounterpartTranslate(text: string, variables?: IVariables): { trans
     return translateWithFallback(text, options);
 }
 
+/**
+ * The value a variable or tag can take for a translation interpolation.
+ */
 type SubstitutionValue = number | string | React.ReactNode | ((sub: string) => React.ReactNode);
 
 export interface IVariables {
@@ -189,7 +207,7 @@ export type TranslatedString = string | React.ReactNode;
 
 // For development/testing purposes it is useful to also output the original string
 // Don't do that for release versions
-const annotateStrings = (result: TranslatedString, translationKey: string): TranslatedString => {
+const annotateStrings = (result: TranslatedString, translationKey: TranslationKey): TranslatedString => {
     if (!ANNOTATE_STRINGS) {
         return result;
     }
@@ -222,14 +240,22 @@ const annotateStrings = (result: TranslatedString, translationKey: string): Tran
  * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
 // eslint-next-line @typescript-eslint/naming-convention
-export function _t(text: string, variables?: IVariables): string;
-export function _t(text: string, variables: IVariables | undefined, tags: Tags): React.ReactNode;
-export function _t(text: string, variables?: IVariables, tags?: Tags): TranslatedString {
+export function _t(text: TranslationKey, variables?: IVariables): string;
+export function _t(text: TranslationKey, variables: IVariables | undefined, tags: Tags): React.ReactNode;
+export function _t(text: TranslationKey, variables?: IVariables, tags?: Tags): TranslatedString {
     // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
     const { translated } = safeCounterpartTranslate(text, variables);
     const substituted = substitute(translated, variables, tags);
 
     return annotateStrings(substituted, text);
+}
+
+/**
+ * Utility function to look up a string by its translation key without resolving variables & tags
+ * @param key - the translation key to return the value for
+ */
+export function lookupString(key: TranslationKey): string {
+    return safeCounterpartTranslate(key, {}).translated;
 }
 
 /*
@@ -243,9 +269,9 @@ export function _t(text: string, variables?: IVariables, tags?: Tags): Translate
  * or translation used a fallback locale, otherwise a string
  */
 // eslint-next-line @typescript-eslint/naming-convention
-export function _tDom(text: string, variables?: IVariables): TranslatedString;
-export function _tDom(text: string, variables: IVariables, tags: Tags): React.ReactNode;
-export function _tDom(text: string, variables?: IVariables, tags?: Tags): TranslatedString {
+export function _tDom(text: TranslationKey, variables?: IVariables): TranslatedString;
+export function _tDom(text: TranslationKey, variables: IVariables, tags: Tags): React.ReactNode;
+export function _tDom(text: TranslationKey, variables?: IVariables, tags?: Tags): TranslatedString {
     // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
     const { translated, isFallback } = safeCounterpartTranslate(text, variables);
     const substituted = substitute(translated, variables, tags);
@@ -303,10 +329,10 @@ export function substitute(text: string, variables?: IVariables, tags?: Tags): s
     return result;
 }
 
-/*
+/**
  * Replace parts of a text using regular expressions
- * @param {string} text The text on which to perform substitutions
- * @param {object} mapping A mapping from regular expressions in string form to replacement string or a
+ * @param text - The text on which to perform substitutions
+ * @param mapping - A mapping from regular expressions in string form to replacement string or a
  * function which will receive as the argument the capture groups defined in the regexp. E.g.
  * { 'Hello (.?) World': (sub) => sub.toUpperCase() }
  *
@@ -433,10 +459,7 @@ export function setMissingEntryGenerator(f: (value: string) => void): void {
 }
 
 type Languages = {
-    [lang: string]: {
-        fileName: string;
-        label: string;
-    };
+    [lang: string]: string;
 };
 
 export function setLanguage(preferredLangs: string | string[]): Promise<void> {
@@ -467,7 +490,7 @@ export function setLanguage(preferredLangs: string | string[]): Promise<void> {
                 logger.error("Unable to find an appropriate language");
             }
 
-            return getLanguageRetry(i18nFolder + availLangs[langToUse].fileName);
+            return getLanguageRetry(i18nFolder + availLangs[langToUse]);
         })
         .then(async (langData): Promise<ICounterpartTranslation | undefined> => {
             counterpart.registerTranslations(langToUse, langData);
@@ -481,7 +504,7 @@ export function setLanguage(preferredLangs: string | string[]): Promise<void> {
 
             // Set 'en' as fallback language:
             if (langToUse !== "en") {
-                return getLanguageRetry(i18nFolder + availLangs["en"].fileName);
+                return getLanguageRetry(i18nFolder + availLangs["en"]);
             }
         })
         .then(async (langData): Promise<void> => {
@@ -492,21 +515,23 @@ export function setLanguage(preferredLangs: string | string[]): Promise<void> {
 
 type Language = {
     value: string;
-    label: string;
+    label: string; // translated
+    labelInTargetLanguage: string; // translated
 };
 
-export function getAllLanguagesFromJson(): Promise<Language[]> {
-    return getLangsJson().then((langsObject) => {
-        const langs: Language[] = [];
-        for (const langKey in langsObject) {
-            if (langsObject.hasOwnProperty(langKey)) {
-                langs.push({
-                    value: langKey,
-                    label: langsObject[langKey].label,
-                });
-            }
-        }
-        return langs;
+export async function getAllLanguagesFromJson(): Promise<string[]> {
+    return Object.keys(await getLangsJson());
+}
+
+export async function getAllLanguagesWithLabels(): Promise<Language[]> {
+    const languageNames = new Intl.DisplayNames([getUserLanguage()], { type: "language", style: "short" });
+    const languages = await getAllLanguagesFromJson();
+    return languages.map<Language>((langKey) => {
+        return {
+            value: langKey,
+            label: languageNames.of(langKey)!,
+            labelInTargetLanguage: new Intl.DisplayNames([langKey], { type: "language", style: "short" }).of(langKey)!,
+        };
     });
 }
 
@@ -518,41 +543,6 @@ export function getLanguagesFromBrowser(): readonly string[] {
 
 export function getLanguageFromBrowser(): string {
     return getLanguagesFromBrowser()[0];
-}
-
-/**
- * Turns a language string, normalises it,
- * (see normalizeLanguageKey) into an array of language strings
- * with fallback to generic languages
- * (eg. 'pt-BR' => ['pt-br', 'pt'])
- *
- * @param {string} language The input language string
- * @return {string[]} List of normalised languages
- */
-export function getNormalizedLanguageKeys(language: string): string[] {
-    const languageKeys: string[] = [];
-    const normalizedLanguage = normalizeLanguageKey(language);
-    const languageParts = normalizedLanguage.split("-");
-    if (languageParts.length === 2 && languageParts[0] === languageParts[1]) {
-        languageKeys.push(languageParts[0]);
-    } else {
-        languageKeys.push(normalizedLanguage);
-        if (languageParts.length === 2) {
-            languageKeys.push(languageParts[0]);
-        }
-    }
-    return languageKeys;
-}
-
-/**
- * Returns a language string with underscores replaced with
- * hyphens, and lowercased.
- *
- * @param {string} language The language string to be normalized
- * @returns {string} The normalized language string
- */
-export function normalizeLanguageKey(language: string): string {
-    return language.toLowerCase().replace("_", "-");
 }
 
 export function getCurrentLanguage(): string {
@@ -641,34 +631,26 @@ async function getLanguage(langPath: string): Promise<ICounterpartTranslation> {
     return res.json();
 }
 
-export interface ICustomTranslations {
-    // Format is a map of english string to language to override
-    [str: string]: {
-        [lang: string]: string;
-    };
-}
-
-let cachedCustomTranslations: Optional<ICustomTranslations> = null;
+let cachedCustomTranslations: Optional<TranslationStringsObject> = null;
 let cachedCustomTranslationsExpire = 0; // zero to trigger expiration right away
 
 // This awkward class exists so the test runner can get at the function. It is
 // not intended for practical or realistic usage.
 export class CustomTranslationOptions {
-    public static lookupFn?: (url: string) => ICustomTranslations;
+    public static lookupFn?: (url: string) => TranslationStringsObject;
 
     private constructor() {
         // static access for tests only
     }
 }
 
-function doRegisterTranslations(customTranslations: ICustomTranslations): void {
-    // We convert the operator-friendly version into something counterpart can
-    // consume.
+function doRegisterTranslations(customTranslations: TranslationStringsObject): void {
+    // We convert the operator-friendly version into something counterpart can consume.
     // Map: lang → Record: string → translation
     const langs: MapWithDefault<string, Record<string, string>> = new MapWithDefault(() => ({}));
-    for (const [str, translations] of Object.entries(customTranslations)) {
-        for (const [lang, newStr] of Object.entries(translations)) {
-            safeSet(langs.getOrCreate(lang), str, newStr);
+    for (const [translationKey, translations] of Object.entries(customTranslations)) {
+        for (const [lang, translation] of Object.entries(translations)) {
+            _.set(langs.getOrCreate(lang), translationKey.split(KEY_SEPARATOR), translation);
         }
     }
 
@@ -698,11 +680,11 @@ export async function registerCustomTranslations({
     if (!lookupUrl) return; // easy - nothing to do
 
     try {
-        let json: Optional<ICustomTranslations>;
+        let json: Optional<TranslationStringsObject>;
         if (testOnlyIgnoreCustomTranslationsCache || Date.now() >= cachedCustomTranslationsExpire) {
             json = CustomTranslationOptions.lookupFn
                 ? CustomTranslationOptions.lookupFn(lookupUrl)
-                : ((await (await fetch(lookupUrl)).json()) as ICustomTranslations);
+                : ((await (await fetch(lookupUrl)).json()) as TranslationStringsObject);
             cachedCustomTranslations = json;
 
             // Set expiration to the future, but not too far. Just trying to avoid

@@ -15,12 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, EventType, RelationType, MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 import { defer } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
@@ -157,20 +154,16 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
         if (this.state.error) {
             const { error } = this.state;
             if (error.errcode === "M_UNRECOGNIZED") {
-                content = (
-                    <p className="mx_MessageEditHistoryDialog_error">
-                        {_t("Your homeserver doesn't seem to support this feature.")}
-                    </p>
-                );
+                content = <p className="mx_MessageEditHistoryDialog_error">{_t("error|edit_history_unsupported")}</p>;
             } else if (error.errcode) {
                 // some kind of error from the homeserver
-                content = <p className="mx_MessageEditHistoryDialog_error">{_t("Something went wrong!")}</p>;
+                content = <p className="mx_MessageEditHistoryDialog_error">{_t("error|something_went_wrong")}</p>;
             } else {
                 content = (
                     <p className="mx_MessageEditHistoryDialog_error">
-                        {_t("Cannot reach homeserver")}
+                        {_t("cannot_reach_homeserver")}
                         <br />
-                        {_t("Ensure you have a stable internet connection, or get in touch with the server admin")}
+                        {_t("cannot_reach_homeserver_detail")}
                     </p>
                 );
             }
@@ -193,7 +186,7 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
                 className="mx_MessageEditHistoryDialog"
                 hasCancel={true}
                 onFinished={this.props.onFinished}
-                title={_t("Message edits")}
+                title={_t("message_edit_dialog_title")}
             >
                 {content}
             </BaseDialog>

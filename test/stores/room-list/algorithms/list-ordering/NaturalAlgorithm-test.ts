@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ConditionKind, EventType, MatrixEvent, PushRuleActionName, Room } from "matrix-js-sdk/src/matrix";
-import { ClientEvent } from "matrix-js-sdk/src/client";
+import { ConditionKind, EventType, MatrixEvent, PushRuleActionName, Room, ClientEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { NaturalAlgorithm } from "../../../../../src/stores/room-list/algorithms/list-ordering/NaturalAlgorithm";
@@ -27,7 +26,7 @@ import { RoomNotificationStateStore } from "../../../../../src/stores/notificati
 import * as RoomNotifs from "../../../../../src/RoomNotifs";
 import { getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../../test-utils";
 import { DEFAULT_PUSH_RULES, makePushRule } from "../../../../test-utils/pushRules";
-import { NotificationColor } from "../../../../../src/stores/notifications/NotificationColor";
+import { NotificationLevel } from "../../../../../src/stores/notifications/NotificationLevel";
 
 describe("NaturalAlgorithm", () => {
     const userId = "@alice:server.org";
@@ -198,7 +197,7 @@ describe("NaturalAlgorithm", () => {
             jest.spyOn(RoomNotifs, "determineUnreadState").mockReturnValue({
                 symbol: null,
                 count: 0,
-                color: NotificationColor.None,
+                level: NotificationLevel.None,
             });
         });
 

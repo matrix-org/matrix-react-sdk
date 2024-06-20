@@ -16,14 +16,13 @@ limitations under the License.
 */
 
 import React from "react";
-import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixError } from "matrix-js-sdk/src/matrix";
 
 import { _t, UserFriendlyError } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Modal from "../../../../Modal";
-import AddThreepid, { Binding } from "../../../../AddThreepid";
+import AddThreepid, { Binding, ThirdPartyIdentifier } from "../../../../AddThreepid";
 import ErrorDialog, { extractErrorMessageFromError } from "../../dialogs/ErrorDialog";
 import SettingsSubsection from "../shared/SettingsSubsection";
 import InlineSpinner from "../../elements/InlineSpinner";
@@ -46,7 +45,8 @@ TODO: Reduce all the copying between account vs. discovery components.
 */
 
 interface IEmailAddressProps {
-    email: IThreepid;
+    email: ThirdPartyIdentifier;
+    disabled?: boolean;
 }
 
 interface IEmailAddressState {
@@ -78,10 +78,6 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
     }
 
     private async changeBinding({ bind, label, errorTitle }: Binding): Promise<void> {
-        if (!(await MatrixClientPeg.safeGet().doesServerSupportSeparateAddAndBind())) {
-            return this.changeBindingTangledAddBind({ bind, label, errorTitle });
-        }
-
         const { medium, address } = this.props.email;
 
         try {
@@ -109,42 +105,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
             });
             Modal.createDialog(ErrorDialog, {
                 title: errorTitle,
-                description: extractErrorMessageFromError(err, _t("Operation failed")),
-            });
-        }
-    }
-
-    private async changeBindingTangledAddBind({ bind, label, errorTitle }: Binding): Promise<void> {
-        const { medium, address } = this.props.email;
-
-        const task = new AddThreepid(MatrixClientPeg.safeGet());
-        this.setState({
-            verifying: true,
-            continueDisabled: true,
-            addTask: task,
-        });
-
-        try {
-            await MatrixClientPeg.safeGet().deleteThreePid(medium, address);
-            if (bind) {
-                await task.bindEmailAddress(address);
-            } else {
-                await task.addEmailAddress(address);
-            }
-            this.setState({
-                continueDisabled: false,
-                bound: bind,
-            });
-        } catch (err) {
-            logger.error(`changeBindingTangledAddBind: Unable to ${label} email address ${address}`, err);
-            this.setState({
-                verifying: false,
-                continueDisabled: false,
-                addTask: null,
-            });
-            Modal.createDialog(ErrorDialog, {
-                title: errorTitle,
-                description: extractErrorMessageFromError(err, _t("Operation failed")),
+                description: extractErrorMessageFromError(err, _t("invite|failed_generic")),
             });
         }
     }
@@ -155,7 +116,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         this.changeBinding({
             bind: false,
             label: "revoke",
-            errorTitle: _t("Unable to revoke sharing for email address"),
+            errorTitle: _t("settings|general|error_revoke_email_discovery"),
         });
     };
 
@@ -165,7 +126,7 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         this.changeBinding({
             bind: true,
             label: "share",
-            errorTitle: _t("Unable to share email address"),
+            errorTitle: _t("settings|general|error_share_email_discovery"),
         });
     };
 
@@ -191,16 +152,14 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
 
             if (underlyingError instanceof MatrixError && underlyingError.errcode === "M_THREEPID_AUTH_FAILED") {
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Your email address hasn't been verified yet"),
-                    description: _t(
-                        "Click the link in the email you received to verify and then click continue again.",
-                    ),
+                    title: _t("settings|general|email_not_verified"),
+                    description: _t("settings|general|email_verification_instructions"),
                 });
             } else {
                 logger.error("Unable to verify email address: " + err);
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("Unable to verify email address."),
-                    description: extractErrorMessageFromError(err, _t("Operation failed")),
+                    title: _t("settings|general|error_email_verification"),
+                    description: extractErrorMessageFromError(err, _t("invite|failed_generic")),
                 });
             }
         } finally {
@@ -217,14 +176,14 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
         if (verifying) {
             status = (
                 <span>
-                    {_t("Verify the link in your inbox")}
+                    {_t("settings|general|discovery_email_verification_instructions")}
                     <AccessibleButton
                         className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                         kind="primary_sm"
                         onClick={this.onContinueClick}
                         disabled={this.state.continueDisabled}
                     >
-                        {_t("Complete")}
+                        {_t("action|complete")}
                     </AccessibleButton>
                 </span>
             );
@@ -234,8 +193,9 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                     className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     kind="danger_sm"
                     onClick={this.onRevokeClick}
+                    disabled={this.props.disabled}
                 >
-                    {_t("Revoke")}
+                    {_t("action|revoke")}
                 </AccessibleButton>
             );
         } else {
@@ -244,8 +204,9 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
                     className="mx_GeneralUserSettingsTab_section--discovery_existing_button"
                     kind="primary_sm"
                     onClick={this.onShareClick}
+                    disabled={this.props.disabled}
                 >
-                    {_t("Share")}
+                    {_t("action|share")}
                 </AccessibleButton>
             );
         }
@@ -259,8 +220,9 @@ export class EmailAddress extends React.Component<IEmailAddressProps, IEmailAddr
     }
 }
 interface IProps {
-    emails: IThreepid[];
+    emails: ThirdPartyIdentifier[];
     isLoading?: boolean;
+    disabled?: boolean;
 }
 
 export default class EmailAddresses extends React.Component<IProps> {
@@ -270,7 +232,7 @@ export default class EmailAddresses extends React.Component<IProps> {
             content = <InlineSpinner />;
         } else if (this.props.emails.length > 0) {
             content = this.props.emails.map((e) => {
-                return <EmailAddress email={e} key={e.address} />;
+                return <EmailAddress email={e} key={e.address} disabled={this.props.disabled} />;
             });
         }
 
@@ -278,10 +240,8 @@ export default class EmailAddresses extends React.Component<IProps> {
 
         return (
             <SettingsSubsection
-                heading={_t("Email addresses")}
-                description={
-                    (!hasEmails && _t("Discovery options will appear once you have added an email above.")) || undefined
-                }
+                heading={_t("settings|general|emails_heading")}
+                description={(!hasEmails && _t("settings|general|discovery_email_empty")) || undefined}
                 stretchContent
             >
                 {content}

@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useMemo } from "react";
+import { Icon as CameraCircle } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 
 import { Icon as HomeIcon } from "../../../../../../res/img/element-icons/home.svg";
 import { Icon as FavoriteIcon } from "../../../../../../res/img/element-icons/roomlist/favorite.svg";
@@ -30,6 +31,7 @@ import PosthogTrackers from "../../../../../PosthogTrackers";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
+import SdkConfig from "../../../../../SdkConfig";
 
 type InteractionName = "WebSettingsSidebarTabSpacesCheckbox" | "WebQuickSettingsPinToSidebarCheckbox";
 
@@ -44,7 +46,14 @@ export const onMetaSpaceChangeFactory =
         PosthogTrackers.trackInteraction(
             interactionName,
             e,
-            [MetaSpace.Home, null, MetaSpace.Favourites, MetaSpace.People, MetaSpace.Orphans].indexOf(metaSpace),
+            [
+                MetaSpace.Home,
+                null,
+                MetaSpace.Favourites,
+                MetaSpace.People,
+                MetaSpace.Orphans,
+                MetaSpace.VideoRooms,
+            ].indexOf(metaSpace),
         );
     };
 
@@ -54,8 +63,15 @@ const SidebarUserSettingsTab: React.FC = () => {
         [MetaSpace.Favourites]: favouritesEnabled,
         [MetaSpace.People]: peopleEnabled,
         [MetaSpace.Orphans]: orphansEnabled,
+        [MetaSpace.VideoRooms]: videoRoomsEnabled,
     } = useSettingValue<Record<MetaSpace, boolean>>("Spaces.enabledMetaSpaces");
     const allRoomsInHome = useSettingValue<boolean>("Spaces.allRoomsInHome");
+    const guestSpaUrl = useMemo(() => {
+        return SdkConfig.get("element_call").guest_spa_url;
+    }, []);
+    const conferenceSubsectionText =
+        _t("settings|sidebar|metaspaces_video_rooms_description") +
+        (guestSpaUrl ? " " + _t("settings|sidebar|metaspaces_video_rooms_description_invite_extension") : "");
 
     const onAllRoomsInHomeToggle = async (event: ChangeEvent<HTMLInputElement>): Promise<void> => {
         await SettingsStore.setValue("Spaces.allRoomsInHome", null, SettingLevel.ACCOUNT, event.target.checked);
@@ -64,13 +80,10 @@ const SidebarUserSettingsTab: React.FC = () => {
 
     return (
         <SettingsTab>
-            <SettingsSection heading={_t("Sidebar")}>
+            <SettingsSection>
                 <SettingsSubsection
-                    heading={_t("Spaces to show")}
-                    description={_t(
-                        "Spaces are ways to group rooms and people. " +
-                            "Alongside the spaces you're in, you can use some pre-built ones too.",
-                    )}
+                    heading={_t("settings|sidebar|metaspaces_subsection")}
+                    description={_t("settings|sidebar|spaces_explainer")}
                 >
                     <StyledCheckbox
                         checked={!!homeEnabled}
@@ -80,10 +93,10 @@ const SidebarUserSettingsTab: React.FC = () => {
                     >
                         <SettingsSubsectionText>
                             <HomeIcon />
-                            {_t("Home")}
+                            {_t("common|home")}
                         </SettingsSubsectionText>
                         <SettingsSubsectionText>
-                            {_t("Home is useful for getting an overview of everything.")}
+                            {_t("settings|sidebar|metaspaces_home_description")}
                         </SettingsSubsectionText>
                     </StyledCheckbox>
 
@@ -94,9 +107,11 @@ const SidebarUserSettingsTab: React.FC = () => {
                         className="mx_SidebarUserSettingsTab_checkbox mx_SidebarUserSettingsTab_homeAllRoomsCheckbox"
                         data-testid="mx_SidebarUserSettingsTab_homeAllRoomsCheckbox"
                     >
-                        <SettingsSubsectionText>{_t("Show all rooms")}</SettingsSubsectionText>
                         <SettingsSubsectionText>
-                            {_t("Show all your rooms in Home, even if they're in a space.")}
+                            {_t("settings|sidebar|metaspaces_home_all_rooms")}
+                        </SettingsSubsectionText>
+                        <SettingsSubsectionText>
+                            {_t("settings|sidebar|metaspaces_home_all_rooms_description")}
                         </SettingsSubsectionText>
                     </StyledCheckbox>
 
@@ -107,10 +122,10 @@ const SidebarUserSettingsTab: React.FC = () => {
                     >
                         <SettingsSubsectionText>
                             <FavoriteIcon />
-                            {_t("Favourites")}
+                            {_t("common|favourites")}
                         </SettingsSubsectionText>
                         <SettingsSubsectionText>
-                            {_t("Group all your favourite rooms and people in one place.")}
+                            {_t("settings|sidebar|metaspaces_favourites_description")}
                         </SettingsSubsectionText>
                     </StyledCheckbox>
 
@@ -121,9 +136,11 @@ const SidebarUserSettingsTab: React.FC = () => {
                     >
                         <SettingsSubsectionText>
                             <MembersIcon />
-                            {_t("People")}
+                            {_t("common|people")}
                         </SettingsSubsectionText>
-                        <SettingsSubsectionText>{_t("Group all your people in one place.")}</SettingsSubsectionText>
+                        <SettingsSubsectionText>
+                            {_t("settings|sidebar|metaspaces_people_description")}
+                        </SettingsSubsectionText>
                     </StyledCheckbox>
 
                     <StyledCheckbox
@@ -133,12 +150,28 @@ const SidebarUserSettingsTab: React.FC = () => {
                     >
                         <SettingsSubsectionText>
                             <HashCircleIcon />
-                            {_t("Rooms outside of a space")}
+                            {_t("settings|sidebar|metaspaces_orphans")}
                         </SettingsSubsectionText>
                         <SettingsSubsectionText>
-                            {_t("Group all your rooms that aren't part of a space in one place.")}
+                            {_t("settings|sidebar|metaspaces_orphans_description")}
                         </SettingsSubsectionText>
                     </StyledCheckbox>
+                    {SettingsStore.getValue("feature_video_rooms") && (
+                        <StyledCheckbox
+                            checked={!!videoRoomsEnabled}
+                            onChange={onMetaSpaceChangeFactory(
+                                MetaSpace.VideoRooms,
+                                "WebSettingsSidebarTabSpacesCheckbox",
+                            )}
+                            className="mx_SidebarUserSettingsTab_checkbox"
+                        >
+                            <SettingsSubsectionText>
+                                <CameraCircle />
+                                {_t("settings|sidebar|metaspaces_video_rooms")}
+                            </SettingsSubsectionText>
+                            <SettingsSubsectionText>{conferenceSubsectionText}</SettingsSubsectionText>
+                        </StyledCheckbox>
+                    )}
                 </SettingsSubsection>
             </SettingsSection>
         </SettingsTab>

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { IPreview } from "./IPreview";
 import { TagID } from "../models";
@@ -41,13 +41,13 @@ export class ReactionEventPreview implements IPreview {
 
         const message = MessagePreviewStore.instance.generatePreviewForEvent(relatedEvent);
         if (isSelf(event)) {
-            return _t("You reacted %(reaction)s to %(message)s", {
+            return _t("event_preview|m.reaction|you", {
                 reaction,
                 message,
             });
         }
 
-        return _t("%(sender)s reacted %(reaction)s to %(message)s", {
+        return _t("event_preview|m.reaction|user", {
             sender: getSenderName(event),
             reaction,
             message,

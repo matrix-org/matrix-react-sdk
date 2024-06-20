@@ -16,12 +16,17 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
-import { Filter } from "matrix-js-sdk/src/filter";
-import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
-import { Direction } from "matrix-js-sdk/src/models/event-timeline";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
+import {
+    Filter,
+    EventTimelineSet,
+    IRoomTimelineData,
+    Direction,
+    MatrixEvent,
+    MatrixEventEvent,
+    Room,
+    RoomEvent,
+    TimelineWindow,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -226,7 +231,7 @@ class FilePanel extends React.Component<IProps, IState> {
                 <BaseCard className="mx_FilePanel mx_RoomView_messageListWrapper" onClose={this.props.onClose}>
                     <div className="mx_RoomView_empty">
                         {_t(
-                            "You must <a>register</a> to use this functionality",
+                            "file_panel|guest_note",
                             {},
                             {
                                 a: (sub) => (
@@ -242,7 +247,7 @@ class FilePanel extends React.Component<IProps, IState> {
         } else if (this.noRoom) {
             return (
                 <BaseCard className="mx_FilePanel mx_RoomView_messageListWrapper" onClose={this.props.onClose}>
-                    <div className="mx_RoomView_empty">{_t("You must join the room to see its files")}</div>
+                    <div className="mx_RoomView_empty">{_t("file_panel|peek_note")}</div>
                 </BaseCard>
             );
         }
@@ -251,8 +256,8 @@ class FilePanel extends React.Component<IProps, IState> {
 
         const emptyState = (
             <div className="mx_RightPanel_empty mx_FilePanel_empty">
-                <h2>{_t("No files visible in this room")}</h2>
-                <p>{_t("Attach files from chat or just drag and drop them anywhere in a room.")}</p>
+                <h2>{_t("file_panel|empty_heading")}</h2>
+                <p>{_t("file_panel|empty_description")}</p>
             </div>
         );
 

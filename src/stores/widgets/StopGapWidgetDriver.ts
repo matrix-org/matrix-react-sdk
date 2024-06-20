@@ -32,14 +32,21 @@ import {
     WidgetEventCapability,
     WidgetKind,
     ISearchUserDirectoryResult,
+    IGetMediaConfigResult,
 } from "matrix-widget-api";
-import { ClientEvent, ITurnServer as IClientTurnServer } from "matrix-js-sdk/src/client";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import {
+    ClientEvent,
+    ITurnServer as IClientTurnServer,
+    EventType,
+    IContent,
+    MatrixEvent,
+    Room,
+    Direction,
+    THREAD_RELATION_TYPE,
+    StateEvents,
+    TimelineEvents,
+} from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
-import { Direction } from "matrix-js-sdk/src/matrix";
 import {
     ApprovalOpts,
     CapabilitiesOpts,
@@ -135,6 +142,9 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 WidgetEventCapability.forStateEvent(EventDirection.Receive, "org.matrix.msc3401.call").raw,
             );
             this.allowedCapabilities.add(
+                WidgetEventCapability.forStateEvent(EventDirection.Receive, EventType.RoomEncryption).raw,
+            );
+            this.allowedCapabilities.add(
                 WidgetEventCapability.forStateEvent(
                     EventDirection.Send,
                     "org.matrix.msc3401.call.member",
@@ -144,6 +154,12 @@ export class StopGapWidgetDriver extends WidgetDriver {
             this.allowedCapabilities.add(
                 WidgetEventCapability.forStateEvent(EventDirection.Receive, "org.matrix.msc3401.call.member").raw,
             );
+
+            const sendRecvRoomEvents = ["io.element.call.encryption_keys"];
+            for (const eventType of sendRecvRoomEvents) {
+                this.allowedCapabilities.add(WidgetEventCapability.forRoomEvent(EventDirection.Send, eventType).raw);
+                this.allowedCapabilities.add(WidgetEventCapability.forRoomEvent(EventDirection.Receive, eventType).raw);
+            }
 
             const sendRecvToDevice = [
                 EventType.CallInvite,
@@ -165,6 +181,14 @@ export class StopGapWidgetDriver extends WidgetDriver {
                     WidgetEventCapability.forToDeviceEvent(EventDirection.Receive, eventType).raw,
                 );
             }
+
+            // To always allow OIDC requests for element call, the widgetPermissionStore is used:
+            SdkContextClass.instance.widgetPermissionStore.setOIDCState(
+                forWidget,
+                forWidgetKind,
+                inRoomId,
+                OIDCState.Allowed,
+            );
         }
     }
 
@@ -222,6 +246,18 @@ export class StopGapWidgetDriver extends WidgetDriver {
         return allAllowed;
     }
 
+    public async sendEvent<K extends keyof StateEvents>(
+        eventType: K,
+        content: StateEvents[K],
+        stateKey?: string,
+        targetRoomId?: string,
+    ): Promise<ISendEventDetails>;
+    public async sendEvent<K extends keyof TimelineEvents>(
+        eventType: K,
+        content: TimelineEvents[K],
+        stateKey: null,
+        targetRoomId?: string,
+    ): Promise<ISendEventDetails>;
     public async sendEvent(
         eventType: string,
         content: IContent,
@@ -233,16 +269,25 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
         if (!client || !roomId) throw new Error("Not in a room or not attached to a client");
 
-        let r: { event_id: string } | null = null; // eslint-disable-line camelcase
+        let r: { event_id: string } | null;
         if (stateKey !== null) {
             // state event
-            r = await client.sendStateEvent(roomId, eventType, content, stateKey);
+            r = await client.sendStateEvent(
+                roomId,
+                eventType as keyof StateEvents,
+                content as StateEvents[keyof StateEvents],
+                stateKey,
+            );
         } else if (eventType === EventType.RoomRedaction) {
             // special case: extract the `redacts` property and call redact
             r = await client.redactEvent(roomId, content["redacts"]);
         } else {
             // message event
-            r = await client.sendEvent(roomId, eventType, content);
+            r = await client.sendEvent(
+                roomId,
+                eventType as keyof TimelineEvents,
+                content as TimelineEvents[keyof TimelineEvents],
+            );
 
             if (eventType === EventType.RoomMessage) {
                 CHAT_EFFECTS.forEach((effect) => {
@@ -504,5 +549,19 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 avatarUrl: r.avatar_url,
             })),
         };
+    }
+
+    public async getMediaConfig(): Promise<IGetMediaConfigResult> {
+        const client = MatrixClientPeg.safeGet();
+
+        return await client.getMediaConfig();
+    }
+
+    public async uploadFile(file: XMLHttpRequestBodyInit): Promise<{ contentUri: string }> {
+        const client = MatrixClientPeg.safeGet();
+
+        const uploadResult = await client.uploadContent(file);
+
+        return { contentUri: uploadResult.content_uri };
     }
 }

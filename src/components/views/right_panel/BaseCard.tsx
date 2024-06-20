@@ -25,7 +25,7 @@ import { backLabelForPhase } from "../../../stores/right-panel/RightPanelStorePh
 import { CardContext } from "./context";
 
 interface IProps {
-    header?: ReactNode;
+    header?: ReactNode | null;
     footer?: ReactNode;
     className?: string;
     withoutScrollContainer?: boolean;
@@ -35,6 +35,8 @@ interface IProps {
     onKeyDown?(ev: KeyboardEvent): void;
     cardState?: any;
     ref?: Ref<HTMLDivElement>;
+    // Ref for the 'close' button the the card
+    closeButtonRef?: Ref<HTMLDivElement>;
     children: ReactNode;
 }
 
@@ -54,7 +56,21 @@ export const Group: React.FC<IGroupProps> = ({ className, title, children }) => 
 };
 
 const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
-    ({ closeLabel, onClose, onBack, className, header, footer, withoutScrollContainer, children, onKeyDown }, ref) => {
+    (
+        {
+            closeLabel,
+            onClose,
+            onBack,
+            className,
+            header,
+            footer,
+            withoutScrollContainer,
+            children,
+            onKeyDown,
+            closeButtonRef,
+        },
+        ref,
+    ) => {
         let backButton;
         const cardHistory = RightPanelStore.instance.roomPhaseHistory;
         if (cardHistory.length > 1) {
@@ -63,7 +79,7 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
                 onBack?.(ev);
                 RightPanelStore.instance.popCard();
             };
-            const label = backLabelForPhase(prevCard.phase) ?? _t("Back");
+            const label = backLabelForPhase(prevCard.phase) ?? _t("action|back");
             backButton = <AccessibleButton className="mx_BaseCard_back" onClick={onBackClick} title={label} />;
         }
 
@@ -74,7 +90,8 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
                     data-testid="base-card-close-button"
                     className="mx_BaseCard_close"
                     onClick={onClose}
-                    title={closeLabel || _t("Close")}
+                    title={closeLabel || _t("action|close")}
+                    ref={closeButtonRef}
                 />
             );
         }
@@ -86,11 +103,13 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
         return (
             <CardContext.Provider value={{ isCard: true }}>
                 <div className={classNames("mx_BaseCard", className)} ref={ref} onKeyDown={onKeyDown}>
-                    <div className="mx_BaseCard_header">
-                        {backButton}
-                        {closeButton}
-                        {header}
-                    </div>
+                    {header !== null && (
+                        <div className="mx_BaseCard_header">
+                            {backButton}
+                            {closeButton}
+                            <div className="mx_BaseCard_headerProp">{header}</div>
+                        </div>
+                    )}
                     {children}
                     {footer && <div className="mx_BaseCard_footer">{footer}</div>}
                 </div>

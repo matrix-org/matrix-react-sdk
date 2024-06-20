@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ReactElement } from "react";
 import { mocked } from "jest-mock";
 import { render, screen } from "@testing-library/react";
-import { IContent } from "matrix-js-sdk/src/models/event";
+import { IContent } from "matrix-js-sdk/src/matrix";
 
 import { bodyToHtml, formatEmojis, topicToHtml } from "../src/HtmlUtils";
 import SettingsStore from "../src/settings/SettingsStore";
@@ -162,6 +162,16 @@ describe("bodyToHtml", () => {
                 body: "hello \\xi world",
                 msgtype: "m.text",
                 formatted_body: "<p>hello</p><pre><code>$\\xi$</code></pre><p>world</p>",
+                format: "org.matrix.custom.html",
+            });
+            expect(html).toMatchSnapshot();
+        });
+
+        it("should not mangle divs", () => {
+            const html = getHtml({
+                body: "hello world",
+                msgtype: "m.text",
+                formatted_body: "<p>hello</p><div>world</div>",
                 format: "org.matrix.custom.html",
             });
             expect(html).toMatchSnapshot();

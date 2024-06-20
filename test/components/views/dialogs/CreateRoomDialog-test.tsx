@@ -16,10 +16,11 @@ limitations under the License.
 
 import React from "react";
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import { Preset, Visibility } from "matrix-js-sdk/src/matrix";
+import { JoinRule, MatrixError, Preset, Visibility } from "matrix-js-sdk/src/matrix";
 
 import CreateRoomDialog from "../../../../src/components/views/dialogs/CreateRoomDialog";
 import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
+import SettingsStore from "../../../../src/settings/SettingsStore";
 
 describe("<CreateRoomDialog />", () => {
     const userId = "@alice:server.org";
@@ -29,7 +30,7 @@ describe("<CreateRoomDialog />", () => {
         getClientWellKnown: jest.fn(),
         doesServerForceEncryptionForPreset: jest.fn(),
         // make every alias available
-        getRoomIdForAlias: jest.fn().mockRejectedValue({ errcode: "M_NOT_FOUND" }),
+        getRoomIdForAlias: jest.fn().mockRejectedValue(new MatrixError({ errcode: "M_NOT_FOUND" })),
     });
 
     const getE2eeEnableToggleInputElement = () => screen.getByLabelText("Enable end-to-end encryption");
@@ -78,7 +79,7 @@ describe("<CreateRoomDialog />", () => {
                 screen.getByText(
                     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
                 ),
-            );
+            ).toBeDefined();
         });
 
         it("should use server .well-known force_disable for encryption setting", async () => {
@@ -98,7 +99,7 @@ describe("<CreateRoomDialog />", () => {
                 screen.getByText(
                     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
                 ),
-            );
+            ).toBeDefined();
         });
 
         it("should use defaultEncrypted prop", async () => {
@@ -149,7 +150,7 @@ describe("<CreateRoomDialog />", () => {
                 screen.getByText(
                     "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
                 ),
-            );
+            ).toBeDefined();
         });
 
         it("should override defaultEncrypted when server forces enabled encryption", async () => {
@@ -160,7 +161,7 @@ describe("<CreateRoomDialog />", () => {
             // server forces encryption to enabled, even though defaultEncrypted is true
             expect(getE2eeEnableToggleInputElement()).toBeChecked();
             expect(getE2eeEnableToggleIsDisabled()).toBeTruthy();
-            expect(screen.getByText("Your server requires encryption to be enabled in private rooms."));
+            expect(screen.getByText("Your server requires encryption to be enabled in private rooms.")).toBeDefined();
         });
 
         it("should enable encryption toggle and disable field when server forces encryption", async () => {
@@ -171,7 +172,7 @@ describe("<CreateRoomDialog />", () => {
             expect(getE2eeEnableToggleInputElement()).toBeChecked();
             expect(getE2eeEnableToggleIsDisabled()).toBeTruthy();
 
-            expect(screen.getByText("Your server requires encryption to be enabled in private rooms."));
+            expect(screen.getByText("Your server requires encryption to be enabled in private rooms.")).toBeDefined();
         });
 
         it("should warn when trying to create a room with an invalid form", async () => {
@@ -204,6 +205,78 @@ describe("<CreateRoomDialog />", () => {
                 encryption: true,
                 parentSpace: undefined,
                 roomType: undefined,
+            });
+        });
+    });
+
+    describe("for a knock room", () => {
+        describe("when feature is disabled", () => {
+            it("should not have the option to create a knock room", async () => {
+                jest.spyOn(SettingsStore, "getValue").mockReturnValue(false);
+                getComponent();
+                fireEvent.click(screen.getByLabelText("Room visibility"));
+                expect(screen.queryByRole("option", { name: "Ask to join" })).not.toBeInTheDocument();
+            });
+        });
+
+        describe("when feature is enabled", () => {
+            const onFinished = jest.fn();
+            const roomName = "Test Room Name";
+
+            beforeEach(async () => {
+                onFinished.mockReset();
+                jest.spyOn(SettingsStore, "getValue").mockImplementation(
+                    (setting) => setting === "feature_ask_to_join",
+                );
+                getComponent({ onFinished });
+                fireEvent.change(screen.getByLabelText("Name"), { target: { value: roomName } });
+                fireEvent.click(screen.getByLabelText("Room visibility"));
+                fireEvent.click(screen.getByRole("option", { name: "Ask to join" }));
+            });
+
+            it("should have a heading", () => {
+                expect(screen.getByRole("heading")).toHaveTextContent("Create a room");
+            });
+
+            it("should have a hint", () => {
+                expect(
+                    screen.getByText(
+                        "Anyone can request to join, but admins or moderators need to grant access. You can change this later.",
+                    ),
+                ).toBeInTheDocument();
+            });
+
+            it("should create a knock room with private visibility", async () => {
+                fireEvent.click(screen.getByText("Create room"));
+                await flushPromises();
+                expect(onFinished).toHaveBeenCalledWith(true, {
+                    createOpts: {
+                        name: roomName,
+                        visibility: Visibility.Private,
+                    },
+                    encryption: true,
+                    joinRule: JoinRule.Knock,
+                    parentSpace: undefined,
+                    roomType: undefined,
+                });
+            });
+
+            it("should create a knock room with public visibility", async () => {
+                fireEvent.click(
+                    screen.getByRole("checkbox", { name: "Make this room visible in the public room directory." }),
+                );
+                fireEvent.click(screen.getByText("Create room"));
+                await flushPromises();
+                expect(onFinished).toHaveBeenCalledWith(true, {
+                    createOpts: {
+                        name: roomName,
+                        visibility: Visibility.Public,
+                    },
+                    encryption: true,
+                    joinRule: JoinRule.Knock,
+                    parentSpace: undefined,
+                    roomType: undefined,
+                });
             });
         });
     });

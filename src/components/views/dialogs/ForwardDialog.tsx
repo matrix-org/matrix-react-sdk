@@ -16,14 +16,21 @@ limitations under the License.
 
 import React, { useEffect, useMemo, useState } from "react";
 import classnames from "classnames";
-import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { ILocationContent, LocationAssetType, M_TIMESTAMP } from "matrix-js-sdk/src/@types/location";
-import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
-import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
+import {
+    IContent,
+    MatrixEvent,
+    Room,
+    RoomMember,
+    EventType,
+    MatrixClient,
+    ContentHelpers,
+    ILocationContent,
+    LocationAssetType,
+    M_TIMESTAMP,
+    M_BEACON,
+    TimelineEvents,
+} from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -34,8 +41,6 @@ import { avatarUrlForUser } from "../../../Avatar";
 import EventTile from "../rooms/EventTile";
 import SearchBox from "../../structures/SearchBox";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
-import { Alignment } from "../elements/Tooltip";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 import NotificationBadge from "../rooms/NotificationBadge";
@@ -47,11 +52,20 @@ import EntityTile from "../rooms/EntityTile";
 import BaseAvatar from "../avatars/BaseAvatar";
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { ButtonEvent } from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { isLocationEvent } from "../../../utils/EventUtils";
 import { isSelfLocation, locationEventGeoUri } from "../../../utils/location";
 import { RoomContextDetails } from "../rooms/RoomContextDetails";
 import { filterBoolean } from "../../../utils/arrays";
+import {
+    IState,
+    RovingTabIndexContext,
+    RovingTabIndexProvider,
+    Type,
+    useRovingTabIndex,
+} from "../../../accessibility/RovingTabIndex";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 const AVATAR_SIZE = 30;
 
@@ -65,10 +79,10 @@ interface IProps {
     onFinished(): void;
 }
 
-interface IEntryProps {
+interface IEntryProps<K extends keyof TimelineEvents> {
     room: Room;
-    type: EventType | string;
-    content: IContent;
+    type: K;
+    content: TimelineEvents[K];
     matrixClient: MatrixClient;
     onFinished(success: boolean): void;
 }
@@ -80,8 +94,9 @@ enum SendState {
     Failed,
 }
 
-const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, onFinished }) => {
+const Entry: React.FC<IEntryProps<any>> = ({ room, type, content, matrixClient: cli, onFinished }) => {
     const [sendState, setSendState] = useState<SendState>(SendState.CanSend);
+    const [onFocus, isActive, ref] = useRovingTabIndex<HTMLDivElement>();
 
     const jumpToRoom = (ev: ButtonEvent): void => {
         dis.dispatch<ViewRoomPayload>({
@@ -110,48 +125,64 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
         className = "mx_ForwardList_canSend";
         if (!room.maySendMessage()) {
             disabled = true;
-            title = _t("You don't have permission to do this");
+            title = _t("forward|no_perms_title");
         }
     } else if (sendState === SendState.Sending) {
         className = "mx_ForwardList_sending";
         disabled = true;
-        title = _t("Sending");
+        title = _t("forward|sending");
         icon = <div className="mx_ForwardList_sendIcon" aria-label={title} />;
     } else if (sendState === SendState.Sent) {
         className = "mx_ForwardList_sent";
         disabled = true;
-        title = _t("Sent");
+        title = _t("forward|sent");
         icon = <div className="mx_ForwardList_sendIcon" aria-label={title} />;
     } else {
         className = "mx_ForwardList_sendFailed";
         disabled = true;
-        title = _t("Failed to send");
+        title = _t("timeline|send_state_failed");
         icon = <NotificationBadge notification={StaticNotificationState.RED_EXCLAMATION} />;
     }
 
+    const id = `mx_ForwardDialog_entry_${room.roomId}`;
     return (
-        <div className="mx_ForwardList_entry">
-            <AccessibleTooltipButton
+        <div
+            className={classnames("mx_ForwardList_entry", {
+                mx_ForwardList_entry_active: isActive,
+            })}
+            aria-labelledby={`${id}_name`}
+            aria-describedby={`${id}_send`}
+            role="listitem"
+            ref={ref}
+            onFocus={onFocus}
+            id={id}
+        >
+            <AccessibleButton
                 className="mx_ForwardList_roomButton"
                 onClick={jumpToRoom}
-                title={_t("Open room")}
-                alignment={Alignment.Top}
+                title={_t("forward|open_room")}
+                placement="top"
+                tabIndex={isActive ? 0 : -1}
             >
-                <DecoratedRoomAvatar room={room} avatarSize={32} />
-                <span className="mx_ForwardList_entry_name">{room.name}</span>
+                <DecoratedRoomAvatar room={room} size="32px" tooltipProps={{ tabIndex: isActive ? 0 : -1 }} />
+                <span className="mx_ForwardList_entry_name" id={`${id}_name`}>
+                    {room.name}
+                </span>
                 <RoomContextDetails component="span" className="mx_ForwardList_entry_detail" room={room} />
-            </AccessibleTooltipButton>
-            <AccessibleTooltipButton
+            </AccessibleButton>
+            <AccessibleButton
                 kind={sendState === SendState.Failed ? "danger_outline" : "primary_outline"}
                 className={`mx_ForwardList_sendButton ${className}`}
                 onClick={send}
                 disabled={disabled}
                 title={title}
-                alignment={Alignment.Top}
+                placement="top"
+                tabIndex={isActive ? 0 : -1}
+                id={`${id}_send`}
             >
-                <div className="mx_ForwardList_sendLabel">{_t("Send")}</div>
+                <div className="mx_ForwardList_sendLabel">{_t("forward|send_label")}</div>
                 {icon}
-            </AccessibleTooltipButton>
+            </AccessibleButton>
         </div>
     );
 };
@@ -180,7 +211,7 @@ const transformEvent = (event: MatrixEvent): { type: string; content: IContent }
             type,
             content: {
                 ...content,
-                ...makeLocationContent(
+                ...ContentHelpers.makeLocationContent(
                     undefined, // text
                     geoUri,
                     timestamp || Date.now(),
@@ -213,6 +244,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
         },
         event_id: "$9999999999999999999999999999999999999999999",
         room_id: event.getRoomId(),
+        origin_server_ts: event.getTs(),
     });
     mockEvent.sender = {
         name: profileInfo.displayname || userId,
@@ -235,7 +267,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
             sortRooms(
                 cli
                     .getVisibleRooms(msc3946DynamicRoomPredecessors)
-                    .filter((room) => room.getMyMembership() === "join" && !room.isSpaceRoom()),
+                    .filter((room) => room.getMyMembership() === KnownMembership.Join && !room.isSpaceRoom()),
             ),
         [cli, msc3946DynamicRoomPredecessors],
     );
@@ -250,35 +282,49 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
 
     const [truncateAt, setTruncateAt] = useState(20);
     function overflowTile(overflowCount: number, totalCount: number): JSX.Element {
-        const text = _t("and %(count)s others...", { count: overflowCount });
+        const text = _t("common|and_n_others", { count: overflowCount });
         return (
             <EntityTile
                 className="mx_EntityTile_ellipsis"
                 avatarJsx={
-                    <BaseAvatar
-                        url={require("../../../../res/img/ellipsis.svg").default}
-                        name="..."
-                        width={36}
-                        height={36}
-                    />
+                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg").default} name="..." size="36px" />
                 }
                 name={text}
-                presenceState="online"
-                suppressOnHover={true}
+                showPresence={false}
                 onClick={() => setTruncateAt(totalCount)}
             />
         );
     }
 
+    const onKeyDown = (ev: React.KeyboardEvent, state: IState): void => {
+        let handled = true;
+
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            case KeyBindingAction.Enter: {
+                state.activeRef?.current?.querySelector<HTMLButtonElement>(".mx_ForwardList_sendButton")?.click();
+                break;
+            }
+
+            default:
+                handled = false;
+        }
+
+        if (handled) {
+            ev.preventDefault();
+            ev.stopPropagation();
+        }
+    };
+
     return (
         <BaseDialog
-            title={_t("Forward message")}
+            title={_t("common|forward_message")}
             className="mx_ForwardDialog"
             contentId="mx_ForwardList"
             onFinished={onFinished}
             fixedWidth={false}
         >
-            <h3>{_t("Message preview")}</h3>
+            <h3>{_t("forward|message_preview_heading")}</h3>
             <div
                 className={classnames("mx_ForwardDialog_preview", {
                     mx_IRCLayout: previewLayout == Layout.IRC,
@@ -293,42 +339,73 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                 />
             </div>
             <hr />
-            <div className="mx_ForwardList" id="mx_ForwardList">
-                <SearchBox
-                    className="mx_textinput_icon mx_textinput_search"
-                    placeholder={_t("Search for rooms or people")}
-                    onSearch={setQuery}
-                    autoFocus={true}
-                />
-                <AutoHideScrollbar className="mx_ForwardList_content">
-                    {rooms.length > 0 ? (
-                        <div className="mx_ForwardList_results">
-                            <TruncatedList
-                                className="mx_ForwardList_resultsList"
-                                truncateAt={truncateAt}
-                                createOverflowElement={overflowTile}
-                                getChildren={(start, end) =>
-                                    rooms
-                                        .slice(start, end)
-                                        .map((room) => (
-                                            <Entry
-                                                key={room.roomId}
-                                                room={room}
-                                                type={type}
-                                                content={content}
-                                                matrixClient={cli}
-                                                onFinished={onFinished}
-                                            />
-                                        ))
-                                }
-                                getChildCount={() => rooms.length}
-                            />
-                        </div>
-                    ) : (
-                        <span className="mx_ForwardList_noResults">{_t("No results")}</span>
-                    )}
-                </AutoHideScrollbar>
-            </div>
+            <RovingTabIndexProvider
+                handleUpDown
+                handleInputFields
+                onKeyDown={onKeyDown}
+                scrollIntoView={{ block: "center" }}
+            >
+                {({ onKeyDownHandler }) => (
+                    <div className="mx_ForwardList" id="mx_ForwardList">
+                        <RovingTabIndexContext.Consumer>
+                            {(context) => (
+                                <SearchBox
+                                    className="mx_textinput_icon mx_textinput_search"
+                                    placeholder={_t("forward|filter_placeholder")}
+                                    onSearch={(query: string): void => {
+                                        setQuery(query);
+                                        setTimeout(() => {
+                                            const ref = context.state.refs[0];
+                                            if (ref) {
+                                                context.dispatch({
+                                                    type: Type.SetFocus,
+                                                    payload: { ref },
+                                                });
+                                                ref.current?.scrollIntoView?.({
+                                                    block: "nearest",
+                                                });
+                                            }
+                                        });
+                                    }}
+                                    autoFocus={true}
+                                    onKeyDown={onKeyDownHandler}
+                                    aria-activedescendant={context.state.activeRef?.current?.id}
+                                    aria-owns="mx_ForwardDialog_resultsList"
+                                />
+                            )}
+                        </RovingTabIndexContext.Consumer>
+                        <AutoHideScrollbar className="mx_ForwardList_content">
+                            {rooms.length > 0 ? (
+                                <div className="mx_ForwardList_results">
+                                    <TruncatedList
+                                        id="mx_ForwardDialog_resultsList"
+                                        className="mx_ForwardList_resultsList"
+                                        truncateAt={truncateAt}
+                                        createOverflowElement={overflowTile}
+                                        getChildren={(start, end) =>
+                                            rooms
+                                                .slice(start, end)
+                                                .map((room) => (
+                                                    <Entry
+                                                        key={room.roomId}
+                                                        room={room}
+                                                        type={type}
+                                                        content={content}
+                                                        matrixClient={cli}
+                                                        onFinished={onFinished}
+                                                    />
+                                                ))
+                                        }
+                                        getChildCount={() => rooms.length}
+                                    />
+                                </div>
+                            ) : (
+                                <span className="mx_ForwardList_noResults">{_t("common|no_results")}</span>
+                            )}
+                        </AutoHideScrollbar>
+                    </div>
+                )}
+            </RovingTabIndexProvider>
         </BaseDialog>
     );
 };

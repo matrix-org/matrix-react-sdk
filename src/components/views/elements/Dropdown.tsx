@@ -320,7 +320,7 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
         if (!options?.length) {
             return [
                 <li key="0" className="mx_Dropdown_option" role="option" aria-selected={false}>
-                    {_t("No results")}
+                    {_t("common|no_results")}
                 </li>,
             ];
         }
@@ -392,7 +392,7 @@ export default class Dropdown extends React.Component<DropdownProps, IState> {
                     aria-haspopup="listbox"
                     aria-expanded={this.state.expanded}
                     disabled={this.props.disabled}
-                    inputRef={this.buttonRef}
+                    ref={this.buttonRef}
                     aria-label={this.props.label}
                     aria-describedby={`${this.props.id}_value`}
                     aria-owns={`${this.props.id}_input`}

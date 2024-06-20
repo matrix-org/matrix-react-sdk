@@ -18,25 +18,18 @@ import React from "react";
 import { fireEvent, render, screen, waitFor, cleanup, act, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Mocked, mocked } from "jest-mock";
-import {
-    Room,
-    User,
-    MatrixClient,
-    RoomMember,
-    MatrixEvent,
-    EventType,
-    CryptoApi,
-    DeviceVerificationStatus,
-} from "matrix-js-sdk/src/matrix";
-import {
-    Phase,
-    VerificationRequest,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
-import { Device } from "matrix-js-sdk/src/models/device";
+import { Room, User, MatrixClient, RoomMember, MatrixEvent, EventType, Device } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { defer } from "matrix-js-sdk/src/utils";
 import { EventEmitter } from "events";
+import {
+    UserVerificationStatus,
+    VerificationRequest,
+    VerificationPhase as Phase,
+    VerificationRequestEvent,
+    CryptoApi,
+    DeviceVerificationStatus,
+} from "matrix-js-sdk/src/crypto-api";
 
 import UserInfo, {
     BanToggleButton,
@@ -61,6 +54,8 @@ import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
 import { clearAllModals, flushPromises } from "../../../test-utils";
 import ErrorDialog from "../../../../src/components/views/dialogs/ErrorDialog";
+import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
+import { UIComponent } from "../../../../src/settings/UIFeature";
 
 jest.mock("../../../../src/utils/direct-messages", () => ({
     ...jest.requireActual("../../../../src/utils/direct-messages"),
@@ -84,6 +79,13 @@ jest.mock("../../../../src/utils/DMRoomMap", () => {
     return {
         shared: jest.fn().mockReturnValue(mock),
         sharedInstance: mock,
+    };
+});
+
+jest.mock("../../../../src/customisations/helpers/UIComponents", () => {
+    const original = jest.requireActual("../../../../src/customisations/helpers/UIComponents");
+    return {
+        shouldShowComponent: jest.fn().mockImplementation(original.shouldShowComponent),
     };
 });
 
@@ -134,6 +136,8 @@ beforeEach(() => {
     mockCrypto = mocked({
         getDeviceVerificationStatus: jest.fn(),
         getUserDeviceInfo: jest.fn(),
+        userHasCrossSigningKeys: jest.fn().mockResolvedValue(false),
+        getUserVerificationStatus: jest.fn(),
     } as unknown as CryptoApi);
 
     mockClient = mocked({
@@ -145,6 +149,7 @@ beforeEach(() => {
         isCryptoEnabled: jest.fn(),
         getUserId: jest.fn(),
         getSafeUserId: jest.fn(),
+        getDomain: jest.fn(),
         on: jest.fn(),
         off: jest.fn(),
         isSynapseAdministrator: jest.fn().mockResolvedValue(false),
@@ -155,14 +160,11 @@ beforeEach(() => {
         currentState: {
             on: jest.fn(),
         },
-        checkUserTrust: jest.fn(),
         getRoom: jest.fn(),
         credentials: {},
         setPowerLevel: jest.fn(),
         downloadKeys: jest.fn(),
-        getStoredDevicesForUser: jest.fn(),
         getCrypto: jest.fn().mockReturnValue(mockCrypto),
-        getStoredCrossSigningForUser: jest.fn(),
     } as unknown as MatrixClient);
 
     jest.spyOn(MatrixClientPeg, "get").mockReturnValue(mockClient);
@@ -180,6 +182,7 @@ describe("<UserInfo />", () => {
             Object.assign(this, {
                 channel: { transactionId: 1 },
                 otherPartySupportsMethod: jest.fn(),
+                generateQRCode: jest.fn().mockReturnValue(new Promise(() => {})),
                 ...opts,
             });
         }
@@ -283,7 +286,8 @@ describe("<UserInfo />", () => {
 
         it("renders close button correctly when encryption panel with a pending verification request", () => {
             renderComponent({ phase: RightPanelPhases.EncryptionPanel, verificationRequest });
-            expect(screen.getByTestId("base-card-close-button")).toHaveAttribute("title", "Cancel");
+            screen.getByTestId("base-card-close-button").focus();
+            expect(screen.getByRole("tooltip")).toHaveTextContent("Cancel");
         });
     });
 
@@ -320,13 +324,40 @@ describe("<UserInfo />", () => {
             // will not return true, so we expect to see the noCommonMethod error from VerificationPanel
             expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
         });
+
+        it("renders the message button", () => {
+            render(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <UserInfo {...defaultProps} />
+                </MatrixClientContext.Provider>,
+            );
+
+            screen.getByRole("button", { name: "Message" });
+        });
+
+        it("hides the message button if the visibility customisation hides all create room features", () => {
+            mocked(shouldShowComponent).withImplementation(
+                (component) => {
+                    return component !== UIComponent.CreateRooms;
+                },
+                () => {
+                    render(
+                        <MatrixClientContext.Provider value={mockClient}>
+                            <UserInfo {...defaultProps} />
+                        </MatrixClientContext.Provider>,
+                    );
+
+                    expect(screen.queryByRole("button", { name: "Message" })).toBeNull();
+                },
+            );
+        });
     });
 
     describe("with crypto enabled", () => {
         beforeEach(() => {
             mockClient.isCryptoEnabled.mockReturnValue(true);
-            mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(false, false, false));
             mockClient.doesServerSupportUnstableFeature.mockResolvedValue(true);
+            mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(false, false, false));
 
             const device = new Device({
                 deviceId: "d1",
@@ -350,14 +381,13 @@ describe("<UserInfo />", () => {
             // click it
             await userEvent.click(devicesButton);
 
-            // there should now be a button with the device id ...
-            const deviceButton = screen.getByRole("button", { description: "d1" });
-
-            // ... which should contain the device name
-            expect(within(deviceButton).getByText("my device")).toBeInTheDocument();
+            // there should now be a button with the device id which should contain the device name
+            expect(screen.getByRole("button", { name: "my device" })).toBeInTheDocument();
         });
 
         it("renders <BasicUserInfo />", async () => {
+            mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(false, false, false));
+
             const { container } = renderComponent({
                 phase: RightPanelPhases.SpaceMemberInfo,
                 verificationRequest,
@@ -366,6 +396,198 @@ describe("<UserInfo />", () => {
             await act(flushPromises);
 
             await waitFor(() => expect(screen.getByRole("button", { name: "Verify" })).toBeInTheDocument());
+            expect(container).toMatchSnapshot();
+        });
+
+        describe("device dehydration", () => {
+            it("hides a verified dehydrated device (unverified user)", async () => {
+                const device1 = new Device({
+                    deviceId: "d1",
+                    userId: defaultUserId,
+                    displayName: "my device",
+                    algorithms: [],
+                    keys: new Map(),
+                });
+                const device2 = new Device({
+                    deviceId: "d2",
+                    userId: defaultUserId,
+                    displayName: "dehydrated device",
+                    algorithms: [],
+                    keys: new Map(),
+                    dehydrated: true,
+                });
+                const devicesMap = new Map<string, Device>([
+                    [device1.deviceId, device1],
+                    [device2.deviceId, device2],
+                ]);
+                const userDeviceMap = new Map<string, Map<string, Device>>([[defaultUserId, devicesMap]]);
+                mockCrypto.getUserDeviceInfo.mockResolvedValue(userDeviceMap);
+
+                renderComponent({ room: mockRoom });
+                await act(flushPromises);
+
+                // check the button exists with the expected text (the dehydrated device shouldn't be counted)
+                const devicesButton = screen.getByRole("button", { name: "1 session" });
+
+                // click it
+                await act(() => {
+                    return userEvent.click(devicesButton);
+                });
+
+                // there should now be a button with the non-dehydrated device ID
+                expect(screen.getByRole("button", { name: "my device" })).toBeInTheDocument();
+
+                // but not for the dehydrated device ID
+                expect(screen.queryByRole("button", { name: "dehydrated device" })).not.toBeInTheDocument();
+
+                // there should be a line saying that the user has "Offline device" enabled
+                expect(screen.getByText("Offline device enabled")).toBeInTheDocument();
+            });
+
+            it("hides a verified dehydrated device (verified user)", async () => {
+                const device1 = new Device({
+                    deviceId: "d1",
+                    userId: defaultUserId,
+                    displayName: "my device",
+                    algorithms: [],
+                    keys: new Map(),
+                });
+                const device2 = new Device({
+                    deviceId: "d2",
+                    userId: defaultUserId,
+                    displayName: "dehydrated device",
+                    algorithms: [],
+                    keys: new Map(),
+                    dehydrated: true,
+                });
+                const devicesMap = new Map<string, Device>([
+                    [device1.deviceId, device1],
+                    [device2.deviceId, device2],
+                ]);
+                const userDeviceMap = new Map<string, Map<string, Device>>([[defaultUserId, devicesMap]]);
+                mockCrypto.getUserDeviceInfo.mockResolvedValue(userDeviceMap);
+                mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(true, true, true));
+                mockCrypto.getDeviceVerificationStatus.mockResolvedValue({
+                    isVerified: () => true,
+                } as DeviceVerificationStatus);
+
+                renderComponent({ room: mockRoom });
+                await act(flushPromises);
+
+                // check the button exists with the expected text (the dehydrated device shouldn't be counted)
+                const devicesButton = screen.getByRole("button", { name: "1 verified session" });
+
+                // click it
+                await act(() => {
+                    return userEvent.click(devicesButton);
+                });
+
+                // there should now be a button with the non-dehydrated device ID
+                expect(screen.getByTitle("d1")).toBeInTheDocument();
+
+                // but not for the dehydrated device ID
+                expect(screen.queryByTitle("d2")).not.toBeInTheDocument();
+
+                // there should be a line saying that the user has "Offline device" enabled
+                expect(screen.getByText("Offline device enabled")).toBeInTheDocument();
+            });
+
+            it("shows an unverified dehydrated device", async () => {
+                const device1 = new Device({
+                    deviceId: "d1",
+                    userId: defaultUserId,
+                    displayName: "my device",
+                    algorithms: [],
+                    keys: new Map(),
+                });
+                const device2 = new Device({
+                    deviceId: "d2",
+                    userId: defaultUserId,
+                    displayName: "dehydrated device",
+                    algorithms: [],
+                    keys: new Map(),
+                    dehydrated: true,
+                });
+                const devicesMap = new Map<string, Device>([
+                    [device1.deviceId, device1],
+                    [device2.deviceId, device2],
+                ]);
+                const userDeviceMap = new Map<string, Map<string, Device>>([[defaultUserId, devicesMap]]);
+                mockCrypto.getUserDeviceInfo.mockResolvedValue(userDeviceMap);
+                mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(true, true, true));
+
+                renderComponent({ room: mockRoom });
+                await act(flushPromises);
+
+                // the dehydrated device should be shown as an unverified device, which means
+                // there should now be a button with the device id ...
+                const deviceButton = screen.getByRole("button", { name: "dehydrated device" });
+
+                // ... which should contain the device name
+                expect(within(deviceButton).getByText("dehydrated device")).toBeInTheDocument();
+            });
+
+            it("shows dehydrated devices if there is more than one", async () => {
+                const device1 = new Device({
+                    deviceId: "d1",
+                    userId: defaultUserId,
+                    displayName: "dehydrated device 1",
+                    algorithms: [],
+                    keys: new Map(),
+                    dehydrated: true,
+                });
+                const device2 = new Device({
+                    deviceId: "d2",
+                    userId: defaultUserId,
+                    displayName: "dehydrated device 2",
+                    algorithms: [],
+                    keys: new Map(),
+                    dehydrated: true,
+                });
+                const devicesMap = new Map<string, Device>([
+                    [device1.deviceId, device1],
+                    [device2.deviceId, device2],
+                ]);
+                const userDeviceMap = new Map<string, Map<string, Device>>([[defaultUserId, devicesMap]]);
+                mockCrypto.getUserDeviceInfo.mockResolvedValue(userDeviceMap);
+
+                renderComponent({ room: mockRoom });
+                await act(flushPromises);
+
+                // check the button exists with the expected text (the dehydrated device shouldn't be counted)
+                const devicesButton = screen.getByRole("button", { name: "2 sessions" });
+
+                // click it
+                await act(() => {
+                    return userEvent.click(devicesButton);
+                });
+
+                // the dehydrated devices should be shown as an unverified device, which means
+                // there should now be a button with the first dehydrated device...
+                const device1Button = screen.getByRole("button", { name: "dehydrated device 1" });
+                expect(device1Button).toBeVisible();
+
+                // ... which should contain the device name
+                expect(within(device1Button).getByText("dehydrated device 1")).toBeInTheDocument();
+                // and a button with the second dehydrated device...
+                const device2Button = screen.getByRole("button", { name: "dehydrated device 2" });
+                expect(device2Button).toBeVisible();
+
+                // ... which should contain the device name
+                expect(within(device2Button).getByText("dehydrated device 2")).toBeInTheDocument();
+            });
+        });
+
+        it("should render a deactivate button for users of the same server if we are a server admin", async () => {
+            mockClient.isSynapseAdministrator.mockResolvedValue(true);
+            mockClient.getDomain.mockReturnValue("example.com");
+
+            const { container } = renderComponent({
+                phase: RightPanelPhases.RoomMemberInfo,
+                room: mockRoom,
+            });
+
+            await waitFor(() => expect(screen.getByRole("button", { name: "Deactivate user" })).toBeInTheDocument());
             expect(container).toMatchSnapshot();
         });
     });
@@ -377,7 +599,7 @@ describe("<UserInfo />", () => {
         });
 
         it("renders unverified user info", async () => {
-            mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(false, false, false));
+            mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(false, false, false));
             renderComponent({ room: mockRoom });
             await act(flushPromises);
 
@@ -388,7 +610,7 @@ describe("<UserInfo />", () => {
         });
 
         it("renders verified user info", async () => {
-            mockClient.checkUserTrust.mockReturnValue(new UserTrustLevel(true, false, false));
+            mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(true, false, false));
             renderComponent({ room: mockRoom });
             await act(flushPromises);
 
@@ -444,6 +666,7 @@ describe("<DeviceItem />", () => {
     const defaultProps = {
         userId: defaultUserId,
         device,
+        isUserVerified: false,
     };
 
     const renderComponent = (props = {}) => {
@@ -456,9 +679,6 @@ describe("<DeviceItem />", () => {
         });
     };
 
-    const setMockUserTrust = (isVerified = false) => {
-        mockClient.checkUserTrust.mockReturnValue({ isVerified: () => isVerified } as UserTrustLevel);
-    };
     const setMockDeviceTrust = (isVerified = false, isCrossSigningVerified = false) => {
         mockCrypto.getDeviceVerificationStatus.mockResolvedValue({
             isVerified: () => isVerified,
@@ -469,13 +689,11 @@ describe("<DeviceItem />", () => {
     const mockVerifyDevice = jest.spyOn(mockVerification, "verifyDevice");
 
     beforeEach(() => {
-        setMockUserTrust();
         setMockDeviceTrust();
     });
 
     afterEach(() => {
         mockCrypto.getDeviceVerificationStatus.mockReset();
-        mockClient.checkUserTrust.mockReset();
         mockVerifyDevice.mockClear();
     });
 
@@ -492,11 +710,11 @@ describe("<DeviceItem />", () => {
     });
 
     it("with verified user only, displays button with a 'Not trusted' label", async () => {
-        setMockUserTrust(true);
-        renderComponent();
+        renderComponent({ isUserVerified: true });
         await act(flushPromises);
 
-        expect(screen.getByRole("button", { name: `${device.displayName} Not trusted` })).toBeInTheDocument();
+        const button = screen.getByRole("button", { name: device.displayName });
+        expect(button).toHaveTextContent(`${device.displayName}Not trusted`);
     });
 
     it("with verified device only, displays no button without a label", async () => {
@@ -509,24 +727,28 @@ describe("<DeviceItem />", () => {
     });
 
     it("when userId is the same as userId from client, uses isCrossSigningVerified to determine if button is shown", async () => {
+        const deferred = defer<DeviceVerificationStatus>();
+        mockCrypto.getDeviceVerificationStatus.mockReturnValue(deferred.promise);
+
         mockClient.getSafeUserId.mockReturnValueOnce(defaultUserId);
         mockClient.getUserId.mockReturnValueOnce(defaultUserId);
         renderComponent();
         await act(flushPromises);
 
         // set trust to be false for isVerified, true for isCrossSigningVerified
-        setMockDeviceTrust(false, true);
+        deferred.resolve({
+            isVerified: () => false,
+            crossSigningVerified: true,
+        } as DeviceVerificationStatus);
 
+        await expect(screen.findByText(device.displayName!)).resolves.toBeInTheDocument();
         // expect to see no button in this case
-        // TODO `toBeInTheDocument` is not called, if called the test is failing
-        expect(screen.queryByRole("button")).not.toBeInTheDocument;
-        expect(screen.getByText(device.displayName!)).toBeInTheDocument();
+        expect(screen.queryByRole("button")).not.toBeInTheDocument();
     });
 
     it("with verified user and device, displays no button and a 'Trusted' label", async () => {
-        setMockUserTrust(true);
         setMockDeviceTrust(true);
-        renderComponent();
+        renderComponent({ isUserVerified: true });
         await act(flushPromises);
 
         expect(screen.queryByRole("button")).not.toBeInTheDocument();
@@ -886,23 +1108,24 @@ describe("<PowerLevelEditor />", () => {
         // firing the event will raise a dialog warning about self demotion, wait for this to appear then click on it
         await userEvent.click(await screen.findByText("Demote", { exact: true }));
         expect(mockClient.setPowerLevel).toHaveBeenCalledTimes(1);
-        expect(mockClient.setPowerLevel).toHaveBeenCalledWith(
-            mockRoom.roomId,
-            defaultMember.userId,
-            changedPowerLevel,
-            powerLevelEvent,
-        );
+        expect(mockClient.setPowerLevel).toHaveBeenCalledWith(mockRoom.roomId, defaultMember.userId, changedPowerLevel);
     });
 });
 
 describe("<RoomKickButton />", () => {
     const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
-    const memberWithInviteMembership = { ...defaultMember, membership: "invite" };
-    const memberWithJoinMembership = { ...defaultMember, membership: "join" };
+    const memberWithInviteMembership = { ...defaultMember, membership: KnownMembership.Invite };
+    const memberWithJoinMembership = { ...defaultMember, membership: KnownMembership.Join };
 
     let defaultProps: Parameters<typeof RoomKickButton>[0];
     beforeEach(() => {
-        defaultProps = { room: mockRoom, member: defaultMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+        defaultProps = {
+            room: mockRoom,
+            member: defaultMember,
+            startUpdating: jest.fn(),
+            stopUpdating: jest.fn(),
+            isUpdating: false,
+        };
     });
 
     const renderComponent = (props = {}) => {
@@ -979,7 +1202,7 @@ describe("<RoomKickButton />", () => {
         // null vs their member followed by
         // my member vs their member
         const mockMyMember = { powerLevel: 1 };
-        const mockTheirMember = { membership: "invite", powerLevel: 0 };
+        const mockTheirMember = { membership: KnownMembership.Invite, powerLevel: 0 };
 
         const mockRoom = {
             getMember: jest
@@ -1000,10 +1223,16 @@ describe("<RoomKickButton />", () => {
 
 describe("<BanToggleButton />", () => {
     const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
-    const memberWithBanMembership = { ...defaultMember, membership: "ban" };
+    const memberWithBanMembership = { ...defaultMember, membership: KnownMembership.Ban };
     let defaultProps: Parameters<typeof BanToggleButton>[0];
     beforeEach(() => {
-        defaultProps = { room: mockRoom, member: defaultMember, startUpdating: jest.fn(), stopUpdating: jest.fn() };
+        defaultProps = {
+            room: mockRoom,
+            member: defaultMember,
+            startUpdating: jest.fn(),
+            stopUpdating: jest.fn(),
+            isUpdating: false,
+        };
     });
 
     const renderComponent = (props = {}) => {
@@ -1103,7 +1332,7 @@ describe("<BanToggleButton />", () => {
         // null vs their member followed by
         // my member vs their member
         const mockMyMember = { powerLevel: 1 };
-        const mockTheirMember = { membership: "ban", powerLevel: 0 };
+        const mockTheirMember = { membership: KnownMembership.Ban, powerLevel: 0 };
 
         const mockRoom = {
             getMember: jest
@@ -1124,13 +1353,14 @@ describe("<BanToggleButton />", () => {
 
 describe("<RoomAdminToolsContainer />", () => {
     const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
-    defaultMember.membership = "invite";
+    defaultMember.membership = KnownMembership.Invite;
 
     let defaultProps: Parameters<typeof RoomAdminToolsContainer>[0];
     beforeEach(() => {
         defaultProps = {
             room: mockRoom,
             member: defaultMember,
+            isUpdating: false,
             startUpdating: jest.fn(),
             stopUpdating: jest.fn(),
             powerLevels: {},
@@ -1186,14 +1416,58 @@ describe("<RoomAdminToolsContainer />", () => {
         mockMeMember.powerLevel = 51; // defaults to 50
         mockRoom.getMember.mockReturnValueOnce(mockMeMember);
 
-        const defaultMemberWithPowerLevelAndJoinMembership = { ...defaultMember, powerLevel: 0, membership: "join" };
+        const defaultMemberWithPowerLevelAndJoinMembership = {
+            ...defaultMember,
+            powerLevel: 0,
+            membership: KnownMembership.Join,
+        };
 
         renderComponent({
             member: defaultMemberWithPowerLevelAndJoinMembership,
             powerLevels: { events: { "m.room.power_levels": 1 } },
         });
 
-        expect(screen.getByText(/mute/i)).toBeInTheDocument();
+        const button = screen.getByText(/mute/i);
+        expect(button).toBeInTheDocument();
+        fireEvent.click(button);
+        expect(defaultProps.startUpdating).toHaveBeenCalled();
+    });
+
+    it("should disable buttons when isUpdating=true", () => {
+        const mockMeMember = new RoomMember(mockRoom.roomId, "arbitraryId");
+        mockMeMember.powerLevel = 51; // defaults to 50
+        mockRoom.getMember.mockReturnValueOnce(mockMeMember);
+
+        const defaultMemberWithPowerLevelAndJoinMembership = {
+            ...defaultMember,
+            powerLevel: 0,
+            membership: KnownMembership.Join,
+        };
+
+        renderComponent({
+            member: defaultMemberWithPowerLevelAndJoinMembership,
+            powerLevels: { events: { "m.room.power_levels": 1 } },
+            isUpdating: true,
+        });
+
+        const button = screen.getByText(/mute/i);
+        expect(button).toBeInTheDocument();
+        expect(button).toHaveAttribute("disabled");
+        expect(button).toHaveAttribute("aria-disabled", "true");
+    });
+
+    it("should not show mute button for one's own member", () => {
+        const mockMeMember = new RoomMember(mockRoom.roomId, mockClient.getSafeUserId());
+        mockMeMember.powerLevel = 51; // defaults to 50
+        mockRoom.getMember.mockReturnValueOnce(mockMeMember);
+
+        renderComponent({
+            member: mockMeMember,
+            powerLevels: { events: { "m.room.power_levels": 100 } },
+        });
+
+        const button = screen.queryByText(/mute/i);
+        expect(button).not.toBeInTheDocument();
     });
 });
 

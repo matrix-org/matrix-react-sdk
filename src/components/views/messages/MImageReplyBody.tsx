@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
+import { ImageContent } from "matrix-js-sdk/src/types";
 
 import MImageBody from "./MImageBody";
-import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 
 const FORCED_IMAGE_HEIGHT = 44;
 
@@ -35,7 +35,7 @@ export default class MImageReplyBody extends MImageBody {
             return super.render();
         }
 
-        const content = this.props.mxEvent.getContent<IMediaEventContent>();
+        const content = this.props.mxEvent.getContent<ImageContent>();
         const thumbnail = this.state.contentUrl
             ? this.messageContent(this.state.contentUrl, this.state.thumbUrl, content, FORCED_IMAGE_HEIGHT)
             : undefined;

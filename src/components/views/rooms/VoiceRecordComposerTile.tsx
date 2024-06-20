@@ -15,12 +15,10 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { _t } from "../../../languageHandler";
 import { RecordingState } from "../../../audio/VoiceRecording";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -34,7 +32,7 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../MediaDeviceHandler";
 import NotificationBadge from "./NotificationBadge";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
-import { NotificationColor } from "../../../stores/notifications/NotificationColor";
+import { NotificationLevel } from "../../../stores/notifications/NotificationLevel";
 import InlineSpinner from "../elements/InlineSpinner";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
@@ -45,6 +43,7 @@ import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import RoomContext from "../../../contexts/RoomContext";
 import { IUpload, VoiceMessageRecording } from "../../../audio/VoiceMessageRecording";
 import { createVoiceMessageContent } from "../../../utils/createVoiceMessageContent";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface IProps {
     room: Room;
@@ -181,14 +180,10 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         // The "microphone access error" dialogs are used a lot, so let's functionify them
         const accessError = (): void => {
             Modal.createDialog(ErrorDialog, {
-                title: _t("Unable to access your microphone"),
+                title: _t("voip|unable_to_access_audio_input_title"),
                 description: (
                     <>
-                        <p>
-                            {_t(
-                                "We were unable to access your microphone. Please check your browser settings and try again.",
-                            )}
-                        </p>
+                        <p>{_t("voip|unable_to_access_audio_input_description")}</p>
                     </>
                 ),
             });
@@ -200,14 +195,10 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             const devices = await MediaDeviceHandler.getDevices();
             if (!devices?.[MediaDeviceKindEnum.AudioInput]?.length) {
                 Modal.createDialog(ErrorDialog, {
-                    title: _t("No microphone found"),
+                    title: _t("voip|no_audio_input_title"),
                     description: (
                         <>
-                            <p>
-                                {_t(
-                                    "We didn't find a microphone on your device. Please check your settings and try again.",
-                                )}
-                            </p>
+                            <p>{_t("voip|no_audio_input_description")}</p>
                         </>
                     ),
                 });
@@ -274,13 +265,13 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         let stopBtn;
         let deleteButton;
         if (this.state.recordingPhase === RecordingState.Started) {
-            let tooltip = _t("Send voice message");
+            let tooltip = _t("composer|send_voice_message");
             if (!!this.state.recorder) {
-                tooltip = _t("Stop recording");
+                tooltip = _t("composer|stop_voice_message");
             }
 
             stopBtn = (
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className="mx_VoiceRecordComposerTile_stop"
                     onClick={this.onRecordStartEndClick}
                     title={tooltip}
@@ -293,9 +284,9 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
         if (this.state.recorder && this.state.recordingPhase !== RecordingState.Uploading) {
             deleteButton = (
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className="mx_VoiceRecordComposerTile_delete"
-                    title={_t("Delete")}
+                    title={_t("action|delete")}
                     onClick={this.onCancel}
                 />
             );
@@ -314,10 +305,10 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
                     <span className="mx_VoiceRecordComposerTile_uploadState_badge">
                         {/* Need to stick the badge in a span to ensure it doesn't create a block component */}
                         <NotificationBadge
-                            notification={StaticNotificationState.forSymbol("!", NotificationColor.Red)}
+                            notification={StaticNotificationState.forSymbol("!", NotificationLevel.Highlight)}
                         />
                     </span>
-                    <span className="text-warning">{_t("Failed to send")}</span>
+                    <span className="text-warning">{_t("timeline|send_state_failed")}</span>
                 </span>
             );
         }

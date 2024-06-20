@@ -58,15 +58,14 @@ limitations under the License.
 
 .mx_UserNotifSettings_gridColumnLabel {
     color: $secondary-content;
-    font-size: $font-12px;
-    font-weight: var(--font-semi-bold);
+    font: var(--cpd-font-body-sm-semibold);
 }
 .mx_UserNotifSettings_gridRowError {
-    // occupy full row
+    /* occupy full row */
     grid-column: 1/-1;
     justify-self: start;
     padding-right: 30%;
-    // collapse half of the grid-gap
+    /* collapse half of the grid-gap */
     margin-top: -$spacing-4;
 }
 
@@ -76,7 +75,7 @@ limitations under the License.
     & > div:first-child {
         /* section header */
         font-size: $font-18px;
-        font-weight: var(--font-semi-bold);
+        font-weight: var(--cpd-font-weight-semibold);
     }
 
     > table {

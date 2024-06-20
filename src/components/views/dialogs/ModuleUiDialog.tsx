@@ -17,31 +17,38 @@ limitations under the License.
 import React, { createRef } from "react";
 import { DialogContent, DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/DialogContent";
 import { logger } from "matrix-js-sdk/src/logger";
+import { ModuleApi } from "@matrix-org/react-sdk-module-api/lib/ModuleApi";
+import { ModuleUiDialogOptions } from "@matrix-org/react-sdk-module-api/lib/types/ModuleUiDialogOptions";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "./ScrollableBaseModal";
 import { _t } from "../../../languageHandler";
 
-interface IProps<C extends React.Component = React.Component> {
-    contentFactory: (props: DialogProps, ref: React.Ref<C>) => React.ReactNode;
-    contentProps: DialogProps;
-    title: string;
-    onFinished(ok?: boolean, model?: Awaited<ReturnType<DialogContent["trySubmit"]>>): void;
+interface IProps<P extends DialogProps, C extends DialogContent<P>> {
+    contentFactory: (props: P, ref: React.RefObject<C>) => React.ReactNode;
+    additionalContentProps: Omit<P, keyof DialogProps> | undefined;
+    initialOptions: ModuleUiDialogOptions;
+    moduleApi: ModuleApi;
+    onFinished(ok?: boolean, model?: Awaited<ReturnType<DialogContent<P & DialogProps>["trySubmit"]>>): void;
 }
 
 interface IState extends IScrollableBaseState {
     // nothing special
 }
 
-export class ModuleUiDialog extends ScrollableBaseModal<IProps, IState> {
-    private contentRef = createRef<DialogContent>();
+export class ModuleUiDialog<P extends DialogProps, C extends DialogContent<P>> extends ScrollableBaseModal<
+    IProps<P, C>,
+    IState
+> {
+    private contentRef = createRef<C>();
 
-    public constructor(props: IProps) {
+    public constructor(props: IProps<P, C>) {
         super(props);
 
         this.state = {
-            title: this.props.title,
-            canSubmit: true,
-            actionLabel: _t("OK"),
+            title: this.props.initialOptions.title,
+            actionLabel: this.props.initialOptions.actionLabel ?? _t("action|ok"),
+            cancelLabel: this.props.initialOptions.cancelLabel,
+            canSubmit: this.props.initialOptions.canSubmit ?? true,
         };
     }
 
@@ -58,11 +65,23 @@ export class ModuleUiDialog extends ScrollableBaseModal<IProps, IState> {
         this.props.onFinished(false);
     }
 
+    private setOptions(options: ModuleUiDialogOptions): void {
+        this.setState((state) => ({ ...state, ...options }));
+    }
+
     protected renderContent(): React.ReactNode {
-        return (
-            <div className="mx_ModuleUiDialog">
-                {this.props.contentFactory(this.props.contentProps, this.contentRef)}
-            </div>
-        );
+        const dialogProps: DialogProps = {
+            moduleApi: this.props.moduleApi,
+            setOptions: this.setOptions.bind(this),
+            cancel: this.cancel.bind(this),
+        };
+
+        // Typescript isn't very happy understanding that `contentProps` satisfies `P`
+        const contentProps: P = {
+            ...this.props.additionalContentProps,
+            ...dialogProps,
+        } as unknown as P;
+
+        return <div className="mx_ModuleUiDialog">{this.props.contentFactory(contentProps, this.contentRef)}</div>;
     }
 }

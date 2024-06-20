@@ -70,15 +70,13 @@ export default function AskInviteAnywayDialog({
         </li>
     ));
 
-    const description =
-        descriptionProp ??
-        _t("Unable to find profiles for the Matrix IDs listed below - would you like to invite them anyway?");
+    const description = descriptionProp ?? _t("invite|unable_find_profiles_description_default");
 
     return (
         <BaseDialog
             className="mx_RetryInvitesDialog"
             onFinished={onGiveUpClicked}
-            title={_t("The following users may not exist")}
+            title={_t("invite|unable_find_profiles_title")}
             contentId="mx_Dialog_content"
         >
             <div id="mx_Dialog_content">
@@ -87,12 +85,12 @@ export default function AskInviteAnywayDialog({
             </div>
 
             <div className="mx_Dialog_buttons">
-                <button onClick={onGiveUpClicked}>{_t("Close")}</button>
+                <button onClick={onGiveUpClicked}>{_t("action|close")}</button>
                 <button onClick={onInviteNeverWarnClicked}>
-                    {inviteNeverWarnLabel ?? _t("Invite anyway and never warn me again")}
+                    {inviteNeverWarnLabel ?? _t("invite|unable_find_profiles_invite_never_warn_label_default")}
                 </button>
                 <button onClick={onInviteClicked} autoFocus={true}>
-                    {inviteLabel ?? _t("Invite anyway")}
+                    {inviteLabel ?? _t("invite|unable_find_profiles_invite_label_default")}
                 </button>
             </div>
         </BaseDialog>

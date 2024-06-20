@@ -19,12 +19,12 @@ import React, { useEffect, useState } from "react";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../MediaDeviceHandler";
 import IconizedContextMenu, { IconizedContextMenuOptionList, IconizedContextMenuRadio } from "./IconizedContextMenu";
 import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
-import { _t, _td } from "../../../languageHandler";
+import { _t, _td, TranslationKey } from "../../../languageHandler";
 
-const SECTION_NAMES: Record<MediaDeviceKindEnum, string> = {
-    [MediaDeviceKindEnum.AudioInput]: _td("Input devices"),
-    [MediaDeviceKindEnum.AudioOutput]: _td("Output devices"),
-    [MediaDeviceKindEnum.VideoInput]: _td("Cameras"),
+const SECTION_NAMES: Record<MediaDeviceKindEnum, TranslationKey> = {
+    [MediaDeviceKindEnum.AudioInput]: _td("voip|input_devices"),
+    [MediaDeviceKindEnum.AudioOutput]: _td("voip|output_devices"),
+    [MediaDeviceKindEnum.VideoInput]: _td("common|cameras"),
 };
 
 interface IDeviceContextMenuDeviceProps {

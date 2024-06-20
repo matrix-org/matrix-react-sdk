@@ -16,14 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, useState } from "react";
+import React, { ComponentProps, createRef, useState, forwardRef } from "react";
 import classNames from "classnames";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 
-import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
 import LegacyCallContextMenu from "../../context_menus/LegacyCallContextMenu";
 import DialpadContextMenu from "../../context_menus/DialpadContextMenu";
-import { Alignment } from "../../elements/Tooltip";
 import {
     alwaysMenuProps,
     alwaysAboveRightOf,
@@ -34,7 +32,7 @@ import {
 import { _t } from "../../../../languageHandler";
 import DeviceContextMenu from "../../context_menus/DeviceContextMenu";
 import { MediaDeviceKindEnum } from "../../../../MediaDeviceHandler";
-import { ButtonEvent } from "../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../elements/AccessibleButton";
 
 // Height of the header duplicated from CSS because we need to subtract it from our max
 // height to get the max height of the video
@@ -42,39 +40,39 @@ const CONTEXT_MENU_VPADDING = 8; // How far the context menu sits above the butt
 
 const CONTROLS_HIDE_DELAY = 2000;
 
-interface IButtonProps extends Omit<React.ComponentProps<typeof AccessibleTooltipButton>, "title"> {
+type ButtonProps = Omit<ComponentProps<typeof AccessibleButton>, "title" | "element"> & {
     state: boolean;
-    className: string;
     onLabel?: string;
     offLabel?: string;
-}
-
-const LegacyCallViewToggleButton: React.FC<IButtonProps> = ({
-    children,
-    state: isOn,
-    className,
-    onLabel,
-    offLabel,
-    ...props
-}) => {
-    const classes = classNames("mx_LegacyCallViewButtons_button", className, {
-        mx_LegacyCallViewButtons_button_on: isOn,
-        mx_LegacyCallViewButtons_button_off: !isOn,
-    });
-
-    return (
-        <AccessibleTooltipButton
-            className={classes}
-            title={isOn ? onLabel : offLabel}
-            alignment={Alignment.Top}
-            {...props}
-        >
-            {children}
-        </AccessibleTooltipButton>
-    );
+    forceHide?: boolean;
+    onHover?: (hovering: boolean) => void;
 };
 
-interface IDropdownButtonProps extends IButtonProps {
+const LegacyCallViewToggleButton = forwardRef<HTMLElement, ButtonProps>(
+    ({ children, state: isOn, className, onLabel, offLabel, forceHide, onHover, ...props }, ref) => {
+        const classes = classNames("mx_LegacyCallViewButtons_button", className, {
+            mx_LegacyCallViewButtons_button_on: isOn,
+            mx_LegacyCallViewButtons_button_off: !isOn,
+        });
+
+        const title = forceHide ? undefined : isOn ? onLabel : offLabel;
+
+        return (
+            <AccessibleButton
+                ref={ref}
+                className={classes}
+                title={title}
+                placement="top"
+                onTooltipOpenChange={onHover}
+                {...props}
+            >
+                {children}
+            </AccessibleButton>
+        );
+    },
+);
+
+interface IDropdownButtonProps extends ButtonProps {
     deviceKinds: MediaDeviceKindEnum[];
 }
 
@@ -93,7 +91,7 @@ const LegacyCallViewDropdownButton: React.FC<IDropdownButtonProps> = ({ state, d
 
     return (
         <LegacyCallViewToggleButton
-            inputRef={buttonRef}
+            ref={buttonRef}
             forceHide={menuDisplayed || hoveringDropdown}
             state={state}
             {...props}
@@ -266,18 +264,18 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                 {this.props.buttonsVisibility.dialpad && (
                     <ContextMenuTooltipButton
                         className="mx_LegacyCallViewButtons_button mx_LegacyCallViewButtons_dialpad"
-                        inputRef={this.dialpadButton}
+                        ref={this.dialpadButton}
                         onClick={this.onDialpadClick}
                         isExpanded={this.state.showDialpad}
-                        title={_t("Dialpad")}
-                        alignment={Alignment.Top}
+                        title={_t("voip|dialpad")}
+                        placement="top"
                     />
                 )}
                 <LegacyCallViewDropdownButton
                     state={!this.props.buttonsState.micMuted}
                     className="mx_LegacyCallViewButtons_button_mic"
-                    onLabel={_t("Mute the microphone")}
-                    offLabel={_t("Unmute the microphone")}
+                    onLabel={_t("voip|disable_microphone")}
+                    offLabel={_t("voip|enable_microphone")}
                     onClick={this.props.handlers.onMicMuteClick}
                     deviceKinds={[MediaDeviceKindEnum.AudioInput, MediaDeviceKindEnum.AudioOutput]}
                 />
@@ -285,8 +283,8 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                     <LegacyCallViewDropdownButton
                         state={!this.props.buttonsState.vidMuted}
                         className="mx_LegacyCallViewButtons_button_vid"
-                        onLabel={_t("Stop the camera")}
-                        offLabel={_t("Start the camera")}
+                        onLabel={_t("voip|disable_camera")}
+                        offLabel={_t("voip|enable_camera")}
                         onClick={this.props.handlers.onVidMuteClick}
                         deviceKinds={[MediaDeviceKindEnum.VideoInput]}
                     />
@@ -295,8 +293,8 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                     <LegacyCallViewToggleButton
                         state={this.props.buttonsState.screensharing}
                         className="mx_LegacyCallViewButtons_button_screensharing"
-                        onLabel={_t("Stop sharing your screen")}
-                        offLabel={_t("Start sharing your screen")}
+                        onLabel={_t("voip|stop_screenshare")}
+                        offLabel={_t("voip|start_screenshare")}
                         onClick={this.props.handlers.onScreenshareClick}
                     />
                 )}
@@ -304,8 +302,8 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                     <LegacyCallViewToggleButton
                         state={this.props.buttonsState.sidebarShown}
                         className="mx_LegacyCallViewButtons_button_sidebar"
-                        onLabel={_t("Hide sidebar")}
-                        offLabel={_t("Show sidebar")}
+                        onLabel={_t("voip|hide_sidebar_button")}
+                        offLabel={_t("voip|show_sidebar_button")}
                         onClick={this.props.handlers.onToggleSidebarClick}
                     />
                 )}
@@ -313,17 +311,17 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                     <ContextMenuTooltipButton
                         className="mx_LegacyCallViewButtons_button mx_LegacyCallViewButtons_button_more"
                         onClick={this.onMoreClick}
-                        inputRef={this.contextMenuButton}
+                        ref={this.contextMenuButton}
                         isExpanded={this.state.showMoreMenu}
-                        title={_t("More")}
-                        alignment={Alignment.Top}
+                        title={_t("voip|more_button")}
+                        placement="top"
                     />
                 )}
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className="mx_LegacyCallViewButtons_button mx_LegacyCallViewButtons_button_hangup"
                     onClick={this.props.handlers.onHangupClick}
-                    title={_t("Hangup")}
-                    alignment={Alignment.Top}
+                    title={_t("voip|hangup")}
+                    placement="top"
                 />
             </div>
         );

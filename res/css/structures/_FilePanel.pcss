@@ -52,16 +52,6 @@ limitations under the License.
             padding-inline-start: 0;
         }
 
-        &:hover {
-            &.mx_EventTile_verified,
-            &.mx_EventTile_unverified,
-            &.mx_EventTile_unknown {
-                .mx_EventTile_line {
-                    box-shadow: none;
-                }
-            }
-        }
-
         .mx_MFileBody {
             line-height: 2.4rem;
         }
@@ -70,11 +60,11 @@ limitations under the License.
             padding-top: $spacing-8;
             display: flex;
             justify-content: space-between;
-            font-size: $font-14px;
+            font: var(--cpd-font-body-md-regular);
             color: $event-timestamp-color;
 
             .mx_MImageBody_size {
-                font-size: $font-14px;
+                font: var(--cpd-font-body-md-regular);
                 text-align: right;
                 white-space: nowrap;
             }
@@ -100,7 +90,8 @@ limitations under the License.
 
                 .mx_MessageTimestamp {
                     text-align: right;
-                    font-size: $font-14px;
+                    color: $secondary-content;
+                    font: var(--cpd-font-body-sm-regular);
                 }
             }
         }

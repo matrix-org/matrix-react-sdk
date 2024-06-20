@@ -23,23 +23,34 @@ import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import { MetaSpace } from "../../../../../../src/stores/spaces";
 import { SettingLevel } from "../../../../../../src/settings/SettingLevel";
 import { flushPromises } from "../../../../../test-utils";
-
-// used by checkbox to relate labels to inputs
-// make it stable for snapshot testing
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: jest.fn().mockReturnValue("abcd"),
-}));
+import SdkConfig from "../../../../../../src/SdkConfig";
 
 describe("<SidebarUserSettingsTab />", () => {
     beforeEach(() => {
         jest.spyOn(PosthogTrackers, "trackInteraction").mockClear();
         jest.spyOn(SettingsStore, "getValue").mockRestore();
-        jest.spyOn(SettingsStore, "setValue").mockReset();
+        jest.spyOn(SettingsStore, "setValue").mockResolvedValue(undefined);
     });
 
-    it("renders sidebar settings", () => {
+    it("renders sidebar settings with guest spa url", () => {
+        const spy = jest.spyOn(SdkConfig, "get").mockReturnValue({ guest_spa_url: "https://somewhere.org" });
+        const originalGetValue = SettingsStore.getValue;
+        const spySettingsStore = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
+            return setting === "feature_video_rooms" ? true : originalGetValue(setting);
+        });
         const { container } = render(<SidebarUserSettingsTab />);
         expect(container).toMatchSnapshot();
+        spySettingsStore.mockRestore();
+        spy.mockRestore();
+    });
+    it("renders sidebar settings without guest spa url", () => {
+        const originalGetValue = SettingsStore.getValue;
+        const spySettingsStore = jest.spyOn(SettingsStore, "getValue").mockImplementation((setting) => {
+            return setting === "feature_video_rooms" ? true : originalGetValue(setting);
+        });
+        const { container } = render(<SidebarUserSettingsTab />);
+        expect(container).toMatchSnapshot();
+        spySettingsStore.mockRestore();
     });
 
     it("toggles all rooms in home setting", async () => {

@@ -24,8 +24,9 @@ import {
     MatrixEventEvent,
     MsgType,
     RelationType,
+    TypedEventEmitter,
 } from "matrix-js-sdk/src/matrix";
-import { TypedEventEmitter } from "matrix-js-sdk/src/models/typed-event-emitter";
+import { AudioContent, EncryptedFile } from "matrix-js-sdk/src/types";
 
 import {
     ChunkRecordedPayload,
@@ -38,7 +39,6 @@ import {
     VoiceBroadcastRecorderEvent,
 } from "..";
 import { uploadFile } from "../../ContentMessages";
-import { IEncryptedFile } from "../../customisations/models/IMediaEventContent";
 import { createVoiceMessageContent } from "../../utils/createVoiceMessageContent";
 import { IDestroyable } from "../../utils/IDestroyable";
 import dis from "../../dispatcher/dispatcher";
@@ -386,7 +386,7 @@ export class VoiceBroadcastRecording
         );
     }
 
-    private async sendVoiceMessage(chunk: ChunkRecordedPayload, url?: string, file?: IEncryptedFile): Promise<void> {
+    private async sendVoiceMessage(chunk: ChunkRecordedPayload, url?: string, file?: EncryptedFile): Promise<void> {
         /**
          * Increment the last sequence number and use it for this message.
          * Done outside of the sendMessageFn to get a scoped value.
@@ -406,7 +406,7 @@ export class VoiceBroadcastRecording
                 rel_type: RelationType.Reference,
                 event_id: this.infoEventId,
             };
-            content["io.element.voice_broadcast_chunk"] = {
+            (<AudioContent>content)["io.element.voice_broadcast_chunk"] = {
                 sequence,
             };
 

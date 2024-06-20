@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { Room, EventType, ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 
 import { inviteUsersToRoom } from "../RoomInvite";
 import Modal, { IHandle } from "../Modal";
@@ -69,7 +68,10 @@ export async function upgradeRoom(
 
     let toInvite: string[] = [];
     if (inviteUsers) {
-        toInvite = [...room.getMembersWithMembership("join"), ...room.getMembersWithMembership("invite")]
+        toInvite = [
+            ...room.getMembersWithMembership(KnownMembership.Join),
+            ...room.getMembersWithMembership(KnownMembership.Invite),
+        ]
             .map((m) => m.userId)
             .filter((m) => m !== cli.getUserId());
     }
@@ -101,8 +103,8 @@ export async function upgradeRoom(
         logger.error(e);
 
         Modal.createDialog(ErrorDialog, {
-            title: _t("Error upgrading room"),
-            description: _t("Double check that your server supports the room version chosen and try again."),
+            title: _t("room|upgrade_error_title"),
+            description: _t("room|upgrade_error_description"),
         });
         throw e;
     }
@@ -118,7 +120,7 @@ export async function upgradeRoom(
 
     if (toInvite.length > 0) {
         // Errors are handled internally to this function
-        await inviteUsersToRoom(cli, newRoomId, toInvite, false, () => {
+        await inviteUsersToRoom(cli, newRoomId, toInvite, () => {
             progress.inviteUsersProgress!++;
             progressCallback?.(progress);
         });
@@ -133,7 +135,7 @@ export async function upgradeRoom(
                     EventType.SpaceChild,
                     {
                         ...(currentEv?.getContent() || {}), // copy existing attributes like suggested
-                        via: [cli.getDomain()],
+                        via: [cli.getDomain()!],
                     },
                     newRoomId,
                 );

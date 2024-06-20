@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { HTMLAttributes } from "react";
 import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import {
     IState,
@@ -32,10 +33,7 @@ const Button = (props: HTMLAttributes<HTMLButtonElement>) => {
 };
 
 const checkTabIndexes = (buttons: NodeListOf<HTMLElement>, expectations: number[]) => {
-    expect(buttons.length).toBe(expectations.length);
-    for (let i = 0; i < buttons.length; i++) {
-        expect(buttons[i].tabIndex).toBe(expectations[i]);
-    }
+    expect([...buttons].map((b) => b.tabIndex)).toStrictEqual(expectations);
 };
 
 // give the buttons keys for the fibre reconciler to not treat them all as the same
@@ -362,6 +360,63 @@ describe("RovingTabIndex", () => {
                 activeRef: ref3,
                 refs: [ref1, ref2, ref3, ref4],
             });
+        });
+    });
+
+    describe("handles arrow keys", () => {
+        it("should handle up/down arrow keys work when handleUpDown=true", async () => {
+            const { container } = render(
+                <RovingTabIndexProvider handleUpDown>
+                    {({ onKeyDownHandler }) => (
+                        <div onKeyDown={onKeyDownHandler}>
+                            {button1}
+                            {button2}
+                            {button3}
+                        </div>
+                    )}
+                </RovingTabIndexProvider>,
+            );
+
+            container.querySelectorAll("button")[0].focus();
+            checkTabIndexes(container.querySelectorAll("button"), [0, -1, -1]);
+
+            await userEvent.keyboard("[ArrowDown]");
+            checkTabIndexes(container.querySelectorAll("button"), [-1, 0, -1]);
+
+            await userEvent.keyboard("[ArrowDown]");
+            checkTabIndexes(container.querySelectorAll("button"), [-1, -1, 0]);
+
+            await userEvent.keyboard("[ArrowUp]");
+            checkTabIndexes(container.querySelectorAll("button"), [-1, 0, -1]);
+
+            await userEvent.keyboard("[ArrowUp]");
+            checkTabIndexes(container.querySelectorAll("button"), [0, -1, -1]);
+
+            // Does not loop without
+            await userEvent.keyboard("[ArrowUp]");
+            checkTabIndexes(container.querySelectorAll("button"), [0, -1, -1]);
+        });
+
+        it("should call scrollIntoView if specified", async () => {
+            const { container } = render(
+                <RovingTabIndexProvider handleUpDown scrollIntoView>
+                    {({ onKeyDownHandler }) => (
+                        <div onKeyDown={onKeyDownHandler}>
+                            {button1}
+                            {button2}
+                            {button3}
+                        </div>
+                    )}
+                </RovingTabIndexProvider>,
+            );
+
+            container.querySelectorAll("button")[0].focus();
+            checkTabIndexes(container.querySelectorAll("button"), [0, -1, -1]);
+
+            const button = container.querySelectorAll("button")[1];
+            const mock = jest.spyOn(button, "scrollIntoView");
+            await userEvent.keyboard("[ArrowDown]");
+            expect(mock).toHaveBeenCalled();
         });
     });
 });

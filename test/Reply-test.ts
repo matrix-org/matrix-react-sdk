@@ -14,10 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IContent, MatrixEvent, MsgType } from "matrix-js-sdk/src/matrix";
-import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
-import { LocationAssetType, M_ASSET } from "matrix-js-sdk/src/@types/location";
-import { M_POLL_END } from "matrix-js-sdk/src/@types/polls";
+import {
+    IContent,
+    MatrixEvent,
+    MsgType,
+    M_BEACON_INFO,
+    LocationAssetType,
+    M_ASSET,
+    M_POLL_END,
+    Room,
+} from "matrix-js-sdk/src/matrix";
 
 import {
     getNestedReplyText,
@@ -26,7 +32,7 @@ import {
     stripHTMLReply,
     stripPlainReply,
 } from "../src/utils/Reply";
-import { makePollStartEvent, mkEvent } from "./test-utils";
+import { makePollStartEvent, mkEvent, stubClient } from "./test-utils";
 import { RoomPermalinkCreator } from "../src/utils/permalinks/Permalinks";
 
 function makeTestEvent(type: string, content: IContent): MatrixEvent {
@@ -61,7 +67,7 @@ describe("Reply", () => {
                 room: "!room1:server",
                 content: {},
             });
-            event.makeRedacted(event);
+            event.makeRedacted(event, new Room(event.getRoomId()!, stubClient(), event.getSender()!));
 
             expect(getParentEventId(event)).toBeUndefined();
         });
@@ -177,7 +183,7 @@ But this is not
                 room: "!room1:server",
                 content: {},
             });
-            event.makeRedacted(event);
+            event.makeRedacted(event, new Room(event.getRoomId()!, stubClient(), event.getSender()!));
 
             expect(shouldDisplayReply(event)).toBe(false);
         });

@@ -14,9 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { SyncState } from "matrix-js-sdk/src/sync";
-import { ClientEvent } from "matrix-js-sdk/src/client";
+import { Room, ClientEvent, SyncState } from "matrix-js-sdk/src/matrix";
 
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -99,7 +97,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
      */
     public getRoomState(room: Room): RoomNotificationState {
         if (!this.roomMap.has(room)) {
-            this.roomMap.set(room, new RoomNotificationState(room));
+            this.roomMap.set(room, new RoomNotificationState(room, false));
         }
         return this.roomMap.get(room)!;
     }
@@ -140,7 +138,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
         if (
             this.globalState.symbol !== globalState.symbol ||
             this.globalState.count !== globalState.count ||
-            this.globalState.color !== globalState.color ||
+            this.globalState.level !== globalState.level ||
             this.globalState.numUnreadStates !== globalState.numUnreadStates ||
             forceEmit
         ) {

@@ -31,6 +31,7 @@ export const DEFAULTS: DeepReadonly<IConfigOptions> = {
     integrations_ui_url: "https://scalar.vector.im/",
     integrations_rest_url: "https://scalar.vector.im/api",
     uisi_autorageshake_app: "element-auto-uisi",
+    show_labs_settings: false,
 
     jitsi: {
         preferred_domain: "meet.element.io",
@@ -60,6 +61,17 @@ export const DEFAULTS: DeepReadonly<IConfigOptions> = {
         existing_issues_url:
             "https://github.com/vector-im/element-web/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc",
         new_issue_url: "https://github.com/vector-im/element-web/issues/new/choose",
+    },
+
+    desktop_builds: {
+        available: true,
+        logo: "vector-icons/1024.png",
+        url: "https://element.io/download",
+    },
+    mobile_builds: {
+        ios: "https://apps.apple.com/app/vector/id1083446067",
+        android: "https://play.google.com/store/apps/details?id=im.vector.app",
+        fdroid: "https://f-droid.org/repository/browse/?fdid=im.vector.app",
     },
 };
 

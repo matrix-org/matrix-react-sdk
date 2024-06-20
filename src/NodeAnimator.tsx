@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { Key, ReactElement, ReactInstance } from "react";
+import React, { Key, MutableRefObject, ReactElement, ReactFragment, ReactInstance, ReactPortal } from "react";
 import ReactDom from "react-dom";
 
 interface IChildProps {
@@ -31,6 +31,12 @@ interface IProps {
 
     // a list of state objects to apply to each child node in turn
     startStyles: React.CSSProperties[];
+
+    innerRef?: MutableRefObject<any>;
+}
+
+function isReactElement(c: ReactElement | ReactFragment | ReactPortal): c is ReactElement {
+    return typeof c === "object" && "type" in c;
 }
 
 /**
@@ -72,7 +78,8 @@ export default class NodeAnimator extends React.Component<IProps> {
     private updateChildren(newChildren: React.ReactNode): void {
         const oldChildren = this.children || {};
         this.children = {};
-        React.Children.toArray(newChildren).forEach((c: ReactElement) => {
+        React.Children.toArray(newChildren).forEach((c) => {
+            if (!isReactElement(c)) return;
             if (oldChildren[c.key!]) {
                 const old = oldChildren[c.key!];
                 const oldNode = ReactDom.findDOMNode(this.nodes[old.key!]);
@@ -118,6 +125,10 @@ export default class NodeAnimator extends React.Component<IProps> {
             }, 0);
         }
         this.nodes[k] = node;
+
+        if (this.props.innerRef) {
+            this.props.innerRef.current = node;
+        }
     }
 
     public render(): React.ReactNode {

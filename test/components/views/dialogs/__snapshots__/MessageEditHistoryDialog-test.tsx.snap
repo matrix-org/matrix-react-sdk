@@ -14,21 +14,21 @@ exports[`<MessageEditHistory /> should match the snapshot 1`] = `
     role="dialog"
   >
     <div
-      class="mx_Dialog_header mx_Dialog_headerWithCancel"
+      class="mx_Dialog_header"
     >
-      <h2
-        class="mx_Heading_h2 mx_Dialog_title"
+      <h1
+        class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         Message edits
-      </h2>
-      <div
-        aria-label="Close dialog"
-        class="mx_AccessibleButton mx_Dialog_cancelButton"
-        role="button"
-        tabindex="0"
-      />
+      </h1>
     </div>
+    <div
+      aria-label="Close dialog"
+      class="mx_AccessibleButton mx_Dialog_cancelButton"
+      role="button"
+      tabindex="0"
+    />
     <div
       class="mx_AutoHideScrollbar mx_ScrollPanel mx_MessageEditHistoryDialog_scrollPanel"
       tabindex="-1"
@@ -45,8 +45,8 @@ exports[`<MessageEditHistory /> should match the snapshot 1`] = `
           >
             <li>
               <div
-                aria-label="Thu, Jan 1 1970"
-                class="mx_DateSeparator"
+                aria-label="Thu, Jan 1, 1970"
+                class="mx_TimelineSeparator"
                 role="separator"
               >
                 <hr
@@ -59,7 +59,7 @@ exports[`<MessageEditHistory /> should match the snapshot 1`] = `
                     aria-hidden="true"
                     class="mx_DateSeparator_dateHeading"
                   >
-                    Thu, Jan 1 1970
+                    Thu, Jan 1, 1970
                   </h2>
                 </div>
                 <hr
@@ -130,21 +130,21 @@ exports[`<MessageEditHistory /> should support events with 1`] = `
     role="dialog"
   >
     <div
-      class="mx_Dialog_header mx_Dialog_headerWithCancel"
+      class="mx_Dialog_header"
     >
-      <h2
-        class="mx_Heading_h2 mx_Dialog_title"
+      <h1
+        class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         Message edits
-      </h2>
-      <div
-        aria-label="Close dialog"
-        class="mx_AccessibleButton mx_Dialog_cancelButton"
-        role="button"
-        tabindex="0"
-      />
+      </h1>
     </div>
+    <div
+      aria-label="Close dialog"
+      class="mx_AccessibleButton mx_Dialog_cancelButton"
+      role="button"
+      tabindex="0"
+    />
     <div
       class="mx_AutoHideScrollbar mx_ScrollPanel mx_MessageEditHistoryDialog_scrollPanel"
       tabindex="-1"
@@ -161,8 +161,8 @@ exports[`<MessageEditHistory /> should support events with 1`] = `
           >
             <li>
               <div
-                aria-label=",  NaN NaN"
-                class="mx_DateSeparator"
+                aria-label="Thu, Jan 1, 1970"
+                class="mx_TimelineSeparator"
                 role="separator"
               >
                 <hr
@@ -175,7 +175,7 @@ exports[`<MessageEditHistory /> should support events with 1`] = `
                     aria-hidden="true"
                     class="mx_DateSeparator_dateHeading"
                   >
-                    ,  NaN NaN
+                    Thu, Jan 1, 1970
                   </h2>
                 </div>
                 <hr
@@ -193,7 +193,7 @@ exports[`<MessageEditHistory /> should support events with 1`] = `
                   <span
                     class="mx_MessageTimestamp"
                   >
-                    NaN:NaN
+                    00:00
                   </span>
                   <div
                     class="mx_EventTile_content"
@@ -236,7 +236,7 @@ exports[`<MessageEditHistory /> should support events with 1`] = `
                   <span
                     class="mx_MessageTimestamp"
                   >
-                    NaN:NaN
+                    00:00
                   </span>
                   <div
                     class="mx_EventTile_content"
@@ -290,7 +290,7 @@ exports[`<MessageEditHistory /> should support events with 1`] = `
                   <span
                     class="mx_MessageTimestamp"
                   >
-                    NaN:NaN
+                    00:00
                   </span>
                   <div
                     class="mx_EventTile_content"

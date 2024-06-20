@@ -15,9 +15,7 @@ limitations under the License.
 */
 
 import React, { ForwardedRef, forwardRef } from "react";
-import { IPusher } from "matrix-js-sdk/src/@types/PushRules";
-import { PUSHER_DEVICE_ID } from "matrix-js-sdk/src/@types/event";
-import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
+import { IPusher, PUSHER_DEVICE_ID, LocalNotificationSettings } from "matrix-js-sdk/src/matrix";
 
 import { _t } from "../../../../languageHandler";
 import AccessibleButton from "../../elements/AccessibleButton";
@@ -32,6 +30,7 @@ import { DevicesState } from "./useOwnDevices";
 import FilteredDeviceListHeader from "./FilteredDeviceListHeader";
 import Spinner from "../../elements/Spinner";
 import { DeviceSecurityLearnMore } from "./DeviceSecurityLearnMore";
+import DeviceTile from "./DeviceTile";
 
 interface Props {
     devices: DevicesDictionary;
@@ -49,6 +48,11 @@ interface Props {
     setPushNotifications: (deviceId: string, enabled: boolean) => Promise<void>;
     setSelectedDeviceIds: (deviceIds: ExtendedDevice["device_id"][]) => void;
     supportsMSC3881?: boolean | undefined;
+    /**
+     * Only allow sessions to be signed out individually
+     * Removes checkboxes and multi selection header
+     */
+    disableMultipleSignout?: boolean;
 }
 
 const isDeviceSelected = (
@@ -69,37 +73,6 @@ const getFilteredSortedDevices = (devices: DevicesDictionary, filter?: FilterVar
 const ALL_FILTER_ID = "ALL";
 type DeviceFilterKey = FilterVariation | typeof ALL_FILTER_ID;
 
-const securityCardContent: Record<
-    DeviceSecurityVariation,
-    {
-        title: string;
-        description: string;
-    }
-> = {
-    [DeviceSecurityVariation.Verified]: {
-        title: _t("Verified sessions"),
-        description: _t("For best security, sign out from any session that you don't recognize or use anymore."),
-    },
-    [DeviceSecurityVariation.Unverified]: {
-        title: _t("Unverified sessions"),
-        description: _t(
-            `Verify your sessions for enhanced secure messaging or ` +
-                `sign out from those you don't recognize or use anymore.`,
-        ),
-    },
-    [DeviceSecurityVariation.Unverifiable]: {
-        title: _t("Unverified session"),
-        description: _t(`This session doesn't support encryption and thus can't be verified.`),
-    },
-    [DeviceSecurityVariation.Inactive]: {
-        title: _t("Inactive sessions"),
-        description: _t(
-            `Consider signing out from old sessions ` + `(%(inactiveAgeDays)s days or older) you don't use anymore.`,
-            { inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS },
-        ),
-    },
-};
-
 const isSecurityVariation = (filter?: DeviceFilterKey): filter is FilterVariation =>
     !!filter &&
     (
@@ -112,6 +85,33 @@ const isSecurityVariation = (filter?: DeviceFilterKey): filter is FilterVariatio
 
 const FilterSecurityCard: React.FC<{ filter?: DeviceFilterKey }> = ({ filter }) => {
     if (isSecurityVariation(filter)) {
+        const securityCardContent: Record<
+            DeviceSecurityVariation,
+            {
+                title: string;
+                description: string;
+            }
+        > = {
+            [DeviceSecurityVariation.Verified]: {
+                title: _t("settings|sessions|verified_sessions"),
+                description: _t("settings|sessions|verified_sessions_list_description"),
+            },
+            [DeviceSecurityVariation.Unverified]: {
+                title: _t("settings|sessions|unverified_sessions"),
+                description: _t("settings|sessions|unverified_sessions_list_description"),
+            },
+            [DeviceSecurityVariation.Unverifiable]: {
+                title: _t("settings|sessions|unverified_session"),
+                description: _t("settings|sessions|unverified_session_explainer_1"),
+            },
+            [DeviceSecurityVariation.Inactive]: {
+                title: _t("settings|sessions|inactive_sessions"),
+                description: _t("settings|sessions|inactive_sessions_list_description", {
+                    inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS,
+                }),
+            },
+        };
+
         const { title, description } = securityCardContent[filter];
         return (
             <div className="mx_FilteredDeviceList_securityCard">
@@ -135,13 +135,13 @@ const FilterSecurityCard: React.FC<{ filter?: DeviceFilterKey }> = ({ filter }) 
 const getNoResultsMessage = (filter?: FilterVariation): string => {
     switch (filter) {
         case DeviceSecurityVariation.Verified:
-            return _t("No verified sessions found.");
+            return _t("settings|sessions|no_verified_sessions");
         case DeviceSecurityVariation.Unverified:
-            return _t("No unverified sessions found.");
+            return _t("settings|sessions|no_unverified_sessions");
         case DeviceSecurityVariation.Inactive:
-            return _t("No inactive sessions found.");
+            return _t("settings|sessions|no_inactive_sessions");
         default:
-            return _t("No sessions found.");
+            return _t("settings|sessions|no_sessions");
     }
 };
 interface NoResultsProps {
@@ -157,7 +157,7 @@ const NoResults: React.FC<NoResultsProps> = ({ filter, clearFilter }) => (
                 <>
                     &nbsp;
                     <AccessibleButton kind="link_inline" onClick={clearFilter} data-testid="devices-clear-filter-btn">
-                        {_t("Show all")}
+                        {_t("action|show_all")}
                     </AccessibleButton>
                 </>
             )
@@ -179,6 +179,7 @@ const DeviceListItem: React.FC<{
     toggleSelected: () => void;
     setPushNotifications: (deviceId: string, enabled: boolean) => Promise<void>;
     supportsMSC3881?: boolean | undefined;
+    isSelectDisabled?: boolean;
 }> = ({
     device,
     pusher,
@@ -193,33 +194,47 @@ const DeviceListItem: React.FC<{
     setPushNotifications,
     toggleSelected,
     supportsMSC3881,
-}) => (
-    <li className="mx_FilteredDeviceList_listItem">
-        <SelectableDeviceTile
-            isSelected={isSelected}
-            onSelect={toggleSelected}
-            onClick={onDeviceExpandToggle}
-            device={device}
-        >
+    isSelectDisabled,
+}) => {
+    const tileContent = (
+        <>
             {isSigningOut && <Spinner w={16} h={16} />}
             <DeviceExpandDetailsButton isExpanded={isExpanded} onClick={onDeviceExpandToggle} />
-        </SelectableDeviceTile>
-        {isExpanded && (
-            <DeviceDetails
-                device={device}
-                pusher={pusher}
-                localNotificationSettings={localNotificationSettings}
-                isSigningOut={isSigningOut}
-                onVerifyDevice={onRequestDeviceVerification}
-                onSignOutDevice={onSignOutDevice}
-                saveDeviceName={saveDeviceName}
-                setPushNotifications={setPushNotifications}
-                supportsMSC3881={supportsMSC3881}
-                className="mx_FilteredDeviceList_deviceDetails"
-            />
-        )}
-    </li>
-);
+        </>
+    );
+    return (
+        <li className="mx_FilteredDeviceList_listItem">
+            {isSelectDisabled ? (
+                <DeviceTile device={device} onClick={onDeviceExpandToggle}>
+                    {tileContent}
+                </DeviceTile>
+            ) : (
+                <SelectableDeviceTile
+                    isSelected={isSelected}
+                    onSelect={toggleSelected}
+                    onClick={onDeviceExpandToggle}
+                    device={device}
+                >
+                    {tileContent}
+                </SelectableDeviceTile>
+            )}
+            {isExpanded && (
+                <DeviceDetails
+                    device={device}
+                    pusher={pusher}
+                    localNotificationSettings={localNotificationSettings}
+                    isSigningOut={isSigningOut}
+                    onVerifyDevice={onRequestDeviceVerification}
+                    onSignOutDevice={onSignOutDevice}
+                    saveDeviceName={saveDeviceName}
+                    setPushNotifications={setPushNotifications}
+                    supportsMSC3881={supportsMSC3881}
+                    className="mx_FilteredDeviceList_deviceDetails"
+                />
+            )}
+        </li>
+    );
+};
 
 /**
  * Filtered list of devices
@@ -243,6 +258,7 @@ export const FilteredDeviceList = forwardRef(
             setPushNotifications,
             setSelectedDeviceIds,
             supportsMSC3881,
+            disableMultipleSignout,
         }: Props,
         ref: ForwardedRef<HTMLDivElement>,
     ) => {
@@ -262,21 +278,21 @@ export const FilteredDeviceList = forwardRef(
         };
 
         const options: FilterDropdownOption<DeviceFilterKey>[] = [
-            { id: ALL_FILTER_ID, label: _t("All") },
+            { id: ALL_FILTER_ID, label: _t("settings|sessions|filter_all") },
             {
                 id: DeviceSecurityVariation.Verified,
-                label: _t("Verified"),
-                description: _t("Ready for secure messaging"),
+                label: _t("common|verified"),
+                description: _t("settings|sessions|filter_verified_description"),
             },
             {
                 id: DeviceSecurityVariation.Unverified,
-                label: _t("Unverified"),
-                description: _t("Not ready for secure messaging"),
+                label: _t("common|unverified"),
+                description: _t("settings|sessions|filter_unverified_description"),
             },
             {
                 id: DeviceSecurityVariation.Inactive,
-                label: _t("Inactive"),
-                description: _t("Inactive for %(inactiveAgeDays)s days or longer", {
+                label: _t("settings|sessions|filter_inactive"),
+                description: _t("settings|sessions|filter_inactive_description", {
                     inactiveAgeDays: INACTIVE_DEVICE_AGE_DAYS,
                 }),
             },
@@ -303,6 +319,7 @@ export const FilteredDeviceList = forwardRef(
                     selectedDeviceCount={selectedDeviceIds.length}
                     isAllSelected={isAllSelected}
                     toggleSelectAll={toggleSelectAll}
+                    isSelectDisabled={disableMultipleSignout}
                 >
                     {selectedDeviceIds.length ? (
                         <>
@@ -314,7 +331,7 @@ export const FilteredDeviceList = forwardRef(
                                 className="mx_FilteredDeviceList_headerButton"
                             >
                                 {isSigningOut && <Spinner w={16} h={16} />}
-                                {_t("Sign out")}
+                                {_t("action|sign_out")}
                             </AccessibleButton>
                             <AccessibleButton
                                 data-testid="cancel-selection-cta"
@@ -323,17 +340,17 @@ export const FilteredDeviceList = forwardRef(
                                 onClick={() => setSelectedDeviceIds([])}
                                 className="mx_FilteredDeviceList_headerButton"
                             >
-                                {_t("Cancel")}
+                                {_t("action|cancel")}
                             </AccessibleButton>
                         </>
                     ) : (
                         <FilterDropdown<DeviceFilterKey>
                             id="device-list-filter"
-                            label={_t("Filter devices")}
+                            label={_t("settings|sessions|filter_label")}
                             value={filter || ALL_FILTER_ID}
                             onOptionChange={onFilterOptionChange}
                             options={options}
-                            selectedLabel={_t("Show")}
+                            selectedLabel={_t("action|show")}
                         />
                     )}
                 </FilteredDeviceListHeader>
@@ -352,6 +369,7 @@ export const FilteredDeviceList = forwardRef(
                             isExpanded={expandedDeviceIds.includes(device.device_id)}
                             isSigningOut={signingOutDeviceIds.includes(device.device_id)}
                             isSelected={isDeviceSelected(device.device_id, selectedDeviceIds)}
+                            isSelectDisabled={disableMultipleSignout}
                             onDeviceExpandToggle={() => onDeviceExpandToggle(device.device_id)}
                             onSignOutDevice={() => onSignOutDevices([device.device_id])}
                             saveDeviceName={(deviceName: string) => saveDeviceName(device.device_id, deviceName)}

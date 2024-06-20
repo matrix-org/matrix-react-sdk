@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React, { useContext } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { logger } from "matrix-js-sdk/src/logger";
+import { Room, RoomMemberEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
 import IconizedContextMenu, {
@@ -30,7 +30,6 @@ import { ButtonEvent } from "../elements/AccessibleButton";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import dis from "../../../dispatcher/dispatcher";
-import RoomListActions from "../../../actions/RoomListActions";
 import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
 import { RoomNotifState } from "../../../RoomNotifs";
 import Modal from "../../../Modal";
@@ -52,6 +51,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { DeveloperToolsOption } from "./DeveloperToolsOption";
+import { tagRoom } from "../../../utils/room/tagRoom";
 
 interface IProps extends IContextMenuProps {
     room: Room;
@@ -59,6 +59,7 @@ interface IProps extends IContextMenuProps {
 
 /**
  * Room context menu accessible via the room header.
+ * @deprecated will be removed as part of `feature_new_room_decoration_ui`
  */
 const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
     const cli = useContext(MatrixClientContext);
@@ -82,7 +83,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
         leaveOption = (
             <IconizedContextMenuOption
                 iconClassName="mx_RoomTile_iconSignOut"
-                label={_t("Forget")}
+                label={_t("room|context_menu|forget")}
                 className="mx_IconizedContextMenu_option_red"
                 onClick={onForgetRoomClick}
             />
@@ -104,7 +105,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
         leaveOption = (
             <IconizedContextMenuOption
                 onClick={onLeaveRoomClick}
-                label={_t("Leave")}
+                label={_t("action|leave")}
                 className="mx_IconizedContextMenu_option_red"
                 iconClassName="mx_RoomTile_iconSignOut"
             />
@@ -116,9 +117,9 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
     const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
     const isVideoRoom =
         videoRoomsEnabled && (room.isElementVideoRoom() || (elementCallVideoRoomsEnabled && room.isCallRoom()));
-
+    const canInvite = useEventEmitterState(cli, RoomMemberEvent.PowerLevel, () => room.canInvite(cli.getUserId()!));
     let inviteOption: JSX.Element | undefined;
-    if (room.canInvite(cli.getUserId()!) && !isDm && shouldShowComponent(UIComponent.InviteUsers)) {
+    if (canInvite && !isDm && shouldShowComponent(UIComponent.InviteUsers)) {
         const onInviteClick = (ev: ButtonEvent): void => {
             ev.preventDefault();
             ev.stopPropagation();
@@ -135,7 +136,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
         inviteOption = (
             <IconizedContextMenuOption
                 onClick={onInviteClick}
-                label={_t("Invite")}
+                label={_t("action|invite")}
                 iconClassName="mx_RoomTile_iconInvite"
             />
         );
@@ -144,7 +145,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
     let favouriteOption: JSX.Element | undefined;
     let lowPriorityOption: JSX.Element | undefined;
     let notificationOption: JSX.Element | undefined;
-    if (room.getMyMembership() === "join") {
+    if (room.getMyMembership() === KnownMembership.Join) {
         const isFavorite = roomTags.includes(DefaultTagID.Favourite);
         favouriteOption = (
             <IconizedContextMenuCheckbox
@@ -153,7 +154,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                     PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuFavouriteToggle", e);
                 }}
                 active={isFavorite}
-                label={isFavorite ? _t("Favourited") : _t("Favourite")}
+                label={isFavorite ? _t("room|context_menu|unfavourite") : _t("room|context_menu|favourite")}
                 iconClassName="mx_RoomTile_iconStar"
             />
         );
@@ -163,7 +164,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
             <IconizedContextMenuCheckbox
                 onClick={(e) => onTagRoom(e, DefaultTagID.LowPriority)}
                 active={isLowPriority}
-                label={_t("Low priority")}
+                label={_t("common|low_priority")}
                 iconClassName="mx_RoomTile_iconArrowDown"
             />
         );
@@ -173,19 +174,19 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
         let iconClassName: string | undefined;
         switch (echoChamber.notificationVolume) {
             case RoomNotifState.AllMessages:
-                notificationLabel = _t("Default");
+                notificationLabel = _t("notifications|default");
                 iconClassName = "mx_RoomTile_iconNotificationsDefault";
                 break;
             case RoomNotifState.AllMessagesLoud:
-                notificationLabel = _t("All messages");
+                notificationLabel = _t("notifications|all_messages");
                 iconClassName = "mx_RoomTile_iconNotificationsAllMessages";
                 break;
             case RoomNotifState.MentionsOnly:
-                notificationLabel = _t("Mentions only");
+                notificationLabel = _t("room|context_menu|mentions_only");
                 iconClassName = "mx_RoomTile_iconNotificationsMentionsKeywords";
                 break;
             case RoomNotifState.Mute:
-                notificationLabel = _t("Mute");
+                notificationLabel = _t("common|mute");
                 iconClassName = "mx_RoomTile_iconNotificationsNone";
                 break;
         }
@@ -205,7 +206,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
 
                     PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuNotificationsItem", ev);
                 }}
-                label={_t("Notifications")}
+                label={_t("notifications|enable_prompt_toast_title")}
                 iconClassName={iconClassName}
             >
                 <span className="mx_IconizedContextMenu_sublabel">{notificationLabel}</span>
@@ -227,7 +228,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                     onFinished();
                     PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuPeopleItem", ev);
                 }}
-                label={_t("People")}
+                label={_t("common|people")}
                 iconClassName="mx_RoomTile_iconPeople"
             >
                 <span className="mx_IconizedContextMenu_sublabel">{room.getJoinedMemberCount()}</span>
@@ -246,7 +247,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                     });
                     onFinished();
                 }}
-                label={_t("Copy room link")}
+                label={_t("room|context_menu|copy_link")}
                 iconClassName="mx_RoomTile_iconCopyLink"
             />
         );
@@ -264,7 +265,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                     RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, false);
                     onFinished();
                 }}
-                label={_t("Files")}
+                label={_t("right_panel|files_button")}
                 iconClassName="mx_RoomTile_iconFiles"
             />
         );
@@ -285,7 +286,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                     RightPanelStore.instance.pushCard({ phase: RightPanelPhases.PinnedMessages }, false);
                     onFinished();
                 }}
-                label={_t("Pinned")}
+                label={_t("right_panel|pinned_messages_button")}
                 iconClassName="mx_RoomTile_iconPins"
             >
                 {pinCount > 0 && <span className="mx_IconizedContextMenu_sublabel">{pinCount}</span>}
@@ -305,7 +306,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                     RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary }, false);
                     onFinished();
                 }}
-                label={_t("Widgets")}
+                label={_t("right_panel|widgets_section")}
                 iconClassName="mx_RoomTile_iconWidgets"
             />
         );
@@ -322,7 +323,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                     Modal.createDialog(ExportDialog, { room });
                     onFinished();
                 }}
-                label={_t("Export chat")}
+                label={_t("right_panel|export_chat_button")}
                 iconClassName="mx_RoomTile_iconExport"
             />
         );
@@ -332,15 +333,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
         ev.preventDefault();
         ev.stopPropagation();
 
-        if (tagId === DefaultTagID.Favourite || tagId === DefaultTagID.LowPriority) {
-            const inverseTag = tagId === DefaultTagID.Favourite ? DefaultTagID.LowPriority : DefaultTagID.Favourite;
-            const isApplied = RoomListStore.instance.getTagsForRoom(room).includes(tagId);
-            const removeTag = isApplied ? tagId : inverseTag;
-            const addTag = isApplied ? null : tagId;
-            dis.dispatch(RoomListActions.tagRoom(cli, room, removeTag, addTag, 0));
-        } else {
-            logger.warn(`Unexpected tag ${tagId} applied to ${room.roomId}`);
-        }
+        tagRoom(room, tagId);
 
         const action = getKeyBindingsManager().getAccessibilityAction(ev as React.KeyboardEvent);
         switch (action) {
@@ -389,7 +382,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
                         onFinished();
                         PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuSettingsItem", ev);
                     }}
-                    label={_t("Settings")}
+                    label={_t("common|settings")}
                     iconClassName="mx_RoomTile_iconSettings"
                 />
 

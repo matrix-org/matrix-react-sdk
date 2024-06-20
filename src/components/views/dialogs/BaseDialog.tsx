@@ -19,7 +19,7 @@ limitations under the License.
 import React from "react";
 import FocusLock from "react-focus-lock";
 import classNames from "classnames";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import AccessibleButton from "../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -53,7 +53,7 @@ interface IProps {
     "top"?: React.ReactNode;
 
     // Title for the dialog.
-    "title"?: JSX.Element | string;
+    "title"?: React.ReactNode;
     // Specific aria label to use, if not provided will set aria-labelledBy to mx_Dialog_title
     "aria-label"?: string;
 
@@ -94,7 +94,11 @@ export default class BaseDialog extends React.Component<IProps> {
     public constructor(props: IProps) {
         super(props);
 
-        this.matrixClient = MatrixClientPeg.get();
+        // XXX: The contract on MatrixClientContext says it is only available within a LoggedInView subtree,
+        // given that modals function outside the MatrixChat React tree this simulates that. We don't want to
+        // use safeGet as it throwing would mean we cannot use modals whilst the user isn't logged in.
+        // The longer term solution is to move our ModalManager into the React tree to inherit contexts properly.
+        this.matrixClient = MatrixClientPeg.get()!;
     }
 
     private onKeyDown = (e: KeyboardEvent | React.KeyboardEvent): void => {
@@ -123,7 +127,7 @@ export default class BaseDialog extends React.Component<IProps> {
                 <AccessibleButton
                     onClick={this.onCancelClick}
                     className="mx_Dialog_cancelButton"
-                    aria-label={_t("Close dialog")}
+                    aria-label={_t("dialog_close_label")}
                 />
             );
         }
@@ -151,9 +155,6 @@ export default class BaseDialog extends React.Component<IProps> {
             lockProps["aria-labelledby"] = "mx_BaseDialog_title";
         }
 
-        const isHeaderWithCancelOnly =
-            !!cancelButton && !this.props.title && !this.props.headerButton && !this.props.headerImage;
-
         return (
             <MatrixClientContext.Provider value={this.matrixClient}>
                 {this.props.screenName && <PosthogScreenTracker screenName={this.props.screenName} />}
@@ -168,13 +169,12 @@ export default class BaseDialog extends React.Component<IProps> {
                     <div
                         className={classNames("mx_Dialog_header", {
                             mx_Dialog_headerWithButton: !!this.props.headerButton,
-                            mx_Dialog_headerWithCancel: !!cancelButton,
-                            mx_Dialog_headerWithCancelOnly: isHeaderWithCancelOnly,
                         })}
                     >
                         {!!(this.props.title || headerImage) && (
                             <Heading
-                                size="h2"
+                                size="3"
+                                as="h1"
                                 className={classNames("mx_Dialog_title", this.props.titleClass)}
                                 id="mx_BaseDialog_title"
                             >
@@ -183,8 +183,8 @@ export default class BaseDialog extends React.Component<IProps> {
                             </Heading>
                         )}
                         {this.props.headerButton}
-                        {cancelButton}
                     </div>
+                    {cancelButton}
                     {this.props.children}
                 </FocusLock>
             </MatrixClientContext.Provider>

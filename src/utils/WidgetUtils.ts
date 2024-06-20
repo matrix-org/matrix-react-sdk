@@ -17,10 +17,9 @@ limitations under the License.
 
 import { base32 } from "rfc4648";
 import { IWidget, IWidgetData } from "matrix-widget-api";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, ClientEvent, MatrixClient, RoomStateEvent, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, MatrixClient, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { randomString, randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
 
@@ -85,7 +84,7 @@ export default class WidgetUtils {
             return false;
         }
 
-        if (room.getMyMembership() !== "join") {
+        if (room.getMyMembership() !== KnownMembership.Join) {
             logger.warn(`User ${me} is not in room ${roomId}`);
             return false;
         }
@@ -334,7 +333,7 @@ export default class WidgetUtils {
         client: MatrixClient,
         roomId: string,
         widgetId: string,
-        content: IWidget,
+        content: IWidget & Record<string, any>,
     ): Promise<void> {
         const addingWidget = !!content.url;
 
@@ -411,45 +410,6 @@ export default class WidgetUtils {
     public static getIntegrationManagerWidgets(client: MatrixClient | undefined): UserWidget[] {
         const widgets = WidgetUtils.getUserWidgetsArray(client);
         return widgets.filter((w) => w.content?.type === "m.integration_manager");
-    }
-
-    public static getRoomWidgetsOfType(room: Room, type: WidgetType): MatrixEvent[] {
-        const widgets = WidgetUtils.getRoomWidgets(room) || [];
-        return widgets.filter((w) => {
-            const content = w.getContent();
-            return content.url && type.matches(content.type);
-        });
-    }
-
-    public static async removeIntegrationManagerWidgets(client: MatrixClient | undefined): Promise<void> {
-        if (!client) {
-            throw new Error("User not logged in");
-        }
-        const widgets = client.getAccountData("m.widgets");
-        if (!widgets) return;
-        const userWidgets: Record<string, IWidgetEvent> = widgets.getContent() || {};
-        Object.entries(userWidgets).forEach(([key, widget]) => {
-            if (widget.content && widget.content.type === "m.integration_manager") {
-                delete userWidgets[key];
-            }
-        });
-        await client.setAccountData("m.widgets", userWidgets);
-    }
-
-    public static addIntegrationManagerWidget(
-        client: MatrixClient,
-        name: string,
-        uiUrl: string,
-        apiUrl: string,
-    ): Promise<void> {
-        return WidgetUtils.setUserWidget(
-            client,
-            "integration_manager_" + new Date().getTime(),
-            WidgetType.INTEGRATION_MANAGER,
-            uiUrl,
-            "Integration manager: " + name,
-            { api_url: apiUrl },
-        );
     }
 
     /**
@@ -561,14 +521,14 @@ export default class WidgetUtils {
             // safe to send.
             // We'll end up using a local render URL when we see a Jitsi widget anyways, so this is
             // really just for backwards compatibility and to appease the spec.
-            baseUrl = "https://app.element.io/";
+            baseUrl = PlatformPeg.get()!.baseUrl;
         }
         const url = new URL("jitsi.html#" + queryString, baseUrl); // this strips hash fragment from baseUrl
         return url.href;
     }
 
     public static getWidgetName(app?: IWidget): string {
-        return app?.name?.trim() || _t("Unknown App");
+        return app?.name?.trim() || _t("widget|no_name");
     }
 
     public static getWidgetDataTitle(app?: IWidget): string {

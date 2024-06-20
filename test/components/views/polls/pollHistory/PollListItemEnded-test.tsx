@@ -16,8 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { render } from "@testing-library/react";
-import { MatrixEvent, Poll, Room } from "matrix-js-sdk/src/matrix";
-import { M_TEXT } from "matrix-js-sdk/src/@types/extensible_events";
+import { MatrixEvent, Poll, Room, M_TEXT } from "matrix-js-sdk/src/matrix";
 
 import { PollListItemEnded } from "../../../../../src/components/views/polls/pollHistory/PollListItemEnded";
 import {
@@ -31,11 +30,6 @@ import {
     setupRoomWithPollEvents,
     unmockIntlDateTimeFormat,
 } from "../../../../test-utils";
-
-// Fake random strings to give a predictable snapshot for IDs
-jest.mock("matrix-js-sdk/src/randomstring", () => ({
-    randomString: () => "abdefghi",
-}));
 
 describe("<PollListItemEnded />", () => {
     const userId = "@alice:domain.org";

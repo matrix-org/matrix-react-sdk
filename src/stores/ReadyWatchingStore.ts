@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { SyncState } from "matrix-js-sdk/src/sync";
+import { MatrixClient, SyncState } from "matrix-js-sdk/src/matrix";
 import { EventEmitter } from "events";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -35,7 +34,8 @@ export abstract class ReadyWatchingStore extends EventEmitter implements IDestro
     public async start(): Promise<void> {
         this.dispatcherRef = this.dispatcher.register(this.onAction);
 
-        const matrixClient = MatrixClientPeg.get();
+        // MatrixClientPeg can be undefined in tests because of circular dependencies with other stores
+        const matrixClient = MatrixClientPeg?.get();
         if (matrixClient) {
             this.matrixClient = matrixClient;
             await this.onReady();

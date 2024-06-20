@@ -16,13 +16,14 @@ limitations under the License.
 
 import { MockedObject } from "jest-mock";
 import { MatrixClient, MatrixEvent, EventType, Room, EventTimeline } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import { IRoomState } from "../../src/components/structures/RoomView";
 import { TimelineRenderingType } from "../../src/contexts/RoomContext";
 import { Layout } from "../../src/settings/enums/Layout";
 import { mkEvent } from "./test-utils";
 
-export const makeMembershipEvent = (roomId: string, userId: string, membership = "join") =>
+export const makeMembershipEvent = (roomId: string, userId: string, membership = KnownMembership.Join) =>
     mkEvent({
         event: true,
         type: EventType.RoomMember,
@@ -88,6 +89,9 @@ export function getRoomContext(room: Room, override: Partial<IRoomState>): IRoom
         narrow: false,
         activeCall: null,
         msc3946ProcessDynamicPredecessor: false,
+        canAskToJoin: false,
+        promptAskToJoin: false,
+        viewRoomOpts: { buttons: [] },
 
         ...override,
     };

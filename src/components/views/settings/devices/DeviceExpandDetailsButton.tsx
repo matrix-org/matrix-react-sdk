@@ -15,21 +15,28 @@ limitations under the License.
 */
 
 import classNames from "classnames";
-import React from "react";
+import React, { ComponentProps } from "react";
 
 import { Icon as CaretIcon } from "../../../../../res/img/feather-customised/dropdown-arrow.svg";
 import { _t } from "../../../../languageHandler";
-import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
+import AccessibleButton from "../../elements/AccessibleButton";
 
-interface Props extends React.ComponentProps<typeof AccessibleTooltipButton> {
+type Props<T extends keyof JSX.IntrinsicElements> = Omit<
+    ComponentProps<typeof AccessibleButton<T>>,
+    "aria-label" | "title" | "kind" | "className" | "onClick" | "element"
+> & {
     isExpanded: boolean;
     onClick: () => void;
-}
+};
 
-export const DeviceExpandDetailsButton: React.FC<Props> = ({ isExpanded, onClick, ...rest }) => {
-    const label = isExpanded ? _t("Hide details") : _t("Show details");
+export const DeviceExpandDetailsButton = <T extends keyof JSX.IntrinsicElements>({
+    isExpanded,
+    onClick,
+    ...rest
+}: Props<T>): JSX.Element => {
+    const label = isExpanded ? _t("settings|sessions|hide_details") : _t("settings|sessions|show_details");
     return (
-        <AccessibleTooltipButton
+        <AccessibleButton
             {...rest}
             aria-label={label}
             title={label}
@@ -40,6 +47,6 @@ export const DeviceExpandDetailsButton: React.FC<Props> = ({ isExpanded, onClick
             onClick={onClick}
         >
             <CaretIcon className="mx_DeviceExpandDetailsButton_icon" />
-        </AccessibleTooltipButton>
+        </AccessibleButton>
     );
 };

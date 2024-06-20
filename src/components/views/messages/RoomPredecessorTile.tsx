@@ -17,8 +17,7 @@ limitations under the License.
 
 import React, { useCallback, useContext } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -99,31 +98,22 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
         return (
             <EventTileBubble
                 className="mx_CreateEvent"
-                title={_t("This room is a continuation of another conversation.")}
+                title={_t("timeline|m.room.create|continuation")}
                 timestamp={timestamp}
             >
                 <div className="mx_EventTile_body">
                     <span className="mx_EventTile_tileError">
                         {!!guessedLink ? (
                             <>
-                                {_t(
-                                    "Can't find the old version of this room (room ID: %(roomId)s), and we have not been " +
-                                        "provided with 'via_servers' to look for it. It's possible that guessing the " +
-                                        "server from the room ID will work. If you want to try, click this link:",
-                                    {
-                                        roomId: predecessor.roomId,
-                                    },
-                                )}
+                                {_t("timeline|m.room.create|unknown_predecessor_guess_server", {
+                                    roomId: predecessor.roomId,
+                                })}
                                 <a href={guessedLink}>{guessedLink}</a>
                             </>
                         ) : (
-                            _t(
-                                "Can't find the old version of this room (room ID: %(roomId)s), and we have not been " +
-                                    "provided with 'via_servers' to look for it.",
-                                {
-                                    roomId: predecessor.roomId,
-                                },
-                            )
+                            _t("timeline|m.room.create|unknown_predecessor", {
+                                roomId: predecessor.roomId,
+                            })
                         )}
                     </span>
                 </div>
@@ -140,14 +130,14 @@ export const RoomPredecessorTile: React.FC<IProps> = ({ mxEvent, timestamp }) =>
 
     const link = (
         <a href={predecessorPermalink} onClick={onLinkClicked}>
-            {_t("Click here to see older messages.")}
+            {_t("timeline|m.room.create|see_older_messages")}
         </a>
     );
 
     return (
         <EventTileBubble
             className="mx_CreateEvent"
-            title={_t("This room is a continuation of another conversation.")}
+            title={_t("timeline|m.room.create|continuation")}
             subtitle={link}
             timestamp={timestamp}
         />

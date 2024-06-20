@@ -15,17 +15,18 @@ limitations under the License.
 */
 
 import { render } from "@testing-library/react";
-import { EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { EventType, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import React from "react";
 
 import ViewSource from "../../../src/components/structures/ViewSource";
-import { mkEvent, stubClient } from "../../test-utils/test-utils";
+import { mkEvent, stubClient, mkMessage } from "../../test-utils/test-utils";
+import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 
-describe("ThreadView", () => {
+describe("ViewSource", () => {
     const ROOM_ID = "!roomId:example.org";
     const SENDER = "@alice:example.org";
 
-    let messageEvent: MatrixEvent;
+    let redactedMessageEvent: MatrixEvent;
 
     const redactionEvent = mkEvent({
         user: SENDER,
@@ -35,14 +36,14 @@ describe("ThreadView", () => {
     });
 
     beforeEach(() => {
-        messageEvent = new MatrixEvent({
+        redactedMessageEvent = new MatrixEvent({
             type: EventType.RoomMessageEncrypted,
             room_id: ROOM_ID,
             sender: SENDER,
             content: {},
             state_key: undefined,
         });
-        messageEvent.makeRedacted(redactionEvent);
+        redactedMessageEvent.makeRedacted(redactionEvent, new Room(ROOM_ID, stubClient(), SENDER));
     });
 
     beforeEach(stubClient);
@@ -50,10 +51,21 @@ describe("ThreadView", () => {
     // See https://github.com/vector-im/element-web/issues/24165
     it("doesn't error when viewing redacted encrypted messages", () => {
         // Sanity checks
-        expect(messageEvent.isEncrypted()).toBeTruthy();
+        expect(redactedMessageEvent.isEncrypted()).toBeTruthy();
         // @ts-ignore clearEvent is private, but it's being used directly <ViewSource />
-        expect(messageEvent.clearEvent).toBe(undefined);
+        expect(redactedMessageEvent.clearEvent).toBe(undefined);
 
-        expect(() => render(<ViewSource mxEvent={messageEvent} onFinished={() => {}} />)).not.toThrow();
+        expect(() => render(<ViewSource mxEvent={redactedMessageEvent} onFinished={() => {}} />)).not.toThrow();
+    });
+
+    it("should show edit button if we are the sender and can post an edit", () => {
+        const event = mkMessage({
+            msg: "Test",
+            user: MatrixClientPeg.get()!.getSafeUserId(),
+            room: ROOM_ID,
+            event: true,
+        });
+        const { getByRole } = render(<ViewSource mxEvent={event} onFinished={() => {}} />);
+        expect(getByRole("button", { name: "Edit" })).toBeInTheDocument();
     });
 });

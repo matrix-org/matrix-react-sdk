@@ -131,7 +131,7 @@ exports[`<CurrentDeviceSection /> handles when device is falsy 1`] = `
       class="mx_SettingsSubsectionHeading"
     >
       <h3
-        class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+        class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
       >
         Current session
       </h3>
@@ -139,6 +139,7 @@ exports[`<CurrentDeviceSection /> handles when device is falsy 1`] = `
         aria-disabled="true"
         aria-expanded="false"
         aria-haspopup="true"
+        aria-label="Options"
         class="mx_AccessibleButton mx_AccessibleButton_disabled"
         data-testid="current-session-menu"
         disabled=""
@@ -167,13 +168,14 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
       class="mx_SettingsSubsectionHeading"
     >
       <h3
-        class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+        class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
       >
         Current session
       </h3>
       <div
         aria-expanded="false"
         aria-haspopup="true"
+        aria-label="Options"
         class="mx_AccessibleButton"
         data-testid="current-session-menu"
         role="button"
@@ -310,13 +312,14 @@ exports[`<CurrentDeviceSection /> renders device and correct security card when 
       class="mx_SettingsSubsectionHeading"
     >
       <h3
-        class="mx_Heading_h3 mx_SettingsSubsectionHeading_heading"
+        class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
       >
         Current session
       </h3>
       <div
         aria-expanded="false"
         aria-haspopup="true"
+        aria-label="Options"
         class="mx_AccessibleButton"
         data-testid="current-session-menu"
         role="button"

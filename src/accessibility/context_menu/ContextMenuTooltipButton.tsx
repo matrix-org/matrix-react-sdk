@@ -16,33 +16,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ComponentProps, forwardRef, Ref } from "react";
 
-import AccessibleTooltipButton from "../../components/views/elements/AccessibleTooltipButton";
+import AccessibleButton from "../../components/views/elements/AccessibleButton";
 
-interface IProps extends React.ComponentProps<typeof AccessibleTooltipButton> {
-    // whether or not the context menu is currently open
+type Props<T extends keyof JSX.IntrinsicElements> = ComponentProps<typeof AccessibleButton<T>> & {
+    // whether the context menu is currently open
     isExpanded: boolean;
-}
+};
 
 // Semantic component for representing the AccessibleButton which launches a <ContextMenu />
-export const ContextMenuTooltipButton: React.FC<IProps> = ({
-    isExpanded,
-    children,
-    onClick,
-    onContextMenu,
-    ...props
-}) => {
+export const ContextMenuTooltipButton = forwardRef(function <T extends keyof JSX.IntrinsicElements>(
+    { isExpanded, children, onClick, onContextMenu, element, ...props }: Props<T>,
+    ref: Ref<HTMLElement>,
+) {
     return (
-        <AccessibleTooltipButton
+        <AccessibleButton
             {...props}
+            element={element as keyof JSX.IntrinsicElements}
             onClick={onClick}
             onContextMenu={onContextMenu ?? onClick ?? undefined}
             aria-haspopup={true}
             aria-expanded={isExpanded}
-            forceHide={isExpanded}
+            disableTooltip={isExpanded}
+            ref={ref}
         >
             {children}
-        </AccessibleTooltipButton>
+        </AccessibleButton>
     );
-};
+});

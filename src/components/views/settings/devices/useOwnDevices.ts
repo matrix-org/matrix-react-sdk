@@ -25,20 +25,20 @@ import {
     PUSHER_DEVICE_ID,
     PUSHER_ENABLED,
     UNSTABLE_MSC3852_LAST_SEEN_UA,
+    MatrixError,
+    LocalNotificationSettings,
 } from "matrix-js-sdk/src/matrix";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto-api";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
-import { LocalNotificationSettings } from "matrix-js-sdk/src/@types/local_notifications";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
-import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import { _t } from "../../../../languageHandler";
 import { getDeviceClientInformation, pruneClientInformation } from "../../../../utils/device/clientInformation";
 import { DevicesDictionary, ExtendedDevice, ExtendedDeviceAppInfo } from "./types";
 import { useEventEmitter } from "../../../../hooks/useEventEmitter";
 import { parseUserAgent } from "../../../../utils/device/parseUserAgent";
 import { isDeviceVerified } from "../../../../utils/device/isDeviceVerified";
+import { SDKContext } from "../../../../contexts/SDKContext";
 
 const parseDeviceExtendedInformation = (matrixClient: MatrixClient, device: IMyDevice): ExtendedDeviceAppInfo => {
     const { name, version, url } = getDeviceClientInformation(matrixClient, device.device_id);
@@ -77,6 +77,7 @@ export enum OwnDevicesError {
 }
 export type DevicesState = {
     devices: DevicesDictionary;
+    dehydratedDeviceId?: string;
     pushers: IPusher[];
     localNotificationSettings: Map<string, LocalNotificationSettings>;
     currentDeviceId: string;
@@ -90,12 +91,14 @@ export type DevicesState = {
     supportsMSC3881?: boolean | undefined;
 };
 export const useOwnDevices = (): DevicesState => {
-    const matrixClient = useContext(MatrixClientContext);
+    const sdkContext = useContext(SDKContext);
+    const matrixClient = sdkContext.client!;
 
     const currentDeviceId = matrixClient.getDeviceId()!;
     const userId = matrixClient.getSafeUserId();
 
     const [devices, setDevices] = useState<DevicesState["devices"]>({});
+    const [dehydratedDeviceId, setDehydratedDeviceId] = useState<DevicesState["dehydratedDeviceId"]>(undefined);
     const [pushers, setPushers] = useState<DevicesState["pushers"]>([]);
     const [localNotificationSettings, setLocalNotificationSettings] = useState<
         DevicesState["localNotificationSettings"]
@@ -129,6 +132,21 @@ export const useOwnDevices = (): DevicesState => {
                 }
             });
             setLocalNotificationSettings(notificationSettings);
+
+            const ownUserId = matrixClient.getUserId()!;
+            const userDevices = (await matrixClient.getCrypto()?.getUserDeviceInfo([ownUserId]))?.get(ownUserId);
+            const dehydratedDeviceIds: string[] = [];
+            for (const device of userDevices?.values() ?? []) {
+                if (device.dehydrated) {
+                    dehydratedDeviceIds.push(device.deviceId);
+                }
+            }
+            // If the user has exactly one device marked as dehydrated, we consider
+            // that as the dehydrated device, and hide it as a normal device (but
+            // indicate that the user is using a dehydrated device).  If the user has
+            // more than one, that is anomalous, and we show all the devices so that
+            // nothing is hidden.
+            setDehydratedDeviceId(dehydratedDeviceIds.length == 1 ? dehydratedDeviceIds[0] : undefined);
 
             setIsLoadingDeviceList(false);
         } catch (error) {
@@ -194,8 +212,8 @@ export const useOwnDevices = (): DevicesState => {
                 await matrixClient.setDeviceDetails(deviceId, { display_name: deviceName });
                 await refreshDevices();
             } catch (error) {
-                logger.error("Error setting session display name", error);
-                throw new Error(_t("Failed to set display name"));
+                logger.error("Error setting device name", error);
+                throw new Error(_t("settings|sessions|error_set_name"));
             }
         },
         [matrixClient, devices, refreshDevices],
@@ -217,7 +235,7 @@ export const useOwnDevices = (): DevicesState => {
                 }
             } catch (error) {
                 logger.error("Error setting pusher state", error);
-                throw new Error(_t("Failed to set pusher state"));
+                throw new Error(_t("settings|sessions|error_pusher_state"));
             } finally {
                 await refreshDevices();
             }
@@ -227,6 +245,7 @@ export const useOwnDevices = (): DevicesState => {
 
     return {
         devices,
+        dehydratedDeviceId,
         pushers,
         localNotificationSettings,
         currentDeviceId,

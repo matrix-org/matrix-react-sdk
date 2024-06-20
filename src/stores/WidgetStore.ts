@@ -14,12 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomStateEvent, MatrixEvent, ClientEvent } from "matrix-js-sdk/src/matrix";
 import { IWidget } from "matrix-widget-api";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent } from "matrix-js-sdk/src/client";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
@@ -32,14 +29,19 @@ import { UPDATE_EVENT } from "./AsyncStore";
 interface IState {}
 
 export interface IApp extends IWidget {
-    roomId: string;
-    eventId?: string; // not present on virtual widgets
+    "roomId": string;
+    "eventId"?: string; // not present on virtual widgets
     // eslint-disable-next-line camelcase
-    avatar_url?: string; // MSC2765 https://github.com/matrix-org/matrix-doc/pull/2765
+    "avatar_url"?: string; // MSC2765 https://github.com/matrix-org/matrix-doc/pull/2765
+    // Whether the widget was created from `widget_build_url` and thus is a call widget of some kind
+    "io.element.managed_hybrid"?: boolean;
 }
 
 export function isAppWidget(widget: IWidget | IApp): widget is IApp {
     return "roomId" in widget && typeof widget.roomId === "string";
+}
+export function isVirtualWidget(widget: IApp): boolean {
+    return widget.eventId === undefined;
 }
 
 interface IRoomWidgets {
@@ -128,7 +130,7 @@ export default class WidgetStore extends AsyncStoreWithClient<IState> {
         // otherwise we are out of sync with the rest of the app with stale widget events during removal
         Array.from(this.widgetMap.values()).forEach((app) => {
             if (app.roomId !== room.roomId) return; // skip - wrong room
-            if (app.eventId === undefined) {
+            if (isVirtualWidget(app)) {
                 // virtual widget - keep it
                 roomInfo.widgets.push(app);
             } else {

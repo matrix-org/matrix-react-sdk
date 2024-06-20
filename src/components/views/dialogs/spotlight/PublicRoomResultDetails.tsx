@@ -33,7 +33,9 @@ interface Props {
 
 export function PublicRoomResultDetails({ room, labelId, descriptionId, detailsId }: Props): JSX.Element {
     let name =
-        room.name || getDisplayAliasForAliasSet(room.canonical_alias ?? "", room.aliases ?? []) || _t("Unnamed room");
+        room.name ||
+        getDisplayAliasForAliasSet(room.canonical_alias ?? "", room.aliases ?? []) ||
+        _t("common|unnamed_room");
     if (name.length > MAX_NAME_LENGTH) {
         name = `${name.substring(0, MAX_NAME_LENGTH)}...`;
     }
@@ -58,7 +60,7 @@ export function PublicRoomResultDetails({ room, labelId, descriptionId, detailsI
             </div>
             <div id={detailsId} className="mx_SpotlightDialog_result_publicRoomDescription">
                 <span className="mx_SpotlightDialog_result_publicRoomMemberCount">
-                    {_t("%(count)s Members", {
+                    {_t("spotlight_dialog|count_of_members", {
                         count: room.num_joined_members,
                     })}
                 </span>

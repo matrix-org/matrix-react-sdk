@@ -18,7 +18,7 @@ limitations under the License.
 import React, { ComponentProps } from "react";
 import { screen, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { MatrixWidgetType } from "matrix-widget-api";
 import {
     ApprovalOpts,
@@ -50,15 +50,17 @@ describe("<WidgetContextMenu />", () => {
         avatar_url: undefined,
     };
 
-    const mockClient = {
-        getUserId: jest.fn().mockReturnValue(userId),
-    } as unknown as MatrixClient;
+    let mockClient: MatrixClient;
 
     let onFinished: () => void;
 
     beforeEach(() => {
         onFinished = jest.fn();
         jest.spyOn(WidgetUtils, "canUserModifyWidgets").mockReturnValue(true);
+
+        mockClient = {
+            getUserId: jest.fn().mockReturnValue(userId),
+        } as unknown as MatrixClient;
     });
 
     afterEach(() => {

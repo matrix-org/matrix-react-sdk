@@ -21,9 +21,7 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import classNames from "classnames";
 
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { ButtonEvent } from "../elements/AccessibleButton";
-import { Alignment } from "../elements/Tooltip";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
     // Whether this button is highlighted
@@ -45,18 +43,18 @@ export default class HeaderButton extends React.Component<IProps> {
         const { isHighlighted, isUnread = false, onClick, name, title, ...props } = this.props;
 
         const classes = classNames({
-            "mx_RoomHeader_button": true,
-            "mx_RoomHeader_button--highlight": isHighlighted,
-            "mx_RoomHeader_button--unread": isUnread,
+            "mx_LegacyRoomHeader_button": true,
+            "mx_LegacyRoomHeader_button--highlight": isHighlighted,
+            "mx_LegacyRoomHeader_button--unread": isUnread,
             [`mx_RightPanel_${name}`]: true,
         });
 
         return (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 {...props}
                 aria-current={isHighlighted ? "true" : "false"}
                 title={title}
-                alignment={Alignment.Bottom}
+                placement="bottom"
                 className={classes}
                 onClick={onClick}
             />

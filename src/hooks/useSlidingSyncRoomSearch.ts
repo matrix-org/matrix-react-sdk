@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { useCallback, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { useLatestResult } from "./useLatestResult";
@@ -56,7 +56,7 @@ export const useSlidingSyncRoomSearch = (): {
                     },
                 });
                 const rooms: Room[] = [];
-                const { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync.getListData(
+                const { roomIndexToRoomId } = SlidingSyncManager.instance.slidingSync!.getListData(
                     SlidingSyncManager.ListSearch,
                 )!;
                 let i = 0;

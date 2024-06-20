@@ -14,8 +14,8 @@
  limitations under the License.
  */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixEvent, EventType, RelationType } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import SettingsStore from "./settings/SettingsStore";
 import { IRoomState } from "./components/structures/RoomView";
@@ -40,10 +40,11 @@ function memberEventDiff(ev: MatrixEvent): IDiff {
     const prevContent = ev.getPrevContent();
 
     const isMembershipChanged = content.membership !== prevContent.membership;
-    diff.isJoin = isMembershipChanged && content.membership === "join";
-    diff.isPart = isMembershipChanged && content.membership === "leave" && ev.getStateKey() === ev.getSender();
+    diff.isJoin = isMembershipChanged && content.membership === KnownMembership.Join;
+    diff.isPart =
+        isMembershipChanged && content.membership === KnownMembership.Leave && ev.getStateKey() === ev.getSender();
 
-    const isJoinToJoin = !isMembershipChanged && content.membership === "join";
+    const isJoinToJoin = !isMembershipChanged && content.membership === KnownMembership.Join;
     diff.isDisplaynameChange = isJoinToJoin && content.displayname !== prevContent.displayname;
     diff.isAvatarChange = isJoinToJoin && content.avatar_url !== prevContent.avatar_url;
     return diff;

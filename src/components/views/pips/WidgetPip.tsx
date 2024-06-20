@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { FC, MutableRefObject, useCallback, useMemo } from "react";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/matrix";
 
 import PersistentApp from "../elements/PersistentApp";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -26,7 +26,7 @@ import WidgetStore from "../../../stores/WidgetStore";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
 import Toolbar from "../../../accessibility/Toolbar";
-import { RovingAccessibleButton, RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
+import { RovingAccessibleButton } from "../../../accessibility/RovingTabIndex";
 import { Icon as BackIcon } from "../../../../res/img/element-icons/back.svg";
 import { Icon as HangupIcon } from "../../../../res/img/element-icons/call/hangup.svg";
 import { _t } from "../../../languageHandler";
@@ -34,7 +34,6 @@ import { WidgetType } from "../../../widgets/WidgetType";
 import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
 import WidgetUtils from "../../../utils/WidgetUtils";
 import { ElementWidgetActions } from "../../../stores/widgets/ElementWidgetActions";
-import { Alignment } from "../elements/Tooltip";
 
 interface Props {
     widgetId: string;
@@ -107,34 +106,37 @@ export const WidgetPip: FC<Props> = ({ widgetId, room, viewingRoom, onStartMovin
 
     return (
         <div className="mx_WidgetPip" onMouseDown={onStartMoving} onClick={onBackClick}>
-            <Toolbar className="mx_WidgetPip_header">
-                <RovingAccessibleButton
-                    onClick={onBackClick}
-                    className="mx_WidgetPip_backButton"
-                    aria-label={_t("Back")}
-                >
-                    <BackIcon className="mx_Icon mx_Icon_16" />
-                    {roomName}
-                </RovingAccessibleButton>
-            </Toolbar>
             <PersistentApp
                 persistentWidgetId={widgetId}
                 persistentRoomId={room.roomId}
                 pointerEvents="none"
                 movePersistedElement={movePersistedElement}
-            />
-            {(call !== null || WidgetType.JITSI.matches(widget?.type)) && (
-                <Toolbar className="mx_WidgetPip_footer">
-                    <RovingAccessibleTooltipButton
-                        onClick={onLeaveClick}
-                        tooltip={_t("Leave")}
-                        aria-label={_t("Leave")}
-                        alignment={Alignment.Top}
-                    >
-                        <HangupIcon className="mx_Icon mx_Icon_24" />
-                    </RovingAccessibleTooltipButton>
-                </Toolbar>
-            )}
+            >
+                <div onMouseDown={onStartMoving} className="mx_WidgetPip_overlay">
+                    <Toolbar className="mx_WidgetPip_header">
+                        <RovingAccessibleButton
+                            onClick={onBackClick}
+                            className="mx_WidgetPip_backButton"
+                            aria-label={_t("action|back")}
+                        >
+                            <BackIcon className="mx_Icon mx_Icon_16" />
+                            {roomName}
+                        </RovingAccessibleButton>
+                    </Toolbar>
+                    {(call !== null || WidgetType.JITSI.matches(widget?.type)) && (
+                        <Toolbar className="mx_WidgetPip_footer">
+                            <RovingAccessibleButton
+                                onClick={onLeaveClick}
+                                title={_t("action|leave")}
+                                aria-label={_t("action|leave")}
+                                placement="top"
+                            >
+                                <HangupIcon className="mx_Icon mx_Icon_24" />
+                            </RovingAccessibleButton>
+                        </Toolbar>
+                    )}
+                </div>
+            </PersistentApp>
         </div>
     );
 };

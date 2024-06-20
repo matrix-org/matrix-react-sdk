@@ -18,7 +18,7 @@ import React, { createRef } from "react";
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
-import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
+import { RovingAccessibleButton } from "../../../accessibility/RovingTabIndex";
 import Toolbar from "../../../accessibility/Toolbar";
 
 export enum Formatting {
@@ -52,43 +52,43 @@ export default class MessageComposerFormatBar extends React.PureComponent<IProps
             mx_MessageComposerFormatBar_shown: this.state.visible,
         });
         return (
-            <Toolbar className={classes} ref={this.formatBarRef} aria-label={_t("Formatting")}>
+            <Toolbar className={classes} ref={this.formatBarRef} aria-label={_t("composer|formatting_toolbar_label")}>
                 <FormatButton
-                    label={_t("Bold")}
+                    label={_t("composer|format_bold")}
                     onClick={() => this.props.onAction(Formatting.Bold)}
                     icon="Bold"
                     shortcut={this.props.shortcuts.bold}
                     visible={this.state.visible}
                 />
                 <FormatButton
-                    label={_t("Italics")}
+                    label={_t("composer|format_italics")}
                     onClick={() => this.props.onAction(Formatting.Italics)}
                     icon="Italic"
                     shortcut={this.props.shortcuts.italics}
                     visible={this.state.visible}
                 />
                 <FormatButton
-                    label={_t("Strikethrough")}
+                    label={_t("composer|format_strikethrough")}
                     onClick={() => this.props.onAction(Formatting.Strikethrough)}
                     icon="Strikethrough"
                     visible={this.state.visible}
                 />
                 <FormatButton
-                    label={_t("Code block")}
+                    label={_t("composer|format_code_block")}
                     onClick={() => this.props.onAction(Formatting.Code)}
                     icon="Code"
                     shortcut={this.props.shortcuts.code}
                     visible={this.state.visible}
                 />
                 <FormatButton
-                    label={_t("Quote")}
+                    label={_t("action|quote")}
                     onClick={() => this.props.onAction(Formatting.Quote)}
                     icon="Quote"
                     shortcut={this.props.shortcuts.quote}
                     visible={this.state.visible}
                 />
                 <FormatButton
-                    label={_t("Insert link")}
+                    label={_t("composer|format_insert_link")}
                     onClick={() => this.props.onAction(Formatting.InsertLink)}
                     icon="InsertLink"
                     shortcut={this.props.shortcuts.insert_link}
@@ -127,26 +127,17 @@ interface IFormatButtonProps {
 class FormatButton extends React.PureComponent<IFormatButtonProps> {
     public render(): React.ReactNode {
         const className = `mx_MessageComposerFormatBar_button mx_MessageComposerFormatBar_buttonIcon${this.props.icon}`;
-        let shortcut;
-        if (this.props.shortcut) {
-            shortcut = <div className="mx_MessageComposerFormatBar_tooltipShortcut">{this.props.shortcut}</div>;
-        }
-        const tooltip = (
-            <div>
-                <div className="mx_Tooltip_title">{this.props.label}</div>
-                <div className="mx_Tooltip_sub">{shortcut}</div>
-            </div>
-        );
 
         // element="button" and type="button" are necessary for the buttons to work on WebKit,
         // otherwise the text is deselected before onClick can ever be called
         return (
-            <RovingAccessibleTooltipButton
+            <RovingAccessibleButton
                 element="button"
                 type="button"
                 onClick={this.props.onClick}
+                aria-label={this.props.label}
                 title={this.props.label}
-                tooltip={tooltip}
+                caption={this.props.shortcut}
                 className={className}
             />
         );

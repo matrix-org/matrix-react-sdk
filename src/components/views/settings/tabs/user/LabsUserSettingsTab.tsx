@@ -29,6 +29,10 @@ import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
 import SettingsTab from "../SettingsTab";
 
+export const showLabsFlags = (): boolean => {
+    return SdkConfig.get("show_labs_settings") || SettingsStore.getValue("developerMode");
+};
+
 export default class LabsUserSettingsTab extends React.Component<{}> {
     private readonly labs: string[];
     private readonly betas: string[];
@@ -48,7 +52,7 @@ export default class LabsUserSettingsTab extends React.Component<{}> {
         this.labs = labs;
         this.betas = betas;
 
-        if (!SdkConfig.get("show_labs_settings")) {
+        if (!showLabsFlags()) {
             this.labs = [];
         }
     }
@@ -110,27 +114,18 @@ export default class LabsUserSettingsTab extends React.Component<{}> {
 
         return (
             <SettingsTab>
-                <SettingsSection heading={_t("Upcoming features")}>
+                <SettingsSection heading={_t("labs|beta_section")}>
                     <SettingsSubsectionText>
-                        {_t(
-                            "What's next for %(brand)s? " +
-                                "Labs are the best way to get things early, " +
-                                "test out new features and help shape them before they actually launch.",
-                            { brand: SdkConfig.get("brand") },
-                        )}
+                        {_t("labs|beta_description", { brand: SdkConfig.get("brand") })}
                     </SettingsSubsectionText>
                     {betaSection}
                 </SettingsSection>
 
                 {labsSections && (
-                    <SettingsSection heading={_t("Early previews")}>
+                    <SettingsSection heading={_t("labs|experimental_section")}>
                         <SettingsSubsectionText>
                             {_t(
-                                "Feeling experimental? " +
-                                    "Try out our latest ideas in development. " +
-                                    "These features are not finalised; " +
-                                    "they may be unstable, may change, or may be dropped altogether. " +
-                                    "<a>Learn more</a>.",
+                                "labs|experimental_description",
                                 {},
                                 {
                                     a: (sub) => {

@@ -18,7 +18,7 @@ limitations under the License.
     --activeBackground-color: $panel-actions;
     --activeBorder-color: $primary-content;
     --activeBorder-transparent-gap: 1px;
-    --gutterSize: 16px;
+    --gutterSize: 14px;
     --height-nested: 24px;
     --height-topLevel: 32px;
 
@@ -33,6 +33,10 @@ limitations under the License.
     /* Create another flexbox so the Panel fills the container */
     display: flex;
     flex-direction: column;
+
+    &.collapsed {
+        width: 68px;
+    }
 
     .mx_SpacePanel_toggleCollapse {
         position: absolute;
@@ -149,6 +153,11 @@ limitations under the License.
             min-width: 0;
         }
 
+        &.mx_SpaceButton_narrow .mx_SpaceButton_selectionWrapper {
+            flex: initial;
+            width: 32px;
+        }
+
         .mx_SpaceButton_name {
             flex: 1;
             margin-left: 8px;
@@ -156,8 +165,7 @@ limitations under the License.
             display: block;
             text-overflow: ellipsis;
             overflow: hidden;
-            font-size: $font-14px;
-            line-height: $font-18px;
+            font: var(--cpd-font-body-md-regular);
         }
 
         .mx_SpaceButton_toggleCollapse {
@@ -195,7 +203,8 @@ limitations under the License.
         &.mx_SpaceButton_home,
         &.mx_SpaceButton_favourites,
         &.mx_SpaceButton_people,
-        &.mx_SpaceButton_orphans {
+        &.mx_SpaceButton_orphans,
+        &.mx_SpaceButton_videoRooms {
             .mx_SpaceButton_icon {
                 background-color: $panel-actions;
 
@@ -221,6 +230,10 @@ limitations under the License.
             mask-image: url("$(res)/img/element-icons/roomlist/hash-circle.svg");
         }
 
+        &.mx_SpaceButton_videoRooms .mx_SpaceButton_icon::before {
+            mask-image: url("@vector-im/compound-design-tokens/icons/video-call-solid.svg");
+        }
+
         &.mx_SpaceButton_new .mx_SpaceButton_icon {
             &::before {
                 background-color: $primary-content;
@@ -231,10 +244,6 @@ limitations under the License.
 
         &.mx_SpaceButton_newCancel .mx_SpaceButton_icon::before {
             transform: rotate(45deg);
-        }
-
-        .mx_BaseAvatar_image {
-            border-radius: 8px;
         }
 
         .mx_SpaceButton_menuButton {
@@ -270,27 +279,15 @@ limitations under the License.
         min-width: 0;
         flex-grow: 1;
 
-        .mx_BaseAvatar:not(.mx_UserMenu_userAvatar_BaseAvatar) .mx_BaseAvatar_initial {
-            color: $secondary-content;
-            border-radius: 8px;
-            background-color: $panel-actions;
-            font-size: $font-15px !important; /* override inline style */
-            font-weight: var(--font-semi-bold);
-            line-height: $font-18px;
-
-            & + .mx_BaseAvatar_image {
-                visibility: hidden;
-            }
-        }
-
         .mx_SpaceTreeLevel {
-            // Indent subspaces
+            /* Indent subspaces */
             padding-left: 16px;
         }
     }
 
     .mx_SpaceButton_avatarWrapper {
         position: relative;
+        line-height: 0;
     }
 
     .mx_SpacePanel_badgeContainer {
@@ -340,7 +337,8 @@ limitations under the License.
     /* root space buttons are bigger and not indented */
     & > .mx_AutoHideScrollbar {
         flex: 1;
-        padding: 0 8px 16px 0;
+        padding: 0 0 16px 0;
+        scrollbar-gutter: stable;
 
         & > .mx_SpaceButton {
             height: var(--height-topLevel);
@@ -355,22 +353,58 @@ limitations under the License.
         }
 
         &.mx_IndicatorScrollbar_topOverflow {
-            mask-image: linear-gradient(180deg, transparent, black 5%);
+            mask-image: linear-gradient(to bottom, transparent, black 16px);
         }
 
         &.mx_IndicatorScrollbar_bottomOverflow {
-            mask-image: linear-gradient(180deg, black, black 95%, transparent);
+            mask-image: linear-gradient(
+                to top,
+                transparent,
+                rgba(255, 255, 255, 30%) 4px,
+                rgba(255, 255, 255, 55%) 8px,
+                rgba(255, 255, 255, 75%) 12px,
+                black 16px
+            );
         }
 
         &.mx_IndicatorScrollbar_topOverflow.mx_IndicatorScrollbar_bottomOverflow {
-            mask-image: linear-gradient(180deg, transparent, black 5%, black 95%, transparent);
+            /* This stacks two gradients on top of one another, which lets us
+               have a fixed pixel offset from both top and bottom for the colour stops.
+               Note the top fade is much smaller because the spaces start close to the top,
+               so otherwise a large gradient suddenly appears when you scroll down.
+             */
+            mask-image: linear-gradient(to bottom, transparent, black 16px),
+                linear-gradient(
+                    to top,
+                    transparent,
+                    rgba(255, 255, 255, 30%) 4px,
+                    rgba(255, 255, 255, 55%) 8px,
+                    rgba(255, 255, 255, 75%) 12px,
+                    black 16px
+                );
+            mask-position:
+                0% 0%,
+                0% 100%;
+            mask-size:
+                calc(100% - 10px) 50%,
+                calc(100% - 10px) 50%;
+            mask-repeat: no-repeat;
         }
     }
 
     .mx_UserMenu {
-        padding: 0 2px 8px;
-        border-bottom: 1px solid $quinary-content;
+        padding-bottom: 12px;
+        border-bottom: 1px solid $separator;
         margin: 12px 14px 4px 18px;
+        width: min-content;
+        max-width: 226px;
+
+        /* Display the container and img here as block elements so they don't take
+         * up extra vertical space.
+         */
+        .mx_UserMenu_userAvatar_BaseAvatar {
+            display: block;
+        }
     }
 }
 
@@ -379,7 +413,7 @@ limitations under the License.
 
     .mx_SpacePanel_contextMenu_header {
         margin: 12px 16px 12px;
-        font-weight: var(--font-semi-bold);
+        font-weight: var(--cpd-font-weight-semibold);
         font-size: $font-15px;
         line-height: $font-18px;
         overflow: hidden;
@@ -431,11 +465,17 @@ limitations under the License.
         color: $tertiary-content;
         font-size: $font-10px;
         line-height: $font-12px;
-        font-weight: var(--font-semi-bold);
-        //margin-left: 8px;
+        font-weight: var(--cpd-font-weight-semibold);
     }
 }
 
 .mx_SpacePanel_sharePublicSpace {
     margin: 0;
+}
+
+.mx_SpacePanel_Tooltip_KeyboardShortcut {
+    kbd {
+        font-family: inherit;
+        text-transform: capitalize;
+    }
 }

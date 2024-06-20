@@ -15,10 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomType, EventType } from "matrix-js-sdk/src/@types/event";
-import { JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { ICreateRoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { Room, ICreateRoomStateEvent, RoomType, EventType, JoinRule } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import { calculateRoomVia } from "./permalinks/Permalinks";
 import Modal from "../Modal";
@@ -43,7 +41,7 @@ import { SdkContextClass } from "../contexts/SDKContext";
 export const shouldShowSpaceSettings = (space: Room): boolean => {
     const userId = space.client.getUserId()!;
     return (
-        space.getMyMembership() === "join" &&
+        space.getMyMembership() === KnownMembership.Join &&
         (space.currentState.maySendStateEvent(EventType.RoomAvatar, userId) ||
             space.currentState.maySendStateEvent(EventType.RoomName, userId) ||
             space.currentState.maySendStateEvent(EventType.RoomTopic, userId) ||
@@ -88,17 +86,17 @@ export const showCreateNewRoom = async (space: Room, type?: RoomType): Promise<b
 };
 
 export const shouldShowSpaceInvite = (space: Room): boolean =>
-    ((space?.getMyMembership() === "join" && space.canInvite(space.client.getUserId()!)) ||
+    ((space?.getMyMembership() === KnownMembership.Join && space.canInvite(space.client.getUserId()!)) ||
         space.getJoinRule() === JoinRule.Public) &&
     shouldShowComponent(UIComponent.InviteUsers);
 
 export const showSpaceInvite = (space: Room, initialText = ""): void => {
     if (space.getJoinRule() === "public") {
         const modal = Modal.createDialog(InfoDialog, {
-            title: _t("Invite to %(spaceName)s", { spaceName: space.name }),
+            title: _t("invite|to_space", { spaceName: space.name }),
             description: (
                 <React.Fragment>
-                    <span>{_t("Share your public space")}</span>
+                    <span>{_t("space|share_public")}</span>
                     <SpacePublicShare space={space} onFinished={() => modal.close()} />
                 </React.Fragment>
             ),

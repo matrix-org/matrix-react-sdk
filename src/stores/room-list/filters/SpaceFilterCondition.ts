@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { EventEmitter } from "events";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import { FILTER_CHANGED, IFilterCondition } from "./IFilterCondition";
 import { IDestroyable } from "../../../utils/IDestroyable";
@@ -62,7 +62,7 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
             this.emit(FILTER_CHANGED);
             // XXX: Room List Store has a bug where updates to the pre-filter during a local echo of a
             // tags transition seem to be ignored, so refire in the next tick to work around it
-            setImmediate(() => {
+            setTimeout(() => {
                 this.emit(FILTER_CHANGED);
             });
         }

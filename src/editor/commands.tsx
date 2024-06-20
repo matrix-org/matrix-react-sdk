@@ -16,8 +16,8 @@ limitations under the License.
 
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IContent } from "matrix-js-sdk/src/models/event";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { RoomMessageEventContent } from "matrix-js-sdk/src/types";
 
 import EditorModel from "./model";
 import { Type } from "./parts";
@@ -64,9 +64,9 @@ export async function runSlashCommand(
     args: string | undefined,
     roomId: string,
     threadId: string | null,
-): Promise<[content: IContent | null, success: boolean]> {
+): Promise<[content: RoomMessageEventContent | null, success: boolean]> {
     const result = cmd.run(matrixClient, roomId, threadId, args);
-    let messageContent: IContent | null = null;
+    let messageContent: RoomMessageEventContent | null = null;
     let error: any = result.error;
     if (result.promise) {
         try {
@@ -83,7 +83,7 @@ export async function runSlashCommand(
         logger.error(`Command failure: ${error}`);
         // assume the error is a server error when the command is async
         const isServerError = !!result.promise;
-        const title = isServerError ? _td("Server error") : _td("Command error");
+        const title = isServerError ? _td("slash_command|server_error") : _td("slash_command|command_error");
 
         let errText;
         if (typeof error === "string") {
@@ -93,7 +93,7 @@ export async function runSlashCommand(
         } else if (error.message) {
             errText = error.message;
         } else {
-            errText = _t("Server unavailable, overloaded, or something else went wrong.");
+            errText = _t("slash_command|server_error_detail");
         }
 
         Modal.createDialog(ErrorDialog, {
@@ -110,14 +110,13 @@ export async function runSlashCommand(
 export async function shouldSendAnyway(commandText: string): Promise<boolean> {
     // ask the user if their unknown command should be sent as a message
     const { finished } = Modal.createDialog(QuestionDialog, {
-        title: _t("Unknown Command"),
+        title: _t("slash_command|unknown_command"),
         description: (
             <div>
-                <p>{_t("Unrecognised command: %(commandText)s", { commandText })}</p>
+                <p>{_t("slash_command|unknown_command_detail", { commandText })}</p>
                 <p>
                     {_t(
-                        "You can use <code>/help</code> to list available commands. " +
-                            "Did you mean to send this as a message?",
+                        "slash_command|unknown_command_help",
                         {},
                         {
                             code: (t) => <code>{t}</code>,
@@ -126,7 +125,7 @@ export async function shouldSendAnyway(commandText: string): Promise<boolean> {
                 </p>
                 <p>
                     {_t(
-                        "Hint: Begin your message with <code>//</code> to start it with a slash.",
+                        "slash_command|unknown_command_hint",
                         {},
                         {
                             code: (t) => <code>{t}</code>,
@@ -135,7 +134,7 @@ export async function shouldSendAnyway(commandText: string): Promise<boolean> {
                 </p>
             </div>
         ),
-        button: _t("Send as message"),
+        button: _t("slash_command|unknown_command_button"),
     });
     const [sendAnyway] = await finished;
     return sendAnyway || false;

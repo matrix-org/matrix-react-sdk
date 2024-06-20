@@ -32,16 +32,24 @@ export const RoomTileCallSummary: FC<Props> = ({ call }) => {
 
     switch (useConnectionState(call)) {
         case ConnectionState.Disconnected:
-            text = _t("Video");
+            text = _t("common|video");
+            active = false;
+            break;
+        case ConnectionState.WidgetLoading:
+            text = _t("common|loading");
+            active = false;
+            break;
+        case ConnectionState.Lobby:
+            text = _t("common|lobby");
             active = false;
             break;
         case ConnectionState.Connecting:
-            text = _t("Joining…");
+            text = _t("room|joining");
             active = true;
             break;
         case ConnectionState.Connected:
         case ConnectionState.Disconnecting:
-            text = _t("Joined");
+            text = _t("common|joined");
             active = true;
             break;
     }

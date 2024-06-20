@@ -16,21 +16,31 @@ limitations under the License.
 
 import React, { createRef, ReactNode } from "react";
 import ReactDOM from "react-dom";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
-import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
-import { Direction, EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
-import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { SyncState } from "matrix-js-sdk/src/sync";
-import { RoomMember, RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
-import { debounce, findLastIndex, throttle } from "lodash";
+import {
+    Room,
+    RoomEvent,
+    RoomMember,
+    RoomMemberEvent,
+    MatrixEvent,
+    MatrixEventEvent,
+    EventTimelineSet,
+    IRoomTimelineData,
+    Direction,
+    EventTimeline,
+    EventType,
+    RelationType,
+    ClientEvent,
+    MatrixClient,
+    Relations,
+    MatrixError,
+    SyncState,
+    TimelineWindow,
+    Thread,
+    ThreadEvent,
+    ReceiptType,
+} from "matrix-js-sdk/src/matrix";
+import { debounce, findLastIndex } from "lodash";
 import { logger } from "matrix-js-sdk/src/logger";
-import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
-import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
-import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
-import { MatrixError } from "matrix-js-sdk/src/http-api";
-import { Relations } from "matrix-js-sdk/src/models/relations";
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -43,7 +53,6 @@ import dis from "../../dispatcher/dispatcher";
 import { Action } from "../../dispatcher/actions";
 import Timer from "../../utils/Timer";
 import shouldHideEvent from "../../shouldHideEvent";
-import { arrayFastClone } from "../../utils/arrays";
 import MessagePanel from "./MessagePanel";
 import { IScrollState } from "./ScrollPanel";
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -58,8 +67,10 @@ import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 
-const PAGINATE_SIZE = 20;
-const INITIAL_SIZE = 20;
+// These pagination sizes are higher than they may possibly need be
+// once https://github.com/matrix-org/matrix-spec-proposals/pull/3874 lands
+const PAGINATE_SIZE = 50;
+const INITIAL_SIZE = 30;
 const READ_RECEIPT_INTERVAL_MS = 500;
 
 const READ_MARKER_DEBOUNCE_MS = 100;
@@ -163,9 +174,6 @@ interface IState {
     liveEvents: MatrixEvent[];
     // track whether our room timeline is loading
     timelineLoading: boolean;
-
-    // the index of the first event that is to be shown
-    firstVisibleEventIndex: number;
 
     // canBackPaginate == false may mean:
     //
@@ -284,7 +292,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
             events: [],
             liveEvents: [],
             timelineLoading: true,
-            firstVisibleEventIndex: 0,
             canBackPaginate: false,
             canForwardPaginate: false,
             readMarkerVisible: true,
@@ -556,12 +563,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.overlayTimelineWindow!.unpaginate(overlayCount, backwards);
         }
 
-        const { events, liveEvents, firstVisibleEventIndex } = this.getEvents();
+        const { events, liveEvents } = this.getEvents();
         this.buildLegacyCallEventGroupers(events);
         this.setState({
             events,
             liveEvents,
-            firstVisibleEventIndex,
         });
 
         // We can now paginate in the unpaginated direction
@@ -591,6 +597,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const dir = backwards ? EventTimeline.BACKWARDS : EventTimeline.FORWARDS;
         const canPaginateKey = backwards ? "canBackPaginate" : "canForwardPaginate";
         const paginatingKey = backwards ? "backPaginating" : "forwardPaginating";
+        type CanPaginateKey = typeof canPaginateKey;
+        type PaginatingKey = typeof paginatingKey;
 
         if (!this.state[canPaginateKey]) {
             debuglog("have given up", dir, "paginating this timeline");
@@ -599,17 +607,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         if (!this.timelineWindow?.canPaginate(dir)) {
             debuglog("can't", dir, "paginate any further");
-            this.setState<null>({ [canPaginateKey]: false });
-            return Promise.resolve(false);
-        }
-
-        if (backwards && this.state.firstVisibleEventIndex !== 0) {
-            debuglog("won't", dir, "paginate past first visible event");
+            this.setState({ [canPaginateKey]: false } as Pick<IState, CanPaginateKey>);
             return Promise.resolve(false);
         }
 
         debuglog("Initiating paginate; backwards:" + backwards);
-        this.setState<null>({ [paginatingKey]: true });
+        this.setState({ [paginatingKey]: true } as Pick<IState, PaginatingKey>);
 
         return this.onPaginationRequest(this.timelineWindow, dir, PAGINATE_SIZE).then(async (r) => {
             if (this.unmounted) {
@@ -622,15 +625,14 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
             debuglog("paginate complete backwards:" + backwards + "; success:" + r);
 
-            const { events, liveEvents, firstVisibleEventIndex } = this.getEvents();
+            const { events, liveEvents } = this.getEvents();
             this.buildLegacyCallEventGroupers(events);
-            const newState: Partial<IState> = {
+            const newState = {
                 [paginatingKey]: false,
                 [canPaginateKey]: r,
                 events,
                 liveEvents,
-                firstVisibleEventIndex,
-            };
+            } as Pick<IState, PaginatingKey | CanPaginateKey | "events" | "liveEvents">;
 
             // moving the window in this direction may mean that we can now
             // paginate in the other where we previously could not.
@@ -647,12 +649,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
             // has in memory because we never gave the component a chance to scroll
             // itself into the right place
             return new Promise((resolve) => {
-                this.setState<null>(newState, () => {
-                    // we can continue paginating in the given direction if:
-                    // - timelineWindow.paginate says we can
-                    // - we're paginating forwards, or we won't be trying to
-                    //   paginate backwards past the first visible event
-                    resolve(r && (!backwards || firstVisibleEventIndex === 0));
+                this.setState(newState, () => {
+                    // we can continue paginating in the given direction if
+                    // timelineWindow.paginate says we can
+                    resolve(r);
                 });
             });
         });
@@ -768,14 +768,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     return;
                 }
 
-                const { events, liveEvents, firstVisibleEventIndex } = this.getEvents();
+                const { events, liveEvents } = this.getEvents();
                 this.buildLegacyCallEventGroupers(events);
                 const lastLiveEvent = liveEvents[liveEvents.length - 1];
 
                 const updatedState: Partial<IState> = {
                     events,
                     liveEvents,
-                    firstVisibleEventIndex,
                 };
 
                 let callRMUpdated = false;
@@ -953,8 +952,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         if (!this.state.events.includes(ev)) return;
 
-        this.recheckFirstVisibleEventIndex();
-
         // Need to update as we don't display event tiles for events that
         // haven't yet been decrypted. The event will have just been updated
         // in place so we just need to re-render.
@@ -969,17 +966,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
         if (this.unmounted) return;
         this.setState({ clientSyncState });
     };
-
-    private recheckFirstVisibleEventIndex = throttle(
-        (): void => {
-            const firstVisibleEventIndex = this.checkForPreJoinUISI(this.state.events);
-            if (firstVisibleEventIndex !== this.state.firstVisibleEventIndex) {
-                this.setState({ firstVisibleEventIndex });
-            }
-        },
-        500,
-        { leading: true, trailing: true },
-    );
 
     private readMarkerTimeout(readMarkerPosition: number | null): number {
         return readMarkerPosition === 0
@@ -1031,7 +1017,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         if (
-            !(await client.doesServerSupportUnstableFeature("org.matrix.msc2285.stable")) ||
+            !(await client.doesServerSupportUnstableFeature("org.matrix.msc2285.stable")) &&
             !(await client.isVersionSupported("v1.4"))
         ) {
             logger.warn(
@@ -1135,7 +1121,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const lastReadEventIndex = this.getLastDisplayedEventIndex({
             ignoreOwn: true,
         });
-        const lastReadEvent: MatrixEvent | null = this.state.events[lastReadEventIndex ?? 0] ?? null;
+        const lastReadEvent = this.state.events[lastReadEventIndex ?? this.state.events.length - 1] ?? null;
 
         const shouldSendReadReceipt = this.shouldSendReadReceipt(
             currentReadReceiptEventId,
@@ -1636,16 +1622,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
             let description: string;
             if (error.errcode == "M_FORBIDDEN") {
-                description = _t(
-                    "Tried to load a specific point in this room's timeline, but you " +
-                        "do not have permission to view the message in question.",
-                );
+                description = _t("timeline|load_error|no_permission");
             } else {
-                description = _t("Tried to load a specific point in this room's timeline, but was unable to find it.");
+                description = _t("timeline|load_error|unable_to_find");
             }
 
             Modal.createDialog(ErrorDialog, {
-                title: _t("Failed to load timeline position"),
+                title: _t("timeline|load_error|title"),
                 description,
                 onFinished,
             });
@@ -1710,7 +1693,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
     }
 
     // get the list of events from the timeline windows and the pending event list
-    private getEvents(): Pick<IState, "events" | "liveEvents" | "firstVisibleEventIndex"> {
+    private getEvents(): Pick<IState, "events" | "liveEvents"> {
         const mainEvents = this.timelineWindow!.getEvents();
         let overlayEvents = this.overlayTimelineWindow?.getEvents() ?? [];
         if (this.props.overlayTimelineSetFilter !== undefined) {
@@ -1742,17 +1725,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
             [...mainEvents],
         );
 
-        // `arrayFastClone` performs a shallow copy of the array
-        // we want the last event to be decrypted first but displayed last
-        // `reverse` is destructive and unfortunately mutates the "events" array
-        arrayFastClone(events)
-            .reverse()
-            .forEach((event) => {
-                const client = MatrixClientPeg.safeGet();
-                client.decryptEventIfNeeded(event);
-            });
-
-        const firstVisibleEventIndex = this.checkForPreJoinUISI(events);
+        // We want the last event to be decrypted first
+        const client = MatrixClientPeg.safeGet();
+        for (let i = events.length - 1; i >= 0; --i) {
+            client.decryptEventIfNeeded(events[i]);
+        }
 
         // Hold onto the live events separately. The read receipt and read marker
         // should use this list, so that they don't advance into pending events.
@@ -1781,81 +1758,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         return {
             events,
             liveEvents,
-            firstVisibleEventIndex,
         };
-    }
-
-    /**
-     * Check for undecryptable messages that were sent while the user was not in
-     * the room.
-     *
-     * @param {Array<MatrixEvent>} events The timeline events to check
-     *
-     * @return {Number} The index within `events` of the event after the most recent
-     * undecryptable event that was sent while the user was not in the room.  If no
-     * such events were found, then it returns 0.
-     */
-    private checkForPreJoinUISI(events: MatrixEvent[]): number {
-        const cli = MatrixClientPeg.safeGet();
-        const room = this.props.timelineSet.room;
-
-        const isThreadTimeline = [TimelineRenderingType.Thread, TimelineRenderingType.ThreadsList].includes(
-            this.context.timelineRenderingType,
-        );
-        if (events.length === 0 || !room || !cli.isRoomEncrypted(room.roomId) || isThreadTimeline) {
-            logger.info("checkForPreJoinUISI: showing all messages, skipping check");
-            return 0;
-        }
-
-        const userId = cli.getSafeUserId();
-
-        // get the user's membership at the last event by getting the timeline
-        // that the event belongs to, and traversing the timeline looking for
-        // that event, while keeping track of the user's membership
-        let i = events.length - 1;
-        let userMembership = "leave";
-        for (; i >= 0; i--) {
-            const timeline = this.props.timelineSet.getTimelineForEvent(events[i].getId()!);
-            if (!timeline) {
-                // Somehow, it seems to be possible for live events to not have
-                // a timeline, even though that should not happen. :(
-                // https://github.com/vector-im/element-web/issues/12120
-                logger.warn(
-                    `Event ${events[i].getId()} in room ${room.roomId} is live, ` + `but it does not have a timeline`,
-                );
-                continue;
-            }
-
-            userMembership = timeline.getState(EventTimeline.FORWARDS)?.getMember(userId)?.membership ?? "leave";
-            const timelineEvents = timeline.getEvents();
-            for (let j = timelineEvents.length - 1; j >= 0; j--) {
-                const event = timelineEvents[j];
-                if (event.getId() === events[i].getId()) {
-                    break;
-                } else if (event.getStateKey() === userId && event.getType() === EventType.RoomMember) {
-                    userMembership = event.getPrevContent().membership || "leave";
-                }
-            }
-            break;
-        }
-
-        // now go through the rest of the events and find the first undecryptable
-        // one that was sent when the user wasn't in the room
-        for (; i >= 0; i--) {
-            const event = events[i];
-            if (event.getStateKey() === userId && event.getType() === EventType.RoomMember) {
-                userMembership = event.getPrevContent().membership || "leave";
-            } else if (userMembership === "leave" && (event.isDecryptionFailure() || event.isBeingDecrypted())) {
-                // reached an undecryptable message when the user wasn't in the room -- don't try to load any more
-                // Note: for now, we assume that events that are being decrypted are
-                // not decryptable - we will be called once more when it is decrypted.
-                logger.info("checkForPreJoinUISI: reached a pre-join UISI at index ", i);
-                return i + 1;
-            }
-        }
-
-        logger.info("checkForPreJoinUISI: did not find pre-join UISI");
-        return 0;
     }
 
     private indexForEventId(evId: string | null): number | null {
@@ -2012,7 +1915,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         return receiptStore?.getEventReadUpTo(myUserId, ignoreSynthesized) ?? null;
     }
 
-    private setReadMarker(eventId: string | null, eventTs: number, inhibitSetState = false): void {
+    private setReadMarker(eventId: string | null, eventTs?: number, inhibitSetState = false): void {
         const roomId = this.props.timelineSet.room?.roomId;
 
         // don't update the state (and cause a re-render) if there is
@@ -2023,7 +1926,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         // in order to later figure out if the read marker is
         // above or below the visible timeline, we stash the timestamp.
-        TimelinePanel.roomReadMarkerTsMap[roomId ?? ""] = eventTs;
+        if (eventTs !== undefined) {
+            TimelinePanel.roomReadMarkerTsMap[roomId ?? ""] = eventTs;
+        } else {
+            delete TimelinePanel.roomReadMarkerTsMap[roomId ?? ""];
+        }
 
         if (inhibitSetState) {
             return;
@@ -2104,9 +2011,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // the HS and fetch the latest events, so we are effectively forward paginating.
         const forwardPaginating =
             this.state.forwardPaginating || ["PREPARED", "CATCHUP"].includes(this.state.clientSyncState!);
-        const events = this.state.firstVisibleEventIndex
-            ? this.state.events.slice(this.state.firstVisibleEventIndex)
-            : this.state.events;
+        const events = this.state.events;
         return (
             <MessagePanel
                 ref={this.messagePanel}
@@ -2119,7 +2024,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 highlightedEventId={this.props.highlightedEventId}
                 readMarkerEventId={this.state.readMarkerEventId}
                 readMarkerVisible={this.state.readMarkerVisible}
-                canBackPaginate={this.state.canBackPaginate && this.state.firstVisibleEventIndex === 0}
+                canBackPaginate={this.state.canBackPaginate}
                 showUrlPreview={this.props.showUrlPreview}
                 showReadReceipts={this.props.showReadReceipts}
                 ourUserId={MatrixClientPeg.safeGet().getSafeUserId()}

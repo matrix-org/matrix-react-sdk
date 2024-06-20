@@ -12,7 +12,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+import { EventEmitter } from "events";
 import { Room, RoomMember, EventType, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { PermalinkParts } from "../../../src/utils/permalinks/PermalinkConstructor";
@@ -43,7 +46,7 @@ describe("Permalinks", function () {
         members: RoomMember[],
         serverACLContent?: { deny?: string[]; allow?: string[] },
     ): Room {
-        members.forEach((m) => (m.membership = "join"));
+        members.forEach((m) => (m.membership = KnownMembership.Join));
         const powerLevelsUsers = members.reduce<Record<string, number>>((pl, member) => {
             if (Number.isFinite(member.powerLevel)) {
                 pl[member.userId] = member.powerLevel;
@@ -85,6 +88,26 @@ describe("Permalinks", function () {
 
     afterAll(() => {
         jest.spyOn(MatrixClientPeg, "get").mockRestore();
+    });
+
+    it("should not clean up listeners even if start was called multiple times", () => {
+        const room = mockRoom("!fake:example.org", []);
+        const getListenerCount = (emitter: EventEmitter) =>
+            emitter
+                .eventNames()
+                .map((e) => emitter.listenerCount(e))
+                .reduce((a, b) => a + b, 0);
+        const listenerCountBefore = getListenerCount(room.currentState);
+
+        const creator = new RoomPermalinkCreator(room);
+        creator.start();
+        creator.start();
+        creator.start();
+        creator.start();
+        expect(getListenerCount(room.currentState)).toBeGreaterThan(listenerCountBefore);
+
+        creator.stop();
+        expect(getListenerCount(room.currentState)).toBe(listenerCountBefore);
     });
 
     it("should pick no candidate servers when the room has no members", function () {
@@ -130,11 +153,11 @@ describe("Permalinks", function () {
         const creator = new RoomPermalinkCreator(room, null);
         creator.load();
         expect(creator.serverCandidates![0]).toBe("pl_95");
-        member95.membership = "left";
+        member95.membership = KnownMembership.Leave;
         // @ts-ignore illegal private property
         creator.onRoomStateUpdate();
         expect(creator.serverCandidates![0]).toBe("pl_75");
-        member95.membership = "join";
+        member95.membership = KnownMembership.Join;
         // @ts-ignore illegal private property
         creator.onRoomStateUpdate();
         expect(creator.serverCandidates![0]).toBe("pl_95");

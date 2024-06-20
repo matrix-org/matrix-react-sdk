@@ -16,12 +16,10 @@ limitations under the License.
 
 import { useState, useCallback, useMemo } from "react";
 
-import type { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { Call, ConnectionState, ElementCall, Layout } from "../models/Call";
-import { useTypedEventEmitterState } from "./useEventEmitter";
-import { CallEvent } from "../models/Call";
+import type { RoomMember } from "matrix-js-sdk/src/matrix";
+import { Call, ConnectionState, ElementCall, Layout, CallEvent } from "../models/Call";
+import { useTypedEventEmitterState, useEventEmitter } from "./useEventEmitter";
 import { CallStore, CallStoreEvent } from "../stores/CallStore";
-import { useEventEmitter } from "./useEventEmitter";
 import SdkConfig, { DEFAULTS } from "../SdkConfig";
 import { _t } from "../languageHandler";
 
@@ -38,21 +36,22 @@ export const useCallForWidget = (widgetId: string, roomId: string): Call | null 
     return call?.widget.id === widgetId ? call : null;
 };
 
-export const useConnectionState = (call: Call): ConnectionState =>
+export const useConnectionState = (call: Call | null): ConnectionState =>
     useTypedEventEmitterState(
-        call,
+        call ?? undefined,
         CallEvent.ConnectionState,
-        useCallback((state) => state ?? call.connectionState, [call]),
+        useCallback((state) => state ?? call?.connectionState ?? ConnectionState.Disconnected, [call]),
     );
 
-export const useParticipants = (call: Call): Map<RoomMember, Set<string>> =>
-    useTypedEventEmitterState(
-        call,
+export const useParticipants = (call: Call | null): Map<RoomMember, Set<string>> => {
+    return useTypedEventEmitterState(
+        call ?? undefined,
         CallEvent.Participants,
-        useCallback((state) => state ?? call.participants, [call]),
+        useCallback((state) => state ?? call?.participants ?? [], [call]),
     );
+};
 
-export const useParticipantCount = (call: Call): number => {
+export const useParticipantCount = (call: Call | null): number => {
     const participants = useParticipants(call);
 
     return useMemo(() => {
@@ -75,19 +74,19 @@ export const useParticipatingMembers = (call: Call): RoomMember[] => {
     }, [participants]);
 };
 
-export const useFull = (call: Call): boolean => {
+export const useFull = (call: Call | null): boolean => {
     return (
         useParticipantCount(call) >=
         (SdkConfig.get("element_call").participant_limit ?? DEFAULTS.element_call.participant_limit!)
     );
 };
 
-export const useJoinCallButtonDisabledTooltip = (call: Call): string | null => {
+export const useJoinCallButtonDisabledTooltip = (call: Call | null): string | null => {
     const isFull = useFull(call);
     const state = useConnectionState(call);
 
-    if (state === ConnectionState.Connecting) return _t("Connecting");
-    if (isFull) return _t("Sorry — this call is currently full");
+    if (state === ConnectionState.Connecting) return _t("voip|join_button_tooltip_connecting");
+    if (isFull) return _t("voip|join_button_tooltip_call_full");
     return null;
 };
 

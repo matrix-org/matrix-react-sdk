@@ -15,10 +15,41 @@ limitations under the License.
 */
 
 import { MatrixClient, MatrixEvent, Room, RoomMember, RoomState, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { mocked } from "jest-mock";
 
-import { waitForMember } from "../../src/utils/membership";
-import { createTestClient } from "../test-utils";
+import { isKnockDenied, waitForMember } from "../../src/utils/membership";
+import { createTestClient, mkRoomMember, stubClient } from "../test-utils";
+
+describe("isKnockDenied", () => {
+    const userId = "alice";
+    let client: jest.Mocked<MatrixClient>;
+    let room: Room;
+
+    beforeEach(() => {
+        client = stubClient() as jest.Mocked<MatrixClient>;
+        room = new Room("!room-id:example.com", client, "@user:example.com");
+    });
+
+    it("checks that the user knock has been denied", () => {
+        const roomMember = mkRoomMember(room.roomId, userId, KnownMembership.Leave, true, {
+            membership: KnownMembership.Knock,
+        });
+        jest.spyOn(room, "getMember").mockReturnValue(roomMember);
+        expect(isKnockDenied(room)).toBe(true);
+    });
+
+    it.each([
+        { membership: KnownMembership.Leave, isKicked: false, prevMembership: KnownMembership.Invite },
+        { membership: KnownMembership.Leave, isKicked: true, prevMembership: KnownMembership.Invite },
+        { membership: KnownMembership.Leave, isKicked: false, prevMembership: KnownMembership.Join },
+        { membership: KnownMembership.Leave, isKicked: true, prevMembership: KnownMembership.Join },
+    ])("checks that the user knock has been not denied", ({ membership, isKicked, prevMembership }) => {
+        const roomMember = mkRoomMember(room.roomId, userId, membership, isKicked, { membership: prevMembership });
+        jest.spyOn(room, "getMember").mockReturnValue(roomMember);
+        expect(isKnockDenied(room)).toBe(false);
+    });
+});
 
 /* Shorter timeout, we've got tests to run */
 const timeout = 30;

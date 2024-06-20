@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { CSSTransition } from "react-transition-group";
 
 import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
@@ -26,9 +26,8 @@ import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import Toolbar from "../../../accessibility/Toolbar";
 import { Action } from "../../../dispatcher/actions";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { ButtonEvent } from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {}
 
@@ -47,24 +46,24 @@ const RoomBreadcrumbTile: React.FC<{ room: Room; onClick: (ev: ButtonEvent) => v
     const [onFocus, isActive, ref] = useRovingTabIndex();
 
     return (
-        <AccessibleTooltipButton
+        <AccessibleButton
             className="mx_RoomBreadcrumbs_crumb"
             onClick={onClick}
-            aria-label={_t("Room %(name)s", { name: room.name })}
+            aria-label={_t("a11y|room_name", { name: room.name })}
             title={room.name}
-            tooltipClassName="mx_RoomBreadcrumbs_Tooltip"
             onFocus={onFocus}
-            inputRef={ref}
+            ref={ref}
             tabIndex={isActive ? 0 : -1}
+            placement="right"
         >
             <DecoratedRoomAvatar
                 room={room}
-                avatarSize={32}
+                size="32px"
                 displayBadge={true}
-                forceCount={true}
+                hideIfDot={true}
                 tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
             />
-        </AccessibleTooltipButton>
+        </AccessibleButton>
     );
 };
 
@@ -123,7 +122,7 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
             // NOTE: The CSSTransition timeout MUST match the timeout in our CSS!
             return (
                 <CSSTransition appear={true} in={this.state.doAnimation} timeout={640} classNames="mx_RoomBreadcrumbs">
-                    <Toolbar className="mx_RoomBreadcrumbs" aria-label={_t("Recently visited rooms")}>
+                    <Toolbar className="mx_RoomBreadcrumbs" aria-label={_t("room_list|breadcrumbs_label")}>
                         {tiles.slice(this.state.skipFirst ? 1 : 0)}
                     </Toolbar>
                 </CSSTransition>
@@ -131,7 +130,7 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
         } else {
             return (
                 <div className="mx_RoomBreadcrumbs">
-                    <div className="mx_RoomBreadcrumbs_placeholder">{_t("No recently visited rooms")}</div>
+                    <div className="mx_RoomBreadcrumbs_placeholder">{_t("room_list|breadcrumbs_empty")}</div>
                 </div>
             );
         }

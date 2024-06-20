@@ -16,12 +16,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { RoomMember, RoomStateEvent, MatrixEvent, EventType } from "matrix-js-sdk/src/matrix";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 
 import dis from "../../../dispatcher/dispatcher";
@@ -34,6 +31,7 @@ import DisambiguatedProfile from "../messages/DisambiguatedProfile";
 import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 import { E2EState } from "./E2EIcon";
 import { asyncSome } from "../../../utils/arrays";
+import { getUserDeviceIds } from "../../../utils/crypto/deviceInfo";
 
 interface IProps {
     member: RoomMember;
@@ -119,17 +117,16 @@ export default class MemberTile extends React.Component<IProps, IState> {
         const cli = MatrixClientPeg.safeGet();
         const { userId } = this.props.member;
         const isMe = userId === cli.getUserId();
-        const userTrust = cli.checkUserTrust(userId);
-        if (!userTrust.isCrossSigningVerified()) {
+        const userTrust = await cli.getCrypto()?.getUserVerificationStatus(userId);
+        if (!userTrust?.isCrossSigningVerified()) {
             this.setState({
-                e2eStatus: userTrust.wasCrossSigningVerified() ? E2EState.Warning : E2EState.Normal,
+                e2eStatus: userTrust?.wasCrossSigningVerified() ? E2EState.Warning : E2EState.Normal,
             });
             return;
         }
 
-        const devices = cli.getStoredDevicesForUser(userId);
-        const anyDeviceUnverified = await asyncSome(devices, async (device) => {
-            const { deviceId } = device;
+        const deviceIDs = await getUserDeviceIds(cli, userId);
+        const anyDeviceUnverified = await asyncSome(deviceIDs, async (deviceId) => {
             // For your own devices, we use the stricter check of cross-signing
             // verification to encourage everyone to trust their own devices via
             // cross-signing so that other users can then safely trust you.
@@ -176,7 +173,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
     }
 
     private getPowerLabel(): string {
-        return _t("%(userName)s (power %(powerLevelNumber)s)", {
+        return _t("member_list|power_label", {
             userName: UserIdentifierCustomisations.getDisplayUserIdentifier(this.props.member.userId, {
                 roomId: this.props.member.roomId,
             }),
@@ -189,7 +186,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         const name = this.getDisplayName();
         const presenceState = member.user?.presence as PresenceState | undefined;
 
-        const av = <MemberAvatar member={member} width={36} height={36} aria-hidden="true" />;
+        const av = <MemberAvatar member={member} size="36px" aria-hidden="true" />;
 
         if (member.user) {
             this.userLastModifiedTime = member.user.getLastModifiedTime();

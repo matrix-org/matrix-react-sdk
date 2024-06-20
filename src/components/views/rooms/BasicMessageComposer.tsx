@@ -16,10 +16,10 @@ limitations under the License.
 
 import classNames from "classnames";
 import React, { createRef, ClipboardEvent, SyntheticEvent } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import EMOTICON_REGEX from "emojibase-regex/emoticon";
 import { logger } from "matrix-js-sdk/src/logger";
+import { EMOTICON_TO_EMOJI } from "@matrix-org/emojibase-bindings";
 
 import EditorModel from "../../../editor/model";
 import HistoryManager from "../../../editor/history";
@@ -37,7 +37,6 @@ import { parseEvent, parsePlainTextMessage } from "../../../editor/deserialize";
 import { renderModel } from "../../../editor/render";
 import SettingsStore from "../../../settings/SettingsStore";
 import { IS_MAC, Key } from "../../../Keyboard";
-import { EMOTICON_TO_EMOJI } from "../../../emoji";
 import { CommandCategories, CommandMap, parseCommandString } from "../../../SlashCommands";
 import Range from "../../../editor/range";
 import MessageComposerFormatBar, { Formatting } from "./MessageComposerFormatBar";
@@ -130,6 +129,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private modifiedFlag = false;
     private isIMEComposing = false;
     private hasTextSelected = false;
+    private readonly isSafari: boolean;
 
     private _isCaretAtEnd = false;
     private lastCaret!: DocumentOffset;
@@ -149,6 +149,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             surroundWith: SettingsStore.getValue("MessageComposerInput.surroundWith"),
             showVisualBell: false,
         };
+
+        const ua = navigator.userAgent.toLowerCase();
+        this.isSafari = ua.includes("safari/") && !ua.includes("chrome/");
 
         this.useMarkdownHandle = SettingsStore.watchSetting(
             "MessageComposerInput.useMarkdown",
@@ -283,9 +286,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     };
 
     private showPlaceholder(): void {
-        // escape single quotes
-        const placeholder = this.props.placeholder?.replace(/'/g, "\\'");
-        this.editorRef.current?.style.setProperty("--placeholder", `'${placeholder}'`);
+        this.editorRef.current?.style.setProperty("--placeholder", `'${CSS.escape(this.props.placeholder ?? "")}'`);
         this.editorRef.current?.classList.add("mx_BasicMessageComposer_inputEmpty");
     }
 
@@ -311,10 +312,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         // however, doing this async seems to break things in Safari for some reason, so browser sniff.
 
-        const ua = navigator.userAgent.toLowerCase();
-        const isSafari = ua.includes("safari/") && !ua.includes("chrome/");
-
-        if (isSafari) {
+        if (this.isSafari) {
             this.onInput({ inputType: "insertCompositionText" });
         } else {
             Promise.resolve().then(() => {
@@ -327,6 +325,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         // checking the event.isComposing flag just in case any browser out there
         // emits events related to the composition after compositionend
         // has been fired
+
+        // From https://www.stum.de/2016/06/24/handling-ime-events-in-javascript/
+        // Safari emits an additional keyDown after compositionend
         return !!(this.isIMEComposing || (event.nativeEvent && event.nativeEvent.isComposing));
     }
 
@@ -506,6 +507,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
     private onKeyDown = (event: React.KeyboardEvent): void => {
         if (!this.editorRef.current) return;
+        if (this.isSafari && event.which == 229) {
+            // Swallow the extra keyDown by Safari
+            event.stopPropagation();
+            return;
+        }
         const model = this.props.model;
         let handled = false;
 
@@ -554,8 +560,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                     autoComplete.onEscape(event);
                     handled = true;
                     break;
-                default:
-                    return; // don't preventDefault on anything else
             }
         } else if (autocompleteAction === KeyBindingAction.ForceCompleteAutocomplete && !this.state.showVisualBell) {
             // there is no current autocomplete window, try to open it
@@ -850,6 +854,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                     dir="auto"
                     aria-disabled={this.props.disabled}
                     data-testid="basicmessagecomposer"
+                    translate="no"
                 />
             </div>
         );

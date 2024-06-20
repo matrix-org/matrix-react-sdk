@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
 import { randomString } from "matrix-js-sdk/src/randomstring";
-import { ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
+import { Tooltip } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
@@ -28,11 +28,7 @@ import {
     isSelfLocation,
 } from "../../../utils/location";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import TooltipTarget from "../elements/TooltipTarget";
-import { Alignment } from "../elements/Tooltip";
-import LocationViewDialog from "../location/LocationViewDialog";
-import Map from "../location/Map";
-import SmartMarker from "../location/SmartMarker";
+import { SmartMarker, Map, LocationViewDialog } from "../location";
 import { IBodyProps } from "./IBodyProps";
 import { createReconnectedListener } from "../../../utils/connection";
 
@@ -100,7 +96,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
                 mxEvent={this.props.mxEvent}
                 mapId={this.mapId}
                 onError={this.onError}
-                tooltip={_t("Expand map")}
+                tooltip={_t("location_sharing|expand_map")}
                 onClick={this.onClick}
             />
         );
@@ -109,11 +105,11 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
 
 export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent; error: Error }> = ({ error, event }) => {
     const errorType = error?.message as LocationShareError;
-    const message = `${_t("Unable to load map")}: ${getLocationShareErrorMessage(errorType)}`;
+    const message = `${_t("location_sharing|failed_load_map")}: ${getLocationShareErrorMessage(errorType)}`;
 
     const locationFallback = isSelfLocation(event.getContent())
-        ? _t("Shared their location: ") + event.getContent()?.body
-        : _t("Shared a location: ") + event.getContent()?.body;
+        ? _t("timeline|m.location|self_location") + event.getContent()?.body
+        : _t("timeline|m.location|location") + event.getContent()?.body;
 
     return (
         <div className="mx_EventTile_body mx_MLocationBody">
@@ -129,7 +125,7 @@ export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent; error: 
 interface LocationBodyContentProps {
     mxEvent: MatrixEvent;
     mapId: string;
-    tooltip?: string;
+    tooltip: string;
     onError: (error: Error) => void;
     onClick?: () => void;
 }
@@ -159,13 +155,9 @@ export const LocationBodyContent: React.FC<LocationBodyContentProps> = ({
 
     return (
         <div className="mx_MLocationBody">
-            {tooltip ? (
-                <TooltipTarget label={tooltip} alignment={Alignment.InnerBottom} maxParentWidth={450}>
-                    {mapElement}
-                </TooltipTarget>
-            ) : (
-                mapElement
-            )}
+            <Tooltip label={tooltip}>
+                <div className="mx_MLocationBody_map">{mapElement}</div>
+            </Tooltip>
         </div>
     );
 };

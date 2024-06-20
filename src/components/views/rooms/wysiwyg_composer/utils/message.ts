@@ -15,9 +15,14 @@ limitations under the License.
 */
 
 import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
-import { IContent, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { ISendEventResponse, MatrixClient } from "matrix-js-sdk/src/matrix";
-import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import {
+    IEventRelation,
+    MatrixEvent,
+    ISendEventResponse,
+    MatrixClient,
+    THREAD_RELATION_TYPE,
+} from "matrix-js-sdk/src/matrix";
+import { RoomMessageEventContent } from "matrix-js-sdk/src/types";
 
 import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 import SettingsStore from "../../../../../settings/SettingsStore";
@@ -64,6 +69,7 @@ export async function sendMessage(
     const posthogEvent: ComposerEvent = {
         eventName: "Composer",
         isEditing: false,
+        messageType: "Text",
         isReply: Boolean(replyToEvent),
         // TODO thread
         inThread: relation?.rel_type === THREAD_RELATION_TYPE.name,
@@ -76,7 +82,7 @@ export async function sendMessage(
     }*/
     PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
 
-    let content: IContent | null = null;
+    let content: RoomMessageEventContent | null = null;
 
     // Slash command handling here approximates what can be found in SendMessageComposer.sendMessage()
     // but note that the /me and // special cases are handled by the call to createMessageContent
@@ -139,7 +145,7 @@ export async function sendMessage(
 
     const prom = doMaybeLocalRoomAction(
         roomId,
-        (actualRoomId: string) => mxClient.sendMessage(actualRoomId, threadId, content as IContent),
+        (actualRoomId: string) => mxClient.sendMessage(actualRoomId, threadId, content!),
         mxClient,
     );
 
@@ -199,6 +205,7 @@ export async function editMessage(
     PosthogAnalytics.instance.trackEvent<ComposerEvent>({
         eventName: "Composer",
         isEditing: true,
+        messageType: "Text",
         inThread: Boolean(editedEvent?.getThread()),
         isReply: Boolean(editedEvent.replyEventId),
     });
@@ -211,7 +218,7 @@ export async function editMessage(
         this.editorRef.current?.replaceEmoticon(position, REGEX_EMOTICON);
     }*/
     const editContent = await createMessageContent(html, true, { editedEvent });
-    const newContent = editContent["m.new_content"];
+    const newContent = editContent["m.new_content"]!;
 
     const shouldSend = true;
 

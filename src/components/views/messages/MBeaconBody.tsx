@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { ForwardRefExoticComponent, useCallback, useContext, useEffect, useState } from "react";
 import {
     Beacon,
     BeaconEvent,
@@ -23,10 +23,10 @@ import {
     MatrixClient,
     RelationType,
     IRedactOpts,
+    ContentHelpers,
+    M_BEACON,
 } from "matrix-js-sdk/src/matrix";
-import { BeaconLocationState } from "matrix-js-sdk/src/content-helpers";
 import { randomString } from "matrix-js-sdk/src/randomstring";
-import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 import classNames from "classnames";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -38,12 +38,11 @@ import { isSelfLocation, LocationShareError } from "../../../utils/location";
 import { BeaconDisplayStatus, getBeaconDisplayStatus } from "../beacon/displayStatus";
 import BeaconStatus from "../beacon/BeaconStatus";
 import OwnBeaconStatus from "../beacon/OwnBeaconStatus";
-import Map from "../location/Map";
+import { Map, SmartMarker } from "../location";
 import { MapError } from "../location/MapError";
 import MapFallback from "../location/MapFallback";
-import SmartMarker from "../location/SmartMarker";
 import { GetRelationsForEvent } from "../rooms/EventTile";
-import BeaconViewDialog from "../beacon/BeaconViewDialog";
+import { BeaconViewDialog } from "../beacon";
 import { IBodyProps } from "./IBodyProps";
 
 const useBeaconState = (
@@ -51,7 +50,7 @@ const useBeaconState = (
 ): {
     beacon?: Beacon;
     description?: string;
-    latestLocationState?: BeaconLocationState;
+    latestLocationState?: ContentHelpers.BeaconLocationState;
     isLive?: boolean;
     waitingToStart?: boolean;
 } => {
@@ -228,12 +227,12 @@ const MBeaconBody = React.forwardRef<HTMLDivElement, IBodyProps>(({ mxEvent, get
                     className="mx_MBeaconBody_chin"
                     beacon={beacon}
                     displayStatus={displayStatus}
-                    label={_t("View live location")}
+                    label={_t("timeline|m.beacon_info|view_live_location")}
                     withIcon
                 />
             )}
         </div>
     );
-});
+}) as ForwardRefExoticComponent<IBodyProps>;
 
 export default MBeaconBody;
