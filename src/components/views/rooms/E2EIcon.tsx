@@ -23,14 +23,7 @@ import { _t, _td, TranslationKey } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 import { XOR } from "../../../@types/common";
-
-export enum E2EState {
-    Verified = "verified",
-    Warning = "warning",
-    Unknown = "unknown",
-    Normal = "normal",
-    Unauthenticated = "unauthenticated",
-}
+import { E2EState } from "../../../models/rooms/E2EState";
 
 const crossSigningUserTitles: { [key in E2EState]?: TranslationKey } = {
     [E2EState.Warning]: _td("encryption|cross_signing_user_warning"),
