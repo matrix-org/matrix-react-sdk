@@ -61,16 +61,18 @@ limitations under the License.
         display: flex;
         flex-direction: column;
         gap: var(--cpd-space-4x);
-        margin: 0 var(--cpd-space-2x) 0 var(--cpd-space-4x);
         /*
-         * Override the default padding of the list
+         * Override the default padding/margin of the list
          */
         padding: 0;
+        margin: 0;
 
         .mx_ThemeChoicePanel_CustomThemeList_theme {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: var(--cpd-color-gray-200);
+            padding: var(--cpd-space-2x) var(--cpd-space-2x) var(--cpd-space-2x) var(--cpd-space-4x);
 
             .mx_ThemeChoicePanel_CustomThemeList_name {
                 font: var(--cpd-font-body-sm-semibold);
