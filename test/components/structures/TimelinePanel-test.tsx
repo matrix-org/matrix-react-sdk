@@ -202,6 +202,20 @@ describe("TimelinePanel", () => {
             content: createMessageEventContent("hello 2"),
         });
 
+        const renderTimelinePanelWithoutManagingReadMarkers = async (): Promise<void> => {
+            const ref = createRef<TimelinePanel>();
+            render(
+                <TimelinePanel
+                    timelineSet={timelineSet}
+                    manageReadMarkers={false}
+                    manageReadReceipts={true}
+                    ref={ref}
+                />,
+            );
+            await flushPromises();
+            timelinePanel = ref.current!;
+        };
+
         const renderTimelinePanel = async (): Promise<void> => {
             const ref = createRef<TimelinePanel>();
             render(
@@ -257,6 +271,52 @@ describe("TimelinePanel", () => {
         describe("when there is a non-threaded timeline", () => {
             beforeEach(() => {
                 setUpTimelineSet();
+            });
+
+            describe("and the client does not manage read markers", () => {
+                it("the read marker is never up-to-date", async () => {
+                    await renderTimelinePanelWithoutManagingReadMarkers();
+                    expect(timelinePanel.isReadMarkerUpToDate()).toBe(false);
+                });
+            });
+
+            describe("and receiving an event", () => {
+                beforeEach(async () => {
+                    await renderTimelinePanel();
+                    timelineSet.addLiveEvent(ev1, {});
+                    await flushPromises();
+                    // @ts-ignore Simulate user activity by calling updateReadMarker (private) on the TimelinePanel.
+                    await timelinePanel.updateReadMarker();
+                });
+
+                it("the read marker should not be up to date", async () => {
+                    expect(timelinePanel.isReadMarkerUpToDate()).toBe(false);
+                });
+
+                describe("and reading the whole timeline", () => {
+                    it("the read marker should be up to date", async () => {
+                        await renderTimelinePanel();
+                        timelineSet.addLiveEvent(ev1, {});
+                        // @ts-ignore sendReadReceipts is private
+                        await timelinePanel.sendReadReceipts();
+                        await timelinePanel.forgetReadMarker();
+                        // @ts-ignore Simulate user activity by calling updateReadMarker (private) on the TimelinePanel.
+                        await timelinePanel.updateReadMarker();
+                        await flushPromises();
+                        expect(timelinePanel.isReadMarkerUpToDate()).toBe(true);
+                    });
+                });
+
+                describe("and pressing Escape", () => {
+                    it("should send read receipts and update the read marker", async () => {
+                        await renderTimelinePanel();
+                        timelineSet.addLiveEvent(ev1, {});
+                        await timelinePanel.dismissAnyReadMarkerOrMarkAsRead();
+                        await flushPromises();
+                        expect(client.sendReadReceipt).toHaveBeenCalled();
+                        expect(client.setRoomReadMarkers).toHaveBeenCalledWith(roomId, ev1.getId());
+                    });
+                });
             });
 
             describe("and reading the timeline", () => {
@@ -376,6 +436,17 @@ describe("TimelinePanel", () => {
                 // fully_read is not supported for threads per spec
                 expect(client.setRoomReadMarkers).not.toHaveBeenCalled();
                 expect(client.sendReadReceipt).toHaveBeenCalledWith(threadEv1, ReceiptType.Read);
+            });
+
+            describe("and pressing Escape", () => {
+                it("should only mark threads as read", async () => {
+                    await renderTimelinePanel();
+                    timelineSet.addLiveEvent(threadEv1, {});
+                    await timelinePanel.dismissAnyReadMarkerOrMarkAsRead();
+                    await flushPromises();
+                    expect(client.sendReadReceipt).not.toHaveBeenCalled();
+                    expect(client.setRoomReadMarkers).not.toHaveBeenCalled();
+                });
             });
         });
     });

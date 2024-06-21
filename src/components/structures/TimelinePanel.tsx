@@ -66,6 +66,7 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
+import { clearRoomNotification } from "../../utils/notifications";
 
 // These pagination sizes are higher than they may possibly need be
 // once https://github.com/matrix-org/matrix-spec-proposals/pull/3874 lands
@@ -1324,6 +1325,19 @@ class TimelinePanel extends React.Component<IProps, IState> {
     };
 
     /**
+     * Check if the read marker is dismissed or up to date
+     */
+    public isReadMarkerUpToDate = (): boolean => {
+        if (!this.props.manageReadMarkers) return false;
+
+        // Find the read receipt
+        const rmId = this.getCurrentReadReceipt();
+
+        // Is the RM already up to date?
+        return rmId === this.state.readMarkerEventId;
+    };
+
+    /**
      * update the read-up-to marker to match the read receipt
      */
     public forgetReadMarker = async (): Promise<void> => {
@@ -1360,6 +1374,22 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.timelineWindow &&
             !this.timelineWindow.canPaginate(EventTimeline.FORWARDS)
         );
+    };
+
+    /*
+     * Dismiss the read marker if any or mark the entire room as read if none
+     */
+    public dismissAnyReadMarkerOrMarkAsRead = async (): Promise<void> => {
+        const client = MatrixClientPeg.safeGet();
+        // Clear all notifications if we already dismissed the read marker and we are at the bottom of the message panel
+        if (this.isReadMarkerUpToDate() && this.canResetTimeline()) {
+            if (this.props.timelineSet.room) {
+                await clearRoomNotification(this.props.timelineSet.room, client);
+            }
+        } else {
+            this.forgetReadMarker();
+            this.jumpToLiveTimeline();
+        }
     };
 
     /* get the current scroll state. See ScrollPanel.getScrollState for
