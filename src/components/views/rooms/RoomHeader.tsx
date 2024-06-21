@@ -82,6 +82,8 @@ export default function RoomHeader({
         isConnectedToCall,
         hasActiveCallSession,
         callOptions,
+        showVoiceCallButton,
+        showVideoCallButton,
     } = useRoomCall(room);
 
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
@@ -199,7 +201,7 @@ export default function RoomHeader({
             )}
         </>
     );
-    const voiceCallButton = (
+    let voiceCallButton: JSX.Element | undefined = (
         <Tooltip label={voiceCallDisabledReason ?? _t("voip|voice_call")}>
             <IconButton
                 // We need both: isViewingCall and isConnectedToCall
@@ -220,11 +222,18 @@ export default function RoomHeader({
             </IconButton>
         </Tooltip>
     );
-    let videoCallButton = startVideoCallButton;
+    let videoCallButton: JSX.Element | undefined = startVideoCallButton;
     if (isConnectedToCall) {
         videoCallButton = toggleCallButton;
     } else if (isViewingCall) {
         videoCallButton = closeLobbyButton;
+    }
+
+    if (!showVideoCallButton) {
+        videoCallButton = undefined;
+    }
+    if (!showVoiceCallButton) {
+        voiceCallButton = undefined;
     }
 
     return (
