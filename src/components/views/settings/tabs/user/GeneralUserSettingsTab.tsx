@@ -58,6 +58,7 @@ import Heading from "../../../typography/Heading";
 import InlineSpinner from "../../../elements/InlineSpinner";
 import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
 import { SDKContext } from "../../../../../contexts/SDKContext";
+import UserPersonalInfoSettings from "../../UserPersonalInfoSettings";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -562,6 +563,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             <SettingsTab data-testid="mx_GeneralUserSettingsTab">
                 <SettingsSection>
                     <UserProfileSettings />
+                    <UserPersonalInfoSettings canMake3pidChanges={this.state.canMake3pidChanges} />
                     {this.renderAccountSection()}
                     {this.renderLanguageSection()}
                     {supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null}
