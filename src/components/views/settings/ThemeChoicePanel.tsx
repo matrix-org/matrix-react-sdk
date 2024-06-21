@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { ChangeEvent, JSX, useMemo, useRef, useState } from "react";
+import React, { ChangeEvent, JSX, useCallback, useMemo, useRef, useState } from "react";
 import {
     InlineField,
     ToggleControl,
@@ -221,6 +221,10 @@ interface CustomThemeProps {
 function CustomTheme({ theme }: CustomThemeProps): JSX.Element {
     const [customTheme, setCustomTheme] = useState<string>("");
     const [error, setError] = useState<string>();
+    const clear = useCallback(() => {
+        setError(undefined);
+        setCustomTheme("");
+    }, [setError, setCustomTheme]);
 
     return (
         <div className="mx_ThemeChoicePanel_CustomTheme">
@@ -257,6 +261,14 @@ function CustomTheme({ theme }: CustomThemeProps): JSX.Element {
                             setError(_t("settings|appearance|custom_theme_invalid"));
                             return;
                         }
+
+                        // Check if the theme is already existing
+                        const isAlreadyExisting = Boolean(currentThemes.find((t) => t.name === themeInfo.name));
+                        if (isAlreadyExisting) {
+                            clear();
+                            return;
+                        }
+
                         currentThemes.push(themeInfo);
                     } catch (e) {
                         logger.error(e);
@@ -265,14 +277,10 @@ function CustomTheme({ theme }: CustomThemeProps): JSX.Element {
                     }
 
                     // Reset the error
-                    setError(undefined);
-                    setCustomTheme("");
+                    clear();
                     await SettingsStore.setValue("custom_themes", null, SettingLevel.ACCOUNT, currentThemes);
                 }}
-                onCancel={() => {
-                    setError(undefined);
-                    setCustomTheme("");
-                }}
+                onCancel={clear}
             />
             <CustomThemeList theme={theme} />
         </div>
