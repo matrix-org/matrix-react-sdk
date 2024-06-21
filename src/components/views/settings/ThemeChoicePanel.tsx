@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { ChangeEvent, Dispatch, JSX, useMemo, useRef, useState } from "react";
+import React, { ChangeEvent, JSX, useMemo, useRef, useState } from "react";
 import {
     InlineField,
     ToggleControl,
@@ -41,49 +41,20 @@ import { findHighContrastTheme, getOrderedThemes, CustomTheme as CustomThemeType
 import { useSettingValue } from "../../../hooks/useSettings";
 
 /**
- * Interface for the theme state
- */
-interface ThemeState {
-    /* The theme */
-    theme: string;
-    /* Whether the system theme is activated */
-    systemThemeActivated: boolean;
-}
-
-/**
- * Hook to fetch the value of the theme and dynamically update when it changes
- */
-function useThemeState(): [ThemeState, Dispatch<React.SetStateAction<ThemeState>>] {
-    const theme = useTheme();
-    const [themeState, setThemeState] = useState(theme);
-
-    return [themeState, setThemeState];
-}
-
-/**
  * Panel to choose the theme
  */
 export function ThemeChoicePanel(): JSX.Element {
-    const [themeState, setThemeState] = useThemeState();
+    const themeState = useTheme();
     const themeWatcher = useRef(new ThemeWatcher());
     const customThemeEnabled = useSettingValue<boolean>("feature_custom_themes");
 
     return (
         <SettingsSubsection heading={_t("common|theme")} newUi={true} data-testid="themePanel">
             {themeWatcher.current.isSystemThemeSupported() && (
-                <SystemTheme
-                    systemThemeActivated={themeState.systemThemeActivated}
-                    onChange={(systemThemeActivated) =>
-                        setThemeState((_themeState) => ({ ..._themeState, systemThemeActivated }))
-                    }
-                />
+                <SystemTheme systemThemeActivated={themeState.systemThemeActivated} />
             )}
-            <ThemeSelectors
-                theme={themeState.theme}
-                disabled={themeState.systemThemeActivated}
-                onChange={(theme) => setThemeState((_themeState) => ({ ..._themeState, theme }))}
-            />
-            {customThemeEnabled && <CustomTheme />}
+            <ThemeSelectors theme={themeState.theme} disabled={themeState.systemThemeActivated} />
+            {customThemeEnabled && <CustomTheme theme={themeState.theme} />}
         </SettingsSubsection>
     );
 }
@@ -94,19 +65,16 @@ export function ThemeChoicePanel(): JSX.Element {
 interface SystemThemeProps {
     /* Whether the system theme is activated */
     systemThemeActivated: boolean;
-    /* Callback when the system theme is toggled */
-    onChange: (systemThemeActivated: boolean) => void;
 }
 
 /**
  * Component to toggle the system theme
  */
-function SystemTheme({ systemThemeActivated, onChange }: SystemThemeProps): JSX.Element {
+function SystemTheme({ systemThemeActivated }: SystemThemeProps): JSX.Element {
     return (
         <Root
             onChange={async (evt) => {
                 const checked = new FormData(evt.currentTarget).get("systemTheme") === "on";
-                onChange(checked);
                 await SettingsStore.setValue("use_system_theme", null, SettingLevel.DEVICE, checked);
                 dis.dispatch<RecheckThemePayload>({ action: Action.RecheckTheme });
             }}
@@ -129,14 +97,12 @@ interface ThemeSelectorProps {
     theme: string;
     /* The theme can't be selected */
     disabled: boolean;
-    /* Callback when the theme is changed */
-    onChange: (theme: string) => void;
 }
 
 /**
  * Component to select the theme
  */
-function ThemeSelectors({ theme, disabled, onChange }: ThemeSelectorProps): JSX.Element {
+function ThemeSelectors({ theme, disabled }: ThemeSelectorProps): JSX.Element {
     const themes = useThemes();
 
     return (
@@ -150,14 +116,10 @@ function ThemeSelectors({ theme, disabled, onChange }: ThemeSelectorProps): JSX.
                 if (!newTheme || theme === newTheme) return;
 
                 // doing getValue in the .catch will still return the value we failed to set,
-                // so remember what the value was before we tried to set it so we can revert
-                const oldTheme = SettingsStore.getValue<string>("theme");
                 SettingsStore.setValue("theme", null, SettingLevel.DEVICE, newTheme).catch(() => {
                     dis.dispatch<RecheckThemePayload>({ action: Action.RecheckTheme });
-                    onChange(oldTheme);
                 });
 
-                onChange(newTheme);
                 // The settings watcher doesn't fire until the echo comes back from the
                 // server, so to make the theme change immediately we need to manually
                 // do the dispatch now
@@ -168,6 +130,7 @@ function ThemeSelectors({ theme, disabled, onChange }: ThemeSelectorProps): JSX.
             }}
         >
             {themes.map((_theme) => {
+                const isChecked = theme === _theme.id;
                 return (
                     <InlineField
                         className={classNames("mx_ThemeChoicePanel_themeSelector", {
@@ -180,11 +143,11 @@ function ThemeSelectors({ theme, disabled, onChange }: ThemeSelectorProps): JSX.
                             "cpd-theme-dark": _theme.isDark,
                         })}
                         name="themeSelector"
-                        key={`${_theme.id}_${disabled}`}
+                        key={`${_theme.id}_${disabled}_${isChecked}`}
                         control={
                             <RadioControl
                                 name="themeSelector"
-                                defaultChecked={!disabled && theme === _theme.id}
+                                defaultChecked={!disabled && isChecked}
                                 disabled={disabled}
                                 value={_theme.id}
                             />
@@ -245,10 +208,17 @@ function makeHighContrastTheme(): ITheme | undefined {
     }
 }
 
+interface CustomThemeProps {
+    /**
+     * The current theme
+     */
+    theme: string;
+}
+
 /**
  * Add and manager custom themes
  */
-function CustomTheme(): JSX.Element {
+function CustomTheme({ theme }: CustomThemeProps): JSX.Element {
     const [customTheme, setCustomTheme] = useState<string>("");
     const [error, setError] = useState<string>();
 
@@ -304,16 +274,23 @@ function CustomTheme(): JSX.Element {
                     setCustomTheme("");
                 }}
             />
-            <CustomThemeList />
+            <CustomThemeList theme={theme} />
         </div>
     );
+}
+
+interface CustomThemeListProps {
+    /*
+     * The current theme
+     */
+    theme: string;
 }
 
 /**
  * List of the custom themes
  * @constructor
  */
-function CustomThemeList(): JSX.Element {
+function CustomThemeList({ theme: currentTheme }: CustomThemeListProps): JSX.Element {
     const customThemes = useSettingValue<CustomThemeType[]>("custom_themes") || [];
 
     return (
@@ -333,6 +310,15 @@ function CustomThemeList(): JSX.Element {
                                 // Remove the theme from the list
                                 const newThemes = currentThemes.filter((t) => t.name !== theme.name);
                                 await SettingsStore.setValue("custom_themes", null, SettingLevel.ACCOUNT, newThemes);
+
+                                // If the delete custom theme is the current theme, reset the theme to the default theme
+                                // By settings the theme at null at the device level, we are getting the default theme
+                                if (currentTheme === `custom-${theme.name}`) {
+                                    await SettingsStore.setValue("theme", null, SettingLevel.DEVICE, null);
+                                    dis.dispatch<RecheckThemePayload>({
+                                        action: Action.RecheckTheme,
+                                    });
+                                }
                             }}
                         >
                             <DeleteIcon className="mx_ThemeChoicePanel_CustomThemeList_delete" />
