@@ -171,7 +171,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private async getCapabilities(): Promise<void> {
         const cli = this.context.client!;
 
-        const capabilities = cli.getCachedCapabilities() ?? {};
+        const capabilities = (await cli.getCapabilities()) ?? {};
         const changePasswordCap = capabilities["m.change_password"];
 
         // You can change your password so long as the capability isn't explicitly disabled. The implicit
