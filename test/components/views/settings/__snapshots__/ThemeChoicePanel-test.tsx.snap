@@ -32,7 +32,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
             >
               <input
                 class="_input_qnvru_32"
-                id="radix-45"
+                id="radix-42"
                 name="systemTheme"
                 title=""
                 type="checkbox"
@@ -47,7 +47,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
           >
             <label
               class="_label_148br_67"
-              for="radix-45"
+              for="radix-42"
             >
               Match system theme
             </label>
@@ -68,7 +68,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
             >
               <input
                 class="_input_1vw5h_26"
-                id="radix-46"
+                id="radix-43"
                 name="themeSelector"
                 title=""
                 type="radio"
@@ -84,7 +84,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
           >
             <label
               class="_label_148br_67 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-46"
+              for="radix-43"
             >
               Light
             </label>
@@ -101,7 +101,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
             >
               <input
                 class="_input_1vw5h_26"
-                id="radix-47"
+                id="radix-44"
                 name="themeSelector"
                 title=""
                 type="radio"
@@ -117,7 +117,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
           >
             <label
               class="_label_148br_67 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-47"
+              for="radix-44"
             >
               Dark
             </label>
@@ -134,7 +134,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
             >
               <input
                 class="_input_1vw5h_26"
-                id="radix-48"
+                id="radix-45"
                 name="themeSelector"
                 title=""
                 type="radio"
@@ -150,7 +150,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
           >
             <label
               class="_label_148br_67 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-48"
+              for="radix-45"
             >
               High contrast
             </label>
@@ -167,7 +167,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
             >
               <input
                 class="_input_1vw5h_26"
-                id="radix-49"
+                id="radix-46"
                 name="themeSelector"
                 title=""
                 type="radio"
@@ -183,7 +183,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
           >
             <label
               class="_label_148br_67 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-49"
+              for="radix-46"
             >
               Alice theme
             </label>
@@ -335,7 +335,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
             >
               <input
                 class="_input_qnvru_32"
-                id="radix-35"
+                id="radix-32"
                 name="systemTheme"
                 title=""
                 type="checkbox"
@@ -350,7 +350,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
           >
             <label
               class="_label_148br_67"
-              for="radix-35"
+              for="radix-32"
             >
               Match system theme
             </label>
@@ -371,7 +371,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
             >
               <input
                 class="_input_1vw5h_26"
-                id="radix-36"
+                id="radix-33"
                 name="themeSelector"
                 title=""
                 type="radio"
@@ -387,7 +387,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
           >
             <label
               class="_label_148br_67 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-36"
+              for="radix-33"
             >
               Light
             </label>
@@ -404,7 +404,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
             >
               <input
                 class="_input_1vw5h_26"
-                id="radix-37"
+                id="radix-34"
                 name="themeSelector"
                 title=""
                 type="radio"
@@ -420,7 +420,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
           >
             <label
               class="_label_148br_67 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-37"
+              for="radix-34"
             >
               Dark
             </label>
@@ -437,7 +437,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
             >
               <input
                 class="_input_1vw5h_26"
-                id="radix-38"
+                id="radix-35"
                 name="themeSelector"
                 title=""
                 type="radio"
@@ -453,7 +453,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
           >
             <label
               class="_label_148br_67 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-38"
+              for="radix-35"
             >
               High contrast
             </label>
@@ -470,7 +470,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
             >
               <input
                 class="_input_1vw5h_26"
-                id="radix-39"
+                id="radix-36"
                 name="themeSelector"
                 title=""
                 type="radio"
@@ -486,7 +486,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
           >
             <label
               class="_label_148br_67 mx_ThemeChoicePanel_themeSelector_Label"
-              for="radix-39"
+              for="radix-36"
             >
               Alice theme
             </label>
