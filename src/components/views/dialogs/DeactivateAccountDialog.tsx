@@ -88,11 +88,6 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         const DEACTIVATE_AESTHETICS: DialogAesthetics = {
             [SSOAuthEntry.LOGIN_TYPE]: dialogAesthetics,
             [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
-            [PasswordAuthEntry.LOGIN_TYPE]: {
-                [DEFAULT_PHASE]: {
-                    body: _t("settings|general|deactivate_confirm_body_password"),
-                },
-            },
         };
 
         const aesthetics = DEACTIVATE_AESTHETICS[stage];
