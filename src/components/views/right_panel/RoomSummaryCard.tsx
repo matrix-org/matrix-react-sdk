@@ -394,11 +394,6 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
         });
     };
 
-    const onRoomMembersClick = (ev: Event): void => {
-        RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, true);
-        PosthogTrackers.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
-    };
-
     const isRoomEncrypted = useIsEncrypted(cli, room);
     const roomContext = useContext(RoomContext);
     const e2eStatus = roomContext.e2eStatus;
@@ -541,13 +536,6 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 <MenuItem Icon={SettingsIcon} label={_t("common|settings")} onSelect={onRoomSettingsClick} />
 
                 <Separator />
-                <MenuItem
-                    // this icon matches the legacy implementation
-                    // and is a short term solution until legacy room header is removed
-                    Icon={UserProfileSolidIcon}
-                    label={_t("common|people")}
-                    onSelect={onRoomMembersClick}
-                />
                 {!isVideoRoom && (
                     <>
                         <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onSelect={onRoomFilesClick} />
