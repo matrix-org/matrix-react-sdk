@@ -14,11 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, SyntheticEvent, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import {
     MenuItem,
-    Tooltip,
     Separator,
     ToggleMenuItem,
     Text,
@@ -26,8 +25,9 @@ import {
     Heading,
     IconButton,
     Link,
+    Search,
+    Form,
 } from "@vector-im/compound-web";
-import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
 import { Icon as FavouriteIcon } from "@vector-im/compound-design-tokens/icons/favourite.svg";
 import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add.svg";
 import { Icon as UserProfileSolidIcon } from "@vector-im/compound-design-tokens/icons/user-profile-solid.svg";
@@ -94,7 +94,7 @@ interface IProps {
     room: Room;
     permalinkCreator: RoomPermalinkCreator;
     onClose(): void;
-    onSearchClick?: () => void;
+    onSearchChange?: (e: ChangeEvent) => void;
 }
 
 interface IAppsSectionProps {
@@ -364,7 +364,7 @@ const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element | null
     );
 };
 
-const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, onSearchClick }) => {
+const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, onSearchChange }) => {
     const cli = useContext(MatrixClientContext);
 
     const onShareRoomClick = (): void => {
@@ -491,32 +491,24 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
 
     return (
         <BaseCard header={null} className="mx_RoomSummaryCard" onClose={onClose}>
-            <Flex
-                as="header"
-                className="mx_RoomSummaryCard_header"
-                gap="var(--cpd-space-3x)"
-                align="center"
-                justify="space-between"
-            >
-                <Tooltip label={_t("action|search")} placement="right">
-                    <button
-                        className="mx_RoomSummaryCard_searchBtn"
-                        data-testid="summary-search"
-                        onClick={() => {
-                            onSearchClick?.();
-                        }}
-                        aria-label={_t("action|search")}
-                    >
-                        <SearchIcon width="100%" height="100%" />
-                    </button>
-                </Tooltip>
-                <AccessibleButton
-                    data-testid="base-card-close-button"
-                    className="mx_BaseCard_close"
-                    onClick={onClose}
-                    title={_t("action|close")}
-                />
-            </Flex>
+            {onSearchChange && (
+                <Flex
+                    as="header"
+                    className="mx_RoomSummaryCard_header"
+                    gap="var(--cpd-space-3x)"
+                    align="center"
+                    justify="space-between"
+                >
+                    <Form.Root className="mx_RoomSummaryCard_search">
+                        <Search
+                            placeholder={_t("room|search|placeholder")}
+                            name="room_message_search"
+                            onChange={onSearchChange}
+                            className="mx_no_textinput"
+                        />
+                    </Form.Root>
+                </Flex>
+            )}
 
             {header}
 
