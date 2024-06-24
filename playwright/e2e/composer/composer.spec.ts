@@ -388,6 +388,41 @@ test.describe("Composer", () => {
                 await expect(page.getByText("Replying")).toBeVisible();
                 await expect(page.locator("div[contenteditable=true]", { hasText: "my reply" })).toBeVisible();
             });
+
+            test("draft in threads", async ({ page, app }) => {
+                // Set up a second room to swtich to, to test drafts
+                const firstRoomname = "Composing Room";
+                const secondRoomname = "Second Composing Room";
+                await app.client.createRoom({ name: secondRoomname });
+
+                // Composer is visible
+                const composer = page.locator("div[contenteditable=true]");
+                await expect(composer).toBeVisible();
+
+                // Send a message
+                await composer.pressSequentially("my first message");
+                await page.getByRole("button", { name: "Send message" }).click();
+
+                // Click reply
+                const tile = page.locator(".mx_EventTile_last");
+                await tile.hover();
+                await tile.getByRole("button", { name: "Reply in thread" }).click();
+
+                const thread = page.locator(".mx_ThreadView");
+                const threadComposer = thread.locator("div[contenteditable=true]");
+
+                // Type threaded text
+                await threadComposer.pressSequentially("my threaded message");
+
+                // Change to another room and back again
+                await app.viewRoomByName(secondRoomname);
+                await app.viewRoomByName(firstRoomname);
+
+                // Assert threaded draft
+                await expect(
+                    thread.locator("div[contenteditable=true]", { hasText: "my threaded message" }),
+                ).toBeVisible();
+            });
         });
     });
 });
