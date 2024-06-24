@@ -16,7 +16,7 @@ limitations under the License.
 
 import * as React from "react";
 import { EventType, MatrixEvent, Room, RoomMember, THREAD_RELATION_TYPE } from "matrix-js-sdk/src/matrix";
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import {
@@ -42,16 +42,12 @@ import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
 import dis from "../../../../src/dispatcher/dispatcher";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
-import { addTextToComposerRTL } from "../../../test-utils/composer";
+import { addTextToComposer, addTextToComposerRTL } from "../../../test-utils/composer";
 import UIStore, { UI_EVENTS } from "../../../../src/stores/UIStore";
 import { Action } from "../../../../src/dispatcher/actions";
 import { VoiceBroadcastInfoState, VoiceBroadcastRecording } from "../../../../src/voice-broadcast";
 import { mkVoiceBroadcastInfoStateEvent } from "../../../voice-broadcast/utils/test-utils";
 import { SdkContextClass } from "../../../../src/contexts/SDKContext";
-
-jest.mock("../../../../src/components/views/rooms/wysiwyg_composer", () => ({
-    SendWysiwygComposer: jest.fn().mockImplementation(() => <div data-testid="wysiwyg-composer" />),
-}));
 
 const openStickerPicker = async (): Promise<void> => {
     await act(async () => {
@@ -467,12 +463,49 @@ describe("MessageComposer", () => {
         });
     });
 
-    it("should render SendWysiwygComposer when enabled", () => {
+    it("wysiwyg correctly persists state to and from localStorage", async () => {
         const room = mkStubRoom("!roomId:server", "Room 1", cli);
+        const messateText = "Test Text";
         SettingsStore.setValue("feature_wysiwyg_composer", null, SettingLevel.DEVICE, true);
+        const { renderResult, rawComponent } = wrapAndRender({ room });
+        const { unmount, rerender } = renderResult;
 
-        wrapAndRender({ room });
-        expect(screen.getByTestId("wysiwyg-composer")).toBeInTheDocument();
+        await act(async () => {
+            await flushPromises();
+        });
+
+        const key = `mx_wysiwyg_state_${room.roomId}`;
+
+        await act(async () => {
+            await userEvent.click(renderResult.getByRole("textbox"));
+        });
+        fireEvent.input(screen.getByRole("textbox"), {
+            data: messateText,
+            inputType: "insertText",
+        });
+
+        await waitFor(() => expect(renderResult.getByRole("textbox")).toHaveTextContent(messateText));
+
+        // Wait for event dispatch to happen
+        await act(async () => {
+            await flushPromises();
+        });
+
+        // assert there is state persisted
+        expect(localStorage.getItem(key)).toBeNull();
+
+        // ensure the right state was persisted to localStorage
+        unmount();
+
+        // assert the persisted state
+        expect(JSON.parse(localStorage.getItem(key)!)).toStrictEqual({
+            content: messateText,
+            isRichText: true,
+        });
+
+        // ensure the correct state is re-loaded
+        rerender(rawComponent);
+        await waitFor(() => expect(renderResult.getByRole("textbox")).toHaveTextContent(messateText));
     });
 });
 
@@ -506,14 +539,16 @@ function wrapAndRender(
         permalinkCreator: new RoomPermalinkCreator(room),
     };
 
+    const getRawComponent = (props = {}, context = roomContext, client = mockClient) => (
+        <MatrixClientContext.Provider value={client}>
+            <RoomContext.Provider value={context}>
+                <MessageComposer {...defaultProps} {...props} />
+            </RoomContext.Provider>
+        </MatrixClientContext.Provider>
+    );
     return {
-        renderResult: render(
-            <MatrixClientContext.Provider value={mockClient}>
-                <RoomContext.Provider value={roomContext}>
-                    <MessageComposer {...defaultProps} {...props} />
-                </RoomContext.Provider>
-            </MatrixClientContext.Provider>,
-        ),
+        rawComponent: getRawComponent(props, roomContext, mockClient),
+        renderResult: render(getRawComponent(props, roomContext, mockClient)),
         roomContext,
     };
 }

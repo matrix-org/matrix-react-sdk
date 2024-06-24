@@ -160,7 +160,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
         }
 
         this.state = {
-            isComposerEmpty: true,
+            isComposerEmpty: initialComposerContent?.length === 0,
             composerContent: initialComposerContent,
             haveRecording: false,
             recordingTimeLeftSeconds: undefined, // when set to a number, shows a toast
