@@ -40,8 +40,6 @@ import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
 import ErrorDialog, { extractErrorMessageFromError } from "../../../dialogs/ErrorDialog";
-import AccountPhoneNumbers from "../../account/PhoneNumbers";
-import AccountEmailAddresses from "../../account/EmailAddresses";
 import DiscoveryEmailAddresses from "../../discovery/EmailAddresses";
 import DiscoveryPhoneNumbers from "../../discovery/PhoneNumbers";
 import ChangePassword from "../../ChangePassword";
@@ -55,7 +53,6 @@ import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
 import { SettingsSubsectionHeading } from "../../shared/SettingsSubsectionHeading";
 import Heading from "../../../typography/Heading";
-import InlineSpinner from "../../../elements/InlineSpinner";
 import { ThirdPartyIdentifier } from "../../../../../AddThreepid";
 import { SDKContext } from "../../../../../contexts/SDKContext";
 import UserPersonalInfoSettings from "../../UserPersonalInfoSettings";
@@ -325,48 +322,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     };
 
     private renderAccountSection(): JSX.Element {
-        let threepidSection: ReactNode = null;
-
-        if (SettingsStore.getValue(UIFeature.ThirdPartyID)) {
-            const emails = this.state.loading3pids ? (
-                <InlineSpinner />
-            ) : (
-                <AccountEmailAddresses
-                    emails={this.state.emails}
-                    onEmailsChange={this.onEmailsChange}
-                    disabled={!this.state.canMake3pidChanges}
-                />
-            );
-            const msisdns = this.state.loading3pids ? (
-                <InlineSpinner />
-            ) : (
-                <AccountPhoneNumbers
-                    msisdns={this.state.msisdns}
-                    onMsisdnsChange={this.onMsisdnsChange}
-                    disabled={!this.state.canMake3pidChanges}
-                />
-            );
-            threepidSection = (
-                <>
-                    <SettingsSubsection
-                        heading={_t("settings|general|emails_heading")}
-                        stretchContent
-                        data-testid="mx_AccountEmailAddresses"
-                    >
-                        {emails}
-                    </SettingsSubsection>
-
-                    <SettingsSubsection
-                        heading={_t("settings|general|msisdns_heading")}
-                        stretchContent
-                        data-testid="mx_AccountPhoneNumbers"
-                    >
-                        {msisdns}
-                    </SettingsSubsection>
-                </>
-            );
-        }
-
         let passwordChangeSection: ReactNode = null;
         if (this.state.canChangePassword) {
             passwordChangeSection = (
@@ -420,7 +375,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     {externalAccountManagement}
                     {passwordChangeSection}
                 </SettingsSubsection>
-                {threepidSection}
             </>
         );
     }

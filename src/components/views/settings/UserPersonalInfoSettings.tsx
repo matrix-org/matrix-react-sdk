@@ -25,6 +25,8 @@ import InlineSpinner from "../elements/InlineSpinner";
 import SettingsSubsection from "./shared/SettingsSubsection";
 import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 import { ThirdPartyIdentifier } from "../../../AddThreepid";
+import SettingsStore from "../../../settings/SettingsStore";
+import { UIFeature } from "../../../settings/UIFeature";
 
 type LoadingState = "loading" | "loaded" | "error";
 
@@ -82,6 +84,8 @@ export const UserPersonalInfoSettings: React.FC<UserPersonalInfoSettingsProps> =
     const onMsisdnsChange = useCallback((msisdns: ThirdPartyIdentifier[]) => {
         setPhoneNumbers(msisdns);
     }, []);
+
+    if (!SettingsStore.getValue(UIFeature.ThirdPartyID)) return null;
 
     return (
         <div>
