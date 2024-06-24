@@ -325,7 +325,6 @@ function LocalRoomView(props: LocalRoomViewProps): ReactElement {
                         room={context.room}
                         searchInfo={undefined}
                         inRoom={true}
-                        onSearchClick={null}
                         onInviteClick={null}
                         onForgetClick={null}
                         e2eStatus={room.encrypted ? E2EStatus.Normal : undefined}
@@ -378,7 +377,6 @@ function LocalRoomCreateLoader(props: ILocalRoomCreateLoaderProps): ReactElement
                         room={props.localRoom}
                         searchInfo={undefined}
                         inRoom={true}
-                        onSearchClick={null}
                         onInviteClick={null}
                         onForgetClick={null}
                         e2eStatus={props.localRoom.encrypted ? E2EStatus.Normal : undefined}
