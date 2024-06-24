@@ -63,7 +63,7 @@ import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/di
 import { clearAllModals, flushPromises } from "../../../test-utils";
 import ErrorDialog from "../../../../src/components/views/dialogs/ErrorDialog";
 import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
-import { UIComponent , UIFeature } from "../../../../src/settings/UIFeature";
+import { UIComponent, UIFeature } from "../../../../src/settings/UIFeature";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 
 jest.mock("../../../../src/utils/direct-messages", () => ({
