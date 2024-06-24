@@ -297,6 +297,7 @@ export default class RightPanel extends React.Component<Props, IState> {
                             // whenever RightPanel is passed a room it is passed a permalinkcreator
                             permalinkCreator={this.props.permalinkCreator!}
                             onSearchChange={this.props.onSearchChange}
+                            focusRoomSearch={cardState?.focusRoomSearch}
                         />
                     );
                 }

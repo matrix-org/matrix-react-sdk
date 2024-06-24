@@ -437,11 +437,6 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
             searchInputRef.current?.focus();
         }
     });
-    useEffect(() => {
-        if (focusRoomSearch) {
-            searchInputRef.current?.focus();
-        }
-    }, [focusRoomSearch]);
 
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
     const header = (
@@ -530,6 +525,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                             onChange={onSearchChange}
                             className="mx_no_textinput"
                             ref={searchInputRef}
+                            autoFocus={focusRoomSearch}
                         />
                     </Form.Root>
                 </Flex>
