@@ -29,12 +29,11 @@ import {
 import { defer } from "matrix-js-sdk/src/utils";
 
 import { RoomSearchView } from "../../../src/components/structures/RoomSearchView";
-import { SearchScope } from "../../../src/components/views/rooms/SearchBar";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
 import { stubClient } from "../../test-utils";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
-import { searchPagination } from "../../../src/Searching";
+import { searchPagination, SearchScope } from "../../../src/Searching";
 
 jest.mock("../../../src/Searching", () => ({
     searchPagination: jest.fn(),

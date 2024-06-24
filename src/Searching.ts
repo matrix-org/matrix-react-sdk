@@ -681,3 +681,20 @@ export default function eventSearch(
         return eventIndexSearch(client, term, roomId, abortSignal);
     }
 }
+
+export enum SearchScope {
+    Room = "Room",
+    All = "All",
+}
+
+export interface SearchInfo {
+    searchId: number;
+    roomId?: string;
+    term: string;
+    scope: SearchScope;
+    promise: Promise<ISearchResults>;
+    abortController?: AbortController;
+
+    inProgress?: boolean;
+    count?: number;
+}

@@ -51,7 +51,7 @@ import {
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import RoomHeader, { IProps as RoomHeaderProps } from "../../../../src/components/views/rooms/LegacyRoomHeader";
-import { SearchScope } from "../../../../src/components/views/rooms/SearchBar";
+import { SearchScope } from "../../../../src/Searching";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
 import RoomContext from "../../../../src/contexts/RoomContext";
