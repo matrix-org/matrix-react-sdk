@@ -26,6 +26,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
 import { Tooltip } from "@vector-im/compound-web";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -64,7 +65,6 @@ import { VoiceBroadcastInfoState } from "../../../voice-broadcast";
 import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStartVoiceMessageBroadcastDialog";
 import { UIFeature } from "../../../settings/UIFeature";
 import { formatTimeLeft } from "../../../DateUtils";
-import { logger } from "matrix-js-sdk/src/logger";
 
 let instanceCount = 0;
 
