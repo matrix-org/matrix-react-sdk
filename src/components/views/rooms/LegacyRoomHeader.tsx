@@ -460,7 +460,6 @@ export interface IProps {
     room: Room;
     oobData?: IOOBData;
     inRoom: boolean;
-    onSearchClick: (() => void) | null;
     onInviteClick: (() => void) | null;
     onForgetClick: (() => void) | null;
     onAppsClick: (() => void) | null;
@@ -611,18 +610,6 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     aria-checked={this.props.appsShown}
                     placement="bottom"
                     key="apps"
-                />,
-            );
-        }
-
-        if (!this.props.viewingCall && this.props.onSearchClick && this.props.inRoom) {
-            startButtons.push(
-                <AccessibleButton
-                    className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_searchButton"
-                    onClick={this.props.onSearchClick}
-                    title={_t("action|search")}
-                    placement="bottom"
-                    key="search"
                 />,
             );
         }
