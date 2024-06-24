@@ -14,7 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, SyntheticEvent, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+    ChangeEvent,
+    SyntheticEvent,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 import classNames from "classnames";
 import {
     MenuItem,
@@ -89,12 +98,15 @@ import { useTopic } from "../../../hooks/room/useTopic";
 import { Linkify, topicToHtml } from "../../../HtmlUtils";
 import { Box } from "../../utils/Box";
 import { onRoomTopicLinkClick } from "../elements/RoomTopic";
+import { useDispatcher } from "../../../hooks/useDispatcher";
+import { Action } from "../../../dispatcher/actions";
 
 interface IProps {
     room: Room;
     permalinkCreator: RoomPermalinkCreator;
     onClose(): void;
     onSearchChange?: (e: ChangeEvent) => void;
+    focusRoomSearch?: boolean;
 }
 
 interface IAppsSectionProps {
@@ -364,7 +376,7 @@ const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element | null
     );
 };
 
-const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, onSearchChange }) => {
+const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, onSearchChange, focusRoomSearch }) => {
     const cli = useContext(MatrixClientContext);
 
     const onShareRoomClick = (): void => {
@@ -418,6 +430,18 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
             }
         }
     }, [room, directRoomsList]);
+
+    const searchInputRef = useRef<HTMLInputElement>(null);
+    useDispatcher(defaultDispatcher, (payload) => {
+        if (payload.action === Action.FocusRoomSearch) {
+            searchInputRef.current?.focus();
+        }
+    });
+    useEffect(() => {
+        if (focusRoomSearch) {
+            searchInputRef.current?.focus();
+        }
+    }, [focusRoomSearch]);
 
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
     const header = (
@@ -505,6 +529,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                             name="room_message_search"
                             onChange={onSearchChange}
                             className="mx_no_textinput"
+                            ref={searchInputRef}
                         />
                     </Form.Root>
                 </Flex>

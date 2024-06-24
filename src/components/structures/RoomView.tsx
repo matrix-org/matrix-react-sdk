@@ -1196,9 +1196,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     );
                 }
                 break;
-            case "focus_search":
-                this.onSearchClick();
-                break;
 
             case "local_room_event":
                 this.onLocalRoomEvent(payload.roomId);
