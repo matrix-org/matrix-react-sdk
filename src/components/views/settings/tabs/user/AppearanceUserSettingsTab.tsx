@@ -26,7 +26,8 @@ import AccessibleButton from "../../../elements/AccessibleButton";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import { Layout } from "../../../../../settings/enums/Layout";
-import LayoutSwitcher from "../../LayoutSwitcher";
+import LayoutSwitcher2 from "../../LayoutSwitcher";
+import { LayoutSwitcher } from "../../LayoutSwitcher2";
 import FontScalingPanel from "../../FontScalingPanel";
 import ThemeChoicePanel from "../../ThemeChoicePanel";
 import ImageSizePanel from "../../ImageSizePanel";
@@ -156,7 +157,8 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
             <SettingsTab data-testid="mx_AppearanceUserSettingsTab">
                 <SettingsSection>
                     <ThemeChoicePanel />
-                    <LayoutSwitcher
+                    <LayoutSwitcher />
+                    <LayoutSwitcher2
                         userId={this.state.userId}
                         displayName={this.state.displayName}
                         avatarUrl={this.state.avatarUrl}
