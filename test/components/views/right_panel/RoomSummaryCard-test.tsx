@@ -141,15 +141,12 @@ describe("<RoomSummaryCard />", () => {
         expect(container).toMatchSnapshot();
     });
 
-    it("opens the search", async () => {
-        const onSearchClick = jest.fn();
-        const { getByLabelText } = getComponent({
-            onSearchClick,
+    it("has the search field", async () => {
+        const onSearchChange = jest.fn();
+        const { getByPlaceholderText } = getComponent({
+            onSearchChange,
         });
-
-        const searchBtn = getByLabelText(_t("action|search"));
-        fireEvent.click(searchBtn);
-        expect(onSearchClick).toHaveBeenCalled();
+        expect(getByPlaceholderText("Search messages…")).toBeVisible();
     });
 
     it("opens room file panel on button click", () => {
