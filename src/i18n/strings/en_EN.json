@@ -2437,7 +2437,7 @@
             "image_size_default": "Default",
             "image_size_large": "Large",
             "layout_bubbles": "Message bubbles",
-            "layout_irc": "IRC (Experimental)",
+            "layout_irc": "IRC (experimental)",
             "match_system_theme": "Match system theme",
             "timeline_image_size": "Image size in the timeline",
             "use_high_contrast": "Use high contrast"

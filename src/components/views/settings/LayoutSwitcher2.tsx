@@ -15,19 +15,73 @@
  */
 
 import React, { JSX } from "react";
-import { InlineField, ToggleControl, Label, Root } from "@vector-im/compound-web";
+import { InlineField, ToggleControl, Label, Root, RadioControl } from "@vector-im/compound-web";
 
 import SettingsSubsection from "./shared/SettingsSubsection";
 import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { useSettingValue } from "../../../hooks/useSettings";
+import { Layout } from "../../../settings/enums/Layout";
 
 export function LayoutSwitcher(): JSX.Element {
     return (
         <SettingsSubsection heading={_t("common|message_layout")} newUi={true} data-testid="layoutPanel">
+            <LayoutSelector />
             <ToggleCompactLayout />
         </SettingsSubsection>
+    );
+}
+
+/**
+ * A selector to choose the layout of the messages.
+ */
+function LayoutSelector(): JSX.Element {
+    return (
+        <Root
+            className="mx_LayoutSwitcher_LayoutSelector"
+            onChange={async (evt) => {
+                // We don't have any file in the form, we can cast it as string safely
+                const newLayout = new FormData(evt.currentTarget).get("layout") as string | null;
+                await SettingsStore.setValue("layout", null, SettingLevel.DEVICE, newLayout);
+            }}
+        >
+            <LayoutRadio layout={Layout.Group} label={_t("common|modern")} />
+            <LayoutRadio layout={Layout.Bubble} label={_t("settings|appearance|layout_bubbles")} />
+            <LayoutRadio layout={Layout.IRC} label={_t("settings|appearance|layout_irc")} />
+        </Root>
+    );
+}
+
+/**
+ * A radio button to select a layout.
+ */
+interface LayoutRadioProps {
+    /**
+     * The value of the layout.
+     */
+    layout: Layout;
+    /**
+     * The label to display for the layout.
+     */
+    label: string;
+}
+
+function LayoutRadio({ layout, label }: LayoutRadioProps): JSX.Element {
+    const currentLayout = useSettingValue<Layout>("layout");
+
+    return (
+        <div className="mxLayoutSwitcher_LayoutSelector_LayoutRadio">
+            <InlineField
+                className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_InlineField"
+                control={<RadioControl name="layout" value={layout} defaultChecked={currentLayout === layout} />}
+                name="layout"
+            >
+                <Label>{label}</Label>
+            </InlineField>
+            <div role="separator" className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator" />
+            todo layout preview
+        </div>
     );
 }
 

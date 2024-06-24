@@ -91,3 +91,22 @@ limitations under the License.
         }
     }
 }
+
+.mx_LayoutSwitcher_LayoutSelector {
+    display: flex;
+    flex-direction: column;
+    gap: var(--cpd-space-4x) !important;
+
+    .mxLayoutSwitcher_LayoutSelector_LayoutRadio {
+        border: 1px solid var(--cpd-color-border-interactive-primary);
+        border-radius: var(--cpd-space-2x);
+
+        .mxLayoutSwitcher_LayoutSelector_LayoutRadio_InlineField {
+            margin: var(--cpd-space-3x);
+        }
+
+        .mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator {
+            border-bottom: 1px solid var(--cpd-color-border-interactive-secondary);
+        }
+    }
+}
