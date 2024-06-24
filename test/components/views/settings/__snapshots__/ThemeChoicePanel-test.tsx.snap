@@ -275,7 +275,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
             </span>
             <button
               aria-label="Delete"
-              class="_icon-button_16nk7_17"
+              class="_icon-button_rijzz_17 _destructive_rijzz_78"
               role="button"
               style="--cpd-icon-button-size: 32px;"
               tabindex="0"
@@ -284,9 +284,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
                 class="_indicator-icon_133tf_26"
                 style="--cpd-icon-button-size: 100%;"
               >
-                <div
-                  class="mx_ThemeChoicePanel_CustomThemeList_delete"
-                />
+                <div />
               </div>
             </button>
           </li>
@@ -578,7 +576,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
             </span>
             <button
               aria-label="Delete"
-              class="_icon-button_16nk7_17"
+              class="_icon-button_rijzz_17 _destructive_rijzz_78"
               role="button"
               style="--cpd-icon-button-size: 32px;"
               tabindex="0"
@@ -587,9 +585,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
                 class="_indicator-icon_133tf_26"
                 style="--cpd-icon-button-size: 100%;"
               >
-                <div
-                  class="mx_ThemeChoicePanel_CustomThemeList_delete"
-                />
+                <div />
               </div>
             </button>
           </li>
