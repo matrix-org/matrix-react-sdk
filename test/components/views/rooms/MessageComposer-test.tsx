@@ -42,7 +42,7 @@ import SettingsStore from "../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
 import dis from "../../../../src/dispatcher/dispatcher";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
-import { addTextToComposer, addTextToComposerRTL } from "../../../test-utils/composer";
+import { addTextToComposerRTL } from "../../../test-utils/composer";
 import UIStore, { UI_EVENTS } from "../../../../src/stores/UIStore";
 import { Action } from "../../../../src/dispatcher/actions";
 import { VoiceBroadcastInfoState, VoiceBroadcastRecording } from "../../../../src/voice-broadcast";
