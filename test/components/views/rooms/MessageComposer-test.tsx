@@ -72,12 +72,6 @@ const setCurrentBroadcastRecording = (room: Room, state: VoiceBroadcastInfoState
     SdkContextClass.instance.voiceBroadcastRecordingsStore.setCurrent(recording);
 };
 
-const shouldClearModal = async (): Promise<void> => {
-    afterEach(async () => {
-        await clearAllModals();
-    });
-};
-
 const expectVoiceMessageRecordingTriggered = (): void => {
     // Checking for the voice message dialog text, if no mic can be found.
     // By this we know at least that starting a voice message was triggered.
@@ -92,7 +86,8 @@ describe("MessageComposer", () => {
         mockPlatformPeg();
     });
 
-    afterEach(() => {
+    afterEach(async () => {
+        await clearAllModals();
         jest.useRealTimers();
 
         SdkContextClass.instance.voiceBroadcastRecordingsStore.clearCurrent();
@@ -411,8 +406,6 @@ describe("MessageComposer", () => {
                 await flushPromises();
             });
 
-            shouldClearModal();
-
             it("should try to start a voice message", () => {
                 expectVoiceMessageRecordingTriggered();
             });
@@ -425,8 +418,6 @@ describe("MessageComposer", () => {
                 await startVoiceMessage();
                 await waitEnoughCyclesForModal();
             });
-
-            shouldClearModal();
 
             it("should not start a voice message and display the info dialog", async () => {
                 expect(screen.queryByLabelText("Stop recording")).not.toBeInTheDocument();
@@ -441,8 +432,6 @@ describe("MessageComposer", () => {
                 await startVoiceMessage();
                 await waitEnoughCyclesForModal();
             });
-
-            shouldClearModal();
 
             it("should try to start a voice message and should not display the info dialog", async () => {
                 expect(screen.queryByText("Can't start voice message")).not.toBeInTheDocument();
@@ -466,7 +455,7 @@ describe("MessageComposer", () => {
     it("wysiwyg correctly persists state to and from localStorage", async () => {
         const room = mkStubRoom("!roomId:server", "Room 1", cli);
         const messateText = "Test Text";
-        SettingsStore.setValue("feature_wysiwyg_composer", null, SettingLevel.DEVICE, true);
+        await SettingsStore.setValue("feature_wysiwyg_composer", null, SettingLevel.DEVICE, true);
         const { renderResult, rawComponent } = wrapAndRender({ room });
         const { unmount, rerender } = renderResult;
 
@@ -477,14 +466,14 @@ describe("MessageComposer", () => {
         const key = `mx_wysiwyg_state_${room.roomId}`;
 
         await act(async () => {
-            await userEvent.click(renderResult.getByRole("textbox"));
+            await userEvent.click(screen.getByRole("textbox"));
         });
         fireEvent.input(screen.getByRole("textbox"), {
             data: messateText,
             inputType: "insertText",
         });
 
-        await waitFor(() => expect(renderResult.getByRole("textbox")).toHaveTextContent(messateText));
+        await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(messateText));
 
         // Wait for event dispatch to happen
         await act(async () => {
@@ -505,7 +494,7 @@ describe("MessageComposer", () => {
 
         // ensure the correct state is re-loaded
         rerender(rawComponent);
-        await waitFor(() => expect(renderResult.getByRole("textbox")).toHaveTextContent(messateText));
+        await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(messateText));
     });
 });
 
