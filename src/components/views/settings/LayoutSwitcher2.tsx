@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import React, { JSX } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import { InlineField, ToggleControl, Label, Root, RadioControl } from "@vector-im/compound-web";
 
 import SettingsSubsection from "./shared/SettingsSubsection";
@@ -23,6 +23,8 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import { useSettingValue } from "../../../hooks/useSettings";
 import { Layout } from "../../../settings/enums/Layout";
+import EventTilePreview from "../elements/EventTilePreview";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 
 export function LayoutSwitcher(): JSX.Element {
     return (
@@ -69,6 +71,7 @@ interface LayoutRadioProps {
 
 function LayoutRadio({ layout, label }: LayoutRadioProps): JSX.Element {
     const currentLayout = useSettingValue<Layout>("layout");
+    const eventTileInfo = useEventTileInfo();
 
     return (
         <div className="mxLayoutSwitcher_LayoutSelector_LayoutRadio">
@@ -80,9 +83,52 @@ function LayoutRadio({ layout, label }: LayoutRadioProps): JSX.Element {
                 <Label>{label}</Label>
             </InlineField>
             <div role="separator" className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator" />
-            todo layout preview
+            <EventTilePreview
+                message={_t("common|preview_message")}
+                layout={layout}
+                className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview"
+                {...eventTileInfo}
+            />
         </div>
     );
+}
+
+type EventTileInfo = {
+    /**
+     * The ID of the user to display.
+     */
+    userId: string;
+    /**
+     * The display name of the user to display.
+     */
+    displayName?: string;
+    /**
+     * The avatar URL of the user to display.
+     */
+    avatarUrl?: string;
+};
+
+/**
+ * Fetch the information to display in the event tile preview.
+ */
+function useEventTileInfo(): EventTileInfo {
+    const matrixClient = useMatrixClientContext();
+    const userId = matrixClient.getSafeUserId();
+    const [eventTileInfo, setEventTileInfo] = useState<EventTileInfo>({ userId });
+
+    useEffect(() => {
+        const run = async (): Promise<void> => {
+            const profileInfo = await matrixClient.getProfileInfo(userId);
+            setEventTileInfo({
+                userId,
+                displayName: profileInfo.displayname,
+                avatarUrl: profileInfo.avatar_url,
+            });
+        };
+
+        run();
+    }, [userId, matrixClient, setEventTileInfo]);
+    return eventTileInfo;
 }
 
 /**
