@@ -16,7 +16,8 @@ limitations under the License.
 
 import React from "react";
 import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
-import { Link } from "@vector-im/compound-web";
+import { Icon as CloseIcon } from "@vector-im/compound-design-tokens/icons/close.svg";
+import { IconButton, Link } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
 import { PosthogScreenTracker } from "../../../PosthogTrackers";
@@ -54,9 +55,9 @@ const RoomSearchAuxPanel: React.FC<Props> = ({ searchInfo, isRoomEncrypted, onSe
                             ? _t("room|search|this_room_button")
                             : _t("room|search|all_rooms_button")}
                     </Link>
-                    <Link onClick={onCancelClick} kind="critical">
-                        {_t("action|cancel")}
-                    </Link>
+                    <IconButton onClick={onCancelClick} destructive tooltip={_t("action|cancel")}>
+                        <CloseIcon width="20px" height="20px" />
+                    </IconButton>
                 </div>
             </div>
             <SearchWarning isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Search} />
