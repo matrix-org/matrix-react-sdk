@@ -44,6 +44,7 @@ jobs:
             - name: Yarn cache
               uses: actions/setup-node@v4
               with:
+                  node-version: lts/* # Latest LTS
                   cache: "yarn"
 
             - name: Install Deps
@@ -114,6 +115,7 @@ jobs:
 
             - uses: actions/setup-node@v4
               with:
+                  node-version: lts/* # Latest LTS
                   cache: "yarn"
 
             - name: Run tests
