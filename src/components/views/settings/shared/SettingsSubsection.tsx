@@ -27,9 +27,10 @@ export interface SettingsSubsectionProps extends HTMLAttributes<HTMLDivElement> 
     // when true content will be justify-items: stretch, which will make items within the section stretch to full width.
     stretchContent?: boolean;
     /*
-     * When true, the new UI style will be applied to the subsection.
+     * When true, the legacy UI style will be applied to the subsection.
+     * @default true
      */
-    newUi?: boolean;
+    legacy?: boolean;
 }
 
 export const SettingsSubsectionText: React.FC<HTMLAttributes<HTMLDivElement>> = ({ children, ...rest }) => (
@@ -43,16 +44,16 @@ export const SettingsSubsection: React.FC<SettingsSubsectionProps> = ({
     description,
     children,
     stretchContent,
-    newUi,
+    legacy = true,
     ...rest
 }) => (
     <div
         {...rest}
         className={classNames("mx_SettingsSubsection", {
-            mx_SettingsSubsection_newUi: newUi,
+            mx_SettingsSubsection_newUi: !legacy,
         })}
     >
-        {typeof heading === "string" ? <SettingsSubsectionHeading heading={heading} newUi={newUi} /> : <>{heading}</>}
+        {typeof heading === "string" ? <SettingsSubsectionHeading heading={heading} legacy={legacy} /> : <>{heading}</>}
         {!!description && (
             <div className="mx_SettingsSubsection_description">
                 <SettingsSubsectionText>{description}</SettingsSubsectionText>
@@ -63,13 +64,13 @@ export const SettingsSubsection: React.FC<SettingsSubsectionProps> = ({
                 className={classNames("mx_SettingsSubsection_content", {
                     mx_SettingsSubsection_contentStretch: !!stretchContent,
                     mx_SettingsSubsection_noHeading: !heading && !description,
-                    mx_SettingsSubsection_content_newUi: newUi,
+                    mx_SettingsSubsection_content_newUi: !legacy,
                 })}
             >
                 {children}
             </div>
         )}
-        {newUi && <Separator />}
+        {!legacy && <Separator />}
     </div>
 );
 
