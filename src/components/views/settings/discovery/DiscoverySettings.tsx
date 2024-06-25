@@ -139,7 +139,7 @@ export const DiscoverySettings: React.FC = () => {
                 setLoadingState("error");
             }
         })();
-    }, [client, requiredPolicyInfo, getThreepidState]);
+    }, [client, getThreepidState]);
 
     if (!SettingsStore.getValue(UIFeature.ThirdPartyID)) return null;
 
