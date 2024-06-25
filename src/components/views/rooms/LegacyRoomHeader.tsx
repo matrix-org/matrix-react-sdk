@@ -38,7 +38,6 @@ import RoomName from "../elements/RoomName";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
 import { RoomKnocksBar } from "./RoomKnocksBar";
-import { SearchInfo } from "../../../Searching";
 import { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from "./RoomTile";
@@ -70,6 +69,7 @@ import { SessionDuration } from "../voip/CallDuration";
 import RoomCallBanner from "../beacon/RoomCallBanner";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import { SearchInfo } from "../../../Searching";
 
 class DisabledWithReason {
     public constructor(public readonly reason: string) {}
