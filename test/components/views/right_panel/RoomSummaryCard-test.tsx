@@ -171,6 +171,19 @@ describe("<RoomSummaryCard />", () => {
             });
             expect(getByPlaceholderText("Search messages…")).toHaveFocus();
         });
+
+        it("should cancel search on escape", () => {
+            const onSearchChange = jest.fn();
+            const onSearchCancel = jest.fn();
+            const { getByPlaceholderText } = getComponent({
+                onSearchChange,
+                onSearchCancel,
+                focusRoomSearch: true,
+            });
+            expect(getByPlaceholderText("Search messages…")).toHaveFocus();
+            fireEvent.keyDown(getByPlaceholderText("Search messages…"), { key: "Escape" });
+            expect(onSearchCancel).toHaveBeenCalled();
+        });
     });
 
     it("opens room file panel on button click", () => {
