@@ -518,7 +518,7 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 justify="space-between"
             >
                 {onSearchChange && (
-                    <Form.Root className="mx_RoomSummaryCard_search">
+                    <Form.Root className="mx_RoomSummaryCard_search" onSubmit={(e) => e.preventDefault()}>
                         <Search
                             placeholder={_t("room|search|placeholder")}
                             name="room_message_search"

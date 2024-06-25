@@ -1846,11 +1846,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onSearchChange = debounce((e: ChangeEvent): void => {
         const term = (e.target as HTMLInputElement).value;
-        if (!term) {
-            this.onCancelSearchClick();
-        } else {
-            this.onSearch(term);
-        }
+        this.onSearch(term);
     }, 300);
 
     private onCancelSearchClick = (): Promise<void> => {

@@ -241,6 +241,10 @@ limitations under the License.
 .mx_RoomSummaryCard_search {
     flex-grow: 1;
     min-width: 0;
+
+    input[type="search"]::-webkit-search-cancel-button {
+        display: unset; /* override _common.pcss which inhibits this */
+    }
 }
 
 .mx_RoomSummaryCard_roomName {
