@@ -70,7 +70,6 @@ import WidgetUtils from "../../../src/utils/WidgetUtils";
 import { WidgetType } from "../../../src/widgets/WidgetType";
 import WidgetStore from "../../../src/stores/WidgetStore";
 import { ViewRoomErrorPayload } from "../../../src/dispatcher/payloads/ViewRoomErrorPayload";
-
 import { SearchScope } from "../../../src/Searching";
 
 const RoomView = wrapInMatrixClientContext(_RoomView);

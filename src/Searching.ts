@@ -15,16 +15,16 @@ limitations under the License.
 */
 
 import {
-    EventType,
     IResultRoomEvents,
-    IRoomEventFilter,
     ISearchRequestBody,
     ISearchResponse,
     ISearchResult,
     ISearchResults,
     MatrixClient,
-    SearchOrderBy,
     SearchResult,
+    SearchOrderBy,
+    IRoomEventFilter,
+    EventType,
 } from "matrix-js-sdk/src/matrix";
 
 import { ISearchArgs } from "./indexing/BaseEventIndexManager";
