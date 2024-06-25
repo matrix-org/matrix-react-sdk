@@ -37,6 +37,7 @@ import { searchPagination, SearchScope } from "../../../src/Searching";
 
 jest.mock("../../../src/Searching", () => ({
     searchPagination: jest.fn(),
+    SearchScope: jest.requireActual("../../../src/Searching").SearchScope,
 }));
 
 describe("<RoomSearchView/>", () => {
