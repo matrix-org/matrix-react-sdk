@@ -78,6 +78,11 @@ module.exports = {
                         name: "matrix-react-sdk/",
                         message: "Please use matrix-react-sdk/src/index instead",
                     },
+                    {
+                        name: "emojibase-regex",
+                        message:
+                            "This regex doesn't actually test for emoji. See the docs at https://emojibase.dev/docs/regex/ and prefer our own EMOJI_REGEX from HtmlUtils.",
+                    },
                 ],
                 patterns: [
                     {
@@ -143,6 +148,11 @@ module.exports = {
                             "!matrix-js-sdk/src/models/related-relations",
                         ],
                         message: "Please use matrix-js-sdk/src/matrix instead",
+                    },
+                    {
+                        group: ["emojibase-regex/emoji*"],
+                        message:
+                            "This regex doesn't actually test for emoji. See the docs at https://emojibase.dev/docs/regex/ and prefer our own EMOJI_REGEX from HtmlUtils.",
                     },
                 ],
             },

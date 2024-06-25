@@ -20,7 +20,6 @@ limitations under the License.
 import React, { LegacyRef, ReactNode } from "react";
 import sanitizeHtml from "sanitize-html";
 import classNames from "classnames";
-import EMOJIBASE_REGEX from "emojibase-regex";
 import katex from "katex";
 import { decode } from "html-entities";
 import { IContent } from "matrix-js-sdk/src/matrix";
@@ -46,10 +45,18 @@ const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
 const SYMBOL_PATTERN = /([\u2100-\u2bff])/;
 
 // Regex pattern for non-emoji characters that can appear in an "all-emoji" message
-// (Zero-Width Joiner, Zero-Width Space, Emoji presentation character, other whitespace)
-const EMOJI_SEPARATOR_REGEX = /[\u200D\u200B\s]|\uFE0F/g;
+// (Zero-Width Space, other whitespace)
+const EMOJI_SEPARATOR_REGEX = /[\u200B\s]/g;
 
-const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, "i");
+// Regex for emoji. This includes any RGI_Emoji sequence followed by an optional
+// emoji presentation VS (U+FE0F), but not those sequences that are followed by
+// a text presentation VS (U+FE0E). We also count lone regional indicators
+// (U+1F1E6-U+1F1FF). Technically this regex produces false negatives for emoji
+// followed by U+FE0E when the emoji doesn't have a text variant, but in
+// practice this doesn't matter.
+export const EMOJI_REGEX = /\p{RGI_Emoji}(?!\uFE0E)(?:(?<!\uFE0F)\uFE0F)?|[\u{1f1e6}-\u{1f1ff}]/v;
+
+const BIGEMOJI_REGEX = new RegExp(`^(${EMOJI_REGEX.source})+$`, "iv");
 
 /*
  * Return true if the given string contains emoji
@@ -267,7 +274,7 @@ export function formatEmojis(message: string | undefined, isHtmlMessage?: boolea
 
     const splitter = new GraphemeSplitter();
     for (const char of splitter.iterateGraphemes(message)) {
-        if (EMOJIBASE_REGEX.test(char)) {
+        if (EMOJI_REGEX.test(char)) {
             if (text) {
                 result.push(text);
                 text = "";
