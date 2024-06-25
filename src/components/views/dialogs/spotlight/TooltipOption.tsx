@@ -29,6 +29,7 @@ type TooltipOptionProps<T extends keyof JSX.IntrinsicElements> = ButtonProps<T> 
 export const TooltipOption = <T extends keyof JSX.IntrinsicElements>({
     inputRef,
     className,
+    element,
     ...props
 }: TooltipOptionProps<T>): JSX.Element => {
     const [onFocus, isActive, ref] = useRovingTabIndex(inputRef);
@@ -41,6 +42,7 @@ export const TooltipOption = <T extends keyof JSX.IntrinsicElements>({
             tabIndex={-1}
             aria-selected={isActive}
             role="option"
+            element={element as keyof JSX.IntrinsicElements}
         />
     );
 };

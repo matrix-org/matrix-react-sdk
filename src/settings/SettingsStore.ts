@@ -268,10 +268,10 @@ export default class SettingsStore {
         if (typeof displayName === "string") {
             return _t(displayName);
         }
-        if (displayName[atLevel]) {
-            return _t(displayName[atLevel]);
+        if (displayName?.[atLevel]) {
+            return _t(displayName[atLevel]!);
         }
-        if (displayName["default"]) {
+        if (displayName?.["default"]) {
             return _t(displayName["default"]);
         }
 
