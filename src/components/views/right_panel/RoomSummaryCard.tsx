@@ -528,6 +528,12 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                             autoFocus={focusRoomSearch}
                         />
                     </Form.Root>
+                    <AccessibleButton
+                        data-testid="base-card-close-button"
+                        className="mx_BaseCard_close"
+                        onClick={onClose}
+                        title={_t("action|close")}
+                    />
                 </Flex>
             )}
 
