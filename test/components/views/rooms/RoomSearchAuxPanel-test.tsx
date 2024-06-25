@@ -55,6 +55,27 @@ describe("RoomSearchAuxPanel", () => {
         expect(onSearchScopeChange).toHaveBeenCalledWith(SearchScope.All);
     });
 
+    it("should allow the user to toggle back to room-specific search", async () => {
+        const onSearchScopeChange = jest.fn();
+
+        render(
+            <RoomSearchAuxPanel
+                searchInfo={{
+                    searchId: 1234,
+                    term: "abcd",
+                    scope: SearchScope.All,
+                    promise: new Promise(() => {}),
+                }}
+                isRoomEncrypted={false}
+                onSearchScopeChange={onSearchScopeChange}
+                onCancelClick={jest.fn()}
+            />,
+        );
+
+        screen.getByText("Search this room").click();
+        expect(onSearchScopeChange).toHaveBeenCalledWith(SearchScope.Room);
+    });
+
     it("should allow the user to cancel a search", async () => {
         const onCancelClick = jest.fn();
 

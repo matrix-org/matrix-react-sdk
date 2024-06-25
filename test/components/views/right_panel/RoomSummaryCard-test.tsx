@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import { EventType, MatrixEvent, Room, MatrixClient, JoinRule } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import { mocked, MockedObject } from "jest-mock";
@@ -37,6 +37,7 @@ import { _t } from "../../../../src/languageHandler";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { tagRoom } from "../../../../src/utils/room/tagRoom";
 import { DefaultTagID } from "../../../../src/stores/room-list/models";
+import { Action } from "../../../../src/dispatcher/actions";
 
 jest.mock("../../../../src/utils/room/tagRoom");
 
@@ -141,12 +142,35 @@ describe("<RoomSummaryCard />", () => {
         expect(container).toMatchSnapshot();
     });
 
-    it("has the search field", async () => {
-        const onSearchChange = jest.fn();
-        const { getByPlaceholderText } = getComponent({
-            onSearchChange,
+    describe("search", () => {
+        it("has the search field", async () => {
+            const onSearchChange = jest.fn();
+            const { getByPlaceholderText } = getComponent({
+                onSearchChange,
+            });
+            expect(getByPlaceholderText("Search messages…")).toBeVisible();
         });
-        expect(getByPlaceholderText("Search messages…")).toBeVisible();
+
+        it("should focus the search field if Action.FocusRoomSearch is fired", async () => {
+            const onSearchChange = jest.fn();
+            const { getByPlaceholderText } = getComponent({
+                onSearchChange,
+            });
+            expect(getByPlaceholderText("Search messages…")).not.toHaveFocus();
+            defaultDispatcher.fire(Action.FocusRoomSearch);
+            await waitFor(() => {
+                expect(getByPlaceholderText("Search messages…")).toHaveFocus();
+            });
+        });
+
+        it("should focus the search field if focusRoomSearch=true", () => {
+            const onSearchChange = jest.fn();
+            const { getByPlaceholderText } = getComponent({
+                onSearchChange,
+                focusRoomSearch: true,
+            });
+            expect(getByPlaceholderText("Search messages…")).toHaveFocus();
+        });
     });
 
     it("opens room file panel on button click", () => {
