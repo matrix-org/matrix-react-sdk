@@ -20,11 +20,11 @@ import {
     ISearchResponse,
     ISearchResult,
     ISearchResults,
-    MatrixClient,
-    SearchResult,
     SearchOrderBy,
     IRoomEventFilter,
     EventType,
+    MatrixClient,
+    SearchResult,
 } from "matrix-js-sdk/src/matrix";
 
 import { ISearchArgs } from "./indexing/BaseEventIndexManager";
