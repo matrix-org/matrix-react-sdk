@@ -15,15 +15,15 @@ limitations under the License.
 */
 
 import {
+    EventType,
     IResultRoomEvents,
+    IRoomEventFilter,
     ISearchRequestBody,
     ISearchResponse,
     ISearchResult,
     ISearchResults,
-    SearchOrderBy,
-    IRoomEventFilter,
-    EventType,
     MatrixClient,
+    SearchOrderBy,
     SearchResult,
 } from "matrix-js-sdk/src/matrix";
 
@@ -680,4 +680,21 @@ export default function eventSearch(
     } else {
         return eventIndexSearch(client, term, roomId, abortSignal);
     }
+}
+
+export enum SearchScope {
+    Room = "Room",
+    All = "All",
+}
+
+export interface SearchInfo {
+    searchId: number;
+    roomId?: string;
+    term: string;
+    scope: SearchScope;
+    promise: Promise<ISearchResults>;
+    abortController?: AbortController;
+
+    inProgress?: boolean;
+    count?: number;
 }

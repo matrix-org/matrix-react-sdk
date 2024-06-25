@@ -15,15 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { FC, useState, useMemo, useCallback } from "react";
+import React, { FC, useCallback, useMemo, useState } from "react";
 import classNames from "classnames";
 import { throttle } from "lodash";
-import { RoomStateEvent, ISearchResults } from "matrix-js-sdk/src/matrix";
+import type { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { IconButton, Tooltip } from "@vector-im/compound-web";
 import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
-
-import type { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import { _t } from "../../../languageHandler";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -38,7 +37,6 @@ import RoomName from "../elements/RoomName";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
 import { RoomKnocksBar } from "./RoomKnocksBar";
-import { SearchScope } from "./SearchBar";
 import { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from "./RoomTile";
@@ -70,6 +68,7 @@ import { SessionDuration } from "../voip/CallDuration";
 import RoomCallBanner from "../beacon/RoomCallBanner";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import { SearchInfo } from "../../../Searching";
 
 class DisabledWithReason {
     public constructor(public readonly reason: string) {}
@@ -456,18 +455,6 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
     );
 };
 
-export interface ISearchInfo {
-    searchId: number;
-    roomId?: string;
-    term: string;
-    scope: SearchScope;
-    promise: Promise<ISearchResults>;
-    abortController?: AbortController;
-
-    inProgress?: boolean;
-    count?: number;
-}
-
 export interface IProps {
     room: Room;
     oobData?: IOOBData;
@@ -478,7 +465,7 @@ export interface IProps {
     onAppsClick: (() => void) | null;
     e2eStatus: E2EStatus;
     appsShown: boolean;
-    searchInfo?: ISearchInfo;
+    searchInfo?: SearchInfo;
     excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
     showButtons?: boolean;
     enableRoomOptionsMenu?: boolean;
