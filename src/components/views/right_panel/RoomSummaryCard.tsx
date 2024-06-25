@@ -510,14 +510,14 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
 
     return (
         <BaseCard header={null} className="mx_RoomSummaryCard" onClose={onClose}>
-            {onSearchChange && (
-                <Flex
-                    as="header"
-                    className="mx_RoomSummaryCard_header"
-                    gap="var(--cpd-space-3x)"
-                    align="center"
-                    justify="space-between"
-                >
+            <Flex
+                as="header"
+                className="mx_RoomSummaryCard_header"
+                gap="var(--cpd-space-3x)"
+                align="center"
+                justify="space-between"
+            >
+                {onSearchChange && (
                     <Form.Root className="mx_RoomSummaryCard_search">
                         <Search
                             placeholder={_t("room|search|placeholder")}
@@ -528,14 +528,14 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                             autoFocus={focusRoomSearch}
                         />
                     </Form.Root>
-                    <AccessibleButton
-                        data-testid="base-card-close-button"
-                        className="mx_BaseCard_close"
-                        onClick={onClose}
-                        title={_t("action|close")}
-                    />
-                </Flex>
-            )}
+                )}
+                <AccessibleButton
+                    data-testid="base-card-close-button"
+                    className="mx_BaseCard_close"
+                    onClick={onClose}
+                    title={_t("action|close")}
+                />
+            </Flex>
 
             {header}
 
