@@ -269,7 +269,7 @@ export default class SettingsStore {
             return _t(displayName);
         }
         if (displayName?.[atLevel]) {
-            return _t(displayName[atLevel]!);
+            return _t(displayName[atLevel]);
         }
         if (displayName?.["default"]) {
             return _t(displayName["default"]);
