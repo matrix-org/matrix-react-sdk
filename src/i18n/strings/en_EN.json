@@ -2031,16 +2031,16 @@
         "rejoin_button": "Re-join",
         "search": {
             "all_rooms_button": "Search all rooms",
+            "placeholder": "Search messages…",
             "result_count": {
                 "one": "(~%(count)s result)",
                 "other": "(~%(count)s results)"
             },
-            "this_room_button": "Search this room",
             "summary": {
                 "one": "1 result found for \"%(query)s\"",
                 "other": "%(count)s results found for \"%(query)s\""
             },
-            "placeholder": "Search messages…"
+            "this_room_button": "Search this room"
         },
         "show_labs_settings": "Show Labs settings",
         "status_bar": {
