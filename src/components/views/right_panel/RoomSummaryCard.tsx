@@ -100,12 +100,14 @@ import { Box } from "../../utils/Box";
 import { onRoomTopicLinkClick } from "../elements/RoomTopic";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import { Action } from "../../../dispatcher/actions";
+import { Key } from "../../../Keyboard";
 
 interface IProps {
     room: Room;
     permalinkCreator: RoomPermalinkCreator;
     onClose(): void;
     onSearchChange?: (e: ChangeEvent) => void;
+    onSearchCancel?: () => void;
     focusRoomSearch?: boolean;
 }
 
@@ -376,7 +378,14 @@ const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element | null
     );
 };
 
-const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, onSearchChange, focusRoomSearch }) => {
+const RoomSummaryCard: React.FC<IProps> = ({
+    room,
+    permalinkCreator,
+    onClose,
+    onSearchChange,
+    onSearchCancel,
+    focusRoomSearch,
+}) => {
     const cli = useContext(MatrixClientContext);
 
     const onShareRoomClick = (): void => {
@@ -526,6 +535,12 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                             className="mx_no_textinput"
                             ref={searchInputRef}
                             autoFocus={focusRoomSearch}
+                            onKeyDown={(e) => {
+                                if (searchInputRef.current && e.key === Key.ESCAPE) {
+                                    searchInputRef.current.value = "";
+                                    onSearchCancel?.();
+                                }
+                            }}
                         />
                     </Form.Root>
                 )}

@@ -58,6 +58,7 @@ interface RoomProps extends BaseProps {
     room: Room;
     permalinkCreator: RoomPermalinkCreator;
     onSearchChange?: (e: ChangeEvent) => void;
+    onSearchCancel?: () => void;
 }
 
 type Props = XOR<RoomlessProps, RoomProps>;
@@ -297,6 +298,7 @@ export default class RightPanel extends React.Component<Props, IState> {
                             // whenever RightPanel is passed a room it is passed a permalinkcreator
                             permalinkCreator={this.props.permalinkCreator!}
                             onSearchChange={this.props.onSearchChange}
+                            onSearchCancel={this.props.onSearchCancel}
                             focusRoomSearch={cardState?.focusRoomSearch}
                         />
                     );

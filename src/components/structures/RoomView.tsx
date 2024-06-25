@@ -2510,6 +2510,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 permalinkCreator={this.permalinkCreator}
                 e2eStatus={this.state.e2eStatus}
                 onSearchChange={this.onSearchChange}
+                onSearchCancel={this.onCancelSearchClick}
             />
         ) : undefined;
 
