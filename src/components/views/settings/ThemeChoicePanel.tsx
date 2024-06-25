@@ -296,7 +296,6 @@ interface CustomThemeListProps {
 
 /**
  * List of the custom themes
- * @constructor
  */
 function CustomThemeList({ theme: currentTheme }: CustomThemeListProps): JSX.Element {
     const customThemes = useSettingValue<CustomThemeType[]>("custom_themes") || [];
