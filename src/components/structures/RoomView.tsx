@@ -325,6 +325,7 @@ function LocalRoomView(props: LocalRoomViewProps): ReactElement {
                         room={context.room}
                         searchInfo={undefined}
                         inRoom={true}
+                        onSearchClick={null}
                         onInviteClick={null}
                         onForgetClick={null}
                         e2eStatus={room.encrypted ? E2EStatus.Normal : undefined}
@@ -377,6 +378,7 @@ function LocalRoomCreateLoader(props: ILocalRoomCreateLoaderProps): ReactElement
                         room={props.localRoom}
                         searchInfo={undefined}
                         inRoom={true}
+                        onSearchClick={null}
                         onInviteClick={null}
                         onForgetClick={null}
                         e2eStatus={props.localRoom.encrypted ? E2EStatus.Normal : undefined}
@@ -1838,6 +1840,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         dis.fire(Action.ViewRoomDirectory);
     };
 
+    private onSearchClick = (): void => {
+        dis.fire(Action.FocusRoomSearch);
+    };
+
     private onSearchChange = debounce((e: ChangeEvent): void => {
         const term = (e.target as HTMLInputElement).value;
         if (!term) {
@@ -2583,6 +2589,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         let excludedRightPanelPhaseButtons = [RightPanelPhases.Timeline];
         let onAppsClick: (() => void) | null = this.onAppsClick;
         let onForgetClick: (() => void) | null = this.onForgetClick;
+        let onSearchClick: (() => void) | null = this.onSearchClick;
         let onInviteClick: (() => void) | null = null;
         let viewingCall = false;
 
@@ -2592,11 +2599,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 excludedRightPanelPhaseButtons = [];
                 onAppsClick = null;
                 onForgetClick = null;
+                onSearchClick = null;
                 break;
             case MainSplitContentType.Call:
                 excludedRightPanelPhaseButtons = [];
                 onAppsClick = null;
                 onForgetClick = null;
+                onSearchClick = null;
                 if (this.state.room.canInvite(this.context.client.getSafeUserId())) {
                     onInviteClick = this.onInviteClick;
                 }
@@ -2645,6 +2654,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                                         searchInfo={this.state.search}
                                         oobData={this.props.oobData}
                                         inRoom={myMembership === KnownMembership.Join}
+                                        onSearchClick={onSearchClick}
                                         onInviteClick={onInviteClick}
                                         onForgetClick={showForgetButton ? onForgetClick : null}
                                         e2eStatus={this.state.e2eStatus}

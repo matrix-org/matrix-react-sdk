@@ -207,6 +207,7 @@ describe("LegacyRoomHeader", () => {
                 <RoomHeader
                     room={room}
                     inRoom={true}
+                    onSearchClick={() => {}}
                     onInviteClick={null}
                     onForgetClick={() => {}}
                     onAppsClick={() => {}}
@@ -845,6 +846,7 @@ function mountHeader(room: Room, propsOverride = {}, roomContext?: Partial<IRoom
     const props: RoomHeaderProps = {
         room,
         inRoom: true,
+        onSearchClick: () => {},
         onInviteClick: null,
         onForgetClick: () => {},
         onAppsClick: () => {},

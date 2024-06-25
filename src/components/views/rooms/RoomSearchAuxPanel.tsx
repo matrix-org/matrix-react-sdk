@@ -39,8 +39,8 @@ const RoomSearchAuxPanel: React.FC<Props> = ({ searchInfo, isRoomEncrypted, onSe
             <div className="mx_RoomSearchAuxPanel">
                 <div className="mx_RoomSearchAuxPanel_resultCount">
                     <SearchIcon width="24px" height="24px" />
-                    {searchInfo?.count
-                        ? _t("room|search|summary", { count: searchInfo.count, query: searchInfo.term })
+                    {searchInfo
+                        ? _t("room|search|summary", { count: searchInfo.count ?? 0, query: searchInfo.term })
                         : undefined}
                 </div>
                 <div className="mx_RoomSearchAuxPanel_buttons">
