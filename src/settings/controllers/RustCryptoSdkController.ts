@@ -39,7 +39,8 @@ export default class RustCryptoSdkController extends SettingController {
 
         if (SettingsStore.getValueAt(SettingLevel.CONFIG, Features.RustCrypto)) {
             // It's enabled in the config, so you can't get rid of it even by logging out.
-            return _t("labs|rust_crypto_in_config", { brand: SdkConfig.get().brand });
+            // return _t("labs|rust_crypto_in_config", { brand: SdkConfig.get().brand });
+            return SettingsStore.getValueAt(SettingLevel.CONFIG, Features.RustCrypto);
         }
 
         // The setting is enabled at the device level, but not mandated at the config level.
