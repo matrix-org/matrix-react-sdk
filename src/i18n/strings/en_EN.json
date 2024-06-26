@@ -2421,7 +2421,8 @@
         "always_show_message_timestamps": "Always show message timestamps",
         "appearance": {
             "bundled_emoji_font": "Use bundled emoji font",
-            "compact_layout": "Show compact layout",
+            "compact_layout": "Show compact text and messages",
+            "compact_layout_description": "Modern layout must be selected to use this feature.",
             "custom_font": "Use a system font",
             "custom_font_description": "Set the name of a font installed on your system & %(brand)s will attempt to use it.",
             "custom_font_name": "System font name",

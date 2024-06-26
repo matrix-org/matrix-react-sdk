@@ -15,7 +15,7 @@
  */
 
 import React, { JSX, useEffect, useState } from "react";
-import { InlineField, ToggleControl, Label, Root, RadioControl } from "@vector-im/compound-web";
+import { HelpMessage, InlineField, Label, RadioControl, Root, ToggleControl } from "@vector-im/compound-web";
 
 import SettingsSubsection from "./shared/SettingsSubsection";
 import { _t } from "../../../languageHandler";
@@ -144,6 +144,7 @@ function useEventTileInfo(): EventTileInfo {
  */
 function ToggleCompactLayout(): JSX.Element {
     const compactLayoutEnabled = useSettingValue<boolean>("useCompactLayout");
+    const layout = useSettingValue<Layout>("layout");
 
     return (
         <Root
@@ -154,9 +155,16 @@ function ToggleCompactLayout(): JSX.Element {
         >
             <InlineField
                 name="compactLayout"
-                control={<ToggleControl name="compactLayout" defaultChecked={compactLayoutEnabled} />}
+                control={
+                    <ToggleControl
+                        disabled={layout !== Layout.Group}
+                        name="compactLayout"
+                        defaultChecked={compactLayoutEnabled}
+                    />
+                }
             >
                 <Label>{_t("settings|appearance|compact_layout")}</Label>
+                <HelpMessage>{_t("settings|appearance|compact_layout_description")}</HelpMessage>
             </InlineField>
         </Root>
     );
