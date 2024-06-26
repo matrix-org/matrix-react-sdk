@@ -69,7 +69,6 @@
     },
     "dependencies": {
         "@babel/runtime": "^7.12.5",
-        "@js-temporal/polyfill": "^0.4.4",
         "@matrix-org/analytics-events": "^0.23.0",
         "@matrix-org/emojibase-bindings": "^1.1.2",
         "@matrix-org/matrix-wysiwyg": "2.37.4",
@@ -132,6 +131,7 @@
         "sanitize-filename": "^1.6.3",
         "sanitize-html": "2.13.0",
         "tar-js": "^0.3.0",
+        "temporal-polyfill": "^0.2.5",
         "ua-parser-js": "^1.0.2",
         "uuid": "^10.0.0",
         "what-input": "^5.2.10"
