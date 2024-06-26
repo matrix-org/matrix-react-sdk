@@ -38,6 +38,7 @@ interface IProps {
     // Ref for the 'close' button the the card
     closeButtonRef?: Ref<HTMLDivElement>;
     children: ReactNode;
+    disableBackButton?: boolean;
 }
 
 interface IGroupProps {
@@ -68,12 +69,13 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
             children,
             onKeyDown,
             closeButtonRef,
+            disableBackButton,
         },
         ref,
     ) => {
         let backButton;
         const cardHistory = RightPanelStore.instance.roomPhaseHistory;
-        if (cardHistory.length > 1) {
+        if (!disableBackButton && cardHistory.length > 1) {
             const prevCard = cardHistory[cardHistory.length - 2];
             const onBackClick = (ev: ButtonEvent): void => {
                 onBack?.(ev);
