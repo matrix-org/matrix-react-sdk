@@ -45,7 +45,8 @@ export default class Clock extends React.Component<Props> {
         return currentFloor !== nextFloor;
     }
 
-    private calculateDuration(seconds: number): string {
+    private calculateDuration(seconds: number): string | undefined {
+        if (isNaN(seconds)) return undefined;
         return new Temporal.Duration(0, 0, 0, 0, 0, 0, Math.round(seconds))
             .round({ smallestUnit: "seconds", largestUnit: "hours" })
             .toString();
