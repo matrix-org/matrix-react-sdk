@@ -62,7 +62,12 @@ const RoomSearchAuxPanel: React.FC<Props> = ({ searchInfo, isRoomEncrypted, onSe
                             ? _t("room|search|this_room_button")
                             : _t("room|search|all_rooms_button")}
                     </Link>
-                    <IconButton onClick={onCancelClick} destructive tooltip={_t("action|cancel")}>
+                    <IconButton
+                        onClick={onCancelClick}
+                        destructive
+                        tooltip={_t("action|cancel")}
+                        aria-label={_t("action|cancel")}
+                    >
                         <CloseIcon width="20px" height="20px" />
                     </IconButton>
                 </div>

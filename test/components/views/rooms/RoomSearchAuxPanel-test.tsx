@@ -37,7 +37,9 @@ describe("RoomSearchAuxPanel", () => {
             />,
         );
 
-        expect(screen.getByText('5 results found for "abcd"')).toBeVisible();
+        expect(screen.getByText("5 results found for", { exact: false })).toHaveTextContent(
+            "5 results found for “abcd”",
+        );
     });
 
     it("should allow the user to toggle to all rooms search", async () => {
@@ -87,7 +89,7 @@ describe("RoomSearchAuxPanel", () => {
             />,
         );
 
-        screen.getByText("Cancel").click();
+        screen.getByLabelText("Cancel").click();
         expect(onCancelClick).toHaveBeenCalled();
     });
 });
