@@ -40,8 +40,6 @@ test.describe("Device verification", () => {
         // Visit the login page of the app, to load the matrix sdk
         await page.goto("/#/login");
 
-        await page.pause();
-
         // wait for the page to load
         await page.waitForSelector(".mx_AuthPage", { timeout: 30000 });
 
@@ -52,13 +50,17 @@ test.describe("Device verification", () => {
             bootstrapSecretStorage: true,
         });
         aliceBotClient.setCredentials(credentials);
-        const mxClientHandle = await aliceBotClient.prepareClient();
 
-        await page.waitForTimeout(20000);
-
-        expectedBackupVersion = await mxClientHandle.evaluate(async (mxClient) => {
-            return await mxClient.getCrypto()!.getActiveSessionBackupVersion();
-        });
+        // Backup is prepared in the background. Poll until it is ready.
+        const botClientHandle = await aliceBotClient.prepareClient();
+        await expect
+            .poll(async () => {
+                expectedBackupVersion = await botClientHandle.evaluate((cli) =>
+                    cli.getCrypto()!.getActiveSessionBackupVersion(),
+                );
+                return expectedBackupVersion;
+            })
+            .not.toBe(null);
     });
 
     // Click the "Verify with another device" button, and have the bot client auto-accept it.
@@ -303,10 +305,7 @@ test.describe("User verification", () => {
         user: aliceCredentials,
         toasts,
         room: { roomId: dmRoomId },
-        cryptoBackend,
     }) => {
-        test.skip(cryptoBackend === "legacy", "Not implemented for legacy crypto");
-
         // once Alice has joined, Bob starts the verification
         const bobVerificationRequest = await bob.evaluateHandle(
             async (client, { dmRoomId, aliceCredentials }) => {
