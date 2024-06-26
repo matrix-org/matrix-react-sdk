@@ -16,7 +16,16 @@ limitations under the License.
 
 import { defineConfig } from "@playwright/test";
 
-const baseURL = process.env["BASE_URL"] ?? "http://localhost:8080";
+let baseURL = "http://localhost:8080";
+
+const extraLaunchArgs: string[] = [];
+if (process.env["BASE_URL"]) {
+    baseURL = process.env["BASE_URL"];
+    // We need to use a different headless mode to allow insecure origins
+    // https://github.com/microsoft/playwright/issues/22944
+    extraLaunchArgs.push("--headless=new");
+    extraLaunchArgs.push(`--unsafely-treat-insecure-origin-as-secure=${baseURL}`);
+}
 
 export default defineConfig({
     use: {
@@ -26,7 +35,12 @@ export default defineConfig({
         baseURL,
         permissions: ["clipboard-write", "clipboard-read", "microphone"],
         launchOptions: {
-            args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream", "--mute-audio"],
+            args: [
+                "--use-fake-ui-for-media-stream",
+                "--use-fake-device-for-media-stream",
+                "--mute-audio",
+                ...extraLaunchArgs,
+            ],
         },
         trace: "on-first-retry",
     },
