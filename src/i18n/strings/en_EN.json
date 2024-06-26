@@ -2037,8 +2037,8 @@
                 "other": "(~%(count)s results)"
             },
             "summary": {
-                "one": "1 result found for \"%(query)s\"",
-                "other": "%(count)s results found for \"%(query)s\""
+                "one": "1 result found for “<query/>”",
+                "other": "%(count)s results found for “<query/>”"
             },
             "this_room_button": "Search this room"
         },

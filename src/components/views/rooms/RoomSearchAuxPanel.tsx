@@ -38,11 +38,18 @@ const RoomSearchAuxPanel: React.FC<Props> = ({ searchInfo, isRoomEncrypted, onSe
         <>
             <PosthogScreenTracker screenName="RoomSearch" />
             <div className="mx_RoomSearchAuxPanel">
-                <div className="mx_RoomSearchAuxPanel_resultCount">
+                <div className="mx_RoomSearchAuxPanel_summary">
                     <SearchIcon width="24px" height="24px" />
-                    {searchInfo
-                        ? _t("room|search|summary", { count: searchInfo.count ?? 0, query: searchInfo.term })
-                        : undefined}
+                    <div className="mx_RoomSearchAuxPanel_summary_text">
+                        {searchInfo
+                            ? _t(
+                                  "room|search|summary",
+                                  { count: searchInfo.count ?? 0 },
+                                  { query: () => <b>{searchInfo.term}</b> },
+                              )
+                            : undefined}
+                        <SearchWarning kind={WarningKind.Search} isRoomEncrypted={isRoomEncrypted} showLogo={false} />
+                    </div>
                 </div>
                 <div className="mx_RoomSearchAuxPanel_buttons">
                     <Link
@@ -60,7 +67,6 @@ const RoomSearchAuxPanel: React.FC<Props> = ({ searchInfo, isRoomEncrypted, onSe
                     </IconButton>
                 </div>
             </div>
-            <SearchWarning isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Search} />
         </>
     );
 };

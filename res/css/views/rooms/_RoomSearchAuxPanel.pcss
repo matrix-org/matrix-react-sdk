@@ -25,10 +25,27 @@ limitations under the License.
     padding: var(--cpd-space-3x);
     box-sizing: border-box;
 
-    .mx_RoomSearchAuxPanel_resultCount {
+    .mx_RoomSearchAuxPanel_summary {
         flex-grow: 1;
         display: inherit; /* flex */
         gap: var(--cpd-space-2x);
+        align-items: center;
+
+        > svg {
+            padding: var(--cpd-space-2x);
+            border-radius: var(--cpd-space-2x);
+            background-color: var(--cpd-color-bg-subtle-secondary);
+            color: var(--cpd-color-icon-secondary);
+        }
+
+        .mx_RoomSearchAuxPanel_summary_text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mx_SearchWarning {
+            display: contents;
+        }
     }
 
     .mx_RoomSearchAuxPanel_buttons {
