@@ -15,7 +15,7 @@
  */
 
 import React, { JSX, useEffect, useState } from "react";
-import { HelpMessage, InlineField, Label, RadioControl, Root, ToggleControl } from "@vector-im/compound-web";
+import { Field, HelpMessage, InlineField, Label, RadioControl, Root, ToggleControl } from "@vector-im/compound-web";
 
 import SettingsSubsection from "./shared/SettingsSubsection";
 import { _t } from "../../../languageHandler";
@@ -83,20 +83,21 @@ function LayoutRadio({ layout, label }: LayoutRadioProps): JSX.Element {
 
     return (
         <div className="mxLayoutSwitcher_LayoutSelector_LayoutRadio">
-            <InlineField
-                className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_InlineField"
-                control={<RadioControl name="layout" value={layout} defaultChecked={currentLayout === layout} />}
-                name="layout"
-            >
-                <Label>{label}</Label>
-            </InlineField>
-            <div role="separator" className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator" />
-            <EventTilePreview
-                message={_t("common|preview_message")}
-                layout={layout}
-                className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview"
-                {...eventTileInfo}
-            />
+            <Field name="layout" className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_Field">
+                <div className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_inline">
+                    <RadioControl name="layout" value={layout} defaultChecked={currentLayout === layout} />
+                    <Label className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_Label">{label}</Label>
+                </div>
+                <Label>
+                    <div role="separator" className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator" />
+                    <EventTilePreview
+                        message={_t("common|preview_message")}
+                        layout={layout}
+                        className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview"
+                        {...eventTileInfo}
+                    />
+                </Label>
+            </Field>
         </div>
     );
 }
