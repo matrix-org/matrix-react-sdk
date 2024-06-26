@@ -77,7 +77,7 @@ class Helpers {
      * Return the system theme toggle
      */
     getMatchSystemThemeCheckbox() {
-        return this.page.getByRole("checkbox", { name: "Match system theme" });
+        return this.getThemePanel().getByRole("checkbox");
     }
 
     /**
@@ -86,7 +86,7 @@ class Helpers {
      * @private
      */
     private getThemeRadio(theme: string) {
-        return this.page.getByRole("radio", { name: theme });
+        return this.getThemePanel().getByRole("radio", { name: theme });
     }
 
     /**
