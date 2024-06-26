@@ -143,11 +143,11 @@ function ThemeSelectors({ theme, disabled }: ThemeSelectorProps): JSX.Element {
                             "cpd-theme-dark": _theme.isDark,
                         })}
                         name="themeSelector"
-                        key={`${_theme.id}_${disabled}_${isChecked}`}
+                        key={_theme.id}
                         control={
                             <RadioControl
                                 name="themeSelector"
-                                defaultChecked={!disabled && isChecked}
+                                checked={!disabled && isChecked}
                                 disabled={disabled}
                                 value={_theme.id}
                             />

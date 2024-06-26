@@ -23,22 +23,36 @@ import fetchMock from "fetch-mock-jest";
 import { ThemeChoicePanel } from "../../../../src/components/views/settings/ThemeChoicePanel";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import ThemeWatcher from "../../../../src/settings/watchers/ThemeWatcher";
+import { SettingLevel } from "../../../../src/settings/SettingLevel";
 
 jest.mock("../../../../src/settings/watchers/ThemeWatcher");
 
 describe("<ThemeChoicePanel />", () => {
-    beforeEach(() => {
+    /**
+     * Enable or disable the system theme
+     * @param enable
+     */
+    async function enableSystemTheme(enable: boolean) {
+        await SettingsStore.setValue("use_system_theme", null, SettingLevel.DEVICE, enable);
+    }
+
+    /**
+     * Set the theme
+     * @param theme
+     */
+    async function setTheme(theme: string) {
+        await SettingsStore.setValue("theme", null, SettingLevel.DEVICE, theme);
+    }
+
+    beforeEach(async () => {
         mocked(ThemeWatcher).mockImplementation(() => {
             return {
                 isSystemThemeSupported: jest.fn().mockReturnValue(true),
             } as unknown as MockedObject<ThemeWatcher>;
         });
-    });
 
-    afterEach(() => {
-        jest.spyOn(SettingsStore, "getValue").mockRestore();
-        jest.spyOn(SettingsStore, "getValueAt").mockRestore();
-        jest.spyOn(SettingsStore, "setValue").mockRestore();
+        await enableSystemTheme(false);
+        await setTheme("light");
     });
 
     it("renders the theme choice UI", () => {
@@ -47,34 +61,21 @@ describe("<ThemeChoicePanel />", () => {
     });
 
     describe("theme selection", () => {
-        /**
-         * Enable or disable the system theme
-         * @param enable
-         */
-        function enableSystemTheme(enable: boolean) {
-            jest.spyOn(SettingsStore, "getValueAt").mockImplementation((level, settingName) => {
-                if (settingName === "use_system_theme") return enable;
-            });
-        }
-
         describe("system theme", () => {
-            it("should disable Match system theme", () => {
-                enableSystemTheme(false);
-
+            it("should disable Match system theme", async () => {
                 render(<ThemeChoicePanel />);
                 expect(screen.getByRole("checkbox", { name: "Match system theme" })).not.toBeChecked();
             });
 
-            it("should enable Match system theme", () => {
-                enableSystemTheme(true);
+            it("should enable Match system theme", async () => {
+                await enableSystemTheme(true);
 
                 render(<ThemeChoicePanel />);
                 expect(screen.getByRole("checkbox", { name: "Match system theme" })).toBeChecked();
             });
 
-            it("should change the system theme when clicked", () => {
+            it("should change the system theme when clicked", async () => {
                 jest.spyOn(SettingsStore, "setValue");
-                enableSystemTheme(false);
 
                 render(<ThemeChoicePanel />);
                 act(() => screen.getByRole("checkbox", { name: "Match system theme" }).click());
@@ -86,8 +87,8 @@ describe("<ThemeChoicePanel />", () => {
         });
 
         describe("theme selection", () => {
-            it("should disable theme selection when system theme is enabled", () => {
-                enableSystemTheme(true);
+            it("should disable theme selection when system theme is enabled", async () => {
+                await enableSystemTheme(true);
                 render(<ThemeChoicePanel />);
 
                 // We expect all the themes to be disabled
@@ -97,8 +98,7 @@ describe("<ThemeChoicePanel />", () => {
                 });
             });
 
-            it("should enable theme selection when system theme is disabled", () => {
-                enableSystemTheme(false);
+            it("should enable theme selection when system theme is disabled", async () => {
                 render(<ThemeChoicePanel />);
 
                 // We expect all the themes to be disabled
@@ -108,11 +108,7 @@ describe("<ThemeChoicePanel />", () => {
                 });
             });
 
-            it("should have light theme selected", () => {
-                jest.spyOn(SettingsStore, "getValueAt").mockImplementation((level, settingName) => {
-                    if (settingName === "theme") return "light";
-                });
-
+            it("should have light theme selected", async () => {
                 render(<ThemeChoicePanel />);
 
                 // We expect the light theme to be selected
@@ -124,11 +120,8 @@ describe("<ThemeChoicePanel />", () => {
                 expect(darkTheme).not.toBeChecked();
             });
 
-            it("should switch to dark theme", () => {
+            it("should switch to dark theme", async () => {
                 jest.spyOn(SettingsStore, "setValue");
-                jest.spyOn(SettingsStore, "getValueAt").mockImplementation((level, settingName) => {
-                    if (settingName === "theme") return "light";
-                });
 
                 render(<ThemeChoicePanel />);
 
@@ -138,8 +131,10 @@ describe("<ThemeChoicePanel />", () => {
 
                 // Switch to the dark theme
                 act(() => darkTheme.click());
+                expect(SettingsStore.setValue).toHaveBeenCalledWith("theme", null, "device", "dark");
+
                 // Dark theme is now selected
-                expect(darkTheme).toBeChecked();
+                await waitFor(() => expect(darkTheme).toBeChecked());
                 // Light theme is not selected anymore
                 expect(lightTheme).not.toBeChecked();
                 // The setting should be updated
@@ -152,11 +147,9 @@ describe("<ThemeChoicePanel />", () => {
         const aliceTheme = { name: "Alice theme", is_dark: true, colors: {} };
         const bobTheme = { name: "Bob theme", is_dark: false, colors: {} };
 
-        beforeEach(() => {
-            jest.spyOn(SettingsStore, "getValueAt").mockImplementation((level, settingName) => {
-                if (settingName === "feature_custom_themes") return "true";
-                if (settingName === "custom_themes") return [aliceTheme];
-            });
+        beforeEach(async () => {
+            await SettingsStore.setValue("feature_custom_themes", null, SettingLevel.DEVICE, true);
+            await SettingsStore.setValue("custom_themes", null, SettingLevel.DEVICE, [aliceTheme]);
         });
 
         it("should render the custom theme section", () => {

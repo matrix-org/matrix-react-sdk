@@ -58,7 +58,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
         class="_root_148br_24 mx_ThemeChoicePanel_ThemeSelectors"
       >
         <div
-          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector cpd-theme-light"
+          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector mx_ThemeChoicePanel_themeSelector_enabled cpd-theme-light"
         >
           <div
             class="_inline-field-control_148br_52"
@@ -67,6 +67,7 @@ exports[`<ThemeChoicePanel /> custom theme should display custom theme 1`] = `
               class="_container_1vw5h_18"
             >
               <input
+                checked=""
                 class="_input_1vw5h_26"
                 id="radix-43"
                 name="themeSelector"
@@ -359,7 +360,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
         class="_root_148br_24 mx_ThemeChoicePanel_ThemeSelectors"
       >
         <div
-          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector cpd-theme-light"
+          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector mx_ThemeChoicePanel_themeSelector_enabled cpd-theme-light"
         >
           <div
             class="_inline-field-control_148br_52"
@@ -368,6 +369,7 @@ exports[`<ThemeChoicePanel /> custom theme should render the custom theme sectio
               class="_container_1vw5h_18"
             >
               <input
+                checked=""
                 class="_input_1vw5h_26"
                 id="radix-33"
                 name="themeSelector"
@@ -633,7 +635,6 @@ exports[`<ThemeChoicePanel /> renders the theme choice UI 1`] = `
               class="_container_qnvru_18"
             >
               <input
-                checked=""
                 class="_input_qnvru_32"
                 id="radix-0"
                 name="systemTheme"
@@ -661,7 +662,7 @@ exports[`<ThemeChoicePanel /> renders the theme choice UI 1`] = `
         class="_root_148br_24 mx_ThemeChoicePanel_ThemeSelectors"
       >
         <div
-          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector mx_ThemeChoicePanel_themeSelector_disabled cpd-theme-light"
+          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector mx_ThemeChoicePanel_themeSelector_enabled cpd-theme-light"
         >
           <div
             class="_inline-field-control_148br_52"
@@ -670,8 +671,8 @@ exports[`<ThemeChoicePanel /> renders the theme choice UI 1`] = `
               class="_container_1vw5h_18"
             >
               <input
+                checked=""
                 class="_input_1vw5h_26"
-                disabled=""
                 id="radix-1"
                 name="themeSelector"
                 title=""
@@ -695,7 +696,7 @@ exports[`<ThemeChoicePanel /> renders the theme choice UI 1`] = `
           </div>
         </div>
         <div
-          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector mx_ThemeChoicePanel_themeSelector_disabled cpd-theme-dark"
+          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector cpd-theme-dark"
         >
           <div
             class="_inline-field-control_148br_52"
@@ -705,7 +706,6 @@ exports[`<ThemeChoicePanel /> renders the theme choice UI 1`] = `
             >
               <input
                 class="_input_1vw5h_26"
-                disabled=""
                 id="radix-2"
                 name="themeSelector"
                 title=""
@@ -729,7 +729,7 @@ exports[`<ThemeChoicePanel /> renders the theme choice UI 1`] = `
           </div>
         </div>
         <div
-          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector mx_ThemeChoicePanel_themeSelector_disabled cpd-theme-light"
+          class="_inline-field_148br_40 mx_ThemeChoicePanel_themeSelector cpd-theme-light"
         >
           <div
             class="_inline-field-control_148br_52"
@@ -739,7 +739,6 @@ exports[`<ThemeChoicePanel /> renders the theme choice UI 1`] = `
             >
               <input
                 class="_input_1vw5h_26"
-                disabled=""
                 id="radix-3"
                 name="themeSelector"
                 title=""
