@@ -34,6 +34,14 @@ module.exports = {
                 ["*.mxcUrlToHttp", "*.getHttpUriForMxc"],
                 "Use Media helper instead to centralise access for customisation.",
             ),
+            ...buildRestrictedPropertiesOptions(["window.setImmediate"], "Use setTimeout instead."),
+        ],
+        "no-restricted-globals": [
+            "error",
+            {
+                name: "setImmediate",
+                message: "Use setTimeout instead.",
+            },
         ],
 
         "import/no-duplicates": ["error"],
@@ -98,8 +106,6 @@ module.exports = {
                             "!matrix-js-sdk/src/secret-storage",
                             "!matrix-js-sdk/src/room-hierarchy",
                             "!matrix-js-sdk/src/rendezvous",
-                            "!matrix-js-sdk/src/rendezvous/transports",
-                            "!matrix-js-sdk/src/rendezvous/channels",
                             "!matrix-js-sdk/src/indexeddb-worker",
                             "!matrix-js-sdk/src/pushprocessor",
                             "!matrix-js-sdk/src/extensible_events_v1",

@@ -65,10 +65,12 @@ interface IOptions<C extends ComponentType> {
 
 export enum ModalManagerEvent {
     Opened = "opened",
+    Closed = "closed",
 }
 
 type HandlerMap = {
     [ModalManagerEvent.Opened]: () => void;
+    [ModalManagerEvent.Closed]: () => void;
 };
 
 export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMap> {
@@ -232,6 +234,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
                 }
 
                 this.reRender();
+                this.emitClosed();
             },
             deferred.promise,
         ];
@@ -328,6 +331,14 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         }
     }
 
+    /**
+     * Emit the closed event
+     * @private
+     */
+    private emitClosed(): void {
+        this.emit(ModalManagerEvent.Closed);
+    }
+
     private onBackgroundClick = (): void => {
         const modal = this.getCurrentModal();
         if (!modal) {
@@ -411,7 +422,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
                 </div>
             );
 
-            setImmediate(() => ReactDOM.render(dialog, ModalManager.getOrCreateContainer()));
+            setTimeout(() => ReactDOM.render(dialog, ModalManager.getOrCreateContainer()), 0);
         } else {
             // This is safe to call repeatedly if we happen to do that
             ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());

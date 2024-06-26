@@ -18,12 +18,12 @@ limitations under the License.
 */
 
 import { ReactNode } from "react";
-import { createClient, MatrixClient, SSOAction, OidcTokenRefresher } from "matrix-js-sdk/src/matrix";
+import { createClient, MatrixClient, SSOAction, OidcTokenRefresher, decodeBase64 } from "matrix-js-sdk/src/matrix";
 import { IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { IMatrixClientCreds, MatrixClientPeg } from "./MatrixClientPeg";
+import { IMatrixClientCreds, MatrixClientPeg, MatrixClientPegAssignOpts } from "./MatrixClientPeg";
 import { ModuleRunner } from "./modules/ModuleRunner";
 import EventIndexPeg from "./indexing/EventIndexPeg";
 import createMatrixClient from "./utils/createMatrixClient";
@@ -37,6 +37,7 @@ import ActiveWidgetStore from "./stores/ActiveWidgetStore";
 import PlatformPeg from "./PlatformPeg";
 import { sendLoginRequest } from "./Login";
 import * as StorageManager from "./utils/StorageManager";
+import * as StorageAccess from "./utils/StorageAccess";
 import SettingsStore from "./settings/SettingsStore";
 import { SettingLevel } from "./settings/SettingLevel";
 import ToastStore from "./stores/ToastStore";
@@ -288,7 +289,7 @@ export async function attemptDelegatedAuthLogin(
  */
 async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> {
     try {
-        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, idTokenClaims, clientId, issuer } =
+        const { accessToken, refreshToken, homeserverUrl, identityServerUrl, idToken, clientId, issuer } =
             await completeOidcLogin(queryParams);
 
         const {
@@ -310,7 +311,7 @@ async function attemptOidcNativeLogin(queryParams: QueryDict): Promise<boolean> 
         logger.debug("Logged in via OIDC native flow");
         await onSuccessfulDelegatedAuthLogin(credentials);
         // this needs to happen after success handler which clears storages
-        persistOidcAuthenticatedSettings(clientId, issuer, idTokenClaims);
+        persistOidcAuthenticatedSettings(clientId, issuer, idToken);
         return true;
     } catch (error) {
         logger.error("Failed to login via OIDC", error);
@@ -421,6 +422,7 @@ async function onSuccessfulDelegatedAuthLogin(credentials: IMatrixClientCreds): 
 }
 
 type TryAgainFunction = () => void;
+
 /**
  * Display a friendly error to the user when token login or OIDC authorization fails
  * @param description error description
@@ -493,7 +495,7 @@ export interface IStoredSession {
 async function getStoredToken(storageKey: string): Promise<string | undefined> {
     let token: string | undefined;
     try {
-        token = await StorageManager.idbLoad("account", storageKey);
+        token = await StorageAccess.idbLoad("account", storageKey);
     } catch (e) {
         logger.error(`StorageManager.idbLoad failed for account:${storageKey}`, e);
     }
@@ -502,7 +504,7 @@ async function getStoredToken(storageKey: string): Promise<string | undefined> {
         if (token) {
             try {
                 // try to migrate access token to IndexedDB if we can
-                await StorageManager.idbSave("account", storageKey, token);
+                await StorageAccess.idbSave("account", storageKey, token);
                 localStorage.removeItem(storageKey);
             } catch (e) {
                 logger.error(`migration of token ${storageKey} to IndexedDB failed`, e);
@@ -719,7 +721,7 @@ async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promis
     try {
         const clientId = getStoredOidcClientId();
         const idTokenClaims = getStoredOidcIdTokenClaims();
-        const redirectUri = PlatformPeg.get()!.getSSOCallbackUrl().href;
+        const redirectUri = PlatformPeg.get()!.getOidcCallbackUrl().href;
         const deviceId = credentials.deviceId;
         if (!deviceId) {
             throw new Error("Expected deviceId in user credentials.");
@@ -820,7 +822,23 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     checkSessionLock();
 
     dis.fire(Action.OnLoggedIn);
-    await startMatrixClient(client, /*startSyncing=*/ !softLogout);
+
+    const clientPegOpts: MatrixClientPegAssignOpts = {};
+    if (credentials.pickleKey) {
+        // The pickleKey, if provided, is probably a base64-encoded 256-bit key, so can be used for the crypto store.
+        if (credentials.pickleKey.length === 43) {
+            clientPegOpts.rustCryptoStoreKey = decodeBase64(credentials.pickleKey);
+        } else {
+            // We have some legacy pickle key. Continue using it as a password.
+            clientPegOpts.rustCryptoStorePassword = credentials.pickleKey;
+        }
+    }
+
+    try {
+        await startMatrixClient(client, /*startSyncing=*/ !softLogout, clientPegOpts);
+    } finally {
+        clientPegOpts.rustCryptoStoreKey?.fill(0);
+    }
 
     return client;
 }
@@ -902,7 +920,7 @@ export function logout(oidcClientStore?: OidcClientStore): void {
         // logout doesn't work for guest sessions
         // Also we sometimes want to re-log in a guest session if we abort the login.
         // defer until next tick because it calls a synchronous dispatch, and we are likely here from a dispatch.
-        setImmediate(() => onLoggedOut());
+        setTimeout(onLoggedOut, 0);
         return;
     }
 
@@ -954,11 +972,16 @@ export function isLoggingOut(): boolean {
 /**
  * Starts the matrix client and all other react-sdk services that
  * listen for events while a session is logged in.
+ *
  * @param client the matrix client to start
- * @param {boolean} startSyncing True (default) to actually start
- * syncing the client.
+ * @param startSyncing - `true` to actually start syncing the client.
+ * @param clientPegOpts - Options to pass through to {@link MatrixClientPeg.start}.
  */
-async function startMatrixClient(client: MatrixClient, startSyncing = true): Promise<void> {
+async function startMatrixClient(
+    client: MatrixClient,
+    startSyncing: boolean,
+    clientPegOpts: MatrixClientPegAssignOpts,
+): Promise<void> {
     logger.log(`Lifecycle: Starting MatrixClient`);
 
     // dispatch this before starting the matrix client: it's used
@@ -989,10 +1012,10 @@ async function startMatrixClient(client: MatrixClient, startSyncing = true): Pro
         // index (e.g. the FilePanel), therefore initialize the event index
         // before the client.
         await EventIndexPeg.init();
-        await MatrixClientPeg.start();
+        await MatrixClientPeg.start(clientPegOpts);
     } else {
         logger.warn("Caller requested only auxiliary services be started");
-        await MatrixClientPeg.assign();
+        await MatrixClientPeg.assign(clientPegOpts);
     }
 
     checkSessionLock();
@@ -1064,7 +1087,7 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
         AbstractLocalStorageSettingsHandler.clear();
 
         try {
-            await StorageManager.idbDelete("account", ACCESS_TOKEN_STORAGE_KEY);
+            await StorageAccess.idbDelete("account", ACCESS_TOKEN_STORAGE_KEY);
         } catch (e) {
             logger.error("idbDelete failed for account:mx_access_token", e);
         }

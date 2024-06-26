@@ -18,17 +18,7 @@ import React from "react";
 import { fireEvent, render, screen, waitFor, cleanup, act, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Mocked, mocked } from "jest-mock";
-import {
-    Room,
-    User,
-    MatrixClient,
-    RoomMember,
-    MatrixEvent,
-    EventType,
-    CryptoApi,
-    DeviceVerificationStatus,
-    Device,
-} from "matrix-js-sdk/src/matrix";
+import { Room, User, MatrixClient, RoomMember, MatrixEvent, EventType, Device } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import { defer } from "matrix-js-sdk/src/utils";
 import { EventEmitter } from "events";
@@ -37,6 +27,8 @@ import {
     VerificationRequest,
     VerificationPhase as Phase,
     VerificationRequestEvent,
+    CryptoApi,
+    DeviceVerificationStatus,
 } from "matrix-js-sdk/src/crypto-api";
 
 import UserInfo, {
@@ -157,6 +149,7 @@ beforeEach(() => {
         isCryptoEnabled: jest.fn(),
         getUserId: jest.fn(),
         getSafeUserId: jest.fn(),
+        getDomain: jest.fn(),
         on: jest.fn(),
         off: jest.fn(),
         isSynapseAdministrator: jest.fn().mockResolvedValue(false),
@@ -293,7 +286,8 @@ describe("<UserInfo />", () => {
 
         it("renders close button correctly when encryption panel with a pending verification request", () => {
             renderComponent({ phase: RightPanelPhases.EncryptionPanel, verificationRequest });
-            expect(screen.getByTestId("base-card-close-button")).toHaveAttribute("title", "Cancel");
+            screen.getByTestId("base-card-close-button").focus();
+            expect(screen.getByRole("tooltip")).toHaveTextContent("Cancel");
         });
     });
 
@@ -387,11 +381,8 @@ describe("<UserInfo />", () => {
             // click it
             await userEvent.click(devicesButton);
 
-            // there should now be a button with the device id ...
-            const deviceButton = screen.getByRole("button", { description: "d1" });
-
-            // ... which should contain the device name
-            expect(within(deviceButton).getByText("my device")).toBeInTheDocument();
+            // there should now be a button with the device id which should contain the device name
+            expect(screen.getByRole("button", { name: "my device" })).toBeInTheDocument();
         });
 
         it("renders <BasicUserInfo />", async () => {
@@ -444,10 +435,10 @@ describe("<UserInfo />", () => {
                 });
 
                 // there should now be a button with the non-dehydrated device ID
-                expect(screen.getByRole("button", { description: "d1" })).toBeInTheDocument();
+                expect(screen.getByRole("button", { name: "my device" })).toBeInTheDocument();
 
                 // but not for the dehydrated device ID
-                expect(screen.queryByRole("button", { description: "d2" })).not.toBeInTheDocument();
+                expect(screen.queryByRole("button", { name: "dehydrated device" })).not.toBeInTheDocument();
 
                 // there should be a line saying that the user has "Offline device" enabled
                 expect(screen.getByText("Offline device enabled")).toBeInTheDocument();
@@ -530,7 +521,7 @@ describe("<UserInfo />", () => {
 
                 // the dehydrated device should be shown as an unverified device, which means
                 // there should now be a button with the device id ...
-                const deviceButton = screen.getByRole("button", { description: "d2" });
+                const deviceButton = screen.getByRole("button", { name: "dehydrated device" });
 
                 // ... which should contain the device name
                 expect(within(deviceButton).getByText("dehydrated device")).toBeInTheDocument();
@@ -572,17 +563,32 @@ describe("<UserInfo />", () => {
                 });
 
                 // the dehydrated devices should be shown as an unverified device, which means
-                // there should now be a button with the first dehydrated device id ...
-                const device1Button = screen.getByRole("button", { description: "d1" });
+                // there should now be a button with the first dehydrated device...
+                const device1Button = screen.getByRole("button", { name: "dehydrated device 1" });
+                expect(device1Button).toBeVisible();
 
                 // ... which should contain the device name
                 expect(within(device1Button).getByText("dehydrated device 1")).toBeInTheDocument();
-                // and a button with the second dehydrated device id ...
-                const device2Button = screen.getByRole("button", { description: "d2" });
+                // and a button with the second dehydrated device...
+                const device2Button = screen.getByRole("button", { name: "dehydrated device 2" });
+                expect(device2Button).toBeVisible();
 
                 // ... which should contain the device name
                 expect(within(device2Button).getByText("dehydrated device 2")).toBeInTheDocument();
             });
+        });
+
+        it("should render a deactivate button for users of the same server if we are a server admin", async () => {
+            mockClient.isSynapseAdministrator.mockResolvedValue(true);
+            mockClient.getDomain.mockReturnValue("example.com");
+
+            const { container } = renderComponent({
+                phase: RightPanelPhases.RoomMemberInfo,
+                room: mockRoom,
+            });
+
+            await waitFor(() => expect(screen.getByRole("button", { name: "Deactivate user" })).toBeInTheDocument());
+            expect(container).toMatchSnapshot();
         });
     });
 
@@ -707,7 +713,8 @@ describe("<DeviceItem />", () => {
         renderComponent({ isUserVerified: true });
         await act(flushPromises);
 
-        expect(screen.getByRole("button", { name: `${device.displayName} Not trusted` })).toBeInTheDocument();
+        const button = screen.getByRole("button", { name: device.displayName });
+        expect(button).toHaveTextContent(`${device.displayName}Not trusted`);
     });
 
     it("with verified device only, displays no button without a label", async () => {

@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import React, { lazy, Suspense, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { discoverAndValidateOIDCIssuerWellKnown, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
@@ -32,7 +32,7 @@ import { ExtendedDevice } from "../../devices/types";
 import { deleteDevicesWithInteractiveAuth } from "../../devices/deleteDevices";
 import SettingsTab from "../SettingsTab";
 import LoginWithQRSection from "../../devices/LoginWithQRSection";
-import LoginWithQR, { Mode } from "../../../auth/LoginWithQR";
+import { Mode } from "../../../auth/LoginWithQR-types";
 import { useAsyncMemo } from "../../../../../hooks/useAsyncMemo";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
 import { FilterVariation } from "../../devices/filter";
@@ -40,6 +40,10 @@ import { OtherSessionsSectionHeading } from "../../devices/OtherSessionsSectionH
 import { SettingsSection } from "../../shared/SettingsSection";
 import { OidcLogoutDialog } from "../../../dialogs/oidc/OidcLogoutDialog";
 import { SDKContext } from "../../../../../contexts/SDKContext";
+import Spinner from "../../../elements/Spinner";
+
+// We import `LoginWithQR` asynchronously to avoid importing the entire Rust Crypto WASM into the main bundle.
+const LoginWithQR = lazy(() => import("../../../auth/LoginWithQR"));
 
 const confirmSignOut = async (sessionsToSignOutCount: number): Promise<boolean> => {
     const { finished } = Modal.createDialog(QuestionDialog, {
@@ -147,7 +151,9 @@ const useSignOut = (
     };
 };
 
-const SessionManagerTab: React.FC = () => {
+const SessionManagerTab: React.FC<{
+    showMsc4108QrCode?: boolean;
+}> = ({ showMsc4108QrCode }) => {
     const {
         devices,
         dehydratedDeviceId,
@@ -185,6 +191,20 @@ const SessionManagerTab: React.FC = () => {
     const clientVersions = useAsyncMemo(() => matrixClient.getVersions(), [matrixClient]);
     const capabilities = useAsyncMemo(async () => matrixClient?.getCapabilities(), [matrixClient]);
     const wellKnown = useMemo(() => matrixClient?.getClientWellKnown(), [matrixClient]);
+    const oidcClientConfig = useAsyncMemo(async () => {
+        try {
+            const authIssuer = await matrixClient?.getAuthIssuer();
+            if (authIssuer) {
+                return discoverAndValidateOIDCIssuerWellKnown(authIssuer.issuer);
+            }
+        } catch (e) {
+            logger.error("Failed to discover OIDC metadata", e);
+        }
+    }, [matrixClient]);
+    const isCrossSigningReady = useAsyncMemo(
+        async () => matrixClient.getCrypto()?.isCrossSigningReady() ?? false,
+        [matrixClient],
+    );
 
     const onDeviceExpandToggle = (deviceId: ExtendedDevice["device_id"]): void => {
         if (expandedDeviceIds.includes(deviceId)) {
@@ -267,7 +287,7 @@ const SessionManagerTab: React.FC = () => {
               }
             : undefined;
 
-    const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>();
+    const [signInWithQrMode, setSignInWithQrMode] = useState<Mode | null>(showMsc4108QrCode ? Mode.Show : null);
 
     const onQrFinish = useCallback(() => {
         setSignInWithQrMode(null);
@@ -278,12 +298,29 @@ const SessionManagerTab: React.FC = () => {
     }, [setSignInWithQrMode]);
 
     if (signInWithQrMode) {
-        return <LoginWithQR mode={signInWithQrMode} onFinished={onQrFinish} client={matrixClient} />;
+        return (
+            <Suspense fallback={<Spinner />}>
+                <LoginWithQR
+                    mode={signInWithQrMode}
+                    onFinished={onQrFinish}
+                    client={matrixClient}
+                    legacy={!oidcClientConfig && !showMsc4108QrCode}
+                />
+            </Suspense>
+        );
     }
 
     return (
         <SettingsTab>
-            <SettingsSection heading={_t("settings|sessions|title")}>
+            <SettingsSection>
+                <LoginWithQRSection
+                    onShowQr={onShowQrClicked}
+                    versions={clientVersions}
+                    capabilities={capabilities}
+                    wellKnown={wellKnown}
+                    oidcClientConfig={oidcClientConfig}
+                    isCrossSigningReady={isCrossSigningReady}
+                />
                 <SecurityRecommendations
                     devices={devices}
                     goToFilteredList={onGoToFilteredList}
@@ -337,12 +374,6 @@ const SessionManagerTab: React.FC = () => {
                         />
                     </SettingsSubsection>
                 )}
-                <LoginWithQRSection
-                    onShowQr={onShowQrClicked}
-                    versions={clientVersions}
-                    capabilities={capabilities}
-                    wellKnown={wellKnown}
-                />
             </SettingsSection>
         </SettingsTab>
     );

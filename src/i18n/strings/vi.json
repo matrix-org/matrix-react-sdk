@@ -229,9 +229,6 @@
         "password_field_weak_label": "Mật khẩu được phép, nhưng không an toàn",
         "phone_label": "Điện thoại",
         "phone_optional_label": "Điện thoại (tùy chọn)",
-        "qr_code_login": {
-            "error_invalid_scanned_code": "Mã vừa quét là không hợp lệ."
-        },
         "register_action": "Tạo tài khoản",
         "registration": {
             "continue_without_email_description": "Lưu ý là nếu bạn không thêm địa chỉ thư điện tử và quên mật khẩu, bạn có thể <b>vĩnh viễn mất quyền truy cập vào tài khoản của mình</b>.",
@@ -395,7 +392,6 @@
         "description": "Sự mô tả",
         "deselect_all": "Bỏ chọn tất cả",
         "device": "Thiết bị",
-        "display_name": "Tên hiển thị",
         "edited": "đã chỉnh sửa",
         "email_address": "Địa chỉ thư điện tử",
         "emoji": "Biểu tượng cảm xúc",
@@ -1147,7 +1143,6 @@
         "failed_generic": "Tác vụ thất bại",
         "failed_title": "Không thể mời",
         "invalid_address": "Không nhận ra địa chỉ",
-        "key_share_warning": "Những người được mời sẽ có thể đọc tin nhắn cũ.",
         "name_email_mxid_share_room": "Mời ai đó bằng tên, địa chỉ thư điện tử, tên người dùng của họ (như <userId/>) hoặc chia sẻ phòng này <a>share this room</a>.",
         "name_email_mxid_share_space": "Mời ai đó bằng tên, địa chỉ thư điện tử, tên người dùng của họ (như <userId/>) hoặc <a>chia sẻ space này</a>.",
         "name_mxid_share_room": "Mời ai đó thông qua tên hiển thị, tên người dùng của họ (ví dụ <userId/>) hoặc <a>chia sẻ phòng này</a>.",
@@ -1287,14 +1282,10 @@
         "pinning": "Ghim tin nhắn",
         "report_to_moderators": "Báo cáo cho điều phối viên",
         "report_to_moderators_description": "Trong các phòng hỗ trợ điều phối, nút \"Báo cáo\" sẽ giúp bạn báo cáo lạm dụng cho điều phối viên của phòng.",
-        "rust_crypto": "Mã hóa dựa trên Rust",
         "sliding_sync": "Chế độ đồng bộ tối ưu (Sync v3)",
         "sliding_sync_description": "Đang được phát triển tích cực, không thể vô hiệu.",
         "sliding_sync_disabled_notice": "Đăng xuất và đăng nhập lại để vô hiệu hóa",
-        "sliding_sync_proxy_url_label": "Đường dẫn máy chủ ủy nhiệm (proxy)",
         "sliding_sync_server_no_support": "Máy chủ của bạn không hoàn toàn hỗ trợ",
-        "sliding_sync_server_specify_proxy": "Máy chủ của bạn không hỗ trợ, bạn cần chỉ định máy chủ ủy nhiệm (proxy)",
-        "sliding_sync_server_support": "Máy chủ của bạn hoàn toàn hỗ trợ",
         "under_active_development": "Đang được phát triển tích cực.",
         "video_rooms": "Phòng video",
         "video_rooms_a_new_way_to_chat": "Một cách mới để trò chuyện bằng thoại và video trong %(brand)s.",
@@ -2120,13 +2111,11 @@
             "custom_theme_success": "Đã thêm chủ đề!",
             "custom_theme_url": "URL chủ đề tùy chỉnh",
             "font_size": "Cỡ chữ",
-            "heading": "Tùy chỉnh diện mạo của bạn",
             "image_size_default": "Mặc định",
             "image_size_large": "Lớn",
             "layout_bubbles": "Bong bóng tin nhắn",
             "layout_irc": "IRC (thử nghiệm)",
             "match_system_theme": "Theo chủ đề hệ thống",
-            "subheading": "Cài đặt Giao diện chỉ ảnh hưởng đến phiên %(brand)s này.",
             "timeline_image_size": "Kích thước hình ảnh trong timeline",
             "use_high_contrast": "Sử dụng độ tương phản cao"
         },
@@ -2155,7 +2144,6 @@
             "confirm_adding_email_body": "Nhấn vào nút dưới đây để xác nhận thêm địa chỉ thư điện tử này.",
             "confirm_adding_email_title": "Xác nhận thêm địa chỉ thư điện tử",
             "deactivate_confirm_body": "Bạn có chắc chắn muốn hủy kích hoạt tài khoản của mình không? Điều này là không thể thay đổi.",
-            "deactivate_confirm_body_password": "Để tiếp tục, vui lòng nhập mật khẩu tài khoản của bạn:",
             "deactivate_confirm_body_sso": "Xác nhận việc hủy kích hoạt tài khoản của bạn bằng cách sử dụng Single Sign On để chứng minh danh tính của bạn.",
             "deactivate_confirm_content": "Xác nhận bạn muốn vô hiệu hóa tài khoản. Nếu bạn tiếp tục:",
             "deactivate_confirm_content_1": "Bạn sẽ không thể kích hoạt lại tài khoản của bạn",
@@ -2191,8 +2179,6 @@
             "error_remove_3pid": "Không thể xóa thông tin liên hệ",
             "error_revoke_email_discovery": "Không thể thu hồi chia sẻ cho địa chỉ thư điện tử",
             "error_revoke_msisdn_discovery": "Không thể thu hồi chia sẻ cho số điện thoại",
-            "error_saving_profile": "Lệnh không thể hoàn thành",
-            "error_saving_profile_title": "Không lưu được hồ sơ của bạn",
             "error_share_email_discovery": "Không thể chia sẻ địa chỉ thư điện tử",
             "error_share_msisdn_discovery": "Không thể chia sẻ số điện thoại",
             "external_account_management": "Thông tin tài khoản bạn được quản lý riêng ở <code>%(hostname)s</code>.",
@@ -2843,7 +2829,6 @@
             "tooltip_sub": "Nhấp để xem các chỉnh sửa",
             "tooltip_title": "Đã chỉnh sửa lúc %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "Các tin nhắn được mã hóa trước thời điểm này không có sẵn.",
         "error_no_renderer": "Sự kiện này không thể được hiển thị",
         "error_rendering_message": "Không thể tải tin nhắn này",
         "historical_messages_unavailable": "Bạn khồng thể thấy các tin nhắn trước",
@@ -3069,8 +3054,7 @@
         "pending_moderation_reason": "Tin nhắn chờ duyệt: %(reason)s",
         "reactions": {
             "add_reaction_prompt": "Thêm phản ứng",
-            "label": "%(reactors)s đã phản hồi với %(content)s",
-            "tooltip": "<reactors/><reactedWith>đã phản hồi với %(shortName)s</reactedWith>"
+            "label": "%(reactors)s đã phản hồi với %(content)s"
         },
         "read_receipt_title": {
             "one": "Gửi bởi %(count)s người",

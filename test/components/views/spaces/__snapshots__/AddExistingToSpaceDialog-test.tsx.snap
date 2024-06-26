@@ -35,7 +35,6 @@ exports[`<AddExistingToSpaceDialog /> looks as expected 1`] = `
             <img
               alt=""
               class="_image_mcap2_50"
-              crossorigin="anonymous"
               data-type="square"
               height="40px"
               loading="lazy"
@@ -57,12 +56,6 @@ exports[`<AddExistingToSpaceDialog /> looks as expected 1`] = `
         </div>
       </h1>
     </div>
-    <div
-      aria-label="Close dialog"
-      class="mx_AccessibleButton mx_Dialog_cancelButton"
-      role="button"
-      tabindex="0"
-    />
     <div
       class="mx_AddExistingToSpace"
     >
@@ -119,6 +112,12 @@ exports[`<AddExistingToSpaceDialog /> looks as expected 1`] = `
         </div>
       </div>
     </div>
+    <div
+      aria-label="Close dialog"
+      class="mx_AccessibleButton mx_Dialog_cancelButton"
+      role="button"
+      tabindex="0"
+    />
   </div>
   <div
     data-focus-guard="true"

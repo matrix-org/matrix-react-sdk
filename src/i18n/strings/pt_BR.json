@@ -341,7 +341,6 @@
         "description": "Descrição",
         "deselect_all": "Desmarcar todos",
         "device": "Dispositivo",
-        "display_name": "Nome e sobrenome",
         "edited": "editado",
         "email_address": "Endereço de e-mail",
         "encrypted": "Criptografada",
@@ -1617,13 +1616,11 @@
             "custom_theme_success": "Tema adicionado!",
             "custom_theme_url": "Link do tema personalizado",
             "font_size": "Tamanho da fonte",
-            "heading": "Personalize sua aparência",
             "image_size_default": "Padrão",
             "image_size_large": "Grande",
             "layout_bubbles": "Balões de mensagem",
             "layout_irc": "IRC (experimental)",
             "match_system_theme": "Se adaptar ao tema do sistema",
-            "subheading": "As configurações de aparência afetam apenas esta sessão do %(brand)s.",
             "timeline_image_size": "Tamanho da imagem na linha do tempo",
             "use_high_contrast": "Usar alto contraste"
         },
@@ -1674,8 +1671,6 @@
             "error_remove_3pid": "Não foi possível remover informação de contato",
             "error_revoke_email_discovery": "Não foi possível revogar o compartilhamento do endereço de e-mail",
             "error_revoke_msisdn_discovery": "Não foi possível revogar o compartilhamento do número de celular",
-            "error_saving_profile": "A operação não foi concluída",
-            "error_saving_profile_title": "Houve uma falha ao salvar o seu perfil",
             "error_share_email_discovery": "Não foi possível compartilhar o endereço de e-mail",
             "error_share_msisdn_discovery": "Não foi possível compartilhar o número de celular",
             "incorrect_msisdn_verification": "Código de confirmação incorreto",
@@ -2141,7 +2136,6 @@
             "tooltip_sub": "Clicar para ver edições",
             "tooltip_title": "Editado em %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "As mensagens criptografadas antes deste ponto não estão disponíveis.",
         "error_no_renderer": "Este evento não pôde ser exibido",
         "error_rendering_message": "Não foi possível carregar esta mensagem",
         "historical_messages_unavailable": "Você não pode ver as mensagens anteriores",
@@ -2352,8 +2346,7 @@
         },
         "reactions": {
             "add_reaction_prompt": "Adicionar reação",
-            "label": "%(reactors)s reagiram com %(content)s",
-            "tooltip": "<reactors/><reactedWith>reagiu com %(shortName)s</reactedWith>"
+            "label": "%(reactors)s reagiram com %(content)s"
         },
         "read_receipt_title": {
             "one": "Visto por %(count)s pessoa",

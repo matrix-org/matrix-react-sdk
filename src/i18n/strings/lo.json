@@ -374,7 +374,6 @@
         "dark": "ມືດ",
         "description": "ລາຍລະອຽດ",
         "deselect_all": "ຍົກເລີກການເລືອກທັງໝົດ",
-        "display_name": "ຊື່ສະແດງ",
         "edited": "ດັດແກ້",
         "email_address": "ທີ່ຢູ່ອີເມວ",
         "emoji": "ອີໂມຈິ",
@@ -1060,7 +1059,6 @@
         "failed_generic": "ການດໍາເນີນງານບໍ່ສຳເລັດ",
         "failed_title": "ການເຊີນບໍ່ສຳເລັດ",
         "invalid_address": "ບໍ່ຮັບຮູ້ທີ່ຢູ່",
-        "key_share_warning": "ຄົນທີ່ໄດ້ຮັບເຊີນຈະສາມາດອ່ານຂໍ້ຄວາມເກົ່າໄດ້.",
         "name_email_mxid_share_room": "ເຊີນຄົນທີ່ໃຊ້ຊື່ຂອງເຂົາເຈົ້າ, ທີ່ຢູ່ອີເມວ, ຊື່ຜູ້ໃຊ້ (ເຊັ່ນ <userId/>) ຫຼື <a>ແບ່ງປັນຫ້ອງນີ້</a>.",
         "name_email_mxid_share_space": "ເຊີນບຸຄົນອຶ່ນໂດຍໃຊ້ຊື່, ທີ່ຢູ່ອີເມວ, ຊື່ຜູ້ໃຊ້ (ເຊັ່ນ<userId/> ຫຼື <a>share this space</a>.",
         "name_mxid_share_room": "ເຊີນຄົນທີ່ໃຊ້ຊື່ຂອງເຂົາເຈົ້າ, ຊື່ຜູ້ໃຊ້ (ເຊັ່ນ <userId/>) ຫຼື <a>ແບ່ງປັນຫ້ອງນີ້</a>.",
@@ -1940,13 +1938,11 @@
             "custom_theme_success": "ເພີ່ມຫົວຂໍ້!",
             "custom_theme_url": "ການ ກຳນົດເອງຫົວຂໍ້ URL",
             "font_size": "ຂະໜາດຕົວອັກສອນ",
-            "heading": "ປັບແຕ່ງຮູບລັກສະນະຂອງທ່ານ",
             "image_size_default": "ຄ່າເລີ່ມຕົ້ນ",
             "image_size_large": "ຂະຫນາດໃຫຍ່",
             "layout_bubbles": "ຟອງຂໍ້ຄວາມ",
             "layout_irc": "(ທົດລອງ)IRC",
             "match_system_theme": "ລະບົບຈັບຄູ່ຫົວຂໍ້",
-            "subheading": "ການຕັ້ງຄ່າຮູບລັກສະນະມີຜົນກະທົບພຽງແຕ່ %(brand)s ໃນລະບົບ ນີ້.",
             "timeline_image_size": "ຂະຫນາດຮູບພາບຢູ່ໃນທາມລາຍ",
             "use_high_contrast": "ໃຊ້ຄວາມຄົມຊັດສູງ"
         },
@@ -1972,7 +1968,6 @@
             "confirm_adding_email_body": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
             "confirm_adding_email_title": "ຢືນຢັນການເພີ່ມອີເມວ",
             "deactivate_confirm_body": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການປິດການນຳໃຊ້ບັນຊີຂອງທ່ານ? ນີ້ແມ່ນບໍ່ສາມາດປີ້ນກັບກັນໄດ້.",
-            "deactivate_confirm_body_password": "ເພື່ອສືບຕໍ່, ກະລຸນາໃສ່ລະຫັດຜ່ານບັນຊີຂອງທ່ານ:",
             "deactivate_confirm_body_sso": "ຢືນຢັນການປິດບັນຊີຂອງທ່ານໂດຍການໃຊ້ການເຂົ້າສູ່ລະບົບດຽວເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
             "deactivate_confirm_content": "ຢືນຢັນວ່າທ່ານຕ້ອງການປິດການນຳໃຊ້ບັນຊີຂອງທ່ານ. ຖ້າທ່ານດໍາເນີນການ:",
             "deactivate_confirm_content_1": "ທ່ານຈະບໍ່ສາມາດເປີດໃຊ້ບັນຊີຂອງທ່ານຄືນໄດ້",
@@ -2006,8 +2001,6 @@
             "error_remove_3pid": "ບໍ່ສາມາດລຶບຂໍ້ມູນການຕິດຕໍ່ໄດ້",
             "error_revoke_email_discovery": "ບໍ່ສາມາດຖອນການແບ່ງປັນສໍາລັບທີ່ຢູ່ອີເມວໄດ້",
             "error_revoke_msisdn_discovery": "ບໍ່ສາມາດຖອນການແບ່ງປັນສຳລັບເບີໂທລະສັບໄດ້",
-            "error_saving_profile": "ການດໍາເນີນງານບໍ່ສໍາເລັດ",
-            "error_saving_profile_title": "ບັນທຶກໂປຣໄຟລ໌ຂອງທ່ານບໍ່ສຳເລັດ",
             "error_share_email_discovery": "ບໍ່ສາມາດແບ່ງປັນທີ່ຢູ່ອີເມວໄດ້",
             "error_share_msisdn_discovery": "ບໍ່ສາມາດແບ່ງປັນເບີໂທລະສັບໄດ້",
             "incorrect_msisdn_verification": "ລະຫັດຢືນຢັນບໍ່ຖືກຕ້ອງ",
@@ -2523,7 +2516,6 @@
             "tooltip_sub": "ກົດເພື່ອເບິ່ງການແກ້ໄຂ",
             "tooltip_title": "ແກ້ໄຂເມື່ອ %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້ກ່ອນຈຸດນີ້ບໍ່ສາມາດໃຊ້ໄດ້.",
         "error_no_renderer": "ເຫດການນີ້ບໍ່ສາມາດສະແດງໄດ້",
         "error_rendering_message": "ບໍ່ສາມາດໂຫຼດຂໍ້ຄວາມນີ້ໄດ້",
         "historical_messages_unavailable": "ທ່ານບໍ່ສາມາດເຫັນຂໍ້ຄວາມກ່ອນໜ້ານີ້",
@@ -2739,8 +2731,7 @@
         "pending_moderation_reason": "ຂໍ້ຄວາມທີ່ລໍຖ້າການກວດກາ: %(reason)s",
         "reactions": {
             "add_reaction_prompt": "ເພີ່ມການຕອບໂຕ້",
-            "label": "%(reactors)sປະຕິກິລິຍາກັບ %(content)s",
-            "tooltip": "<reactors/><reactedWith>ປະຕິກິລິຍາດ້ວຍ %(shortName)s</reactedWith>"
+            "label": "%(reactors)sປະຕິກິລິຍາກັບ %(content)s"
         },
         "read_receipt_title": {
             "one": "ເຫັນໂດຍ %(count)s ຄົນ",

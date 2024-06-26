@@ -32,6 +32,7 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
     >
       <div
         aria-disabled="true"
+        aria-label="Remove"
         class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_outline mx_AccessibleButton_disabled"
         disabled=""
         role="button"
@@ -41,6 +42,7 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
       </div>
       <div
         aria-disabled="true"
+        aria-label="Mark as not suggested"
         class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline mx_AccessibleButton_disabled"
         disabled=""
         role="button"
@@ -391,7 +393,6 @@ exports[`SpaceHierarchy <SpaceHierarchy /> renders 1`] = `
             Join
           </div>
           <span
-            data-state="closed"
             tabindex="0"
           >
             <span

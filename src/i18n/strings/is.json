@@ -218,7 +218,6 @@
         "phone_label": "Sími",
         "phone_optional_label": "Sími (valfrjálst)",
         "qr_code_login": {
-            "error_invalid_scanned_code": "Skannaði kóðinn er ógildur.",
             "sign_in_new_device": "Skrá inn nýtt tæki",
             "waiting_for_device": "Bíð eftir að tækið skráist inn"
         },
@@ -377,7 +376,6 @@
         "description": "Lýsing",
         "deselect_all": "Afvelja allt",
         "device": "Tæki",
-        "display_name": "Birtingarnafn",
         "edited": "breytti",
         "email_address": "Tölvupóstfang",
         "emoji": "Tjáningartáknmynd",
@@ -1030,7 +1028,6 @@
         "failed_generic": "Aðgerð tókst ekki",
         "failed_title": "Mistókst að bjóða",
         "invalid_address": "Óþekkjanlegt vistfang",
-        "key_share_warning": "Fólk sem er boðið mun geta lesið eldri skilaboð.",
         "name_email_mxid_share_room": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessari spjallrás</a>.",
         "name_email_mxid_share_space": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessu svæði</a>.",
         "name_mxid_share_room": "Bjóddu einhverjum með því að nota nafn, notandanafn (eins og <userId/>) eða <a>deildu þessari spjallrás</a>.",
@@ -1167,8 +1164,6 @@
         "pinning": "Festing skilaboða",
         "report_to_moderators": "Tilkynna til umsjónarmanna",
         "report_to_moderators_description": "Í spjallrásum sem styðja eftirlit umsjónarmanna, mun 'Kæra'-hnappurinn gefa þér færi á að tilkynna misnotkun til umsjónarmanna spjallrása.",
-        "sliding_sync_proxy_url_label": "Slóð milliþjóns",
-        "sliding_sync_proxy_url_optional_label": "Slóð milliþjóns (valfrjálst)",
         "under_active_development": "Í virkri þróun.",
         "video_rooms": "Myndspjallrásir",
         "video_rooms_a_new_way_to_chat": "Ný leið til að spjalla með tali og myndmerki í %(brand)s.",
@@ -1929,13 +1924,11 @@
             "custom_theme_success": "Þema bætt við!",
             "custom_theme_url": "Slóð á sérsniðið þema",
             "font_size": "Leturstærð",
-            "heading": "Sérsníddu útlitið þitt",
             "image_size_default": "Sjálfgefið",
             "image_size_large": "Stórt",
             "layout_bubbles": "Skilaboðablöðrur",
             "layout_irc": "IRC (á tilraunastigi)",
             "match_system_theme": "Samsvara þema kerfis",
-            "subheading": "Stillingar útlits hafa einungis áhrif á þessa %(brand)s setu.",
             "timeline_image_size": "Stærð myndar í tímalínunni",
             "use_high_contrast": "Nota mikil birtuskil"
         },
@@ -1982,8 +1975,6 @@
             "error_remove_3pid": "Ekki tókst að fjarlægja upplýsingar um tengilið",
             "error_revoke_email_discovery": "Ekki er hægt að afturkalla að deila tölvupóstfangi",
             "error_revoke_msisdn_discovery": "Ekki er hægt að afturkalla að deila símanúmeri",
-            "error_saving_profile": "Ekki tókst að ljúka aðgerðinni",
-            "error_saving_profile_title": "Mistókst að vista sniðið þitt",
             "error_share_email_discovery": "Get ekki deilt tölvupóstfangi",
             "error_share_msisdn_discovery": "Ekki er hægt að deila símanúmeri",
             "incorrect_msisdn_verification": "Rangur sannvottunarkóði",
@@ -2805,8 +2796,7 @@
         "pending_moderation_reason": "Efni sem bíður yfirferðar: %(reason)s",
         "reactions": {
             "add_reaction_prompt": "Bæta við viðbrögðum",
-            "label": "%(reactors)s brást við með %(content)s",
-            "tooltip": "<reactors/><reactedWith>brást við %(shortName)s</reactedWith>"
+            "label": "%(reactors)s brást við með %(content)s"
         },
         "read_receipt_title": {
             "one": "Séð af %(count)s aðila",

@@ -40,8 +40,6 @@ test.describe("Device verification", () => {
         // Visit the login page of the app, to load the matrix sdk
         await page.goto("/#/login");
 
-        await page.pause();
-
         // wait for the page to load
         await page.waitForSelector(".mx_AuthPage", { timeout: 30000 });
 
@@ -52,13 +50,17 @@ test.describe("Device verification", () => {
             bootstrapSecretStorage: true,
         });
         aliceBotClient.setCredentials(credentials);
-        const mxClientHandle = await aliceBotClient.prepareClient();
 
-        await page.waitForTimeout(20000);
-
-        expectedBackupVersion = await mxClientHandle.evaluate(async (mxClient) => {
-            return await mxClient.getCrypto()!.getActiveSessionBackupVersion();
-        });
+        // Backup is prepared in the background. Poll until it is ready.
+        const botClientHandle = await aliceBotClient.prepareClient();
+        await expect
+            .poll(async () => {
+                expectedBackupVersion = await botClientHandle.evaluate((cli) =>
+                    cli.getCrypto()!.getActiveSessionBackupVersion(),
+                );
+                return expectedBackupVersion;
+            })
+            .not.toBe(null);
     });
 
     // Click the "Verify with another device" button, and have the bot client auto-accept it.
@@ -240,24 +242,26 @@ test.describe("User verification", () => {
     test.use({
         displayName: "Alice",
         botCreateOpts: { displayName: "Bob", autoAcceptInvites: true, userIdPrefix: "bob_" },
+        room: async ({ page, app, bot: bob, user: aliceCredentials }, use) => {
+            await app.client.bootstrapCrossSigning(aliceCredentials);
+
+            // the other user creates a DM
+            const dmRoomId = await createDMRoom(bob, aliceCredentials.userId);
+
+            // accept the DM
+            await app.viewRoomByName("Bob");
+            await page.getByRole("button", { name: "Start chatting" }).click();
+            await use({ roomId: dmRoomId });
+        },
     });
 
     test("can receive a verification request when there is no existing DM", async ({
         page,
-        app,
         bot: bob,
         user: aliceCredentials,
         toasts,
+        room: { roomId: dmRoomId },
     }) => {
-        await app.client.bootstrapCrossSigning(aliceCredentials);
-
-        // the other user creates a DM
-        const dmRoomId = await createDMRoom(bob, aliceCredentials.userId);
-
-        // accept the DM
-        await app.viewRoomByName("Bob");
-        await page.getByRole("button", { name: "Start chatting" }).click();
-
         // once Alice has joined, Bob starts the verification
         const bobVerificationRequest = await bob.evaluateHandle(
             async (client, { dmRoomId, aliceCredentials }) => {
@@ -278,7 +282,7 @@ test.describe("User verification", () => {
         // it should contain the details of the requesting user
         await expect(toast.getByText(`Bob (${bob.credentials.userId})`)).toBeVisible();
         // Accept
-        await toast.getByRole("button", { name: "Verify Session" }).click();
+        await toast.getByRole("button", { name: "Verify User" }).click();
 
         // request verification by emoji
         await page.locator("#mx_RightPanel").getByRole("button", { name: "Verify by emoji" }).click();
@@ -293,6 +297,48 @@ test.describe("User verification", () => {
         await page.getByRole("button", { name: "They match" }).click();
         await expect(page.getByText("You've successfully verified Bob!")).toBeVisible();
         await page.getByRole("button", { name: "Got it" }).click();
+    });
+
+    test("can abort emoji verification when emoji mismatch", async ({
+        page,
+        bot: bob,
+        user: aliceCredentials,
+        toasts,
+        room: { roomId: dmRoomId },
+    }) => {
+        // once Alice has joined, Bob starts the verification
+        const bobVerificationRequest = await bob.evaluateHandle(
+            async (client, { dmRoomId, aliceCredentials }) => {
+                const room = client.getRoom(dmRoomId);
+                while (room.getMember(aliceCredentials.userId)?.membership !== "join") {
+                    await new Promise((resolve) => {
+                        room.once(window.matrixcs.RoomStateEvent.Members, resolve);
+                    });
+                }
+
+                return client.getCrypto().requestVerificationDM(aliceCredentials.userId, dmRoomId);
+            },
+            { dmRoomId, aliceCredentials },
+        );
+
+        // Accept verification via toast
+        const toast = await toasts.getToast("Verification requested");
+        await toast.getByRole("button", { name: "Verify User" }).click();
+
+        // request verification by emoji
+        await page.locator("#mx_RightPanel").getByRole("button", { name: "Verify by emoji" }).click();
+
+        /* on the bot side, wait for the verifier to exist ... */
+        const botVerifier = await awaitVerifier(bobVerificationRequest);
+        // ... confirm ...
+        botVerifier.evaluate((verifier) => verifier.verify()).catch(() => {});
+        // ... and abort the verification
+        await page.getByRole("button", { name: "They don't match" }).click();
+
+        const dialog = page.locator(".mx_Dialog");
+        await expect(dialog.getByText("Your messages are not secure")).toBeVisible();
+        await dialog.getByRole("button", { name: "OK" }).click();
+        await expect(dialog).not.toBeVisible();
     });
 });
 

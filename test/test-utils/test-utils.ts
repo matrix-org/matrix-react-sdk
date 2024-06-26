@@ -210,6 +210,8 @@ export function createTestClient(): MatrixClient {
         getPushers: jest.fn().mockResolvedValue({ pushers: [] }),
         getThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
         bulkLookupThreePids: jest.fn().mockResolvedValue({ threepids: [] }),
+        setAvatarUrl: jest.fn().mockResolvedValue(undefined),
+        setDisplayName: jest.fn().mockResolvedValue(undefined),
         setPusher: jest.fn().mockResolvedValue(undefined),
         setPushRuleEnabled: jest.fn().mockResolvedValue(undefined),
         setPushRuleActions: jest.fn().mockResolvedValue(undefined),
@@ -271,6 +273,8 @@ export function createTestClient(): MatrixClient {
         getMediaConfig: jest.fn(),
         baseUrl: "https://matrix-client.matrix.org",
         matrixRTC: createStubMatrixRTC(),
+        isFallbackICEServerAllowed: jest.fn().mockReturnValue(false),
+        getAuthIssuer: jest.fn(),
     } as unknown as MatrixClient;
 
     client.reEmitter = new ReEmitter(client);
@@ -363,10 +367,12 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
         room_id: opts.room,
         sender: opts.user,
         content: opts.content,
-        prev_content: opts.prev_content,
         event_id: opts.id ?? "$" + Math.random() + "-" + Math.random(),
         origin_server_ts: opts.ts ?? 0,
-        unsigned: opts.unsigned,
+        unsigned: {
+            ...opts.unsigned,
+            prev_content: opts.prev_content,
+        },
         redacts: opts.redacts,
     };
     if (opts.skey !== undefined) {
@@ -622,6 +628,7 @@ export function mkStubRoom(
         getType: jest.fn().mockReturnValue(undefined),
         getUnfilteredTimelineSet: jest.fn(),
         getUnreadNotificationCount: jest.fn(() => 0),
+        getRoomUnreadNotificationCount: jest.fn().mockReturnValue(0),
         getVersion: jest.fn().mockReturnValue("1"),
         hasMembershipState: () => false,
         isElementVideoRoom: jest.fn().mockReturnValue(false),
@@ -639,7 +646,6 @@ export function mkStubRoom(
         roomId,
         setBlacklistUnverifiedDevices: jest.fn(),
         setUnreadNotificationCount: jest.fn(),
-        shouldUpgradeToVersion: (() => null) as () => string | null,
         tags: {},
         timeline: [],
     } as unknown as Room;

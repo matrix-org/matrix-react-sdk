@@ -307,7 +307,6 @@
         "description": "Aprašas",
         "deselect_all": "Nuimti pasirinkimą nuo visko",
         "device": "Įrenginys",
-        "display_name": "Rodomas Vardas",
         "edited": "pakeista",
         "email_address": "El. pašto adresas",
         "emoji": "Jaustukai",
@@ -808,7 +807,6 @@
         "failed_generic": "Operacija nepavyko",
         "failed_title": "Nepavyko pakviesti",
         "invalid_address": "Neatpažintas adresas",
-        "key_share_warning": "Pakviesti asmenys galės skaityti senus pranešimus.",
         "name_email_mxid_share_room": "Pakviesti ką nors, naudojant jų vardą, el. pašto adresą, vartotojo vardą (pvz.: <userId/>) arba <a>bendrinti šį kambarį</a>.",
         "name_mxid_share_room": "Pakviesti ką nors naudojant jų vardą, vartotojo vardą (pvz.: <userId/>) arba <a>bendrinti šį kambarį</a>.",
         "recents_section": "Pastarieji pokalbiai",
@@ -1522,13 +1520,11 @@
             "custom_theme_success": "Tema pridėta!",
             "custom_theme_url": "Pasirinktinės temos URL",
             "font_size": "Šrifto dydis",
-            "heading": "Tinkinti savo išvaizdą",
             "image_size_default": "Numatytas",
             "image_size_large": "Didelis",
             "layout_bubbles": "Žinučių burbulai",
             "layout_irc": "IRC (eksperimentinis)",
             "match_system_theme": "Suderinti su sistemos tema",
-            "subheading": "Išvaizdos nustatymai įtakoja tik šį %(brand)s seansą.",
             "timeline_image_size": "Paveikslėlio dydis laiko juostoje",
             "use_high_contrast": "Naudoti didelį kontrastą"
         },
@@ -1579,8 +1575,6 @@
             "error_remove_3pid": "Nepavyko pašalinti kontaktinės informacijos",
             "error_revoke_email_discovery": "Nepavyksta atšaukti el. pašto adreso bendrinimo",
             "error_revoke_msisdn_discovery": "Neina atšaukti telefono numerio bendrinimo",
-            "error_saving_profile": "Nepavyko užbaigti operacijos",
-            "error_saving_profile_title": "Nepavyko išsaugoti jūsų profilio",
             "error_share_email_discovery": "Nepavyko pasidalinti el. pašto adresu",
             "error_share_msisdn_discovery": "Neina bendrinti telefono numerio",
             "incorrect_msisdn_verification": "Neteisingas patvirtinimo kodas",
@@ -2012,7 +2006,6 @@
             "tooltip_sub": "Spustelėkite kad peržiūrėti pakeitimus",
             "tooltip_title": "Keista %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "Iki šio taško užšifruotos žinutės yra neprieinamos.",
         "error_no_renderer": "Nepavyko parodyti šio įvykio",
         "error_rendering_message": "Nepavyko įkelti šios žinutės",
         "historical_messages_unavailable": "Negalite matyti ankstesnių žinučių",
@@ -2204,8 +2197,7 @@
         "pending_moderation": "Žinutė laukia moderavimo",
         "pending_moderation_reason": "Žinutė laukia moderavimo: %(reason)s",
         "reactions": {
-            "add_reaction_prompt": "Pridėti reakciją",
-            "tooltip": "<reactors/><reactedWith>reagavo su %(shortName)s</reactedWith>"
+            "add_reaction_prompt": "Pridėti reakciją"
         },
         "read_receipt_title": {
             "one": "Matė %(count)s žmogus",

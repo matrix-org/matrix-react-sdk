@@ -26,6 +26,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { act, fireEvent, getByTestId, render, RenderResult, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import ForwardDialog from "../../../../src/components/views/dialogs/ForwardDialog";
@@ -130,9 +131,9 @@ describe("ForwardDialog", () => {
         expect(container.querySelectorAll(".mx_ForwardList_entry")).toHaveLength(3);
 
         const searchInput = getByTestId(container, "searchbox-input");
-        act(() => userEvent.type(searchInput, "a"));
+        await userEvent.type(searchInput, "a");
 
-        expect(container.querySelectorAll(".mx_ForwardList_entry")).toHaveLength(3);
+        expect(container.querySelectorAll(".mx_ForwardList_entry")).toHaveLength(2);
     });
 
     it("should be navigable using arrow keys", async () => {
@@ -199,7 +200,7 @@ describe("ForwardDialog", () => {
         await act(async () => {
             cancelSend();
             // Wait one tick for the button to realize the send failed
-            await new Promise((resolve) => setImmediate(resolve));
+            await sleep(0);
         });
         update();
         expect(firstButton.className).toContain("mx_ForwardList_sendFailed");
@@ -215,7 +216,7 @@ describe("ForwardDialog", () => {
         await act(async () => {
             finishSend();
             // Wait one tick for the button to realize the send succeeded
-            await new Promise((resolve) => setImmediate(resolve));
+            await sleep(0);
         });
         update();
         expect(secondButton.className).toContain("mx_ForwardList_sent");
