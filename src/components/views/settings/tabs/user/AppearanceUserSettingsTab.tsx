@@ -27,7 +27,7 @@ import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import { LayoutSwitcher } from "../../LayoutSwitcher";
 import FontScalingPanel from "../../FontScalingPanel";
-import ThemeChoicePanel from "../../ThemeChoicePanel";
+import { ThemeChoicePanel } from "../../ThemeChoicePanel";
 import ImageSizePanel from "../../ImageSizePanel";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
