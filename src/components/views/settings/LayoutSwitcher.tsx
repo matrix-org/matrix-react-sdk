@@ -83,12 +83,12 @@ function LayoutRadio({ layout, label }: LayoutRadioProps): JSX.Element {
 
     return (
         <div className="mxLayoutSwitcher_LayoutSelector_LayoutRadio">
-            <Field name="layout" className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_Field">
-                <div className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_inline">
-                    <RadioControl name="layout" value={layout} defaultChecked={currentLayout === layout} />
-                    <Label className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_Label">{label}</Label>
-                </div>
-                <Label>
+            <Field name="layout">
+                <Label aria-label={label}>
+                    <div className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_inline">
+                        <RadioControl name="layout" value={layout} defaultChecked={currentLayout === layout} />
+                        <span>{label}</span>
+                    </div>
                     <div role="separator" className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator" />
                     <EventTilePreview
                         message={_t("common|preview_message")}
