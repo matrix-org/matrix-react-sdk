@@ -51,6 +51,8 @@ limitations under the License.
              * Tweak also hover style and remove action bar
              */
             .mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview {
+                pointer-events: none;
+
                 .mx_EventTile {
                     margin: 0;
 
@@ -81,18 +83,6 @@ limitations under the License.
                         margin-top: var(--cpd-space-6x);
                         margin-right: 34px;
                         flex-shrink: 1;
-                    }
-
-                    /**
-                     * Remove the hover effect on the tile
-                     */
-                    &:hover:before {
-                        background-color: inherit;
-                    }
-                    &:not([data-layout="bubble"]):hover {
-                        .mx_EventTile_line {
-                            background-color: inherit;
-                        }
                     }
 
                     .mx_EventTile_line {
