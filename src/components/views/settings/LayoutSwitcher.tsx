@@ -82,23 +82,21 @@ function LayoutRadio({ layout, label }: LayoutRadioProps): JSX.Element {
     const eventTileInfo = useEventTileInfo();
 
     return (
-        <div className="mxLayoutSwitcher_LayoutSelector_LayoutRadio">
-            <Field name="layout">
-                <Label aria-label={label}>
-                    <div className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_inline">
-                        <RadioControl name="layout" value={layout} defaultChecked={currentLayout === layout} />
-                        <span>{label}</span>
-                    </div>
-                    <div role="separator" className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator" />
-                    <EventTilePreview
-                        message={_t("common|preview_message")}
-                        layout={layout}
-                        className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview"
-                        {...eventTileInfo}
-                    />
-                </Label>
-            </Field>
-        </div>
+        <Field name="layout" className="mxLayoutSwitcher_LayoutSelector_LayoutRadio">
+            <Label aria-label={label}>
+                <div className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_inline">
+                    <RadioControl name="layout" value={layout} defaultChecked={currentLayout === layout} />
+                    <span>{label}</span>
+                </div>
+                <div role="separator" className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator" />
+                <EventTilePreview
+                    message={_t("common|preview_message")}
+                    layout={layout}
+                    className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview"
+                    {...eventTileInfo}
+                />
+            </Label>
+        </Field>
     );
 }
 
