@@ -195,9 +195,8 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                         Modern
                       </span>
                     </div>
-                    <div
+                    <hr
                       class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator"
-                      role="separator"
                     />
                     <div
                       class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview"
@@ -312,9 +311,8 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                         Message bubbles
                       </span>
                     </div>
-                    <div
+                    <hr
                       class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator"
-                      role="separator"
                     />
                     <div
                       class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview"
@@ -429,9 +427,8 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                         IRC (experimental)
                       </span>
                     </div>
-                    <div
+                    <hr
                       class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator"
-                      role="separator"
                     />
                     <div
                       class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview mx_IRCLayout"

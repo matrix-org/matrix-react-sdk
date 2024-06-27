@@ -32,7 +32,6 @@ import ImageSizePanel from "../../ImageSizePanel";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection from "../../shared/SettingsSubsection";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 
 interface IProps {}
 
@@ -44,9 +43,6 @@ interface IState {
 }
 
 export default class AppearanceUserSettingsTab extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
     public constructor(props: IProps) {
         super(props);
 
