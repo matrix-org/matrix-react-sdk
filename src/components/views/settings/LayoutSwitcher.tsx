@@ -88,7 +88,7 @@ function LayoutRadio({ layout, label }: LayoutRadioProps): JSX.Element {
                     <RadioControl name="layout" value={layout} defaultChecked={currentLayout === layout} />
                     <span>{label}</span>
                 </div>
-                <div role="separator" className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator" />
+                <hr className="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator" />
                 <EventTilePreview
                     message={_t("common|preview_message")}
                     layout={layout}
