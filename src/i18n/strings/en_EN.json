@@ -2719,7 +2719,6 @@
             "dialog_title": "<strong>Settings:</strong> Security & Privacy",
             "e2ee_default_disabled_warning": "Your server admin has disabled end-to-end encryption by default in private rooms & Direct Messages.",
             "enable_message_search": "Enable message search in encrypted rooms",
-            "encryption_individual_verification_mode": "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.",
             "encryption_section": "Encryption",
             "error_loading_key_backup_status": "Unable to load key backup status",
             "export_megolm_keys": "Export E2E room keys",
