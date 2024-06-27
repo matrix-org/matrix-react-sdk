@@ -168,10 +168,10 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                   class="mxLayoutSwitcher_LayoutSelector_LayoutRadio"
                 >
                   <div
-                    class="_inline-field_148br_40 mxLayoutSwitcher_LayoutSelector_LayoutRadio_InlineField"
+                    class="_field_148br_34 mxLayoutSwitcher_LayoutSelector_LayoutRadio_Field"
                   >
                     <div
-                      class="_inline-field-control_148br_52"
+                      class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_inline"
                     >
                       <div
                         class="_container_1vw5h_18"
@@ -179,7 +179,7 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                         <input
                           checked=""
                           class="_input_1vw5h_26"
-                          id="radix-0"
+                          id="radix-3"
                           name="layout"
                           title=""
                           type="radio"
@@ -189,119 +189,120 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                           class="_ui_1vw5h_27"
                         />
                       </div>
-                    </div>
-                    <div
-                      class="_inline-field-body_148br_46"
-                    >
                       <label
-                        class="_label_148br_67"
-                        for="radix-0"
+                        class="_label_148br_67 mxLayoutSwitcher_LayoutSelector_LayoutRadio_Label"
+                        for="radix-3"
                       >
                         Modern
                       </label>
                     </div>
-                  </div>
-                  <div
-                    class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator"
-                    role="separator"
-                  />
-                  <div
-                    class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview"
-                    role="presentation"
-                  >
-                    <div
-                      aria-atomic="true"
-                      aria-live="off"
-                      class="mx_EventTile"
-                      data-event-id="$9999999999999999999999999999999999999999999"
-                      data-has-reply="false"
-                      data-layout="group"
-                      data-scroll-tokens="$9999999999999999999999999999999999999999999"
-                      data-self="true"
-                      tabindex="-1"
+                    <label
+                      class="_label_148br_67"
+                      for="radix-3"
                     >
                       <div
-                        class="mx_DisambiguatedProfile"
-                      >
-                        <span
-                          class="mx_Username_color2 mx_DisambiguatedProfile_displayName"
-                          dir="auto"
-                        >
-                          @userId:matrix.org
-                        </span>
-                      </div>
+                        class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator"
+                        role="separator"
+                      />
                       <div
-                        class="mx_EventTile_avatar"
-                      >
-                        <span
-                          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
-                          data-color="2"
-                          data-testid="avatar-img"
-                          data-type="round"
-                          role="presentation"
-                          style="--cpd-avatar-size: 30px;"
-                          title="@userId:matrix.org"
-                        >
-                          u
-                        </span>
-                      </div>
-                      <div
-                        class="mx_EventTile_line"
+                        class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview"
+                        role="presentation"
                       >
                         <div
-                          class="mx_MTextBody mx_EventTile_content"
-                        >
-                          <span
-                            class="mx_EventTile_body"
-                            dir="auto"
-                          >
-                            Hey you. You're the best!
-                          </span>
-                        </div>
-                        <div
-                          aria-label="Message Actions"
+                          aria-atomic="true"
                           aria-live="off"
-                          class="mx_MessageActionBar"
-                          role="toolbar"
+                          class="mx_EventTile"
+                          data-event-id="$9999999999999999999999999999999999999999999"
+                          data-has-reply="false"
+                          data-layout="group"
+                          data-scroll-tokens="$9999999999999999999999999999999999999999999"
+                          data-self="true"
+                          tabindex="-1"
                         >
                           <div
-                            aria-label="Edit"
-                            class="mx_AccessibleButton mx_MessageActionBar_iconButton"
-                            role="button"
-                            tabindex="0"
+                            class="mx_DisambiguatedProfile"
                           >
-                            <div />
+                            <span
+                              class="mx_Username_color2 mx_DisambiguatedProfile_displayName"
+                              dir="auto"
+                            >
+                              @userId:matrix.org
+                            </span>
                           </div>
                           <div
-                            aria-expanded="false"
-                            aria-haspopup="true"
-                            aria-label="Options"
-                            class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
-                            role="button"
-                            tabindex="-1"
+                            class="mx_EventTile_avatar"
                           >
-                            <div />
+                            <span
+                              class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+                              data-color="2"
+                              data-testid="avatar-img"
+                              data-type="round"
+                              role="presentation"
+                              style="--cpd-avatar-size: 30px;"
+                              title="@userId:matrix.org"
+                            >
+                              u
+                            </span>
+                          </div>
+                          <div
+                            class="mx_EventTile_line"
+                          >
+                            <div
+                              class="mx_MTextBody mx_EventTile_content"
+                            >
+                              <span
+                                class="mx_EventTile_body"
+                                dir="auto"
+                              >
+                                Hey you. You're the best!
+                              </span>
+                            </div>
+                            <div
+                              aria-label="Message Actions"
+                              aria-live="off"
+                              class="mx_MessageActionBar"
+                              role="toolbar"
+                            >
+                              <div
+                                aria-label="Edit"
+                                class="mx_AccessibleButton mx_MessageActionBar_iconButton"
+                                role="button"
+                                tabindex="0"
+                              >
+                                <div />
+                              </div>
+                              <div
+                                aria-expanded="false"
+                                aria-haspopup="true"
+                                aria-label="Options"
+                                class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
+                                role="button"
+                                tabindex="-1"
+                              >
+                                <div />
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="mxLayoutSwitcher_LayoutSelector_LayoutRadio"
                 >
                   <div
-                    class="_inline-field_148br_40 mxLayoutSwitcher_LayoutSelector_LayoutRadio_InlineField"
+                    class="_field_148br_34 mxLayoutSwitcher_LayoutSelector_LayoutRadio_Field"
                   >
                     <div
-                      class="_inline-field-control_148br_52"
+                      class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_inline"
                     >
                       <div
                         class="_container_1vw5h_18"
                       >
                         <input
                           class="_input_1vw5h_26"
-                          id="radix-1"
+                          id="radix-4"
                           name="layout"
                           title=""
                           type="radio"
@@ -311,119 +312,120 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                           class="_ui_1vw5h_27"
                         />
                       </div>
-                    </div>
-                    <div
-                      class="_inline-field-body_148br_46"
-                    >
                       <label
-                        class="_label_148br_67"
-                        for="radix-1"
+                        class="_label_148br_67 mxLayoutSwitcher_LayoutSelector_LayoutRadio_Label"
+                        for="radix-4"
                       >
                         Message bubbles
                       </label>
                     </div>
-                  </div>
-                  <div
-                    class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator"
-                    role="separator"
-                  />
-                  <div
-                    class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview"
-                    role="presentation"
-                  >
-                    <div
-                      aria-atomic="true"
-                      aria-live="off"
-                      class="mx_EventTile"
-                      data-event-id="$9999999999999999999999999999999999999999999"
-                      data-has-reply="false"
-                      data-layout="bubble"
-                      data-scroll-tokens="$9999999999999999999999999999999999999999999"
-                      data-self="true"
-                      tabindex="-1"
+                    <label
+                      class="_label_148br_67"
+                      for="radix-4"
                     >
                       <div
-                        class="mx_DisambiguatedProfile"
-                      >
-                        <span
-                          class="mx_Username_color2 mx_DisambiguatedProfile_displayName"
-                          dir="auto"
-                        >
-                          @userId:matrix.org
-                        </span>
-                      </div>
+                        class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator"
+                        role="separator"
+                      />
                       <div
-                        class="mx_EventTile_avatar"
-                      >
-                        <span
-                          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
-                          data-color="2"
-                          data-testid="avatar-img"
-                          data-type="round"
-                          role="presentation"
-                          style="--cpd-avatar-size: 30px;"
-                          title="@userId:matrix.org"
-                        >
-                          u
-                        </span>
-                      </div>
-                      <div
-                        class="mx_EventTile_line"
+                        class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview"
+                        role="presentation"
                       >
                         <div
-                          class="mx_MTextBody mx_EventTile_content"
-                        >
-                          <span
-                            class="mx_EventTile_body"
-                            dir="auto"
-                          >
-                            Hey you. You're the best!
-                          </span>
-                        </div>
-                        <div
-                          aria-label="Message Actions"
+                          aria-atomic="true"
                           aria-live="off"
-                          class="mx_MessageActionBar"
-                          role="toolbar"
+                          class="mx_EventTile"
+                          data-event-id="$9999999999999999999999999999999999999999999"
+                          data-has-reply="false"
+                          data-layout="bubble"
+                          data-scroll-tokens="$9999999999999999999999999999999999999999999"
+                          data-self="true"
+                          tabindex="-1"
                         >
                           <div
-                            aria-label="Edit"
-                            class="mx_AccessibleButton mx_MessageActionBar_iconButton"
-                            role="button"
-                            tabindex="0"
+                            class="mx_DisambiguatedProfile"
                           >
-                            <div />
+                            <span
+                              class="mx_Username_color2 mx_DisambiguatedProfile_displayName"
+                              dir="auto"
+                            >
+                              @userId:matrix.org
+                            </span>
                           </div>
                           <div
-                            aria-expanded="false"
-                            aria-haspopup="true"
-                            aria-label="Options"
-                            class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
-                            role="button"
-                            tabindex="-1"
+                            class="mx_EventTile_avatar"
                           >
-                            <div />
+                            <span
+                              class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+                              data-color="2"
+                              data-testid="avatar-img"
+                              data-type="round"
+                              role="presentation"
+                              style="--cpd-avatar-size: 30px;"
+                              title="@userId:matrix.org"
+                            >
+                              u
+                            </span>
+                          </div>
+                          <div
+                            class="mx_EventTile_line"
+                          >
+                            <div
+                              class="mx_MTextBody mx_EventTile_content"
+                            >
+                              <span
+                                class="mx_EventTile_body"
+                                dir="auto"
+                              >
+                                Hey you. You're the best!
+                              </span>
+                            </div>
+                            <div
+                              aria-label="Message Actions"
+                              aria-live="off"
+                              class="mx_MessageActionBar"
+                              role="toolbar"
+                            >
+                              <div
+                                aria-label="Edit"
+                                class="mx_AccessibleButton mx_MessageActionBar_iconButton"
+                                role="button"
+                                tabindex="0"
+                              >
+                                <div />
+                              </div>
+                              <div
+                                aria-expanded="false"
+                                aria-haspopup="true"
+                                aria-label="Options"
+                                class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
+                                role="button"
+                                tabindex="-1"
+                              >
+                                <div />
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </label>
                   </div>
                 </div>
                 <div
                   class="mxLayoutSwitcher_LayoutSelector_LayoutRadio"
                 >
                   <div
-                    class="_inline-field_148br_40 mxLayoutSwitcher_LayoutSelector_LayoutRadio_InlineField"
+                    class="_field_148br_34 mxLayoutSwitcher_LayoutSelector_LayoutRadio_Field"
                   >
                     <div
-                      class="_inline-field-control_148br_52"
+                      class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_inline"
                     >
                       <div
                         class="_container_1vw5h_18"
                       >
                         <input
                           class="_input_1vw5h_26"
-                          id="radix-2"
+                          id="radix-5"
                           name="layout"
                           title=""
                           type="radio"
@@ -433,102 +435,103 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                           class="_ui_1vw5h_27"
                         />
                       </div>
-                    </div>
-                    <div
-                      class="_inline-field-body_148br_46"
-                    >
                       <label
-                        class="_label_148br_67"
-                        for="radix-2"
+                        class="_label_148br_67 mxLayoutSwitcher_LayoutSelector_LayoutRadio_Label"
+                        for="radix-5"
                       >
                         IRC (experimental)
                       </label>
                     </div>
-                  </div>
-                  <div
-                    class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator"
-                    role="separator"
-                  />
-                  <div
-                    class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview mx_IRCLayout"
-                    role="presentation"
-                  >
-                    <div
-                      aria-atomic="true"
-                      aria-live="off"
-                      class="mx_EventTile"
-                      data-event-id="$9999999999999999999999999999999999999999999"
-                      data-has-reply="false"
-                      data-layout="irc"
-                      data-scroll-tokens="$9999999999999999999999999999999999999999999"
-                      data-self="true"
-                      tabindex="-1"
+                    <label
+                      class="_label_148br_67"
+                      for="radix-5"
                     >
                       <div
-                        class="mx_DisambiguatedProfile"
-                      >
-                        <span
-                          class="mx_Username_color2 mx_DisambiguatedProfile_displayName"
-                          dir="auto"
-                        >
-                          @userId:matrix.org
-                        </span>
-                      </div>
+                        class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_separator"
+                        role="separator"
+                      />
                       <div
-                        class="mx_EventTile_avatar"
-                      >
-                        <span
-                          class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
-                          data-color="2"
-                          data-testid="avatar-img"
-                          data-type="round"
-                          role="presentation"
-                          style="--cpd-avatar-size: 14px;"
-                          title="@userId:matrix.org"
-                        >
-                          u
-                        </span>
-                      </div>
-                      <div
-                        class="mx_EventTile_line"
+                        class="mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview mx_IRCLayout"
+                        role="presentation"
                       >
                         <div
-                          class="mx_MTextBody mx_EventTile_content"
-                        >
-                          <span
-                            class="mx_EventTile_body"
-                            dir="auto"
-                          >
-                            Hey you. You're the best!
-                          </span>
-                        </div>
-                        <div
-                          aria-label="Message Actions"
+                          aria-atomic="true"
                           aria-live="off"
-                          class="mx_MessageActionBar"
-                          role="toolbar"
+                          class="mx_EventTile"
+                          data-event-id="$9999999999999999999999999999999999999999999"
+                          data-has-reply="false"
+                          data-layout="irc"
+                          data-scroll-tokens="$9999999999999999999999999999999999999999999"
+                          data-self="true"
+                          tabindex="-1"
                         >
                           <div
-                            aria-label="Edit"
-                            class="mx_AccessibleButton mx_MessageActionBar_iconButton"
-                            role="button"
-                            tabindex="0"
+                            class="mx_DisambiguatedProfile"
                           >
-                            <div />
+                            <span
+                              class="mx_Username_color2 mx_DisambiguatedProfile_displayName"
+                              dir="auto"
+                            >
+                              @userId:matrix.org
+                            </span>
                           </div>
                           <div
-                            aria-expanded="false"
-                            aria-haspopup="true"
-                            aria-label="Options"
-                            class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
-                            role="button"
-                            tabindex="-1"
+                            class="mx_EventTile_avatar"
                           >
-                            <div />
+                            <span
+                              class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+                              data-color="2"
+                              data-testid="avatar-img"
+                              data-type="round"
+                              role="presentation"
+                              style="--cpd-avatar-size: 14px;"
+                              title="@userId:matrix.org"
+                            >
+                              u
+                            </span>
+                          </div>
+                          <div
+                            class="mx_EventTile_line"
+                          >
+                            <div
+                              class="mx_MTextBody mx_EventTile_content"
+                            >
+                              <span
+                                class="mx_EventTile_body"
+                                dir="auto"
+                              >
+                                Hey you. You're the best!
+                              </span>
+                            </div>
+                            <div
+                              aria-label="Message Actions"
+                              aria-live="off"
+                              class="mx_MessageActionBar"
+                              role="toolbar"
+                            >
+                              <div
+                                aria-label="Edit"
+                                class="mx_AccessibleButton mx_MessageActionBar_iconButton"
+                                role="button"
+                                tabindex="0"
+                              >
+                                <div />
+                              </div>
+                              <div
+                                aria-expanded="false"
+                                aria-haspopup="true"
+                                aria-label="Options"
+                                class="mx_AccessibleButton mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton"
+                                role="button"
+                                tabindex="-1"
+                              >
+                                <div />
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </label>
                   </div>
                 </div>
               </form>
@@ -545,9 +548,9 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                       class="_container_qnvru_18"
                     >
                       <input
-                        aria-describedby="radix-3"
+                        aria-describedby="radix-6"
                         class="_input_qnvru_32"
-                        id="radix-4"
+                        id="radix-7"
                         name="compactLayout"
                         title=""
                         type="checkbox"
@@ -562,13 +565,13 @@ exports[`AppearanceUserSettingsTab should render 1`] = `
                   >
                     <label
                       class="_label_148br_67"
-                      for="radix-4"
+                      for="radix-7"
                     >
                       Show compact text and messages
                     </label>
                     <span
                       class="_message_148br_98 _help-message_148br_104"
-                      id="radix-3"
+                      id="radix-6"
                     >
                       Modern layout must be selected to use this feature.
                     </span>
