@@ -146,11 +146,8 @@ export class StopGapWidgetDriver extends WidgetDriver {
             );
             const clientUserId = MatrixClientPeg.safeGet().getSafeUserId();
             this.allowedCapabilities.add(
-                WidgetEventCapability.forStateEvent(
-                    EventDirection.Send,
-                    "org.matrix.msc3401.call.member",
-                    clientUserId,
-                ).raw,
+                WidgetEventCapability.forStateEvent(EventDirection.Send, "org.matrix.msc3401.call.member", clientUserId)
+                    .raw,
             );
             const clientDeviceId = MatrixClientPeg.safeGet().getDeviceId();
             if (clientDeviceId !== null) {
