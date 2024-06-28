@@ -144,13 +144,32 @@ export class StopGapWidgetDriver extends WidgetDriver {
             this.allowedCapabilities.add(
                 WidgetEventCapability.forStateEvent(EventDirection.Receive, EventType.RoomEncryption).raw,
             );
+            const clientUserId = MatrixClientPeg.safeGet().getSafeUserId();
             this.allowedCapabilities.add(
                 WidgetEventCapability.forStateEvent(
                     EventDirection.Send,
                     "org.matrix.msc3401.call.member",
-                    MatrixClientPeg.safeGet().getSafeUserId(),
+                    clientUserId,
                 ).raw,
             );
+            const clientDeviceId = MatrixClientPeg.safeGet().getDeviceId();
+            if (clientDeviceId !== null) {
+                this.allowedCapabilities.add(
+                    WidgetEventCapability.forStateEvent(
+                        EventDirection.Send,
+                        "org.matrix.msc3401.call.member",
+                        `_${clientUserId}_${clientDeviceId}`,
+                    ).raw,
+                );
+                // MSC3779 version, with no leading underscore
+                this.allowedCapabilities.add(
+                    WidgetEventCapability.forStateEvent(
+                        EventDirection.Send,
+                        "org.matrix.msc3401.call.member",
+                        `${clientUserId}_${clientDeviceId}`,
+                    ).raw,
+                );
+            }
             this.allowedCapabilities.add(
                 WidgetEventCapability.forStateEvent(EventDirection.Receive, "org.matrix.msc3401.call.member").raw,
             );
