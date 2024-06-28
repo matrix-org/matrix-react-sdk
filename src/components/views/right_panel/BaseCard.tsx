@@ -28,6 +28,9 @@ interface IProps {
     header?: ReactNode | null;
     footer?: ReactNode;
     className?: string;
+    id?: string;
+    role?: "tabpanel";
+    ariaLabelledBy: string;
     withoutScrollContainer?: boolean;
     closeLabel?: string;
     onClose?(ev: ButtonEvent): void;
@@ -62,6 +65,9 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
             onClose,
             onBack,
             className,
+            id,
+            ariaLabelledBy,
+            role,
             header,
             footer,
             withoutScrollContainer,
@@ -102,7 +108,14 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
 
         return (
             <CardContext.Provider value={{ isCard: true }}>
-                <div className={classNames("mx_BaseCard", className)} ref={ref} onKeyDown={onKeyDown}>
+                <div
+                    id={id}
+                    aria-labelledby={ariaLabelledBy}
+                    role={role}
+                    className={classNames("mx_BaseCard", className)}
+                    ref={ref}
+                    onKeyDown={onKeyDown}
+                >
                     {header !== null && (
                         <div className="mx_BaseCard_header">
                             {backButton}

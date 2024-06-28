@@ -40,8 +40,10 @@ export const TabbedNavigation: React.FC<Props> = ({ phase }): JSX.Element | null
 
     return (
         <div className="mx_RightPanel_navBarContainer">
-            <NavBar className="mx_RightPanel_navBar" aria-label="foo">
+            <NavBar className="mx_RightPanel_navBar" aria-label="right panel" role="tablist">
                 <NavItem
+                    aria-controls="room-summary-panel"
+                    id="room-summary-panel-tab"
                     onClick={() => {
                         RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomSummary }, true);
                     }}
@@ -50,6 +52,8 @@ export const TabbedNavigation: React.FC<Props> = ({ phase }): JSX.Element | null
                     Info
                 </NavItem>
                 <NavItem
+                    aria-controls="memberlist-panel"
+                    id="memberlist-panel-tab"
                     onClick={(ev) => {
                         RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, true);
                         PosthogTrackers.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
@@ -59,6 +63,8 @@ export const TabbedNavigation: React.FC<Props> = ({ phase }): JSX.Element | null
                     People
                 </NavItem>
                 <NavItem
+                    aria-controls="thread-panel"
+                    id="thread-panel-tab"
                     onClick={() => {
                         RightPanelStore.instance.pushCard({ phase: RightPanelPhases.ThreadPanel }, true);
                     }}

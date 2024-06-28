@@ -419,7 +419,10 @@ export default class MemberList extends React.Component<IProps, IState> {
 
         return (
             <BaseCard
+                id="memberlist-panel"
                 className="mx_MemberList"
+                ariaLabelledBy="memberlist-panel-tab"
+                role="tabpanel"
                 header={<React.Fragment>{scopeHeader}</React.Fragment>}
                 footer={footer}
                 onClose={this.props.onClose}

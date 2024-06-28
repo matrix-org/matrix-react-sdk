@@ -485,7 +485,14 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
     const isFavorite = roomTags.includes(DefaultTagID.Favourite);
 
     return (
-        <BaseCard header={null} className="mx_RoomSummaryCard" onClose={onClose}>
+        <BaseCard
+            header={null}
+            id="room-summary-panel"
+            className="mx_RoomSummaryCard"
+            ariaLabelledBy="room-summary-panel-tab"
+            role="tabpanel"
+            onClose={onClose}
+        >
             <Flex
                 as="header"
                 className="mx_RoomSummaryCard_header"
