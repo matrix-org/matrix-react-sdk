@@ -102,25 +102,6 @@ test.describe("Appearance user settings tab", () => {
             await util.getBubbleLayout().click();
             await expect(util.getCompactLayoutCheckbox()).toBeDisabled();
         });
-
-        test.skip("should support enabling compact group (modern) layout", async ({ page, app, user }) => {
-            // Create and view a room first
-            await app.client.createRoom({ name: "Test Room" });
-            await app.viewRoomByName("Test Room");
-
-            await app.settings.openUserSettings("Appearance");
-
-            // Click "Show advanced" link button
-            const tab = page.getByTestId("mx_AppearanceUserSettingsTab");
-            await tab.getByRole("button", { name: "Show advanced" }).click();
-
-            await tab.locator("label", { hasText: "Use a more compact 'Modern' layout" }).click();
-
-            // Assert that the room layout is set to compact group (modern) layout
-            await expect(
-                page.locator("#matrixchat .mx_MatrixChat_wrapper.mx_MatrixChat_useCompactLayout"),
-            ).toBeVisible();
-        });
     });
 
     test.describe("Theme Choice Panel", () => {
