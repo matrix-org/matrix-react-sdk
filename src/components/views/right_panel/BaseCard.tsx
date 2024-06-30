@@ -26,11 +26,12 @@ import { CardContext } from "./context";
 
 interface IProps {
     header?: ReactNode | null;
+    hideHeaderButtons?: boolean;
     footer?: ReactNode;
     className?: string;
     id?: string;
     role?: "tabpanel";
-    ariaLabelledBy: string;
+    ariaLabelledBy?: string;
     withoutScrollContainer?: boolean;
     closeLabel?: string;
     onClose?(ev: ButtonEvent): void;
@@ -68,6 +69,7 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
             id,
             ariaLabelledBy,
             role,
+            hideHeaderButtons,
             header,
             footer,
             withoutScrollContainer,
@@ -106,6 +108,16 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
             children = <AutoHideScrollbar>{children}</AutoHideScrollbar>;
         }
 
+        let headerButtons: React.ReactElement | undefined;
+        if (!hideHeaderButtons) {
+            headerButtons = (
+                <>
+                    {backButton}
+                    {closeButton}
+                </>
+            );
+        }
+
         return (
             <CardContext.Provider value={{ isCard: true }}>
                 <div
@@ -118,8 +130,7 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
                 >
                     {header !== null && (
                         <div className="mx_BaseCard_header">
-                            {backButton}
-                            {closeButton}
+                            {headerButtons}
                             <div className="mx_BaseCard_headerProp">{header}</div>
                         </div>
                     )}

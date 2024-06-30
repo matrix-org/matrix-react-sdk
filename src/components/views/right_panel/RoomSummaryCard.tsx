@@ -93,7 +93,6 @@ import { onRoomTopicLinkClick } from "../elements/RoomTopic";
 interface IProps {
     room: Room;
     permalinkCreator: RoomPermalinkCreator;
-    onClose(): void;
     onSearchClick?: () => void;
 }
 
@@ -364,7 +363,7 @@ const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element | null
     );
 };
 
-const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, onSearchClick }) => {
+const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onSearchClick }) => {
     const cli = useContext(MatrixClientContext);
 
     const onShareRoomClick = (): void => {
@@ -491,7 +490,6 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
             className="mx_RoomSummaryCard"
             ariaLabelledBy="room-summary-panel-tab"
             role="tabpanel"
-            onClose={onClose}
         >
             <Flex
                 as="header"
@@ -512,12 +510,6 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                         <SearchIcon width="100%" height="100%" />
                     </button>
                 </Tooltip>
-                <AccessibleButton
-                    data-testid="base-card-close-button"
-                    className="mx_BaseCard_close"
-                    onClick={onClose}
-                    title={_t("action|close")}
-                />
             </Flex>
 
             {header}

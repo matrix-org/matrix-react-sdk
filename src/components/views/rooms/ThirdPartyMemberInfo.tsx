@@ -133,7 +133,9 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
             );
         }
 
-        const scopeHeader: JSX.Element | undefined = this.room ? <SpaceScopeHeader room={this.room} /> : undefined;
+        const scopeHeader: JSX.Element | undefined = this.room?.isSpaceRoom() ? (
+            <SpaceScopeHeader room={this.room} />
+        ) : null;
 
         return (
             <BaseCard header={scopeHeader} onClose={this.props.onClose}>
