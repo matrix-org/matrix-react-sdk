@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EditInPlace, Alert } from "@vector-im/compound-web";
+import { EditInPlace, Alert, ErrorMessage } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
@@ -61,7 +61,6 @@ const UsernameBox: React.FC<UsernameBoxProps> = ({ username }) => {
 const UserProfileSettings: React.FC = () => {
     const [avatarURL, setAvatarURL] = useState(OwnProfileStore.instance.avatarMxc);
     const [displayName, setDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
-    const [initialDisplayName, setInitialDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
     const [avatarError, setAvatarError] = useState<boolean>(false);
     const [maxUploadSize, setMaxUploadSize] = useState<number | undefined>();
     const [displayNameError, setDisplayNameError] = useState<boolean>(false);
@@ -128,7 +127,6 @@ const UserProfileSettings: React.FC = () => {
         try {
             setDisplayNameError(false);
             await client.setDisplayName(displayName);
-            setInitialDisplayName(displayName);
         } catch (e) {
             setDisplayNameError(true);
             throw e;
@@ -160,7 +158,6 @@ const UserProfileSettings: React.FC = () => {
                     className="mx_UserProfileSettings_profile_displayName"
                     label={_t("settings|general|display_name")}
                     value={displayName}
-                    disableSaveButton={displayName === initialDisplayName}
                     saveButtonLabel={_t("common|save")}
                     cancelButtonLabel={_t("common|cancel")}
                     savedLabel={_t("common|saved")}
@@ -168,8 +165,9 @@ const UserProfileSettings: React.FC = () => {
                     onChange={onDisplayNameChanged}
                     onCancel={onDisplayNameCancel}
                     onSave={onDisplayNameSave}
-                    error={displayNameError ? _t("settings|general|display_name_error") : undefined}
-                />
+                >
+                    {displayNameError && <ErrorMessage>{_t("settings|general|display_name_error")}</ErrorMessage>}
+                </EditInPlace>
             </div>
             {avatarError && (
                 <Alert title={_t("settings|general|avatar_upload_error_title")} type="critical">
