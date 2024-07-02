@@ -40,7 +40,7 @@ describe("<GeneralUserSettingsTab />", () => {
     const mockClient = getMockClientWithEventEmitter({
         ...mockClientMethodsUser(userId),
         ...mockClientMethodsServer(),
-        getCachedCapabilities: jest.fn(),
+        getCapabilities: jest.fn(),
         getThreePids: jest.fn(),
         getIdentityServerUrl: jest.fn(),
         deleteThreePid: jest.fn(),
@@ -63,7 +63,7 @@ describe("<GeneralUserSettingsTab />", () => {
         jest.spyOn(SettingsStore, "getValue").mockRestore();
         jest.spyOn(logger, "error").mockRestore();
 
-        mockClient.getCachedCapabilities.mockReturnValue({});
+        mockClient.getCapabilities.mockResolvedValue({});
         mockClient.getThreePids.mockResolvedValue({
             threepids: [],
         });
