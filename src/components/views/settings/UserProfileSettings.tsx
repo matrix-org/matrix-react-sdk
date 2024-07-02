@@ -55,10 +55,17 @@ const UsernameBox: React.FC<UsernameBoxProps> = ({ username }) => {
     );
 };
 
+interface UserProfileSettingsProps {
+    // Whether the homeserver allows the user to set their display name.
+    canSetDisplayName: boolean;
+    // Whether the homeserver allows the user to set their avatar.
+    canSetAvatar: boolean;
+}
+
 /**
  * A group of settings views to allow the user to set their profile information.
  */
-const UserProfileSettings: React.FC = () => {
+const UserProfileSettings: React.FC<UserProfileSettingsProps> = ({ canSetDisplayName, canSetAvatar }) => {
     const [avatarURL, setAvatarURL] = useState(OwnProfileStore.instance.avatarMxc);
     const [displayName, setDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
     const [avatarError, setAvatarError] = useState<boolean>(false);
@@ -141,10 +148,16 @@ const UserProfileSettings: React.FC = () => {
         [client],
     );
 
+    const someFieldsDisabled = !canSetDisplayName || !canSetAvatar;
+
     return (
         <div className="mx_UserProfileSettings">
             <h2>{_t("common|profile")}</h2>
-            <div>{_t("settings|general|profile_subtitle")}</div>
+            <div>
+                {someFieldsDisabled
+                    ? _t("settings|general|profile_subtitle_oidc")
+                    : _t("settings|general|profile_subtitle")}
+            </div>
             <div className="mx_UserProfileSettings_profile">
                 <AvatarSetting
                     avatar={avatarURL ?? undefined}
@@ -153,6 +166,7 @@ const UserProfileSettings: React.FC = () => {
                     removeAvatar={avatarURL ? onAvatarRemove : undefined}
                     placeholderName={displayName}
                     placeholderId={client.getUserId() ?? ""}
+                    disabled={!canSetAvatar}
                 />
                 <EditInPlace
                     className="mx_UserProfileSettings_profile_displayName"
@@ -165,6 +179,7 @@ const UserProfileSettings: React.FC = () => {
                     onChange={onDisplayNameChanged}
                     onCancel={onDisplayNameCancel}
                     onSave={onDisplayNameSave}
+                    disabled={!canSetDisplayName}
                 >
                     {displayNameError && <ErrorMessage>{_t("settings|general|display_name_error")}</ErrorMessage>}
                 </EditInPlace>
