@@ -84,7 +84,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
                 break;
             }
 
-            case Action.FocusRoomSearch: {
+            case Action.FocusMessageSearch: {
                 if (this.currentCard.phase !== RightPanelPhases.RoomSummary) {
                     this.setCard({ phase: RightPanelPhases.RoomSummary, state: { focusRoomSearch: true } });
                 }

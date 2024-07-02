@@ -1841,7 +1841,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private onSearchClick = (): void => {
-        dis.fire(Action.FocusRoomSearch);
+        dis.fire(Action.FocusMessageSearch);
     };
 
     private onSearchChange = debounce((e: ChangeEvent): void => {

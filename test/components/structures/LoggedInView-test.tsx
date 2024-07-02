@@ -390,12 +390,12 @@ describe("<LoggedInView />", () => {
         });
     });
 
-    it("should fire FocusRoomSearch on Ctrl+F when enabled", async () => {
+    it("should fire FocusMessageSearch on Ctrl+F when enabled", async () => {
         jest.spyOn(defaultDispatcher, "fire");
         await SettingsStore.setValue("ctrlFForSearch", null, SettingLevel.DEVICE, true);
 
         getComponent();
         await userEvent.keyboard("{Control>}f{/Control}");
-        expect(defaultDispatcher.fire).toHaveBeenCalledWith(Action.FocusRoomSearch);
+        expect(defaultDispatcher.fire).toHaveBeenCalledWith(Action.FocusMessageSearch);
     });
 });

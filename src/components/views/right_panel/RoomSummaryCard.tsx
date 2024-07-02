@@ -72,7 +72,7 @@ import WidgetAvatar from "../avatars/WidgetAvatar";
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import RoomContext from "../../../contexts/RoomContext";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { UIComponent, UIFeature } from "../../../settings/UIFeature";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import { WidgetContextMenu } from "../context_menus/WidgetContextMenu";
@@ -101,6 +101,7 @@ import { onRoomTopicLinkClick } from "../elements/RoomTopic";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { Key } from "../../../Keyboard";
+import { useTransition } from "../../../hooks/useTransition";
 
 interface IProps {
     room: Room;
@@ -442,10 +443,23 @@ const RoomSummaryCard: React.FC<IProps> = ({
 
     const searchInputRef = useRef<HTMLInputElement>(null);
     useDispatcher(defaultDispatcher, (payload) => {
-        if (payload.action === Action.FocusRoomSearch) {
+        if (payload.action === Action.FocusMessageSearch) {
             searchInputRef.current?.focus();
         }
     });
+    // Clear the search field when the user leaves the search view
+    useTransition(
+        (prevTimelineRenderingType) => {
+            if (
+                prevTimelineRenderingType === TimelineRenderingType.Search &&
+                roomContext.timelineRenderingType !== TimelineRenderingType.Search &&
+                searchInputRef.current
+            ) {
+                searchInputRef.current.value = "";
+            }
+        },
+        [roomContext.timelineRenderingType],
+    );
 
     const alias = room.getCanonicalAlias() || room.getAltAliases()[0] || "";
     const header = (

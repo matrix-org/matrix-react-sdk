@@ -392,5 +392,5 @@ export enum Action {
     /**
      * Opens right panel room summary and focuses the search input
      */
-    FocusRoomSearch = "focus_room_search",
+    FocusMessageSearch = "focus_search",
 }

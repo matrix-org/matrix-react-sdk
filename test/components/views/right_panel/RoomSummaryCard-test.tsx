@@ -151,13 +151,13 @@ describe("<RoomSummaryCard />", () => {
             expect(getByPlaceholderText("Search messages…")).toBeVisible();
         });
 
-        it("should focus the search field if Action.FocusRoomSearch is fired", async () => {
+        it("should focus the search field if Action.FocusMessageSearch is fired", async () => {
             const onSearchChange = jest.fn();
             const { getByPlaceholderText } = getComponent({
                 onSearchChange,
             });
             expect(getByPlaceholderText("Search messages…")).not.toHaveFocus();
-            defaultDispatcher.fire(Action.FocusRoomSearch);
+            defaultDispatcher.fire(Action.FocusMessageSearch);
             await waitFor(() => {
                 expect(getByPlaceholderText("Search messages…")).toHaveFocus();
             });
