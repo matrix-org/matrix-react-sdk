@@ -187,12 +187,11 @@ describe("<RoomSummaryCard />", () => {
             expect(onSearchCancel).toHaveBeenCalled();
         });
 
-        it("should empty search field when the timeline rendering type changes away", () => {
+        it("should empty search field when the timeline rendering type changes away", async () => {
             const onSearchChange = jest.fn();
-            const roomContext = { timelineRenderingType: TimelineRenderingType.Search } as any;
             const { rerender } = render(
                 <MatrixClientContext.Provider value={mockClient}>
-                    <RoomContext.Provider value={roomContext}>
+                    <RoomContext.Provider value={{ timelineRenderingType: TimelineRenderingType.Search } as any}>
                         <RoomSummaryCard
                             room={room}
                             permalinkCreator={new RoomPermalinkCreator(room)}
@@ -204,12 +203,12 @@ describe("<RoomSummaryCard />", () => {
                 </MatrixClientContext.Provider>,
             );
 
-            userEvent.type(screen.getByPlaceholderText("Search messages…"), "test");
+            await userEvent.type(screen.getByPlaceholderText("Search messages…"), "test");
+            expect(screen.getByPlaceholderText("Search messages…")).toHaveValue("test");
 
-            roomContext.timemlineRenderingType = TimelineRenderingType.Room;
             rerender(
                 <MatrixClientContext.Provider value={mockClient}>
-                    <RoomContext.Provider value={roomContext}>
+                    <RoomContext.Provider value={{ timelineRenderingType: TimelineRenderingType.Room } as any}>
                         <RoomSummaryCard
                             room={room}
                             permalinkCreator={new RoomPermalinkCreator(room)}
@@ -219,7 +218,7 @@ describe("<RoomSummaryCard />", () => {
                     </RoomContext.Provider>
                 </MatrixClientContext.Provider>,
             );
-            userEvent.type(screen.getByPlaceholderText("Search messages…"), "test");
+            expect(screen.getByPlaceholderText("Search messages…")).toHaveValue("");
         });
     });
 
