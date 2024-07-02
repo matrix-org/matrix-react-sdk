@@ -2109,15 +2109,7 @@
     "@radix-ui/react-label" "2.0.2"
     "@radix-ui/react-primitive" "1.0.3"
 
-"@radix-ui/react-id@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@radix-ui/react-id/-/react-id-1.0.1.tgz#73cdc181f650e4df24f0b6a5b7aa426b912c88c0"
-  integrity sha512-tI7sT/kqYp8p96yGWY1OAnLHrqDgzHefRBKQ2YAkBS5ja7QLcZ9Z/uY7bEjPUatf8RomoXM8/1sMj1IJaE5UzQ==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@radix-ui/react-use-layout-effect" "1.0.1"
-
-"@radix-ui/react-id@1.1.0":
+"@radix-ui/react-id@1.0.1", "@radix-ui/react-id@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-id/-/react-id-1.1.0.tgz#de47339656594ad722eb87f94a6b25f9cffae0ed"
   integrity sha512-EJUrI8yYh7WOjNOqpoJaf1jlFIH2LvtgAl+YcFqNCa+4hj64ZXmPkAKOFs/ukjz3byN6bdb/AVUqHkI8/uWWMA==
@@ -2276,13 +2268,6 @@
   integrity sha512-L7vwWlR1kTTQ3oh7g1O0CBF3YCyyTj8NmhLR+phShpyA50HCfBFKVJTpshm9PzLiKmehsrQzTYTpX9HvmC9rhw==
   dependencies:
     "@radix-ui/react-use-callback-ref" "1.1.0"
-
-"@radix-ui/react-use-layout-effect@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@radix-ui/react-use-layout-effect/-/react-use-layout-effect-1.0.1.tgz#be8c7bc809b0c8934acf6657b577daf948a75399"
-  integrity sha512-v/5RegiJWYdoCvMnITBkNNx6bCj20fiaJnWtRkU18yITptraXjffz5Qbn05uOiQnOvi+dbkznkoaMltz1GnszQ==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
 
 "@radix-ui/react-use-layout-effect@1.1.0":
   version "1.1.0"
@@ -3060,10 +3045,10 @@
   dependencies:
     svg2vectordrawable "^2.9.1"
 
-"@vector-im/compound-web@^4.10.0":
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-4.10.0.tgz#5403c9933af91d432b5fb5f92a305acadc810893"
-  integrity sha512-SPeol6FK/h/q8ChHyuCCncUIVoIGNdPODBf7UqvaohRjt8EzyAAHKP89l1YhWKqEaOtG67+28IXoFvdS46tbUA==
+"@vector-im/compound-web@^5.1.2":
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-5.1.2.tgz#2ee3d859819e153c898770c058a4277c0b8ef3b8"
+  integrity sha512-p7ide2JRblCkcSMPNakkWjK9GxA8boMQCEgXCT7Dp+owhONf2QsYpyRzlW+tPZ3DULd+h4nqWRova4uSeZtBbA==
   dependencies:
     "@floating-ui/react" "^0.26.9"
     "@floating-ui/react-dom" "^2.0.8"

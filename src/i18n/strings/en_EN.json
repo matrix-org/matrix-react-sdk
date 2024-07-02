@@ -2031,16 +2031,16 @@
         "rejoin_button": "Re-join",
         "search": {
             "all_rooms_button": "Search all rooms",
-            "placeholder": "Search messages…",
             "result_count": {
                 "one": "(~%(count)s result)",
                 "other": "(~%(count)s results)"
             },
+            "this_room_button": "Search this room",
             "summary": {
                 "one": "1 result found for “<query/>”",
                 "other": "%(count)s results found for “<query/>”"
             },
-            "this_room_button": "Search this room"
+            "placeholder": "Search messages…"
         },
         "show_labs_settings": "Show Labs settings",
         "status_bar": {
@@ -2535,7 +2535,8 @@
             "spell_check_section": "Spell check",
             "unable_to_load_emails": "Unable to load email addresses",
             "unable_to_load_msisdns": "Unable to load phone numbers",
-            "username": "Username"
+            "username": "Username",
+            "profile_subtitle_oidc": "Your account is managed separately by an identity provider and so some of your personal information can’t be changed here."
         },
         "image_thumbnails": "Show previews/thumbnails for images",
         "inline_url_previews_default": "Enable inline URL previews by default",
