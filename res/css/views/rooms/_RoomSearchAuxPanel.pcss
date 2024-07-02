@@ -24,18 +24,21 @@ limitations under the License.
     border-width: 1px 0;
     padding: var(--cpd-space-3x);
     box-sizing: border-box;
+    gap: var(--cpd-space-2x);
 
     .mx_RoomSearchAuxPanel_summary {
         flex-grow: 1;
         display: inherit; /* flex */
         gap: var(--cpd-space-2x);
         align-items: center;
+        overflow: hidden;
 
         > svg {
             padding: var(--cpd-space-2x);
             border-radius: var(--cpd-space-2x);
             background-color: var(--cpd-color-bg-subtle-secondary);
             color: var(--cpd-color-icon-secondary);
+            flex-shrink: 0;
         }
 
         .mx_RoomSearchAuxPanel_summary_text {
@@ -43,6 +46,13 @@ limitations under the License.
             flex-direction: column;
             font-size: $font-15px;
             line-height: $font-22px;
+            overflow: hidden;
+
+            span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
         }
 
         .mx_SearchWarning {
@@ -57,5 +67,6 @@ limitations under the License.
         display: inherit; /* flex */
         gap: var(--cpd-space-6x);
         align-items: center;
+        flex-shrink: 0;
     }
 }
