@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EditInPlace, Alert } from "@vector-im/compound-web";
+import { EditInPlace, Alert, ErrorMessage } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
@@ -55,13 +55,19 @@ const UsernameBox: React.FC<UsernameBoxProps> = ({ username }) => {
     );
 };
 
+interface UserProfileSettingsProps {
+    // Whether the homeserver allows the user to set their display name.
+    canSetDisplayName: boolean;
+    // Whether the homeserver allows the user to set their avatar.
+    canSetAvatar: boolean;
+}
+
 /**
  * A group of settings views to allow the user to set their profile information.
  */
-const UserProfileSettings: React.FC = () => {
+const UserProfileSettings: React.FC<UserProfileSettingsProps> = ({ canSetDisplayName, canSetAvatar }) => {
     const [avatarURL, setAvatarURL] = useState(OwnProfileStore.instance.avatarMxc);
     const [displayName, setDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
-    const [initialDisplayName, setInitialDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
     const [avatarError, setAvatarError] = useState<boolean>(false);
     const [maxUploadSize, setMaxUploadSize] = useState<number | undefined>();
     const [displayNameError, setDisplayNameError] = useState<boolean>(false);
@@ -128,7 +134,6 @@ const UserProfileSettings: React.FC = () => {
         try {
             setDisplayNameError(false);
             await client.setDisplayName(displayName);
-            setInitialDisplayName(displayName);
         } catch (e) {
             setDisplayNameError(true);
             throw e;
@@ -143,10 +148,16 @@ const UserProfileSettings: React.FC = () => {
         [client],
     );
 
+    const someFieldsDisabled = !canSetDisplayName || !canSetAvatar;
+
     return (
         <div className="mx_UserProfileSettings">
             <h2>{_t("common|profile")}</h2>
-            <div>{_t("settings|general|profile_subtitle")}</div>
+            <div>
+                {someFieldsDisabled
+                    ? _t("settings|general|profile_subtitle_oidc")
+                    : _t("settings|general|profile_subtitle")}
+            </div>
             <div className="mx_UserProfileSettings_profile">
                 <AvatarSetting
                     avatar={avatarURL ?? undefined}
@@ -155,12 +166,12 @@ const UserProfileSettings: React.FC = () => {
                     removeAvatar={avatarURL ? onAvatarRemove : undefined}
                     placeholderName={displayName}
                     placeholderId={client.getUserId() ?? ""}
+                    disabled={!canSetAvatar}
                 />
                 <EditInPlace
                     className="mx_UserProfileSettings_profile_displayName"
                     label={_t("settings|general|display_name")}
                     value={displayName}
-                    disableSaveButton={displayName === initialDisplayName}
                     saveButtonLabel={_t("common|save")}
                     cancelButtonLabel={_t("common|cancel")}
                     savedLabel={_t("common|saved")}
@@ -168,8 +179,10 @@ const UserProfileSettings: React.FC = () => {
                     onChange={onDisplayNameChanged}
                     onCancel={onDisplayNameCancel}
                     onSave={onDisplayNameSave}
-                    error={displayNameError ? _t("settings|general|display_name_error") : undefined}
-                />
+                    disabled={!canSetDisplayName}
+                >
+                    {displayNameError && <ErrorMessage>{_t("settings|general|display_name_error")}</ErrorMessage>}
+                </EditInPlace>
             </div>
             {avatarError && (
                 <Alert title={_t("settings|general|avatar_upload_error_title")} type="critical">

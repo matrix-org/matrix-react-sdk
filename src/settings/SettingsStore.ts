@@ -263,13 +263,19 @@ export default class SettingsStore {
     public static getDisplayName(settingName: string, atLevel = SettingLevel.DEFAULT): string | null {
         if (!SETTINGS[settingName] || !SETTINGS[settingName].displayName) return null;
 
-        let displayName = SETTINGS[settingName].displayName;
-        if (displayName instanceof Object) {
-            if (displayName[atLevel]) displayName = displayName[atLevel];
-            else displayName = displayName["default"];
+        const displayName = SETTINGS[settingName].displayName;
+
+        if (typeof displayName === "string") {
+            return _t(displayName);
+        }
+        if (displayName?.[atLevel]) {
+            return _t(displayName[atLevel]);
+        }
+        if (displayName?.["default"]) {
+            return _t(displayName["default"]);
         }
 
-        return displayName ? _t(displayName) : null;
+        return null;
     }
 
     /**
@@ -349,7 +355,7 @@ export default class SettingsStore {
         const setting = SETTINGS[settingName];
         const levelOrder = getLevelOrder(setting);
 
-        return SettingsStore.getValueAt(levelOrder[0], settingName, roomId, false, excludeDefault);
+        return SettingsStore.getValueAt<T>(levelOrder[0], settingName, roomId, false, excludeDefault);
     }
 
     /**
@@ -363,13 +369,13 @@ export default class SettingsStore {
      * @param {boolean} excludeDefault True to disable using the default value.
      * @return {*} The value, or null if not found.
      */
-    public static getValueAt(
+    public static getValueAt<T = any>(
         level: SettingLevel,
         settingName: string,
         roomId: string | null = null,
         explicit = false,
         excludeDefault = false,
-    ): any {
+    ): T {
         // Verify that the setting is actually a setting
         const setting = SETTINGS[settingName];
         if (!setting) {
