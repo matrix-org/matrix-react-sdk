@@ -30,7 +30,6 @@ import {
 import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
 import { Icon as FavouriteIcon } from "@vector-im/compound-design-tokens/icons/favourite.svg";
 import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add.svg";
-import { Icon as UserProfileSolidIcon } from "@vector-im/compound-design-tokens/icons/user-profile-solid.svg";
 import { Icon as LinkIcon } from "@vector-im/compound-design-tokens/icons/link.svg";
 import { Icon as SettingsIcon } from "@vector-im/compound-design-tokens/icons/settings.svg";
 import { Icon as ExportArchiveIcon } from "@vector-im/compound-design-tokens/icons/export-archive.svg";
@@ -93,7 +92,6 @@ import { onRoomTopicLinkClick } from "../elements/RoomTopic";
 interface IProps {
     room: Room;
     permalinkCreator: RoomPermalinkCreator;
-    onClose(): void;
     onSearchClick?: () => void;
 }
 
@@ -364,7 +362,7 @@ const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element | null
     );
 };
 
-const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, onSearchClick }) => {
+const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onSearchClick }) => {
     const cli = useContext(MatrixClientContext);
 
     const onShareRoomClick = (): void => {
@@ -392,11 +390,6 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
             action: "leave_room",
             room_id: room.roomId,
         });
-    };
-
-    const onRoomMembersClick = (ev: Event): void => {
-        RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, true);
-        PosthogTrackers.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
     };
 
     const isRoomEncrypted = useIsEncrypted(cli, room);
@@ -490,7 +483,13 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
     const isFavorite = roomTags.includes(DefaultTagID.Favourite);
 
     return (
-        <BaseCard header={null} className="mx_RoomSummaryCard" onClose={onClose}>
+        <BaseCard
+            header={null}
+            id="room-summary-panel"
+            className="mx_RoomSummaryCard"
+            ariaLabelledBy="room-summary-panel-tab"
+            role="tabpanel"
+        >
             <Flex
                 as="header"
                 className="mx_RoomSummaryCard_header"
@@ -510,12 +509,6 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                         <SearchIcon width="100%" height="100%" />
                     </button>
                 </Tooltip>
-                <AccessibleButton
-                    data-testid="base-card-close-button"
-                    className="mx_BaseCard_close"
-                    onClick={onClose}
-                    title={_t("action|close")}
-                />
             </Flex>
 
             {header}
@@ -541,13 +534,6 @@ const RoomSummaryCard: React.FC<IProps> = ({ room, permalinkCreator, onClose, on
                 <MenuItem Icon={SettingsIcon} label={_t("common|settings")} onSelect={onRoomSettingsClick} />
 
                 <Separator />
-                <MenuItem
-                    // this icon matches the legacy implementation
-                    // and is a short term solution until legacy room header is removed
-                    Icon={UserProfileSolidIcon}
-                    label={_t("common|people")}
-                    onSelect={onRoomMembersClick}
-                />
                 {!isVideoRoom && (
                     <>
                         <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onSelect={onRoomFilesClick} />

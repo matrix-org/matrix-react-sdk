@@ -42,6 +42,7 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { IRightPanelCard, IRightPanelCardState } from "../../stores/right-panel/RightPanelStoreIPanelState";
 import { Action } from "../../dispatcher/actions";
 import { XOR } from "../../@types/common";
+import { TabbedNavigation } from "../views/right_panel/TabbedNavigation";
 
 interface BaseProps {
     overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
@@ -170,6 +171,7 @@ export default class RightPanel extends React.Component<Props, IState> {
                         <MemberList
                             roomId={roomId}
                             key={roomId}
+                            hideHeaderButtons
                             onClose={this.onClose}
                             searchQuery={this.state.searchQuery}
                             onSearchQueryChanged={this.onSearchQueryChanged}
@@ -293,7 +295,6 @@ export default class RightPanel extends React.Component<Props, IState> {
                     card = (
                         <RoomSummaryCard
                             room={this.props.room}
-                            onClose={this.onClose}
                             // whenever RightPanel is passed a room it is passed a permalinkcreator
                             permalinkCreator={this.props.permalinkCreator!}
                             onSearchClick={this.props.onSearchClick}
@@ -311,6 +312,7 @@ export default class RightPanel extends React.Component<Props, IState> {
 
         return (
             <aside className="mx_RightPanel" id="mx_RightPanel">
+                <TabbedNavigation phase={phase!} />
                 {card}
             </aside>
         );

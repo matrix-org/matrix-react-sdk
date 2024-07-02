@@ -277,6 +277,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
             }}
         >
             <BaseCard
+                hideHeaderButtons
                 header={
                     <ThreadPanelHeader
                         filterOption={filterOption}
@@ -284,7 +285,10 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                         empty={!hasThreads}
                     />
                 }
+                id="thread-panel"
                 className="mx_ThreadPanel"
+                ariaLabelledBy="thread-panel-tab"
+                role="tabpanel"
                 onClose={onClose}
                 withoutScrollContainer={true}
                 ref={card}

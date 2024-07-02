@@ -23,8 +23,7 @@ import { useRoomName } from "../../../hooks/useRoomName";
 
 /**
  * Scope header used to decorate right panels that are scoped to a space.
- * When room is not a space renders nothing.
- * Otherwise renders room avatar and name.
+ * It renders room avatar and name.
  */
 export const SpaceScopeHeader: React.FC<{ room: Room }> = ({ room }) => {
     const roomName = useRoomName(room);
