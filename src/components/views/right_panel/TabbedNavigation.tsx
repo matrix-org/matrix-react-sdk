@@ -22,12 +22,7 @@ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import PosthogTrackers from "../../../PosthogTrackers";
 
 export function shouldShowTabsForPhase(phase?: RightPanelPhases): boolean {
-    const foo = [
-        RightPanelPhases.RoomSummary,
-        RightPanelPhases.RoomMemberList,
-        RightPanelPhases.ThreadPanel,
-        RightPanelPhases.FilePanel,
-    ];
+    const foo = [RightPanelPhases.RoomSummary, RightPanelPhases.RoomMemberList, RightPanelPhases.ThreadPanel];
     return !!phase && foo.includes(phase);
 }
 
