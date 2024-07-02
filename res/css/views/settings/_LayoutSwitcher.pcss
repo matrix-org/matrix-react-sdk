@@ -26,7 +26,9 @@ limitations under the License.
 
         .mxLayoutSwitcher_LayoutSelector_LayoutRadio_inline {
             display: flex;
-            // 10px
+            /*
+             * 10px
+             */
             gap: calc(var(--cpd-space-2x) + var(--cpd-space-0-5x));
             align-items: center;
         }
@@ -37,9 +39,9 @@ limitations under the License.
         }
 
         /**
-             * Override the event tile style to make it fit in the selector
-             * Tweak also hover style and remove action bar
-             */
+         * Override the event tile style to make it fit in the selector
+         * Tweak also hover style and remove action bar
+         */
         .mxLayoutSwitcher_LayoutSelector_LayoutRadio_EventTilePreview {
             pointer-events: none;
 
@@ -47,8 +49,8 @@ limitations under the License.
                 margin: 0;
 
                 /**
-                     * Hide the message options and message action bar in the preview
-                     */
+                 * Hide the message options and message action bar in the preview
+                 */
                 .mx_EventTile_msgOption,
                 .mx_MessageActionBar {
                     display: none;
@@ -63,13 +65,12 @@ limitations under the License.
                 }
 
                 /**
-                     * Add margin to center the bubble
-                     */
-
+                 * Add margin to center the bubble
+                 */
                 &[data-layout="bubble"] {
                     /**
-                         * Add the layout margin and the margin to vertically center the bubble
-                         */
+                     * Add the layout margin and the margin to vertically center the bubble
+                     */
                     margin-top: var(--cpd-space-6x);
                     margin-right: 34px;
                     flex-shrink: 1;
