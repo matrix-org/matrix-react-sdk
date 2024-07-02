@@ -51,6 +51,7 @@ import { _t } from "../../../languageHandler";
 import { linkify } from "../../../linkify-matrix";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { Landmark, navigateLandmark } from "../../../accessibility/KeyboardLandmarkUtils";
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp("(?:^|\\s)(" + EMOTICON_REGEX.source + ")\\s|:^$");
@@ -536,6 +537,17 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             }
         }
 
+        const navAction = getKeyBindingsManager().getNavigationAction(event);
+        switch (navAction) {
+            case KeyBindingAction.PreviousLandmark:
+                navigateLandmark(Landmark.MESSAGE_COMPOSER, true);
+                handled = true;
+                break;
+            case KeyBindingAction.NextLandmark:
+                navigateLandmark(Landmark.MESSAGE_COMPOSER);
+                handled = true;
+                break;
+        }
         const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
         const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(event);
         if (model.autoComplete?.hasCompletions()) {

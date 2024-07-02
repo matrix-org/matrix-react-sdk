@@ -75,6 +75,7 @@ import { PipContainer } from "./PipContainer";
 import { monitorSyncedPushRules } from "../../utils/pushRules/monitorSyncedPushRules";
 import { ConfigOptions } from "../../SdkConfig";
 import { MatrixClientContextProvider } from "./MatrixClientContextProvider";
+import { Landmark, navigateLandmark } from "../../accessibility/KeyboardLandmarkUtils";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -472,6 +473,14 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         const navAction = getKeyBindingsManager().getNavigationAction(ev);
         switch (navAction) {
+            case KeyBindingAction.NextLandmark:
+                navigateLandmark(Landmark.HOME);
+                handled = true;
+                break;
+            case KeyBindingAction.PreviousLandmark:
+                navigateLandmark(Landmark.HOME, true);
+                handled = true;
+                break;
             case KeyBindingAction.FilterRooms:
                 dis.dispatch({
                     action: "focus_room_filter",
@@ -628,7 +637,6 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     public render(): React.ReactNode {
         let pageElement;
-
         switch (this.props.page_type) {
             case PageTypes.RoomView:
                 pageElement = (

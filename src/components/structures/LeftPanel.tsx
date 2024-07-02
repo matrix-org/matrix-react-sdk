@@ -44,6 +44,7 @@ import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButto
 import PosthogTrackers from "../../PosthogTrackers";
 import PageType from "../../PageTypes";
 import { UserOnboardingButton } from "../views/user-onboarding/UserOnboardingButton";
+import { Landmark, navigateLandmark } from "../../accessibility/KeyboardLandmarkUtils";
 
 interface IProps {
     isMinimized: boolean;
@@ -306,6 +307,19 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                     ev.preventDefault();
                     this.roomListRef.current?.focus();
                 }
+                break;
+        }
+        const navAction = getKeyBindingsManager().getNavigationAction(ev);
+        switch (navAction) {
+            case KeyBindingAction.NextLandmark:
+                ev.stopPropagation();
+                ev.preventDefault();
+                navigateLandmark(Landmark.ROOM_SEARCH);
+                break;
+            case KeyBindingAction.PreviousLandmark:
+                ev.stopPropagation();
+                ev.preventDefault();
+                navigateLandmark(Landmark.ROOM_SEARCH, true);
                 break;
         }
     };

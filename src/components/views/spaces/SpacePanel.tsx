@@ -67,10 +67,13 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { Action } from "../../../dispatcher/actions";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { ThreadsActivityCentre } from "./threads-activity-centre/";
 import AccessibleButton from "../elements/AccessibleButton";
+import { Landmark, navigateLandmark } from "../../../accessibility/KeyboardLandmarkUtils";
 import { KeyboardShortcut } from "../settings/KeyboardShortcut";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
@@ -383,7 +386,23 @@ const SpacePanel: React.FC = () => {
                 >
                     <nav
                         className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
-                        onKeyDown={onKeyDownHandler}
+                        onKeyDown={(ev) => {
+                            const navAction = getKeyBindingsManager().getNavigationAction(ev);
+                            if (navAction === KeyBindingAction.PreviousLandmark) {
+                                navigateLandmark(Landmark.ACTIVE_SPACE_BUTTON, true);
+                                ev.stopPropagation();
+                                ev.preventDefault();
+                                return;
+                            }
+                            if (navAction === KeyBindingAction.NextLandmark) {
+                                navigateLandmark(Landmark.ACTIVE_SPACE_BUTTON);
+                                ev.stopPropagation();
+                                ev.preventDefault();
+                                return;
+                            }
+
+                            onKeyDownHandler(ev);
+                        }}
                         ref={ref}
                         aria-label={_t("common|spaces")}
                     >
