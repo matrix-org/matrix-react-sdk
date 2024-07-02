@@ -30,7 +30,6 @@ import {
 import { Icon as SearchIcon } from "@vector-im/compound-design-tokens/icons/search.svg";
 import { Icon as FavouriteIcon } from "@vector-im/compound-design-tokens/icons/favourite.svg";
 import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add.svg";
-import { Icon as UserProfileSolidIcon } from "@vector-im/compound-design-tokens/icons/user-profile-solid.svg";
 import { Icon as LinkIcon } from "@vector-im/compound-design-tokens/icons/link.svg";
 import { Icon as SettingsIcon } from "@vector-im/compound-design-tokens/icons/settings.svg";
 import { Icon as ExportArchiveIcon } from "@vector-im/compound-design-tokens/icons/export-archive.svg";

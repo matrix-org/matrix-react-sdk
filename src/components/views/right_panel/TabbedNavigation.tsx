@@ -49,7 +49,7 @@ export const TabbedNavigation: React.FC<Props> = ({ phase }): JSX.Element | null
                 <NavItem
                     aria-controls="memberlist-panel"
                     id="memberlist-panel-tab"
-                    onClick={(ev) => {
+                    onClick={(ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
                         RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, true);
                         PosthogTrackers.trackInteraction("WebRightPanelRoomInfoPeopleButton", ev);
                     }}
