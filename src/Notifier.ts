@@ -112,6 +112,9 @@ class NotifierClass {
     private toolbarHidden?: boolean;
     private isSyncing?: boolean;
 
+    private audioContext: AudioContext = new AudioContext();
+    private sounds: Record<string, AudioBuffer> = {}; // Cache the sounds loaded
+
     public notificationMessageForEvent(ev: MatrixEvent): string | null {
         const msgType = ev.getContent().msgtype;
         if (msgType && msgTypeHandlers.hasOwnProperty(msgType)) {
@@ -219,6 +222,42 @@ class NotifierClass {
         };
     }
 
+    private async createAudioSourceForRoom(roomId: string): Promise<AudioBufferSourceNode> {
+        const audio = await this.getSoundBufferForRoom(roomId);
+        const source = this.audioContext.createBufferSource();
+        source.buffer = audio;
+        source.connect(this.audioContext.destination);
+        return source;
+    }
+
+    private async getSoundBufferForRoom(roomId: string): Promise<AudioBuffer> {
+        const sound = this.getSoundForRoom(roomId);
+
+        // Detect supported formats
+        const audioElement = document.createElement("audio");
+        let format = "";
+        if (audioElement.canPlayType("audio/mpeg")) {
+            format = "mp3";
+        } else if (audioElement.canPlayType("audio/ogg")) {
+            format = "ogg";
+        } else {
+            logger.error("Browser doens't support mp3 or ogg");
+            // Will probably never happen. If happened, format="" and will fail to load audio. Who cares...
+        }
+
+        const url = sound ? sound["url"] : "media/message." + format;
+
+        if (this.sounds.hasOwnProperty(url)) {
+            return this.sounds[url];
+        }
+
+        const response = await fetch(url);
+        const buffer = await response.arrayBuffer();
+        const audio = await this.audioContext.decodeAudioData(buffer);
+        this.sounds[url] = audio;
+        return audio;
+    }
+
     // XXX: Exported for tests
     public async playAudioNotification(ev: MatrixEvent, room: Room): Promise<void> {
         const cli = MatrixClientPeg.safeGet();
@@ -226,29 +265,9 @@ class NotifierClass {
             return;
         }
 
-        const sound = this.getSoundForRoom(room.roomId);
-        logger.log(`Got sound ${(sound && sound.name) || "default"} for ${room.roomId}`);
-
-        try {
-            const selector = document.querySelector<HTMLAudioElement>(
-                sound ? `audio[src='${sound.url}']` : "#messageAudio",
-            );
-            let audioElement = selector;
-            if (!audioElement) {
-                if (!sound) {
-                    logger.error("No audio element or sound to play for notification");
-                    return;
-                }
-                audioElement = new Audio(sound.url);
-                if (sound.type) {
-                    audioElement.type = sound.type;
-                }
-                document.body.appendChild(audioElement);
-            }
-            await audioElement.play();
-        } catch (ex) {
-            logger.warn("Caught error when trying to fetch room notification sound:", ex);
-        }
+        // Play notification sound here
+        const source = await this.createAudioSourceForRoom(room.roomId);
+        source.start();
     }
 
     public start(): void {
