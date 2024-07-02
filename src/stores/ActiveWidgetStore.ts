@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
-import { MatrixEvent, RoomStateEvent, RoomState } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, RoomStateEvent, RoomState, MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { MatrixClientPeg } from "../MatrixClientPeg";
 import WidgetUtils from "../utils/WidgetUtils";
 import { WidgetMessagingStore } from "./widgets/WidgetMessagingStore";
 
@@ -41,6 +40,7 @@ export default class ActiveWidgetStore extends EventEmitter {
     private persistentWidgetId: string | null = null;
     private persistentRoomId: string | null = null;
     private dockedWidgetsByUid = new Map<string, number>();
+    private matrixClient?: MatrixClient;
 
     public static get instance(): ActiveWidgetStore {
         if (!ActiveWidgetStore.internalInstance) {
@@ -49,12 +49,13 @@ export default class ActiveWidgetStore extends EventEmitter {
         return ActiveWidgetStore.internalInstance;
     }
 
-    public start(): void {
-        MatrixClientPeg.safeGet().on(RoomStateEvent.Events, this.onRoomStateEvents);
+    public start(client: MatrixClient): void {
+        this.matrixClient = client;
+        this.matrixClient.on(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
     public stop(): void {
-        MatrixClientPeg.get()?.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
+        this.matrixClient?.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
     private onRoomStateEvents = (ev: MatrixEvent, { roomId }: RoomState): void => {
