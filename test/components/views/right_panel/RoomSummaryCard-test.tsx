@@ -19,6 +19,7 @@ import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import { EventType, MatrixEvent, Room, MatrixClient, JoinRule } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import { mocked, MockedObject } from "jest-mock";
+import userEvent from "@testing-library/user-event";
 
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import RoomSummaryCard from "../../../../src/components/views/right_panel/RoomSummaryCard";
@@ -38,6 +39,7 @@ import SettingsStore from "../../../../src/settings/SettingsStore";
 import { tagRoom } from "../../../../src/utils/room/tagRoom";
 import { DefaultTagID } from "../../../../src/stores/room-list/models";
 import { Action } from "../../../../src/dispatcher/actions";
+import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
 
 jest.mock("../../../../src/utils/room/tagRoom");
 
@@ -183,6 +185,41 @@ describe("<RoomSummaryCard />", () => {
             expect(getByPlaceholderText("Search messages…")).toHaveFocus();
             fireEvent.keyDown(getByPlaceholderText("Search messages…"), { key: "Escape" });
             expect(onSearchCancel).toHaveBeenCalled();
+        });
+
+        it("should empty search field when the timeline rendering type changes away", () => {
+            const onSearchChange = jest.fn();
+            const roomContext = { timelineRenderingType: TimelineRenderingType.Search } as any;
+            const { rerender } = render(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <RoomContext.Provider value={roomContext}>
+                        <RoomSummaryCard
+                            room={room}
+                            permalinkCreator={new RoomPermalinkCreator(room)}
+                            onClose={jest.fn()}
+                            onSearchChange={onSearchChange}
+                            focusRoomSearch={true}
+                        />
+                    </RoomContext.Provider>
+                </MatrixClientContext.Provider>,
+            );
+
+            userEvent.type(screen.getByPlaceholderText("Search messages…"), "test");
+
+            roomContext.timemlineRenderingType = TimelineRenderingType.Room;
+            rerender(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <RoomContext.Provider value={roomContext}>
+                        <RoomSummaryCard
+                            room={room}
+                            permalinkCreator={new RoomPermalinkCreator(room)}
+                            onClose={jest.fn()}
+                            onSearchChange={onSearchChange}
+                        />
+                    </RoomContext.Provider>
+                </MatrixClientContext.Provider>,
+            );
+            userEvent.type(screen.getByPlaceholderText("Search messages…"), "test");
         });
     });
 

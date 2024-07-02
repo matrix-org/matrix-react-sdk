@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SearchWarning /> with desktop builds available renders with a logo by default 1`] = `
+<DocumentFragment>
+  <div
+    class="mx_SearchWarning"
+  >
+    <img
+      alt=""
+      src="https://logo"
+      width="32px"
+    />
+    <span>
+      <span>
+        <a
+          href="https://url"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          Open the Desktop app
+        </a>
+         to search rooms with encrypted messages
+      </span>
+    </span>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`<SearchWarning /> with desktop builds available renders without a logo when showLogo=false 1`] = `
+<DocumentFragment>
+  <div
+    class="mx_SearchWarning"
+  >
+    <span>
+      <span>
+        <a
+          href="https://url"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          Open the Desktop app
+        </a>
+         to search rooms with encrypted messages
+      </span>
+    </span>
+  </div>
+</DocumentFragment>
+`;
