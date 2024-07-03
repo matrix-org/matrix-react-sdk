@@ -17,7 +17,7 @@ exports[`<SearchWarning /> with desktop builds available renders with a logo by 
           rel="noreferrer noopener"
           target="_blank"
         >
-          Open the Desktop app
+          Get the Desktop app
         </a>
          to search rooms with encrypted messages
       </span>
@@ -38,7 +38,7 @@ exports[`<SearchWarning /> with desktop builds available renders without a logo 
           rel="noreferrer noopener"
           target="_blank"
         >
-          Open the Desktop app
+          Get the Desktop app
         </a>
          to search rooms with encrypted messages
       </span>
