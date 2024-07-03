@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, RenderResult, waitFor } from "@testing-library/react";
+import { fireEvent, render, RenderResult, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import PreferencesUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/PreferencesUserSettingsTab";
 import { MatrixClientPeg } from "../../../../../../src/MatrixClientPeg";
@@ -23,6 +24,7 @@ import { mockPlatformPeg, stubClient } from "../../../../../test-utils";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../../../../src/settings/SettingLevel";
 import MatrixClientBackedController from "../../../../../../src/settings/controllers/MatrixClientBackedController";
+import PlatformPeg from "../../../../../../src/PlatformPeg";
 
 describe("PreferencesUserSettingsTab", () => {
     beforeEach(() => {
@@ -36,6 +38,21 @@ describe("PreferencesUserSettingsTab", () => {
     it("should render", () => {
         const { asFragment } = renderTab();
         expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("should reload when changing language", async () => {
+        const reloadStub = jest.fn();
+        PlatformPeg.get()!.reload = reloadStub;
+
+        renderTab();
+        const languageDropdown = await screen.findByRole("button", { name: "Language Dropdown" });
+        expect(languageDropdown).toBeInTheDocument();
+
+        await userEvent.click(languageDropdown);
+
+        const germanOption = await screen.findByText("Deutsch");
+        await userEvent.click(germanOption);
+        expect(reloadStub).toHaveBeenCalled();
     });
 
     describe("send read receipts", () => {
