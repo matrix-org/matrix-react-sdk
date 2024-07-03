@@ -27,9 +27,9 @@ import { StandardActions } from "../../../src/notifications/StandardActions";
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
 import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../test-utils";
 import { TestSdkContext } from "../../TestSdkContext";
+import defaultDispatcher from "../../../src/dispatcher/dispatcher";
 import SettingsStore from "../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
-import defaultDispatcher from "../../../src/dispatcher/dispatcher";
 import { Action } from "../../../src/dispatcher/actions";
 
 describe("<LoggedInView />", () => {

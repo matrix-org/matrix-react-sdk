@@ -1955,7 +1955,7 @@
             "video_call_ec_layout_spotlight": "Spotlight",
             "video_room_view_chat_button": "View chat timeline"
         },
-        "header_face_pile_tooltip": "Toggle member list",
+        "header_face_pile_tooltip": "People",
         "header_untrusted_label": "Untrusted",
         "inaccessible": "This room or space is not accessible at this time.",
         "inaccessible_name": "%(roomName)s is not accessible at this time.",
@@ -2031,16 +2031,16 @@
         "rejoin_button": "Re-join",
         "search": {
             "all_rooms_button": "Search all rooms",
-            "placeholder": "Search messages…",
             "result_count": {
                 "one": "(~%(count)s result)",
                 "other": "(~%(count)s results)"
             },
+            "this_room_button": "Search this room",
             "summary": {
                 "one": "1 result found for “<query/>”",
                 "other": "%(count)s results found for “<query/>”"
             },
-            "this_room_button": "Search this room"
+            "placeholder": "Search messages…"
         },
         "show_labs_settings": "Show Labs settings",
         "status_bar": {
