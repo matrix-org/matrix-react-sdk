@@ -991,10 +991,6 @@ export default class LegacyCallHandler extends EventEmitter {
             Modal.createDialog(ErrorDialog, {
                 description: _t("voip|cannot_call_yourself_description"),
             });
-        } else if (members.length === 2) {
-            logger.info(`Place ${type} call in ${roomId}`);
-
-            await this.placeMatrixCall(roomId, type, transferee);
         } else {
             // > 2
             switch (platformType) {
@@ -1003,6 +999,15 @@ export default class LegacyCallHandler extends EventEmitter {
                     break;
                 case PlatformCallType.BigBlueButtonCall:
                     await this.placeBigBlueButtonCall(roomId, type);
+                    break;
+                case PlatformCallType.LegacyCall:
+                    if (members.length === 2) {
+                        logger.info(`Place ${type} call in ${roomId}`);
+
+                        await this.placeMatrixCall(roomId, type, transferee);
+                    } else {
+                        logger.warn("tried to do a legacy call with more then two room participants");
+                    }
                     break;
             }
         }
