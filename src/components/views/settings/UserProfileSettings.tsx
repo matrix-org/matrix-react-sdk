@@ -35,6 +35,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import LogoutDialog, { shouldShowLogoutDialog } from "../dialogs/LogoutDialog";
 import Modal from "../../../Modal";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Flex } from "../../utils/Flex";
 
 const SpinnerToast: React.FC = ({ children }) => (
     <>
@@ -242,12 +243,12 @@ const UserProfileSettings: React.FC<UserProfileSettingsProps> = ({
                 </Alert>
             )}
             {userIdentifier && <UsernameBox username={userIdentifier} />}
-            <div className="mx_UserProfileSettings_profile_buttons">
+            <Flex gap="var(--cpd-space-4x)" className="mx_UserProfileSettings_profile_buttons">
                 {externalAccountManagementUrl && (
                     <ManageAccountButton externalAccountManagementUrl={externalAccountManagementUrl} />
                 )}
                 <SignOutButton />
-            </div>
+            </Flex>
         </div>
     );
 };
