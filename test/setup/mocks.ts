@@ -30,6 +30,6 @@ export const mocks = {
         resume: jest.fn(),
         setSinkId: jest.fn(),
         suspend: jest.fn(),
-        decodeAudioData: jest.fn((buffer, fn) => fn({})),
+        decodeAudioData: jest.fn((buffer, fn) => fn?.({})),
     },
 };
