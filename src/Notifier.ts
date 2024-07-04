@@ -58,6 +58,7 @@ import ToastStore from "./stores/ToastStore";
 import { VoiceBroadcastChunkEventType, VoiceBroadcastInfoEventType } from "./voice-broadcast";
 import { getSenderName } from "./utils/event/getSenderName";
 import { stripPlainReply } from "./utils/Reply";
+import { createAudioContext, pickFormat } from "./audio/compat";
 
 /*
  * Dispatches:
@@ -112,7 +113,7 @@ class NotifierClass {
     private toolbarHidden?: boolean;
     private isSyncing?: boolean;
 
-    private audioContext: AudioContext = new AudioContext();
+    private audioContext: AudioContext = createAudioContext();
     private sounds: Record<string, AudioBuffer> = {}; // Cache the sounds loaded
 
     public notificationMessageForEvent(ev: MatrixEvent): string | null {
@@ -233,19 +234,13 @@ class NotifierClass {
     private async getSoundBufferForRoom(roomId: string): Promise<AudioBuffer> {
         const sound = this.getSoundForRoom(roomId);
 
-        // Detect supported formats
-        const audioElement = document.createElement("audio");
-        let format = "";
-        if (audioElement.canPlayType("audio/mpeg")) {
-            format = "mp3";
-        } else if (audioElement.canPlayType("audio/ogg")) {
-            format = "ogg";
-        } else {
-            logger.error("Browser doens't support mp3 or ogg");
+        const format = pickFormat("mp3", "ogg");
+        if (!format) {
+            logger.error("Browser doesn't support mp3 or ogg");
             // Will probably never happen. If happened, format="" and will fail to load audio. Who cares...
         }
 
-        const url = sound ? sound["url"] : "media/message." + format;
+        const url = sound ? sound["url"] : `media/message.${format}`;
 
         if (this.sounds.hasOwnProperty(url)) {
             return this.sounds[url];

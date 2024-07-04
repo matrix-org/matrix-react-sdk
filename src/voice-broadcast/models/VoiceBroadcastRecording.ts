@@ -47,6 +47,7 @@ import { VoiceBroadcastChunkEvents } from "../utils/VoiceBroadcastChunkEvents";
 import { RelationsHelper, RelationsHelperEvent } from "../../events/RelationsHelper";
 import { createReconnectedListener } from "../../utils/connection";
 import { localNotificationsAreSilenced } from "../../utils/notifications";
+import { createAudioContext, pickFormat } from "../../audio/compat";
 
 export enum VoiceBroadcastRecordingEvent {
     StateChanged = "liveness_changed",
@@ -75,7 +76,7 @@ export class VoiceBroadcastRecording
     private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
     private roomId: string;
     private infoEventId: string;
-    private audioContext: AudioContext = new AudioContext();
+    private audioContext: AudioContext = createAudioContext();
     private sounds: Record<string, AudioBuffer> = {}; // Cache the sounds loaded
 
     /**
@@ -348,15 +349,9 @@ export class VoiceBroadcastRecording
             return;
         }
 
-        // Detect supported formats
-        const audioElement = document.createElement("audio");
-        let format = "";
-        if (audioElement.canPlayType("audio/mpeg")) {
-            format = "mp3";
-        } else if (audioElement.canPlayType("audio/ogg")) {
-            format = "ogg";
-        } else {
-            console.log("Browser doens't support mp3 or ogg");
+        const format = pickFormat("mp3", "ogg");
+        if (!format) {
+            console.log("Browser doesn't support mp3 or ogg");
             // Will probably never happen. If happened, format="" and will fail to load audio. Who cares...
         }
 

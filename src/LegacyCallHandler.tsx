@@ -66,6 +66,7 @@ import { localNotificationsAreSilenced } from "./utils/notifications";
 import { SdkContextClass } from "./contexts/SDKContext";
 import { showCantStartACallDialog } from "./voice-broadcast/utils/showCantStartACallDialog";
 import { isNotNull } from "./Typeguards";
+import { createAudioContext, pickFormat } from "./audio/compat";
 
 export const PROTOCOL_PSTN = "m.protocol.pstn";
 export const PROTOCOL_PSTN_PREFIXED = "im.vector.protocol.pstn";
@@ -168,7 +169,7 @@ export default class LegacyCallHandler extends EventEmitter {
 
     private silencedCalls = new Set<string>(); // callIds
 
-    private audioContext: AudioContext = new AudioContext();
+    private audioContext: AudioContext = createAudioContext();
     private sounds: Record<string, AudioBuffer> = {}; // Cache the sounds loaded
     private playingSources: Record<string, AudioBufferSourceNode> = {}; // Record them for stopping
 
@@ -428,14 +429,8 @@ export default class LegacyCallHandler extends EventEmitter {
         const logPrefix = `LegacyCallHandler.play(${audioId}):`;
         logger.debug(`${logPrefix} beginning of function`);
 
-        // Detect supported formats
-        const audioElement = document.createElement("audio");
-        let format = "";
-        if (audioElement.canPlayType("audio/mpeg")) {
-            format = "mp3";
-        } else if (audioElement.canPlayType("audio/ogg")) {
-            format = "ogg";
-        } else {
+        const format = pickFormat("mp3", "ogg");
+        if (!format) {
             logger.error(`${logPrefix} no supported format found`);
             // Will probably never happen. If happened, format="" and will fail to load audio. Who cares...
             return;
