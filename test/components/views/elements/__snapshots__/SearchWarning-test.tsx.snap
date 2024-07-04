@@ -12,14 +12,15 @@ exports[`<SearchWarning /> with desktop builds available renders with a logo by 
     />
     <span>
       <span>
+        Use the 
         <a
           href="https://url"
           rel="noreferrer noopener"
           target="_blank"
         >
-          Get the Desktop app
+          Desktop app
         </a>
-         to search rooms with encrypted messages
+         to search encrypted messages
       </span>
     </span>
   </div>
@@ -33,14 +34,15 @@ exports[`<SearchWarning /> with desktop builds available renders without a logo 
   >
     <span>
       <span>
+        Use the 
         <a
           href="https://url"
           rel="noreferrer noopener"
           target="_blank"
         >
-          Get the Desktop app
+          Desktop app
         </a>
-         to search rooms with encrypted messages
+         to search encrypted messages
       </span>
     </span>
   </div>
