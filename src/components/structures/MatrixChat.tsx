@@ -647,7 +647,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case "logout":
                 LegacyCallHandler.instance.hangupAllCalls();
                 Promise.all([
-                    ...[...CallStore.instance.activeCalls].map((call) => call.disconnect()),
+                    ...[...CallStore.instance.connectedCalls].map((call) => call.disconnect()),
                     cleanUpBroadcasts(this.stores),
                 ]).finally(() => Lifecycle.logout(this.stores.oidcClientStore));
                 break;
@@ -1756,11 +1756,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         } else if (screen === "home") {
             dis.dispatch({
                 action: Action.ViewHomePage,
-            });
-        } else if (screen === "start") {
-            this.showScreen("home");
-            dis.dispatch({
-                action: "require_registration",
             });
         } else if (screen === "directory") {
             dis.fire(Action.ViewRoomDirectory);

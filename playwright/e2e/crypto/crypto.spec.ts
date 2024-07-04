@@ -248,6 +248,10 @@ test.describe("Cryptography", function () {
         await page.getByPlaceholder("Security Key").fill(secretStorageKey);
         await page.getByRole("button", { name: "Continue" }).click();
 
+        // Enter the password
+        await page.getByPlaceholder("Password").fill(aliceCredentials.password);
+        await page.getByRole("button", { name: "Continue" }).click();
+
         await expect(async () => {
             const masterKey2 = await fetchMasterKey();
             expect(masterKey1).not.toEqual(masterKey2);
@@ -318,13 +322,7 @@ test.describe("Cryptography", function () {
             });
         });
 
-        test("should show the correct shield on e2e events", async ({
-            page,
-            app,
-            bot: bob,
-            homeserver,
-            cryptoBackend,
-        }) => {
+        test("should show the correct shield on e2e events", async ({ page, app, bot: bob, homeserver }) => {
             // Bob has a second, not cross-signed, device
             const bobSecondDevice = new Bot(page, homeserver, {
                 bootstrapSecretStorage: false,
@@ -428,14 +426,8 @@ test.describe("Cryptography", function () {
             await app.viewRoomByName("Bob");
             await app.viewRoomByName("TestRoom");
 
-            // some debate over whether this should have a red or a grey shield. Legacy crypto shows a grey shield,
-            // Rust crypto a red one.
             await expect(last).toContainText("test encrypted from unverified");
-            if (cryptoBackend === "rust") {
-                await expect(lastE2eIcon).toHaveClass(/mx_EventTile_e2eIcon_warning/);
-            } else {
-                await expect(lastE2eIcon).toHaveClass(/mx_EventTile_e2eIcon_normal/);
-            }
+            await expect(lastE2eIcon).toHaveClass(/mx_EventTile_e2eIcon_warning/);
             await lastE2eIcon.focus();
             await expect(page.getByRole("tooltip")).toContainText("Encrypted by an unknown or deleted device.");
         });
@@ -447,6 +439,7 @@ test.describe("Cryptography", function () {
             homeserver,
             user: aliceCredentials,
         }) => {
+            test.slow();
             const securityKey = await enableKeyBackup(app);
 
             // bob sends a valid event
@@ -464,6 +457,15 @@ test.describe("Cryptography", function () {
 
             /* log out, and back in */
             await logOutOfElement(page);
+            // Reload to work around a Rust crypto bug where it can hold onto the indexeddb even after logout
+            // https://github.com/element-hq/element-web/issues/25779
+            await page.addInitScript(() => {
+                // When we reload, the initScript created by the `user`/`pageWithCredentials` fixtures
+                // will re-inject the original credentials into localStorage, which we don't want.
+                // To work around, we add a second initScript which will clear localStorage again.
+                window.localStorage.clear();
+            });
+            await page.reload();
             await logIntoElement(page, homeserver, aliceCredentials, securityKey);
 
             /* go back to the test room and find Bob's message again */
@@ -545,9 +547,7 @@ test.describe("Cryptography", function () {
             app,
             credentials,
             user,
-            cryptoBackend,
         }) => {
-            test.skip(cryptoBackend === "legacy", "Not implemented for legacy crypto");
             test.setTimeout(60000);
 
             // Start with a logged-in session, without key backup, and send a message.
@@ -611,11 +611,8 @@ test.describe("Cryptography", function () {
                 app,
                 credentials: aliceCredentials,
                 user: alice,
-                cryptoBackend,
                 bot: bob,
             }) => {
-                test.skip(cryptoBackend === "legacy", "Not implemented for legacy crypto");
-
                 // Bob creates an encrypted room and sends a message to it. He then invites Alice
                 const roomId = await bob.evaluate(
                     async (client, { alice }) => {
@@ -719,15 +716,8 @@ test.describe("Cryptography", function () {
                 app,
                 credentials: aliceCredentials,
                 user: alice,
-                cryptoBackend,
                 bot: bob,
             }) => {
-                // The old pre-join UTD hiding code would hide events sent
-                // before our latest join event, even if the event that we're
-                // jumping to was decryptable.  We test that this no longer happens.
-
-                test.skip(cryptoBackend === "legacy", "Not implemented for legacy crypto");
-
                 // Bob:
                 // - creates an encrypted room,
                 // - invites Alice,

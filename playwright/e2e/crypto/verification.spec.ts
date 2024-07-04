@@ -40,25 +40,26 @@ test.describe("Device verification", () => {
         // Visit the login page of the app, to load the matrix sdk
         await page.goto("/#/login");
 
-        await page.pause();
-
         // wait for the page to load
         await page.waitForSelector(".mx_AuthPage", { timeout: 30000 });
 
         // Create a new device for alice
         aliceBotClient = new Bot(page, homeserver, {
-            rustCrypto: true,
             bootstrapCrossSigning: true,
             bootstrapSecretStorage: true,
         });
         aliceBotClient.setCredentials(credentials);
-        const mxClientHandle = await aliceBotClient.prepareClient();
 
-        await page.waitForTimeout(20000);
-
-        expectedBackupVersion = await mxClientHandle.evaluate(async (mxClient) => {
-            return await mxClient.getCrypto()!.getActiveSessionBackupVersion();
-        });
+        // Backup is prepared in the background. Poll until it is ready.
+        const botClientHandle = await aliceBotClient.prepareClient();
+        await expect
+            .poll(async () => {
+                expectedBackupVersion = await botClientHandle.evaluate((cli) =>
+                    cli.getCrypto()!.getActiveSessionBackupVersion(),
+                );
+                return expectedBackupVersion;
+            })
+            .not.toBe(null);
     });
 
     // Click the "Verify with another device" button, and have the bot client auto-accept it.
@@ -280,7 +281,7 @@ test.describe("User verification", () => {
         // it should contain the details of the requesting user
         await expect(toast.getByText(`Bob (${bob.credentials.userId})`)).toBeVisible();
         // Accept
-        await toast.getByRole("button", { name: "Verify Session" }).click();
+        await toast.getByRole("button", { name: "Verify User" }).click();
 
         // request verification by emoji
         await page.locator("#mx_RightPanel").getByRole("button", { name: "Verify by emoji" }).click();
@@ -303,10 +304,7 @@ test.describe("User verification", () => {
         user: aliceCredentials,
         toasts,
         room: { roomId: dmRoomId },
-        cryptoBackend,
     }) => {
-        test.skip(cryptoBackend === "legacy", "Not implemented for legacy crypto");
-
         // once Alice has joined, Bob starts the verification
         const bobVerificationRequest = await bob.evaluateHandle(
             async (client, { dmRoomId, aliceCredentials }) => {
@@ -324,7 +322,7 @@ test.describe("User verification", () => {
 
         // Accept verification via toast
         const toast = await toasts.getToast("Verification requested");
-        await toast.getByRole("button", { name: "Verify Session" }).click();
+        await toast.getByRole("button", { name: "Verify User" }).click();
 
         // request verification by emoji
         await page.locator("#mx_RightPanel").getByRole("button", { name: "Verify by emoji" }).click();

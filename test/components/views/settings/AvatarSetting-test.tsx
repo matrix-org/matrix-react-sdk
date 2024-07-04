@@ -32,35 +32,27 @@ describe("<AvatarSetting />", () => {
 
     it("renders avatar with specified alt text", async () => {
         const { queryByAltText } = render(
-            <AvatarSetting avatarAltText="Avatar of Peter Fox" avatar="mxc://example.org/my-avatar" />,
+            <AvatarSetting
+                placeholderId="blee"
+                placeholderName="boo"
+                avatarAltText="Avatar of Peter Fox"
+                avatar="mxc://example.org/my-avatar"
+            />,
         );
 
         const imgElement = queryByAltText("Avatar of Peter Fox");
         expect(imgElement).toBeInTheDocument();
     });
 
-    it("renders avatar with remove button", async () => {
-        const { queryByText } = render(
+    it("renders a file as the avatar when supplied", async () => {
+        render(
             <AvatarSetting
+                placeholderId="blee"
+                placeholderName="boo"
                 avatarAltText="Avatar of Peter Fox"
-                avatar="mxc://example.org/my-avatar"
-                removeAvatar={jest.fn()}
+                avatar={AVATAR_FILE}
             />,
         );
-
-        const removeButton = queryByText("Remove");
-        expect(removeButton).toBeInTheDocument();
-    });
-
-    it("renders avatar without remove button", async () => {
-        const { queryByText } = render(<AvatarSetting disabled={true} avatarAltText="Avatar of Peter Fox" />);
-
-        const removeButton = queryByText("Remove");
-        expect(removeButton).toBeNull();
-    });
-
-    it("renders a file as the avatar when supplied", async () => {
-        render(<AvatarSetting avatarAltText="Avatar of Peter Fox" avatar={AVATAR_FILE} />);
 
         const imgElement = await screen.findByRole("button", { name: "Avatar of Peter Fox" });
         expect(imgElement).toBeInTheDocument();
@@ -73,14 +65,13 @@ describe("<AvatarSetting />", () => {
 
         render(
             <AvatarSetting
+                placeholderId="blee"
+                placeholderName="boo"
                 avatar="mxc://example.org/my-avatar"
                 avatarAltText="Avatar of Peter Fox"
                 onChange={onChange}
             />,
         );
-
-        // not really necessary, but to follow the expected user flow as much as possible
-        await user.click(screen.getByRole("button", { name: "Avatar of Peter Fox" }));
 
         const fileInput = screen.getByAltText("Upload");
         await user.upload(fileInput, AVATAR_FILE);

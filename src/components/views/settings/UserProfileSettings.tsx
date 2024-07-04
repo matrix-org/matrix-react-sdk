@@ -16,10 +16,9 @@ limitations under the License.
 
 import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EditInPlace, Alert } from "@vector-im/compound-web";
+import { EditInPlace, Alert, ErrorMessage } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 import AvatarSetting from "./AvatarSetting";
 import PosthogTrackers from "../../../PosthogTrackers";
@@ -29,6 +28,7 @@ import InlineSpinner from "../elements/InlineSpinner";
 import UserIdentifierCustomisations from "../../../customisations/UserIdentifier";
 import { useId } from "../../../utils/useId";
 import CopyableText from "../elements/CopyableText";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 
 const SpinnerToast: React.FC = ({ children }) => (
     <>
@@ -55,41 +55,49 @@ const UsernameBox: React.FC<UsernameBoxProps> = ({ username }) => {
     );
 };
 
+interface UserProfileSettingsProps {
+    // Whether the homeserver allows the user to set their display name.
+    canSetDisplayName: boolean;
+    // Whether the homeserver allows the user to set their avatar.
+    canSetAvatar: boolean;
+}
+
 /**
  * A group of settings views to allow the user to set their profile information.
  */
-const UserProfileSettings: React.FC = () => {
+const UserProfileSettings: React.FC<UserProfileSettingsProps> = ({ canSetDisplayName, canSetAvatar }) => {
     const [avatarURL, setAvatarURL] = useState(OwnProfileStore.instance.avatarMxc);
     const [displayName, setDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
-    const [initialDisplayName, setInitialDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
     const [avatarError, setAvatarError] = useState<boolean>(false);
     const [maxUploadSize, setMaxUploadSize] = useState<number | undefined>();
     const [displayNameError, setDisplayNameError] = useState<boolean>(false);
 
     const toastRack = useToastContext();
 
+    const client = useMatrixClientContext();
+
     useEffect(() => {
         (async () => {
             try {
-                const mediaConfig = await MatrixClientPeg.safeGet().getMediaConfig();
+                const mediaConfig = await client.getMediaConfig();
                 setMaxUploadSize(mediaConfig["m.upload.size"]);
             } catch (e) {
                 logger.warn("Failed to get media config", e);
             }
         })();
-    }, []);
+    }, [client]);
 
     const onAvatarRemove = useCallback(async () => {
         const removeToast = toastRack.displayToast(
             <SpinnerToast>{_t("settings|general|avatar_remove_progress")}</SpinnerToast>,
         );
         try {
-            await MatrixClientPeg.safeGet().setAvatarUrl(""); // use empty string as Synapse 500s on undefined
+            await client.setAvatarUrl(""); // use empty string as Synapse 500s on undefined
             setAvatarURL("");
         } finally {
             removeToast();
         }
-    }, [toastRack]);
+    }, [toastRack, client]);
 
     const onAvatarChange = useCallback(
         async (avatarFile: File) => {
@@ -102,7 +110,6 @@ const UserProfileSettings: React.FC = () => {
             );
             try {
                 setAvatarError(false);
-                const client = MatrixClientPeg.safeGet();
                 const { content_uri: uri } = await client.uploadContent(avatarFile);
                 await client.setAvatarUrl(uri);
                 setAvatarURL(uri);
@@ -112,7 +119,7 @@ const UserProfileSettings: React.FC = () => {
                 removeToast();
             }
         },
-        [toastRack],
+        [toastRack, client],
     );
 
     const onDisplayNameChanged = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -126,45 +133,56 @@ const UserProfileSettings: React.FC = () => {
     const onDisplayNameSave = useCallback(async (): Promise<void> => {
         try {
             setDisplayNameError(false);
-            await MatrixClientPeg.safeGet().setDisplayName(displayName);
-            setInitialDisplayName(displayName);
+            await client.setDisplayName(displayName);
         } catch (e) {
             setDisplayNameError(true);
+            throw e;
         }
-    }, [displayName]);
+    }, [displayName, client]);
 
     const userIdentifier = useMemo(
         () =>
-            UserIdentifierCustomisations.getDisplayUserIdentifier(MatrixClientPeg.safeGet().getSafeUserId(), {
+            UserIdentifierCustomisations.getDisplayUserIdentifier(client.getSafeUserId(), {
                 withDisplayName: true,
             }),
-        [],
+        [client],
     );
+
+    const someFieldsDisabled = !canSetDisplayName || !canSetAvatar;
 
     return (
         <div className="mx_UserProfileSettings">
             <h2>{_t("common|profile")}</h2>
-            <div>{_t("settings|general|profile_subtitle")}</div>
+            <div>
+                {someFieldsDisabled
+                    ? _t("settings|general|profile_subtitle_oidc")
+                    : _t("settings|general|profile_subtitle")}
+            </div>
             <div className="mx_UserProfileSettings_profile">
                 <AvatarSetting
                     avatar={avatarURL ?? undefined}
                     avatarAltText={_t("common|user_avatar")}
                     onChange={onAvatarChange}
-                    removeAvatar={onAvatarRemove}
+                    removeAvatar={avatarURL ? onAvatarRemove : undefined}
+                    placeholderName={displayName}
+                    placeholderId={client.getUserId() ?? ""}
+                    disabled={!canSetAvatar}
                 />
                 <EditInPlace
                     className="mx_UserProfileSettings_profile_displayName"
                     label={_t("settings|general|display_name")}
                     value={displayName}
-                    disableSaveButton={displayName === initialDisplayName}
                     saveButtonLabel={_t("common|save")}
                     cancelButtonLabel={_t("common|cancel")}
                     savedLabel={_t("common|saved")}
+                    savingLabel={_t("common|updating")}
                     onChange={onDisplayNameChanged}
                     onCancel={onDisplayNameCancel}
                     onSave={onDisplayNameSave}
-                    error={displayNameError ? _t("settings|general|display_name_error") : undefined}
-                />
+                    disabled={!canSetDisplayName}
+                >
+                    {displayNameError && <ErrorMessage>{_t("settings|general|display_name_error")}</ErrorMessage>}
+                </EditInPlace>
             </div>
             {avatarError && (
                 <Alert title={_t("settings|general|avatar_upload_error_title")} type="critical">

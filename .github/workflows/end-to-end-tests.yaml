@@ -103,7 +103,7 @@ jobs:
             fail-fast: false
             matrix:
                 # Run multiple instances in parallel to speed up the tests
-                runner: [1, 2, 3, 4, 5, 6, 7, 8]
+                runner: [1, 2, 3, 4, 5, 6]
         steps:
             - uses: actions/checkout@v4
               with:
@@ -145,10 +145,8 @@ jobs:
               run: yarn playwright install --with-deps
 
             - name: Run Playwright tests
-              uses: coactions/setup-xvfb@6b00cf1889f4e1d5a48635647013c0508128ee1a
-              with:
-                  run: yarn playwright test --shard ${{ matrix.runner }}/${{ strategy.job-total }}
-                  working-directory: matrix-react-sdk
+              run: yarn playwright test --shard ${{ matrix.runner }}/${{ strategy.job-total }}
+              working-directory: matrix-react-sdk
 
             - name: Upload blob report to GitHub Actions Artifacts
               if: always()
@@ -164,9 +162,6 @@ jobs:
         if: always()
         runs-on: ubuntu-latest
         steps:
-            - if: needs.playwright.result != 'skipped' && needs.playwright.result != 'success'
-              run: exit 1
-
             - uses: actions/checkout@v4
               if: inputs.skip != true
               with:
@@ -195,7 +190,7 @@ jobs:
               run: yarn playwright merge-reports --reporter=html,./playwright/flaky-reporter.ts ./all-blob-reports
               env:
                   # Only pass creds to the flaky-reporter on main branch runs
-                  GITHUB_TOKEN: ${{ github.event.workflow_run.head_branch == 'develop' && secrets.ELEMENT_BOT_TOKEN || '' }}
+                  GITHUB_TOKEN: ${{ github.ref_name == 'develop' && secrets.ELEMENT_BOT_TOKEN || '' }}
 
             - name: Upload HTML report
               if: inputs.skip != true
@@ -204,3 +199,6 @@ jobs:
                   name: html-report
                   path: playwright-report
                   retention-days: 14
+
+            - if: needs.playwright.result != 'skipped' && needs.playwright.result != 'success'
+              run: exit 1
