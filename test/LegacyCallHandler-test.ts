@@ -542,6 +542,14 @@ describe("LegacyCallHandler without third party protocols", () => {
         SdkConfig.reset();
     });
 
+    it("should cache sounds between playbacks", async () => {
+        callHandler.play(AudioID.Ring);
+        await waitFor(() => expect(mockAudioBufferSourceNode.start).toHaveBeenCalled());
+        expect(fetchMock.calls("/media/ring.mp3")).toHaveLength(1);
+        callHandler.play(AudioID.Ring);
+        expect(fetchMock.calls("/media/ring.mp3")).toHaveLength(1);
+    });
+
     it("should still start a native call", async () => {
         callHandler.placeCall(NATIVE_ROOM_ALICE, CallType.Voice);
 
@@ -635,14 +643,6 @@ describe("LegacyCallHandler without third party protocols", () => {
 
             // ringer audio started
             await waitFor(() => expect(mockAudioBufferSourceNode.start).toHaveBeenCalled());
-        });
-
-        it("should cache sounds between playbacks", async () => {
-            callHandler.play(AudioID.Ring);
-            await waitFor(() => expect(mockAudioBufferSourceNode.start).toHaveBeenCalled());
-            expect(fetchMock.calls("/media/ring.mp3")).toHaveLength(1);
-            callHandler.play(AudioID.Ring);
-            expect(fetchMock.calls("/media/ring.mp3")).toHaveLength(1);
         });
 
         it("does not ring when incoming call state is ringing but local notifications are silenced", () => {
