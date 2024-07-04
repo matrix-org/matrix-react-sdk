@@ -491,7 +491,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 dis.dispatch({
                     action: Action.ViewHomePage,
                 });
-                Modal.closeCurrentModal("homeKeyboardShortcut");
+                Modal.closeAllModals();
                 handled = true;
                 break;
             case KeyBindingAction.ToggleSpacePanel:

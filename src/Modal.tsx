@@ -47,8 +47,8 @@ export interface IModal<C extends ComponentType> {
     elem: React.ReactNode;
     className?: string;
     beforeClosePromise?: Promise<boolean>;
-    closeReason?: string;
-    onBeforeClose?(reason?: string): Promise<boolean>;
+    closeReason?: ModalCloseReason;
+    onBeforeClose?(reason?: ModalCloseReason): Promise<boolean>;
     onFinished: ComponentProps<C>["onFinished"];
     close(...args: Parameters<ComponentProps<C>["onFinished"]>): void;
     hidden?: boolean;
@@ -72,6 +72,8 @@ type HandlerMap = {
     [ModalManagerEvent.Opened]: () => void;
     [ModalManagerEvent.Closed]: () => void;
 };
+
+type ModalCloseReason = "backgroundClick";
 
 export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMap> {
     private counter = 0;
@@ -147,18 +149,12 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         return this.appendDialogAsync<C>(Promise.resolve(Element), props, className);
     }
 
-    /**
-     * @param reason either "backgroundClick" or undefined
-     * @return whether a modal was closed
-     */
-    public closeCurrentModal(reason?: string): boolean {
-        const modal = this.getCurrentModal();
-        if (!modal) {
-            return false;
+    public closeAllModals(reason?: ModalCloseReason): void {
+        let modal: IModal<any>;
+        while ((modal = this.getCurrentModal())) {
+            modal.closeReason = reason;
+            modal.close();
         }
-        modal.closeReason = reason;
-        modal.close();
-        return true;
     }
 
     private buildModal<C extends ComponentType>(
