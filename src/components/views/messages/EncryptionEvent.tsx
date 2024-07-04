@@ -16,8 +16,8 @@ limitations under the License.
 
 import React, { forwardRef, useContext } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-import { IRoomEncryption } from "matrix-js-sdk/src/crypto/RoomList";
 
+import type { RoomEncryptionEventContent } from "matrix-js-sdk/src/types";
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import EventTileBubble from "./EventTileBubble";
@@ -38,8 +38,8 @@ const EncryptionEvent = forwardRef<HTMLDivElement, IProps>(({ mxEvent, timestamp
     const roomId = mxEvent.getRoomId()!;
     const isRoomEncrypted = MatrixClientPeg.safeGet().isRoomEncrypted(roomId);
 
-    const prevContent = mxEvent.getPrevContent() as IRoomEncryption;
-    const content = mxEvent.getContent<IRoomEncryption>();
+    const prevContent = mxEvent.getPrevContent() as RoomEncryptionEventContent;
+    const content = mxEvent.getContent<RoomEncryptionEventContent>();
 
     // if no change happened then skip rendering this, a shallow check is enough as all known fields are top-level.
     if (!objectHasDiff(prevContent, content)) return null; // nop

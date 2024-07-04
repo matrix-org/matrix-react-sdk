@@ -118,7 +118,6 @@ module.exports = {
                             "!matrix-js-sdk/src/crypto/olmlib",
                             "!matrix-js-sdk/src/crypto/crypto",
                             "!matrix-js-sdk/src/crypto/keybackup",
-                            "!matrix-js-sdk/src/crypto/RoomList",
                             "!matrix-js-sdk/src/crypto/deviceinfo",
                             "!matrix-js-sdk/src/crypto/key_passphrase",
                             "!matrix-js-sdk/src/crypto/CrossSigning",
