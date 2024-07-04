@@ -549,11 +549,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             action: "appsDrawer",
             show: true,
         });
-        if (this.context.widgetLayoutStore.hasMaximisedWidget(this.state.room)) {
-            // Show chat in right panel when a widget is maximised
-            this.context.rightPanelStore.setCard({ phase: RightPanelPhases.Timeline });
-        }
         this.checkWidgets(this.state.room);
+        this.checkRightPanel(this.state.room);
     };
 
     /**
@@ -613,6 +610,25 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showApps: this.shouldShowApps(room),
         });
     };
+
+    private checkRightPanel(room: Room | undefined): void {
+        if (!room) return;
+        const mainSplit = this.getMainSplitContentType(room);
+        if (
+            (mainSplit === MainSplitContentType.MaximisedWidget || mainSplit === MainSplitContentType.Call) &&
+            !this.state.showRightPanel
+        ) {
+            // Show chat in right panel when a widget is maximised
+            this.context.rightPanelStore.setCard({ phase: RightPanelPhases.Timeline });
+        } else if (
+            this.context.rightPanelStore.currentCard.phase === RightPanelPhases.Timeline &&
+            this.context.rightPanelStore.roomPhaseHistory.some((card) => card.phase === RightPanelPhases.Timeline)
+        ) {
+            // We're returning to the main timeline, so hide the right panel timeline
+            this.context.rightPanelStore.setCard({ phase: RightPanelPhases.RoomSummary });
+            this.context.rightPanelStore.hide(this.state.roomId ?? null);
+        }
+    }
 
     private getMainSplitContentType = (room: Room): MainSplitContentType => {
         if (
@@ -679,19 +695,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             viewRoomOpts: this.context.roomViewStore.getViewRoomOpts(),
         };
 
-        if (
-            this.state.mainSplitContentType !== MainSplitContentType.Timeline &&
-            newState.mainSplitContentType === MainSplitContentType.Timeline &&
-            this.context.rightPanelStore.isOpen &&
-            this.context.rightPanelStore.currentCard.phase === RightPanelPhases.Timeline &&
-            this.context.rightPanelStore.roomPhaseHistory.some((card) => card.phase === RightPanelPhases.Timeline)
-        ) {
-            // We're returning to the main timeline, so hide the right panel timeline
-            this.context.rightPanelStore.setCard({ phase: RightPanelPhases.RoomSummary });
-            this.context.rightPanelStore.togglePanel(this.state.roomId ?? null);
-            newState.showRightPanel = false;
-        }
-
+        this.checkRightPanel(room);
         const initialEventId = this.context.roomViewStore.getInitialEventId() ?? this.state.initialEventId;
         if (initialEventId) {
             let initialEvent = room?.findEventById(initialEventId);

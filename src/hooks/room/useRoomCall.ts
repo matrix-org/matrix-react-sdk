@@ -48,6 +48,7 @@ export enum PlatformCallType {
     ElementCall,
     JitsiCall,
     LegacyCall,
+    BigBlueButtonCall,
 }
 export const getPlatformCallTypeLabel = (platformCallType: PlatformCallType): string => {
     switch (platformCallType) {
@@ -57,6 +58,8 @@ export const getPlatformCallTypeLabel = (platformCallType: PlatformCallType): st
             return _t("voip|jitsi_call");
         case PlatformCallType.LegacyCall:
             return _t("voip|legacy_call");
+        case PlatformCallType.BigBlueButtonCall:
+            return _t("voip|bigbluebutton_call");
     }
 };
 const enum State {
@@ -80,7 +83,7 @@ export const useRoomCall = (
     voiceCallClick(evt: React.MouseEvent | undefined, selectedType: PlatformCallType): void;
     videoCallDisabledReason: string | null;
     videoCallClick(evt: React.MouseEvent | undefined, selectedType: PlatformCallType): void;
-    toggleCallMaximized: () => void;
+    toggleCallMaximised: () => void;
     isViewingCall: boolean;
     isConnectedToCall: boolean;
     hasActiveCallSession: boolean;
@@ -103,6 +106,12 @@ export const useRoomCall = (
     const widgets = useWidgets(room);
     const jitsiWidget = useMemo(() => widgets.find((widget) => WidgetType.JITSI.matches(widget.type)), [widgets]);
     const hasJitsiWidget = !!jitsiWidget;
+    const bigbluebuttonWidget = useMemo(
+        () => widgets.find((widget) => WidgetType.BIGBLUEBUTTON.matches(widget.type)),
+        [widgets],
+    );
+    const hasBigBlueButtonWidget = !!bigbluebuttonWidget;
+
     const managedHybridWidget = useMemo(() => widgets.find(isManagedHybridWidget), [widgets]);
     const hasManagedHybridWidget = !!managedHybridWidget;
 
@@ -131,17 +140,29 @@ export const useRoomCall = (
         const options: PlatformCallType[] = [];
         if (memberCount <= 2) {
             options.push(PlatformCallType.LegacyCall);
-        } else if (mayEditWidgets || hasJitsiWidget) {
-            options.push(PlatformCallType.JitsiCall);
         }
+        if (mayEditWidgets || hasJitsiWidget) options.push(PlatformCallType.JitsiCall);
+        if ((mayEditWidgets || hasBigBlueButtonWidget) && SettingsStore.getValue("feature_big_blue_button_calls"))
+            options.push(PlatformCallType.BigBlueButtonCall);
         if (groupCallsEnabled) {
             if (hasGroupCall || mayCreateElementCalls) {
                 options.push(PlatformCallType.ElementCall);
             }
-            if (useElementCallExclusively && !hasJitsiWidget) {
+            if (
+                useElementCallExclusively &&
+                !hasJitsiWidget &&
+                (!hasBigBlueButtonWidget || !SettingsStore.getValue("feature_big_blue_button_calls"))
+            ) {
                 return [PlatformCallType.ElementCall];
             }
-            if (hasGroupCall && WidgetType.CALL.matches(groupCall.widget.type)) {
+            // we need to do an exception here that if there is a bigbluebutton widget it looks like there is a group call
+            // but actually it is a bigbluebutton call...
+            // they both use matrix rtc sessions...
+            if (
+                hasGroupCall &&
+                WidgetType.CALL.matches(groupCall.widget.type) &&
+                (!hasBigBlueButtonWidget || !SettingsStore.getValue("feature_big_blue_button_calls"))
+            ) {
                 // only allow joining the ongoing Element call if there is one.
                 return [PlatformCallType.ElementCall];
             }
@@ -151,6 +172,7 @@ export const useRoomCall = (
         memberCount,
         mayEditWidgets,
         hasJitsiWidget,
+        hasBigBlueButtonWidget,
         groupCallsEnabled,
         hasGroupCall,
         mayCreateElementCalls,
@@ -167,10 +189,19 @@ export const useRoomCall = (
     } else {
         widget = groupCall?.widget ?? jitsiWidget;
     }
+    // big blue button widget always wins if available.
+    if (
+        SettingsStore.getValue("feature_big_blue_button_calls") &&
+        callOptions.includes(PlatformCallType.BigBlueButtonCall) &&
+        bigbluebuttonWidget
+    ) {
+        widget = bigbluebuttonWidget;
+    }
     const updateWidgetState = useCallback((): void => {
         setCanPinWidget(WidgetLayoutStore.instance.canAddToContainer(room, Container.Top));
         setWidgetPinned(!!widget && WidgetLayoutStore.instance.isInContainer(room, widget, Container.Top));
     }, [room, widget]);
+
     useEventEmitter(WidgetLayoutStore.instance, WidgetLayoutStore.emissionForRoom(room), updateWidgetState);
     useEffect(() => {
         updateWidgetState();
@@ -189,7 +220,7 @@ export const useRoomCall = (
         if (connectedCalls.find((call) => call.roomId != room.roomId)) {
             return State.Ongoing;
         }
-        if (hasGroupCall && (hasJitsiWidget || hasManagedHybridWidget)) {
+        if (hasGroupCall && (hasJitsiWidget || hasBigBlueButtonWidget || hasManagedHybridWidget)) {
             return promptPinWidget ? State.Unpinned : State.Ongoing;
         }
         if (hasLegacyCall) {
@@ -205,23 +236,24 @@ export const useRoomCall = (
         return State.NoCall;
     }, [
         connectedCalls,
-        canInviteGuests,
         hasGroupCall,
         hasJitsiWidget,
-        hasLegacyCall,
+        hasBigBlueButtonWidget,
         hasManagedHybridWidget,
+        hasLegacyCall,
+        memberCount,
+        canInviteGuests,
         mayCreateElementCalls,
         mayEditWidgets,
-        memberCount,
-        promptPinWidget,
         room.roomId,
+        promptPinWidget,
     ]);
 
     const voiceCallClick = useCallback(
         (evt: React.MouseEvent | undefined, callPlatformType: PlatformCallType): void => {
             evt?.stopPropagation();
             if (widget && promptPinWidget) {
-                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
+                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Center);
             } else {
                 placeCall(room, CallType.Voice, callPlatformType, evt?.shiftKey ?? false);
             }
@@ -232,7 +264,7 @@ export const useRoomCall = (
         (evt: React.MouseEvent | undefined, callPlatformType: PlatformCallType): void => {
             evt?.stopPropagation();
             if (widget && promptPinWidget) {
-                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Top);
+                WidgetLayoutStore.instance.moveToContainer(room, widget, Container.Center);
             } else {
                 placeCall(room, CallType.Video, callPlatformType, evt?.shiftKey ?? false);
             }
@@ -261,7 +293,7 @@ export const useRoomCall = (
             voiceCallDisabledReason = null;
             videoCallDisabledReason = null;
     }
-    const toggleCallMaximized = useCallback(() => {
+    const toggleCallMaximised = useCallback(() => {
         defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
@@ -288,10 +320,10 @@ export const useRoomCall = (
         voiceCallClick,
         videoCallDisabledReason,
         videoCallClick,
-        toggleCallMaximized: toggleCallMaximized,
-        isViewingCall: isViewingCall,
-        isConnectedToCall: isConnectedToCall,
-        hasActiveCallSession: hasActiveCallSession,
+        toggleCallMaximised,
+        isViewingCall,
+        isConnectedToCall,
+        hasActiveCallSession,
         callOptions,
         showVoiceCallButton: !hideVoiceCallButton,
         showVideoCallButton: !hideVideoCallButton,

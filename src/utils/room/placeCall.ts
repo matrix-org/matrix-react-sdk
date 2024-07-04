@@ -35,9 +35,7 @@ export const placeCall = async (
     platformCallType: PlatformCallType,
     skipLobby: boolean,
 ): Promise<void> => {
-    if (platformCallType == PlatformCallType.LegacyCall || platformCallType == PlatformCallType.JitsiCall) {
-        await LegacyCallHandler.instance.placeCall(room.roomId, callType);
-    } else if (platformCallType == PlatformCallType.ElementCall) {
+    if (platformCallType == PlatformCallType.ElementCall) {
         defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
@@ -45,5 +43,7 @@ export const placeCall = async (
             skipLobby,
             metricsTrigger: undefined,
         });
+    } else {
+        await LegacyCallHandler.instance.placeCall(room.roomId, callType, undefined, platformCallType);
     }
 };

@@ -59,6 +59,7 @@ import { getJoinedNonFunctionalMembers } from "../utils/room/getJoinedNonFunctio
 import { isVideoRoom } from "../utils/video-rooms";
 import { FontWatcher } from "../settings/watchers/FontWatcher";
 import { JitsiCallMemberContent, JitsiCallMemberEventType } from "../call-types";
+import { Container, WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
 
 const TIMEOUT_MS = 16000;
 
@@ -949,6 +950,18 @@ export class ElementCall extends Call {
         this.messaging?.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.session.off(MatrixRTCSessionEvent.MembershipsChanged, this.onMembershipChanged);
         this.client.matrixRTC.off(MatrixRTCSessionManagerEvents.SessionEnded, this.onRTCSessionEnded);
+        // TODO this is a hack to temporarily get the bbb widget removed
+        // It should not be part of the ElementCall class.
+        // what we want is a BBB call type or a generic call type that can be configured with a widget
+        // (bbb and jitsi could be covered by this same call type)
+        // The rtc session would contain which widget is used with what session so one can decide
+        // which widget to destroy based on `this.session`.
+        // We intentionally do not put this behind a feature flag since we want to also hide it if someone else added
+        // the widget and this account is using it manually.
+        WidgetStore.instance
+            .getApps(this.roomId)
+            .filter((app) => WidgetType.BIGBLUEBUTTON.matches(app.type))
+            .forEach((app) => WidgetLayoutStore.instance.moveToContainer(this.room, app, Container.Right));
 
         if (this.settingsStoreCallEncryptionWatcher) {
             SettingsStore.unwatchSetting(this.settingsStoreCallEncryptionWatcher);
@@ -993,7 +1006,14 @@ export class ElementCall extends Call {
                 }
             }
         }
-
+        // TODO this is a hack to temporarily get the bbb widget removed
+        // It should not be part of the ElementCall class.
+        if (!participants.has(this.room.getMember(this.client.getUserId()!)!)) {
+            WidgetStore.instance
+                .getApps(this.roomId)
+                .filter((app) => WidgetType.BIGBLUEBUTTON.matches(app.type))
+                .forEach((app) => WidgetLayoutStore.instance.moveToContainer(this.room, app, Container.Right));
+        }
         this.participants = participants;
     }
 
