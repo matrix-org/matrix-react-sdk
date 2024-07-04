@@ -463,7 +463,7 @@ describe("LegacyCallHandler without third party protocols", () => {
         start: jest.fn(),
     };
     const mockAudioContext = {
-        decodeAudioData: jest.fn((buffer, fn) => fn({})),
+        decodeAudioData: jest.fn().mockResolvedValue({}),
         suspend: jest.fn(),
         resume: jest.fn(),
         createBufferSource: jest.fn().mockReturnValue(mockAudioBufferSourceNode),
@@ -528,6 +528,12 @@ describe("LegacyCallHandler without third party protocols", () => {
 
         SdkContextClass.instance.voiceBroadcastPlaybacksStore.clearCurrent();
         SdkContextClass.instance.voiceBroadcastRecordingsStore.clearCurrent();
+
+        fetchMock.get(
+            "/media/ring.mp3",
+            { body: new Blob(["1", "2", "3", "4"], { type: "audio/mpeg" }) },
+            { sendAsJson: false },
+        );
     });
 
     afterEach(() => {
@@ -543,10 +549,10 @@ describe("LegacyCallHandler without third party protocols", () => {
     });
 
     it("should cache sounds between playbacks", async () => {
-        callHandler.play(AudioID.Ring);
-        await waitFor(() => expect(mockAudioBufferSourceNode.start).toHaveBeenCalled());
+        await callHandler.play(AudioID.Ring);
+        expect(mockAudioBufferSourceNode.start).toHaveBeenCalled();
         expect(fetchMock.calls("/media/ring.mp3")).toHaveLength(1);
-        callHandler.play(AudioID.Ring);
+        await callHandler.play(AudioID.Ring);
         expect(fetchMock.calls("/media/ring.mp3")).toHaveLength(1);
     });
 
@@ -605,12 +611,6 @@ describe("LegacyCallHandler without third party protocols", () => {
                     });
                 }
             });
-
-            fetchMock.get(
-                "/media/ring.mp3",
-                { body: new Blob(["1", "2", "3", "4"], { type: "audio/mpeg" }) },
-                { sendAsJson: false },
-            );
         });
 
         it("listens for incoming call events when voip is enabled", () => {

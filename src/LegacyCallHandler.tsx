@@ -66,7 +66,7 @@ import { localNotificationsAreSilenced } from "./utils/notifications";
 import { SdkContextClass } from "./contexts/SDKContext";
 import { showCantStartACallDialog } from "./voice-broadcast/utils/showCantStartACallDialog";
 import { isNotNull } from "./Typeguards";
-import { createAudioContext, pickFormat } from "./audio/compat";
+import { BackgroundAudio } from "./audio/BackgroundAudio";
 
 export const PROTOCOL_PSTN = "m.protocol.pstn";
 export const PROTOCOL_PSTN_PREFIXED = "im.vector.protocol.pstn";
@@ -169,8 +169,7 @@ export default class LegacyCallHandler extends EventEmitter {
 
     private silencedCalls = new Set<string>(); // callIds
 
-    private audioContext: AudioContext = createAudioContext();
-    private sounds: Record<string, AudioBuffer> = {}; // Cache the sounds loaded
+    private backgroundAudio = new BackgroundAudio();
     private playingSources: Record<string, AudioBufferSourceNode> = {}; // Record them for stopping
 
     public static get instance(): LegacyCallHandler {
@@ -425,62 +424,21 @@ export default class LegacyCallHandler extends EventEmitter {
         return this.transferees.get(callId);
     }
 
-    public play(audioId: AudioID): void {
+    public async play(audioId: AudioID): Promise<void> {
         const logPrefix = `LegacyCallHandler.play(${audioId}):`;
         logger.debug(`${logPrefix} beginning of function`);
 
-        const format = pickFormat("mp3", "ogg");
-        if (!format) {
-            logger.error(`${logPrefix} no supported format found`);
-            // Will probably never happen. If happened, format="" and will fail to load audio. Who cares...
-            return;
-        }
-
-        const URLs: Record<AudioID, string> = {
-            ringAudio: `./media/ring.${format}`,
-            ringbackAudio: `./media/ringback.${format}`,
-            callendAudio: `./media/callend.${format}`,
-            busyAudio: `./media/busy.${format}`,
-        };
-        const loop: Record<AudioID, boolean> = {
-            ringAudio: true,
-            ringbackAudio: true,
-            callendAudio: false,
-            busyAudio: false,
+        const audioInfo: Record<AudioID, [prefix: string, loop: boolean]> = {
+            [AudioID.Ring]: [`./media/ring`, true],
+            [AudioID.Ringback]: [`./media/ringback`, true],
+            [AudioID.CallEnd]: [`./media/callend`, false],
+            [AudioID.Busy]: [`./media/busy`, false],
         };
 
-        const playDownloadedSound = (sound: AudioBuffer): void => {
-            const source = this.audioContext.createBufferSource();
-            source.buffer = sound;
-            source.loop = loop[audioId];
-            source.connect(this.audioContext.destination);
-            this.playingSources[audioId] = source;
-            source.start();
-
-            logger.debug(`${logPrefix} playing audio successfully`);
-        };
-
-        const soundUrl = URLs[audioId];
-        if (this.sounds.hasOwnProperty(soundUrl)) {
-            const sound = this.sounds[soundUrl];
-            logger.debug(`${logPrefix} hit cache`);
-            playDownloadedSound(sound);
-        } else {
-            logger.debug(`${logPrefix} fetching audio`);
-            fetch(soundUrl).then((response) => {
-                if (response.status !== 200) {
-                    logger.error(`${logPrefix} failed to fetch audio`);
-                    return;
-                }
-                response.arrayBuffer().then((buffer) => {
-                    this.audioContext.decodeAudioData(buffer, (decodedData) => {
-                        const sound = decodedData;
-                        this.sounds[soundUrl] = sound;
-                        playDownloadedSound(sound);
-                    });
-                });
-            });
-        }
+        const [urlPrefix, loop] = audioInfo[audioId];
+        const source = await this.backgroundAudio.pickFormatAndPlay(urlPrefix, ["mp3", "ogg"], loop);
+        this.playingSources[audioId] = source;
+        logger.debug(`${logPrefix} playing audio successfully`);
     }
 
     public pause(audioId: AudioID): void {
@@ -494,6 +452,7 @@ export default class LegacyCallHandler extends EventEmitter {
         }
 
         source.stop();
+        delete this.playingSources[audioId];
 
         logger.debug(`${logPrefix} paused audio`);
     }

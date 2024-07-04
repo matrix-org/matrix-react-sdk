@@ -89,20 +89,3 @@ export function decodeOgg(audioBuffer: ArrayBuffer): Promise<ArrayBuffer> {
         );
     });
 }
-
-const formatMap = {
-    mp3: "audio/mpeg",
-    ogg: "audio/ogg",
-};
-
-export function pickFormat<F extends Array<keyof typeof formatMap>>(...formats: F): F[number] | null {
-    // Detect supported formats
-    const audioElement = document.createElement("audio");
-
-    for (const format of formats) {
-        if (audioElement.canPlayType(formatMap[format])) {
-            return format;
-        }
-    }
-    return null;
-}

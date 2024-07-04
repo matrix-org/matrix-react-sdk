@@ -47,7 +47,7 @@ import { VoiceBroadcastChunkEvents } from "../utils/VoiceBroadcastChunkEvents";
 import { RelationsHelper, RelationsHelperEvent } from "../../events/RelationsHelper";
 import { createReconnectedListener } from "../../utils/connection";
 import { localNotificationsAreSilenced } from "../../utils/notifications";
-import { createAudioContext, pickFormat } from "../../audio/compat";
+import { BackgroundAudio } from "../../audio/BackgroundAudio";
 
 export enum VoiceBroadcastRecordingEvent {
     StateChanged = "liveness_changed",
@@ -76,8 +76,7 @@ export class VoiceBroadcastRecording
     private reconnectedListener: ClientEventHandlerMap[ClientEvent.Sync];
     private roomId: string;
     private infoEventId: string;
-    private audioContext: AudioContext = createAudioContext();
-    private sounds: Record<string, AudioBuffer> = {}; // Cache the sounds loaded
+    private backgroundAudio = new BackgroundAudio();
 
     /**
      * Broadcast chunks have a sequence number to bring them in the correct order and to know if a message is missing.
@@ -349,26 +348,7 @@ export class VoiceBroadcastRecording
             return;
         }
 
-        const format = pickFormat("mp3", "ogg");
-        if (!format) {
-            console.log("Browser doesn't support mp3 or ogg");
-            // Will probably never happen. If happened, format="" and will fail to load audio. Who cares...
-        }
-
-        if (!this.sounds.hasOwnProperty("errorAudio")) {
-            // No cache, fetch it
-            const response = await fetch(`./media/error.${format}`);
-            if (response.status != 200) {
-                logger.warn("Failed to fetch error audio");
-            }
-            const buffer = await response.arrayBuffer();
-            const sound = await this.audioContext.decodeAudioData(buffer);
-            this.sounds["errorAudio"] = sound;
-        }
-        const source = this.audioContext.createBufferSource();
-        source.buffer = this.sounds["errorAudio"];
-        source.connect(this.audioContext.destination);
-        source.start();
+        await this.backgroundAudio.pickFormatAndPlay("./media/error", ["mp3", "ogg"]);
     }
 
     private async uploadFile(chunk: ChunkRecordedPayload): ReturnType<typeof uploadFile> {

@@ -164,7 +164,7 @@ describe("Notifier", () => {
         });
 
         // @ts-ignore
-        Notifier.audioContext = mockAudioContext;
+        Notifier.backgroundAudio.audioContext = mockAudioContext;
     });
 
     describe("triggering notification from events", () => {
