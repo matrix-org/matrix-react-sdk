@@ -119,7 +119,6 @@ module.exports = {
                             "!matrix-js-sdk/src/crypto/keybackup",
                             "!matrix-js-sdk/src/crypto/deviceinfo",
                             "!matrix-js-sdk/src/crypto/key_passphrase",
-                            "!matrix-js-sdk/src/crypto/CrossSigning",
                             "!matrix-js-sdk/src/crypto/recoverykey",
                             "!matrix-js-sdk/src/crypto/dehydration",
                             "!matrix-js-sdk/src/oidc",
