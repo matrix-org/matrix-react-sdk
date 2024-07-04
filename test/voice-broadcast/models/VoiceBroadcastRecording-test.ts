@@ -30,6 +30,7 @@ import {
     SyncState,
 } from "matrix-js-sdk/src/matrix";
 import { EncryptedFile } from "matrix-js-sdk/src/types";
+import fetchMock from "fetch-mock-jest";
 
 import { uploadFile } from "../../../src/ContentMessages";
 import { createVoiceMessageContent } from "../../../src/utils/createVoiceMessageContent";
@@ -50,7 +51,6 @@ import { mkEvent, mkStubRoom, stubClient } from "../../test-utils";
 import dis from "../../../src/dispatcher/dispatcher";
 import { VoiceRecording } from "../../../src/audio/VoiceRecording";
 import { mocks } from "../../setup/mocks";
-import fetchMock from "fetch-mock-jest";
 
 jest.mock("../../../src/voice-broadcast/audio/VoiceBroadcastRecorder", () => ({
     ...(jest.requireActual("../../../src/voice-broadcast/audio/VoiceBroadcastRecorder") as object),
