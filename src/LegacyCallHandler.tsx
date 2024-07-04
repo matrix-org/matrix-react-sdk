@@ -436,13 +436,13 @@ export default class LegacyCallHandler extends EventEmitter {
             return;
         }
 
-        const URLs = {
+        const URLs: Record<AudioID, string> = {
             ringAudio: `./media/ring.${format}`,
             ringbackAudio: `./media/ringback.${format}`,
             callendAudio: `./media/callend.${format}`,
             busyAudio: `./media/busy.${format}`,
         };
-        const loop = {
+        const loop: Record<AudioID, boolean> = {
             ringAudio: true,
             ringbackAudio: true,
             callendAudio: false,
