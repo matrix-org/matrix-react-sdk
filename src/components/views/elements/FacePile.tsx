@@ -21,7 +21,7 @@ import { AvatarStack, Tooltip } from "@vector-im/compound-web";
 import MemberAvatar from "../avatars/MemberAvatar";
 import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
 
-interface IProps extends HTMLAttributes<HTMLSpanElement> {
+interface IProps extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
     members: RoomMember[];
     size: string;
     overflow: boolean;
@@ -40,6 +40,7 @@ const FacePile: FC<IProps> = ({
     tooltipShortcut,
     children,
     viewUserOnClick = true,
+    onClick,
     ...props
 }) => {
     const faces = members.map(
@@ -47,12 +48,7 @@ const FacePile: FC<IProps> = ({
             ? (m) => <MemberAvatar key={m.userId} member={m} size={size} hideTitle />
             : (m) => (
                   <Tooltip key={m.userId} label={m.name} caption={tooltipShortcut}>
-                      <MemberAvatar
-                          member={m}
-                          size={size}
-                          viewUserOnClick={!props.onClick && viewUserOnClick}
-                          hideTitle
-                      />
+                      <MemberAvatar member={m} size={size} viewUserOnClick={!onClick && viewUserOnClick} hideTitle />
                   </Tooltip>
               ),
     );
@@ -65,7 +61,7 @@ const FacePile: FC<IProps> = ({
     );
 
     const content = (
-        <AccessibleButton className="mx_FacePile" onClick={props.onClick ?? null}>
+        <AccessibleButton {...props} className="mx_FacePile" onClick={onClick ?? null}>
             <AvatarStack>{pileContents}</AvatarStack>
             {children}
         </AccessibleButton>

@@ -365,12 +365,7 @@ export default function RoomHeader({
                     )}
                 </Flex>
                 {!isDirectMessage && (
-                    <BodyText
-                        as="div"
-                        size="sm"
-                        weight="medium"
-                        aria-label={_t("common|n_members", { count: memberCount })}
-                    >
+                    <BodyText as="div" size="sm" weight="medium">
                         <FacePile
                             className="mx_RoomHeader_members"
                             members={members.slice(0, 3)}
@@ -382,6 +377,7 @@ export default function RoomHeader({
                                 RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomMemberList);
                                 e.stopPropagation();
                             }}
+                            aria-label={_t("common|n_members", { count: memberCount })}
                         >
                             {formatCount(memberCount)}
                         </FacePile>
