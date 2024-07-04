@@ -361,7 +361,10 @@ limitations under the License.
                         background: $tertiary-content;
                     }
 
-                    &:hover:not(.mx_SpotlightDialog_result_multiline)::before,
+                    &:hover::before {
+                        background-color: var(--cpd-color-bg-subtle-secondary);
+                    }
+
                     &[aria-selected="true"]::before {
                         background-color: $secondary-content;
                     }
@@ -371,7 +374,10 @@ limitations under the License.
                     mask-image: url("$(res)/img/element-icons/context-menu.svg");
                 }
 
-                &:hover:not(.mx_SpotlightDialog_result_multiline),
+                &:hover {
+                    background-color: var(--cpd-color-bg-subtle-secondary);
+                }
+
                 &[aria-selected="true"] {
                     background-color: $system;
 
