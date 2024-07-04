@@ -88,3 +88,6 @@ window.fetch = fetchMock.sandbox();
 
 // @ts-ignore
 window.Response = Response;
+
+// set up AudioContext API mock
+global.AudioContext = jest.fn().mockImplementation(() => ({ ...mocks.AudioContext }));
