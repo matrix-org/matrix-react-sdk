@@ -50,7 +50,7 @@ import { VoiceBroadcastInfoState, VoiceBroadcastPlayback, VoiceBroadcastRecordin
 import { mkVoiceBroadcastInfoStateEvent } from "./voice-broadcast/utils/test-utils";
 import { SdkContextClass } from "../src/contexts/SDKContext";
 import Modal from "../src/Modal";
-import { mocks } from "./setup/mocks";
+import { createAudioContext } from "../src/audio/compat";
 
 jest.mock("../src/Modal");
 
@@ -72,6 +72,11 @@ jest.mock("../src/audio/VoiceRecording", () => ({
 
 jest.mock("../src/utils/room/getFunctionalMembers", () => ({
     getFunctionalMembers: jest.fn(),
+}));
+
+jest.mock("../src/audio/compat", () => ({
+    ...jest.requireActual("../src/audio/compat"),
+    createAudioContext: jest.fn(),
 }));
 
 // The Matrix IDs that the user sees when talking to Alice & Bob
@@ -451,6 +456,19 @@ describe("LegacyCallHandler without third party protocols", () => {
     let audioElement: HTMLAudioElement;
     let fakeCall: MatrixCall | null;
 
+    const mockAudioBufferSourceNode = {
+        addEventListener: jest.fn(),
+        connect: jest.fn(),
+        start: jest.fn(),
+    };
+    const mockAudioContext = {
+        decodeAudioData: jest.fn((buffer, fn) => fn({})),
+        suspend: jest.fn(),
+        resume: jest.fn(),
+        createBufferSource: jest.fn().mockReturnValue(mockAudioBufferSourceNode),
+        currentTime: 1337,
+    };
+
     beforeEach(() => {
         stubClient();
         fakeCall = null;
@@ -466,6 +484,7 @@ describe("LegacyCallHandler without third party protocols", () => {
             throw new Error("Endpoint unsupported.");
         };
 
+        mocked(createAudioContext).mockReturnValue(mockAudioContext as unknown as AudioContext);
         callHandler = new LegacyCallHandler();
         callHandler.start();
 
@@ -614,7 +633,7 @@ describe("LegacyCallHandler without third party protocols", () => {
             call.emit(CallEvent.State, CallState.Ringing, CallState.Connected, fakeCall!);
 
             // ringer audio started
-            await waitFor(() => expect(mocks.AudioBufferSourceNode.start).toHaveBeenCalled());
+            await waitFor(() => expect(mockAudioBufferSourceNode.start).toHaveBeenCalled());
         });
 
         it("does not ring when incoming call state is ringing but local notifications are silenced", () => {
@@ -631,7 +650,7 @@ describe("LegacyCallHandler without third party protocols", () => {
             call.emit(CallEvent.State, CallState.Ringing, CallState.Connected, fakeCall!);
 
             // ringer audio element started
-            expect(mocks.AudioBufferSourceNode.start).not.toHaveBeenCalled();
+            expect(mockAudioBufferSourceNode.start).not.toHaveBeenCalled();
             expect(callHandler.isCallSilenced(call.callId)).toEqual(true);
         });
 
@@ -665,7 +684,7 @@ describe("LegacyCallHandler without third party protocols", () => {
             // call still silenced
             expect(callHandler.isCallSilenced(call.callId)).toEqual(true);
             // ringer not played
-            expect(mocks.AudioBufferSourceNode.start).not.toHaveBeenCalled();
+            expect(mockAudioBufferSourceNode.start).not.toHaveBeenCalled();
         });
     });
 });

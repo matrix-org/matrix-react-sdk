@@ -18,8 +18,6 @@ import fetchMock from "fetch-mock-jest";
 import { TextDecoder, TextEncoder } from "util";
 import { Response } from "node-fetch";
 
-import { mocks } from "./mocks";
-
 // Stub ResizeObserver
 // @ts-ignore - we know it's a duplicate (that's why we're stubbing it)
 class ResizeObserver {
@@ -90,6 +88,3 @@ window.fetch = fetchMock.sandbox();
 
 // @ts-ignore
 window.Response = Response;
-
-// set up AudioContext API mock
-global.AudioContext = jest.fn().mockImplementation(() => ({ ...mocks.AudioContext }));
