@@ -66,7 +66,14 @@ export const EMOJI_REGEX = (() => {
     }
 })();
 
-const BIGEMOJI_REGEX = new RegExp(`^(${EMOJI_REGEX.source})+$`, "iv");
+const BIGEMOJI_REGEX = (() => {
+    try {
+        return new RegExp(`^(${EMOJI_REGEX.source})+$`, "iv");
+    } catch (_e) {
+        // Fall back, just like for EMOJI_REGEX
+        return /(?!)/;
+    }
+})();
 
 /*
  * Return true if the given string contains emoji
