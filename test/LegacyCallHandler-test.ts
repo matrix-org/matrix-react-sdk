@@ -461,6 +461,7 @@ describe("LegacyCallHandler without third party protocols", () => {
         addEventListener: jest.fn(),
         connect: jest.fn(),
         start: jest.fn(),
+        stop: jest.fn(),
     };
     const mockAudioContext = {
         decodeAudioData: jest.fn().mockResolvedValue({}),
@@ -554,6 +555,12 @@ describe("LegacyCallHandler without third party protocols", () => {
         expect(fetchMock.calls("/media/ring.mp3")).toHaveLength(1);
         await callHandler.play(AudioID.Ring);
         expect(fetchMock.calls("/media/ring.mp3")).toHaveLength(1);
+    });
+
+    it("should allow silencing an incoming call ring", async () => {
+        await callHandler.play(AudioID.Ring);
+        await callHandler.silenceCall("call123");
+        expect(mockAudioBufferSourceNode.stop).toHaveBeenCalled();
     });
 
     it("should still start a native call", async () => {
