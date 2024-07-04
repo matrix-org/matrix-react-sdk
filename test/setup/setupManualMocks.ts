@@ -87,3 +87,16 @@ window.fetch = fetchMock.sandbox();
 
 // @ts-ignore
 window.Response = Response;
+
+// set up AudioContext API mock
+global.AudioContext = jest.fn().mockImplementation(() => ({
+    close: jest.fn(),
+    createMediaElementSource: jest.fn(),
+    createMediaStreamDestination: jest.fn(),
+    createMediaStreamSource: jest.fn(),
+    createStreamTrackSource: jest.fn(),
+    getOutputTimestamp: jest.fn(),
+    resume: jest.fn(),
+    setSinkId: jest.fn(),
+    suspend: jest.fn(),
+}));
