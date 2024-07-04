@@ -49,6 +49,8 @@ import {
 import { mkEvent, mkStubRoom, stubClient } from "../../test-utils";
 import dis from "../../../src/dispatcher/dispatcher";
 import { VoiceRecording } from "../../../src/audio/VoiceRecording";
+import { mocks } from "../../setup/mocks";
+import fetchMock from "fetch-mock-jest";
 
 jest.mock("../../../src/voice-broadcast/audio/VoiceBroadcastRecorder", () => ({
     ...(jest.requireActual("../../../src/voice-broadcast/audio/VoiceBroadcastRecorder") as object),
@@ -546,12 +548,13 @@ describe("VoiceBroadcastRecording", () => {
                 beforeEach(() => {
                     mocked(client.sendMessage).mockRejectedValue("Error");
                     emitFirsChunkRecorded();
+                    fetchMock.get("media/error.mp3", 200);
                 });
 
                 itShouldBeInState("connection_error");
 
                 it("should play a notification", () => {
-                    expect(audioElement.play).toHaveBeenCalled();
+                    expect(mocks.AudioBufferSourceNode.start).toHaveBeenCalled();
                 });
 
                 describe("and the connection is back", () => {
