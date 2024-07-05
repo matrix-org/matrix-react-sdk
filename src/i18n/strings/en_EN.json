@@ -1955,7 +1955,7 @@
             "video_call_ec_layout_spotlight": "Spotlight",
             "video_room_view_chat_button": "View chat timeline"
         },
-        "header_face_pile_tooltip": "Toggle member list",
+        "header_face_pile_tooltip": "People",
         "header_untrusted_label": "Untrusted",
         "inaccessible": "This room or space is not accessible at this time.",
         "inaccessible_name": "%(roomName)s is not accessible at this time.",
@@ -2416,6 +2416,8 @@
         "always_show_message_timestamps": "Always show message timestamps",
         "appearance": {
             "bundled_emoji_font": "Use bundled emoji font",
+            "compact_layout": "Show compact text and messages",
+            "compact_layout_description": "Modern layout must be selected to use this feature.",
             "custom_font": "Use a system font",
             "custom_font_description": "Set the name of a font installed on your system & %(brand)s will attempt to use it.",
             "custom_font_name": "System font name",
@@ -2432,7 +2434,7 @@
             "image_size_default": "Default",
             "image_size_large": "Large",
             "layout_bubbles": "Message bubbles",
-            "layout_irc": "IRC (Experimental)",
+            "layout_irc": "IRC (experimental)",
             "match_system_theme": "Match system theme",
             "timeline_image_size": "Image size in the timeline"
         },
@@ -2511,7 +2513,6 @@
             "error_revoke_msisdn_discovery": "Unable to revoke sharing for phone number",
             "error_share_email_discovery": "Unable to share email address",
             "error_share_msisdn_discovery": "Unable to share phone number",
-            "external_account_management": "Your account details are managed separately at <code>%(hostname)s</code>.",
             "identity_server_no_token": "No identity access token found",
             "identity_server_not_set": "Identity server not set",
             "incorrect_msisdn_verification": "Incorrect verification code",
@@ -2527,6 +2528,7 @@
             "password_change_success": "Your password was successfully changed.",
             "personal_info": "Personal info",
             "profile_subtitle": "This is how you appear to others on the app.",
+            "profile_subtitle_oidc": "Your account is managed separately by an identity provider and so some of your personal information can’t be changed here.",
             "remove_email_prompt": "Remove %(email)s?",
             "remove_msisdn_prompt": "Remove %(phone)s?",
             "spell_check_locale_placeholder": "Choose a locale",
