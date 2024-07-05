@@ -34,7 +34,6 @@ import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import ErrorDialog, { extractErrorMessageFromError } from "../../../dialogs/ErrorDialog";
 import ChangePassword from "../../ChangePassword";
-import SetIntegrationManager from "../../SetIntegrationManager";
 import ToggleSwitch from "../../../elements/ToggleSwitch";
 import { IS_MAC } from "../../../../../Keyboard";
 import SettingsTab from "../SettingsTab";
