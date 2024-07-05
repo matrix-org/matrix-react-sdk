@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, RenderResult, waitFor } from "@testing-library/react";
+import { render, RenderResult } from "@testing-library/react";
 import { ConditionKind, EventType, IPushRule, MatrixEvent, ClientEvent, PushRuleKind } from "matrix-js-sdk/src/matrix";
 import { MediaHandler } from "matrix-js-sdk/src/webrtc/mediaHandler";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -32,7 +32,6 @@ import SettingsStore from "../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { Action } from "../../../src/dispatcher/actions";
 import Modal from "../../../src/Modal";
-import QuestionDialog from "../../../src/components/views/dialogs/QuestionDialog";
 
 describe("<LoggedInView />", () => {
     const userId = "@alice:domain.org";
