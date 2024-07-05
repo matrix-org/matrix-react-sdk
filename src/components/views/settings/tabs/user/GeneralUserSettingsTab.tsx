@@ -222,12 +222,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         );
     }
 
-    private renderIntegrationManagerSection(): ReactNode {
-        if (!SettingsStore.getValue(UIFeature.Widgets)) return null;
-
-        return <SetIntegrationManager />;
-    }
-
     public render(): React.ReactNode {
         let accountManagementSection: JSX.Element | undefined;
         const isAccountManagedExternally = !!this.state.externalAccountManagementUrl;
@@ -245,7 +239,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     <UserPersonalInfoSettings canMake3pidChanges={this.state.canMake3pidChanges} />
                     {this.renderAccountSection()}
                 </SettingsSection>
-                {this.renderIntegrationManagerSection()}
                 {accountManagementSection}
             </SettingsTab>
         );
