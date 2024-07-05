@@ -151,6 +151,24 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
     }
 
     /**
+     * DEPRECATED.
+     * This is used only for tests. They should be using forceCloseAllModals but that
+     * caused a chunk of tests to fail, so for now they continue to use this.
+     *
+     * @param reason either "backgroundClick" or undefined
+     * @return whether a modal was closed
+     */
+    public closeCurrentModal(reason?: ModalCloseReason): boolean {
+        const modal = this.getCurrentModal();
+        if (!modal) {
+            return false;
+        }
+        modal.closeReason = reason;
+        modal.close();
+        return true;
+    }
+
+    /**
      * Forces closes all open modals. The modals onBeforeClose function will not be
      * run and the modal will not have a chance to prevent closing. Intended for
      * situations like the user logging out of the app.
