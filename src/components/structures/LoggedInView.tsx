@@ -491,7 +491,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 // even if we cancel because there are modals open, we still
                 // handled it: nothing else should happen.
                 handled = true;
-                if (Modal.hasModals()) {
+                if (Modal.hasDialogs()) {
                     return;
                 }
                 dis.dispatch({

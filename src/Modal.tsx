@@ -184,13 +184,6 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         this.reRender();
     }
 
-    /**
-     * @returns true if any modals are currently being displayed, otherwise false
-     */
-    public hasModals(): boolean {
-        return this.modals.length > 0;
-    }
-
     private buildModal<C extends ComponentType>(
         prom: Promise<C>,
         props?: ComponentProps<C>,
