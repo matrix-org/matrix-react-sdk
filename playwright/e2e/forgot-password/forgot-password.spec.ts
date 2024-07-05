@@ -18,7 +18,8 @@ import { expect, test } from "../../element-web-test";
 import { selectHomeserver } from "../utils";
 
 const username = "user1234";
-const password = "p4s5W0rD";
+// this has to be password-like enough to please zxcvbn. Needless to say it's just from pwgen.
+const password = "oETo7MPf0o";
 const email = "user@nowhere.dummy";
 
 test.describe("Forgot Password", () => {
@@ -69,6 +70,8 @@ test.describe("Forgot Password", () => {
 
         await page.getByRole("button", { name: "Reset password" }).click();
 
-        await expect(page.getByRole("main")).toMatchScreenshot("forgot-password-verify-email.png");
+        await expect(page.getByRole("button", { name: "Resend" })).toBeInViewport();
+
+        await expect(page.locator(".mx_Dialog")).toMatchScreenshot("forgot-password-verify-email.png");
     });
 });
