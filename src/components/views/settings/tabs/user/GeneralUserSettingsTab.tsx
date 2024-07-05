@@ -276,12 +276,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         );
     }
 
-    private renderIntegrationManagerSection(): ReactNode {
-        if (!SettingsStore.getValue(UIFeature.Widgets)) return null;
-
-        return <SetIntegrationManager />;
-    }
-
     public render(): React.ReactNode {
         const plaf = PlatformPeg.get();
         const supportsMultiLanguageSpellCheck = plaf?.supportsSpellCheckSettings();
@@ -305,7 +299,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                     {this.renderLanguageSection()}
                     {supportsMultiLanguageSpellCheck ? this.renderSpellCheckSection() : null}
                 </SettingsSection>
-                {this.renderIntegrationManagerSection()}
                 {accountManagementSection}
             </SettingsTab>
         );
