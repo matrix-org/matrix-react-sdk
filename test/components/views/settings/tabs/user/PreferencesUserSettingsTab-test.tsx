@@ -55,6 +55,28 @@ describe("PreferencesUserSettingsTab", () => {
         expect(reloadStub).toHaveBeenCalled();
     });
 
+    it("should not show spell check setting if unsupported", async () => {
+        PlatformPeg.get()!.supportsSpellCheckSettings = jest.fn().mockReturnValue(false);
+
+        renderTab();
+        expect(screen.queryByRole("switch", { name: "Allow spell check" })).not.toBeInTheDocument();
+    });
+
+    it("should enable spell check", async () => {
+        const spellCheckEnableFn = jest.fn();
+        PlatformPeg.get()!.supportsSpellCheckSettings = jest.fn().mockReturnValue(true);
+        PlatformPeg.get()!.getSpellCheckEnabled = jest.fn().mockReturnValue(false);
+        PlatformPeg.get()!.setSpellCheckEnabled = spellCheckEnableFn;
+
+        renderTab();
+        const toggle = await screen.findByRole("switch", { name: "Allow spell check" });
+        expect(toggle).toHaveAttribute("aria-checked", "false");
+
+        await userEvent.click(toggle);
+
+        expect(spellCheckEnableFn).toHaveBeenCalledWith(true);
+    });
+
     describe("send read receipts", () => {
         beforeEach(() => {
             stubClient();
