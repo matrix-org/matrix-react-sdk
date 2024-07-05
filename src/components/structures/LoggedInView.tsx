@@ -488,11 +488,15 @@ class LoggedInView extends React.Component<IProps, IState> {
                 handled = true;
                 break;
             case KeyBindingAction.GoToHome:
+                // even if we cancel because there are modals open, we still
+                // handled it: nothing else should happen.
+                handled = true;
+                if (Modal.hasModals()) {
+                    return;
+                }
                 dis.dispatch({
                     action: Action.ViewHomePage,
                 });
-                Modal.closeAllModals();
-                handled = true;
                 break;
             case KeyBindingAction.ToggleSpacePanel:
                 dis.fire(Action.ToggleSpacePanel);

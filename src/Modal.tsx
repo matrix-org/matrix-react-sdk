@@ -18,7 +18,7 @@ limitations under the License.
 import React from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
-import { defer, sleep } from "matrix-js-sdk/src/utils";
+import { IDeferred, defer, sleep } from "matrix-js-sdk/src/utils";
 import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
 import { Glass } from "@vector-im/compound-web";
 
@@ -52,6 +52,7 @@ export interface IModal<C extends ComponentType> {
     onFinished: ComponentProps<C>["onFinished"];
     close(...args: Parameters<ComponentProps<C>["onFinished"]>): void;
     hidden?: boolean;
+    deferred?: IDeferred<Parameters<ComponentProps<C>["onFinished"]>>;
 }
 
 export interface IHandle<C extends ComponentType> {
@@ -149,12 +150,27 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         return this.appendDialogAsync<C>(Promise.resolve(Element), props, className);
     }
 
-    public closeAllModals(reason?: ModalCloseReason): void {
-        let modal: IModal<any>;
-        while ((modal = this.getCurrentModal())) {
-            modal.closeReason = reason;
-            modal.close();
+    /**
+     * Forces closes all open modals. The modals onBeforeClose function will not be
+     * run and the modal will not have a chance to prevent closing. Intended for
+     * situations like the user logging out of the app.
+     */
+    public forceCloseAllModals(): void {
+        for (const modal of this.modals) {
+            modal.deferred?.resolve([]);
+            if (modal.onFinished) modal.onFinished.apply(null);
+            this.emitClosed();
         }
+
+        this.modals = [];
+        this.reRender();
+    }
+
+    /**
+     * @returns true if any modals are currently being displayed, otherwise false
+     */
+    public hasModals(): boolean {
+        return this.modals.length > 0;
     }
 
     private buildModal<C extends ComponentType>(
@@ -195,7 +211,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         modal: IModal<C>,
         props?: ComponentProps<C>,
     ): [IHandle<C>["close"], IHandle<C>["finished"]] {
-        const deferred = defer<Parameters<ComponentProps<C>["onFinished"]>>();
+        modal.deferred = defer<Parameters<ComponentProps<C>["onFinished"]>>();
         return [
             async (...args: Parameters<ComponentProps<C>["onFinished"]>): Promise<void> => {
                 if (modal.beforeClosePromise) {
@@ -208,7 +224,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
                         return;
                     }
                 }
-                deferred.resolve(args);
+                modal.deferred?.resolve(args);
                 if (props?.onFinished) props.onFinished.apply(null, args);
                 const i = this.modals.indexOf(modal);
                 if (i >= 0) {
@@ -232,7 +248,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
                 this.reRender();
                 this.emitClosed();
             },
-            deferred.promise,
+            modal.deferred.promise,
         ];
     }
 

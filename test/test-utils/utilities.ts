@@ -202,7 +202,7 @@ export const waitEnoughCyclesForModal = async ({
  */
 export const clearAllModals = async (): Promise<void> => {
     // Prevent modals from leaking and polluting other tests
-    Modal.closeAllModals();
+    Modal.forceCloseAllModals();
 
     // Then wait for the screen to update (probably React rerender and async/await).
     // Important for tests using Jest fake timers to not get into an infinite loop
@@ -215,6 +215,10 @@ export const clearAllModals = async (): Promise<void> => {
     // to make a hack even hackier check if timers are faked using a weird trick from github
     // then call the appropriate promise flusher
     // https://github.com/facebook/jest/issues/10555#issuecomment-1136466942
+
+    // For even more ick, this shouldn't be necessary now that forceCloseAllModals() removes
+    // all modals synchronously, but in practice a whole bunch of tests start failing without
+    // this async wait in between tests because of other general flakiness.
     const jestTimersFaked = setTimeout.name === "setTimeout";
     if (jestTimersFaked) {
         await flushPromisesWithFakeTimers();
