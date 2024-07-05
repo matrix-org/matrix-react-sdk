@@ -124,7 +124,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
 
     private onAction = (payload: ActionPayload): void => {
         if (payload.action === "logout") {
-            this.closeCurrentModal();
+            this.forceCloseAllModals();
         }
     };
 
