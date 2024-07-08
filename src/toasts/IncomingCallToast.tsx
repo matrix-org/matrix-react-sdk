@@ -87,7 +87,7 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
     // Start ringing if not already.
     useEffect(() => {
         const isRingToast = (notifyEvent.getContent() as unknown as { notify_type: string })["notify_type"] == "ring";
-        if (isRingToast && audio.paused) {
+        if (isRingToast && audio?.paused) {
             audio.play();
         }
     }, [audio, notifyEvent]);
