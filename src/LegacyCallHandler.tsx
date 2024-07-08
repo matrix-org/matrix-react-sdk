@@ -457,6 +457,10 @@ export default class LegacyCallHandler extends EventEmitter {
         logger.debug(`${logPrefix} paused audio`);
     }
 
+    public isPlaying(audioId: AudioID): boolean {
+        return !!this.playingSources[audioId];
+    }
+
     private matchesCallForThisRoom(call: MatrixCall): boolean {
         // We don't allow placing more than one call per room, but that doesn't mean there
         // can't be more than one, eg. in a glare situation. This checks that the given call
