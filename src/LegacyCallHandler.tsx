@@ -457,7 +457,12 @@ export default class LegacyCallHandler extends EventEmitter {
         logger.debug(`${logPrefix} paused audio`);
     }
 
-    public isPlaying(audioId: AudioID): boolean {
+    /**
+     * Returns whether the given audio is currently playing
+     * Only supported for looping audio tracks
+     * @param audioId the ID of the audio to query for playing state
+     */
+    public isPlaying(audioId: AudioID.Ring | AudioID.Ringback): boolean {
         return !!this.playingSources[audioId];
     }
 
