@@ -37,9 +37,6 @@ import { ButtonEvent } from "../views/elements/AccessibleButton";
 import Spinner from "../views/elements/Spinner";
 import Heading from "../views/typography/Heading";
 import { clearRoomNotification } from "../../utils/notifications";
-import { useDispatcher } from "../../hooks/useDispatcher";
-import dis from "../../dispatcher/dispatcher";
-import { Action } from "../../dispatcher/actions";
 
 interface IProps {
     roomId: string;
@@ -258,14 +255,6 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
             timelinePanel.current?.refreshTimeline();
         }
     }, [timelineSet, timelinePanel]);
-
-    useDispatcher(dis, (payload) => {
-        // This actually foucses the close button on the threads panel, as its the only interactive element,
-        // but at least it puts the user in the right area of the app.
-        if (payload.action === Action.FocusThreadsPanel) {
-            closeButonRef.current?.focus();
-        }
-    });
 
     return (
         <RoomContext.Provider
