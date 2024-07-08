@@ -34,7 +34,8 @@ interface IProps extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
 
 /**
  * A component which displays a list of avatars in a row, with a tooltip showing the names of the users.
- * Any additional props inherited from the div element are passed to the underlying AccessibleButton.
+ *
+ * Any additional props, not named explicitly here, are passed to the underlying {@link AccessibleButton}.
  */
 const FacePile: FC<IProps> = ({
     members,
