@@ -27,7 +27,7 @@ const LABEL = "Z-Flaky-Test";
 const ISSUE_TITLE_PREFIX = "Flaky playwright test: ";
 
 // TEMP TO DRY RUN
-class FlakyReporter implements StaleScreenshotReporter {
+class FlakyReporter extends StaleScreenshotReporter implements Reporter {
     private flakes = new Set<string>();
 
     public onTestEnd(test: TestCase): void {
