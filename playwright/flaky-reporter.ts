@@ -20,12 +20,14 @@ limitations under the License.
  */
 
 import type { Reporter, TestCase } from "@playwright/test/reporter";
+import StaleScreenshotReporter from "./stale-screenshot-reporter";
 
 const REPO = "element-hq/element-web";
 const LABEL = "Z-Flaky-Test";
 const ISSUE_TITLE_PREFIX = "Flaky playwright test: ";
 
-class FlakyReporter implements Reporter {
+// TEMP TO DRY RUN
+class FlakyReporter implements StaleScreenshotReporter {
     private flakes = new Set<string>();
 
     public onTestEnd(test: TestCase): void {

@@ -302,7 +302,7 @@ export const expect = baseExpect.extend({
     async toMatchScreenshot(
         this: ExpectMatcherState,
         receiver: Page | Locator,
-        name?: `${string}.png`,
+        name: `${string}.png`,
         options?: {
             mask?: Array<Locator>;
             omitBackground?: boolean;
@@ -310,6 +310,9 @@ export const expect = baseExpect.extend({
             css?: string;
         },
     ) {
+        const testInfo = test.info();
+        if (!testInfo) throw new Error(`toMatchScreenshot() must be called during the test`);
+
         const page = "page" in receiver ? receiver.page() : receiver;
 
         // We add a custom style tag before taking screenshots
@@ -346,6 +349,13 @@ export const expect = baseExpect.extend({
         await baseExpect(receiver).toHaveScreenshot(name, options);
 
         await style.evaluate((tag) => tag.remove());
+
+        testInfo.annotations.push({
+            // `_` prefix hides it from the HTML reporter
+            type: "_screenshot",
+            description: testInfo.snapshotPath(name),
+        });
+
         return { pass: true, message: () => "", name: "toMatchScreenshot" };
     },
 });
