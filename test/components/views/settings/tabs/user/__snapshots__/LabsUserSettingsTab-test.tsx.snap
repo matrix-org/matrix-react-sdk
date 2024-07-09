@@ -168,6 +168,11 @@ exports[`<LabsUserSettingsTab /> renders settings marked as beta as beta cards 1
               Join the beta
             </div>
           </div>
+          <div
+            class="mx_BetaCard_refreshWarning"
+          >
+            Joining the beta will reload BrandedClient.
+          </div>
         </div>
         <div
           class="mx_BetaCard_columns_image_wrapper"
