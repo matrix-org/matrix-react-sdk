@@ -3040,10 +3040,10 @@
   dependencies:
     svg2vectordrawable "^2.9.1"
 
-"@vector-im/compound-web@^5.2.2":
-  version "5.2.2"
-  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-5.2.2.tgz#0fbb783484b444c55577897941b0afbefe168aaa"
-  integrity sha512-8s4wM66m2NyS+UBGqhQQzWwbpBC3cjCSEYzLWrdzRHZDgezvAAzXg8KcPJpycpBaSX+362Uuf3RfgULvR7aAMg==
+"@vector-im/compound-web@^5.2.3":
+  version "5.2.3"
+  resolved "https://registry.yarnpkg.com/@vector-im/compound-web/-/compound-web-5.2.3.tgz#feab8ae7623cfaa243b9be69325e1696bfa1a09c"
+  integrity sha512-KU5vAgNIFBzRHfCRK5dGAhxjrfkrUXeOYzDUNc2QjEnqGaUR3RM4c53sw0Ga1oHbOeAWoUGId+ptH3ewPdUTAQ==
   dependencies:
     "@floating-ui/react" "^0.26.9"
     "@floating-ui/react-dom" "^2.0.8"
