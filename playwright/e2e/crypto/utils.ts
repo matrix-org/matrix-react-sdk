@@ -361,7 +361,7 @@ export const verify = async (page: Page, bob: Bot) => {
     const bobsVerificationRequestPromise = waitForVerificationRequest(bob);
 
     const roomInfo = await openRoomInfo(page);
-    await roomInfo.getByRole("menuitem", { name: "People" }).click();
+    await page.locator(".mx_RightPanelTabs").getByText("People").click();
     await roomInfo.getByText("Bob").click();
     await roomInfo.getByRole("button", { name: "Verify" }).click();
     await roomInfo.getByRole("button", { name: "Start Verification" }).click();
