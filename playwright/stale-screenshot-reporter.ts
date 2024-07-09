@@ -42,7 +42,13 @@ class StaleScreenshotReporter implements Reporter {
         for (const screenshot of this.screenshots) {
             screenshotFiles.delete(screenshot);
         }
-        console.log("~~", screenshotFiles);
+        if (screenshotFiles.size > 0) {
+            console.log("Stale screenshot files:");
+            for (const screenshot of screenshotFiles) {
+                console.log(screenshot);
+            }
+            process.exit(1);
+        }
     }
 }
 

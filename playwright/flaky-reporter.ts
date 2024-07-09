@@ -31,6 +31,7 @@ class FlakyReporter extends StaleScreenshotReporter implements Reporter {
     private flakes = new Set<string>();
 
     public onTestEnd(test: TestCase): void {
+        super.onTestEnd(test);
         const title = `${test.location.file.split("playwright/e2e/")[1]}: ${test.title}`;
         if (test.outcome() === "flaky") {
             this.flakes.add(title);
@@ -38,6 +39,7 @@ class FlakyReporter extends StaleScreenshotReporter implements Reporter {
     }
 
     public async onExit(): Promise<void> {
+        await super.onExit();
         if (this.flakes.size === 0) {
             console.log("No flakes found");
             return;
