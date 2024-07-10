@@ -15,10 +15,13 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
+import fetchMock from "fetch-mock-jest";
 
-import { isManagedHybridWidgetEnabled } from "../../src/widgets/ManagedHybrid";
+import { addManagedHybridWidget, isManagedHybridWidgetEnabled } from "../../src/widgets/ManagedHybrid";
 import { stubClient } from "../test-utils";
 import SdkConfig from "../../src/SdkConfig";
+import WidgetUtils from "../../src/utils/WidgetUtils";
 
 jest.mock("../../src/utils/room/getJoinedNonFunctionalMembers", () => ({
     getJoinedNonFunctionalMembers: jest.fn().mockReturnValue([1, 2]),
@@ -49,5 +52,51 @@ describe("isManagedHybridWidgetEnabled", () => {
             widget_build_url_ignore_dm: true,
         });
         expect(isManagedHybridWidgetEnabled(room)).toBeFalsy();
+    });
+});
+
+describe("addManagedHybridWidget", () => {
+    let room: Room;
+
+    beforeEach(() => {
+        const client = stubClient();
+        room = new Room("!room:server", client, client.getSafeUserId());
+    });
+
+    it("should noop if user lacks permission", async () => {
+        const logSpy = jest.spyOn(logger, "error").mockImplementation();
+        jest.spyOn(WidgetUtils, "canUserModifyWidgets").mockReturnValue(false);
+
+        fetchMock.mockClear();
+        await addManagedHybridWidget(room);
+        expect(logSpy).toHaveBeenCalledWith("User not allowed to modify widgets in !room:server");
+        expect(fetchMock).toHaveBeenCalledTimes(0);
+    });
+
+    it("should noop if no widget_build_url", async () => {
+        jest.spyOn(WidgetUtils, "canUserModifyWidgets").mockReturnValue(true);
+
+        fetchMock.mockClear();
+        await addManagedHybridWidget(room);
+        expect(fetchMock).toHaveBeenCalledTimes(0);
+    });
+
+    it("should add the widget successfully", async () => {
+        fetchMock.get("https://widget-build-url/?roomId=!room:server", {
+            widget_id: "WIDGET_ID",
+            widget: { key: "value" },
+        });
+        jest.spyOn(WidgetUtils, "canUserModifyWidgets").mockReturnValue(true);
+        const setRoomWidgetContentSpy = jest.spyOn(WidgetUtils, "setRoomWidgetContent").mockResolvedValue();
+        SdkConfig.put({
+            widget_build_url: "https://widget-build-url",
+        });
+
+        await addManagedHybridWidget(room);
+        expect(fetchMock).toHaveBeenCalledWith("https://widget-build-url?roomId=!room:server");
+        expect(setRoomWidgetContentSpy).toHaveBeenCalledWith(room.client, room.roomId, "WIDGET_ID", {
+            "key": "value",
+            "io.element.managed_hybrid": true,
+        });
     });
 });
