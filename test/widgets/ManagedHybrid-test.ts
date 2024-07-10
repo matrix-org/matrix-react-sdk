@@ -22,6 +22,7 @@ import { addManagedHybridWidget, isManagedHybridWidgetEnabled } from "../../src/
 import { stubClient } from "../test-utils";
 import SdkConfig from "../../src/SdkConfig";
 import WidgetUtils from "../../src/utils/WidgetUtils";
+import { WidgetLayoutStore } from "../../src/stores/widgets/WidgetLayoutStore";
 
 jest.mock("../../src/utils/room/getJoinedNonFunctionalMembers", () => ({
     getJoinedNonFunctionalMembers: jest.fn().mockReturnValue([1, 2]),
@@ -87,6 +88,7 @@ describe("addManagedHybridWidget", () => {
             widget: { key: "value" },
         });
         jest.spyOn(WidgetUtils, "canUserModifyWidgets").mockReturnValue(true);
+        jest.spyOn(WidgetLayoutStore.instance, "canCopyLayoutToRoom").mockReturnValue(true);
         const setRoomWidgetContentSpy = jest.spyOn(WidgetUtils, "setRoomWidgetContent").mockResolvedValue();
         SdkConfig.put({
             widget_build_url: "https://widget-build-url",
