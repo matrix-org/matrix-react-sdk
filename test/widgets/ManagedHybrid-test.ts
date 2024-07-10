@@ -14,38 +14,40 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room } from "matrix-js-sdk/src/matrix";
+
 import { isManagedHybridWidgetEnabled } from "../../src/widgets/ManagedHybrid";
-import DMRoomMap from "../../src/utils/DMRoomMap";
 import { stubClient } from "../test-utils";
 import SdkConfig from "../../src/SdkConfig";
 
+jest.mock("../../src/utils/room/getJoinedNonFunctionalMembers", () => ({
+    getJoinedNonFunctionalMembers: jest.fn().mockReturnValue([1, 2]),
+}));
+
 describe("isManagedHybridWidgetEnabled", () => {
-    let dmRoomMap: DMRoomMap;
+    let room: Room;
 
     beforeEach(() => {
-        stubClient();
-        dmRoomMap = {
-            getUserIdForRoomId: jest.fn().mockReturnValue("@user:server"),
-        } as unknown as DMRoomMap;
-        DMRoomMap.setShared(dmRoomMap);
+        const client = stubClient();
+        room = new Room("!room:server", client, client.getSafeUserId());
     });
 
     it("should return false if widget_build_url is unset", () => {
-        expect(isManagedHybridWidgetEnabled("!room:server")).toBeFalsy();
+        expect(isManagedHybridWidgetEnabled(room)).toBeFalsy();
     });
 
-    it("should return true for DMs when widget_build_url_ignore_dm is unset", () => {
+    it("should return true for 1-1 rooms when widget_build_url_ignore_dm is unset", () => {
         SdkConfig.put({
             widget_build_url: "https://url",
         });
-        expect(isManagedHybridWidgetEnabled("!room:server")).toBeTruthy();
+        expect(isManagedHybridWidgetEnabled(room)).toBeTruthy();
     });
 
-    it("should return false for DMs when widget_build_url_ignore_dm is true", () => {
+    it("should return false for 1-1 rooms when widget_build_url_ignore_dm is true", () => {
         SdkConfig.put({
             widget_build_url: "https://url",
             widget_build_url_ignore_dm: true,
         });
-        expect(isManagedHybridWidgetEnabled("!room:server")).toBeFalsy();
+        expect(isManagedHybridWidgetEnabled(room)).toBeFalsy();
     });
 });
