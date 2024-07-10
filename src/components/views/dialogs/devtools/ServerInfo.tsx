@@ -38,7 +38,7 @@ export async function getServerVersionFromFederationApi(client: MatrixClient): P
     let baseUrl = client.getHomeserverUrl();
 
     try {
-        const hsName = MatrixClientPeg.getHomeserverName();
+        const hsName = MatrixClientPeg.safeGet().getDomain();
         // We don't use the js-sdk Autodiscovery module here as it only support client well-known, not server ones.
         const response = await fetch(`https://${hsName}/.well-known/matrix/server`);
         const json = await response.json();
@@ -55,7 +55,7 @@ export async function getServerVersionFromFederationApi(client: MatrixClient): P
 
 const ServerInfo: React.FC<IDevtoolsProps> = ({ onBack }) => {
     const cli = useContext(MatrixClientContext);
-    const capabilities = useAsyncMemo(() => cli.getCapabilities(true).catch(() => FAILED_TO_LOAD), [cli]);
+    const capabilities = useAsyncMemo(() => cli.fetchCapabilities().catch(() => FAILED_TO_LOAD), [cli]);
     const clientVersions = useAsyncMemo(() => cli.getVersions().catch(() => FAILED_TO_LOAD), [cli]);
     const serverVersions = useAsyncMemo(async (): Promise<IServerWellKnown | symbol> => {
         try {

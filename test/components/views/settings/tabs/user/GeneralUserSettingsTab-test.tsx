@@ -29,6 +29,7 @@ import {
 import { UIFeature } from "../../../../../../src/settings/UIFeature";
 import { SettingLevel } from "../../../../../../src/settings/SettingLevel";
 import { OidcClientStore } from "../../../../../../src/stores/oidc/OidcClientStore";
+import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 
 describe("<GeneralUserSettingsTab />", () => {
     const defaultProps = {
@@ -48,9 +49,11 @@ describe("<GeneralUserSettingsTab />", () => {
     let stores: SdkContextClass;
 
     const getComponent = () => (
-        <SDKContext.Provider value={stores}>
-            <GeneralUserSettingsTab {...defaultProps} />
-        </SDKContext.Provider>
+        <MatrixClientContext.Provider value={mockClient}>
+            <SDKContext.Provider value={stores}>
+                <GeneralUserSettingsTab {...defaultProps} />
+            </SDKContext.Provider>
+        </MatrixClientContext.Provider>
     );
 
     beforeEach(() => {
@@ -89,13 +92,10 @@ describe("<GeneralUserSettingsTab />", () => {
         } as unknown as OidcClientStore;
         jest.spyOn(stores, "oidcClientStore", "get").mockReturnValue(mockOidcClientStore);
 
-        const { getByTestId } = render(getComponent());
+        render(getComponent());
 
-        // wait for well-known call to settle
-        await flushPromises();
-
-        expect(getByTestId("external-account-management-outer").textContent).toMatch(/.*id\.server\.org/);
-        expect(getByTestId("external-account-management-link").getAttribute("href")).toMatch(accountManagementLink);
+        const manageAccountLink = await screen.findByRole("button", { name: "Manage account" });
+        expect(manageAccountLink.getAttribute("href")).toMatch(accountManagementLink);
     });
 
     describe("Manage integrations", () => {

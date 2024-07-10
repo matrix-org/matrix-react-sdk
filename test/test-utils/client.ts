@@ -17,7 +17,7 @@ limitations under the License.
 import EventEmitter from "events";
 import { MethodLikeKeys, mocked, MockedObject, PropertyLikeKeys } from "jest-mock";
 import { Feature, ServerSupport } from "matrix-js-sdk/src/feature";
-import { MatrixClient, Room, User } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Room, MatrixError, User } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 
@@ -129,13 +129,14 @@ export const mockClientMethodsEvents = () => ({
 export const mockClientMethodsServer = (): Partial<Record<MethodLikeKeys<MatrixClient>, unknown>> => ({
     getIdentityServerUrl: jest.fn(),
     getHomeserverUrl: jest.fn(),
-    getCapabilities: jest.fn().mockReturnValue({}),
+    getCapabilities: jest.fn().mockResolvedValue({}),
     getClientWellKnown: jest.fn().mockReturnValue({}),
     waitForClientWellKnown: jest.fn().mockResolvedValue({}),
     doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(false),
     isVersionSupported: jest.fn().mockResolvedValue(false),
     getVersions: jest.fn().mockResolvedValue({}),
     isFallbackICEServerAllowed: jest.fn(),
+    getAuthIssuer: jest.fn().mockRejectedValue(new MatrixError({ errcode: "M_UNKNOWN" }, 404)),
 });
 
 export const mockClientMethodsDevice = (
@@ -179,4 +180,5 @@ export const mockClientMethodsCrypto = (): Partial<
 
 export const mockClientMethodsRooms = (rooms: Room[] = []): Partial<Record<MethodLikeKeys<MatrixClient>, unknown>> => ({
     getRooms: jest.fn().mockReturnValue(rooms),
+    getRoom: jest.fn((roomId) => rooms.find((r) => r.roomId === roomId) ?? null),
 });

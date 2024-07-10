@@ -14,11 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { ScalableBloomFilter } from "bloom-filters";
 import { CryptoEvent, HttpApiEvent, MatrixClient, MatrixEventEvent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Error as ErrorEvent } from "@matrix-org/analytics-events/types/typescript/Error";
 import { DecryptionFailureCode } from "matrix-js-sdk/src/crypto-api";
 
 import { PosthogAnalytics } from "./PosthogAnalytics";
+import { MEGOLM_ENCRYPTION_ALGORITHM } from "./utils/crypto";
+
+/** The key that we use to store the `reportedEvents` bloom filter in localstorage */
+const DECRYPTION_FAILURE_STORAGE_KEY = "mx_decryption_failure_event_ids";
 
 export class DecryptionFailure {
     /**
@@ -73,7 +78,10 @@ export class DecryptionFailureTracker {
             // Map JS-SDK error codes to tracker codes for aggregation
             switch (errorCode) {
                 case DecryptionFailureCode.MEGOLM_UNKNOWN_INBOUND_SESSION_ID:
+                case DecryptionFailureCode.MEGOLM_KEY_WITHHELD:
                     return "OlmKeysNotSentError";
+                case DecryptionFailureCode.MEGOLM_KEY_WITHHELD_FOR_UNVERIFIED_DEVICE:
+                    return "RoomKeysWithheldForUnverifiedDevice";
                 case DecryptionFailureCode.OLM_UNKNOWN_MESSAGE_INDEX:
                     return "OlmIndexError";
                 case DecryptionFailureCode.HISTORICAL_MESSAGE_NO_KEY_BACKUP:
@@ -104,8 +112,8 @@ export class DecryptionFailureTracker {
      */
     public visibleEvents: Set<string> = new Set();
 
-    /** Event IDs of failures that were reported previously */
-    private reportedEvents: Set<string> = new Set();
+    /** Bloom filter tracking event IDs of failures that were reported previously */
+    private reportedEvents: ScalableBloomFilter = new ScalableBloomFilter();
 
     /** Set to an interval ID when `start` is called */
     public checkInterval: number | null = null;
@@ -154,10 +162,16 @@ export class DecryptionFailureTracker {
      *
      * @param {function} errorCodeMapFn The function used to map decryption failure reason  codes to the
      * `trackedErrorCode`.
+     *
+     * @param {boolean} checkReportedEvents Check if we have already reported an event.
+     * Defaults to `true`. This is only used for tests, to avoid possible false positives from
+     * the Bloom filter. This should be set to `false` for all tests except for those
+     * that specifically test the `reportedEvents` functionality.
      */
     private constructor(
         private readonly fn: TrackingFn,
         private readonly errorCodeMapFn: ErrCodeMapFn,
+        private readonly checkReportedEvents: boolean = true,
     ) {
         if (!fn || typeof fn !== "function") {
             throw new Error("DecryptionFailureTracker requires tracking function");
@@ -172,13 +186,18 @@ export class DecryptionFailureTracker {
         return DecryptionFailureTracker.internalInstance;
     }
 
-    // loadReportedEvents() {
-    //     this.reportedEvents = new Set(JSON.parse(localStorage.getItem('mx-decryption-failure-event-ids')) || []);
-    // }
+    private loadReportedEvents(): void {
+        const storedFailures = localStorage.getItem(DECRYPTION_FAILURE_STORAGE_KEY);
+        if (storedFailures) {
+            this.reportedEvents = ScalableBloomFilter.fromJSON(JSON.parse(storedFailures));
+        } else {
+            this.reportedEvents = new ScalableBloomFilter();
+        }
+    }
 
-    // saveReportedEvents() {
-    //     localStorage.setItem('mx-decryption-failure-event-ids', JSON.stringify([...this.reportedEvents]));
-    // }
+    private saveReportedEvents(): void {
+        localStorage.setItem(DECRYPTION_FAILURE_STORAGE_KEY, JSON.stringify(this.reportedEvents.saveAsJSON()));
+    }
 
     /** Callback for when an event is decrypted.
      *
@@ -192,7 +211,7 @@ export class DecryptionFailureTracker {
      */
     private eventDecrypted(e: MatrixEvent, nowTs: number): void {
         // for now we only track megolm decryption failures
-        if (e.getWireContent().algorithm != "m.megolm.v1.aes-sha2") {
+        if (e.getWireContent().algorithm != MEGOLM_ENCRYPTION_ALGORITHM) {
             return;
         }
         const errCode = e.decryptionFailureReason;
@@ -205,7 +224,7 @@ export class DecryptionFailureTracker {
         const eventId = e.getId()!;
 
         // if it's already reported, we don't need to do anything
-        if (this.reportedEvents.has(eventId)) {
+        if (this.reportedEvents.has(eventId) && this.checkReportedEvents) {
             return;
         }
 
@@ -231,7 +250,7 @@ export class DecryptionFailureTracker {
         const eventId = e.getId()!;
 
         // if it's already reported, we don't need to do anything
-        if (this.reportedEvents.has(eventId)) {
+        if (this.reportedEvents.has(eventId) && this.checkReportedEvents) {
             return;
         }
 
@@ -290,6 +309,7 @@ export class DecryptionFailureTracker {
      * Start checking for and tracking failures.
      */
     public async start(client: MatrixClient): Promise<void> {
+        this.loadReportedEvents();
         await this.calculateClientProperties(client);
         this.registerHandlers(client);
         this.checkInterval = window.setInterval(
@@ -385,9 +405,7 @@ export class DecryptionFailureTracker {
         }
         this.failures = failuresNotReady;
 
-        // Commented out for now for expediency, we need to consider unbound nature of storing
-        // this in localStorage
-        // this.saveReportedEvents();
+        this.saveReportedEvents();
     }
 
     /**

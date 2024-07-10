@@ -339,7 +339,6 @@
         "cross_signing": "امضاء متقابل",
         "dark": "تاریک",
         "description": "توضیحات",
-        "display_name": "نام نمایشی",
         "edited": "ویرایش شده",
         "email_address": "آدرس ایمیل",
         "emoji": "شکلک",
@@ -878,7 +877,6 @@
         "failed_generic": "عملیات انجام نشد",
         "failed_title": "دعوت موفقیت‌آمیز نبود",
         "invalid_address": "آدرس ناشناخته",
-        "key_share_warning": "افراد دعوت‌شده خواهند توانست پیام‌های قدیمی را بخوانند.",
         "name_email_mxid_share_room": "با استفاده از نام، آدرس ایمیل، نام کاربری (مانند <userId/>) از فردی دعوت کرده و یا <a>این اتاق را به اشتراک بگذارید</a>.",
         "name_email_mxid_share_space": "با استفاده از نام ، آدرس ایمیل ، نام کاربری (مانند <userId/>) کسی را دعوت کرده یا <a>این فضای کاری را به اشتراک بگذارید</a>.",
         "name_mxid_share_room": "با استفاده از نام یا نام کاربری (مانند <userId/>) از افراد دعوت کرده و یا <a>این اتاق را به اشتراک بگذارید</a>.",
@@ -1497,11 +1495,8 @@
             "custom_font_description": "نام فونتی که بر روی سیستم‌تان نصب است را وارد کرده و %(brand)s سعی می‌کند از آن استفاده کند.",
             "custom_font_name": "نام فونت سیستمی",
             "custom_font_size": "از اندازه‌ی دلخواه استفاده کنید",
-            "custom_theme_add_button": "افزودن پوسته",
             "custom_theme_error_downloading": "بارگیری اطلاعات پوسته با خطا همراه بود.",
             "custom_theme_invalid": "ساختار پوسته صحیح نیست.",
-            "custom_theme_success": "پوسته اضافه شد!",
-            "custom_theme_url": "آدرس پوسته دلخواه",
             "font_size": "اندازه فونت",
             "image_size_default": "پیشفرض",
             "match_system_theme": "با پوسته‌ی سیستم تطبیق پیدا کن"
@@ -1534,7 +1529,6 @@
             "discovery_email_verification_instructions": "لینک موجود در صندوق دریافت خود را تائید کنید",
             "discovery_msisdn_empty": "امکانات کاوش و جستجو بلافاصله بعد از اضافه‌کردن شماره تلفن در بالا ظاهر خواهند شد.",
             "discovery_needs_terms": "با شرایط و ضوایط سرویس سرور هویت‌سنجی (%(serverName)s) موافقت کرده تا بتوانید از طریق آدرس ایمیل و شماره تلفن قابل یافته‌شدن باشید.",
-            "discovery_section": "کاوش",
             "email_address_in_use": "این آدرس ایمیل در حال حاضر در حال استفاده است",
             "email_address_label": "آدرس ایمیل",
             "email_not_verified": "آدرس ایمیل شما هنوز تائید نشده‌است",
@@ -1552,8 +1546,6 @@
             "error_remove_3pid": "حذف اطلاعات تماس امکان‌پذیر نیست",
             "error_revoke_email_discovery": "لغو اشتراک گذاری برای آدرس ایمیل ممکن نیست",
             "error_revoke_msisdn_discovery": "لغو اشتراک‌گذاری شماره تلفن امکان‌پذیر نیست",
-            "error_saving_profile": "امکان تکمیل عملیات وجود ندارد",
-            "error_saving_profile_title": "ذخیره‌ی تنظیمات شما موفقیت‌آمیز نبود",
             "error_share_email_discovery": "به اشتراک‌گذاری آدرس ایمیل ممکن نیست",
             "error_share_msisdn_discovery": "امکان به اشتراک‌گذاری شماره تلفن وجود ندارد",
             "identity_server_not_set": "سرور هویت تنظیم نشده است",
@@ -2144,8 +2136,7 @@
             "updated_rule_users": "%(senderName)s قاعده تحریم کاربران را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد"
         },
         "reactions": {
-            "add_reaction_prompt": "افزودن واکنش",
-            "tooltip": "<reactors/><reactedWith> واکنش نشان داد با %(shortName)s</reactedWith>"
+            "add_reaction_prompt": "افزودن واکنش"
         },
         "redacted": {
             "tooltip": "پیام در %(date)s حذف شد"
