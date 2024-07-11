@@ -37,17 +37,30 @@ class StaleScreenshotReporter implements Reporter {
         }
     }
 
+    private error(msg: string, file: string) {
+        if (process.env.GITHUB_ACTIONS) {
+            console.log(`::error file=${file}::${msg}`);
+        }
+        console.log(msg, file);
+    }
+
     public async onExit(): Promise<void> {
         const screenshotFiles = new Set(await glob(`**/*.png`, { cwd: snapshotRoot }));
+        for (const screenshot of screenshotFiles) {
+            if (screenshot.split("-").at(-1) !== "linux.png") {
+                this.error(
+                    "Found screenshot belonging to different platform, this should not be checked in.",
+                    screenshot,
+                );
+            }
+        }
         for (const screenshot of this.screenshots) {
             screenshotFiles.delete(screenshot);
         }
         if (screenshotFiles.size > 0) {
-            console.log("Stale screenshot files:");
             for (const screenshot of screenshotFiles) {
-                console.log(screenshot);
+                this.error("Stale screenshot file", screenshot);
             }
-            process.exit(1);
         }
     }
 }
