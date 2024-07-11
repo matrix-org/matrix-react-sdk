@@ -111,14 +111,17 @@ async function getSecretStorageKey({
         }
         [keyId, keyInfo] = keyInfoEntries[0];
     }
+    logger.debug(`getSecretStorageKey: request for 4S keys [${Object.keys(keyInfos)}]: looking for key ${keyId}`);
 
     // Check the in-memory cache
     if (secretStorageBeingAccessed && secretStorageKeys[keyId]) {
+        logger.debug(`getSecretStorageKey: returning key ${keyId} from cache`);
         return [keyId, secretStorageKeys[keyId]];
     }
 
     if (dehydrationCache.key) {
         if (await MatrixClientPeg.safeGet().checkSecretStorageKey(dehydrationCache.key, keyInfo)) {
+            logger.debug("getSecretStorageKey: returning key from dehydration cache");
             cacheSecretStorageKey(keyId, keyInfo, dehydrationCache.key);
             return [keyId, dehydrationCache.key];
         }
@@ -126,11 +129,12 @@ async function getSecretStorageKey({
 
     const keyFromCustomisations = ModuleRunner.instance.extensions.cryptoSetup.getSecretStorageKey();
     if (keyFromCustomisations) {
-        logger.log("CryptoSetupExtension: Using key from extension (secret storage)");
+        logger.log("getSecretStorageKey: Using secret storage key from CryptoSetupExtension");
         cacheSecretStorageKey(keyId, keyInfo, keyFromCustomisations);
         return [keyId, keyFromCustomisations];
     }
 
+    logger.debug("getSecretStorageKey: prompting user for key");
     const inputToKey = makeInputToKey(keyInfo);
     const { finished } = Modal.createDialog(
         AccessSecretStorageDialog,
@@ -158,6 +162,7 @@ async function getSecretStorageKey({
     if (!keyParams) {
         throw new AccessCancelledError();
     }
+    logger.debug("getSecretStorageKey: got key from user");
     const key = await inputToKey(keyParams);
 
     // Save to cache to avoid future prompts in the current session
