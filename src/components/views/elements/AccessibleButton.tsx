@@ -92,12 +92,12 @@ type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> &
     /**
      * The tooltip to show on hover or focus.
      */
-    title?: string;
+    title?: TooltipProps["label"];
     /**
      * The caption is a secondary text displayed under the `title` of the tooltip.
      * Only valid when used in conjunction with `title`.
      */
-    caption?: string;
+    caption?: TooltipProps["caption"];
     /**
      * The placement of the tooltip.
      */
@@ -106,7 +106,14 @@ type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> &
      * Callback for when the tooltip is opened or closed.
      */
     onTooltipOpenChange?: TooltipProps["onOpenChange"];
+
+    /**
+     * Whether the tooltip should be disabled.
+     */
+    disableTooltip?: TooltipProps["disabled"];
 };
+
+export type ButtonProps<T extends keyof JSX.IntrinsicElements> = Props<T>;
 
 /**
  * Type of the props passed to the element that is rendered by AccessibleButton.
@@ -140,6 +147,7 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
         caption,
         placement = "right",
         onTooltipOpenChange,
+        disableTooltip,
         ...restProps
     }: Props<T>,
     ref: Ref<HTMLElement>,
@@ -217,6 +225,7 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
                 isTriggerInteractive={true}
                 placement={placement}
                 onOpenChange={onTooltipOpenChange}
+                disabled={disableTooltip}
             >
                 {button}
             </Tooltip>

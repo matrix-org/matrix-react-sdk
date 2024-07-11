@@ -344,7 +344,6 @@
         "dark": "כהה",
         "description": "תאור",
         "deselect_all": "הסר סימון מהכל",
-        "display_name": "שם לתצוגה",
         "edited": "נערך",
         "email_address": "כתובת דוא\"ל",
         "emoji": "אימוג'י",
@@ -1619,11 +1618,8 @@
             "custom_font_description": "הגדר את שם הגופן המותקן במערכת שלך ו- %(brand)s ים ינסו להשתמש בו.",
             "custom_font_name": "שם גופן מערכת",
             "custom_font_size": "השתמשו בגודל מותאם אישית",
-            "custom_theme_add_button": "הוסף ערכת נושא חדשה",
             "custom_theme_error_downloading": "שגיאה בהורדת מידע אודות ערכת הנושא.",
             "custom_theme_invalid": "סכמת תבנית לא תקינה.",
-            "custom_theme_success": "ערכת נושא התווספה בהצלחה!",
-            "custom_theme_url": "כתובת ערכת נושא מותאמת אישית",
             "font_size": "גודל אותיות",
             "image_size_default": "ברירת מחדל",
             "image_size_large": "גדול",
@@ -1661,7 +1657,6 @@
             "discovery_email_verification_instructions": "אמת את הקישור בתיבת הדואר הנכנס שלך",
             "discovery_msisdn_empty": "אפשרויות גילוי יופיעו לאחר הוספת מספר טלפון לעיל.",
             "discovery_needs_terms": "הסכים לתנאי השירות של שרת הזהות (%(serverName)s) כדי לאפשר לעצמך להיות גלוי על ידי כתובת דוא\"ל או מספר טלפון.",
-            "discovery_section": "מציאה",
             "email_address_in_use": "כתובת הדואר הזו כבר בשימוש",
             "email_address_label": "כתובת דוא\"ל",
             "email_not_verified": "כתובת הדוא\"ל שלך עדיין לא אומתה",
@@ -1679,8 +1674,6 @@
             "error_remove_3pid": "לא ניתן להסיר את פרטי הקשר",
             "error_revoke_email_discovery": "לא ניתן לבטל את השיתוף לכתובת הדוא\"ל",
             "error_revoke_msisdn_discovery": "לא ניתן לבטל את השיתוף למספר טלפון",
-            "error_saving_profile": "לא ניתן היה להשלים את הפעולה",
-            "error_saving_profile_title": "שמירת הפרופיל שלך נכשלה",
             "error_share_email_discovery": "לא ניתן לשתף את כתובת הדוא\"ל",
             "error_share_msisdn_discovery": "לא ניתן לשתף מספר טלפון",
             "incorrect_msisdn_verification": "קוד אימות שגוי",
@@ -2307,9 +2300,6 @@
             "updated_rule_rooms": "%(senderName)s עדכן את הכלל שפאפשר חסימה של חדרים התואמים ל%(glob)s עבור %(reason)s",
             "updated_rule_servers": "%(senderName)s עדכן את הכללים המאפשרים חסימת שרתים התואמים ל%(glob)s עבור %(reason)s",
             "updated_rule_users": "%(senderName)s עדכן את הכלל שמאפשר חסימת משתמשים התואמים ל%(glob)s עבור %(reason)s"
-        },
-        "reactions": {
-            "tooltip": "<reactors/><reactedWith> הגיבו עם %(shortName)s</reactedWith>"
         },
         "redacted": {
             "tooltip": "הודעה נמחקה בתאריך %(date)s"

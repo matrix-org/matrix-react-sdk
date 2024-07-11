@@ -200,15 +200,24 @@ export interface IConfigOptions {
      * The issuer URL must have a trailing `/`.
      * OPTIONAL
      */
-    oidc_static_clients?: Record<
-        string,
-        {
-            client_id: string;
-        }
-    >;
+    oidc_static_clients?: {
+        [issuer: string]: { client_id: string };
+    };
+
+    /**
+     * Configuration for OIDC dynamic registration where a static OIDC client is not configured.
+     */
+    oidc_metadata?: {
+        client_uri?: string;
+        logo_uri?: string;
+        tos_uri?: string;
+        policy_uri?: string;
+        contacts?: string[];
+    };
 }
 
 export interface ISsoRedirectOptions {
     immediate?: boolean;
     on_welcome_page?: boolean;
+    on_login_page?: boolean;
 }

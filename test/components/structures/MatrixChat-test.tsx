@@ -769,7 +769,7 @@ describe("<MatrixChat />", () => {
                     jest.spyOn(PosthogAnalytics.instance, "logout").mockImplementation(() => {});
                     jest.spyOn(EventIndexPeg, "deleteEventIndex").mockImplementation(async () => {});
 
-                    jest.spyOn(CallStore.instance, "activeCalls", "get").mockReturnValue(new Set([call1, call2]));
+                    jest.spyOn(CallStore.instance, "connectedCalls", "get").mockReturnValue(new Set([call1, call2]));
 
                     mockPlatformPeg({
                         destroyPickleKey: jest.fn(),
@@ -955,6 +955,7 @@ describe("<MatrixChat />", () => {
         describe("post login setup", () => {
             beforeEach(() => {
                 const mockCrypto = {
+                    getVersion: jest.fn().mockReturnValue("Version 0"),
                     getVerificationRequestsToDeviceInProgress: jest.fn().mockReturnValue([]),
                     getUserDeviceInfo: jest.fn().mockResolvedValue(new Map()),
                     getUserVerificationStatus: jest

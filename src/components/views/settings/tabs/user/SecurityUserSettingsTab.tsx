@@ -43,6 +43,8 @@ import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
 import { useOwnDevices } from "../../devices/useOwnDevices";
+import DiscoverySettings from "../../discovery/DiscoverySettings";
+import SetIntegrationManager from "../../SetIntegrationManager";
 
 interface IIgnoredUserProps {
     userId: string;
@@ -336,6 +338,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             };
             privacySection = (
                 <SettingsSection heading={_t("common|privacy")}>
+                    <DiscoverySettings />
                     <SettingsSubsection
                         heading={_t("common|analytics")}
                         description={_t("settings|security|analytics_description")}
@@ -374,6 +377,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         return (
             <SettingsTab>
                 {warning}
+                <SetIntegrationManager />
                 <SettingsSection heading={_t("settings|security|encryption_section")}>
                     {secureBackup}
                     {eventIndex}

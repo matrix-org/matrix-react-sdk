@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MEGOLM_ALGORITHM } from "matrix-js-sdk/src/crypto/olmlib";
 import { EventType, KNOWN_SAFE_ROOM_VERSION, MatrixClient, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 
-import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from "../../../src/models/LocalRoom";
+import { LOCAL_ROOM_ID_PREFIX, LocalRoom } from "../../../src/models/LocalRoom";
 import { determineCreateRoomEncryptionOption, Member } from "../../../src/utils/direct-messages";
+import { MEGOLM_ENCRYPTION_ALGORITHM } from "../crypto";
 
 /**
  * Create a DM local room. This room will not be send to the server and only exists inside the client.
@@ -46,7 +46,6 @@ export async function createDmLocalRoom(client: MatrixClient, targets: Member[])
                 room_version: KNOWN_SAFE_ROOM_VERSION,
             },
             state_key: "",
-            user_id: userId,
             sender: userId,
             room_id: localRoom.roomId,
             origin_server_ts: Date.now(),
@@ -60,9 +59,8 @@ export async function createDmLocalRoom(client: MatrixClient, targets: Member[])
                 event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
                 type: EventType.RoomEncryption,
                 content: {
-                    algorithm: MEGOLM_ALGORITHM,
+                    algorithm: MEGOLM_ENCRYPTION_ALGORITHM,
                 },
-                user_id: userId,
                 sender: userId,
                 state_key: "",
                 room_id: localRoom.roomId,
@@ -80,7 +78,6 @@ export async function createDmLocalRoom(client: MatrixClient, targets: Member[])
                 membership: KnownMembership.Join,
             },
             state_key: userId,
-            user_id: userId,
             sender: userId,
             room_id: localRoom.roomId,
         }),

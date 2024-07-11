@@ -40,10 +40,9 @@ import Modal from "./Modal";
 import MatrixClientBackedSettingsHandler from "./settings/handlers/MatrixClientBackedSettingsHandler";
 import * as StorageManager from "./utils/StorageManager";
 import IdentityAuthClient from "./IdentityAuthClient";
-import { crossSigningCallbacks, tryToUnlockSecretStorageWithDehydrationKey } from "./SecurityManager";
+import { crossSigningCallbacks } from "./SecurityManager";
 import { ModuleRunner } from "./modules/ModuleRunner";
 import { SlidingSyncManager } from "./SlidingSyncManager";
-import CryptoStoreTooNewDialog from "./components/views/dialogs/CryptoStoreTooNewDialog";
 import { _t, UserFriendlyError } from "./languageHandler";
 import { SettingLevel } from "./settings/SettingLevel";
 import MatrixClientBackedController from "./settings/controllers/MatrixClientBackedController";
@@ -52,7 +51,6 @@ import PlatformPeg from "./PlatformPeg";
 import { formatList } from "./utils/FormattingUtils";
 import SdkConfig from "./SdkConfig";
 import { Features } from "./settings/Settings";
-import { PhasedRolloutFeature } from "./utils/PhasedRolloutFeature";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -66,6 +64,27 @@ export interface IMatrixClientCreds {
     freshLogin?: boolean;
 }
 
+export interface MatrixClientPegAssignOpts {
+    /**
+     * If we are using Rust crypto, a key with which to encrypt the indexeddb.
+     *
+     * If provided, it must be exactly 32 bytes of data. If both this and
+     * {@link MatrixClientPegAssignOpts.rustCryptoStorePassword} are undefined,
+     * the store will be unencrypted.
+     */
+    rustCryptoStoreKey?: Uint8Array;
+
+    /**
+     * If we are using Rust crypto, a password which will be used to derive a key to encrypt the store with.
+     *
+     * An alternative to {@link MatrixClientPegAssignOpts.rustCryptoStoreKey}. Ignored if `rustCryptoStoreKey` is set.
+     *
+     * Deriving a key from a password is (deliberately) a slow operation, so prefer to pass a `rustCryptoStoreKey`
+     * directly where possible.
+     */
+    rustCryptoStorePassword?: string;
+}
+
 /**
  * Holds the current instance of the `MatrixClient` to use across the codebase.
  * Looking for an `MatrixClient`? Just look for the `MatrixClientPeg` on the peg
@@ -77,15 +96,6 @@ export interface IMatrixClientPeg {
      * The opts used to start the client
      */
     opts: IStartClientOpts;
-
-    /**
-     * Return the server name of the user's homeserver
-     * Throws an error if unable to deduce the homeserver name
-     * (e.g. if the user is not logged in)
-     *
-     * @returns {string} The homeserver name, if present.
-     */
-    getHomeserverName(): string;
 
     /**
      * Get the current MatrixClient, if any
@@ -103,14 +113,14 @@ export interface IMatrixClientPeg {
     unset(): void;
 
     /**
-     * Prepare the MatrixClient for use, including initialising the store and crypto, but do not start it
+     * Prepare the MatrixClient for use, including initialising the store and crypto, but do not start it.
      */
-    assign(): Promise<IStartClientOpts>;
+    assign(opts?: MatrixClientPegAssignOpts): Promise<IStartClientOpts>;
 
     /**
-     * Prepare the MatrixClient for use, including initialising the store and crypto, and start it
+     * Prepare the MatrixClient for use, including initialising the store and crypto, and start it.
      */
-    start(): Promise<void>;
+    start(opts?: MatrixClientPegAssignOpts): Promise<void>;
 
     /**
      * If we've registered a user ID we set this to the ID of the
@@ -257,7 +267,10 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         PlatformPeg.get()?.reload();
     };
 
-    public async assign(): Promise<IStartClientOpts> {
+    /**
+     * Implementation of {@link IMatrixClientPeg.assign}.
+     */
+    public async assign(assignOpts: MatrixClientPegAssignOpts = {}): Promise<IStartClientOpts> {
         if (!this.matrixClient) {
             throw new Error("createClient must be called first");
         }
@@ -284,7 +297,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
         // try to initialise e2e on the new client
         if (!SettingsStore.getValue("lowBandwidth")) {
-            await this.initClientCrypto();
+            await this.initClientCrypto(assignOpts.rustCryptoStoreKey, assignOpts.rustCryptoStorePassword);
         }
 
         const opts = utils.deepCopy(this.opts);
@@ -310,86 +323,48 @@ class MatrixClientPegClass implements IMatrixClientPeg {
 
     /**
      * Attempt to initialize the crypto layer on a newly-created MatrixClient
+     *
+     * @param rustCryptoStoreKey - A key with which to encrypt the rust crypto indexeddb.
+     *   If provided, it must be exactly 32 bytes of data. If both this and `rustCryptoStorePassword` are
+     *   undefined, the store will be unencrypted.
+     *
+     * @param rustCryptoStorePassword - An alternative to `rustCryptoStoreKey`. Ignored if `rustCryptoStoreKey` is set.
+     *    A password which will be used to derive a key to encrypt the store with. Deriving a key from a password is
+     *    (deliberately) a slow operation, so prefer to pass a `rustCryptoStoreKey` directly where possible.
      */
-    private async initClientCrypto(): Promise<void> {
+    private async initClientCrypto(rustCryptoStoreKey?: Uint8Array, rustCryptoStorePassword?: string): Promise<void> {
         if (!this.matrixClient) {
             throw new Error("createClient must be called first");
         }
 
-        let useRustCrypto = SettingsStore.getValue(Features.RustCrypto);
-
-        // We want the value that is set in the config.json for that web instance
-        const defaultUseRustCrypto = SettingsStore.getValueAt(SettingLevel.CONFIG, Features.RustCrypto);
-        const migrationPercent = SettingsStore.getValueAt(SettingLevel.CONFIG, "RustCrypto.staged_rollout_percent");
-
-        // If the default config is to use rust crypto, and the user is on legacy crypto,
-        // we want to check if we should migrate the current user.
-        if (!useRustCrypto && defaultUseRustCrypto && Number.isInteger(migrationPercent)) {
-            // The user is not on rust crypto, but the default stack is now rust; Let's check if we should migrate
-            // the current user to rust crypto.
-            try {
-                const stagedRollout = new PhasedRolloutFeature("RustCrypto.staged_rollout_percent", migrationPercent);
-                // Device id should not be null at that point, or init crypto will fail anyhow
-                const deviceId = this.matrixClient.getDeviceId()!;
-                // we use deviceId rather than userId because we don't particularly want all devices
-                // of a user to be migrated at the same time.
-                useRustCrypto = stagedRollout.isFeatureEnabled(deviceId);
-            } catch (e) {
-                logger.warn("Failed to create staged rollout feature for rust crypto migration", e);
-            }
+        if (!rustCryptoStoreKey && !rustCryptoStorePassword) {
+            logger.error("Warning! Not using an encryption key for rust crypto store.");
         }
 
-        // we want to make sure that the same crypto implementation is used throughout the lifetime of a device,
-        // so persist the setting at the device layer
-        // (At some point, we'll allow the user to *enable* the setting via labs, which will migrate their existing
-        // device to the rust-sdk implementation, but that won't change anything here).
-        await SettingsStore.setValue(Features.RustCrypto, null, SettingLevel.DEVICE, useRustCrypto);
+        // Record the fact that we used the Rust crypto stack with this client. This just guards against people
+        // rolling back to versions of EW that did not default to Rust crypto (which would lead to an error, since
+        // we cannot migrate from Rust to Legacy crypto).
+        await SettingsStore.setValue(Features.RustCrypto, null, SettingLevel.DEVICE, true);
 
-        // Now we can initialise the right crypto impl.
-        if (useRustCrypto) {
-            await this.matrixClient.initRustCrypto();
+        await this.matrixClient.initRustCrypto({
+            storageKey: rustCryptoStoreKey,
+            storagePassword: rustCryptoStorePassword,
+        });
 
-            StorageManager.setCryptoInitialised(true);
-            // TODO: device dehydration and whathaveyou
-            return;
-        }
-
-        // fall back to the libolm layer.
-        try {
-            // check that we have a version of the js-sdk which includes initCrypto
-            if (this.matrixClient.initCrypto) {
-                await this.matrixClient.initCrypto();
-                this.matrixClient.setCryptoTrustCrossSignedDevices(
-                    !SettingsStore.getValue("e2ee.manuallyVerifyAllSessions"),
-                );
-                await tryToUnlockSecretStorageWithDehydrationKey(this.matrixClient);
-                StorageManager.setCryptoInitialised(true);
-            }
-        } catch (e) {
-            if (e instanceof Error && e.name === "InvalidCryptoStoreError") {
-                // The js-sdk found a crypto DB too new for it to use
-                Modal.createDialog(CryptoStoreTooNewDialog);
-            }
-            // this can happen for a number of reasons, the most likely being
-            // that the olm library was missing. It's not fatal.
-            logger.warn("Unable to initialise e2e", e);
-        }
+        StorageManager.setCryptoInitialised(true);
+        // TODO: device dehydration and whathaveyou
+        return;
     }
 
-    public async start(): Promise<void> {
-        const opts = await this.assign();
+    /**
+     * Implementation of {@link IMatrixClientPeg.start}.
+     */
+    public async start(assignOpts?: MatrixClientPegAssignOpts): Promise<void> {
+        const opts = await this.assign(assignOpts);
 
         logger.log(`MatrixClientPeg: really starting MatrixClient`);
         await this.matrixClient!.startClient(opts);
         logger.log(`MatrixClientPeg: MatrixClient started`);
-    }
-
-    public getHomeserverName(): string {
-        const matches = /^@[^:]+:(.+)$/.exec(this.safeGet().getSafeUserId());
-        if (matches === null || matches.length < 1) {
-            throw new Error("Failed to derive homeserver name from user ID!");
-        }
-        return matches[1];
     }
 
     private namesToRoomName(names: string[], count: number): string | undefined {
