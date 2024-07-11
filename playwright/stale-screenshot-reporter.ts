@@ -41,7 +41,8 @@ class StaleScreenshotReporter implements Reporter {
         if (process.env.GITHUB_ACTIONS) {
             console.log(`::error file=${file}::${msg}`);
         }
-        console.log(msg, file);
+        console.error(msg, file);
+        process.exitCode = 1;
     }
 
     public async onExit(): Promise<void> {
@@ -49,7 +50,7 @@ class StaleScreenshotReporter implements Reporter {
         for (const screenshot of screenshotFiles) {
             if (screenshot.split("-").at(-1) !== "linux.png") {
                 this.error(
-                    "Found screenshot belonging to different platform, this should not be checked in.",
+                    "Found screenshot belonging to different platform, this should not be checked in",
                     screenshot,
                 );
             }
