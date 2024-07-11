@@ -28,6 +28,7 @@ const snapshotRoot = path.join(__dirname, "snapshots");
 
 class StaleScreenshotReporter implements Reporter {
     private screenshots = new Set<string>();
+    private success = true;
 
     public onTestEnd(test: TestCase): void {
         for (const annotation of test.annotations) {
@@ -42,7 +43,7 @@ class StaleScreenshotReporter implements Reporter {
             console.log(`::error file=${file}::${msg}`);
         }
         console.error(msg, file);
-        process.exitCode = 1;
+        this.success = false;
     }
 
     public async onExit(): Promise<void> {
@@ -62,6 +63,10 @@ class StaleScreenshotReporter implements Reporter {
             for (const screenshot of screenshotFiles) {
                 this.error("Stale screenshot file", screenshot);
             }
+        }
+
+        if (!this.success) {
+            process.exit(1);
         }
     }
 }
