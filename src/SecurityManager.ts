@@ -45,10 +45,6 @@ let dehydrationCache: {
     keyInfo?: SecretStorage.SecretStorageKeyDescription;
 } = {};
 
-function isCachingAllowed(): boolean {
-    return secretStorageBeingAccessed;
-}
-
 /**
  * This can be used by other components to check if secret storage access is in
  * progress, so that we can e.g. avoid intermittently showing toasts during
@@ -118,7 +114,7 @@ async function getSecretStorageKey({
     }
 
     // Check the in-memory cache
-    if (isCachingAllowed() && secretStorageKeys[keyId]) {
+    if (secretStorageBeingAccessed && secretStorageKeys[keyId]) {
         return [keyId, secretStorageKeys[keyId]];
     }
 
@@ -226,7 +222,7 @@ function cacheSecretStorageKey(
     keyInfo: SecretStorage.SecretStorageKeyDescription,
     key: Uint8Array,
 ): void {
-    if (isCachingAllowed()) {
+    if (secretStorageBeingAccessed) {
         secretStorageKeys[keyId] = key;
         secretStorageKeyInfo[keyId] = keyInfo;
     }
@@ -313,10 +309,8 @@ export async function withSecretStorageKeyCache<T>(func: () => Promise<T>): Prom
     } finally {
         // Clear secret storage key cache now that work is complete
         secretStorageBeingAccessed = false;
-        if (!isCachingAllowed()) {
-            secretStorageKeys = {};
-            secretStorageKeyInfo = {};
-        }
+        secretStorageKeys = {};
+        secretStorageKeyInfo = {};
     }
 }
 
