@@ -287,11 +287,13 @@ export const crossSigningCallbacks: ICryptoCallbacks = {
  * @param func - The operation to be wrapped.
  */
 export async function withSecretStorageKeyCache<T>(func: () => Promise<T>): Promise<T> {
+    logger.debug("SecurityManager: enabling 4S key cache");
     secretStorageBeingAccessed = true;
     try {
         return await func();
     } finally {
         // Clear secret storage key cache now that work is complete
+        logger.debug("SecurityManager: disabling 4S key cache");
         secretStorageBeingAccessed = false;
         secretStorageKeys = {};
         secretStorageKeyInfo = {};
@@ -327,7 +329,21 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
 async function doAccessSecretStorage(func: () => Promise<void>, forceReset: boolean): Promise<void> {
     try {
         const cli = MatrixClientPeg.safeGet();
-        if (!(await cli.secretStorage.hasKey()) || forceReset) {
+        const crypto = cli.getCrypto();
+        if (!crypto) {
+            throw new Error("End-to-end encryption is disabled - unable to access secret storage.");
+        }
+
+        let createNew = false;
+        if (forceReset) {
+            logger.debug("accessSecretStorage: resetting 4S");
+            createNew = true;
+        } else if (!(await cli.secretStorage.hasKey())) {
+            logger.debug("accessSecretStorage: no 4S key configured, creating a new one");
+            createNew = true;
+        }
+
+        if (createNew) {
             // This dialog calls bootstrap itself after guiding the user through
             // passphrase creation.
             const { finished } = Modal.createDialogAsync(
@@ -355,13 +371,10 @@ async function doAccessSecretStorage(func: () => Promise<void>, forceReset: bool
                 throw new Error("Secret storage creation canceled");
             }
         } else {
-            const crypto = cli.getCrypto();
-            if (!crypto) {
-                throw new Error("End-to-end encryption is disabled - unable to access secret storage.");
-            }
-
+            logger.debug("accessSecretStorage: bootstrapCrossSigning");
             await crypto.bootstrapCrossSigning({
                 authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
+                    logger.debug("accessSecretStorage: performing UIA to upload cross-signing keys");
                     const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                         title: _t("encryption|bootstrap_title"),
                         matrixClient: cli,
@@ -371,8 +384,10 @@ async function doAccessSecretStorage(func: () => Promise<void>, forceReset: bool
                     if (!confirmed) {
                         throw new Error("Cross-signing key upload auth canceled");
                     }
+                    logger.debug("accessSecretStorage: Cross-signing key upload successful");
                 },
             });
+            logger.debug("accessSecretStorage: bootstrapSecretStorage");
             await crypto.bootstrapSecretStorage({});
 
             const keyId = Object.keys(secretStorageKeys)[0];
@@ -381,21 +396,23 @@ async function doAccessSecretStorage(func: () => Promise<void>, forceReset: bool
                 if (secretStorageKeyInfo[keyId] && secretStorageKeyInfo[keyId].passphrase) {
                     dehydrationKeyInfo = { passphrase: secretStorageKeyInfo[keyId].passphrase };
                 }
-                logger.log("Setting dehydration key");
+                logger.log("accessSecretStorage: Setting dehydration key");
                 await cli.setDehydrationKey(secretStorageKeys[keyId], dehydrationKeyInfo, "Backup device");
             } else if (!keyId) {
-                logger.warn("Not setting dehydration key: no SSSS key found");
+                logger.warn("accessSecretStorage: Not setting dehydration key: no SSSS key found");
             } else {
-                logger.log("Not setting dehydration key: feature disabled");
+                logger.log("accessSecretStorage: Not setting dehydration key: feature disabled");
             }
         }
 
+        logger.debug("accessSecretStorage: 4S now ready");
         // `return await` needed here to ensure `finally` block runs after the
         // inner operation completes.
-        return await func();
+        await func();
+        logger.debug("accessSecretStorage: operation complete");
     } catch (e) {
         ModuleRunner.instance.extensions.cryptoSetup.catchAccessSecretStorageError(e as Error);
-        logger.error(e);
+        logger.error("accessSecretStorage: error during operation", e);
         // Re-throw so that higher level logic can abort as needed
         throw e;
     }
