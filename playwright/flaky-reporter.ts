@@ -20,18 +20,15 @@ limitations under the License.
  */
 
 import type { Reporter, TestCase } from "@playwright/test/reporter";
-import StaleScreenshotReporter from "./stale-screenshot-reporter";
 
 const REPO = "element-hq/element-web";
 const LABEL = "Z-Flaky-Test";
 const ISSUE_TITLE_PREFIX = "Flaky playwright test: ";
 
-// TEMP TO DRY RUN
-class FlakyReporter extends StaleScreenshotReporter implements Reporter {
+class FlakyReporter implements Reporter {
     private flakes = new Set<string>();
 
     public onTestEnd(test: TestCase): void {
-        super.onTestEnd(test);
         const title = `${test.location.file.split("playwright/e2e/")[1]}: ${test.title}`;
         if (test.outcome() === "flaky") {
             this.flakes.add(title);
@@ -39,7 +36,6 @@ class FlakyReporter extends StaleScreenshotReporter implements Reporter {
     }
 
     public async onExit(): Promise<void> {
-        await super.onExit();
         if (this.flakes.size === 0) {
             console.log("No flakes found");
             return;
