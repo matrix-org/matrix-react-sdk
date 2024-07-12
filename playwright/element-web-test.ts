@@ -314,7 +314,7 @@ export const expect = baseExpect.extend({
         const page = "page" in receiver ? receiver.page() : receiver;
 
         let hideTooltipsCss: string | undefined;
-        if (hideTooltips) {
+        if (options.hideTooltips) {
             hideTooltipsCss = `
                 .mx_Tooltip_visible {
                     visibility: hidden !important;
