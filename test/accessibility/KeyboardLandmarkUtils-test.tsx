@@ -1,5 +1,4 @@
 /*
- *
  * Copyright 2024 The Matrix.org Foundation C.I.C.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +17,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 
-import { Landmark, navigateLandmark } from "../../src/accessibility/KeyboardLandmarkUtils";
+import { Landmark, LandmarkNavigation } from "../../src/accessibility/LandmarkNavigation";
 import defaultDispatcher from "../../src/dispatcher/dispatcher";
 
 describe("KeyboardLandmarkUtils", () => {
@@ -41,35 +40,35 @@ describe("KeyboardLandmarkUtils", () => {
         );
         // ACTIVE_SPACE_BUTTON <-> ROOM_SEARCH <-> ROOM_LIST <-> HOME <-> ACTIVE_SPACE_BUTTON
         // ACTIVE_SPACE_BUTTON -> ROOM_SEARCH
-        navigateLandmark(Landmark.ACTIVE_SPACE_BUTTON);
+        LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.ACTIVE_SPACE_BUTTON);
         expect(screen.getByTestId("mx_RoomSearch")).toHaveFocus();
 
         // ROOM_SEARCH -> ROOM_LIST
-        navigateLandmark(Landmark.ROOM_SEARCH);
+        LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.ROOM_SEARCH);
         expect(screen.getByTestId("mx_RoomTile")).toHaveFocus();
 
         // ROOM_LIST -> HOME_PAGE
-        navigateLandmark(Landmark.ROOM_LIST);
+        LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.ROOM_LIST);
         expect(screen.getByTestId("mx_HomePage")).toHaveFocus();
 
-        // HOME_PAGE -> ACTIVE_SPACE_BUTTOn
-        navigateLandmark(Landmark.HOME);
+        // HOME_PAGE -> ACTIVE_SPACE_BUTTON
+        LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.MESSAGE_COMPOSER_OR_HOME);
         expect(screen.getByTestId("mx_SpaceButton_active")).toHaveFocus();
 
         // HOME_PAGE <- ACTIVE_SPACE_BUTTON
-        navigateLandmark(Landmark.ACTIVE_SPACE_BUTTON, true);
+        LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.ACTIVE_SPACE_BUTTON);
         expect(screen.getByTestId("mx_HomePage")).toHaveFocus();
 
         // ROOM_LIST <- HOME_PAGE
-        navigateLandmark(Landmark.HOME, true);
+        LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.MESSAGE_COMPOSER_OR_HOME);
         expect(screen.getByTestId("mx_RoomTile")).toHaveFocus();
 
         // ROOM_SEARCH <- ROOM_LIST
-        navigateLandmark(Landmark.ROOM_LIST, true);
+        LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.ROOM_LIST);
         expect(screen.getByTestId("mx_RoomSearch")).toHaveFocus();
 
         // ACTIVE_SPACE_BUTTON <- ROOM_SEARCH
-        navigateLandmark(Landmark.ROOM_SEARCH, true);
+        LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.ROOM_SEARCH);
         expect(screen.getByTestId("mx_SpaceButton_active")).toHaveFocus();
     });
 
@@ -97,35 +96,35 @@ describe("KeyboardLandmarkUtils", () => {
         );
         // ACTIVE_SPACE_BUTTON <-> ROOM_SEARCH <-> ROOM_LIST <-> MESSAGE_COMPOSER <-> ACTIVE_SPACE_BUTTON
         // ACTIVE_SPACE_BUTTON -> ROOM_SEARCH
-        navigateLandmark(Landmark.ACTIVE_SPACE_BUTTON);
+        LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.ACTIVE_SPACE_BUTTON);
         expect(screen.getByTestId("mx_RoomSearch")).toHaveFocus();
 
         // ROOM_SEARCH -> ROOM_LIST
-        navigateLandmark(Landmark.ROOM_SEARCH);
+        LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.ROOM_SEARCH);
         expect(screen.getByTestId("mx_RoomTile_selected")).toHaveFocus();
 
         // ROOM_LIST -> MESSAGE_COMPOSER
-        navigateLandmark(Landmark.ROOM_LIST);
+        LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.ROOM_LIST);
         await waitFor(() => expect(callback).toHaveBeenCalledTimes(1));
 
-        // MESSAGE_COMPOSER -> ACTIVE_SPACE_BUTTOn
-        navigateLandmark(Landmark.HOME);
+        // MESSAGE_COMPOSER -> ACTIVE_SPACE_BUTTON
+        LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.MESSAGE_COMPOSER_OR_HOME);
         expect(screen.getByTestId("mx_SpaceButton_active")).toHaveFocus();
 
         // MESSAGE_COMPOSER <- ACTIVE_SPACE_BUTTON
-        navigateLandmark(Landmark.ACTIVE_SPACE_BUTTON, true);
+        LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.ACTIVE_SPACE_BUTTON);
         await waitFor(() => expect(callback).toHaveBeenCalledTimes(2));
 
         // ROOM_LIST <- MESSAGE_COMPOSER
-        navigateLandmark(Landmark.HOME, true);
+        LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.MESSAGE_COMPOSER_OR_HOME);
         expect(screen.getByTestId("mx_RoomTile_selected")).toHaveFocus();
 
         // ROOM_SEARCH <- ROOM_LIST
-        navigateLandmark(Landmark.ROOM_LIST, true);
+        LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.ROOM_LIST);
         expect(screen.getByTestId("mx_RoomSearch")).toHaveFocus();
 
         // ACTIVE_SPACE_BUTTON <- ROOM_SEARCH
-        navigateLandmark(Landmark.ROOM_SEARCH, true);
+        LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.ROOM_SEARCH);
         expect(screen.getByTestId("mx_SpaceButton_active")).toHaveFocus();
     });
 });
