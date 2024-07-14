@@ -20,6 +20,7 @@ import { ReceiptType, MatrixClient, PendingEventOrdering, Room } from "matrix-js
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import React from "react";
 import userEvent from "@testing-library/user-event";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 import { ChevronFace } from "../../../../src/components/structures/ContextMenu";
 import {
@@ -35,7 +36,7 @@ import { mkMessage, stubClient } from "../../../test-utils/test-utils";
 import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
 import { UIComponent } from "../../../../src/settings/UIFeature";
 import SettingsStore from "../../../../src/settings/SettingsStore";
-import Modal from "../../../../src/Modal";
+import { clearAllModals } from "../../../test-utils";
 
 jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
     shouldShowComponent: jest.fn(),
@@ -89,8 +90,8 @@ describe("RoomGeneralContextMenu", () => {
         onFinished = jest.fn();
     });
 
-    afterEach(() => {
-        Modal.closeCurrentModal("force");
+    afterEach(async () => {
+        await clearAllModals();
     });
 
     it("renders an empty context menu for archived rooms", async () => {
@@ -141,7 +142,7 @@ describe("RoomGeneralContextMenu", () => {
         const markAsReadBtn = getByLabelText(container, "Mark as read");
         fireEvent.click(markAsReadBtn);
 
-        await new Promise(setImmediate);
+        await sleep(0);
 
         expect(mockClient.sendReadReceipt).toHaveBeenCalledWith(event, ReceiptType.Read, true);
         expect(onFinished).toHaveBeenCalled();
@@ -155,7 +156,7 @@ describe("RoomGeneralContextMenu", () => {
         const markAsUnreadBtn = getByLabelText(container, "Mark as unread");
         fireEvent.click(markAsUnreadBtn);
 
-        await new Promise(setImmediate);
+        await sleep(0);
 
         expect(mockClient.setRoomAccountData).toHaveBeenCalledWith(ROOM_ID, "com.famedly.marked_unread", {
             unread: true,

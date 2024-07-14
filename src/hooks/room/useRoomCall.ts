@@ -31,7 +31,7 @@ import { placeCall } from "../../utils/room/placeCall";
 import { Container, WidgetLayoutStore } from "../../stores/widgets/WidgetLayoutStore";
 import { useRoomState } from "../useRoomState";
 import { _t } from "../../languageHandler";
-import { isManagedHybridWidget } from "../../widgets/ManagedHybrid";
+import { isManagedHybridWidget, isManagedHybridWidgetEnabled } from "../../widgets/ManagedHybrid";
 import { IApp } from "../../stores/WidgetStore";
 import { SdkContextClass } from "../../contexts/SDKContext";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
@@ -41,6 +41,8 @@ import { Action } from "../../dispatcher/actions";
 import { CallStore, CallStoreEvent } from "../../stores/CallStore";
 import { isVideoRoom } from "../../utils/video-rooms";
 import { useGuestAccessInformation } from "./useGuestAccessInformation";
+import SettingsStore from "../../settings/SettingsStore";
+import { UIFeature } from "../../settings/UIFeature";
 
 export enum PlatformCallType {
     ElementCall,
@@ -83,6 +85,8 @@ export const useRoomCall = (
     isConnectedToCall: boolean;
     hasActiveCallSession: boolean;
     callOptions: PlatformCallType[];
+    showVideoCallButton: boolean;
+    showVoiceCallButton: boolean;
 } => {
     // settings
     const groupCallsEnabled = useFeatureEnabled("feature_group_calls");
@@ -124,7 +128,7 @@ export const useRoomCall = (
     // The options provided to the RoomHeader.
     // If there are multiple options, the user will be prompted to choose.
     const callOptions = useMemo((): PlatformCallType[] => {
-        const options = [];
+        const options: PlatformCallType[] = [];
         if (memberCount <= 2) {
             options.push(PlatformCallType.LegacyCall);
         } else if (mayEditWidgets || hasJitsiWidget) {
@@ -176,13 +180,13 @@ export const useRoomCall = (
     // We only want to prompt to pin the widget if it's not element call based.
     const isECWidget = WidgetType.CALL.matches(widget?.type ?? "");
     const promptPinWidget = !isECWidget && canPinWidget && !widgetPinned;
-    const activeCalls = useEventEmitterState(CallStore.instance, CallStoreEvent.ActiveCalls, () =>
-        Array.from(CallStore.instance.activeCalls),
+    const connectedCalls = useEventEmitterState(CallStore.instance, CallStoreEvent.ConnectedCalls, () =>
+        Array.from(CallStore.instance.connectedCalls),
     );
     const { canInviteGuests } = useGuestAccessInformation(room);
 
     const state = useMemo((): State => {
-        if (activeCalls.find((call) => call.roomId != room.roomId)) {
+        if (connectedCalls.find((call) => call.roomId != room.roomId)) {
             return State.Ongoing;
         }
         if (hasGroupCall && (hasJitsiWidget || hasManagedHybridWidget)) {
@@ -200,7 +204,7 @@ export const useRoomCall = (
         }
         return State.NoCall;
     }, [
-        activeCalls,
+        connectedCalls,
         canInviteGuests,
         hasGroupCall,
         hasJitsiWidget,
@@ -266,6 +270,16 @@ export const useRoomCall = (
         });
     }, [isViewingCall, room.roomId]);
 
+    // We hide the voice call button if it'd have the same effect as the video call button
+    let hideVoiceCallButton =
+        isManagedHybridWidgetEnabled(room.roomId) || !callOptions.includes(PlatformCallType.LegacyCall);
+    let hideVideoCallButton = false;
+    // We hide both buttons if they require widgets but widgets are disabled.
+    if (memberCount > 2 && !SettingsStore.getValue(UIFeature.Widgets)) {
+        hideVoiceCallButton = true;
+        hideVideoCallButton = true;
+    }
+
     /**
      * We've gone through all the steps
      */
@@ -279,5 +293,7 @@ export const useRoomCall = (
         isConnectedToCall: isConnectedToCall,
         hasActiveCallSession: hasActiveCallSession,
         callOptions,
+        showVoiceCallButton: !hideVoiceCallButton,
+        showVideoCallButton: !hideVideoCallButton,
     };
 };

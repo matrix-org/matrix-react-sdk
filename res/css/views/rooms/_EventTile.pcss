@@ -689,6 +689,7 @@ $left-gutter: 64px;
         font-family: inherit !important;
         white-space: normal !important;
         line-height: inherit !important;
+        background-color: inherit;
         color: inherit; /* inherit the colour from the dark or light theme by default (but not for code blocks) */
 
         pre,
@@ -701,7 +702,7 @@ $left-gutter: 64px;
             background-color: $inlinecode-background-color;
             border: 1px solid $inlinecode-border-color;
             border-radius: 4px;
-            /* The horizontal padding is added by gfm.css .markdown-body */
+            /* The horizontal padding is added by github-markdown-css .markdown-body */
             padding: $spacing-2 0;
             /* Avoid inline code blocks to be sticked when on multiple lines */
             line-height: $font-22px;

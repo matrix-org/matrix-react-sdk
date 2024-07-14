@@ -16,7 +16,7 @@ limitations under the License.
 
 import * as Sentry from "@sentry/browser";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { type Integration } from "@sentry/types/types/integration";
+import { type Integration } from "@sentry/types/build/types/integration";
 
 import SdkConfig from "./SdkConfig";
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -205,16 +205,16 @@ export async function initSentry(sentryConfig: IConfigOptions["sentry"]): Promis
     if (!sentryConfig) return;
     // Only enable Integrations.GlobalHandlers, which hooks uncaught exceptions, if automaticErrorReporting is true
     const integrations: Integration[] = [
-        new Sentry.Integrations.InboundFilters(),
-        new Sentry.Integrations.FunctionToString(),
-        new Sentry.Integrations.Breadcrumbs(),
-        new Sentry.Integrations.HttpContext(),
-        new Sentry.Integrations.Dedupe(),
+        Sentry.inboundFiltersIntegration(),
+        Sentry.functionToStringIntegration(),
+        Sentry.breadcrumbsIntegration(),
+        Sentry.httpContextIntegration(),
+        Sentry.dedupeIntegration(),
     ];
 
     if (SettingsStore.getValue("automaticErrorReporting")) {
-        integrations.push(new Sentry.Integrations.GlobalHandlers({ onerror: false, onunhandledrejection: true }));
-        integrations.push(new Sentry.Integrations.TryCatch());
+        integrations.push(Sentry.globalHandlersIntegration({ onerror: false, onunhandledrejection: true }));
+        integrations.push(Sentry.browserApiErrorsIntegration());
     }
 
     Sentry.init({

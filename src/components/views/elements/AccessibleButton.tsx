@@ -106,7 +106,14 @@ type Props<T extends keyof JSX.IntrinsicElements> = DynamicHtmlElementProps<T> &
      * Callback for when the tooltip is opened or closed.
      */
     onTooltipOpenChange?: TooltipProps["onOpenChange"];
+
+    /**
+     * Whether the tooltip should be disabled.
+     */
+    disableTooltip?: TooltipProps["disabled"];
 };
+
+export type ButtonProps<T extends keyof JSX.IntrinsicElements> = Props<T>;
 
 /**
  * Type of the props passed to the element that is rendered by AccessibleButton.
@@ -140,6 +147,7 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
         caption,
         placement = "right",
         onTooltipOpenChange,
+        disableTooltip,
         ...restProps
     }: Props<T>,
     ref: Ref<HTMLElement>,
@@ -217,6 +225,7 @@ const AccessibleButton = forwardRef(function <T extends keyof JSX.IntrinsicEleme
                 isTriggerInteractive={true}
                 placement={placement}
                 onOpenChange={onTooltipOpenChange}
+                disabled={disableTooltip}
             >
                 {button}
             </Tooltip>

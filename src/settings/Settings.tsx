@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import React, { ReactNode } from "react";
 
 import { _t, _td, TranslationKey } from "../languageHandler";
@@ -24,7 +23,6 @@ import {
     NotificationsEnabledController,
 } from "./controllers/NotificationControllers";
 import ThemeController from "./controllers/ThemeController";
-import PushToMatrixClientController from "./controllers/PushToMatrixClientController";
 import ReloadOnChangeController from "./controllers/ReloadOnChangeController";
 import FontSizeController from "./controllers/FontSizeController";
 import SystemFontController from "./controllers/SystemFontController";
@@ -33,7 +31,6 @@ import SettingController from "./controllers/SettingController";
 import { IS_MAC } from "../Keyboard";
 import UIFeatureController from "./controllers/UIFeatureController";
 import { UIFeature } from "./UIFeature";
-import { OrderedMultiController } from "./controllers/OrderedMultiController";
 import { Layout } from "./enums/Layout";
 import ReducedMotionController from "./controllers/ReducedMotionController";
 import IncompatibleController from "./controllers/IncompatibleController";
@@ -42,11 +39,9 @@ import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
 import SlidingSyncController from "./controllers/SlidingSyncController";
 import { FontWatcher } from "./watchers/FontWatcher";
-import RustCryptoSdkController from "./controllers/RustCryptoSdkController";
 import ServerSupportUnstableFeatureController from "./controllers/ServerSupportUnstableFeatureController";
 import { WatchManager } from "./WatchManager";
 import { CustomTheme } from "../theme";
-import SettingsStore from "./SettingsStore";
 import AnalyticsController from "./controllers/AnalyticsController";
 
 export const defaultWatchManager = new WatchManager();
@@ -71,6 +66,7 @@ const LEVELS_ROOM_SETTINGS_WITH_ROOM = [
 const LEVELS_ACCOUNT_SETTINGS = [SettingLevel.DEVICE, SettingLevel.ACCOUNT, SettingLevel.CONFIG];
 const LEVELS_DEVICE_ONLY_SETTINGS = [SettingLevel.DEVICE];
 const LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG = [SettingLevel.DEVICE, SettingLevel.CONFIG];
+const LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED = [SettingLevel.CONFIG, SettingLevel.DEVICE];
 const LEVELS_UI_FEATURE = [
     SettingLevel.CONFIG,
     // in future we might have a .well-known level or something
@@ -98,9 +94,14 @@ export enum Features {
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
     NotificationSettings2 = "feature_notification_settings2",
     OidcNativeFlow = "feature_oidc_native_flow",
-    // If true, every new login will use the new rust crypto implementation
-    RustCrypto = "feature_rust_crypto",
     ReleaseAnnouncement = "feature_release_announcement",
+
+    /** If true, use the Rust crypto implementation.
+     *
+     * This is no longer read, but we continue to populate it on all devices, to guard against people rolling back to
+     * old versions of EW that do not use rust crypto by default.
+     */
+    RustCrypto = "feature_rust_crypto",
 }
 
 export const labGroupNames: Record<LabGroup, TranslationKey> = {
@@ -132,17 +133,6 @@ export type SettingValueType =
 
 export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
-
-    /**
-     * If true, then the presence of this setting in `config.json` will disable the option in the UI.
-     *
-     * In other words, we prevent the user overriding the setting if an explicit value is given in `config.json`.
-     * XXX:  note that users who have already set a non-default value before `config.json` is update will continue
-     * to use that value (and, indeed, won't be able to change it!): https://github.com/element-hq/element-web/issues/26877
-     *
-     * Obviously, this only really makes sense if `supportedLevels` includes {@link SettingLevel.CONFIG}.
-     */
-    configDisablesSetting?: true;
 
     // Display names are strongly recommended for clarity.
     // Display name can also be an object for different levels.
@@ -268,70 +258,70 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
-        configDisablesSetting: true,
         // Requires a reload since this setting is cached in EventUtils
         controller: new ReloadOnChangeController(),
         displayName: _td("labs|msc3531_hide_messages_pending_moderation"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         default: false,
     },
     "feature_report_to_moderators": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
-        configDisablesSetting: true,
         displayName: _td("labs|report_to_moderators"),
         description: _td("labs|report_to_moderators_description"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         default: false,
     },
     "feature_latex_maths": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        configDisablesSetting: true,
         displayName: _td("labs|latex_maths"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         default: false,
     },
     "feature_pinning": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        configDisablesSetting: true,
         displayName: _td("labs|pinning"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         default: false,
     },
     "feature_wysiwyg_composer": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        configDisablesSetting: true,
         displayName: _td("labs|wysiwyg_composer"),
         description: _td("labs|feature_wysiwyg_composer_description"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         default: false,
     },
     "feature_mjolnir": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
-        configDisablesSetting: true,
         displayName: _td("labs|mjolnir"),
         description: _td("labs|currently_experimental"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         default: false,
     },
     "feature_custom_themes": {
         isFeature: true,
         labsGroup: LabGroup.Themes,
-        configDisablesSetting: true,
         displayName: _td("labs|custom_themes"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         default: false,
     },
     "feature_dehydration": {
         isFeature: true,
         labsGroup: LabGroup.Encryption,
-        configDisablesSetting: true,
         displayName: _td("labs|dehydration"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         default: false,
     },
     "useOnlyCurrentProfiles": {
@@ -350,25 +340,25 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "feature_html_topic": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
-        configDisablesSetting: true,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         displayName: _td("labs|html_topic"),
         default: false,
     },
     "feature_bridge_state": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
-        configDisablesSetting: true,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         displayName: _td("labs|bridge_state"),
         default: false,
     },
     "feature_jump_to_date": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        configDisablesSetting: true,
         displayName: _td("labs|jump_to_date"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         default: false,
         controller: new ServerSupportUnstableFeatureController(
             "feature_jump_to_date",
@@ -398,8 +388,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "feature_sliding_sync": {
         isFeature: true,
         labsGroup: LabGroup.Developer,
-        configDisablesSetting: true,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         displayName: _td("labs|sliding_sync"),
         description: _td("labs|sliding_sync_description"),
         shouldWarn: true,
@@ -414,8 +404,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "feature_element_call_video_rooms": {
         isFeature: true,
         labsGroup: LabGroup.VoiceAndVideo,
-        configDisablesSetting: true,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         displayName: _td("labs|element_call_video_rooms"),
         controller: new ReloadOnChangeController(),
         default: false,
@@ -423,8 +413,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "feature_group_calls": {
         isFeature: true,
         labsGroup: LabGroup.VoiceAndVideo,
-        configDisablesSetting: true,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         displayName: _td("labs|group_calls"),
         controller: new ReloadOnChangeController(),
         default: false,
@@ -432,16 +422,16 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "feature_disable_call_per_sender_encryption": {
         isFeature: true,
         labsGroup: LabGroup.VoiceAndVideo,
-        configDisablesSetting: true,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         displayName: _td("labs|feature_disable_call_per_sender_encryption"),
         default: false,
     },
     "feature_allow_screen_share_only_mode": {
         isFeature: true,
         labsGroup: LabGroup.VoiceAndVideo,
-        configDisablesSetting: true,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         description: _td("labs|under_active_development"),
         displayName: _td("labs|allow_screen_share_only_mode"),
         controller: new ReloadOnChangeController(),
@@ -450,8 +440,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "feature_location_share_live": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        configDisablesSetting: true,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         displayName: _td("labs|location_share_live"),
         description: _td("labs|location_share_live_description"),
         shouldWarn: true,
@@ -460,8 +450,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "feature_dynamic_room_predecessors": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
-        configDisablesSetting: true,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         displayName: _td("labs|dynamic_room_predecessors"),
         description: _td("labs|dynamic_room_predecessors_description"),
         shouldWarn: true,
@@ -470,8 +460,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     [Features.VoiceBroadcast]: {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        configDisablesSetting: true,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         displayName: _td("labs|voice_broadcast"),
         default: false,
     },
@@ -483,37 +473,15 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     [Features.OidcNativeFlow]: {
         isFeature: true,
         labsGroup: LabGroup.Developer,
-        configDisablesSetting: true,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         displayName: _td("labs|oidc_native_flow"),
         description: _td("labs|oidc_native_flow_description"),
         default: false,
     },
     [Features.RustCrypto]: {
-        // use the rust matrix-sdk-crypto-wasm for crypto.
-        isFeature: true,
-        labsGroup: LabGroup.Developer,
-        // unlike most features, `configDisablesSetting` is false here.
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td("labs|rust_crypto"),
-        description: () => {
-            if (SettingsStore.getValueAt(SettingLevel.CONFIG, Features.RustCrypto)) {
-                // It's enabled in the config, so you can't get rid of it even by logging out.
-                return _t("labs|rust_crypto_in_config_description");
-            } else {
-                return _t("labs|rust_crypto_optin_warning");
-            }
-        },
-        shouldWarn: true,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: true,
-        controller: new RustCryptoSdkController(),
-    },
-    // Must be set under `setting_defaults` in config.json.
-    // If set to 100 in conjunction with `feature_rust_crypto`, all existing users will migrate to the new crypto.
-    // Default is 0, meaning no existing users on legacy crypto will migrate.
-    "RustCrypto.staged_rollout_percent": {
-        supportedLevels: [SettingLevel.CONFIG],
-        default: 0,
     },
     /**
      * @deprecated in favor of {@link fontSizeDelta}
@@ -527,10 +495,10 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "feature_render_reaction_images": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        configDisablesSetting: true,
         displayName: _td("labs|render_reaction_images"),
         description: _td("labs|render_reaction_images_description"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         default: false,
     },
     /**
@@ -609,28 +577,30 @@ export const SETTINGS: { [setting: string]: ISetting } = {
     "feature_ask_to_join": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
-        configDisablesSetting: true,
         default: false,
         displayName: _td("labs|ask_to_join"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
     },
     "feature_new_room_decoration_ui": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
-        configDisablesSetting: true,
         displayName: _td("labs|new_room_decoration_ui"),
-        description: _td("labs|under_active_development"),
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: false,
         controller: new ReloadOnChangeController(),
+        betaInfo: {
+            title: _td("labs|new_room_decoration_ui_beta_title"),
+            caption: () => <p>{_t("labs|new_room_decoration_ui_beta_caption")}</p>,
+        },
     },
     "feature_notifications": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        configDisablesSetting: true,
         displayName: _td("labs|notifications"),
         description: _td("labs|unrealiable_e2e"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         default: false,
     },
     "useCompactLayout": {
@@ -1034,18 +1004,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: true,
         controller: new UIFeatureController(UIFeature.Voip),
-    },
-    "e2ee.manuallyVerifyAllSessions": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td("settings|security|manually_verify_all_sessions"),
-        default: false,
-        controller: new OrderedMultiController([
-            // Apply the feature controller first to ensure that the setting doesn't
-            // show up and can't be toggled. PushToMatrixClientController doesn't
-            // do any overrides anyways.
-            new UIFeatureController(UIFeature.AdvancedEncryption),
-            new PushToMatrixClientController(MatrixClient.prototype.setCryptoTrustCrossSignedDevices, true),
-        ]),
     },
     "ircDisplayNameWidth": {
         // We specifically want to have room-device > device so that users may set a device default
