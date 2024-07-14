@@ -63,7 +63,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import AccessibleButton from "../elements/AccessibleButton";
-import { Landmark, navigateLandmark } from "../../../accessibility/KeyboardLandmarkUtils";
+import { Landmark, LandmarkNavigation } from "../../../accessibility/LandmarkNavigation";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -658,14 +658,14 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                         onKeyDown={(ev) => {
                             const navAction = getKeyBindingsManager().getNavigationAction(ev);
                             if (navAction === KeyBindingAction.NextLandmark) {
-                                navigateLandmark(Landmark.ROOM_LIST);
+                                LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.ROOM_LIST);
                                 ev.stopPropagation();
                                 ev.preventDefault();
                                 return;
                             }
 
                             if (navAction === KeyBindingAction.PreviousLandmark) {
-                                navigateLandmark(Landmark.ROOM_LIST, true);
+                                LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.ROOM_LIST);
                                 ev.stopPropagation();
                                 ev.preventDefault();
                                 return;

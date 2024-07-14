@@ -51,7 +51,7 @@ import { _t } from "../../../languageHandler";
 import { linkify } from "../../../linkify-matrix";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { Landmark, navigateLandmark } from "../../../accessibility/KeyboardLandmarkUtils";
+import { Landmark, LandmarkNavigation } from "../../../accessibility/LandmarkNavigation";
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp("(?:^|\\s)(" + EMOTICON_REGEX.source + ")\\s|:^$");
@@ -540,11 +540,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         const navAction = getKeyBindingsManager().getNavigationAction(event);
         switch (navAction) {
             case KeyBindingAction.PreviousLandmark:
-                navigateLandmark(Landmark.MESSAGE_COMPOSER, true);
+                LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.MESSAGE_COMPOSER_OR_HOME);
                 handled = true;
                 break;
             case KeyBindingAction.NextLandmark:
-                navigateLandmark(Landmark.MESSAGE_COMPOSER);
+                LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.MESSAGE_COMPOSER_OR_HOME);
                 handled = true;
                 break;
         }

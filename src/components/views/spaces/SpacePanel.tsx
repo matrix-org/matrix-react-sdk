@@ -73,7 +73,7 @@ import { shouldShowComponent } from "../../../customisations/helpers/UIComponent
 import { UIComponent } from "../../../settings/UIFeature";
 import { ThreadsActivityCentre } from "./threads-activity-centre/";
 import AccessibleButton from "../elements/AccessibleButton";
-import { Landmark, navigateLandmark } from "../../../accessibility/KeyboardLandmarkUtils";
+import { Landmark, LandmarkNavigation } from "../../../accessibility/LandmarkNavigation";
 import { KeyboardShortcut } from "../settings/KeyboardShortcut";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
@@ -389,13 +389,13 @@ const SpacePanel: React.FC = () => {
                         onKeyDown={(ev) => {
                             const navAction = getKeyBindingsManager().getNavigationAction(ev);
                             if (navAction === KeyBindingAction.PreviousLandmark) {
-                                navigateLandmark(Landmark.ACTIVE_SPACE_BUTTON, true);
+                                LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.ACTIVE_SPACE_BUTTON);
                                 ev.stopPropagation();
                                 ev.preventDefault();
                                 return;
                             }
                             if (navAction === KeyBindingAction.NextLandmark) {
-                                navigateLandmark(Landmark.ACTIVE_SPACE_BUTTON);
+                                LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.ACTIVE_SPACE_BUTTON);
                                 ev.stopPropagation();
                                 ev.preventDefault();
                                 return;
