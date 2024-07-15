@@ -124,7 +124,7 @@ test.describe("HTML Export", () => {
         await expect(page).toMatchScreenshot("html-export.png", {
             mask: [
                 page.getByText("This is the start of export", { exact: false }),
-                page.locator(".mx_DateSeparator_dateHeading"),
+                page.locator(".mx_DateSeparator_dateContent"),
                 page.locator(".mx_MessageTimestamp"),
             ],
         });
