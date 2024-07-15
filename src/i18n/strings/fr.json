@@ -2023,14 +2023,11 @@
         "rejecting": "Rejet de l’invitation…",
         "rejoin_button": "Revenir",
         "search": {
-            "all_rooms": "Tous les salons",
             "all_rooms_button": "Rechercher dans tous les salons",
-            "field_placeholder": "Rechercher…",
             "result_count": {
                 "one": "(~%(count)s résultat)",
                 "other": "(~%(count)s résultats)"
             },
-            "this_room": "Ce salon",
             "this_room_button": "Rechercher dans ce salon"
         },
         "show_labs_settings": "Afficher les réglages des expérimentations",
@@ -2675,7 +2672,6 @@
             "delete_backup_confirm_description": "En êtes-vous sûr ? Vous perdrez vos messages chiffrés si vos clés ne sont pas sauvegardées correctement.",
             "e2ee_default_disabled_warning": "L’administrateur de votre serveur a désactivé le chiffrement de bout en bout par défaut dans les salons privés et les conversations privées.",
             "enable_message_search": "Activer la recherche de messages dans les salons chiffrés",
-            "encryption_individual_verification_mode": "Vérifiez individuellement chaque session utilisée par un utilisateur pour la marquer comme fiable, sans faire confiance aux appareils signés avec la signature croisée.",
             "encryption_section": "Chiffrement",
             "error_loading_key_backup_status": "Impossible de charger l’état de sauvegarde des clés",
             "export_megolm_keys": "Exporter les clés de chiffrement de salon",
@@ -2694,7 +2690,6 @@
             "key_backup_inactive": "Cette session <b>ne sauvegarde pas vos clés</b>, mais vous n’avez pas de sauvegarde existante que vous pouvez restaurer ou compléter à l’avenir.",
             "key_backup_inactive_warning": "Vos clés <b>ne sont pas sauvegardées sur cette session</b>.",
             "key_backup_latest_version": "Dernière version de la sauvegarde sur le serveur :",
-            "manually_verify_all_sessions": "Vérifier manuellement toutes les sessions à distance",
             "message_search_disable_warning": "Si l’option est désactivée, les messages des salons chiffrés n’apparaîtront pas dans les résultats de recherche.",
             "message_search_disabled": "Mettre en cache les messages chiffrés localement et de manière sécurisée pour qu’ils apparaissent dans les résultats de recherche.",
             "message_search_enabled": {
