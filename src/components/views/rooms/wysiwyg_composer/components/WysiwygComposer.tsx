@@ -43,6 +43,7 @@ interface WysiwygComposerProps {
     rightComponent?: ReactNode;
     children?: (ref: MutableRefObject<HTMLDivElement | null>, wysiwyg: FormattingFunctions) => ReactNode;
     eventRelation?: IEventRelation;
+    emojiSuggestions?: Map<string, string>;
 }
 
 export const WysiwygComposer = memo(function WysiwygComposer({
@@ -56,6 +57,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     rightComponent,
     children,
     eventRelation,
+    emojiSuggestions,
 }: WysiwygComposerProps) {
     const { room } = useRoomContext();
     const autocompleteRef = useRef<Autocomplete | null>(null);
@@ -64,6 +66,7 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     const { ref, isWysiwygReady, content, actionStates, wysiwyg, suggestion, messageContent } = useWysiwyg({
         initialContent,
         inputEventProcessor,
+        emojiSuggestions,
     });
 
     const { isFocused, onFocus } = useIsFocused();

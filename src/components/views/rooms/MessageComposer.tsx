@@ -106,6 +106,7 @@ interface IState {
     showVoiceBroadcastButton: boolean;
     isWysiwygLabEnabled: boolean;
     isRichTextEnabled: boolean;
+    isAutoReplaceEmojiEnabled: boolean;
     initialComposerContent: string;
 }
 
@@ -142,6 +143,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
             showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
             showVoiceBroadcastButton: SettingsStore.getValue(Features.VoiceBroadcast),
             isWysiwygLabEnabled: SettingsStore.getValue<boolean>("feature_wysiwyg_composer"),
+            isAutoReplaceEmojiEnabled: SettingsStore.getValue<boolean>("MessageComposerInput.autoReplaceEmoji"),
             isRichTextEnabled: true,
             initialComposerContent: "",
         };
@@ -152,6 +154,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
         SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
         SettingsStore.monitorSetting(Features.VoiceBroadcast, null);
         SettingsStore.monitorSetting("feature_wysiwyg_composer", null);
+        SettingsStore.monitorSetting("MessageComposerInput.autoReplaceEmoji", null);
     }
 
     private get voiceRecording(): Optional<VoiceMessageRecording> {
@@ -235,6 +238,12 @@ export class MessageComposer extends React.Component<IProps, IState> {
                     case "feature_wysiwyg_composer": {
                         if (this.state.isWysiwygLabEnabled !== settingUpdatedPayload.newValue) {
                             this.setState({ isWysiwygLabEnabled: Boolean(settingUpdatedPayload.newValue) });
+                        }
+                        break;
+                    }
+                    case "MessageComposerInput.autoReplaceEmoji": {
+                        if (this.state.isAutoReplaceEmojiEnabled !== settingUpdatedPayload.newValue) {
+                            this.setState({ isAutoReplaceEmojiEnabled: Boolean(settingUpdatedPayload.newValue) });
                         }
                         break;
                     }
