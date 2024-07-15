@@ -314,6 +314,7 @@ export const expect = baseExpect.extend({
         options?: {
             mask?: Array<Locator>;
             omitBackground?: boolean;
+            hideTooltips?: boolean;
             timeout?: number;
             css?: string;
         },
@@ -322,6 +323,15 @@ export const expect = baseExpect.extend({
         if (!testInfo) throw new Error(`toMatchScreenshot() must be called during the test`);
 
         const page = "page" in receiver ? receiver.page() : receiver;
+
+        let hideTooltipsCss: string | undefined;
+        if (options?.hideTooltips) {
+            hideTooltipsCss = `
+                .mx_Tooltip_visible {
+                    visibility: hidden !important;
+                }
+            `;
+        }
 
         // We add a custom style tag before taking screenshots
         const style = (await page.addStyleTag({
@@ -350,6 +360,7 @@ export const expect = baseExpect.extend({
                 .mx_MessageTimestamp {
                     font-family: Inconsolata !important;
                 }
+                ${hideTooltipsCss ?? ""}
                 ${options?.css ?? ""}
             `,
         })) as ElementHandle<Element>;
