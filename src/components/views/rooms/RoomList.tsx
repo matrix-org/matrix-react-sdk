@@ -657,7 +657,10 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                         onBlur={this.props.onBlur}
                         onKeyDown={(ev) => {
                             const navAction = getKeyBindingsManager().getNavigationAction(ev);
-                            if (navAction) {
+                            if (
+                                navAction === KeyBindingAction.NextLandmark ||
+                                navAction === KeyBindingAction.PreviousLandmark
+                            ) {
                                 LandmarkNavigation.findAndFocusNextLandmark(
                                     Landmark.ROOM_LIST,
                                     navAction === KeyBindingAction.PreviousLandmark,

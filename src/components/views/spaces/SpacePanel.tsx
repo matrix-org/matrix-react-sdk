@@ -388,8 +388,10 @@ const SpacePanel: React.FC = () => {
                         className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
                         onKeyDown={(ev) => {
                             const navAction = getKeyBindingsManager().getNavigationAction(ev);
-
-                            if (navAction) {
+                            if (
+                                navAction === KeyBindingAction.NextLandmark ||
+                                navAction === KeyBindingAction.PreviousLandmark
+                            ) {
                                 LandmarkNavigation.findAndFocusNextLandmark(
                                     Landmark.ACTIVE_SPACE_BUTTON,
                                     navAction === KeyBindingAction.PreviousLandmark,

@@ -311,7 +311,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         }
 
         const navAction = getKeyBindingsManager().getNavigationAction(ev);
-        if (navAction) {
+        if (navAction === KeyBindingAction.PreviousLandmark || navAction === KeyBindingAction.NextLandmark) {
             ev.stopPropagation();
             ev.preventDefault();
             LandmarkNavigation.findAndFocusNextLandmark(

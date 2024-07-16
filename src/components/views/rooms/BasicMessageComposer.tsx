@@ -539,7 +539,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         const navAction = getKeyBindingsManager().getNavigationAction(event);
 
-        if (navAction) {
+        if (navAction === KeyBindingAction.NextLandmark || navAction === KeyBindingAction.PreviousLandmark) {
             LandmarkNavigation.findAndFocusNextLandmark(
                 Landmark.MESSAGE_COMPOSER_OR_HOME,
                 navAction === KeyBindingAction.PreviousLandmark,
