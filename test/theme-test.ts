@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import SettingsStore from "../src/settings/SettingsStore";
-import { enumerateThemes, setTheme } from "../src/theme";
+import { enumerateThemes, getOrderedThemes, setTheme } from "../src/theme";
 
 describe("theme", () => {
     describe("setTheme", () => {
@@ -160,6 +160,15 @@ describe("theme", () => {
                 "light-high-contrast": "Light high contrast",
                 "dark": "Dark",
             });
+        });
+    });
+
+    describe("getOrderedThemes", () => {
+        it("should return a list of themes in the correct order", () => {
+            expect(getOrderedThemes()).toEqual([
+                { id: "light", name: "Light" },
+                { id: "dark", name: "Dark" },
+            ]);
         });
     });
 });
