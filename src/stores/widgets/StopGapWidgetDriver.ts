@@ -145,12 +145,14 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 WidgetEventCapability.forStateEvent(EventDirection.Receive, EventType.RoomEncryption).raw,
             );
             const clientUserId = MatrixClientPeg.safeGet().getSafeUserId();
+            // For the legacy membership type
             this.allowedCapabilities.add(
                 WidgetEventCapability.forStateEvent(EventDirection.Send, "org.matrix.msc3401.call.member", clientUserId)
                     .raw,
             );
             const clientDeviceId = MatrixClientPeg.safeGet().getDeviceId();
             if (clientDeviceId !== null) {
+                // For the session membership type compliant with MSC4143
                 this.allowedCapabilities.add(
                     WidgetEventCapability.forStateEvent(
                         EventDirection.Send,
