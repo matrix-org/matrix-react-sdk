@@ -63,11 +63,12 @@ export class LandmarkNavigation {
     }
 
     /**
-     *
+     * Focus the next landmark from a given landmark.
+     * This method will skip over any missing landmarks.
      * @param currentLandmark The current landmark
      * @param backwards If true, search the next landmark to the left in ORDERED_LANDMARKS
      */
-    private static findAndFocusLandmark(currentLandmark: Landmark, backwards = false): void {
+    private static findAndFocusNextLandmark(currentLandmark: Landmark, backwards = false): void {
         let somethingWasFocused = false;
         let landmark = currentLandmark;
         while (!somethingWasFocused) {
@@ -81,7 +82,7 @@ export class LandmarkNavigation {
      * @param currentLandmark The current landmark
      */
     public static navigateToNextLandmarkFrom(currentLandmark: Landmark): void {
-        LandmarkNavigation.findAndFocusLandmark(currentLandmark);
+        LandmarkNavigation.findAndFocusNextLandmark(currentLandmark);
     }
 
     /**
@@ -89,7 +90,7 @@ export class LandmarkNavigation {
      * @param currentLandmark The current landmark
      */
     public static navigateToPreviousLandmarkFrom(currentLandmark: Landmark): void {
-        LandmarkNavigation.findAndFocusLandmark(currentLandmark, true);
+        LandmarkNavigation.findAndFocusNextLandmark(currentLandmark, true);
     }
 }
 
