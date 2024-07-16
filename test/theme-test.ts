@@ -18,6 +18,10 @@ import SettingsStore from "../src/settings/SettingsStore";
 import { enumerateThemes, getOrderedThemes, setTheme } from "../src/theme";
 
 describe("theme", () => {
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
     describe("setTheme", () => {
         let lightTheme: HTMLStyleElement;
         let darkTheme: HTMLStyleElement;
@@ -48,7 +52,6 @@ describe("theme", () => {
         });
 
         afterEach(() => {
-            jest.restoreAllMocks();
             jest.useRealTimers();
         });
 
@@ -164,10 +167,13 @@ describe("theme", () => {
     });
 
     describe("getOrderedThemes", () => {
+        jest.spyOn(SettingsStore, "getValue").mockReturnValue([{ name: "Zebra Striped" }, { name: "Apple Green" }]);
         it("should return a list of themes in the correct order", () => {
             expect(getOrderedThemes()).toEqual([
                 { id: "light", name: "Light" },
                 { id: "dark", name: "Dark" },
+                { id: "custom-Apple Green", name: "Apple Green" },
+                { id: "custom-Zebra Striped", name: "Zebra Striped" },
             ]);
         });
     });
