@@ -41,13 +41,6 @@ const ORDERED_LANDMARKS = [
  * ACTIVE_SPACE_BUTTON <-> ROOM_SEARCH <-> ROOM_LIST <-> MESSAGE_COMPOSER/HOME <-> ACTIVE_SPACE_BUTTON
  */
 export class LandmarkNavigation {
-    private static getIndexInArray(i: number): number {
-        const n = ORDERED_LANDMARKS.length;
-        // calculating index in the circular array
-        const nextIndex = ((i % n) + n) % n;
-        return nextIndex;
-    }
-
     /**
      * Get the next/previous landmark that must be focused from a given landmark
      * @param currentLandmark The current landmark
@@ -57,8 +50,7 @@ export class LandmarkNavigation {
     private static getLandmark(currentLandmark: Landmark, backwards = false): Landmark {
         const currentIndex = ORDERED_LANDMARKS.findIndex((l) => l === currentLandmark);
         const offset = backwards ? -1 : 1;
-        const nextIndex = LandmarkNavigation.getIndexInArray(currentIndex + offset);
-        const newLandmark = ORDERED_LANDMARKS[nextIndex];
+        const newLandmark = ORDERED_LANDMARKS.at((currentIndex + offset) % ORDERED_LANDMARKS.length)!;
         return newLandmark;
     }
 
