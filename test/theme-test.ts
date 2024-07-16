@@ -167,8 +167,8 @@ describe("theme", () => {
     });
 
     describe("getOrderedThemes", () => {
-        jest.spyOn(SettingsStore, "getValue").mockReturnValue([{ name: "Zebra Striped" }, { name: "Apple Green" }]);
         it("should return a list of themes in the correct order", () => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue([{ name: "Zebra Striped" }, { name: "Apple Green" }]);
             expect(getOrderedThemes()).toEqual([
                 { id: "light", name: "Light" },
                 { id: "dark", name: "Dark" },
