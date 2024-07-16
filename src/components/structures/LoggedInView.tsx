@@ -449,6 +449,8 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         const roomAction = getKeyBindingsManager().getRoomAction(ev);
         switch (roomAction) {
+            case KeyBindingAction.SelectPrevMessage:
+            case KeyBindingAction.SelectNextMessage:
             case KeyBindingAction.ScrollUp:
             case KeyBindingAction.ScrollDown:
             case KeyBindingAction.JumpToFirstMessage:
@@ -470,6 +472,13 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         const navAction = getKeyBindingsManager().getNavigationAction(ev);
         switch (navAction) {
+            case KeyBindingAction.SelectPrevMessage:
+            case KeyBindingAction.SelectNextMessage:
+                // pass the event down to the scroll panel
+                this.onScrollKeyPressed(ev);
+                handled = true;
+                break;
+
             case KeyBindingAction.FilterRooms:
                 dis.dispatch({
                     action: "focus_room_filter",

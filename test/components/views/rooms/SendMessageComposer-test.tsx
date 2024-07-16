@@ -39,6 +39,7 @@ import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalink
 import { mockPlatformPeg } from "../../../test-utils/platform";
 import { doMaybeLocalRoomAction } from "../../../../src/utils/local-room";
 import { addTextToComposer } from "../../../test-utils/composer";
+import { Action } from "../../../../src/dispatcher/actions";
 
 jest.mock("../../../../src/utils/local-room", () => ({
     doMaybeLocalRoomAction: jest.fn(),
@@ -574,6 +575,20 @@ describe("<SendMessageComposer/>", () => {
             expect(isQuickReaction(model3)).toBeFalsy();
             expect(isQuickReaction(model4)).toBeFalsy();
         });
+    });
+
+    it("should dispatch focus tile action on keyboard shortcut", async () => {
+        const cli = stubClient();
+        const room = mkStubRoom("!roomId:server", "Room", cli);
+        const spyDispatcher = jest.spyOn(defaultDispatcher, "dispatch");
+        const { container } = render(
+            <MatrixClientContext.Provider value={cli}>
+                <SendMessageComposer room={room} toggleStickerPickerOpen={jest.fn()} />
+            </MatrixClientContext.Provider>,
+        );
+        const composer = container.querySelector<HTMLDivElement>(".mx_BasicMessageComposer_input")!;
+        await userEvent.type(composer, "[ControlLeft>][ArrowUp][/ControlLeft]");
+        expect(spyDispatcher).toHaveBeenCalledWith({ action: Action.FocusLastTile });
     });
 
     it("should call prepareToEncrypt when the user is typing", async () => {

@@ -37,6 +37,8 @@ import {
 import ResizeNotifier from "../../../src/utils/ResizeNotifier";
 import { IRoomState } from "../../../src/components/structures/RoomView";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
+import defaultDispatcher from "../../../src/dispatcher/dispatcher";
+import { Action } from "../../../src/dispatcher/actions";
 
 jest.mock("../../../src/utils/beacon", () => ({
     useBeacon: jest.fn(),
@@ -373,6 +375,51 @@ describe("MessagePanel", function () {
 
         // read marker should be visible given props and not at the last event
         expect(isReadMarkerVisible(rm)).toBeTruthy();
+    });
+
+    it("FocusLastTile action works", function () {
+        const events = mkEvents();
+        const ref = React.createRef<MessagePanel>();
+        render(
+            getComponent({
+                events,
+                readMarkerEventId: events[4].getId(),
+                readMarkerVisible: true,
+                ref,
+            }),
+        );
+        const lastTile = document.querySelector('.mx_EventTile[data-event-id="' + events[9].getId() + '"]');
+        expect(lastTile).not.toHaveFocus();
+        defaultDispatcher.fire(Action.FocusLastTile, true);
+        expect(lastTile).toHaveFocus();
+    });
+
+    it("Should be able to navigate between events using keyboard", function () {
+        const events = mkEvents();
+        const ref = React.createRef<MessagePanel>();
+        render(
+            getComponent({
+                events,
+                readMarkerEventId: events[4].getId(),
+                readMarkerVisible: true,
+                ref,
+            }),
+        );
+        const UpKeyEvent = new KeyboardEvent("keydown", { key: "ArrowUp", ctrlKey: true });
+        const DownKeyEvent = new KeyboardEvent("keydown", { key: "ArrowDown", ctrlKey: true });
+        // Ctrl + UP
+        ref.current?.handleScrollKey(UpKeyEvent);
+        // Second last tile should be focused because the last tile gets focus from the composer.
+        expect(document.querySelector('.mx_EventTile[data-event-id="' + events[8].getId() + '"]')).toHaveFocus();
+
+        ref.current?.handleScrollKey(UpKeyEvent);
+        expect(document.querySelector('.mx_EventTile[data-event-id="' + events[7].getId() + '"]')).toHaveFocus();
+
+        ref.current?.handleScrollKey(DownKeyEvent);
+        expect(document.querySelector('.mx_EventTile[data-event-id="' + events[8].getId() + '"]')).toHaveFocus();
+
+        ref.current?.handleScrollKey(DownKeyEvent);
+        expect(document.querySelector('.mx_EventTile[data-event-id="' + events[9].getId() + '"]')).toHaveFocus();
     });
 
     it("should hide the read-marker at the end of summarised events", function () {

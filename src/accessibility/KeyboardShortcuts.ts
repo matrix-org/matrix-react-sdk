@@ -120,6 +120,10 @@ export enum KeyBindingAction {
     SelectPrevUnreadRoom = "KeyBinding.previousUnreadRoom",
     /** Select next room with unread messages */
     SelectNextUnreadRoom = "KeyBinding.nextUnreadRoom",
+    /** Select prev message */
+    SelectPrevMessage = "KeyBinding.previousMessage",
+    /** Select next message */
+    SelectNextMessage = "KeyBinding.nextMessage",
 
     /** Switches to a space by number */
     SwitchToSpaceByNumber = "KeyBinding.switchToSpaceByNumber",
@@ -287,6 +291,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.SelectPrevUnreadRoom,
             KeyBindingAction.SelectNextRoom,
             KeyBindingAction.SelectPrevRoom,
+            KeyBindingAction.SelectNextMessage,
+            KeyBindingAction.SelectPrevMessage,
             KeyBindingAction.OpenUserSettings,
             KeyBindingAction.SwitchToSpaceByNumber,
             KeyBindingAction.PreviousVisitedRoomOrSpace,
@@ -558,6 +564,20 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.ARROW_UP,
         },
         displayName: _td("keyboard|prev_room"),
+    },
+    [KeyBindingAction.SelectNextMessage]: {
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("keyboard|next_message"),
+    },
+    [KeyBindingAction.SelectPrevMessage]: {
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("keyboard|prev_message"),
     },
     [KeyBindingAction.CancelAutocomplete]: {
         default: {
