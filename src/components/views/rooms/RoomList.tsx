@@ -657,20 +657,15 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                         onBlur={this.props.onBlur}
                         onKeyDown={(ev) => {
                             const navAction = getKeyBindingsManager().getNavigationAction(ev);
-                            if (navAction === KeyBindingAction.NextLandmark) {
-                                LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.ROOM_LIST);
+                            if (navAction) {
+                                LandmarkNavigation.findAndFocusNextLandmark(
+                                    Landmark.ROOM_LIST,
+                                    navAction === KeyBindingAction.PreviousLandmark,
+                                );
                                 ev.stopPropagation();
                                 ev.preventDefault();
                                 return;
                             }
-
-                            if (navAction === KeyBindingAction.PreviousLandmark) {
-                                LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.ROOM_LIST);
-                                ev.stopPropagation();
-                                ev.preventDefault();
-                                return;
-                            }
-
                             onKeyDownHandler(ev);
                         }}
                         className="mx_RoomList"

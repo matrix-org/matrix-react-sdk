@@ -60,55 +60,31 @@ export class LandmarkNavigation {
      * @param currentLandmark The current landmark
      * @param backwards If true, search the next landmark to the left in ORDERED_LANDMARKS
      */
-    private static findAndFocusNextLandmark(currentLandmark: Landmark, backwards = false): void {
-        let somethingWasFocused = false;
+    public static findAndFocusNextLandmark(currentLandmark: Landmark, backwards = false): void {
         let landmark = currentLandmark;
-        while (!somethingWasFocused) {
+        let element: HTMLElement | null | undefined = null;
+        while (element === null) {
             landmark = LandmarkNavigation.getLandmark(landmark, backwards);
-            somethingWasFocused = focusFunctions[landmark]();
+            element = landmarkToDOMElementMap[landmark]();
         }
-    }
-
-    /**
-     * Find and focus the next landmark from a given landmark
-     * @param currentLandmark The current landmark
-     */
-    public static navigateToNextLandmarkFrom(currentLandmark: Landmark): void {
-        LandmarkNavigation.findAndFocusNextLandmark(currentLandmark);
-    }
-
-    /**
-     * Find and focus the previous landmark from a given landmark
-     * @param currentLandmark The current landmark
-     */
-    public static navigateToPreviousLandmarkFrom(currentLandmark: Landmark): void {
-        LandmarkNavigation.findAndFocusNextLandmark(currentLandmark, true);
+        element?.focus();
     }
 }
 
 /**
- * Keys are the different landmarks and the values are function which when invoked
- * gives focus to the corresponding landmark. These functions return a boolean
- * indicating whether focus was successfully given.
+ * The functions return:
+ * - The DOM element of the landmark if it exists
+ * - undefined if the DOM element exists but focus is given through an action
+ * - null if the landmark does not exist
  */
-const focusFunctions = {
-    [Landmark.ACTIVE_SPACE_BUTTON]: () => {
-        const e = document.querySelector<HTMLElement>(".mx_SpaceButton_active");
-        e?.focus();
-        return !!e;
-    },
-    [Landmark.ROOM_SEARCH]: () => {
-        const e = document.querySelector<HTMLElement>(".mx_RoomSearch");
-        e?.focus();
-        return !!e;
-    },
-    [Landmark.ROOM_LIST]: () => {
-        const e =
-            document.querySelector<HTMLElement>(".mx_RoomTile_selected") ||
-            document.querySelector<HTMLElement>(".mx_RoomTile");
-        e?.focus();
-        return !!e;
-    },
+const landmarkToDOMElementMap = {
+    [Landmark.ACTIVE_SPACE_BUTTON]: () => document.querySelector<HTMLElement>(".mx_SpaceButton_active"),
+
+    [Landmark.ROOM_SEARCH]: () => document.querySelector<HTMLElement>(".mx_RoomSearch"),
+    [Landmark.ROOM_LIST]: () =>
+        document.querySelector<HTMLElement>(".mx_RoomTile_selected") ||
+        document.querySelector<HTMLElement>(".mx_RoomTile"),
+
     [Landmark.MESSAGE_COMPOSER_OR_HOME]: () => {
         const isComposerOpen = !!document.querySelector(".mx_MessageComposer");
         if (isComposerOpen) {
@@ -120,11 +96,10 @@ const focusFunctions = {
                 },
                 true,
             );
-            return true;
+            // Special case where the element does exist but we focus it through an action.
+            return undefined;
         } else {
-            const e = document.querySelector<HTMLElement>(".mx_HomePage");
-            e?.focus();
-            return !!e;
+            return document.querySelector<HTMLElement>(".mx_HomePage");
         }
     },
 };

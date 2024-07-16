@@ -309,18 +309,15 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 }
                 break;
         }
+
         const navAction = getKeyBindingsManager().getNavigationAction(ev);
-        switch (navAction) {
-            case KeyBindingAction.NextLandmark:
-                ev.stopPropagation();
-                ev.preventDefault();
-                LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.ROOM_SEARCH);
-                break;
-            case KeyBindingAction.PreviousLandmark:
-                ev.stopPropagation();
-                ev.preventDefault();
-                LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.ROOM_SEARCH);
-                break;
+        if (navAction) {
+            ev.stopPropagation();
+            ev.preventDefault();
+            LandmarkNavigation.findAndFocusNextLandmark(
+                Landmark.ROOM_SEARCH,
+                navAction === KeyBindingAction.PreviousLandmark,
+            );
         }
     };
 

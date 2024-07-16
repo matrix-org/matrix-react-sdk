@@ -538,16 +538,15 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         }
 
         const navAction = getKeyBindingsManager().getNavigationAction(event);
-        switch (navAction) {
-            case KeyBindingAction.PreviousLandmark:
-                LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.MESSAGE_COMPOSER_OR_HOME);
-                handled = true;
-                break;
-            case KeyBindingAction.NextLandmark:
-                LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.MESSAGE_COMPOSER_OR_HOME);
-                handled = true;
-                break;
+
+        if (navAction) {
+            LandmarkNavigation.findAndFocusNextLandmark(
+                Landmark.MESSAGE_COMPOSER_OR_HOME,
+                navAction === KeyBindingAction.PreviousLandmark,
+            );
+            handled = true;
         }
+
         const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
         const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(event);
         if (model.autoComplete?.hasCompletions()) {

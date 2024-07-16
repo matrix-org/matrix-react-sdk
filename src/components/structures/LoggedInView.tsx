@@ -472,11 +472,11 @@ class LoggedInView extends React.Component<IProps, IState> {
         const navAction = getKeyBindingsManager().getNavigationAction(ev);
         switch (navAction) {
             case KeyBindingAction.NextLandmark:
-                LandmarkNavigation.navigateToNextLandmarkFrom(Landmark.MESSAGE_COMPOSER_OR_HOME);
-                handled = true;
-                break;
             case KeyBindingAction.PreviousLandmark:
-                LandmarkNavigation.navigateToPreviousLandmarkFrom(Landmark.MESSAGE_COMPOSER_OR_HOME);
+                LandmarkNavigation.findAndFocusNextLandmark(
+                    Landmark.MESSAGE_COMPOSER_OR_HOME,
+                    navAction === KeyBindingAction.PreviousLandmark,
+                );
                 handled = true;
                 break;
             case KeyBindingAction.FilterRooms:
