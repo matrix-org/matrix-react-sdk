@@ -65,7 +65,7 @@ export class LandmarkNavigation {
         let element: HTMLElement | null | undefined = null;
         while (element === null) {
             landmark = LandmarkNavigation.getLandmark(landmark, backwards);
-            element = landmarkToDOMElementMap[landmark]();
+            element = landmarkToDomElementMap[landmark]();
         }
         element?.focus();
     }
@@ -77,7 +77,7 @@ export class LandmarkNavigation {
  * - undefined if the DOM element exists but focus is given through an action
  * - null if the landmark does not exist
  */
-const landmarkToDOMElementMap = {
+const landmarkToDomElementMap = {
     [Landmark.ACTIVE_SPACE_BUTTON]: () => document.querySelector<HTMLElement>(".mx_SpaceButton_active"),
 
     [Landmark.ROOM_SEARCH]: () => document.querySelector<HTMLElement>(".mx_RoomSearch"),
