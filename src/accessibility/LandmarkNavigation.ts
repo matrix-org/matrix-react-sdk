@@ -49,45 +49,72 @@ export class LandmarkNavigation {
     }
 
     /**
-     * Find the next landmark from a given landmark
+     * Get the next/previous landmark that must be focused from a given landmark
      * @param currentLandmark The current landmark
-     * @returns The next landmark in sequence
+     * @param backwards If true, the landmark before currentLandmark in ORDERED_LANDMARKS is returned
+     * @returns The next landmark to focus
      */
-    public static navigateToNextLandmarkFrom(currentLandmark: Landmark): void {
+    private static getLandmark(currentLandmark: Landmark, backwards = false): Landmark {
         const currentIndex = ORDERED_LANDMARKS.findIndex((l) => l === currentLandmark);
-        const nextIndex = LandmarkNavigation.getIndexInArray(currentIndex + 1);
+        const offset = backwards ? -1 : 1;
+        const nextIndex = LandmarkNavigation.getIndexInArray(currentIndex + offset);
         const newLandmark = ORDERED_LANDMARKS[nextIndex];
-        focusFunctions[newLandmark]();
+        return newLandmark;
     }
 
     /**
-     * Find the previous landmark from a given landmark
+     *
      * @param currentLandmark The current landmark
-     * @returns The previous landmark
+     * @param backwards If true, search the next landmark to the left in ORDERED_LANDMARKS
+     */
+    private static findAndFocusLandmark(currentLandmark: Landmark, backwards = false): void {
+        let somethingWasFocused = false;
+        let landmark = currentLandmark;
+        while (!somethingWasFocused) {
+            landmark = LandmarkNavigation.getLandmark(landmark, backwards);
+            somethingWasFocused = focusFunctions[landmark]();
+        }
+    }
+
+    /**
+     * Find and focus the next landmark from a given landmark
+     * @param currentLandmark The current landmark
+     */
+    public static navigateToNextLandmarkFrom(currentLandmark: Landmark): void {
+        LandmarkNavigation.findAndFocusLandmark(currentLandmark);
+    }
+
+    /**
+     * Find and focus the previous landmark from a given landmark
+     * @param currentLandmark The current landmark
      */
     public static navigateToPreviousLandmarkFrom(currentLandmark: Landmark): void {
-        const currentIndex = ORDERED_LANDMARKS.findIndex((l) => l === currentLandmark);
-        const nextIndex = LandmarkNavigation.getIndexInArray(currentIndex - 1);
-        const newLandmark = ORDERED_LANDMARKS[nextIndex];
-        focusFunctions[newLandmark]();
+        LandmarkNavigation.findAndFocusLandmark(currentLandmark, true);
     }
 }
+
 /**
  * Keys are the different landmarks and the values are function which when invoked
- * gives focus to the corresponding landmark.
+ * gives focus to the corresponding landmark. These functions return a boolean
+ * indicating whether focus was successfully given.
  */
 const focusFunctions = {
     [Landmark.ACTIVE_SPACE_BUTTON]: () => {
-        document.querySelector<HTMLElement>(".mx_SpaceButton_active")?.focus();
+        const e = document.querySelector<HTMLElement>(".mx_SpaceButton_active");
+        e?.focus();
+        return !!e;
     },
     [Landmark.ROOM_SEARCH]: () => {
-        document.querySelector<HTMLElement>(".mx_RoomSearch")?.focus();
+        const e = document.querySelector<HTMLElement>(".mx_RoomSearch");
+        e?.focus();
+        return !!e;
     },
     [Landmark.ROOM_LIST]: () => {
-        (
+        const e =
             document.querySelector<HTMLElement>(".mx_RoomTile_selected") ||
-            document.querySelector<HTMLElement>(".mx_RoomTile")
-        )?.focus();
+            document.querySelector<HTMLElement>(".mx_RoomTile");
+        e?.focus();
+        return !!e;
     },
     [Landmark.MESSAGE_COMPOSER_OR_HOME]: () => {
         const isComposerOpen = !!document.querySelector(".mx_MessageComposer");
@@ -100,8 +127,11 @@ const focusFunctions = {
                 },
                 true,
             );
+            return true;
         } else {
-            document.querySelector<HTMLElement>(".mx_HomePage")?.focus();
+            const e = document.querySelector<HTMLElement>(".mx_HomePage");
+            e?.focus();
+            return !!e;
         }
     },
 };
