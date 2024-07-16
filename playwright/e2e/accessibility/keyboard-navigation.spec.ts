@@ -55,11 +55,11 @@ test.describe("Landmark navigation tests", () => {
         await expect(page.locator(".mx_SpaceButton_active")).toBeFocused();
     });
 
-    test("in a room", async ({ page, homeserver, app, user }) => {
+    test("with an open room", async ({ page, homeserver, app, user }) => {
         const bob = new Bot(page, homeserver, { displayName: "Bob" });
         await bob.prepareClient();
 
-        // create dms with bob and charlie
+        // create dm with bob
         await app.client.evaluate(
             async (cli, { bob }) => {
                 const bobRoom = await cli.createRoom({ is_direct: true });
@@ -108,11 +108,11 @@ test.describe("Landmark navigation tests", () => {
         await expect(page.locator(".mx_SpaceButton_active")).toBeFocused();
     });
 
-    test("without a room", async ({ page, homeserver, app, user }) => {
+    test("without an open room", async ({ page, homeserver, app, user }) => {
         const bob = new Bot(page, homeserver, { displayName: "Bob" });
         await bob.prepareClient();
 
-        // create dms with bob and charlie
+        // create a dm with bob
         await app.client.evaluate(
             async (cli, { bob }) => {
                 const bobRoom = await cli.createRoom({ is_direct: true });
@@ -145,5 +145,22 @@ test.describe("Landmark navigation tests", () => {
         // Pressing Control+F6 again will focus the home section
         await page.keyboard.press("ControlOrMeta+F6");
         await expect(page.locator(".mx_HomePage")).toBeFocused();
+
+        // Pressing Control+F6 will bring focus back to the space button
+        await page.keyboard.press("ControlOrMeta+F6");
+        await expect(page.locator(".mx_SpaceButton_active")).toBeFocused();
+
+        // Now go back in same order
+        await page.keyboard.press("ControlOrMeta+Shift+F6");
+        await expect(page.locator(".mx_HomePage")).toBeFocused();
+
+        await page.keyboard.press("ControlOrMeta+Shift+F6");
+        await expect(page.locator(".mx_RoomTile")).toBeFocused();
+
+        await page.keyboard.press("ControlOrMeta+Shift+F6");
+        await expect(page.locator(".mx_RoomSearch")).toBeFocused();
+
+        await page.keyboard.press("ControlOrMeta+Shift+F6");
+        await expect(page.locator(".mx_SpaceButton_active")).toBeFocused();
     });
 });
