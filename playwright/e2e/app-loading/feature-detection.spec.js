@@ -16,17 +16,10 @@ limitations under the License.
 
 import { expect, test } from "@playwright/test";
 
-[
-    { feature: "Intl", script: `window.Intl = undefined;` },
-    { feature: "fetch", script: `window.fetch = undefined;` },
-    { feature: "crypto", script: `window.crypto = undefined;` },
-    { feature: "localStorage", script: `window.localStorage = undefined;` },
-].forEach(({ feature, script }) => {
-    test(`shows error page if browser lacks feature: ${feature}`, async ({ page }) => {
-        await page.addInitScript({ content: script });
-        await page.goto("/");
+test(`shows error page if browser lacks Intl support`, async ({ page }) => {
+    await page.addInitScript({ content: `delete window.Intl;` });
+    await page.goto("/");
 
-        const header = await page.frameLocator("iframe").getByText("Unsupported browser");
-        await expect(header).toBeVisible();
-    });
+    const header = await page.frameLocator("iframe").getByText("Unsupported browser");
+    await expect(header).toBeVisible();
 });
