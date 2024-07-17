@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 [
     { feature: "Intl", script: `window.Intl = undefined;` },
@@ -26,6 +26,7 @@ import { test } from "@playwright/test";
         await page.addInitScript({ content: script });
         await page.goto("/");
 
-        await page.getByRole("heading", { name: "Unsupported Browser" });
+        const header = await page.frameLocator("iframe").getByText("Unsupported browser");
+        await expect(header).toBeVisible();
     });
 });
