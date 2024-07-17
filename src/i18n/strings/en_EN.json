@@ -1370,12 +1370,14 @@
         "navigate_next_message_edit": "Navigate to next message to edit",
         "navigate_prev_history": "Previous recently visited room or space",
         "navigate_prev_message_edit": "Navigate to previous message to edit",
+        "next_landmark": "Go to next landmark",
         "next_room": "Next room or DM",
         "next_unread_room": "Next unread room or DM",
         "number": "[number]",
         "open_user_settings": "Open user settings",
         "page_down": "Page Down",
         "page_up": "Page Up",
+        "prev_landmark": "Go to previous landmark",
         "prev_room": "Previous room or DM",
         "prev_unread_room": "Previous unread room or DM",
         "room_list_collapse_section": "Collapse room list section",
@@ -1396,9 +1398,7 @@
         "toggle_space_panel": "Toggle space panel",
         "toggle_top_left_menu": "Toggle the top left menu",
         "toggle_webcam_mute": "Toggle webcam on/off",
-        "upload_file": "Upload a file",
-        "prev_landmark": "Go to previous landmark",
-        "next_landmark": "Go to next landmark"
+        "upload_file": "Upload a file"
     },
     "labs": {
         "allow_screen_share_only_mode": "Allow screen share only mode",
@@ -3812,9 +3812,9 @@
         "unban_space_everything": "Unban them from everything I'm able to",
         "unban_space_specific": "Unban them from specific things I'm able to",
         "unban_space_warning": "They won't be able to access whatever you're not an admin of.",
+        "unignore_button": "Unblock",
         "verify_button": "Verify User",
-        "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices.",
-        "unignore_button": "Unblock"
+        "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices."
     },
     "user_menu": {
         "link_new_device": "Link new device",

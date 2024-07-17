@@ -91,7 +91,8 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../utils/direct-messages";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { asyncSome } from "../../../utils/arrays";
-import UIStore from "../../../stores/UIStore";
+import { Flex } from "../../utils/Flex";
+import CopyableText from "../elements/CopyableText";
 
 export interface IDevice extends Device {
     ambiguous?: boolean;
@@ -1671,24 +1672,6 @@ export const UserInfoHeader: React.FC<{
 
     const avatarUrl = (member as User).avatarUrl;
 
-    const avatarElement = (
-        <div className="mx_UserInfo_avatar">
-            <div className="mx_UserInfo_avatar_transition">
-                <div className="mx_UserInfo_avatar_transition_child">
-                    <MemberAvatar
-                        key={member.userId} // to instantly blank the avatar when UserInfo changes members
-                        member={member as RoomMember}
-                        size={UIStore.instance.windowHeight * 0.3 + "px"}
-                        resizeMethod="scale"
-                        fallbackUserId={member.userId}
-                        onClick={onMemberAvatarClick}
-                        urls={avatarUrl ? [avatarUrl] : undefined}
-                    />
-                </div>
-            </div>
-        </div>
-    );
-
     let presenceState: string | undefined;
     let presenceLastActiveAgo: number | undefined;
     let presenceCurrentlyActive: boolean | undefined;
@@ -1711,37 +1694,52 @@ export const UserInfoHeader: React.FC<{
                 activeAgo={presenceLastActiveAgo}
                 currentlyActive={presenceCurrentlyActive}
                 presenceState={presenceState}
+                className="mx_UserInfo_profileStatus"
                 coloured
             />
         );
     }
 
     const e2eIcon = e2eStatus ? <E2EIcon size={18} status={e2eStatus} isUser={true} /> : null;
-
+    const userIdentifier = UserIdentifierCustomisations.getDisplayUserIdentifier?.(member.userId, {
+        roomId,
+        withDisplayName: true,
+    });
     const displayName = (member as RoomMember).rawDisplayName;
     return (
         <React.Fragment>
-            {avatarElement}
-
-            <div className="mx_UserInfo_container mx_UserInfo_separator">
-                <div className="mx_UserInfo_profile">
-                    <div>
-                        <h2>
-                            <span title={displayName} aria-label={displayName} dir="auto">
-                                {displayName}
-                            </span>
-                            {e2eIcon}
-                        </h2>
+            <div className="mx_UserInfo_avatar">
+                <div className="mx_UserInfo_avatar_transition">
+                    <div className="mx_UserInfo_avatar_transition_child">
+                        <MemberAvatar
+                            key={member.userId} // to instantly blank the avatar when UserInfo changes members
+                            member={member as RoomMember}
+                            size="120px"
+                            resizeMethod="scale"
+                            fallbackUserId={member.userId}
+                            onClick={onMemberAvatarClick}
+                            urls={avatarUrl ? [avatarUrl] : undefined}
+                        />
                     </div>
-                    <div className="mx_UserInfo_profile_mxid">
-                        {UserIdentifierCustomisations.getDisplayUserIdentifier?.(member.userId, {
-                            roomId,
-                            withDisplayName: true,
-                        })}
-                    </div>
-                    <div className="mx_UserInfo_profileStatus">{presenceLabel}</div>
                 </div>
             </div>
+
+            <Container>
+                <Flex direction="column" align="center" className="mx_UserInfo_profile">
+                    <Heading size="sm" weight="semibold" as="h1" dir="auto">
+                        <Flex direction="row-reverse" align="center">
+                            {displayName}
+                            {e2eIcon}
+                        </Flex>
+                    </Heading>
+                    {presenceLabel}
+                    <Text size="sm" weight="semibold" className="mx_UserInfo_profile_mxid">
+                        <CopyableText getTextToCopy={() => userIdentifier} border={false}>
+                            {userIdentifier}
+                        </CopyableText>
+                    </Text>
+                </Flex>
+            </Container>
         </React.Fragment>
     );
 };
