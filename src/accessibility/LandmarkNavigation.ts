@@ -18,12 +18,6 @@ import { TimelineRenderingType } from "../contexts/RoomContext";
 import { Action } from "../dispatcher/actions";
 import defaultDispatcher from "../dispatcher/dispatcher";
 
-/**
- * In future, browsers will support focusVisible option.
- * See https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#focusvisible
- */
-type ExperimentalFocusOptions = FocusOptions & { focusVisible: true };
-
 export const enum Landmark {
     // This is the space/home button in the left panel.
     ACTIVE_SPACE_BUTTON,
@@ -73,7 +67,7 @@ export class LandmarkNavigation {
             landmark = LandmarkNavigation.getLandmark(landmark, backwards);
             element = landmarkToDomElementMap[landmark]();
         }
-        element?.focus({ focusVisible: true } as ExperimentalFocusOptions);
+        element?.focus({ focusVisible: true });
     }
 }
 
