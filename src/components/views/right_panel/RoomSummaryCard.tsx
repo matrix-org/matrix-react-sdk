@@ -575,18 +575,11 @@ const RoomSummaryCard: React.FC<IProps> = ({
                     disabled={!canInviteToState}
                     onSelect={() => inviteToRoom(room)}
                 />
-                <MenuItem Icon={LinkIcon} label={_t("action|copy_link")} onSelect={onShareRoomClick} />
-                <MenuItem Icon={SettingsIcon} label={_t("common|settings")} onSelect={onRoomSettingsClick} />
 
                 <Separator />
+
                 {!isVideoRoom && (
                     <>
-                        <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onSelect={onRoomFilesClick} />
-                        <MenuItem
-                            Icon={PollsIcon}
-                            label={_t("right_panel|polls_button")}
-                            onSelect={onRoomPollHistoryClick}
-                        />
                         {pinningEnabled && (
                             <MenuItem
                                 Icon={PinIcon}
@@ -598,6 +591,21 @@ const RoomSummaryCard: React.FC<IProps> = ({
                                 </Text>
                             </MenuItem>
                         )}
+                        <MenuItem Icon={FilesIcon} label={_t("right_panel|files_button")} onSelect={onRoomFilesClick} />
+                    </>
+                )}
+
+                <Separator />
+
+                <MenuItem Icon={LinkIcon} label={_t("action|copy_link")} onSelect={onShareRoomClick} />
+
+                {!isVideoRoom && (
+                    <>
+                        <MenuItem
+                            Icon={PollsIcon}
+                            label={_t("right_panel|polls_button")}
+                            onSelect={onRoomPollHistoryClick}
+                        />
                         <MenuItem
                             Icon={ExportArchiveIcon}
                             label={_t("export_chat|title")}
@@ -605,6 +613,8 @@ const RoomSummaryCard: React.FC<IProps> = ({
                         />
                     </>
                 )}
+
+                <MenuItem Icon={SettingsIcon} label={_t("common|settings")} onSelect={onRoomSettingsClick} />
 
                 <Separator />
 
