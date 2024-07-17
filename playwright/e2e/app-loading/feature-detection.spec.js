@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { expect, test } from "@playwright/test";
+import { test, expect } from "../../element-web-test";
 
 test(`shows error page if browser lacks Intl support`, async ({ page }) => {
     await page.addInitScript({ content: `delete window.Intl;` });
@@ -22,4 +22,6 @@ test(`shows error page if browser lacks Intl support`, async ({ page }) => {
 
     const header = await page.frameLocator("iframe").getByText("Unsupported browser");
     await expect(header).toBeVisible();
+
+    await expect(page).toMatchScreenshot("unsupported-browser.png");
 });
