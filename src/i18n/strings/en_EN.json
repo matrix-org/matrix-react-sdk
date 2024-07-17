@@ -1370,14 +1370,12 @@
         "navigate_next_message_edit": "Navigate to next message to edit",
         "navigate_prev_history": "Previous recently visited room or space",
         "navigate_prev_message_edit": "Navigate to previous message to edit",
-        "next_landmark": "Go to next landmark",
         "next_room": "Next room or DM",
         "next_unread_room": "Next unread room or DM",
         "number": "[number]",
         "open_user_settings": "Open user settings",
         "page_down": "Page Down",
         "page_up": "Page Up",
-        "prev_landmark": "Go to previous landmark",
         "prev_room": "Previous room or DM",
         "prev_unread_room": "Previous unread room or DM",
         "room_list_collapse_section": "Collapse room list section",
@@ -1398,7 +1396,9 @@
         "toggle_space_panel": "Toggle space panel",
         "toggle_top_left_menu": "Toggle the top left menu",
         "toggle_webcam_mute": "Toggle webcam on/off",
-        "upload_file": "Upload a file"
+        "upload_file": "Upload a file",
+        "prev_landmark": "Go to previous landmark",
+        "next_landmark": "Go to next landmark"
     },
     "labs": {
         "allow_screen_share_only_mode": "Allow screen share only mode",
@@ -3770,6 +3770,7 @@
         "error_revoke_3pid_invite_title": "Failed to revoke invite",
         "hide_sessions": "Hide sessions",
         "hide_verified_sessions": "Hide verified sessions",
+        "ignore_button": "Block",
         "ignore_confirm_description": "All messages and invites from this user will be hidden. Are you sure you want to ignore them?",
         "ignore_confirm_title": "Ignore %(user)s",
         "invited_by": "Invited by %(sender)s",
@@ -3797,14 +3798,14 @@
             "no_recent_messages_description": "Try scrolling up in the timeline to see if there are any earlier ones.",
             "no_recent_messages_title": "No recent messages by %(user)s found"
         },
-        "redact_button": "Remove recent messages",
+        "redact_button": "Remove messages",
         "revoke_invite": "Revoke invite",
-        "role_label": "Role in <RoomName/>",
         "room_encrypted": "Messages in this room are end-to-end encrypted.",
         "room_encrypted_detail": "Your messages are secured and only you and the recipient have the unique keys to unlock them.",
         "room_unencrypted": "Messages in this room are not end-to-end encrypted.",
         "room_unencrypted_detail": "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.",
-        "share_button": "Share Link to User",
+        "send_message": "Send message",
+        "share_button": "Share profile",
         "unban_button_room": "Unban from room",
         "unban_button_space": "Unban from space",
         "unban_room_confirm_title": "Unban from %(roomName)s",
@@ -3812,7 +3813,8 @@
         "unban_space_specific": "Unban them from specific things I'm able to",
         "unban_space_warning": "They won't be able to access whatever you're not an admin of.",
         "verify_button": "Verify User",
-        "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices."
+        "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices.",
+        "unignore_button": "Unblock"
     },
     "user_menu": {
         "link_new_device": "Link new device",

@@ -48,28 +48,16 @@ limitations under the License.
     }
 
     .mx_UserInfo_container {
-        padding: $spacing-8 $spacing-16;
-
-        &:not(.mx_UserInfo_separator) {
-            padding-top: $spacing-16;
-            padding-bottom: 0;
-
-            > :not(h3) {
-                margin-inline-start: $spacing-8;
-                display: flex;
-                flex-flow: column;
-                align-items: flex-start;
-                row-gap: $spacing-8;
-            }
-        }
+        padding: var(--cpd-space-4x) 0;
+        margin: 0 var(--cpd-space-4x);
 
         .mx_UserInfo_container_verifyButton {
             margin-top: $spacing-8;
         }
-    }
 
-    .mx_UserInfo_separator {
-        border-bottom: 1px solid $separator;
+        & + .mx_UserInfo_container {
+            border-top: 1px solid $separator;
+        }
     }
 
     .mx_UserInfo_memberDetailsContainer {
@@ -112,7 +100,7 @@ limitations under the License.
         }
     }
 
-    h3 {
+    h2 {
         text-transform: uppercase;
         color: $tertiary-content;
         font: var(--cpd-font-heading-sm-semibold);
@@ -189,10 +177,6 @@ limitations under the License.
 
     .mx_UserInfo_field {
         line-height: $font-16px;
-
-        &.mx_UserInfo_destructive {
-            color: $alert;
-        }
     }
 
     .mx_UserInfo_statusMessage {
