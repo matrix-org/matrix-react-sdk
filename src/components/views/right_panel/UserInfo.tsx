@@ -1661,6 +1661,7 @@ export const UserInfoHeader: React.FC<{
                 activeAgo={presenceLastActiveAgo}
                 currentlyActive={presenceCurrentlyActive}
                 presenceState={presenceState}
+                coloured
             />
         );
     }
