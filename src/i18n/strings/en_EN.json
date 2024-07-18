@@ -3770,7 +3770,7 @@
         "error_revoke_3pid_invite_title": "Failed to revoke invite",
         "hide_sessions": "Hide sessions",
         "hide_verified_sessions": "Hide verified sessions",
-        "ignore_button": "Block",
+        "ignore_button": "Ignore",
         "ignore_confirm_description": "All messages and invites from this user will be hidden. Are you sure you want to ignore them?",
         "ignore_confirm_title": "Ignore %(user)s",
         "invited_by": "Invited by %(sender)s",
@@ -3812,7 +3812,7 @@
         "unban_space_everything": "Unban them from everything I'm able to",
         "unban_space_specific": "Unban them from specific things I'm able to",
         "unban_space_warning": "They won't be able to access whatever you're not an admin of.",
-        "unignore_button": "Unblock",
+        "unignore_button": "Unignore",
         "verify_button": "Verify User",
         "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices."
     },

@@ -346,14 +346,14 @@ describe("<UserInfo />", () => {
             );
         });
 
-        describe("Block", () => {
+        describe("Ignore", () => {
             const member = new RoomMember(defaultRoomId, defaultUserId);
 
             it("shows block button when member userId does not match client userId", () => {
                 // call to client.getUserId returns undefined, which will not match member.userId
                 renderComponent();
 
-                expect(screen.getByRole("button", { name: "Block" })).toBeInTheDocument();
+                expect(screen.getByRole("button", { name: "Ignore" })).toBeInTheDocument();
             });
 
             it("shows a modal before ignoring the user", async () => {
@@ -367,7 +367,7 @@ describe("<UserInfo />", () => {
                     mockClient.getIgnoredUsers.mockReturnValue([]);
                     renderComponent();
 
-                    await userEvent.click(screen.getByRole("button", { name: "Block" }));
+                    await userEvent.click(screen.getByRole("button", { name: "Ignore" }));
                     expect(modalSpy).toHaveBeenCalled();
                     expect(mockClient.setIgnoredUsers).toHaveBeenLastCalledWith([member.userId]);
                 } finally {
@@ -386,7 +386,7 @@ describe("<UserInfo />", () => {
                     mockClient.getIgnoredUsers.mockReturnValue([]);
                     renderComponent();
 
-                    await userEvent.click(screen.getByRole("button", { name: "Block" }));
+                    await userEvent.click(screen.getByRole("button", { name: "Ignore" }));
                     expect(modalSpy).toHaveBeenCalled();
                     expect(mockClient.setIgnoredUsers).not.toHaveBeenCalled();
                 } finally {
@@ -399,7 +399,7 @@ describe("<UserInfo />", () => {
                 mockClient.getIgnoredUsers.mockReturnValue([member.userId]);
                 renderComponent();
 
-                await userEvent.click(screen.getByRole("button", { name: "Unblock" }));
+                await userEvent.click(screen.getByRole("button", { name: "Unignore" }));
                 expect(mockClient.setIgnoredUsers).toHaveBeenCalledWith([]);
             });
         });
