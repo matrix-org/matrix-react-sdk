@@ -35,7 +35,7 @@ export enum ElementWidgetActions {
      * @deprecated Use MSC2931 instead
      */
     ViewRoom = "io.element.view_room",
-    // This can be sent as from or to widget
+    // This action type is used as a `fromWidget` and a `toWidget` action.
     // fromWidget: updates the client about the current device mute state
     // toWidget: the client requests a specific device mute configuration
     //   The reply will always be the resulting configuration
