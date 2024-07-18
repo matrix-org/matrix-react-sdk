@@ -16,15 +16,15 @@ limitations under the License.
 
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
-import { RendezvousFailureReason } from "matrix-js-sdk/src/rendezvous";
+import {
+    ClientRendezvousFailureReason,
+    LegacyRendezvousFailureReason,
+    MSC4108FailureReason,
+} from "matrix-js-sdk/src/rendezvous";
 
 import LoginWithQRFlow from "../../../../../src/components/views/auth/LoginWithQRFlow";
-import {
-    Click,
-    Phase,
-    LoginWithQRFailureReason,
-    FailureReason,
-} from "../../../../../src/components/views/auth/LoginWithQR";
+import { LoginWithQRFailureReason, FailureReason } from "../../../../../src/components/views/auth/LoginWithQR";
+import { Click, Phase } from "../../../../../src/components/views/auth/LoginWithQR-types";
 
 describe("<LoginWithQRFlow />", () => {
     const onClick = jest.fn();
@@ -58,7 +58,7 @@ describe("<LoginWithQRFlow />", () => {
         expect(screen.getAllByTestId("cancel-button")).toHaveLength(1);
         expect(container).toMatchSnapshot();
         fireEvent.click(screen.getByTestId("cancel-button"));
-        expect(onClick).toHaveBeenCalledWith(Click.Cancel);
+        expect(onClick).toHaveBeenCalledWith(Click.Cancel, undefined);
     });
 
     it("renders QR code", async () => {
@@ -68,24 +68,16 @@ describe("<LoginWithQRFlow />", () => {
         expect(container).toMatchSnapshot();
     });
 
-    it("renders spinner while connecting", async () => {
-        const { container } = render(getComponent({ phase: Phase.Connecting }));
-        expect(screen.getAllByTestId("cancel-button")).toHaveLength(1);
-        expect(container).toMatchSnapshot();
-        fireEvent.click(screen.getByTestId("cancel-button"));
-        expect(onClick).toHaveBeenCalledWith(Click.Cancel);
-    });
-
     it("renders code when connected", async () => {
-        const { container } = render(getComponent({ phase: Phase.Connected, confirmationDigits: "mock-digits" }));
+        const { container } = render(getComponent({ phase: Phase.LegacyConnected, confirmationDigits: "mock-digits" }));
         expect(screen.getAllByText("mock-digits")).toHaveLength(1);
         expect(screen.getAllByTestId("decline-login-button")).toHaveLength(1);
         expect(screen.getAllByTestId("approve-login-button")).toHaveLength(1);
         expect(container).toMatchSnapshot();
         fireEvent.click(screen.getByTestId("decline-login-button"));
-        expect(onClick).toHaveBeenCalledWith(Click.Decline);
+        expect(onClick).toHaveBeenCalledWith(Click.Decline, undefined);
         fireEvent.click(screen.getByTestId("approve-login-button"));
-        expect(onClick).toHaveBeenCalledWith(Click.Approve);
+        expect(onClick).toHaveBeenCalledWith(Click.Approve, undefined);
     });
 
     it("renders spinner while signing in", async () => {
@@ -93,7 +85,7 @@ describe("<LoginWithQRFlow />", () => {
         expect(screen.getAllByTestId("cancel-button")).toHaveLength(1);
         expect(container).toMatchSnapshot();
         fireEvent.click(screen.getByTestId("cancel-button"));
-        expect(onClick).toHaveBeenCalledWith(Click.Cancel);
+        expect(onClick).toHaveBeenCalledWith(Click.Cancel, undefined);
     });
 
     it("renders spinner while verifying", async () => {
@@ -101,10 +93,17 @@ describe("<LoginWithQRFlow />", () => {
         expect(container).toMatchSnapshot();
     });
 
+    it("renders check code confirmation", async () => {
+        const { container } = render(getComponent({ phase: Phase.OutOfBandConfirmation }));
+        expect(container).toMatchSnapshot();
+    });
+
     describe("errors", () => {
         for (const failureReason of [
-            ...Object.values(RendezvousFailureReason),
+            ...Object.values(LegacyRendezvousFailureReason),
+            ...Object.values(MSC4108FailureReason),
             ...Object.values(LoginWithQRFailureReason),
+            ...Object.values(ClientRendezvousFailureReason),
         ]) {
             it(`renders ${failureReason}`, async () => {
                 const { container } = render(
@@ -114,10 +113,7 @@ describe("<LoginWithQRFlow />", () => {
                     }),
                 );
                 expect(screen.getAllByTestId("cancellation-message")).toHaveLength(1);
-                expect(screen.getAllByTestId("try-again-button")).toHaveLength(1);
                 expect(container).toMatchSnapshot();
-                fireEvent.click(screen.getByTestId("try-again-button"));
-                expect(onClick).toHaveBeenCalledWith(Click.TryAgain);
             });
         }
     });

@@ -106,24 +106,24 @@ test.describe("RightPanel", () => {
             await expect(page.locator(".mx_FilePanel")).toBeVisible();
             await expect(page.locator(".mx_FilePanel_empty")).toBeVisible();
 
-            await page.getByRole("button", { name: "Room information" }).click();
+            await page.getByTestId("base-card-back-button").click();
             await checkRoomSummaryCard(page, ROOM_NAME);
         });
 
         test("should handle viewing room member", async ({ page, app }) => {
             await viewRoomSummaryByName(page, app, ROOM_NAME);
 
-            await page.getByRole("menuitem", { name: "People" }).click();
+            await page.locator(".mx_RightPanelTabs").getByText("People").click();
             await expect(page.locator(".mx_MemberList")).toBeVisible();
 
             await getMemberTileByName(page, NAME).click();
             await expect(page.locator(".mx_UserInfo")).toBeVisible();
             await expect(page.locator(".mx_UserInfo_profile").getByText(NAME)).toBeVisible();
 
-            await page.getByRole("button", { name: "Room members" }).click();
+            await page.getByTestId("base-card-back-button").click();
             await expect(page.locator(".mx_MemberList")).toBeVisible();
 
-            await page.getByRole("button", { name: "Room information" }).click();
+            await page.locator(".mx_RightPanelTabs").getByText("Info").click();
             await checkRoomSummaryCard(page, ROOM_NAME);
         });
     });
@@ -138,14 +138,12 @@ test.describe("RightPanel", () => {
                 .getByRole("button", { name: /\d member/ })
                 .click();
             await expect(page.locator(".mx_MemberList")).toBeVisible();
-            await expect(page.locator(".mx_SpaceScopeHeader").getByText(SPACE_NAME)).toBeVisible();
 
             await getMemberTileByName(page, NAME).click();
             await expect(page.locator(".mx_UserInfo")).toBeVisible();
             await expect(page.locator(".mx_UserInfo_profile").getByText(NAME)).toBeVisible();
-            await expect(page.locator(".mx_SpaceScopeHeader").getByText(SPACE_NAME)).toBeVisible();
 
-            await page.getByRole("button", { name: "Back" }).click();
+            await page.getByTestId("base-card-back-button").click();
             await expect(page.locator(".mx_MemberList")).toBeVisible();
         });
     });

@@ -53,7 +53,7 @@ interface IProps {
     "top"?: React.ReactNode;
 
     // Title for the dialog.
-    "title"?: JSX.Element | string;
+    "title"?: React.ReactNode;
     // Specific aria label to use, if not provided will set aria-labelledBy to mx_Dialog_title
     "aria-label"?: string;
 
@@ -128,6 +128,8 @@ export default class BaseDialog extends React.Component<IProps> {
                     onClick={this.onCancelClick}
                     className="mx_Dialog_cancelButton"
                     aria-label={_t("dialog_close_label")}
+                    title={_t("action|close")}
+                    placement="bottom"
                 />
             );
         }
@@ -184,8 +186,8 @@ export default class BaseDialog extends React.Component<IProps> {
                         )}
                         {this.props.headerButton}
                     </div>
-                    {cancelButton}
                     {this.props.children}
+                    {cancelButton}
                 </FocusLock>
             </MatrixClientContext.Provider>
         );

@@ -34,7 +34,6 @@ import { KnownMembership } from "matrix-js-sdk/src/types";
 import { UserVerificationStatus, VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { UserTrustLevel } from "matrix-js-sdk/src/crypto/CrossSigning";
 
 import dis from "../../../dispatcher/dispatcher";
 import Modal from "../../../Modal";
@@ -43,7 +42,6 @@ import DMRoomMap from "../../../utils/DMRoomMap";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import SdkConfig from "../../../SdkConfig";
 import MultiInviter from "../../../utils/MultiInviter";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import E2EIcon from "../rooms/E2EIcon";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import { textualPowerLevel } from "../../../Roles";
@@ -82,7 +80,6 @@ import { DirectoryMember, startDmOnFirstMessage } from "../../../utils/direct-me
 import { SdkContextClass } from "../../../contexts/SDKContext";
 import { asyncSome } from "../../../utils/arrays";
 import UIStore from "../../../stores/UIStore";
-import { SpaceScopeHeader } from "../rooms/SpaceScopeHeader";
 
 export interface IDevice extends Device {
     ambiguous?: boolean;
@@ -237,7 +234,12 @@ export function DeviceItem({
         );
     } else {
         return (
-            <AccessibleButton className={classes} title={device.deviceId} onClick={onDeviceClick}>
+            <AccessibleButton
+                className={classes}
+                title={device.deviceId}
+                aria-label={deviceName}
+                onClick={onDeviceClick}
+            >
                 <div className={iconClasses} />
                 <div className="mx_UserInfo_device_name">{deviceName}</div>
                 <div className="mx_UserInfo_device_trusted">{trustedLabel}</div>
@@ -1319,7 +1321,7 @@ export const useDevices = (userId: string): IDevice[] | undefined | null => {
             if (_userId !== userId) return;
             updateDevices();
         };
-        const onUserTrustStatusChanged = (_userId: string, trustLevel: UserTrustLevel): void => {
+        const onUserTrustStatusChanged = (_userId: string, trustLevel: UserVerificationStatus): void => {
             if (_userId !== userId) return;
             updateDevices();
         };
@@ -1408,8 +1410,7 @@ const BasicUserInfo: React.FC<{
 
     // We don't need a perfect check here, just something to pass as "probably not our homeserver". If
     // someone does figure out how to bypass this check the worst that happens is an error.
-    // FIXME this should be using cli instead of MatrixClientPeg.matrixClient
-    if (isSynapseAdmin && member.userId.endsWith(`:${MatrixClientPeg.getHomeserverName()}`)) {
+    if (isSynapseAdmin && member.userId.endsWith(`:${cli.getDomain()}`)) {
         synapseDeactivateButton = (
             <AccessibleButton
                 kind="link"
@@ -1772,10 +1773,11 @@ const UserInfo: React.FC<IProps> = ({ user, room, onClose, phase = RightPanelPha
             <UserInfoHeader member={member} e2eStatus={e2eStatus} roomId={room?.roomId} />
         </>
     );
+
     return (
         <BaseCard
             className={classes.join(" ")}
-            header={room ? <SpaceScopeHeader room={room} /> : undefined}
+            header={_t("common|profile")}
             onClose={onClose}
             closeLabel={closeLabel}
             cardState={cardState}

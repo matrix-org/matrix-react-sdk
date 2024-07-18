@@ -18,7 +18,7 @@ limitations under the License.
 import React, { FC, useState, useMemo, useCallback } from "react";
 import classNames from "classnames";
 import { throttle } from "lodash";
-import { RoomStateEvent, ISearchResults } from "matrix-js-sdk/src/matrix";
+import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { IconButton, Tooltip } from "@vector-im/compound-web";
 import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
@@ -33,13 +33,11 @@ import RoomHeaderButtons from "../right_panel/LegacyRoomHeaderButtons";
 import E2EIcon from "./E2EIcon";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
 import { RoomKnocksBar } from "./RoomKnocksBar";
-import { SearchScope } from "./SearchBar";
 import { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from "./RoomTile";
@@ -68,10 +66,10 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { SessionDuration } from "../voip/CallDuration";
-import { Alignment } from "../elements/Tooltip";
 import RoomCallBanner from "../beacon/RoomCallBanner";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import { SearchInfo } from "../../../Searching";
 
 class DisabledWithReason {
     public constructor(public readonly reason: string) {}
@@ -111,12 +109,12 @@ const VoiceCallButton: FC<VoiceCallButtonProps> = ({ room, busy, setBusy, behavi
     }, [behavior, room, setBusy]);
 
     return (
-        <AccessibleTooltipButton
+        <AccessibleButton
             className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_voiceCallButton"
             onClick={onClick}
-            title={_t("voip|voice_call")}
-            tooltip={tooltip ?? _t("voip|voice_call")}
-            alignment={Alignment.Bottom}
+            aria-label={_t("voip|voice_call")}
+            title={tooltip ?? _t("voip|voice_call")}
+            placement="bottom"
             disabled={disabled || busy}
         />
     );
@@ -237,13 +235,13 @@ const VideoCallButton: FC<VideoCallButtonProps> = ({ room, busy, setBusy, behavi
 
     return (
         <>
-            <AccessibleTooltipButton
+            <AccessibleButton
                 ref={buttonRef}
                 className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_videoCallButton"
                 onClick={onClick}
-                title={_t("voip|video_call")}
-                tooltip={tooltip ?? _t("voip|video_call")}
-                alignment={Alignment.Bottom}
+                aria-label={_t("voip|video_call")}
+                title={tooltip ?? _t("voip|video_call")}
+                placement="bottom"
                 disabled={disabled || busy}
             />
             {menu}
@@ -442,7 +440,7 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
 
     return (
         <>
-            <AccessibleTooltipButton
+            <AccessibleButton
                 ref={buttonRef}
                 className={classNames("mx_LegacyRoomHeader_button", {
                     "mx_LegacyRoomHeader_layoutButton--freedom": layout === Layout.Tile,
@@ -450,25 +448,13 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
                 })}
                 onClick={onClick}
                 title={_t("room|header|video_call_ec_change_layout")}
-                alignment={Alignment.Bottom}
+                placement="bottom"
                 key="layout"
             />
             {menu}
         </>
     );
 };
-
-export interface ISearchInfo {
-    searchId: number;
-    roomId?: string;
-    term: string;
-    scope: SearchScope;
-    promise: Promise<ISearchResults>;
-    abortController?: AbortController;
-
-    inProgress?: boolean;
-    count?: number;
-}
 
 export interface IProps {
     room: Room;
@@ -480,7 +466,7 @@ export interface IProps {
     onAppsClick: (() => void) | null;
     e2eStatus: E2EStatus;
     appsShown: boolean;
-    searchInfo?: ISearchInfo;
+    searchInfo?: SearchInfo;
     excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
     showButtons?: boolean;
     enableRoomOptionsMenu?: boolean;
@@ -600,11 +586,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         if (!this.props.viewingCall && this.props.onForgetClick) {
             startButtons.push(
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_forgetButton"
                     onClick={this.props.onForgetClick}
                     title={_t("room|header|forget_room_button")}
-                    alignment={Alignment.Bottom}
+                    placement="bottom"
                     key="forget"
                 />,
             );
@@ -612,7 +598,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         if (!this.props.viewingCall && this.props.onAppsClick) {
             startButtons.push(
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className={classNames("mx_LegacyRoomHeader_button mx_LegacyRoomHeader_appsButton", {
                         mx_LegacyRoomHeader_appsButton_highlight: this.props.appsShown,
                     })}
@@ -623,7 +609,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                             : _t("room|header|show_widgets_button")
                     }
                     aria-checked={this.props.appsShown}
-                    alignment={Alignment.Bottom}
+                    placement="bottom"
                     key="apps"
                 />,
             );
@@ -631,11 +617,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         if (!this.props.viewingCall && this.props.onSearchClick && this.props.inRoom) {
             startButtons.push(
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_searchButton"
                     onClick={this.props.onSearchClick}
                     title={_t("action|search")}
-                    alignment={Alignment.Bottom}
+                    placement="bottom"
                     key="search"
                 />,
             );
@@ -643,11 +629,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         if (this.props.onInviteClick && (!this.props.viewingCall || isVideoRoom) && this.props.inRoom) {
             startButtons.push(
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_inviteButton"
                     onClick={this.props.onInviteClick}
                     title={_t("action|invite")}
-                    alignment={Alignment.Bottom}
+                    placement="bottom"
                     key="invite"
                 />,
             );
@@ -667,11 +653,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                 );
             } else {
                 endButtons.push(
-                    <AccessibleTooltipButton
+                    <AccessibleButton
                         className="mx_LegacyRoomHeader_button mx_LegacyRoomHeader_minimiseButton"
                         onClick={this.onHideCallClick}
                         title={_t("room|header|video_room_view_chat_button")}
-                        alignment={Alignment.Bottom}
+                        placement="bottom"
                         key="minimise"
                     />,
                 );
@@ -754,7 +740,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     onClick={this.onContextMenuOpenClick}
                     isExpanded={!!this.state.contextMenuPosition}
                     title={_t("room|context_menu|title")}
-                    alignment={Alignment.Bottom}
+                    placement="bottom"
                 >
                     {roomName}
                     {this.props.room && <div className="mx_LegacyRoomHeader_chevron" />}

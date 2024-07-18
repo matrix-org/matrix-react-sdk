@@ -14,19 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { type Page, expect, JSHandle } from "@playwright/test";
+import { expect, JSHandle, type Page } from "@playwright/test";
 
 import type { CryptoEvent, ICreateRoomOpts, MatrixClient } from "matrix-js-sdk/src/matrix";
 import type {
+    EmojiMapping,
+    ShowSasCallbacks,
     VerificationRequest,
     Verifier,
-    EmojiMapping,
     VerifierEvent,
-    ShowSasCallbacks,
 } from "matrix-js-sdk/src/crypto-api";
 import { Credentials, HomeserverInstance } from "../../plugins/homeserver";
 import { Client } from "../../pages/client";
 import { ElementAppPage } from "../../pages/ElementAppPage";
+import { Bot } from "../../pages/bot";
 
 /**
  * wait for the given client to receive an incoming verification request, and automatically accept it
@@ -113,6 +114,13 @@ export async function checkDeviceIsConnectedKeyBackup(
     expectedBackupVersion: string,
     checkBackupKeyInCache: boolean,
 ): Promise<void> {
+    // Sanity check the given backup version: if it's null, something went wrong earlier in the test.
+    if (!expectedBackupVersion) {
+        throw new Error(
+            `Invalid backup version passed to \`checkDeviceIsConnectedKeyBackup\`: ${expectedBackupVersion}`,
+        );
+    }
+
     await page.getByRole("button", { name: "User menu" }).click();
     await page.locator(".mx_UserMenu_contextMenu").getByRole("menuitem", { name: "Security & Privacy" }).click();
     await expect(page.locator(".mx_Dialog").getByRole("button", { name: "Restore from Backup" })).toBeVisible();
@@ -148,7 +156,7 @@ export async function logIntoElement(
     // select homeserver
     await page.getByRole("button", { name: "Edit" }).click();
     await page.getByRole("textbox", { name: "Other homeserver" }).fill(homeserver.config.baseUrl);
-    await page.getByRole("button", { name: "Continue" }).click();
+    await page.getByRole("button", { name: "Continue", exact: true }).click();
 
     // wait for the dialog to go away
     await expect(page.locator(".mx_ServerPickerDialog")).not.toBeVisible();
@@ -167,13 +175,38 @@ export async function logIntoElement(
     }
 }
 
-export async function logOutOfElement(page: Page) {
+/**
+ * Click the "sign out" option in Element, and wait for the login page to load
+ *
+ * @param page - Playwright `Page` object.
+ * @param discardKeys - if true, expect a "You'll lose access to your encrypted messages" dialog, and dismiss it.
+ */
+export async function logOutOfElement(page: Page, discardKeys: boolean = false) {
     await page.getByRole("button", { name: "User menu" }).click();
     await page.locator(".mx_UserMenu_contextMenu").getByRole("menuitem", { name: "Sign out" }).click();
-    await page.locator(".mx_Dialog .mx_QuestionDialog").getByRole("button", { name: "Sign out" }).click();
+    if (discardKeys) {
+        await page.getByRole("button", { name: "I don't want my encrypted messages" }).click();
+    } else {
+        await page.locator(".mx_Dialog .mx_QuestionDialog").getByRole("button", { name: "Sign out" }).click();
+    }
 
     // Wait for the login page to load
     await page.getByRole("heading", { name: "Sign in" }).click();
+}
+
+/**
+ * Open the security settings, and verify the current session using the security key.
+ *
+ * @param app - `ElementAppPage` wrapper for the playwright `Page`.
+ * @param securityKey - The security key (i.e., 4S key), set up during a previous session.
+ */
+export async function verifySession(app: ElementAppPage, securityKey: string) {
+    const settings = await app.settings.openUserSettings("Security & Privacy");
+    await settings.getByRole("button", { name: "Verify this session" }).click();
+    await app.page.getByRole("button", { name: "Verify with Security Key" }).click();
+    await app.page.locator(".mx_Dialog").locator('input[type="password"]').fill(securityKey);
+    await app.page.getByRole("button", { name: "Continue", disabled: false }).click();
+    await app.page.getByRole("button", { name: "Done" }).click();
 }
 
 /**
@@ -289,4 +322,74 @@ export async function createRoom(page: Page, roomName: string, isEncrypted: bool
     }
 
     await dialog.getByRole("button", { name: "Create room" }).click();
+
+    // Wait for the client to process the encryption event before carrying on (and potentially sending events).
+    if (isEncrypted) {
+        await expect(page.getByText("Encryption enabled")).toBeVisible();
+    }
+}
+
+/**
+ * Open the room info panel and return the panel element
+ * @param page - the page to use
+ */
+export const openRoomInfo = async (page: Page) => {
+    await page.getByRole("button", { name: "Room info" }).click();
+    return page.locator(".mx_RightPanel");
+};
+
+/**
+ * Configure the given MatrixClient to auto-accept any invites
+ * @param client - the client to configure
+ */
+export async function autoJoin(client: Client) {
+    await client.evaluate((cli) => {
+        cli.on(window.matrixcs.RoomMemberEvent.Membership, (event, member) => {
+            if (member.membership === "invite" && member.userId === cli.getUserId()) {
+                cli.joinRoom(member.roomId);
+            }
+        });
+    });
+}
+
+/**
+ * Verify a user by emoji
+ * @param page - the page to use
+ * @param bob - the user to verify
+ */
+export const verify = async (page: Page, bob: Bot) => {
+    const bobsVerificationRequestPromise = waitForVerificationRequest(bob);
+
+    const roomInfo = await openRoomInfo(page);
+    await page.locator(".mx_RightPanelTabs").getByText("People").click();
+    await roomInfo.getByText("Bob").click();
+    await roomInfo.getByRole("button", { name: "Verify" }).click();
+    await roomInfo.getByRole("button", { name: "Start Verification" }).click();
+
+    // this requires creating a DM, so can take a while. Give it a longer timeout.
+    await roomInfo.getByRole("button", { name: "Verify by emoji" }).click({ timeout: 30000 });
+
+    const request = await bobsVerificationRequestPromise;
+    // the bot user races with the Element user to hit the "verify by emoji" button
+    const verifier = await request.evaluateHandle((request) => request.startVerification("m.sas.v1"));
+    await doTwoWaySasVerification(page, verifier);
+    await roomInfo.getByRole("button", { name: "They match" }).click();
+    await expect(roomInfo.getByText("You've successfully verified Bob!")).toBeVisible();
+    await roomInfo.getByRole("button", { name: "Got it" }).click();
+};
+
+/**
+ * Wait for a verifier to exist for a VerificationRequest
+ *
+ * @param botVerificationRequest
+ */
+export async function awaitVerifier(
+    botVerificationRequest: JSHandle<VerificationRequest>,
+): Promise<JSHandle<Verifier>> {
+    return botVerificationRequest.evaluateHandle(async (verificationRequest) => {
+        while (!verificationRequest.verifier) {
+            await new Promise((r) => verificationRequest.once("change" as any, r));
+        }
+        return verificationRequest.verifier;
+    });
 }

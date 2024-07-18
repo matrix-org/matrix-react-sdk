@@ -376,7 +376,6 @@
         "description": "Descrición",
         "deselect_all": "Retirar selección a todos",
         "device": "Dispositivo",
-        "display_name": "Nome mostrado",
         "edited": "editada",
         "email_address": "Enderezo de correo",
         "encrypted": "Cifrado",
@@ -1076,7 +1075,6 @@
         "failed_generic": "Fallou a operación",
         "failed_title": "Fallou o convite",
         "invalid_address": "Enderezo non recoñecible",
-        "key_share_warning": "As persoas convidadas poderán ler as mensaxes antigas.",
         "name_email_mxid_share_room": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
         "name_email_mxid_share_space": "Convida a persoas usando o seu nome, enderezo de email, nome de usuaria (como <userId/>) ou <a>comparte este espazo</a>.",
         "name_mxid_share_room": "Convida a alguén usando o seu nome, nome de usuaria (como <userId/>) ou <a>comparte esta sala</a>.",
@@ -1211,13 +1209,7 @@
         "leave_beta_reload": "Ao saír da beta volveremos a cargar %(brand)s.",
         "msc3531_hide_messages_pending_moderation": "Permitir que a moderación agoche mensaxes pendentes de moderar.",
         "pinning": "Fixando mensaxe",
-        "sliding_sync_configuration": "Configuración Sliding Sync",
-        "sliding_sync_disable_warning": "Para desactivalo tes que saír e volver a acceder, usa con precaución!",
-        "sliding_sync_proxy_url_label": "URL do Proxy",
-        "sliding_sync_proxy_url_optional_label": "URL do proxy (optativo)",
         "sliding_sync_server_no_support": "O teu servidor non ten soporte nativo",
-        "sliding_sync_server_specify_proxy": "O teu servidor non ten servidor nativo, tes que indicar un proxy",
-        "sliding_sync_server_support": "O teu servidor ten soporte nativo",
         "video_rooms": "Salas de vídeo",
         "video_rooms_a_new_way_to_chat": "Un novo xeito de conversar con voz e vídeo en %(brand)s.",
         "video_rooms_always_on_voip_channels": "As salas de vídeo son canles VoIP sempre activas dentro dunha sala en %(brand)s.",
@@ -1674,13 +1666,10 @@
         "read_topic": "Preme para ler o tema",
         "rejoin_button": "Volta a unirte",
         "search": {
-            "all_rooms": "Todas as Salas",
-            "field_placeholder": "Buscar…",
             "result_count": {
                 "other": "(~%(count)s resultados)",
                 "one": "(~%(count)s resultado)"
-            },
-            "this_room": "Esta sala"
+            }
         },
         "show_labs_settings": "Mostrar axustes en Labs",
         "status_bar": {
@@ -2027,20 +2016,14 @@
             "custom_font_description": "Escolle unha das tipografías instaladas no teu sistema e %(brand)s intentará utilizalas.",
             "custom_font_name": "Nome da letra do sistema",
             "custom_font_size": "Usar tamaño personalizado",
-            "custom_theme_add_button": "Engadir decorado",
             "custom_theme_error_downloading": "Erro ao descargar información do decorado.",
             "custom_theme_invalid": "Esquema do decorado incorrecto.",
-            "custom_theme_success": "Decorado engadido!",
-            "custom_theme_url": "URL do decorado personalizado",
             "font_size": "Tamaño da letra",
-            "heading": "Personaliza o aspecto",
             "image_size_default": "Por defecto",
             "image_size_large": "Grande",
             "layout_bubbles": "Burbullas con mensaxes",
             "match_system_theme": "Imitar o aspecto do sistema",
-            "subheading": "Os axustes da aparencia só lle afectan a esta sesión %(brand)s.",
-            "timeline_image_size": "Tamaño de imaxe na cronoloxía",
-            "use_high_contrast": "Usar alto contraste"
+            "timeline_image_size": "Tamaño de imaxe na cronoloxía"
         },
         "automatic_language_detection_syntax_highlight": "Activar a detección automática de idioma para o resalte da sintaxe",
         "autoplay_gifs": "Reprod. automática GIFs",
@@ -2064,7 +2047,6 @@
             "confirm_adding_email_body": "Preme no botón inferior para confirmar que queres engadir o email.",
             "confirm_adding_email_title": "Confirma novo email",
             "deactivate_confirm_body": "¿Tes a certeza de querer desactivar a túa conta? Esto é irreversible.",
-            "deactivate_confirm_body_password": "Para continuar, escribe o contrasinal da túa conta:",
             "deactivate_confirm_body_sso": "Confirma a desactivación da túa conta usando Single Sign On para probar a túa identidade.",
             "deactivate_confirm_content": "Confirma que desexas desactivar a túa conta. Se continúas:",
             "deactivate_confirm_content_1": "Non poderás reactivar a túa conta",
@@ -2081,7 +2063,6 @@
             "discovery_email_verification_instructions": "Verifica a ligazón na túa caixa de correo",
             "discovery_msisdn_empty": "As opción para atoparte aparecerán cando engadas un número de teléfono.",
             "discovery_needs_terms": "Acepta os Termos do Servizo do servidor (%(serverName)s) para permitir que te atopen polo enderezo de email ou número de teléfono.",
-            "discovery_section": "Descubrir",
             "email_address_in_use": "Xa se está a usar este email",
             "email_address_label": "Enderezo de Email",
             "email_not_verified": "O teu enderezo de email aínda non foi verificado",
@@ -2099,8 +2080,6 @@
             "error_remove_3pid": "Non se puido eliminar a información do contacto",
             "error_revoke_email_discovery": "Non se puido revogar a compartición para o enderezo de correo",
             "error_revoke_msisdn_discovery": "Non se puido revogar a compartición do número de teléfono",
-            "error_saving_profile": "Non se puido realizar a acción",
-            "error_saving_profile_title": "Non se gardaron os cambios",
             "error_share_email_discovery": "Non se puido compartir co enderezo de email",
             "error_share_msisdn_discovery": "Non se puido compartir o número de teléfono",
             "incorrect_msisdn_verification": "Código de verificación incorrecto",
@@ -2114,8 +2093,7 @@
             "password_change_success": "Cambiouse correctamente o contrasinal.",
             "remove_email_prompt": "Eliminar %(email)s?",
             "remove_msisdn_prompt": "Eliminar %(phone)s?",
-            "spell_check_locale_placeholder": "Elixe o idioma",
-            "spell_check_section": "Corrección"
+            "spell_check_locale_placeholder": "Elixe o idioma"
         },
         "image_thumbnails": "Mostrar miniaturas/vista previa das imaxes",
         "inline_url_previews_default": "Activar por defecto as vistas previas en liña de URL",
@@ -2250,7 +2228,6 @@
             "delete_backup_confirm_description": "Estás seguro? Perderás as mensaxes cifradas se non tes unha copia de apoio das chaves de cifrado.",
             "e2ee_default_disabled_warning": "A administración do servidor desactivou por defecto o cifrado extremo-a-extremo en salas privadas e Mensaxes Directas.",
             "enable_message_search": "Activar a busca de mensaxes en salas cifradas",
-            "encryption_individual_verification_mode": "Verificar individualmente cada sesión utilizada pola usuaria para marcala como confiable, non confiando en dispositivos con sinatura cruzada.",
             "encryption_section": "Cifrado",
             "error_loading_key_backup_status": "Non se puido cargar o estado das chaves de apoio",
             "export_megolm_keys": "Exportar chaves E2E da sala",
@@ -2264,7 +2241,6 @@
             "key_backup_connect_prompt": "Conecta esta sesión ao gardado das chaves antes de desconectarte para evitar perder calquera chave que só puidese estar nesta sesión.",
             "key_backup_inactive": "Esta sesión <b>non está facendo copia das chaves</b>, pero tes unha copia de apoio existente que podes restablecer e engadir para seguir adiante.",
             "key_backup_inactive_warning": "As túas chaves <b>non están a ser copiadas desde esta sesión</b>.",
-            "manually_verify_all_sessions": "Verificar manualmente todas as sesións remotas",
             "message_search_disable_warning": "Se está desactivado, as mensaxes das salas cifradas non aparecerán nos resultados das buscas.",
             "message_search_disabled": "Gardar de xeito seguro mensaxes cifradas na caché local para que aparezan nos resultados de buscas.",
             "message_search_enabled": {
@@ -2674,7 +2650,6 @@
             "tooltip_sub": "Preme para ver as edicións",
             "tooltip_title": "Editado o %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "Non están dispoñibles as mensaxes cifradas anteriores a este punto.",
         "error_no_renderer": "Non se puido amosar este evento",
         "error_rendering_message": "Non se cargou a mensaxe",
         "historical_messages_unavailable": "Non podes ver mensaxes anteriores",
@@ -2895,8 +2870,7 @@
         "pending_moderation_reason": "Mensaxe pendente de moderar: %(reason)s",
         "reactions": {
             "add_reaction_prompt": "Engadir reacción",
-            "label": "%(reactors)s reaccionou con %(content)s",
-            "tooltip": "<reactors/><reactedWith>reaccionaron con %(shortName)s</reactedWith>"
+            "label": "%(reactors)s reaccionou con %(content)s"
         },
         "read_receipt_title": {
             "one": "Visto por %(count)s persoa",

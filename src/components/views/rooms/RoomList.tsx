@@ -57,10 +57,13 @@ import IconizedContextMenu, {
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ExtraTile from "./ExtraTile";
 import RoomSublist, { IAuxButtonProps } from "./RoomSublist";
 import { SdkContextClass } from "../../../contexts/SDKContext";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import AccessibleButton from "../elements/AccessibleButton";
+import { Landmark, LandmarkNavigation } from "../../../accessibility/LandmarkNavigation";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -160,7 +163,7 @@ const DmAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex, dispatcher = default
                                     showSpaceInvite(activeSpace);
                                 }}
                                 disabled={!canInvite}
-                                tooltip={canInvite ? undefined : _t("spaces|error_no_permission_invite")}
+                                title={canInvite ? undefined : _t("spaces|error_no_permission_invite")}
                             />
                         )}
                     </IconizedContextMenuOptionList>
@@ -185,7 +188,7 @@ const DmAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex, dispatcher = default
         );
     } else if (!activeSpace && showCreateRooms) {
         return (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 tabIndex={tabIndex}
                 onClick={(e) => {
                     dispatcher.dispatch({ action: "view_create_chat" });
@@ -250,7 +253,7 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
                                 PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateRoomItem", e);
                             }}
                             disabled={!canAddRooms}
-                            tooltip={canAddRooms ? undefined : _t("spaces|error_no_permission_create_room")}
+                            title={canAddRooms ? undefined : _t("spaces|error_no_permission_create_room")}
                         />
                         {videoRoomsEnabled && (
                             <IconizedContextMenuOption
@@ -266,7 +269,7 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
                                     );
                                 }}
                                 disabled={!canAddRooms}
-                                tooltip={canAddRooms ? undefined : _t("spaces|error_no_permission_create_room")}
+                                title={canAddRooms ? undefined : _t("spaces|error_no_permission_create_room")}
                             >
                                 <BetaPill />
                             </IconizedContextMenuOption>
@@ -281,7 +284,7 @@ const UntaggedAuxButton: React.FC<IAuxButtonProps> = ({ tabIndex }) => {
                                 showAddExistingRooms(activeSpace);
                             }}
                             disabled={!canAddRooms}
-                            tooltip={canAddRooms ? undefined : _t("spaces|error_no_permission_add_room")}
+                            title={canAddRooms ? undefined : _t("spaces|error_no_permission_add_room")}
                         />
                     </>
                 ) : null}
@@ -652,7 +655,22 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     <div
                         onFocus={this.props.onFocus}
                         onBlur={this.props.onBlur}
-                        onKeyDown={onKeyDownHandler}
+                        onKeyDown={(ev) => {
+                            const navAction = getKeyBindingsManager().getNavigationAction(ev);
+                            if (
+                                navAction === KeyBindingAction.NextLandmark ||
+                                navAction === KeyBindingAction.PreviousLandmark
+                            ) {
+                                LandmarkNavigation.findAndFocusNextLandmark(
+                                    Landmark.ROOM_LIST,
+                                    navAction === KeyBindingAction.PreviousLandmark,
+                                );
+                                ev.stopPropagation();
+                                ev.preventDefault();
+                                return;
+                            }
+                            onKeyDownHandler(ev);
+                        }}
                         className="mx_RoomList"
                         role="tree"
                         aria-label={_t("common|rooms")}

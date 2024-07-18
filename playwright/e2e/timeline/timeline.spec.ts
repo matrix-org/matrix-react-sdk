@@ -70,6 +70,22 @@ const sendEvent = async (client: Client, roomId: string, html = false): Promise<
     return client.sendEvent(roomId, null, "m.room.message" as EventType, content);
 };
 
+const sendImage = async (
+    client: Client,
+    roomId: string,
+    pngBytes: Buffer,
+    additionalContent?: any,
+): Promise<ISendEventResponse> => {
+    const upload = await client.uploadContent(pngBytes, { name: "image.png", type: "image/png" });
+    return client.sendEvent(roomId, null, "m.room.message" as EventType, {
+        ...(additionalContent ?? {}),
+
+        msgtype: "m.image" as MsgType,
+        body: "image.png",
+        url: upload.content_uri,
+    });
+};
+
 test.describe("Timeline", () => {
     test.use({
         displayName: OLD_NAME,
@@ -394,6 +410,7 @@ test.describe("Timeline", () => {
                 {
                     // Exclude timestamp from snapshot of mx_MainSplit
                     mask: [page.locator(".mx_MessageTimestamp")],
+                    hideTooltips: true,
                 },
             );
 
@@ -411,6 +428,7 @@ test.describe("Timeline", () => {
             await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("expanded-gels-and-messages-irc-layout.png", {
                 // Exclude timestamp from snapshot of mx_MainSplit
                 mask: [page.locator(".mx_MessageTimestamp")],
+                hideTooltips: true,
             });
 
             // 3. Alignment of expanded GELS and placeholder of deleted message
@@ -431,6 +449,7 @@ test.describe("Timeline", () => {
             await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("expanded-gels-redaction-placeholder.png", {
                 // Exclude timestamp from snapshot of mx_MainSplit
                 mask: [page.locator(".mx_MessageTimestamp")],
+                hideTooltips: true,
             });
 
             // 4. Alignment of expanded GELS, placeholder of deleted message, and emote
@@ -453,6 +472,7 @@ test.describe("Timeline", () => {
             await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("expanded-gels-emote-irc-layout.png", {
                 // Exclude timestamp from snapshot of mx_MainSplit
                 mask: [page.locator(".mx_MessageTimestamp")],
+                hideTooltips: true,
             });
         });
 
@@ -465,6 +485,7 @@ test.describe("Timeline", () => {
                         display: none !important;
                     }
                 `,
+                hideTooltips: true,
             };
 
             await sendEvent(app.client, room.roomId);
@@ -552,9 +573,9 @@ test.describe("Timeline", () => {
             );
         });
 
-        test("should set inline start padding to a hidden event line", async ({ page, app, room, cryptoBackend }) => {
+        test("should set inline start padding to a hidden event line", async ({ page, app, room }) => {
             test.skip(
-                cryptoBackend === "rust",
+                true,
                 "Disabled due to screenshot test being flaky - https://github.com/element-hq/element-web/issues/26890",
             );
             await sendEvent(app.client, room.roomId);
@@ -765,10 +786,10 @@ test.describe("Timeline", () => {
 
                 await page.locator(".mx_LegacyRoomHeader").getByRole("button", { name: "Search" }).click();
 
-                await expect(page.locator(".mx_SearchBar")).toMatchScreenshot("search-bar-on-timeline.png");
+                await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").fill("Message");
+                await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").press("Enter");
 
-                await page.locator(".mx_SearchBar_input").getByRole("textbox").fill("Message");
-                await page.locator(".mx_SearchBar_input").getByRole("textbox").press("Enter");
+                await expect(page.locator(".mx_RoomSearchAuxPanel")).toMatchScreenshot("search-aux-panel.png");
 
                 for (const locator of await page
                     .locator(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight")
@@ -806,8 +827,8 @@ test.describe("Timeline", () => {
                 await page.locator(".mx_LegacyRoomHeader").getByRole("button", { name: "Search" }).click();
 
                 // Search the string to display both the message and TextualEvent on search results panel
-                await page.locator(".mx_SearchBar").getByRole("textbox").fill(stringToSearch);
-                await page.locator(".mx_SearchBar").getByRole("textbox").press("Enter");
+                await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").fill(stringToSearch);
+                await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").press("Enter");
 
                 // On search results panel
                 const resultsPanel = page.locator(".mx_RoomView_searchResultsPanel");
@@ -1135,6 +1156,92 @@ test.describe("Timeline", () => {
                 "long-strings-with-reply-bubble-layout.png",
                 screenshotOptions,
             );
+        });
+
+        async function testImageRendering(page: Page, app: ElementAppPage, room: { roomId: string }) {
+            await app.viewRoomById(room.roomId);
+
+            // Reinstall the service workers to clear their implicit caches (global-level stuff)
+            await page.evaluate(async () => {
+                const registrations = await window.navigator.serviceWorker.getRegistrations();
+                registrations.forEach((r) => r.update());
+            });
+
+            await sendImage(app.client, room.roomId, NEW_AVATAR);
+            await expect(page.locator(".mx_MImageBody").first()).toBeVisible();
+
+            // Exclude timestamp and read marker from snapshot
+            const screenshotOptions = {
+                mask: [page.locator(".mx_MessageTimestamp")],
+                css: `
+                    .mx_TopUnreadMessagesBar, .mx_MessagePanel_myReadMarker {
+                        display: none !important;
+                    }
+                `,
+            };
+
+            await expect(page.locator(".mx_ScrollPanel")).toMatchScreenshot(
+                "image-in-timeline-default-layout.png",
+                screenshotOptions,
+            );
+        }
+
+        test("should render images in the timeline", async ({ page, app, room, context }) => {
+            await testImageRendering(page, app, room);
+        });
+
+        // XXX: This test doesn't actually work because the service worker relies on IndexedDB, which Playwright forces
+        // to be a localstorage implementation, which service workers cannot access.
+        // See https://github.com/microsoft/playwright/issues/11164
+        // See https://github.com/microsoft/playwright/issues/15684#issuecomment-2070862042
+        //
+        // In practice, this means this test will *always* succeed because it ends up relying on fallback behaviour tested
+        // above (unless of course the above tests are also broken).
+        test.describe("MSC3916 - Authenticated Media", () => {
+            test("should render authenticated images in the timeline", async ({ page, app, room, context }) => {
+                // Note: we have to use `context` instead of `page` for routing, otherwise we'll miss Service Worker events.
+                // See https://playwright.dev/docs/service-workers-experimental#network-events-and-routing
+
+                // Install our mocks and preventative measures
+                await context.route("**/_matrix/client/versions", async (route) => {
+                    // Force enable MSC3916/Matrix 1.11, which may require the service worker's internal cache to be cleared later.
+                    const json = await (await route.fetch()).json();
+                    if (!json["versions"]) json["versions"] = [];
+                    json["versions"].push("v1.11");
+                    await route.fulfill({ json });
+                });
+                await context.route("**/_matrix/media/*/download/**", async (route) => {
+                    // should not be called. We don't use `abort` so that it's clearer in the logs what happened.
+                    await route.fulfill({
+                        status: 500,
+                        json: { errcode: "M_UNKNOWN", error: "Unexpected route called." },
+                    });
+                });
+                await context.route("**/_matrix/media/*/thumbnail/**", async (route) => {
+                    // should not be called. We don't use `abort` so that it's clearer in the logs what happened.
+                    await route.fulfill({
+                        status: 500,
+                        json: { errcode: "M_UNKNOWN", error: "Unexpected route called." },
+                    });
+                });
+                await context.route("**/_matrix/client/v1/download/**", async (route) => {
+                    expect(route.request().headers()["Authorization"]).toBeDefined();
+                    // we can't use route.continue() because no configured homeserver supports MSC3916 yet
+                    await route.fulfill({
+                        body: NEW_AVATAR,
+                    });
+                });
+                await context.route("**/_matrix/client/v1/thumbnail/**", async (route) => {
+                    expect(route.request().headers()["Authorization"]).toBeDefined();
+                    // we can't use route.continue() because no configured homeserver supports MSC3916 yet
+                    await route.fulfill({
+                        body: NEW_AVATAR,
+                    });
+                });
+
+                // We check the same screenshot because there should be no user-visible impact to using authentication.
+                await testImageRendering(page, app, room);
+            });
         });
     });
 });

@@ -29,7 +29,7 @@ import { defer, sleep } from "matrix-js-sdk/src/utils";
 import { UserVerificationStatus } from "matrix-js-sdk/src/crypto-api";
 
 import MatrixChat from "../../../src/components/structures/MatrixChat";
-import * as StorageManager from "../../../src/utils/StorageManager";
+import * as StorageAccess from "../../../src/utils/StorageAccess";
 import defaultDispatcher from "../../../src/dispatcher/dispatcher";
 import { Action } from "../../../src/dispatcher/actions";
 import { UserTab } from "../../../src/components/views/dialogs/UserTab";
@@ -61,6 +61,7 @@ import SettingsStore from "../../../src/settings/SettingsStore";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import { MatrixClientPeg as peg } from "../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
+import { ReleaseAnnouncementStore } from "../../../src/stores/ReleaseAnnouncementStore";
 
 jest.mock("matrix-js-sdk/src/oidc/authorize", () => ({
     completeAuthorizationCodeGrant: jest.fn(),
@@ -219,8 +220,8 @@ describe("<MatrixChat />", () => {
             headers: { "content-type": "application/json" },
         });
 
-        jest.spyOn(StorageManager, "idbLoad").mockReset();
-        jest.spyOn(StorageManager, "idbSave").mockResolvedValue(undefined);
+        jest.spyOn(StorageAccess, "idbLoad").mockReset();
+        jest.spyOn(StorageAccess, "idbSave").mockResolvedValue(undefined);
         jest.spyOn(defaultDispatcher, "dispatch").mockClear();
         jest.spyOn(defaultDispatcher, "fire").mockClear();
 
@@ -283,6 +284,7 @@ describe("<MatrixChat />", () => {
         const tokenResponse: BearerTokenResponse = {
             access_token: accessToken,
             refresh_token: "def456",
+            id_token: "ghi789",
             scope: "test",
             token_type: "Bearer",
             expires_at: 12345,
@@ -458,7 +460,7 @@ describe("<MatrixChat />", () => {
 
         describe("when login succeeds", () => {
             beforeEach(() => {
-                jest.spyOn(StorageManager, "idbLoad").mockImplementation(
+                jest.spyOn(StorageAccess, "idbLoad").mockImplementation(
                     async (_table: string, key: string | string[]) => (key === "mx_access_token" ? accessToken : null),
                 );
                 loginClient.getProfileInfo.mockResolvedValue({
@@ -552,7 +554,7 @@ describe("<MatrixChat />", () => {
 
         beforeEach(async () => {
             await populateStorageForSession();
-            jest.spyOn(StorageManager, "idbLoad").mockImplementation(async (table, key) => {
+            jest.spyOn(StorageAccess, "idbLoad").mockImplementation(async (table, key) => {
                 const safeKey = Array.isArray(key) ? key[0] : key;
                 return mockidb[table]?.[safeKey];
             });
@@ -627,6 +629,12 @@ describe("<MatrixChat />", () => {
                         (id) => [room, spaceRoom].find((room) => room.roomId === id) || null,
                     );
                     jest.spyOn(spaceRoom, "isSpaceRoom").mockReturnValue(true);
+
+                    jest.spyOn(ReleaseAnnouncementStore.instance, "getReleaseAnnouncement").mockReturnValue(null);
+                });
+
+                afterEach(() => {
+                    jest.restoreAllMocks();
                 });
 
                 describe("leave_room", () => {
@@ -761,7 +769,7 @@ describe("<MatrixChat />", () => {
                     jest.spyOn(PosthogAnalytics.instance, "logout").mockImplementation(() => {});
                     jest.spyOn(EventIndexPeg, "deleteEventIndex").mockImplementation(async () => {});
 
-                    jest.spyOn(CallStore.instance, "activeCalls", "get").mockReturnValue(new Set([call1, call2]));
+                    jest.spyOn(CallStore.instance, "connectedCalls", "get").mockReturnValue(new Set([call1, call2]));
 
                     mockPlatformPeg({
                         destroyPickleKey: jest.fn(),
@@ -861,7 +869,7 @@ describe("<MatrixChat />", () => {
 
             mockClient.loginFlows.mockResolvedValue({ flows: [{ type: "m.login.password" }] });
 
-            jest.spyOn(StorageManager, "idbLoad").mockImplementation(async (table, key) => {
+            jest.spyOn(StorageAccess, "idbLoad").mockImplementation(async (table, key) => {
                 const safeKey = Array.isArray(key) ? key[0] : key;
                 return mockidb[table]?.[safeKey];
             });
@@ -947,6 +955,7 @@ describe("<MatrixChat />", () => {
         describe("post login setup", () => {
             beforeEach(() => {
                 const mockCrypto = {
+                    getVersion: jest.fn().mockReturnValue("Version 0"),
                     getVerificationRequestsToDeviceInProgress: jest.fn().mockReturnValue([]),
                     getUserDeviceInfo: jest.fn().mockResolvedValue(new Map()),
                     getUserVerificationStatus: jest
@@ -1157,7 +1166,7 @@ describe("<MatrixChat />", () => {
 
         describe("when login succeeds", () => {
             beforeEach(() => {
-                jest.spyOn(StorageManager, "idbLoad").mockImplementation(
+                jest.spyOn(StorageAccess, "idbLoad").mockImplementation(
                     async (_table: string, key: string | string[]) => {
                         if (key === "mx_access_token") {
                             return accessToken as any;

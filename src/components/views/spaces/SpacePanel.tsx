@@ -34,7 +34,6 @@ import { _t } from "../../../languageHandler";
 import { useContextMenu } from "../../structures/ContextMenu";
 import SpaceCreateMenu from "./SpaceCreateMenu";
 import { SpaceButton, SpaceItem } from "./SpaceTreeLevel";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import {
@@ -63,16 +62,19 @@ import QuickSettingsButton from "./QuickSettingsButton";
 import { useSettingValue } from "../../../hooks/useSettings";
 import UserMenu from "../../structures/UserMenu";
 import IndicatorScrollbar from "../../structures/IndicatorScrollbar";
-import { IS_MAC, Key } from "../../../Keyboard";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { Action } from "../../../dispatcher/actions";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
-import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { ThreadsActivityCentre } from "./threads-activity-centre/";
+import AccessibleButton from "../elements/AccessibleButton";
+import { Landmark, LandmarkNavigation } from "../../../accessibility/LandmarkNavigation";
+import { KeyboardShortcut } from "../settings/KeyboardShortcut";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -368,8 +370,6 @@ const SpacePanel: React.FC = () => {
         }
     });
 
-    const isThreadsActivityCentreEnabled = useSettingValue<boolean>("threadsActivityCentre");
-
     return (
         <RovingTabIndexProvider handleHomeEnd handleUpDown={!dragging}>
             {({ onKeyDownHandler, onDragEndHandler }) => (
@@ -386,29 +386,35 @@ const SpacePanel: React.FC = () => {
                 >
                     <nav
                         className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
-                        onKeyDown={onKeyDownHandler}
+                        onKeyDown={(ev) => {
+                            const navAction = getKeyBindingsManager().getNavigationAction(ev);
+                            if (
+                                navAction === KeyBindingAction.NextLandmark ||
+                                navAction === KeyBindingAction.PreviousLandmark
+                            ) {
+                                LandmarkNavigation.findAndFocusNextLandmark(
+                                    Landmark.ACTIVE_SPACE_BUTTON,
+                                    navAction === KeyBindingAction.PreviousLandmark,
+                                );
+                                ev.stopPropagation();
+                                ev.preventDefault();
+                                return;
+                            }
+                            onKeyDownHandler(ev);
+                        }}
                         ref={ref}
                         aria-label={_t("common|spaces")}
                     >
                         <UserMenu isPanelCollapsed={isPanelCollapsed}>
-                            <AccessibleTooltipButton
+                            <AccessibleButton
                                 className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
                                 onClick={() => setPanelCollapsed(!isPanelCollapsed)}
                                 title={isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
-                                tooltip={
-                                    <div>
-                                        <div className="mx_Tooltip_title">
-                                            {isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
-                                        </div>
-                                        <div className="mx_Tooltip_sub">
-                                            {IS_MAC
-                                                ? "⌘ + ⇧ + D"
-                                                : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) +
-                                                  " + " +
-                                                  _t(ALTERNATE_KEY_NAME[Key.SHIFT]) +
-                                                  " + D"}
-                                        </div>
-                                    </div>
+                                caption={
+                                    <KeyboardShortcut
+                                        value={{ ctrlOrCmdKey: true, shiftKey: true, key: "d" }}
+                                        className="mx_SpacePanel_Tooltip_KeyboardShortcut"
+                                    />
                                 }
                             />
                         </UserMenu>
@@ -426,9 +432,8 @@ const SpacePanel: React.FC = () => {
                             )}
                         </Droppable>
 
-                        {isThreadsActivityCentreEnabled && (
-                            <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} />
-                        )}
+                        <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} />
+
                         <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
                     </nav>
                 </DragDropContext>

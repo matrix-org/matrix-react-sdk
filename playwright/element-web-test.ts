@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import { test as base, expect as baseExpect, Locator, Page, ExpectMatcherState, ElementHandle } from "@playwright/test";
+import { sanitizeForFilePath } from "playwright-core/lib/utils";
 import AxeBuilder from "@axe-core/playwright";
 import _ from "lodash";
-import { basename } from "node:path";
+import { basename, extname } from "node:path";
 
 import type mailhog from "mailhog";
 import type { IConfigOptions } from "../src/IConfigOptions";
@@ -32,6 +33,10 @@ import { Toasts } from "./pages/toasts";
 import { Bot, CreateBotOpts } from "./pages/bot";
 import { ProxyInstance, SlidingSyncProxy } from "./plugins/sliding-sync-proxy";
 import { Webserver } from "./plugins/webserver";
+
+// Enable experimental service worker support
+// See https://playwright.dev/docs/service-workers-experimental#how-to-enable
+process.env["PW_EXPERIMENTAL_SERVICE_WORKER_NETWORK_EVENTS"] = "1";
 
 const CONFIG_JSON: Partial<IConfigOptions> = {
     // This is deliberately quite a minimal config.json, so that we can test that the default settings
@@ -59,84 +64,77 @@ const CONFIG_JSON: Partial<IConfigOptions> = {
     },
 };
 
-export type TestOptions = {
-    cryptoBackend: "legacy" | "rust";
-};
-
 interface CredentialsWithDisplayName extends Credentials {
     displayName: string;
 }
 
-export const test = base.extend<
-    TestOptions & {
-        axe: AxeBuilder;
-        checkA11y: () => Promise<void>;
+export const test = base.extend<{
+    axe: AxeBuilder;
+    checkA11y: () => Promise<void>;
 
-        /**
-         * The contents of the config.json to send when the client requests it.
-         */
-        config: typeof CONFIG_JSON;
+    /**
+     * The contents of the config.json to send when the client requests it.
+     */
+    config: typeof CONFIG_JSON;
 
-        /**
-         * The options with which to run the {@link #homeserver} fixture.
-         */
-        startHomeserverOpts: StartHomeserverOpts | string;
+    /**
+     * The options with which to run the {@link #homeserver} fixture.
+     */
+    startHomeserverOpts: StartHomeserverOpts | string;
 
-        homeserver: HomeserverInstance;
-        oAuthServer: { port: number };
+    homeserver: HomeserverInstance;
+    oAuthServer: { port: number };
 
-        /**
-         * The displayname to use for the user registered in {@link #credentials}.
-         *
-         * To set it, call `test.use({ displayName: "myDisplayName" })` in the test file or `describe` block.
-         * See {@link https://playwright.dev/docs/api/class-test#test-use}.
-         */
-        displayName?: string;
+    /**
+     * The displayname to use for the user registered in {@link #credentials}.
+     *
+     * To set it, call `test.use({ displayName: "myDisplayName" })` in the test file or `describe` block.
+     * See {@link https://playwright.dev/docs/api/class-test#test-use}.
+     */
+    displayName?: string;
 
-        /**
-         * A test fixture which registers a test user on the {@link #homeserver} and supplies the details
-         * of the registered user.
-         */
-        credentials: CredentialsWithDisplayName;
+    /**
+     * A test fixture which registers a test user on the {@link #homeserver} and supplies the details
+     * of the registered user.
+     */
+    credentials: CredentialsWithDisplayName;
 
-        /**
-         * The same as {@link https://playwright.dev/docs/api/class-fixtures#fixtures-page|`page`},
-         * but adds an initScript which will populate localStorage with the user's details from
-         * {@link #credentials} and {@link #homeserver}.
-         *
-         * Similar to {@link #user}, but doesn't load the app.
-         */
-        pageWithCredentials: Page;
+    /**
+     * The same as {@link https://playwright.dev/docs/api/class-fixtures#fixtures-page|`page`},
+     * but adds an initScript which will populate localStorage with the user's details from
+     * {@link #credentials} and {@link #homeserver}.
+     *
+     * Similar to {@link #user}, but doesn't load the app.
+     */
+    pageWithCredentials: Page;
 
-        /**
-         * A (rather poorly-named) test fixture which registers a user per {@link #credentials}, stores
-         * the credentials into localStorage per {@link #homeserver}, and then loads the front page of the
-         * app.
-         */
-        user: CredentialsWithDisplayName;
+    /**
+     * A (rather poorly-named) test fixture which registers a user per {@link #credentials}, stores
+     * the credentials into localStorage per {@link #homeserver}, and then loads the front page of the
+     * app.
+     */
+    user: CredentialsWithDisplayName;
 
-        /**
-         * The same as {@link https://playwright.dev/docs/api/class-fixtures#fixtures-page|`page`},
-         * but wraps the returned `Page` in a class of utilities for interacting with the Element-Web UI,
-         * {@link ElementAppPage}.
-         */
-        app: ElementAppPage;
+    /**
+     * The same as {@link https://playwright.dev/docs/api/class-fixtures#fixtures-page|`page`},
+     * but wraps the returned `Page` in a class of utilities for interacting with the Element-Web UI,
+     * {@link ElementAppPage}.
+     */
+    app: ElementAppPage;
 
-        mailhog: { api: mailhog.API; instance: Instance };
-        crypto: Crypto;
-        room?: { roomId: string };
-        toasts: Toasts;
-        uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
-        botCreateOpts: CreateBotOpts;
-        bot: Bot;
-        slidingSyncProxy: ProxyInstance;
-        labsFlags: string[];
-        webserver: Webserver;
-    }
->({
-    cryptoBackend: ["legacy", { option: true }],
+    mailhog: { api: mailhog.API; instance: Instance };
+    crypto: Crypto;
+    room?: { roomId: string };
+    toasts: Toasts;
+    uut?: Locator; // Unit Under Test, useful place to refer a prepared locator
+    botCreateOpts: CreateBotOpts;
+    bot: Bot;
+    slidingSyncProxy: ProxyInstance;
+    labsFlags: string[];
+    webserver: Webserver;
+}>({
     config: CONFIG_JSON,
-    page: async ({ context, page, config, cryptoBackend, labsFlags }, use) => {
+    page: async ({ context, page, config, labsFlags }, use) => {
         await context.route(`http://localhost:8080/config.json*`, async (route) => {
             const json = { ...CONFIG_JSON, ...config };
             json["features"] = {
@@ -147,10 +145,6 @@ export const test = base.extend<
                     return obj;
                 }, {}),
             };
-            // the default is to use rust now, so set to `false` if on legacy backend
-            if (cryptoBackend === "legacy") {
-                json.features.feature_rust_crypto = false;
-            }
             await route.fulfill({ json });
         });
         await use(page);
@@ -305,19 +299,39 @@ export const test = base.extend<
     },
 });
 
+// Based on https://github.com/microsoft/playwright/blob/2b77ed4d7aafa85a600caa0b0d101b72c8437eeb/packages/playwright/src/util.ts#L206C8-L210C2
+function sanitizeFilePathBeforeExtension(filePath: string): string {
+    const ext = extname(filePath);
+    const base = filePath.substring(0, filePath.length - ext.length);
+    return sanitizeForFilePath(base) + ext;
+}
+
 export const expect = baseExpect.extend({
     async toMatchScreenshot(
         this: ExpectMatcherState,
         receiver: Page | Locator,
-        name?: `${string}.png`,
+        name: `${string}.png`,
         options?: {
             mask?: Array<Locator>;
             omitBackground?: boolean;
+            hideTooltips?: boolean;
             timeout?: number;
             css?: string;
         },
     ) {
+        const testInfo = test.info();
+        if (!testInfo) throw new Error(`toMatchScreenshot() must be called during the test`);
+
         const page = "page" in receiver ? receiver.page() : receiver;
+
+        let hideTooltipsCss: string | undefined;
+        if (options?.hideTooltips) {
+            hideTooltipsCss = `
+                .mx_Tooltip_visible {
+                    visibility: hidden !important;
+                }
+            `;
+        }
 
         // We add a custom style tag before taking screenshots
         const style = (await page.addStyleTag({
@@ -338,17 +352,31 @@ export const expect = baseExpect.extend({
                 .mx_ReplyChain {
                     border-left-color: var(--cpd-color-blue-1200) !important;
                 }
+                /* Avoid flakiness from hover styling */
+                .mx_ReplyChain_show {
+                    color: var(--cpd-color-text-secondary) !important;
+                }
                 /* Use monospace font for timestamp for consistent mask width */
                 .mx_MessageTimestamp {
                     font-family: Inconsolata !important;
                 }
+                ${hideTooltipsCss ?? ""}
                 ${options?.css ?? ""}
             `,
         })) as ElementHandle<Element>;
 
-        await baseExpect(receiver).toHaveScreenshot(name, options);
+        const screenshotName = sanitizeFilePathBeforeExtension(name);
+        await baseExpect(receiver).toHaveScreenshot(screenshotName, options);
 
         await style.evaluate((tag) => tag.remove());
+
+        testInfo.annotations.push({
+            // `_` prefix hides it from the HTML reporter
+            type: "_screenshot",
+            // include a path relative to `playwright/snapshots/`
+            description: testInfo.snapshotPath(screenshotName).split("/playwright/snapshots/", 2)[1],
+        });
+
         return { pass: true, message: () => "", name: "toMatchScreenshot" };
     },
 });

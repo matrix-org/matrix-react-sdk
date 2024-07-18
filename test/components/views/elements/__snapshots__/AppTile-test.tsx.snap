@@ -13,34 +13,36 @@ exports[`AppTile destroys non-persisted right panel widget on room change 1`] = 
         class="mx_BaseCard_header"
       >
         <div
-          class="mx_AccessibleButton mx_BaseCard_close"
+          class="mx_BaseCard_header_title"
+        >
+          <h4
+            class="mx_Heading_h4 mx_BaseCard_header_title_heading"
+          >
+            Example 1
+          </h4>
+          <div
+            aria-expanded="false"
+            aria-haspopup="true"
+            aria-label="Options"
+            class="mx_AccessibleButton mx_BaseCard_header_title_button--option"
+            role="button"
+            tabindex="0"
+          />
+        </div>
+        <button
+          class="_icon-button_bh2qc_17 _subtle-bg_bh2qc_38"
           data-testid="base-card-close-button"
           role="button"
+          style="--cpd-icon-button-size: 28px;"
           tabindex="0"
-          title="Close"
-        />
-        <div
-          class="mx_BaseCard_headerProp"
         >
           <div
-            class="mx_BaseCard_header_title"
+            class="_indicator-icon_133tf_26"
+            style="--cpd-icon-button-size: 100%;"
           >
-            <h4
-              class="mx_Heading_h4 mx_BaseCard_header_title_heading"
-            >
-              Example 1
-            </h4>
-            <div
-              aria-expanded="false"
-              aria-haspopup="true"
-              aria-label="Options"
-              class="mx_AccessibleButton mx_BaseCard_header_title_button--option"
-              role="button"
-              tabindex="0"
-              title="Options"
-            />
+            <div />
           </div>
-        </div>
+        </button>
       </div>
       <div
         class="mx_AppTileFullWidth"
@@ -117,7 +119,6 @@ exports[`AppTile for a pinned widget should render 1`] = `
             <img
               alt=""
               class="_image_mcap2_50"
-              crossorigin="anonymous"
               data-type="round"
               height="20px"
               loading="lazy"
@@ -126,9 +127,9 @@ exports[`AppTile for a pinned widget should render 1`] = `
               width="20px"
             />
           </span>
-          <b>
+          <h3>
             Example 1
-          </b>
+          </h3>
           <span />
         </span>
       </span>
@@ -136,20 +137,20 @@ exports[`AppTile for a pinned widget should render 1`] = `
         class="mx_AppTileMenuBar_widgets"
       >
         <div
+          aria-label="Un-maximise"
           class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
           role="button"
           tabindex="0"
-          title="Un-maximise"
         >
           <div
             class="mx_Icon mx_Icon_12"
           />
         </div>
         <div
+          aria-label="Minimise"
           class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
           role="button"
           tabindex="0"
-          title="Minimise"
         >
           <div
             class="mx_Icon mx_Icon_12"
@@ -162,7 +163,6 @@ exports[`AppTile for a pinned widget should render 1`] = `
           class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
           role="button"
           tabindex="0"
-          title="Options"
         >
           <div
             class="mx_Icon mx_Icon_12"
@@ -204,7 +204,6 @@ exports[`AppTile for a pinned widget should render permission request 1`] = `
             <img
               alt=""
               class="_image_mcap2_50"
-              crossorigin="anonymous"
               data-type="round"
               height="20px"
               loading="lazy"
@@ -213,9 +212,9 @@ exports[`AppTile for a pinned widget should render permission request 1`] = `
               width="20px"
             />
           </span>
-          <b>
+          <h3>
             Example 1
-          </b>
+          </h3>
           <span />
         </span>
       </span>
@@ -223,20 +222,20 @@ exports[`AppTile for a pinned widget should render permission request 1`] = `
         class="mx_AppTileMenuBar_widgets"
       >
         <div
+          aria-label="Un-maximise"
           class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
           role="button"
           tabindex="0"
-          title="Un-maximise"
         >
           <div
             class="mx_Icon mx_Icon_12"
           />
         </div>
         <div
+          aria-label="Minimise"
           class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
           role="button"
           tabindex="0"
-          title="Minimise"
         >
           <div
             class="mx_Icon mx_Icon_12"
@@ -249,7 +248,6 @@ exports[`AppTile for a pinned widget should render permission request 1`] = `
           class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
           role="button"
           tabindex="0"
-          title="Options"
         >
           <div
             class="mx_Icon mx_Icon_12"
@@ -293,9 +291,7 @@ exports[`AppTile for a pinned widget should render permission request 1`] = `
             <span>
               Using this widget may share data 
               <div
-                aria-describedby="mx_TooltipTarget_vY7Q4uEh"
                 class="mx_TextWithTooltip_target mx_TextWithTooltip_target--helpIcon"
-                tabindex="0"
               >
                 <div
                   class="mx_Icon mx_Icon_12"
@@ -358,7 +354,6 @@ exports[`AppTile preserves non-persisted widget on container move 1`] = `
                   <img
                     alt=""
                     class="_image_mcap2_50"
-                    crossorigin="anonymous"
                     data-type="round"
                     height="20px"
                     loading="lazy"
@@ -367,9 +362,9 @@ exports[`AppTile preserves non-persisted widget on container move 1`] = `
                     width="20px"
                   />
                 </span>
-                <b>
+                <h3>
                   Example 1
-                </b>
+                </h3>
                 <span />
               </span>
             </span>
@@ -377,20 +372,20 @@ exports[`AppTile preserves non-persisted widget on container move 1`] = `
               class="mx_AppTileMenuBar_widgets"
             >
               <div
+                aria-label="Maximise"
                 class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
                 role="button"
                 tabindex="0"
-                title="Maximise"
               >
                 <div
                   class="mx_Icon mx_Icon_12"
                 />
               </div>
               <div
+                aria-label="Minimise"
                 class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
                 role="button"
                 tabindex="0"
-                title="Minimise"
               >
                 <div
                   class="mx_Icon mx_Icon_12"
@@ -403,7 +398,6 @@ exports[`AppTile preserves non-persisted widget on container move 1`] = `
                 class="mx_AccessibleButton mx_AppTileMenuBar_widgets_button"
                 role="button"
                 tabindex="0"
-                title="Options"
               >
                 <div
                   class="mx_Icon mx_Icon_12"
