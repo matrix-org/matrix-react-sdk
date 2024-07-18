@@ -29,7 +29,7 @@ test(`shows error page if browser lacks Intl support`, async ({ page }) => {
     await expect(page).toMatchScreenshot("unsupported-browser.png");
 });
 
-test.only(`shows error page if browser lacks WebAssembly support`, async ({ page }) => {
+test(`shows error page if browser lacks WebAssembly support`, async ({ page }) => {
     await page.addInitScript({ content: `delete window.WebAssembly;` });
     await page.goto("/");
 
