@@ -3193,14 +3193,14 @@
             "one": "%(count)s reply",
             "other": "%(count)s replies"
         },
+        "empty_description": "Use “%(replyInThread)s” when hovering over a message.",
+        "empty_title": "Threads help keep your conversations on-topic and easy to track.",
         "error_start_thread_existing_relation": "Can't create a thread from an event with an existing relation",
         "mark_all_read": "Mark all as read",
         "my_threads": "My threads",
         "my_threads_description": "Shows all threads you've participated in",
         "open_thread": "Open thread",
-        "show_thread_filter": "Show:",
-        "empty_title": "Threads help keep your conversations on-topic and easy to track.",
-        "empty_description": "Use “%(replyInThread)s” when hovering over a message."
+        "show_thread_filter": "Show:"
     },
     "threads_activity_centre": {
         "header": "Threads activity",
@@ -3767,6 +3767,7 @@
         "error_revoke_3pid_invite_title": "Failed to revoke invite",
         "hide_sessions": "Hide sessions",
         "hide_verified_sessions": "Hide verified sessions",
+        "ignore_button": "Ignore",
         "ignore_confirm_description": "All messages and invites from this user will be hidden. Are you sure you want to ignore them?",
         "ignore_confirm_title": "Ignore %(user)s",
         "invited_by": "Invited by %(sender)s",
@@ -3800,6 +3801,7 @@
         "room_encrypted_detail": "Your messages are secured and only you and the recipient have the unique keys to unlock them.",
         "room_unencrypted": "Messages in this room are not end-to-end encrypted.",
         "room_unencrypted_detail": "In encrypted rooms, your messages are secured and only you and the recipient have the unique keys to unlock them.",
+        "send_message": "Send message",
         "share_button": "Share profile",
         "unban_button_room": "Unban from room",
         "unban_button_space": "Unban from space",
@@ -3807,11 +3809,9 @@
         "unban_space_everything": "Unban them from everything I'm able to",
         "unban_space_specific": "Unban them from specific things I'm able to",
         "unban_space_warning": "They won't be able to access whatever you're not an admin of.",
-        "verify_button": "Verify User",
-        "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices.",
         "unignore_button": "Unignore",
-        "send_message": "Send message",
-        "ignore_button": "Ignore"
+        "verify_button": "Verify User",
+        "verify_explainer": "For extra security, verify this user by checking a one-time code on both of your devices."
     },
     "user_menu": {
         "link_new_device": "Link new device",
