@@ -2695,12 +2695,9 @@
             "one": "%(count)s vastaus",
             "other": "%(count)s vastausta"
         },
-        "empty_explainer": "Ketjut auttavat pitämään keskustelut asiayhteyteen sopivina ja helposti seurattavina.",
-        "empty_heading": "Pidä keskustelut järjestyksessä ketjuissa",
         "my_threads": "Omat ketjut",
         "my_threads_description": "Näyttää kaikki ketjut, joissa olet ollut osallinen",
         "open_thread": "Avaa ketju",
-        "show_all_threads": "Näytä kaikki ketjut",
         "show_thread_filter": "Näytä:"
     },
     "time": {
@@ -3232,7 +3229,6 @@
         },
         "redact_button": "Poista viimeaikaiset viestit",
         "revoke_invite": "Kumoa kutsu",
-        "role_label": "Rooli huoneessa <RoomName/>",
         "room_encrypted": "Tämän huoneen viestit ovat päästä päähän -salattuja.",
         "room_encrypted_detail": "Viestisi ovat turvattu, ja vain sinulla ja vastaanottajalla on avaimet viestien lukemiseen.",
         "room_unencrypted": "Tämän huoneen viestit eivät ole päästä päähän -salattuja.",

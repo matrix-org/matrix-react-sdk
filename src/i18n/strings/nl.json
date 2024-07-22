@@ -2620,15 +2620,10 @@
             "one": "%(count)s reactie",
             "other": "%(count)s reacties"
         },
-        "empty_explainer": "Threads helpen jou gesprekken on-topic te houden en gemakkelijk bij te houden.",
-        "empty_has_threads_tip": "Reageer op een lopende thread of gebruik \"%(replyInThread)s\" wanneer je de muisaanwijzer op een bericht plaatst om een nieuwe te starten.",
-        "empty_heading": "Houd threads georganiseerd",
-        "empty_tip": "<b>Tip:</b> Gebruik “%(replyInThread)s” met de muiscursor boven een bericht.",
         "error_start_thread_existing_relation": "Kan geen discussie maken van een gebeurtenis met een bestaande relatie",
         "my_threads": "Mijn discussies",
         "my_threads_description": "Toon alle threads waarin je hebt bijgedragen",
         "open_thread": "Open discussie",
-        "show_all_threads": "Threads weergeven",
         "show_thread_filter": "Toon:"
     },
     "time": {
@@ -3156,7 +3151,6 @@
         },
         "redact_button": "Recente berichten verwijderen",
         "revoke_invite": "Uitnodiging intrekken",
-        "role_label": "Rol in <RoomName/>",
         "room_encrypted": "De berichten in deze kamer worden eind-tot-eind-versleuteld.",
         "room_encrypted_detail": "Jouw berichten zijn beveiligd, en enkel de ontvanger en jij hebben de unieke sleutels om ze te ontsleutelen.",
         "room_unencrypted": "De berichten in deze kamer worden niet eind-tot-eind-versleuteld.",
