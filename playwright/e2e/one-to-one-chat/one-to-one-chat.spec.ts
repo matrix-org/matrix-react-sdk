@@ -49,6 +49,6 @@ test.describe("1:1 chat room", () => {
 
         // open new 1:1 chat room
         await page.goto(`/#/user/${user2.userId}?action=chat`);
-        await expect(page.locator(".mx_LegacyRoomHeader_nametext").getByText(user2.displayName)).toBeVisible();
+        await expect(page.locator(".mx_RoomHeader_heading").getByText(user2.displayName)).toBeVisible();
     });
 });

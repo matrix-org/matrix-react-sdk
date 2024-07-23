@@ -823,9 +823,6 @@ test.describe("Timeline", () => {
                     page.getByText(`${OLD_NAME} changed the topic to "This is a room for ${stringToSearch}.".`),
                 ).toHaveClass(/mx_TextualEvent/);
 
-                // Display the room search bar
-                await page.locator(".mx_LegacyRoomHeader").getByRole("button", { name: "Search" }).click();
-
                 // Search the string to display both the message and TextualEvent on search results panel
                 await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").fill(stringToSearch);
                 await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").press("Enter");
