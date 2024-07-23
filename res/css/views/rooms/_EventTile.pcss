@@ -1039,7 +1039,7 @@ $left-gutter: 64px;
 
     &::after {
         $inset-block-start: auto;
-        $inset-inline-end: -8px;
+        $inset-inline-end: calc(-1 * var(--cpd-space-2x));
         $inset-block-end: calc(-1 * var(--topOffset) - $hrHeight); /* exclude the height of horizontal line */
         $inset-inline-start: calc(var(--leftOffset) + $padding);
         inset: $inset-block-start $inset-inline-end $inset-block-end $inset-inline-start;
