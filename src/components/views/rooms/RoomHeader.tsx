@@ -58,6 +58,8 @@ import { notificationLevelToIndicator } from "../../../utils/notifications";
 import { CallGuestLinkButton } from "./RoomHeader/CallGuestLinkButton";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import { ReleaseAnnouncement } from "../../structures/ReleaseAnnouncement";
+import { useIsReleaseAnnouncementOpen } from "../../../hooks/useIsReleaseAnnouncementOpen";
+import { ReleaseAnnouncementStore } from "../../../stores/ReleaseAnnouncementStore";
 
 export default function RoomHeader({
     room,
@@ -239,6 +241,8 @@ export default function RoomHeader({
         voiceCallButton = undefined;
     }
 
+    const isReleaseAnnouncementOpen = useIsReleaseAnnouncementOpen("newRoomHeader");
+
     return (
         <>
             <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
@@ -253,6 +257,9 @@ export default function RoomHeader({
                         aria-label={_t("right_panel|room_summary_card|title")}
                         tabIndex={0}
                         onClick={() => {
+                            if (isReleaseAnnouncementOpen) {
+                                ReleaseAnnouncementStore.instance.nextReleaseAnnouncement();
+                            }
                             RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomSummary);
                         }}
                         className="mx_RoomHeader_infoWrapper"
