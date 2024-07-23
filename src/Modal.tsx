@@ -118,7 +118,9 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
     public constructor() {
         super();
 
-        // We never unregister this: it's a singleton. An instance could be instantiated, in theory...
+        // We never unregister this, but the Modal class is a singleton so there would
+        // never be an opportunity to do so anyway, except in the entirely theoretical
+        // scenario of instantiating a non-singleton instance of the Modal class.
         defaultDispatcher.register(this.onAction);
     }
 

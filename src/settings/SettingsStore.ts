@@ -35,6 +35,7 @@ import SettingsHandler from "./handlers/SettingsHandler";
 import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
 import { Action } from "../dispatcher/actions";
 import PlatformSettingsHandler from "./handlers/PlatformSettingsHandler";
+import ReloadOnChangeController from "./controllers/ReloadOnChangeController";
 
 // Convert the settings to easier to manage objects for the handlers
 const defaultSettings: Record<string, any> = {};
@@ -132,6 +133,12 @@ export default class SettingsStore {
 
     // Counter used for generation of watcher IDs
     private static watcherCount = 1;
+
+    public static reset(): void {
+        for (const handler of Object.values(LEVEL_HANDLERS)) {
+            handler.reset();
+        }
+    }
 
     /**
      * Gets all the feature-style setting names.
@@ -316,7 +323,12 @@ export default class SettingsStore {
             SettingsStore.isFeature(settingName) &&
             SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, null, true, true) !== false
         ) {
-            return SETTINGS[settingName]?.betaInfo;
+            const betaInfo = SETTINGS[settingName]!.betaInfo;
+            if (betaInfo) {
+                betaInfo.requiresRefresh =
+                    betaInfo.requiresRefresh ?? SETTINGS[settingName]!.controller instanceof ReloadOnChangeController;
+            }
+            return betaInfo;
         }
     }
 
