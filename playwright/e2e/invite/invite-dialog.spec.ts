@@ -36,7 +36,7 @@ test.describe("Invite dialog", function () {
         await expect(page.getByText("Hanako created and configured the room.")).toBeVisible();
 
         // Open the room info panel
-        await page.getByRole("button", { name: "Room info" }).click();
+        await app.toggleRoomInfoPanel();
 
         await page.locator(".mx_BaseCard").getByRole("menuitem", { name: "Invite" }).click();
 

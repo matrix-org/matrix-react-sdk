@@ -784,7 +784,7 @@ test.describe("Timeline", () => {
                 await sendEvent(app.client, room.roomId, true);
                 await page.goto(`/#/room/${room.roomId}`);
 
-                await page.locator(".mx_LegacyRoomHeader").getByRole("button", { name: "Search" }).click();
+                await app.toggleRoomInfoPanel();
 
                 await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").fill("Message");
                 await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").press("Enter");
@@ -809,7 +809,7 @@ test.describe("Timeline", () => {
                 await page.goto(`/#/room/${room.roomId}`);
 
                 // Open a room setting dialog
-                await page.getByRole("button", { name: "Room options" }).click();
+                await app.toggleRoomInfoPanel();
                 await page.getByRole("menuitem", { name: "Settings" }).click();
 
                 // Set a room topic to render a TextualEvent
