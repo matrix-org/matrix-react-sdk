@@ -118,6 +118,11 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
                     ?.getTimelineForEvent(eventId)
                     ?.getEvents()
                     .find((e) => e.getId() === eventId);
+
+                if (localEvent?.isEncrypted()) {
+                    await cli.decryptEventIfNeeded(localEvent);
+                }
+
                 if (localEvent) return PinningUtils.isPinnable(localEvent) ? localEvent : null;
 
                 try {
