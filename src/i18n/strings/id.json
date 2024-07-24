@@ -3046,15 +3046,10 @@
             "one": "%(count)s balasan",
             "other": "%(count)s balasan"
         },
-        "empty_explainer": "Utasan membantu membuat obrolan sesuai topik dan mudah untuk dilacak.",
-        "empty_has_threads_tip": "Balas ke utasan yang sedang terjadi atau gunakan “%(replyInThread)s” ketika kursor diletakkan pada pesan untuk memulai yang baru.",
-        "empty_heading": "Buat diskusi tetap teratur dengan utasan",
-        "empty_tip": "<b>Tip:</b> Gunakan “%(replyInThread)s” ketika kursor di atas pesan.",
         "error_start_thread_existing_relation": "Tidak dapat membuat utasan dari sebuah peristiwa dengan relasi yang sudah ada",
         "my_threads": "Utasan saya",
         "my_threads_description": "Menampilkan semua utasan yang Anda berpartisipasi",
         "open_thread": "Buka utasan",
-        "show_all_threads": "Tampilkan semua utasan",
         "show_thread_filter": "Tampilkan:"
     },
     "time": {
@@ -3626,7 +3621,6 @@
         },
         "redact_button": "Hapus pesan terkini",
         "revoke_invite": "Hapus undangan",
-        "role_label": "Peran di <RoomName/>",
         "room_encrypted": "Pesan di ruangan ini terenkripsi secara ujung ke ujung.",
         "room_encrypted_detail": "Pesan Anda diamankan dan hanya Anda dan penerimanya mempunyai kunci yang unik untuk mengaksesnya.",
         "room_unencrypted": "Pesan di ruangan ini tidak dienkripsi secara ujung ke ujung.",

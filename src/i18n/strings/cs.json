@@ -3097,15 +3097,10 @@
             "one": "%(count)s odpověď",
             "other": "%(count)s odpovědí"
         },
-        "empty_explainer": "Vlákna pomáhají udržovat konverzace k tématu a snadno je sledovat.",
-        "empty_has_threads_tip": "Odpovědět na probíhající vlákno nebo použít \"%(replyInThread)s\", když najedete na zprávu a začnete novou.",
-        "empty_heading": "Udržujte diskuse organizované pomocí vláken",
-        "empty_tip": "<b>Tip:</b> Použijte \"%(replyInThread)s\" při najetí na zprávu.",
         "error_start_thread_existing_relation": "Nelze založit vlákno ve vlákně",
         "my_threads": "Moje vlákna",
         "my_threads_description": "Zobrazit všechna vlákna, kterých jste se zúčastnili",
         "open_thread": "Otevřít vlákno",
-        "show_all_threads": "Zobrazit všechna vlákna",
         "show_thread_filter": "Zobrazit:"
     },
     "threads_activity_centre": {
@@ -3683,7 +3678,6 @@
         },
         "redact_button": "Odstranit nedávné zprávy",
         "revoke_invite": "Zrušit pozvání",
-        "role_label": "Role v <RoomName/>",
         "room_encrypted": "Zprávy jsou v této místnosti koncově šifrované.",
         "room_encrypted_detail": "Vaše zprávy jsou zabezpečené - pouze vy a jejich příjemci máte klíče potřebné k jejich přečtení.",
         "room_unencrypted": "Zprávy nejsou koncově šifrované.",

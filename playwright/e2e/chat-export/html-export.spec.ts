@@ -108,7 +108,7 @@ test.describe("HTML Export", () => {
             page.locator(".mx_EventTile_last .mx_MTextBody .mx_EventTile_body").getByText("Testing 9"),
         ).toBeVisible();
 
-        await page.getByRole("button", { name: "Room info" }).click();
+        await app.toggleRoomInfoPanel();
         await page.getByRole("menuitem", { name: "Export Chat" }).click();
 
         const downloadPromise = page.waitForEvent("download");
@@ -124,7 +124,8 @@ test.describe("HTML Export", () => {
         await expect(page).toMatchScreenshot("html-export.png", {
             mask: [
                 page.getByText("This is the start of export", { exact: false }),
-                page.locator(".mx_DateSeparator_dateHeading"),
+                // We need to mask the whole thing because the width of the time part changes
+                page.locator(".mx_TimelineSeparator"),
                 page.locator(".mx_MessageTimestamp"),
             ],
         });

@@ -104,7 +104,7 @@ test.describe("Cryptography", function () {
             await expect(lastTileE2eIcon).not.toBeVisible();
 
             /* Now verify Bob */
-            await verify(page, bob);
+            await verify(app, bob);
 
             /* Existing message should be updated when user is verified. */
             await expect(last).toContainText("test encrypted 1");
@@ -132,7 +132,7 @@ test.describe("Cryptography", function () {
             // wait for the logout to propagate. Workaround for https://github.com/vector-im/element-web/issues/26263 by repeatedly closing and reopening Bob's user info.
             async function awaitOneDevice(iterations = 1) {
                 const rightPanel = page.locator(".mx_RightPanel");
-                await rightPanel.getByRole("button", { name: "Room members" }).click();
+                await rightPanel.getByTestId("base-card-back-button").click();
                 await rightPanel.getByText("Bob").click();
                 const sessionCountText = await rightPanel
                     .locator(".mx_UserInfo_devices")
@@ -222,7 +222,7 @@ test.describe("Cryptography", function () {
             await bobSecondDevice.prepareClient();
 
             // verify Bob
-            await verify(page, bob);
+            await verify(app, bob);
 
             // bob sends a valid event
             const testEvent = await bob.sendMessage(testRoomId, "Hoo!");
