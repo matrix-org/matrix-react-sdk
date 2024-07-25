@@ -19,7 +19,7 @@ import { render, screen, cleanup, fireEvent, waitFor } from "@testing-library/re
 import { mocked, Mocked } from "jest-mock";
 import { Room, RoomStateEvent, MatrixEvent, MatrixEventEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
-=import { ICallNotifyContent } from "matrix-js-sdk/src/matrixrtc";
+import { ICallNotifyContent } from "matrix-js-sdk/src/matrixrtc";
 
 import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import {
