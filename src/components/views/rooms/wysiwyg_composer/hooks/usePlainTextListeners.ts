@@ -37,6 +37,7 @@ function isDivElement(target: EventTarget): target is HTMLDivElement {
  * Also returns pieces of state and utility functions that are required for use in other hooks
  * and by the autocomplete component.
  *
+ * @param isAutoReplaceEmojiEnabled - whether plain text emoticons should be auto replaced with emojis.
  * @param initialContent - the content of the editor when it is first mounted
  * @param onChange - called whenever there is change in the editor content
  * @param onSend - called whenever the user sends the message
@@ -49,6 +50,7 @@ function isDivElement(target: EventTarget): target is HTMLDivElement {
  * - the output from the {@link useSuggestion} hook
  */
 export function usePlainTextListeners(
+    isAutoReplaceEmojiEnabled: boolean,
     initialContent?: string,
     onChange?: (content: string) => void,
     onSend?: () => void,
@@ -100,7 +102,8 @@ export function usePlainTextListeners(
     // For separation of concerns, the suggestion handling is kept in a separate hook but is
     // nested here because we do need to be able to update the `content` state in this hook
     // when a user selects a suggestion from the autocomplete menu
-    const { suggestion, onSelect, handleCommand, handleMention, handleAtRoomMention } = useSuggestion(ref, setText);
+    const { suggestion, onSelect, handleCommand, handleMention, handleAtRoomMention, handleEmojiReplacement } =
+        useSuggestion(ref, setText, isAutoReplaceEmojiEnabled);
 
     const onInput = useCallback(
         (event: SyntheticEvent<HTMLDivElement, InputEvent | ClipboardEvent>) => {
@@ -140,6 +143,10 @@ export function usePlainTextListeners(
             if (isHandledByAutocomplete) {
                 return;
             }
+            // handling accepting of plain text emojicon to emoji suggestions
+            if (event.key == Key.ENTER || event.key == Key.SPACE) {
+                handleEmojiReplacement();
+            }
 
             // resume regular flow
             if (event.key === Key.ENTER) {
@@ -161,7 +168,7 @@ export function usePlainTextListeners(
                 }
             }
         },
-        [autocompleteRef, enterShouldSend, send],
+        [autocompleteRef, enterShouldSend, send, suggestion, handleEmojiReplacement],
     );
 
     return {

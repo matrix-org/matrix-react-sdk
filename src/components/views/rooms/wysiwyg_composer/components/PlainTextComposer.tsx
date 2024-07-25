@@ -38,6 +38,7 @@ interface PlainTextComposerProps {
     rightComponent?: ReactNode;
     children?: (ref: MutableRefObject<HTMLDivElement | null>, composerFunctions: ComposerFunctions) => ReactNode;
     eventRelation?: IEventRelation;
+    isAutoReplaceEmojiEnabled: boolean;
 }
 
 export function PlainTextComposer({
@@ -51,6 +52,7 @@ export function PlainTextComposer({
     leftComponent,
     rightComponent,
     eventRelation,
+    isAutoReplaceEmojiEnabled,
 }: PlainTextComposerProps): JSX.Element {
     const {
         ref: editorRef,
@@ -66,7 +68,7 @@ export function PlainTextComposer({
         handleCommand,
         handleMention,
         handleAtRoomMention,
-    } = usePlainTextListeners(initialContent, onChange, onSend, eventRelation);
+    } = usePlainTextListeners(isAutoReplaceEmojiEnabled, initialContent, onChange, onSend, eventRelation);
 
     const composerFunctions = useComposerFunctions(editorRef, setContent);
     usePlainTextInitialization(initialContent, editorRef);

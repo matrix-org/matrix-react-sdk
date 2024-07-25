@@ -506,6 +506,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         menuPosition={menuPosition}
                         placeholder={this.renderPlaceholderText()}
                         eventRelation={this.props.relation}
+                        isAutoReplaceEmojiEnabled={this.state.isAutoReplaceEmojiEnabled}
                     />
                 );
             } else {
