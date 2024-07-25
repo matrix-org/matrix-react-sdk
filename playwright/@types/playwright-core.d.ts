@@ -1,5 +1,5 @@
 /*
-Copyright 2023 The Matrix.org Foundation C.I.C.
+Copyright 2024 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,16 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_SpaceScopeHeader {
-    text-align: center;
-
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
-
-    .mx_BaseAvatar {
-        margin-right: var(--cpd-space-2x);
-        vertical-align: middle;
-    }
+declare module "playwright-core/lib/utils" {
+    // This type is not public in playwright-core utils
+    export function sanitizeForFilePath(filePath: string): string;
 }
