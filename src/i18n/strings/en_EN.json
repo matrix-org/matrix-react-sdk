@@ -1841,10 +1841,18 @@
         "pinned_messages": {
             "empty": "Nothing pinned, yet",
             "explainer": "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.",
+            "header": {
+                "one": "1 Pinned message",
+                "other": "%(count)s Pinned messages",
+                "zero": "Pinned message"
+            },
             "limits": {
                 "other": "You can only pin up to %(count)s widgets"
             },
-            "title": "Pinned messages"
+            "menu": "Open menu",
+            "title": "Pinned messages",
+            "unpin_all": "Unpin all messages",
+            "view": "View in timeline"
         },
         "pinned_messages_button": "Pinned messages",
         "poll": {
