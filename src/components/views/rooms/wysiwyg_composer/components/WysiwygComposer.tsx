@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { memo, MutableRefObject, ReactNode, useEffect, useRef, useState } from "react";
 import { IEventRelation } from "matrix-js-sdk/src/matrix";
+import { EMOTICON_TO_EMOJI } from "@matrix-org/emojibase-bindings";
 import { useWysiwyg, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
 import classNames from "classnames";
 
@@ -31,7 +32,6 @@ import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import { Action } from "../../../../../dispatcher/actions";
 import { parsePermalink } from "../../../../../utils/permalinks/Permalinks";
 import { isNotNull } from "../../../../../Typeguards";
-import { EMOTICON_TO_EMOJI } from "@matrix-org/emojibase-bindings";
 
 interface WysiwygComposerProps {
     disabled?: boolean;

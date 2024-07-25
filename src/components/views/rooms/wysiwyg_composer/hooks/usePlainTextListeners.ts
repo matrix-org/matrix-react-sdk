@@ -168,7 +168,7 @@ export function usePlainTextListeners(
                 }
             }
         },
-        [autocompleteRef, enterShouldSend, send, suggestion, handleEmojiReplacement],
+        [autocompleteRef, enterShouldSend, send, handleEmojiReplacement],
     );
 
     return {

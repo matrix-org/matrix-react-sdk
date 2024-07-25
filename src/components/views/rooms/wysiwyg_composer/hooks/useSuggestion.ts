@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { EMOTICON_TO_EMOJI } from "@matrix-org/emojibase-bindings";
 import { AllowedMentionAttributes, MappedSuggestion } from "@matrix-org/matrix-wysiwyg";
 import { SyntheticEvent, useState, SetStateAction } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { isNotNull } from "../../../../../Typeguards";
-import { EMOTICON_TO_EMOJI } from "@matrix-org/emojibase-bindings";
 
 /**
  * Information about the current state of the `useSuggestion` hook.
@@ -272,14 +272,14 @@ export function processEmojiReplacement(
         return;
     }
     const { node, mappedSuggestion } = suggestionData;
-    let existingContent = node.textContent;
+    const existingContent = node.textContent;
 
     if (existingContent == null) {
         return;
     }
 
     // replace the emoticon with the suggesed emoji
-    let newContent =
+    const newContent =
         existingContent.slice(0, suggestionData.startOffset) +
         mappedSuggestion.text +
         existingContent.slice(suggestionData.endOffset);
