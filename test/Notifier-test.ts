@@ -26,7 +26,7 @@ import {
     SyncState,
 } from "matrix-js-sdk/src/matrix";
 import { waitFor } from "@testing-library/react";
-import { CallMembership } from "matrix-js-sdk/src/matrixrtc";
+import { CallMembership, MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc";
 
 import BasePlatform from "../src/BasePlatform";
 import Notifier from "../src/Notifier";
