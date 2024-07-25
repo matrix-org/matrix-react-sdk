@@ -21,8 +21,6 @@ export enum ElementWidgetActions {
     JoinCall = "io.element.join",
     HangupCall = "im.vector.hangup",
     CallParticipants = "io.element.participants",
-    MuteVideo = "io.element.mute_video",
-    UnmuteVideo = "io.element.unmute_video",
     StartLiveStream = "im.vector.start_live_stream",
 
     // Actions for switching layouts
@@ -30,11 +28,11 @@ export enum ElementWidgetActions {
     SpotlightLayout = "io.element.spotlight_layout",
 
     OpenIntegrationManager = "integration_manager_open",
-
     /**
      * @deprecated Use MSC2931 instead
      */
     ViewRoom = "io.element.view_room",
+
     // This action type is used as a `fromWidget` and a `toWidget` action.
     // fromWidget: updates the client about the current device mute state
     // toWidget: the client requests a specific device mute configuration
