@@ -55,7 +55,7 @@ type SuggestionState = Suggestion | null;
 export function useSuggestion(
     editorRef: React.RefObject<HTMLDivElement>,
     setText: (text?: string) => void,
-    isAutoReplaceEmojiEnabled: boolean,
+    isAutoReplaceEmojiEnabled?: boolean,
 ): {
     handleMention: (href: string, displayName: string, attributes: AllowedMentionAttributes) => void;
     handleAtRoomMention: (attributes: AllowedMentionAttributes) => void;
@@ -115,7 +115,7 @@ export function useSuggestion(
 export function processSelectionChange(
     editorRef: React.RefObject<HTMLDivElement>,
     setSuggestionData: React.Dispatch<React.SetStateAction<SuggestionState>>,
-    isAutoReplaceEmojiEnabled: boolean,
+    isAutoReplaceEmojiEnabled?: boolean,
 ): void {
     const selection = document.getSelection();
 
@@ -307,7 +307,7 @@ export function findSuggestionInText(
     text: string,
     offset: number,
     isFirstTextNode: boolean,
-    isAutoReplaceEmojiEnabled: boolean,
+    isAutoReplaceEmojiEnabled?: boolean,
 ): { mappedSuggestion: MappedSuggestion; startOffset: number; endOffset: number } | null {
     // Return null early if the offset is outside the content
     if (offset < 0 || offset > text.length) {
@@ -394,7 +394,7 @@ function shouldIncrementEndIndex(text: string, index: number): boolean {
  * @param isAutoReplaceEmojiEnabled - whether plain text emoticons should be auto replaced with emojis
  * @returns a `MappedSuggestion` if a suggestion is present, null otherwise
  */
-export function getMappedSuggestion(text: string, isAutoReplaceEmojiEnabled: boolean): MappedSuggestion | null {
+export function getMappedSuggestion(text: string, isAutoReplaceEmojiEnabled?: boolean): MappedSuggestion | null {
     if (isAutoReplaceEmojiEnabled) {
         const emoji = EMOTICON_TO_EMOJI.get(text.toLocaleLowerCase());
         if (emoji?.unicode) {

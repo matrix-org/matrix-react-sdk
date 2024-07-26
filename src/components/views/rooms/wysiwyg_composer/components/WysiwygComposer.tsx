@@ -32,6 +32,7 @@ import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import { Action } from "../../../../../dispatcher/actions";
 import { parsePermalink } from "../../../../../utils/permalinks/Permalinks";
 import { isNotNull } from "../../../../../Typeguards";
+import SettingsStore from "../../../../../settings/SettingsStore";
 
 interface WysiwygComposerProps {
     disabled?: boolean;
@@ -44,7 +45,6 @@ interface WysiwygComposerProps {
     rightComponent?: ReactNode;
     children?: (ref: MutableRefObject<HTMLDivElement | null>, wysiwyg: FormattingFunctions) => ReactNode;
     eventRelation?: IEventRelation;
-    isAutoReplaceEmojiEnabled: boolean;
 }
 
 function getEmojiSuggestions(enabled: boolean): Map<string, string> {
@@ -63,17 +63,26 @@ export const WysiwygComposer = memo(function WysiwygComposer({
     rightComponent,
     children,
     eventRelation,
-    isAutoReplaceEmojiEnabled,
 }: WysiwygComposerProps) {
     const { room } = useRoomContext();
     const autocompleteRef = useRef<Autocomplete | null>(null);
 
     const inputEventProcessor = useInputEventProcessor(onSend, autocompleteRef, initialContent, eventRelation);
 
-    const [emojiSuggestions, setEmojiSuggestions] = useState(getEmojiSuggestions(isAutoReplaceEmojiEnabled));
+    const [emojiSuggestions, setEmojiSuggestions] = useState(
+        getEmojiSuggestions(SettingsStore.getValue<boolean>("MessageComposerInput.autoReplaceEmoji")),
+    );
+
     useEffect(() => {
-        setEmojiSuggestions(getEmojiSuggestions(isAutoReplaceEmojiEnabled));
-    }, [isAutoReplaceEmojiEnabled]);
+        const ref = SettingsStore.watchSetting("MessageComposerInput.autoReplaceEmoji", null, (...[, , , value]) => {
+            setEmojiSuggestions(getEmojiSuggestions(value as boolean));
+        });
+
+        // clean-up
+        return () => {
+            SettingsStore.unwatchSetting(ref);
+        };
+    });
 
     const { ref, isWysiwygReady, content, actionStates, wysiwyg, suggestion, messageContent } = useWysiwyg({
         initialContent,

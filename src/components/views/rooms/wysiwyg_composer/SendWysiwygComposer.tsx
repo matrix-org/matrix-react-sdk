@@ -43,7 +43,6 @@ const Content = forwardRef<HTMLElement, ContentProps>(function Content(
 export interface SendWysiwygComposerProps {
     initialContent?: string;
     isRichTextEnabled: boolean;
-    isAutoReplaceEmojiEnabled: boolean;
     placeholder?: string;
     disabled?: boolean;
     e2eStatus?: E2EStatus;

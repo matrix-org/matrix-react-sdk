@@ -37,10 +37,11 @@ function isDivElement(target: EventTarget): target is HTMLDivElement {
  * Also returns pieces of state and utility functions that are required for use in other hooks
  * and by the autocomplete component.
  *
- * @param isAutoReplaceEmojiEnabled - whether plain text emoticons should be auto replaced with emojis.
  * @param initialContent - the content of the editor when it is first mounted
  * @param onChange - called whenever there is change in the editor content
  * @param onSend - called whenever the user sends the message
+ * @param eventRelation - used to send the event to the correct place eg timeline vs thread
+ * @param isAutoReplaceEmojiEnabled - whether plain text emoticons should be auto replaced with emojis
  * @returns
  * - `ref`: a ref object which the caller must attach to the HTML `div` node for the editor
  * * `autocompleteRef`: a ref object which the caller must attach to the autocomplete component
@@ -50,11 +51,11 @@ function isDivElement(target: EventTarget): target is HTMLDivElement {
  * - the output from the {@link useSuggestion} hook
  */
 export function usePlainTextListeners(
-    isAutoReplaceEmojiEnabled: boolean,
     initialContent?: string,
     onChange?: (content: string) => void,
     onSend?: () => void,
     eventRelation?: IEventRelation,
+    isAutoReplaceEmojiEnabled?: boolean,
 ): {
     ref: RefObject<HTMLDivElement>;
     autocompleteRef: React.RefObject<Autocomplete>;

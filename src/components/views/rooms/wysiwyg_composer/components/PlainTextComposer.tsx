@@ -16,7 +16,7 @@ limitations under the License.
 
 import classNames from "classnames";
 import { IEventRelation } from "matrix-js-sdk/src/matrix";
-import React, { MutableRefObject, ReactNode } from "react";
+import React, { MutableRefObject, ReactNode, useEffect, useState } from "react";
 
 import { useComposerFunctions } from "../hooks/useComposerFunctions";
 import { useIsFocused } from "../hooks/useIsFocused";
@@ -26,6 +26,7 @@ import { useSetCursorPosition } from "../hooks/useSetCursorPosition";
 import { ComposerFunctions } from "../types";
 import { Editor } from "./Editor";
 import { WysiwygAutocomplete } from "./WysiwygAutocomplete";
+import SettingsStore from "../../../../../settings/SettingsStore";
 
 interface PlainTextComposerProps {
     disabled?: boolean;
@@ -38,7 +39,6 @@ interface PlainTextComposerProps {
     rightComponent?: ReactNode;
     children?: (ref: MutableRefObject<HTMLDivElement | null>, composerFunctions: ComposerFunctions) => ReactNode;
     eventRelation?: IEventRelation;
-    isAutoReplaceEmojiEnabled: boolean;
 }
 
 export function PlainTextComposer({
@@ -52,8 +52,20 @@ export function PlainTextComposer({
     leftComponent,
     rightComponent,
     eventRelation,
-    isAutoReplaceEmojiEnabled,
 }: PlainTextComposerProps): JSX.Element {
+    const [isAutoReplaceEmojiEnabled, setIsAutoReplaceEmojiEnabled] = useState(
+        SettingsStore.getValue<boolean>("MessageComposerInput.autoReplaceEmoji"),
+    );
+    useEffect(() => {
+        const ref = SettingsStore.watchSetting("MessageComposerInput.autoReplaceEmoji", null, (...[, , , value]) => {
+            setIsAutoReplaceEmojiEnabled(value as boolean);
+        });
+
+        // clean-up
+        return () => {
+            SettingsStore.unwatchSetting(ref);
+        };
+    });
     const {
         ref: editorRef,
         autocompleteRef,
@@ -68,14 +80,12 @@ export function PlainTextComposer({
         handleCommand,
         handleMention,
         handleAtRoomMention,
-    } = usePlainTextListeners(isAutoReplaceEmojiEnabled, initialContent, onChange, onSend, eventRelation);
-
+    } = usePlainTextListeners(initialContent, onChange, onSend, eventRelation, isAutoReplaceEmojiEnabled);
     const composerFunctions = useComposerFunctions(editorRef, setContent);
     usePlainTextInitialization(initialContent, editorRef);
     useSetCursorPosition(disabled, editorRef);
     const { isFocused, onFocus } = useIsFocused();
     const computedPlaceholder = (!content && placeholder) || undefined;
-
     return (
         <div
             data-testid="PlainTextComposer"
