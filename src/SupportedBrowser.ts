@@ -30,7 +30,7 @@ const TOAST_KEY = "unsupportedbrowser";
 const SUPPORTED_DEVICE_TYPES = [DeviceType.Web, DeviceType.Desktop];
 const SUPPORTED_BROWSER_QUERY =
     "last 2 Chrome versions, last 2 Firefox versions, last 2 Safari versions, last 2 Edge versions";
-const LEARN_MORE_URL = "https://element.io/docs/unsupported-browsers";
+const LEARN_MORE_URL = "https://github.com/element-hq/element-web#supported-environments";
 
 function onLearnMoreClick(): void {
     onDismissClick();
