@@ -4114,5 +4114,9 @@
             "userInputs": "There should not be any personal or page related data.",
             "wordByItself": "A word by itself is easy to guess"
         }
+    },
+    "unsupported_browser": {
+        "title": "%(brand)s does not support this browser",
+        "description": "If you continue, some features may stop working and there is a risk that you may lose data in the future. Update your browser to continue using %(brand)s."
     }
 }
