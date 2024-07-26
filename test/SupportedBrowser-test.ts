@@ -72,8 +72,8 @@ describe("SupportedBrowser", () => {
     it.each([
         // Safari 17.5 on macOS Sonoma
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15",
-        // Firefox 128 on macOS Sonoma
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:128.0) Gecko/20100101 Firefox/128.0",
+        // Firefox 127 on macOS Sonoma
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:127.0) Gecko/20100101 Firefox/127.0",
         // Edge 126 on Windows
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36 Edg/126.0.2592.113",
         // Edge 126 on macOS
@@ -90,6 +90,11 @@ describe("SupportedBrowser", () => {
         // Element Nightly on macOS
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) ElementNightly/2024072501 Chrome/126.0.6478.127 Electron/31.2.1 Safari/537.36",
     ])("should not warn for Element Desktop", testUserAgentFactory());
+
+    it.each(["AppleTV11,1/11.1"])(
+        "should handle unknown user agent sanely",
+        testUserAgentFactory("Browser unsupported, unknown client"),
+    );
 
     it("should not warn for unsupported browser if user accepted already", async () => {
         const toastSpy = jest.spyOn(ToastStore.sharedInstance(), "addOrReplaceToast");

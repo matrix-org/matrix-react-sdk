@@ -34,7 +34,7 @@ const LEARN_MORE_URL = "https://github.com/element-hq/element-web#supported-envi
 
 function onLearnMoreClick(): void {
     onDismissClick();
-    window.open(LEARN_MORE_URL, "_blank");
+    window.open(LEARN_MORE_URL, "_blank", "noopener,noreferrer");
 }
 
 function onDismissClick(): void {
@@ -61,7 +61,8 @@ export function getBrowserSupport(): boolean {
     const minimumBrowserVersions = new Map<string, number>();
     for (const browser of browsers) {
         const [browserName, browserVersion] = getBrowserNameVersion(browser);
-        if (browsers.includes(browserName)) continue;
+        // We sorted the browsers so will encounter the minimum version first
+        if (minimumBrowserVersions.has(browserName)) continue;
         minimumBrowserVersions.set(browserName, browserVersion);
     }
 
