@@ -92,9 +92,8 @@ export function getBrowserSupport(): boolean {
 }
 
 export function checkBrowserSupport(): void {
-    // const supported = getBrowserSupport();
-    // if (supported) return;
-    const supported = false;
+    const supported = getBrowserSupport();
+    if (supported) return;
 
     if (localStorage.getItem(LOCAL_STORAGE_KEY)) {
         logger.warn("Browser unsupported, but user has previously accepted");
