@@ -83,7 +83,7 @@ exports[`<UserInfo /> with crypto enabled renders <BasicUserInfo /> 1`] = `
         Profile
       </p>
       <button
-        class="_icon-button_bh2qc_17 _subtle-bg_bh2qc_38"
+        class="_icon-button_rijzz_17"
         data-testid="base-card-close-button"
         role="button"
         style="--cpd-icon-button-size: 28px;"
@@ -353,7 +353,7 @@ exports[`<UserInfo /> with crypto enabled should render a deactivate button for 
         Profile
       </p>
       <button
-        class="_icon-button_bh2qc_17 _subtle-bg_bh2qc_38"
+        class="_icon-button_rijzz_17"
         data-testid="base-card-close-button"
         role="button"
         style="--cpd-icon-button-size: 28px;"

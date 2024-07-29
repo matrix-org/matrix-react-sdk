@@ -2637,7 +2637,9 @@
             "show_checklist_shortcuts": "Afficher le raccourci vers la liste de vérification de bienvenue au-dessus de la liste des salons",
             "show_polls_button": "Afficher le bouton des sondages",
             "surround_text": "Entourer le texte sélectionné lors de la saisie de certains caractères",
-            "time_heading": "Affichage de l’heure"
+            "time_heading": "Affichage de l’heure",
+            "user_timezone": "Changer le fuseau horaire",
+            "default_timezone": "Fuseau du navigateur"
         },
         "prompt_invite": "Demander avant d’envoyer des invitations à des identifiants matrix potentiellement non valides",
         "replace_plain_emoji": "Remplacer automatiquement le texte par des émojis",
