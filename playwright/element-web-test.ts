@@ -313,7 +313,7 @@ export const expect = baseExpect.extend({
         name: `${string}.png`,
         options?: {
             mask?: Array<Locator>;
-            omitBackground?: boolean;
+            includeDialogBackground?: boolean;
             showTooltips?: boolean;
             timeout?: number;
             css?: string;
@@ -329,6 +329,16 @@ export const expect = baseExpect.extend({
             hideTooltipsCss = `
                 .mx_Tooltip_visible {
                     visibility: hidden !important;
+                }
+            `;
+        }
+
+        let hideDialogBackgroundCss: string | undefined;
+        if (!options?.includeDialogBackground) {
+            hideDialogBackgroundCss = `
+                /* Make the dialog backdrop solid so any dialog screenshots don't show any components behind them */
+                .mx_Dialog_background {
+                    background-color: #030c1b !important;
                 }
             `;
         }
@@ -360,6 +370,7 @@ export const expect = baseExpect.extend({
                 .mx_MessageTimestamp {
                     font-family: Inconsolata !important;
                 }
+                ${hideDialogBackgroundCss ?? ""}
                 ${hideTooltipsCss ?? ""}
                 ${options?.css ?? ""}
             `,
