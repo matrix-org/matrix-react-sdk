@@ -56,6 +56,10 @@ function getBrowserNameVersion(browser: string): [name: string, version: number]
     return [browserNameLc, parseInt(browserVersion, 10)];
 }
 
+/**
+ * Function to check if the current browser is considered supported by our support policy.
+ * Based on user agent parsing so may be inaccurate if the user has fingerprint prevention turned up to 11.
+ */
 export function getBrowserSupport(): boolean {
     const browsers = browserlist(SUPPORTED_BROWSER_QUERY).sort();
     const minimumBrowserVersions = new Map<string, number>();
@@ -90,6 +94,9 @@ export function getBrowserSupport(): boolean {
     return supported;
 }
 
+/**
+ * Shows a user warning toast if the user's browser is not supported.
+ */
 export function checkBrowserSupport(): void {
     const supported = getBrowserSupport();
     if (supported) return;
