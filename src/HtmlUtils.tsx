@@ -252,7 +252,9 @@ interface IOpts {
     stripReplyFallback?: boolean;
     returnString?: boolean;
     forComposerQuote?: boolean;
-    ref?: React.Ref<HTMLSpanElement>;
+    includeDir?: boolean; // whether to include the dir="auto" attribute
+    asElement?: "div" | "span"; // the element to render the body as. 'span' by default.
+    ref?: React.Ref<HTMLDivElement | HTMLSpanElement>;
 }
 
 export interface IOptsReturnNode extends IOpts {
@@ -318,6 +320,8 @@ export function formatEmojis(message: string | undefined, isHtmlMessage?: boolea
  * opts.stripReplyFallback: optional argument specifying the event is a reply and so fallback needs removing
  * opts.returnString: return an HTML string rather than JSX elements
  * opts.forComposerQuote: optional param to lessen the url rewriting done by sanitization, for quoting into composer
+ * opts.includeDir: whether to include the dir="auto" attribute
+ * opts.asElement: the element to render the body as. 'span' by default.
  * opts.ref: React ref to attach to any React components returned (not compatible with opts.returnString)
  */
 export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IOptsReturnString): string;
@@ -331,6 +335,10 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
     if (opts.forComposerQuote) {
         sanitizeParams = composerSanitizeHtmlParams;
     }
+
+    if (opts.includeDir === undefined) opts.includeDir = true;
+
+    const AsElement = opts.asElement ?? "span";
 
     let strippedBody: string;
     let safeBody: string | undefined; // safe, sanitised HTML, preferred over `strippedBody` which is fully plaintext
@@ -433,17 +441,17 @@ export function bodyToHtml(content: IContent, highlights: Optional<string[]>, op
     }
 
     return safeBody ? (
-        <span
+        <AsElement
             key="body"
             ref={opts.ref}
             className={className}
             dangerouslySetInnerHTML={{ __html: safeBody }}
-            dir="auto"
+            dir={opts.includeDir ? "auto" : undefined}
         />
     ) : (
-        <span key="body" ref={opts.ref} className={className} dir="auto">
+        <AsElement key="body" ref={opts.ref} className={className} dir={opts.includeDir ? "auto" : undefined}>
             {emojiBodyElements || strippedBody}
-        </span>
+        </AsElement>
     );
 }
 

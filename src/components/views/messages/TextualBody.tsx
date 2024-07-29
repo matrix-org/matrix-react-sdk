@@ -569,6 +569,8 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         let isNotice = false;
         let isEmote = false;
 
+        const willHaveWrapper = this.props.replacingEventId || this.props.isSeeingThroughMessageHiddenForModeration;
+
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
         const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
         isEmote = content.msgtype === MsgType.Emote;
@@ -579,22 +581,24 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             stripReplyFallback: stripReply,
             ref: this.contentRef,
             returnString: false,
+            includeDir: !willHaveWrapper,
+            asElement: willHaveWrapper ? "span" : "div",
         });
 
         if (this.props.replacingEventId) {
             body = (
-                <>
+                <div dir="auto" style={{ display: "flex" }}>
                     {body}
                     {this.renderEditedMarker()}
-                </>
+                </div>
             );
         }
         if (this.props.isSeeingThroughMessageHiddenForModeration) {
             body = (
-                <>
+                <div dir="auto" style={{ display: "flex" }}>
                     {body}
                     {this.renderPendingModerationMarker()}
-                </>
+                </div>
             );
         }
 
