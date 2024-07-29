@@ -22,17 +22,17 @@ limitations under the License.
     min-width: 0;
     position: relative;
     margin: 1em 0;
-    border-radius: 4px;
+    border-radius: 8px;
     transition: border-color 0.25s;
-    border: 1px solid $input-border-color;
+    border: 1px solid var(--cpd-color-border-interactive-secondary);
 }
 
 .mx_Field_prefix {
-    border-right: 1px solid $input-border-color;
+    border-right: 1px solid var(--cpd-color-border-interactive-secondary);
 }
 
 .mx_Field_postfix {
-    border-left: 1px solid $input-border-color;
+    border-left: 1px solid var(--cpd-color-border-interactive-secondary);
 }
 
 .mx_Field input,
@@ -42,7 +42,7 @@ limitations under the License.
     border: none;
     /* Even without a border here, we still need this avoid overlapping the rounded */
     /* corners on the field above. */
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 8px 9px;
     color: $primary-content;
     background-color: $background;
@@ -95,10 +95,14 @@ limitations under the License.
 }
 
 .mx_Field label {
-    transition: font-size 0.25s ease-out 0.1s, color 0.25s ease-out 0.1s, transform 0.25s ease-out 0.1s,
+    transition:
+        font-size 0.25s ease-out 0.1s,
+        color 0.25s ease-out 0.1s,
+        transform 0.25s ease-out 0.1s,
         background-color 0.25s ease-out 0.1s;
     background-color: transparent;
     font: var(--cpd-font-body-md-regular);
+    color: var(--cpd-color-text-secondary);
     transform: translateY(0);
     position: absolute;
     left: 0px;
@@ -117,7 +121,10 @@ limitations under the License.
 .mx_Field input:not(:placeholder-shown) + label,
 .mx_Field textarea:focus + label,
 .mx_Field textarea:not(:placeholder-shown) + label {
-    transition: font-size 0.25s ease-out 0s, color 0.25s ease-out 0s, transform 0.25s ease-out 0s,
+    transition:
+        font-size 0.25s ease-out 0s,
+        color 0.25s ease-out 0s,
+        transform 0.25s ease-out 0s,
         background-color 0.25s ease-out 0s;
     font-size: $font-10px;
     transform: translateY(-13px);

@@ -58,9 +58,6 @@ declare global {
     interface Window {
         matrixChat: ReturnType<Renderer>;
         mxMatrixClientPeg: IMatrixClientPeg;
-        Olm: {
-            init: () => Promise<void>;
-        };
         mxReactSdkConfig: DeepReadonly<IConfigOptions>;
 
         // Needed for Safari, unknown to TypeScript
@@ -154,16 +151,10 @@ declare global {
 
     interface HTMLAudioElement {
         type?: string;
-        // sinkId & setSinkId are experimental and typescript doesn't know about them
-        sinkId: string;
-        setSinkId(outputId: string): void;
     }
 
     interface HTMLVideoElement {
         type?: string;
-        // sinkId & setSinkId are experimental and typescript doesn't know about them
-        sinkId: string;
-        setSinkId(outputId: string): void;
     }
 
     // Add Chrome-specific `instant` ScrollBehaviour
@@ -231,6 +222,14 @@ declare global {
     // https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1029#issuecomment-881509595
     interface AudioParamDescriptor {
         readonly port: MessagePort;
+    }
+
+    /**
+     * In future, browsers will support focusVisible option.
+     * See https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus#focusvisible
+     */
+    interface FocusOptions {
+        focusVisible: boolean;
     }
 
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278

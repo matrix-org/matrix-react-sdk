@@ -19,7 +19,7 @@
         "add": "添加",
         "add_existing_room": "添加现有的房间",
         "add_people": "加人",
-        "apply": "申请",
+        "apply": "应用",
         "approve": "批准",
         "ask_to_join": "申请加入",
         "back": "返回",
@@ -51,8 +51,8 @@
         "enter_fullscreen": "进入全屏",
         "exit_fullscreeen": "退出全屏",
         "expand": "展开",
-        "explore_public_rooms": "探索公共房间",
-        "explore_rooms": "探索房间",
+        "explore_public_rooms": "查找公开房间",
+        "explore_rooms": "查找房间",
         "export": "导出",
         "forward": "转发",
         "go": "前往",
@@ -74,7 +74,7 @@
         "maximise": "最大化",
         "mention": "提及",
         "minimise": "最小化",
-        "new_room": "新房间",
+        "new_room": "新建房间",
         "new_video_room": "新视频房间",
         "next": "下一个",
         "no": "不",
@@ -104,7 +104,7 @@
         "save": "保存",
         "search": "搜索",
         "send_report": "发送报告",
-        "share": "共享",
+        "share": "分享",
         "show": "显示",
         "show_advanced": "显示高级",
         "show_all": "显示全部",
@@ -206,7 +206,7 @@
         "forgot_password_email_required": "必须输入和你账户关联的邮箱地址。",
         "forgot_password_prompt": "忘记你的密码了吗？",
         "forgot_password_send_email": "发送重置连接",
-        "identifier_label": "第三方登录",
+        "identifier_label": "登录方式",
         "incorrect_credentials": "用户名或密码错误。",
         "incorrect_credentials_detail": "请注意，你正在登录 %(hs)s，而非 matrix.org。",
         "incorrect_password": "密码错误",
@@ -242,10 +242,7 @@
         "qr_code_login": {
             "approve_access_warning": "为此设备批准访问权限后，它对你的帐户有完全的访问权限。",
             "completing_setup": "完成新设备的设置",
-            "confirm_code_match": "检查以下代码是否与你的其他设备匹配：",
-            "connecting": "正在连接……",
-            "devices_connected": "已连接的设备",
-            "error_homeserver_lacks_support": "此服务器不支持多设备登录"
+            "confirm_code_match": "检查以下代码是否与你的其他设备匹配："
         },
         "register_action": "创建账户",
         "registration": {
@@ -271,15 +268,15 @@
         "reset_password_button": "忘记密码？",
         "reset_password_email_field_description": "使用邮件地址恢复你的账户",
         "reset_password_email_field_required_invalid": "输入邮件地址（此家服务器上必须）",
-        "reset_password_email_not_associated": "你的电子邮件地址似乎未与此家服务器上的Matrix ID关联。",
+        "reset_password_email_not_associated": "你的电子邮件地址似乎未与服务器上的Matrix ID关联。",
         "reset_password_email_not_found_title": "未找到此邮箱地址",
-        "server_picker_custom": "其他家服务器",
+        "server_picker_custom": "其他自定义服务器",
         "server_picker_description": "你可以使用自定义服务器选项来指定不同的家服务器URL以登录其他Matrix服务器。这让你能把%(brand)s和不同家服务器上的已有Matrix账户搭配使用。",
         "server_picker_description_matrix.org": "免费加入最大的公共服务器，成为数百万用户中的一员",
         "server_picker_dialog_title": "决定账户托管位置",
-        "server_picker_explainer": "使用你偏好的Matrix家服务器，如果你有的话，或自己架设一个。",
+        "server_picker_explainer": "使用你的Matrix服务器，或自己架设一个。",
         "server_picker_failed_validate_homeserver": "无法验证家服务器",
-        "server_picker_intro": "我们将您可以托管账户的地方称为“家服务器”。",
+        "server_picker_intro": "我们将您可以托管账户的地方称为“服务器组”。",
         "server_picker_invalid_url": "URL 无效",
         "server_picker_learn_more": "关于家服务器",
         "server_picker_matrix.org": "Matrix.org 是世界上最大的公共家服务器，因此对许多人来说是一个好地方。",
@@ -304,8 +301,8 @@
         "sign_in_with_sso": "使用单点登录",
         "soft_logout": {
             "clear_data_button": "清除所有数据",
-            "clear_data_description": "清除此会话中的所有数据是永久的。加密消息会丢失，除非其密钥已被备份。",
-            "clear_data_title": "是否清除此会话中的所有数据？"
+            "clear_data_description": "清除此设备中的所有数据是永久的。加密消息会丢失，除非其密钥已被备份。",
+            "clear_data_title": "是否清除此设备中的所有数据？"
         },
         "soft_logout_heading": "你已登出",
         "soft_logout_intro_password": "输入你的密码以登录并重新获取访问你账户的权限。",
@@ -313,7 +310,7 @@
         "soft_logout_intro_unsupported_auth": "你不能登录到你的账户。请联系你的家服务器管理员以获取更多信息。",
         "soft_logout_subheading": "清除个人数据",
         "sso": "单点登录",
-        "sso_failed_missing_storage": "我们已要求浏览器记住你使用的家服务器，但不幸的是你的浏览器已忘记。请前往登录页面重试。",
+        "sso_failed_missing_storage": "我们已请求浏览器记住你使用的服务器，但是你的浏览器貌似已经忘记了。请前往登录页面重试。",
         "sso_or_username_password": "%(ssoButtons)s 或 %(usernamePassword)s",
         "sync_footer_subtitle": "如果你加入了很多房间，可能会消耗一些时间",
         "uia": {
@@ -327,7 +324,7 @@
             "msisdn_token_incorrect": "令牌错误",
             "msisdn_token_prompt": "请输入其包含的代码：",
             "password_prompt": "在下方输入账户密码以确认你的身份。",
-            "recaptcha_missing_params": "在家服务器配置中缺少验证码公钥。请将此报告给你的家服务器管理员。",
+            "recaptcha_missing_params": "在服务器配置中缺少验证码公钥。请将此问题报告给你的服务器管理员。",
             "registration_token_prompt": "输入由服务器管理员所提供的注册密钥。",
             "sso_body": "使用单一登入证明你的身份，以确认添加此电子邮件地址。",
             "sso_failed": "确认你的身份时出了一点问题。取消并重试。",
@@ -335,8 +332,8 @@
             "sso_postauth_title": "确认以继续",
             "sso_preauth_body": "要继续，请使用单点登录证明你的身份。",
             "sso_title": "使用单点登录继续",
-            "terms": "请阅读并接受此家服务器的政策：",
-            "terms_invalid": "请阅读并接受此家服务器的所有政策"
+            "terms": "请阅读并接受此服务器的政策：",
+            "terms_invalid": "请阅读并接受此服务器的所有政策"
         },
         "unsupported_auth": "此服务器未提供客户端支持的任何登录流程。",
         "unsupported_auth_email": "此家服务器不支持使用电子邮箱地址登录。",
@@ -418,7 +415,6 @@
         "description": "描述",
         "deselect_all": "取消全选",
         "device": "设备",
-        "display_name": "显示名称",
         "edited": "已编辑",
         "email_address": "邮箱地址",
         "emoji": "表情符号",
@@ -458,10 +454,6 @@
         "n_members": {
             "one": "%(count)s 位成员",
             "other": "%(count)s 位成员"
-        },
-        "n_participants": {
-            "other": "%(count)s 名参与者",
-            "one": "一名参与者"
         },
         "n_rooms": {
             "one": "%(count)s 个房间",
@@ -563,6 +555,9 @@
         "format_strikethrough": "删除线",
         "format_underline": "下划线",
         "format_unordered_list": "无序列表",
+        "link_modal": {
+            "link_field_label": "链接"
+        },
         "no_perms_notice": "你没有在此房间发送消息的权限",
         "placeholder": "发送消息…",
         "placeholder_encrypted": "发送加密消息……",
@@ -604,7 +599,7 @@
         "name_validation_required": "请输入房间名称",
         "room_visibility_label": "房间可见度",
         "title_private_room": "创建一个私人房间",
-        "title_public_room": "创建一个公共房间",
+        "title_public_room": "创建公开房间",
         "title_video_room": "创建视频房间",
         "topic_label": "话题（可选）",
         "unfederated": "阻住任何不属于 %(serverName)s 的人加入此房间。",
@@ -687,14 +682,12 @@
         "methods": "方法",
         "no_verification_requests_found": "未找到验证请求",
         "number_of_users": "用户数",
-        "observe_only": "仅观察",
         "original_event_source": "原始事件源码",
         "phase": "阶段",
         "phase_cancelled": "已取消",
         "phase_requested": "已请求",
         "phase_started": "已开始",
         "phase_transaction": "交易",
-        "requester": "请求者",
         "room_id": "房间ID: %(roomId)s",
         "save_setting_values": "保存设置值",
         "send_custom_account_data_event": "发送自定义账户数据事件",
@@ -969,7 +962,6 @@
         "update_power_level": "权力级别修改失败"
     },
     "error_app_opened_in_another_window": "%(brand)s已在另一个窗口中打开。单击“%(label)s”以在此处使用%(brand)s并断开其他窗口的连接。",
-    "error_database_closed_description": "这可能是由于在多个标签页中打开此应用，或由于清除浏览器数据。",
     "error_database_closed_title": "数据库意外关闭",
     "error_dialog": {
         "copy_room_link_failed": {
@@ -1158,7 +1150,6 @@
         "failed_generic": "操作失败",
         "failed_title": "邀请失败",
         "invalid_address": "无法识别地址",
-        "key_share_warning": "被邀请的人将能够阅读过去的消息。",
         "name_email_mxid_share_room": "使用名字、电子邮件地址、用户名（如<userId/>）邀请某人或<a>分享此房间</a>。",
         "name_email_mxid_share_space": "使用某人的名字、电子邮箱地址或用户名（如 <userId/>）邀请他们，或<a>分享此空间</a>。",
         "name_mxid_share_room": "使用某人的名字、用户名（如 <userId/>）或<a>分享此房间</a>来邀请他们。",
@@ -1311,16 +1302,9 @@
         "pinning": "消息置顶",
         "report_to_moderators": "报告给协管员",
         "report_to_moderators_description": "在支持审核的房间中，“报告”按钮将让你向房间协管员举报滥用行为。",
-        "rust_crypto": "Rust加密实现",
         "sliding_sync": "滑动同步模式",
         "sliding_sync_description": "正在积极开发中，不能禁用。",
-        "sliding_sync_disable_warning": "要停用，你必须登出并重新登录，请小心！",
-        "sliding_sync_proxy_url_label": "代理URL",
-        "sliding_sync_proxy_url_optional_label": "代理URL（可选）",
         "sliding_sync_server_no_support": "你的服务器缺少原生支持",
-        "sliding_sync_server_specify_proxy": "你的服务器缺少原生支持，你必须指定代理",
-        "sliding_sync_server_support": "你的服务器有原生支持",
-        "state_counters": "在房间标题中显示简单计数",
         "under_active_development": "积极开发中。",
         "video_rooms": "视频房间",
         "video_rooms_a_new_way_to_chat": "在 %(brand)s 中使用语音和视频的新方式。",
@@ -1366,14 +1350,6 @@
         "view_rules": "查看规则"
     },
     "language_dropdown_label": "语言下拉菜单",
-    "lazy_loading": {
-        "disabled_action": "清除缓存并重新同步",
-        "disabled_description1": "你之前在 %(host)s 上开启了 %(brand)s 的成员列表延迟加载设置。目前版本中延迟加载功能已被停用。因为本地缓存在这两个设置项上不相容，%(brand)s 需要重新同步你的账户。",
-        "disabled_description2": "如果别的 %(brand)s 版本在别的标签页中仍然开启，请关闭它，因为在同一宿主上同时使用开启了延迟加载和关闭了延迟加载的 %(brand)s 会导致问题。",
-        "disabled_title": "本地缓存不兼容",
-        "resync_description": "通过仅在需要时加载其他用户的信息，%(brand)s 现在使用的内存减少到了原来的三分之一至五分之一。 请等待与服务器重新同步！",
-        "resync_title": "正在更新 %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "你是这里唯一的人。如果你离开了，以后包括你在内任何人都将无法加入。",
         "leave_room_question": "你确定要离开房间 “%(roomName)s” 吗？",
@@ -1456,9 +1432,6 @@
         "all_messages_description": "获得每条消息的通知",
         "class_global": "全局",
         "class_other": "其他",
-        "colour_bold": "粗体",
-        "colour_none": "无",
-        "colour_unsent": "未发送",
         "default": "默认",
         "enable_prompt_toast_description": "开启桌面通知",
         "enable_prompt_toast_title": "通知",
@@ -1799,13 +1772,10 @@
         "read_topic": "点击阅读话题",
         "rejoin_button": "重新加入",
         "search": {
-            "all_rooms": "全部房间",
-            "field_placeholder": "搜索…",
             "result_count": {
                 "one": "（~%(count)s 个结果）",
                 "other": "（~%(count)s 个结果）"
-            },
-            "this_room": "此房间"
+            }
         },
         "show_labs_settings": "显示实验室设置",
         "status_bar": {
@@ -2152,10 +2122,8 @@
         "help_about": {
             "access_token_detail": "你的访问令牌可以完全访问你的账户。不要将其与任何人分享。",
             "brand_version": "%(brand)s 版本：",
-            "chat_bot": "与 %(brand)s 机器人聊天",
             "clear_cache_reload": "清理缓存并重载",
             "help_link": "关于 %(brand)s 的<a>使用说明</a>。",
-            "help_link_chat_bot": "关于 %(brand)s 的使用说明，请点击<a>这里</a>或者通过下方按钮同我们的机器人聊聊。",
             "homeserver": "服务器介绍：<code>%(homeserverUrl)s</code>",
             "title": "帮助及关于",
             "versions": "版本"
@@ -2170,24 +2138,15 @@
             "custom_font_description": "设置一个安装在你的系统上的字体名称，%(brand)s 会尝试使用它。",
             "custom_font_name": "系统字体名称",
             "custom_font_size": "使用自定义大小",
-            "custom_theme_add_button": "添加主题",
             "custom_theme_error_downloading": "下载主题信息时发生错误。",
             "custom_theme_invalid": "主题方案无效。",
-            "custom_theme_success": "主题已添加！",
-            "custom_theme_url": "自定义主题URL",
             "font_size": "字体大小",
-            "font_size_limit": "自定义字体大小只能介于 %(min)s pt 和 %(max)s pt 之间",
-            "font_size_nan": "大小必须是数字",
-            "font_size_valid": "请使用介于 %(min)s pt 和 %(max)s pt 之间的大小",
-            "heading": "自定义你的外观",
             "image_size_default": "默认",
             "image_size_large": "大",
             "layout_bubbles": "消息气泡",
             "layout_irc": "IRC（实验性）",
             "match_system_theme": "匹配系统主题",
-            "subheading": "外观设置仅会影响此 %(brand)s 会话。",
-            "timeline_image_size": "时间线中的图像大小",
-            "use_high_contrast": "使用高对比度"
+            "timeline_image_size": "时间线中的图像大小"
         },
         "automatic_language_detection_syntax_highlight": "启用语法高亮的自动语言检测",
         "autoplay_gifs": "自动播放 GIF",
@@ -2223,7 +2182,6 @@
             "discovery_email_verification_instructions": "验证你的收件箱中的链接",
             "discovery_msisdn_empty": "你添加电话号码后发现选项将会出现。",
             "discovery_needs_terms": "同意身份服务器（%(serverName)s）的服务协议以允许自己被通过邮件地址或电话号码发现。",
-            "discovery_section": "发现",
             "email_address_in_use": "此邮箱地址已被使用",
             "email_address_label": "电子邮箱地址",
             "email_not_verified": "你的邮件地址尚未被验证",
@@ -2241,8 +2199,6 @@
             "error_remove_3pid": "无法移除联系人信息",
             "error_revoke_email_discovery": "无法撤消电子邮件地址共享",
             "error_revoke_msisdn_discovery": "无法撤销电话号码共享",
-            "error_saving_profile": "操作无法完成",
-            "error_saving_profile_title": "个人资料保存失败",
             "error_share_email_discovery": "无法共享邮件地址",
             "error_share_msisdn_discovery": "无法共享电话号码",
             "identity_server_no_token": "找不到身份访问令牌",
@@ -2259,8 +2215,7 @@
             "password_change_success": "你的密码已成功更改。",
             "remove_email_prompt": "删除 %(email)s 吗？",
             "remove_msisdn_prompt": "删除 %(phone)s 吗？",
-            "spell_check_locale_placeholder": "选择区域设置",
-            "spell_check_section": "拼写检查"
+            "spell_check_locale_placeholder": "选择区域设置"
         },
         "image_thumbnails": "显示图片的预览图",
         "inline_url_previews_default": "默认启用行内URL预览",
@@ -2278,7 +2233,7 @@
                 "confirm_security_phrase": "确认你的安全短语",
                 "description": "通过在你的服务器上备份加密密钥来防止丢失你对加密消息和数据的访问权。",
                 "download_or_copy": "%(downloadButton)s或%(copyButton)s",
-                "enter_phrase_title": "输入一个安全密码",
+                "enter_phrase_title": "输入安全短语",
                 "enter_phrase_to_confirm": "再次输入你的安全短语进行确认。",
                 "generate_security_key_description": "我们将为您生成一个安全密钥，将其存储在安全的地方，例如密码管理器或保险箱。",
                 "generate_security_key_title": "生成一个安全密钥",
@@ -2398,7 +2353,6 @@
             "delete_backup_confirm_description": "你确定吗？如果密钥没有正确地备份你将失去你的加密消息。",
             "e2ee_default_disabled_warning": "你的服务器管理员默认关闭了私人房间和私聊中的端到端加密。",
             "enable_message_search": "在加密房间中启用消息搜索",
-            "encryption_individual_verification_mode": "逐一验证用户的每一个会话以将其标记为已信任，而不信任交叉签名的设备。",
             "encryption_section": "加密",
             "error_loading_key_backup_status": "无法载入密钥备份状态",
             "export_megolm_keys": "导出房间的端到端加密密钥",
@@ -2413,7 +2367,6 @@
             "key_backup_connect_prompt": "在登出前连接此会话到密钥备份以避免丢失可能仅在此会话上的密钥。",
             "key_backup_inactive": "此会话<b>未备份你的密钥</b>，但如果你已有现存备份，你可以继续并从中恢复和向其添加。",
             "key_backup_inactive_warning": "你的密钥<b>没有被此会话备份</b>。",
-            "manually_verify_all_sessions": "手动验证所有远程会话",
             "message_search_disable_warning": "如果被禁用，加密房间内的消息不会显示在搜索结果中。",
             "message_search_disabled": "在本地安全地缓存加密消息以使其出现在搜索结果中。",
             "message_search_enabled": {
@@ -2487,8 +2440,7 @@
             "security_recommendations_description": "按照以下建议来提高您的帐户安全性。",
             "session_id": "会话 ID",
             "sign_out_confirm_description": {
-                "one": "你确定要登出%(count)s个会话吗？",
-                "other": "你确定要退出这 %(count)s 个会话吗？"
+                "other": "你确定要从这 %(count)s 个会话中退出吗？"
             },
             "title": "会话",
             "unverified_session": "未验证的会话",
@@ -2536,7 +2488,7 @@
             "connection_section": "连接",
             "echo_cancellation": "回声消除",
             "enable_fallback_ice_server": "允许使用官方的ICE辅助服务器 (%(server)s)",
-            "enable_fallback_ice_server_description": "仅当你的家服务器不提供时才适用。你的IP地址在通话期间会被分享。",
+            "enable_fallback_ice_server_description": "仅当你的服务器不提供时才会使用。你的IP地址在通话期间会被知晓。",
             "mirror_local_feed": "镜像本地视频源",
             "missing_permissions_prompt": "缺少媒体权限，点击下面的按钮以请求权限。",
             "noise_suppression": "噪音抑制",
@@ -2800,15 +2752,10 @@
             "one": "%(count)s 条回复",
             "other": "%(count)s 条回复"
         },
-        "empty_explainer": "消息列帮助保持你的对话切题并易于追踪。",
-        "empty_has_threads_tip": "回复进行中的消息列或当悬停在消息上时使用%(replyInThread)s来发起新的消息列。",
-        "empty_heading": "用消息列使讨论井然有序",
-        "empty_tip": "<b>实用提示：</b>悬停在消息上时使用“%(replyInThread)s”。",
         "error_start_thread_existing_relation": "无法从既有关系的事件创建消息列",
         "my_threads": "我的消息列",
         "my_threads_description": "显示您参与的所有消息列",
         "open_thread": "打开消息列",
-        "show_all_threads": "显示所有消息列",
         "show_thread_filter": "显示："
     },
     "time": {
@@ -2859,7 +2806,6 @@
             "tooltip_sub": "点击查看编辑历史",
             "tooltip_title": "编辑于 %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "在此之前的加密消息不可用。",
         "error_no_renderer": "无法显示此事件",
         "error_rendering_message": "无法加载此消息",
         "historical_messages_unavailable": "你不能查看更早的消息",
@@ -2912,19 +2858,8 @@
             "sent": "%(senderDisplayName)s 发送了一张图片。",
             "show_image": "显示图像"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s 取消了验证",
-            "you_cancelled": "你取消了 %(name)s 的验证"
-        },
-        "m.key.verification.done": "你验证了 %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s 接受了",
-            "user_cancelled": "%(name)s 取消了",
-            "user_declined": "%(name)s 拒绝了",
             "user_wants_to_verify": "%(name)s 想要验证",
-            "you_accepted": "你接受了",
-            "you_cancelled": "你取消了",
-            "you_declined": "你拒绝了",
             "you_started": "你发送了一个验证请求"
         },
         "m.location": {
@@ -3094,8 +3029,7 @@
         "pending_moderation_reason": "消息待审核：%(reason)s",
         "reactions": {
             "add_reaction_prompt": "添加反应",
-            "label": "%(reactors)s做出了%(content)s的反应",
-            "tooltip": "<reactors/><reactedWith>回应了 %(shortName)s</reactedWith>"
+            "label": "%(reactors)s做出了%(content)s的反应"
         },
         "read_receipt_title": {
             "one": "已被%(count)s人查看",
@@ -3353,7 +3287,6 @@
         },
         "redact_button": "移除最近消息",
         "revoke_invite": "撤销邀请",
-        "role_label": "<RoomName/> 中的角色",
         "room_encrypted": "此房间内的消息端到端加密。",
         "room_encrypted_detail": "你的消息是安全的，只有你和接收者有解开它们的唯一密钥。",
         "room_unencrypted": "此房间内的消息未端到端加密。",
@@ -3399,7 +3332,6 @@
         "already_in_call_person": "你正在与其通话。",
         "answered_elsewhere": "已在别处接听",
         "answered_elsewhere_description": "已在另一台设备上接听了此通话。",
-        "audio_devices": "音频设备",
         "call_failed": "呼叫失败",
         "call_failed_description": "无法建立通话",
         "call_failed_media": "通话失败，因为无法使用摄像头或麦克风。请检查：",
@@ -3483,7 +3415,6 @@
         "user_is_presenting": "%(sharerName)s 正在展示",
         "video_call": "视频通话",
         "video_call_started": "视频通话已开始",
-        "video_devices": "视频设备",
         "voice_call": "语音通话",
         "you_are_presenting": "你正在展示"
     },

@@ -35,6 +35,7 @@ import SettingsHandler from "./handlers/SettingsHandler";
 import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
 import { Action } from "../dispatcher/actions";
 import PlatformSettingsHandler from "./handlers/PlatformSettingsHandler";
+import ReloadOnChangeController from "./controllers/ReloadOnChangeController";
 
 // Convert the settings to easier to manage objects for the handlers
 const defaultSettings: Record<string, any> = {};
@@ -132,6 +133,12 @@ export default class SettingsStore {
 
     // Counter used for generation of watcher IDs
     private static watcherCount = 1;
+
+    public static reset(): void {
+        for (const handler of Object.values(LEVEL_HANDLERS)) {
+            handler.reset();
+        }
+    }
 
     /**
      * Gets all the feature-style setting names.
@@ -263,13 +270,19 @@ export default class SettingsStore {
     public static getDisplayName(settingName: string, atLevel = SettingLevel.DEFAULT): string | null {
         if (!SETTINGS[settingName] || !SETTINGS[settingName].displayName) return null;
 
-        let displayName = SETTINGS[settingName].displayName;
-        if (displayName instanceof Object) {
-            if (displayName[atLevel]) displayName = displayName[atLevel];
-            else displayName = displayName["default"];
+        const displayName = SETTINGS[settingName].displayName;
+
+        if (typeof displayName === "string") {
+            return _t(displayName);
+        }
+        if (displayName?.[atLevel]) {
+            return _t(displayName[atLevel]);
+        }
+        if (displayName?.["default"]) {
+            return _t(displayName["default"]);
         }
 
-        return displayName ? _t(displayName) : null;
+        return null;
     }
 
     /**
@@ -310,7 +323,12 @@ export default class SettingsStore {
             SettingsStore.isFeature(settingName) &&
             SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, null, true, true) !== false
         ) {
-            return SETTINGS[settingName]?.betaInfo;
+            const betaInfo = SETTINGS[settingName]!.betaInfo;
+            if (betaInfo) {
+                betaInfo.requiresRefresh =
+                    betaInfo.requiresRefresh ?? SETTINGS[settingName]!.controller instanceof ReloadOnChangeController;
+            }
+            return betaInfo;
         }
     }
 
@@ -318,19 +336,6 @@ export default class SettingsStore {
         if (SettingsStore.isFeature(settingName)) {
             return (<IFeature>SETTINGS[settingName]).labsGroup;
         }
-    }
-
-    /**
-     * Determines if a setting is enabled.
-     * If a setting is disabled then it should normally be hidden from the user to de-clutter the user interface.
-     * This rule is intentionally ignored for labs flags to unveil what features are available with
-     * the right server support.
-     * @param {string} settingName The setting to look up.
-     * @return {boolean} True if the setting is enabled.
-     */
-    public static isEnabled(settingName: string): boolean {
-        if (!SETTINGS[settingName]) return false;
-        return !SETTINGS[settingName].controller?.settingDisabled ?? true;
     }
 
     /**
@@ -362,7 +367,7 @@ export default class SettingsStore {
         const setting = SETTINGS[settingName];
         const levelOrder = getLevelOrder(setting);
 
-        return SettingsStore.getValueAt(levelOrder[0], settingName, roomId, false, excludeDefault);
+        return SettingsStore.getValueAt<T>(levelOrder[0], settingName, roomId, false, excludeDefault);
     }
 
     /**
@@ -376,13 +381,13 @@ export default class SettingsStore {
      * @param {boolean} excludeDefault True to disable using the default value.
      * @return {*} The value, or null if not found.
      */
-    public static getValueAt(
+    public static getValueAt<T = any>(
         level: SettingLevel,
         settingName: string,
         roomId: string | null = null,
         explicit = false,
         excludeDefault = false,
-    ): any {
+    ): T {
         // Verify that the setting is actually a setting
         const setting = SETTINGS[settingName];
         if (!setting) {
@@ -516,31 +521,66 @@ export default class SettingsStore {
      * Determines if the current user is permitted to set the given setting at the given
      * level for a particular room. The room ID is optional if the setting is not being
      * set for a particular room, otherwise it should be supplied.
+     *
+     * This takes into account both the value of {@link SettingController#settingDisabled} of the
+     * `SettingController`, if any; and, for settings where {@link IBaseSetting#supportedLevelsAreOrdered} is true,
+     * checks whether a level of higher precedence is set.
+     *
+     * Typically, if the user cannot set the setting, it should be hidden, to declutter the UI;
+     * however some settings (typically, the labs flags) are exposed but greyed out, to unveil
+     * what features are available with the right server support.
+     *
      * @param {string} settingName The name of the setting to check.
      * @param {String} roomId The room ID to check in, may be null.
-     * @param {SettingLevel} level The level to
-     * check at.
+     * @param {SettingLevel} level The level to check at.
      * @return {boolean} True if the user may set the setting, false otherwise.
      */
     public static canSetValue(settingName: string, roomId: string | null, level: SettingLevel): boolean {
+        const setting = SETTINGS[settingName];
         // Verify that the setting is actually a setting
-        if (!SETTINGS[settingName]) {
+        if (!setting) {
             throw new Error("Setting '" + settingName + "' does not appear to be a setting.");
         }
 
-        if (!SettingsStore.isEnabled(settingName)) {
+        if (setting.controller?.settingDisabled) {
             return false;
         }
 
-        // When non-beta features are specified in the config.json, we force them as enabled or disabled.
-        if (SettingsStore.isFeature(settingName) && !SETTINGS[settingName]?.betaInfo) {
-            const configVal = SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, roomId, true, true);
-            if (configVal === true || configVal === false) return false;
+        // For some config settings (mostly: non-beta features), a value in config.json overrides the local setting
+        // (ie: we force them as enabled or disabled). In this case we should not let the user change the setting.
+        if (
+            setting?.supportedLevelsAreOrdered &&
+            SettingsStore.settingIsOveriddenAtConfigLevel(settingName, roomId, level)
+        ) {
+            return false;
         }
 
         const handler = SettingsStore.getHandler(settingName, level);
         if (!handler) return false;
         return handler.canSetValue(settingName, roomId);
+    }
+
+    /**
+     * Determines if the setting at the specified level is overidden by one at a config level.
+     * @param settingName The name of the setting to check.
+     * @param roomId The room ID to check in, may be null.
+     * @param level The level to check at.
+     * @returns
+     */
+    public static settingIsOveriddenAtConfigLevel(
+        settingName: string,
+        roomId: string | null,
+        level: SettingLevel,
+    ): boolean {
+        const setting = SETTINGS[settingName];
+        const levelOrders = getLevelOrder(setting);
+        const configIndex = levelOrders.indexOf(SettingLevel.CONFIG);
+        const levelIndex = levelOrders.indexOf(level);
+        if (configIndex === -1 || levelIndex === -1 || configIndex >= levelIndex) {
+            return false;
+        }
+        const configVal = SettingsStore.getValueAt(SettingLevel.CONFIG, settingName, roomId, true, true);
+        return configVal === true || configVal === false;
     }
 
     /**

@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { registerOidcClient } from "matrix-js-sdk/src/oidc/register";
+import { registerOidcClient, OidcClientConfig } from "matrix-js-sdk/src/matrix";
 
 import { IConfigOptions } from "../../IConfigOptions";
-import { ValidatedDelegatedAuthConfig } from "../ValidatedServerConfig";
+import PlatformPeg from "../../PlatformPeg";
 
 /**
  * Get the statically configured clientId for the issuer
@@ -40,22 +40,18 @@ const getStaticOidcClientId = (
  * Checks statically configured clientIds first
  * Then attempts dynamic registration with the OP
  * @param delegatedAuthConfig Auth config from ValidatedServerConfig
- * @param clientName Client name to register with the OP, eg 'Element'
- * @param baseUrl URL of the home page of the Client, eg 'https://app.element.io/'
  * @param staticOidcClients static client config from config.json
  * @returns Promise<string> resolves with clientId
  * @throws if no clientId is found
  */
 export const getOidcClientId = async (
-    delegatedAuthConfig: ValidatedDelegatedAuthConfig,
-    clientName: string,
-    baseUrl: string,
+    delegatedAuthConfig: OidcClientConfig,
     staticOidcClients?: IConfigOptions["oidc_static_clients"],
 ): Promise<string> => {
-    const staticClientId = getStaticOidcClientId(delegatedAuthConfig.issuer, staticOidcClients);
+    const staticClientId = getStaticOidcClientId(delegatedAuthConfig.metadata.issuer, staticOidcClients);
     if (staticClientId) {
-        logger.debug(`Using static clientId for issuer ${delegatedAuthConfig.issuer}`);
+        logger.debug(`Using static clientId for issuer ${delegatedAuthConfig.metadata.issuer}`);
         return staticClientId;
     }
-    return await registerOidcClient(delegatedAuthConfig, clientName, baseUrl);
+    return await registerOidcClient(delegatedAuthConfig, await PlatformPeg.get()!.getOidcClientMetadata());
 };

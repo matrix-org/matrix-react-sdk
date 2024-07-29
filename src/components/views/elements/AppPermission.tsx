@@ -18,6 +18,7 @@ limitations under the License.
 
 import React from "react";
 import { RoomMember } from "matrix-js-sdk/src/matrix";
+import { Tooltip } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
@@ -27,7 +28,6 @@ import MemberAvatar from "../avatars/MemberAvatar";
 import BaseAvatar from "../avatars/BaseAvatar";
 import Heading from "../typography/Heading";
 import AccessibleButton from "./AccessibleButton";
-import TextWithTooltip from "./TextWithTooltip";
 import { parseUrl } from "../../../utils/UrlUtils";
 import { Icon as HelpIcon } from "../../../../res/img/feather-customised/help-circle.svg";
 
@@ -99,30 +99,27 @@ export default class AppPermission extends React.Component<IProps, IState> {
             <BaseAvatar name={this.props.creatorUserId} size="38px" />
         );
 
-        const warningTooltipText = (
-            <div>
-                {_t("analytics|shared_data_heading")}
-                <ul>
-                    <li>{_t("widget|shared_data_name")}</li>
-                    <li>{_t("widget|shared_data_avatar")}</li>
-                    <li>{_t("widget|shared_data_mxid")}</li>
-                    <li>{_t("widget|shared_data_device_id")}</li>
-                    <li>{_t("widget|shared_data_theme")}</li>
-                    <li>{_t("widget|shared_data_lang")}</li>
-                    <li>{_t("widget|shared_data_url", { brand })}</li>
-                    <li>{_t("widget|shared_data_room_id")}</li>
-                    <li>{_t("widget|shared_data_widget_id")}</li>
-                </ul>
-            </div>
-        );
         const warningTooltip = (
-            <TextWithTooltip
-                tooltip={warningTooltipText}
-                tooltipClass="mx_Tooltip--appPermission mx_Tooltip--appPermission--dark"
-                class="mx_TextWithTooltip_target--helpIcon"
+            <Tooltip
+                label={_t("analytics|shared_data_heading")}
+                caption={
+                    <ul>
+                        <li>{_t("widget|shared_data_name")}</li>
+                        <li>{_t("widget|shared_data_avatar")}</li>
+                        <li>{_t("widget|shared_data_mxid")}</li>
+                        <li>{_t("widget|shared_data_device_id")}</li>
+                        <li>{_t("widget|shared_data_theme")}</li>
+                        <li>{_t("widget|shared_data_lang")}</li>
+                        <li>{_t("widget|shared_data_url", { brand })}</li>
+                        <li>{_t("widget|shared_data_room_id")}</li>
+                        <li>{_t("widget|shared_data_widget_id")}</li>
+                    </ul>
+                }
             >
-                <HelpIcon className="mx_Icon mx_Icon_12" />
-            </TextWithTooltip>
+                <div className="mx_TextWithTooltip_target mx_TextWithTooltip_target--helpIcon">
+                    <HelpIcon className="mx_Icon mx_Icon_12" />
+                </div>
+            </Tooltip>
         );
 
         // Due to i18n limitations, we can't dedupe the code for variables in these two messages.

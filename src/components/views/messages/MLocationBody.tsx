@@ -17,6 +17,7 @@ limitations under the License.
 import React from "react";
 import { MatrixEvent, ClientEvent, ClientEventHandlerMap } from "matrix-js-sdk/src/matrix";
 import { randomString } from "matrix-js-sdk/src/randomstring";
+import { Tooltip } from "@vector-im/compound-web";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
@@ -27,11 +28,7 @@ import {
     isSelfLocation,
 } from "../../../utils/location";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import TooltipTarget from "../elements/TooltipTarget";
-import { Alignment } from "../elements/Tooltip";
-import LocationViewDialog from "../location/LocationViewDialog";
-import Map from "../location/Map";
-import SmartMarker from "../location/SmartMarker";
+import { SmartMarker, Map, LocationViewDialog } from "../location";
 import { IBodyProps } from "./IBodyProps";
 import { createReconnectedListener } from "../../../utils/connection";
 
@@ -128,7 +125,7 @@ export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent; error: 
 interface LocationBodyContentProps {
     mxEvent: MatrixEvent;
     mapId: string;
-    tooltip?: string;
+    tooltip: string;
     onError: (error: Error) => void;
     onClick?: () => void;
 }
@@ -158,13 +155,9 @@ export const LocationBodyContent: React.FC<LocationBodyContentProps> = ({
 
     return (
         <div className="mx_MLocationBody">
-            {tooltip ? (
-                <TooltipTarget label={tooltip} alignment={Alignment.InnerBottom} maxParentWidth={450}>
-                    {mapElement}
-                </TooltipTarget>
-            ) : (
-                mapElement
-            )}
+            <Tooltip label={tooltip}>
+                <div className="mx_MLocationBody_map">{mapElement}</div>
+            </Tooltip>
         </div>
     );
 };

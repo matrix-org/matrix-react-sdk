@@ -16,7 +16,7 @@
 
 import { Room, RoomStateEvent, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { Optional } from "matrix-events-sdk";
-import { compare, MapWithDefault, recursiveMapToObject } from "matrix-js-sdk/src/utils";
+import { MapWithDefault, recursiveMapToObject } from "matrix-js-sdk/src/utils";
 import { IWidget } from "matrix-widget-api";
 
 import SettingsStore from "../../settings/SettingsStore";
@@ -28,55 +28,10 @@ import { ReadyWatchingStore } from "../ReadyWatchingStore";
 import { SettingLevel } from "../../settings/SettingLevel";
 import { arrayFastClone } from "../../utils/arrays";
 import { UPDATE_EVENT } from "../AsyncStore";
+import { Container, IStoredLayout, ILayoutStateEvent, WIDGET_LAYOUT_EVENT_TYPE, IWidgetLayouts } from "./types";
 
-export const WIDGET_LAYOUT_EVENT_TYPE = "io.element.widgets.layout";
-
-export enum Container {
-    // "Top" is the app drawer, and currently the only sensible value.
-    Top = "top",
-
-    // "Right" is the right panel, and the default for widgets. Setting
-    // this as a container on a widget is essentially like saying "no
-    // changes needed", though this may change in the future.
-    Right = "right",
-
-    Center = "center",
-}
-
-export interface IStoredLayout {
-    // Where to store the widget. Required.
-    container: Container;
-
-    // The index (order) to position the widgets in. Only applies for
-    // ordered containers (like the top container). Smaller numbers first,
-    // and conflicts resolved by comparing widget IDs.
-    index?: number;
-
-    // Percentage (integer) for relative width of the container to consume.
-    // Clamped to 0-100 and may have minimums imposed upon it. Only applies
-    // to containers which support inner resizing (currently only the top
-    // container).
-    width?: number;
-
-    // Percentage (integer) for relative height of the container. Note that
-    // this only applies to the top container currently, and that container
-    // will take the highest value among widgets in the container. Clamped
-    // to 0-100 and may have minimums imposed on it.
-    height?: number | null;
-
-    // TODO: [Deferred] Maximizing (fullscreen) widgets by default.
-}
-
-interface IWidgetLayouts {
-    [widgetId: string]: IStoredLayout;
-}
-
-interface ILayoutStateEvent {
-    // TODO: [Deferred] Forced layout (fixed with no changes)
-
-    // The widget layouts.
-    widgets: IWidgetLayouts;
-}
+export type { IStoredLayout, ILayoutStateEvent };
+export { Container, WIDGET_LAYOUT_EVENT_TYPE };
 
 interface ILayoutSettings extends ILayoutStateEvent {
     overrides?: string; // event ID for layout state event, if present
@@ -245,6 +200,8 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         const runoff = topWidgets.slice(MAX_PINNED);
         rightWidgets.push(...runoff);
 
+        const collator = new Intl.Collator();
+
         // Order the widgets in the top container, putting autopinned Jitsi widgets first
         // unless they have a specific order in mind
         topWidgets.sort((a, b) => {
@@ -264,7 +221,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
 
             if (orderA === orderB) {
                 // We just need a tiebreak
-                return compare(a.id, b.id);
+                return collator.compare(a.id, b.id);
             }
 
             return orderA - orderB;

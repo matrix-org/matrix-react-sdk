@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { MatrixClient, Room, RoomState, EventType } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import SettingsStore from "../../settings/SettingsStore";
@@ -182,7 +183,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
 
         // We do this to intentionally break out of the current event loop task, allowing
         // us to instead wait for a more convenient time to run our updates.
-        setImmediate(() => this.onDispatchAsync(payload));
+        setTimeout(() => this.onDispatchAsync(payload));
     }
 
     protected async onDispatchAsync(payload: ActionPayload): Promise<void> {
@@ -233,7 +234,12 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
                         return;
                     }
                 }
-                await this.handleRoomUpdate(updatedRoom, RoomUpdateCause.Timeline);
+                // If the join rule changes we need to update the tags for the room.
+                // A conference tag is determined by the room public join rule.
+                if (eventPayload.event.getType() === EventType.RoomJoinRules)
+                    await this.handleRoomUpdate(updatedRoom, RoomUpdateCause.PossibleTagChange);
+                else await this.handleRoomUpdate(updatedRoom, RoomUpdateCause.Timeline);
+
                 this.updateFn.trigger();
             };
             if (!room) {
@@ -350,7 +356,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> implements 
     }
 
     private async handleRoomUpdate(room: Room, cause: RoomUpdateCause): Promise<any> {
-        if (cause === RoomUpdateCause.NewRoom && room.getMyMembership() === "invite") {
+        if (cause === RoomUpdateCause.NewRoom && room.getMyMembership() === KnownMembership.Invite) {
             // Let the visibility provider know that there is a new invited room. It would be nice
             // if this could just be an event that things listen for but the point of this is that
             // we delay doing anything about this room until the VoipUserMapper had had a chance

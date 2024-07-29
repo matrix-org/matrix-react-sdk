@@ -9,20 +9,14 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
   role="dialog"
 >
   <div
-    class="mx_Dialog_header mx_Dialog_headerWithCancel"
+    class="mx_Dialog_header"
   >
-    <h2
+    <h1
       class="mx_Heading_h3 mx_Dialog_title"
       id="mx_BaseDialog_title"
     >
       Export Chat
-    </h2>
-    <div
-      aria-label="Close dialog"
-      class="mx_AccessibleButton mx_Dialog_cancelButton"
-      role="button"
-      tabindex="0"
-    />
+    </h1>
   </div>
   <p>
     Select from the options below to export chats from your timeline
@@ -200,6 +194,12 @@ exports[`<ExportDialog /> renders export dialog 1`] = `
       </button>
     </span>
   </div>
+  <div
+    aria-label="Close dialog"
+    class="mx_AccessibleButton mx_Dialog_cancelButton"
+    role="button"
+    tabindex="0"
+  />
 </div>
 `;
 

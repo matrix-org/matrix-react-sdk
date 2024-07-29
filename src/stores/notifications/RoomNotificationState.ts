@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { MatrixEventEvent, RoomEvent, ClientEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import type { Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import type { IDestroyable } from "../../utils/IDestroyable";
@@ -23,9 +24,13 @@ import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import * as RoomNotifs from "../../RoomNotifs";
 import { NotificationState } from "./NotificationState";
 import SettingsStore from "../../settings/SettingsStore";
+import { MARKED_UNREAD_TYPE_STABLE, MARKED_UNREAD_TYPE_UNSTABLE } from "../../utils/notifications";
 
 export class RoomNotificationState extends NotificationState implements IDestroyable {
-    public constructor(public readonly room: Room) {
+    public constructor(
+        public readonly room: Room,
+        private includeThreads: boolean,
+    ) {
         super();
         const cli = this.room.client;
         this.room.on(RoomEvent.Receipt, this.handleReadReceipt);
@@ -33,6 +38,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         this.room.on(RoomEvent.LocalEchoUpdated, this.handleLocalEchoUpdated);
         this.room.on(RoomEvent.Timeline, this.handleRoomEventUpdate);
         this.room.on(RoomEvent.Redaction, this.handleRoomEventUpdate);
+        this.room.on(RoomEvent.AccountData, this.handleRoomAccountDataUpdate);
 
         this.room.on(RoomEvent.UnreadNotifications, this.handleNotificationCountUpdate); // for server-sent counts
         cli.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
@@ -48,6 +54,7 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         this.room.removeListener(RoomEvent.LocalEchoUpdated, this.handleLocalEchoUpdated);
         this.room.removeListener(RoomEvent.Timeline, this.handleRoomEventUpdate);
         this.room.removeListener(RoomEvent.Redaction, this.handleRoomEventUpdate);
+        this.room.removeListener(RoomEvent.AccountData, this.handleRoomAccountDataUpdate);
         cli.removeListener(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         cli.removeListener(ClientEvent.AccountData, this.handleAccountDataUpdate);
     }
@@ -87,14 +94,21 @@ export class RoomNotificationState extends NotificationState implements IDestroy
         }
     };
 
+    private handleRoomAccountDataUpdate = (ev: MatrixEvent): void => {
+        if ([MARKED_UNREAD_TYPE_STABLE, MARKED_UNREAD_TYPE_UNSTABLE].includes(ev.getType())) {
+            this.updateNotificationState();
+        }
+    };
+
     private updateNotificationState(): void {
         const snapshot = this.snapshot();
 
-        const { color, symbol, count } = RoomNotifs.determineUnreadState(this.room);
+        const { level, symbol, count } = RoomNotifs.determineUnreadState(this.room, undefined, this.includeThreads);
         const muted =
             RoomNotifs.getRoomNotifsState(this.room.client, this.room.roomId) === RoomNotifs.RoomNotifState.Mute;
-        const knocked = SettingsStore.getValue("feature_ask_to_join") && this.room.getMyMembership() === "knock";
-        this._color = color;
+        const knocked =
+            SettingsStore.getValue("feature_ask_to_join") && this.room.getMyMembership() === KnownMembership.Knock;
+        this._level = level;
         this._symbol = symbol;
         this._count = count;
         this._muted = muted;

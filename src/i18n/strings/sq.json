@@ -234,23 +234,12 @@
             "approve_access_warning": "Duke miratuar hyrje për këtë pajisje, ajo do të ketë hyrje të plotë në llogarinë tuaj.",
             "completing_setup": "Po plotësohet ujdisja e pajisjes tuaj të re",
             "confirm_code_match": "Kontrolloni se kodi më poshtë përkon me atë në pajisjen tuaj tjetër:",
-            "connecting": "Po lidhet…",
-            "devices_connected": "Pajisje të lidhura",
-            "error_device_already_signed_in": "Nga pajisja tjetër është bërë tashmë hyrja.",
-            "error_device_not_signed_in": "Te pajisja tjetër s’është bërë hyrja.",
-            "error_device_unsupported": "Lidhja me këtë pajisje nuk mbulohet.",
-            "error_homeserver_lacks_support": "Shërbyesi Home nuk mbulon bërje hyrjeje në një pajisje tjetër.",
-            "error_invalid_scanned_code": "Kodi i skanuar është i pavlefshëm.",
-            "error_linking_incomplete": "Lidhja s’u plotësua brenda kohës së domosdoshme.",
-            "error_request_cancelled": "Kërkesa u anulua.",
-            "error_request_declined": "Kërkesa u hodh poshtë në pajisjen tjetër.",
+            "error_rate_limited": "Shumë përpjekje në një kohë të shkurtër. Prisni ca, para se të riprovoni.",
             "error_unexpected": "Ndodhi një gabim të papritur.",
-            "review_and_approve": "Shqyrtoni dhe miratojeni hyrjen",
             "scan_code_instruction": "Skanoni kodin QR më poshtë me pajisjen ku është bërë dalja.",
             "scan_qr_code": "Skanoni kodin QR",
             "select_qr_code": "Përzgjidhni “%(scanQRCode)s”",
             "sign_in_new_device": "Hyni në pajisje të re",
-            "start_at_sign_in_screen": "Filloja në skenën e hyrjes",
             "waiting_for_device": "Po pritet që të bëhet hyrja te pajisja"
         },
         "register_action": "Krijoni Llogari",
@@ -431,7 +420,6 @@
         "description": "Përshkrim",
         "deselect_all": "Shpërzgjidhi krejt",
         "device": "Pajisje",
-        "display_name": "Emër Në Ekran",
         "edited": "e përpunuar",
         "email_address": "Adresë email",
         "encrypted": "I fshehtëzuar",
@@ -465,10 +453,6 @@
         "n_members": {
             "one": "%(count)s anëtar",
             "other": "%(count)s anëtarë"
-        },
-        "n_participants": {
-            "one": "1 pjesëmarrës",
-            "other": "%(count)s pjesëmarrës"
         },
         "n_rooms": {
             "one": "%(count)s dhomë",
@@ -709,7 +693,6 @@
         "notification_state": "Gjendje njoftimi është <strong>%(notificationState)s</strong>",
         "notifications_debug": "Diagnostikim njoftimesh",
         "number_of_users": "Numër përdoruesish",
-        "observe_only": "Vetëm vëzhgo",
         "original_event_source": "Burim i veprimtarisë origjinale",
         "phase": "Fazë",
         "phase_cancelled": "Anuluar",
@@ -717,7 +700,6 @@
         "phase_requested": "E kërkuar",
         "phase_started": "Nisur më",
         "phase_transaction": "Transaksion",
-        "requester": "Kërkues",
         "room_encrypted": "Dhoma është <strong>e fshehtëzuar ✅</strong>",
         "room_id": "ID Dhome: %(roomId)s",
         "room_not_encrypted": "Dhoma është <strong>e pafshehtëzuar 🚨</strong>",
@@ -728,7 +710,6 @@
         "room_notifications_total": "Gjithsej: ",
         "room_notifications_type": "Lloj: ",
         "room_status": "Gjendje dhome",
-        "room_unread_status": "Gjendje e palexuar në dhomë: <strong>%(status)s</strong>",
         "room_unread_status_count": {
             "other": "Gjendje të palexuara në dhomë: <strong>%(status)s</strong>, count: <strong>%(count)s</strong>"
         },
@@ -1016,7 +997,6 @@
         "unknown_error_code": "kod gabimi të panjohur",
         "update_power_level": "S’u arrit të ndryshohej shkalla e pushtetit"
     },
-    "error_database_closed_description": "Kjo mund të jetë e shkaktuar nga pasja e aplikacionit hapur në shumë skeda, ose për shkak të spastrimit të të dhënave të shfletuesit.",
     "error_database_closed_title": "Baza e të dhënave u mbyll papritur",
     "error_dialog": {
         "copy_room_link_failed": {
@@ -1212,7 +1192,6 @@
         "failed_generic": "Veprimi dështoi",
         "failed_title": "S’u arrit të ftohej",
         "invalid_address": "Adresë jo e pranuar",
-        "key_share_warning": "Personat e ftuar do të jenë në gjendje të lexojnë mesazhe të vjetër.",
         "name_email_mxid_share_room": "Ftoni dikë duke përdorur emrin e tij, adresën email, emrin e përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë dhomë</a>.",
         "name_email_mxid_share_space": "Ftoni dikë duke përdorur emrin e tij, adresën email, emrin e përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë hapësirë</a>.",
         "name_mxid_share_room": "Ftoni dikë duke përdorur emrin e tij, emrin e tij të përdoruesit (bie fjala, <userId/>) ose <a>ndani me të këtë dhomë</a>.",
@@ -1338,6 +1317,7 @@
         "group_rooms": "Dhoma",
         "group_spaces": "Hapësira",
         "group_themes": "Tema",
+        "group_threads": "Rrjedha",
         "group_voip": "Zë & Video",
         "group_widgets": "Widget-e",
         "hidebold": "Fshihe pikën e njoftimeve (shfaq vetëm stema numëratorësh)",
@@ -1356,19 +1336,9 @@
         "pinning": "Fiksim Mesazhi",
         "report_to_moderators": "Raportojeni te moderatorët",
         "report_to_moderators_description": "Në dhoma që mbulojnë moderimin, butoni “Raportojeni” do t’ju lejojë t’u raportoni abuzim moderatorëve të dhomës.",
-        "rust_crypto": "Sendërtim kriptografie Rust",
-        "rust_crypto_disabled_notice": "Aktualisht mund të aktivizohet vetëm përmes config.json-it",
-        "sliding_sync_checking": "Po kontrollohet…",
-        "sliding_sync_configuration": "Formësim Sliding Sync-u",
         "sliding_sync_description": "Nën zhvillim aktiv, s’mund të çaktivizohet.",
-        "sliding_sync_disable_warning": "Për ta çaktivizuar do t’ju duhet të bëni daljen dhe ribëni hyrjen, përdoreni me kujdes!",
         "sliding_sync_disabled_notice": "Që të çaktivizohet, dilni dhe rihyni në llogari",
-        "sliding_sync_proxy_url_label": "URL Ndërmjetësi",
-        "sliding_sync_proxy_url_optional_label": "URL ndërmjetësi (opsionale)",
         "sliding_sync_server_no_support": "Shërbyesit tuaj i mungon mbulim i brendshëm për këtë",
-        "sliding_sync_server_specify_proxy": "Shërbyesit tuaj i mungon mbulimi së brendshmi, duhet të specifikoni një ndërmjetës",
-        "sliding_sync_server_support": "Shërbyesi juaj ka mbulim të brendshëm për këtë",
-        "state_counters": "Vizato numëratorë të thjeshtë te kryet e dhomës",
         "under_active_development": "Nën zhvillim aktiv.",
         "video_rooms": "Dhoma me video",
         "video_rooms_a_new_way_to_chat": "Një rrugë e re për të biseduar me zë dhe video në %(brand)s.",
@@ -1416,14 +1386,6 @@
         "view_rules": "Shihni rregulla"
     },
     "language_dropdown_label": "Menu Hapmbyll Gjuhësh",
-    "lazy_loading": {
-        "disabled_action": "Spastro fshehtinën dhe rinjëkohëso",
-        "disabled_description1": "Më parë përdornit %(brand)s në %(host)s me <em>lazy loading</em> anëtarësh të aktivizuar. Në këtë version <em>lazy loading</em> është çaktivizuar. Ngaqë fshehtina vendore s’është e përputhshme mes këtyre dy rregullimeve, %(brand)s-i lyp të rinjëkohësohet llogaria juaj.",
-        "disabled_description2": "Nëse versioni tjetër i %(brand)s-it është ende i hapur në një skedë tjetër, ju lutemi, mbylleni, ngaqë përdorimi njëkohësisht i %(brand)s-it në të njëjtën strehë, në njërën anë me <em>lazy loading</em> të aktivizuar dhe në anën tjetër të çaktivizuar do të shkaktojë probleme.",
-        "disabled_title": "Fshehtinë vendore e papërputhshme",
-        "resync_description": "%(brand)s-i tani përdor 3 deri 5 herë më pak kujtesë, duke ngarkuar të dhëna mbi përdorues të tjerë vetëm kur duhen. Ju lutemi, prisni, teksa njëkohësojmë të dhënat me shërbyesin!",
-        "resync_title": "%(brand)s-i po përditësohet"
-    },
     "leave_room_dialog": {
         "last_person_warning": "Jeni i vetmi person këtu. Nëse e braktisni, askush s’do të jetë në gjendje të hyjë në të ardhmen, përfshi ju.",
         "leave_room_question": "Jeni i sigurt se doni të dilni nga dhoma '%(roomName)s'?",
@@ -1507,11 +1469,6 @@
         "all_messages": "Krejt mesazhet",
         "all_messages_description": "Merrni njoftim për çdo mesazh",
         "class_other": "Tjetër",
-        "colour_bold": "Të trasha",
-        "colour_grey": "Gri",
-        "colour_none": "Asnjë",
-        "colour_red": "E kuqe",
-        "colour_unsent": "Të padërguar",
         "default": "Parazgjedhje",
         "enable_prompt_toast_description": "Aktivizoni njoftime desktopi",
         "enable_prompt_toast_title": "Njoftime",
@@ -1519,6 +1476,9 @@
         "error_change_title": "Ndryshoni rregullime njoftimesh",
         "keyword": "Fjalëkyç",
         "keyword_new": "Fjalëkyç i ri",
+        "level_activity": "Veprimtari",
+        "level_none": "Asnjë",
+        "level_unsent": "Të padërguar",
         "mark_all_read": "Vëru të tërave shenjë si të lexuara",
         "mentions_and_keywords": "@përmendje & fjalëkyçe",
         "mentions_and_keywords_description": "Merrni njoftime vetëm për përmendje dhe fjalëkyçe që keni ujdisur te <a>rregullimet</a> tuaja",
@@ -1898,14 +1858,11 @@
         "rejecting": "Po hidhet poshtë ftesa…",
         "rejoin_button": "Rihyni",
         "search": {
-            "all_rooms": "Krejt Dhomat",
             "all_rooms_button": "Kërko në krejt dhomat",
-            "field_placeholder": "Kërkoni…",
             "result_count": {
                 "other": "(~%(count)s përfundime)",
                 "one": "(~%(count)s përfundim)"
             },
-            "this_room": "Këtë Dhomë",
             "this_room_button": "Kërko në këtë dhomë"
         },
         "show_labs_settings": "Shfaq rregullime për Labs",
@@ -2254,10 +2211,8 @@
         "help_about": {
             "access_token_detail": "Tokeni-i juaj i hyrjeve jep hyrje të plotë në llogarinë tuaj. Mos ia jepni kujt.",
             "brand_version": "Version %(brand)s:",
-            "chat_bot": "Fjalosuni me Robotin %(brand)s",
             "clear_cache_reload": "Spastro fshehtinën dhe ringarko",
             "help_link": "Për ndihmë rreth përdorimit të %(brand)s-it, klikoni <a>këtu</a>.",
-            "help_link_chat_bot": "Për ndihmë rreth përdorimit të %(brand)s-it, klikoni <a>këtu</a>, ose nisni një fjalosje me robotin tonë duke përdorur butonin më poshtë.",
             "homeserver": "Shërbyes Home është <code>%(homeserverUrl)s</code>",
             "identity_server": "Shërbyes identiteti është <code>%(identityServerUrl)s</code>",
             "title": "Ndihmë & Rreth",
@@ -2273,24 +2228,15 @@
             "custom_font_description": "Caktoni emrin e një palë shkronjash të instaluara në sistemin tuaj & %(brand)s do të provojë t’i përdorë.",
             "custom_font_name": "Emër shkronjash sistemi",
             "custom_font_size": "Përdor madhësi vetjake",
-            "custom_theme_add_button": "Shtoni temë",
             "custom_theme_error_downloading": "Gabim në shkarkim të dhënash teme.",
             "custom_theme_invalid": "Skemë e pavlefshme teme.",
-            "custom_theme_success": "Tema u shtua!",
-            "custom_theme_url": "URL teme vetjake",
             "font_size": "Madhësi shkronjash",
-            "font_size_limit": "Madhësia vetjake për shkronjat mund të jetë vetëm mes vlerave %(min)s pt dhe %(max)s pt",
-            "font_size_nan": "Madhësia duhet të jetë një numër",
-            "font_size_valid": "Përdor me %(min)s pt dhe %(max)s pt",
-            "heading": "Përshtatni dukjen tuaj",
             "image_size_default": "Parazgjedhje",
             "image_size_large": "E madhe",
             "layout_bubbles": "Flluska mesazhesh",
             "layout_irc": "IRC (Eksperimentale)",
             "match_system_theme": "Përputhe me temën e sistemit",
-            "subheading": "Rregullimet e Dukjes prekin vetëm këtë sesion %(brand)s.",
-            "timeline_image_size": "Madhësi figure në rrjedhën kohore",
-            "use_high_contrast": "Përdor kontrast të lartë"
+            "timeline_image_size": "Madhësi figure në rrjedhën kohore"
         },
         "automatic_language_detection_syntax_highlight": "Aktivizo pikasje të vetvetishme të gjuhës për theksim sintakse",
         "autoplay_gifs": "Vetëluaji GIF-et",
@@ -2315,7 +2261,6 @@
             "confirm_adding_email_body": "Klikoni butonin më poshtë që të ripohoni shtimin e kësaj adrese email.",
             "confirm_adding_email_title": "Ripohoni shtim email-i",
             "deactivate_confirm_body": "Jeni i sigurt se doni të çaktivizohet llogaria juaj? Kjo është e pakthyeshme.",
-            "deactivate_confirm_body_password": "Që të vazhdohet, ju lutemi, jepni fjalëkalimin e llogarisë tuaj:",
             "deactivate_confirm_body_sso": "Ripohoni çaktivizimin e llogarisë tuaj duke përdorur Hyrje Njëshe që të dëshmoni identitetin tuaj.",
             "deactivate_confirm_content": "Ripohoni se doni të çaktivizohet llogaria juaj. Nëse ecni më tej:",
             "deactivate_confirm_content_1": "S’do të jeni në gjendje të riaktivizoni llogarinë tuaj",
@@ -2332,7 +2277,6 @@
             "discovery_email_verification_instructions": "Verifikoni lidhjen te mesazhet tuaj",
             "discovery_msisdn_empty": "Mundësitë e zbulimit do të shfaqen sapo të keni shtuar më sipër një numër telefoni.",
             "discovery_needs_terms": "Pajtohuni me Kushtet e Shërbimit të shërbyesit të identiteteve (%(serverName)s) që të lejoni veten të jetë e zbulueshme me anë adrese email ose numri telefoni.",
-            "discovery_section": "Zbulueshmëri",
             "email_address_in_use": "Kjo adresë email është tashmë në përdorim",
             "email_address_label": "Adresë Email",
             "email_not_verified": "Adresa juaj email s’është verifikuar ende",
@@ -2353,11 +2297,8 @@
             "error_remove_3pid": "S’arrihet të hiqen të dhëna kontakti",
             "error_revoke_email_discovery": "S’arrihet të shfuqizohet ndarja për këtë adresë email",
             "error_revoke_msisdn_discovery": "S’arrihet të shfuqizohet ndarja për numrin e telefonit",
-            "error_saving_profile": "Veprimi s’u plotësua dot",
-            "error_saving_profile_title": "S’u arrit të ruhej profili juaj",
             "error_share_email_discovery": "S’arrihet të ndahet adresë email",
             "error_share_msisdn_discovery": "S’arrihet të ndahet numër telefoni",
-            "external_account_management": "Hollësitë e llogarisë tuaj administrohen ndarazi te <code>%(hostname)s</code>.",
             "identity_server_no_token": "S’u gjet token hyrjeje identiteti",
             "identity_server_not_set": "Shërbyes identitetesh i paujdisur",
             "incorrect_msisdn_verification": "Kod verifikimi i pasaktë",
@@ -2373,8 +2314,7 @@
             "password_change_success": "Fjalëkalimi juaj u ndryshua me sukses.",
             "remove_email_prompt": "Të hiqet %(email)s?",
             "remove_msisdn_prompt": "Të hiqet %(phone)s?",
-            "spell_check_locale_placeholder": "Zgjidhni vendore",
-            "spell_check_section": "Kontroll drejtshkrimi"
+            "spell_check_locale_placeholder": "Zgjidhni vendore"
         },
         "image_thumbnails": "Shfaq për figurat paraparje/miniatura",
         "inline_url_previews_default": "Aktivizo, si parazgjedhje, paraparje URL-sh brendazi",
@@ -2519,7 +2459,6 @@
             "delete_backup_confirm_description": "Jeni i sigurt? Do të humbni mesazhet tuaj të fshehtëzuar, nëse kopjeruajtja për kyçet tuaj nuk bëhet si duhet.",
             "e2ee_default_disabled_warning": "Përgjegjësi i shërbyesit tuaj ka çaktivizuar fshehtëzimin skaj-më-skaj, si parazgjedhje, në dhoma private & Mesazhe të Drejtpërdrejtë.",
             "enable_message_search": "Aktivizo kërkim mesazhesh në dhoma të fshehtëzuara",
-            "encryption_individual_verification_mode": "Verifikoni individualisht çdo sesion të përdorur nga një përdorues, për t’i vënë shenjë si i besuar, duke mos besuar pajisje <em>cross-signed</em>.",
             "encryption_section": "Fshehtëzim",
             "error_loading_key_backup_status": "S’arrihet të ngarkohet gjendje kopjeruajtjeje kyçesh",
             "export_megolm_keys": "Eksporto kyçe dhome E2E",
@@ -2535,7 +2474,6 @@
             "key_backup_in_progress": "Po kopjeruhen kyçet për %(sessionsRemaining)s…",
             "key_backup_inactive": "Ky sesion <b>nuk po bën kopjeruajtje të kyçeve tuaja</b>, por keni një kopjeruajtje ekzistuese që mund ta përdorni për rimarrje dhe ta shtoni më tej.",
             "key_backup_inactive_warning": "Kyçet tuaj <b>nuk po kopjeruhen nga ky sesion</b>.",
-            "manually_verify_all_sessions": "Verifikoni dorazi krejt sesionet e largët",
             "message_search_disable_warning": "Në u çaktivizoftë, mesazhet prej dhomash të fshehtëzuara s’do të duken në përfundime kërkimi.",
             "message_search_disabled": "Ruaj lokalisht në mënyrë të sigurt në fshehtinë mesazhet që të shfaqen në përfundime kërkimi.",
             "message_search_enabled": {
@@ -2956,17 +2894,11 @@
             "one": "%(count)s përgjigje",
             "other": "%(count)s përgjigje"
         },
-        "empty_explainer": "Rrjedhat ndihmojnë që të mbahen bisedat tuaja brenda temës dhe të ndiqen kollaj.",
-        "empty_has_threads_tip": "Përgjigjuni te një rrjedhë në zhvillim e sipër, ose përdorni “%(replyInThread)s”, kur kalohet kursori sipër një mesazhi për të filluar një të re.",
-        "empty_heading": "Mbajini diskutimet të sistemuara në rrjedha",
-        "empty_tip": "<b>Ndihmëz:</b> Përdorni “%(replyInThread)s”, teksa kaloni kursorin sipër një mesazhi.",
         "error_start_thread_existing_relation": "S’mund të krijohet një rrjedhë prej një akti me një marrëdhënie ekzistuese",
         "my_threads": "Rrjedhat e mia",
         "my_threads_description": "Shfaq krejt rrjedhat ku keni marrë pjesë",
         "open_thread": "Hape rrjedhën",
-        "show_all_threads": "Shfaqi krejt rrjedhat",
-        "show_thread_filter": "Shfaq:",
-        "unable_to_decrypt": "S’arrihet të shfshehtëzohet mesazhi"
+        "show_thread_filter": "Shfaq:"
     },
     "time": {
         "about_day_ago": "rreth një ditë më parë",
@@ -3002,7 +2934,6 @@
         },
         "creation_summary_dm": "%(creator)s krijoi këtë DM.",
         "creation_summary_room": "%(creator)s krijoi dhe formësoi dhomën.",
-        "decryption_failure_blocked": "Dërguesi ka bllokuar marrjen e këtij mesazhi nga ju",
         "download_action_decrypting": "Po shfshehtëzohet",
         "download_action_downloading": "Shkarkim",
         "edits": {
@@ -3010,7 +2941,6 @@
             "tooltip_sub": "Klikoni që të shihni përpunime",
             "tooltip_title": "Përpunuar më %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "S’mund të kihen më mesazhe të fshehtëzuar para kësaj pike.",
         "error_no_renderer": "Ky akt s’u shfaq dot",
         "error_rendering_message": "S’ngarkohet dot ky mesazh",
         "historical_messages_unavailable": "S’mund të shihni mesazhe më të hershëm",
@@ -3073,20 +3003,8 @@
             "sent": "%(senderDisplayName)s dërgoi një figurë.",
             "show_image": "Shfaq figurë"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s anuloi verifikimin",
-            "you_cancelled": "Anuluat verifikimin e %(name)s"
-        },
-        "m.key.verification.done": "Verifikuat %(name)s",
         "m.key.verification.request": {
-            "declining": "Po hidhet poshtë…",
-            "user_accepted": "%(name)s pranoi",
-            "user_cancelled": "%(name)s anuloi",
-            "user_declined": "%(name)s hodhi poshtë",
             "user_wants_to_verify": "%(name)s dëshiron të verifikojë",
-            "you_accepted": "Pranuat",
-            "you_cancelled": "Anuluat",
-            "you_declined": "Hodhët poshtë",
             "you_started": "Dërguat një kërkesë verifikimi"
         },
         "m.location": {
@@ -3257,8 +3175,7 @@
         "pending_moderation_reason": "Mesazh në pritje të moderimit: %(reason)s",
         "reactions": {
             "add_reaction_prompt": "Shtoni reagim",
-            "label": "%(reactors)s reagoi me %(content)s",
-            "tooltip": "<reactors/><reactedWith>reagoi me %(shortName)s</reactedWith>"
+            "label": "%(reactors)s reagoi me %(content)s"
         },
         "read_receipt_title": {
             "one": "Parë nga %(count)s person",
@@ -3529,7 +3446,6 @@
         },
         "redact_button": "Hiq mesazhe së fundi",
         "revoke_invite": "Shfuqizoje ftesën",
-        "role_label": "Rol në <RoomName/>",
         "room_encrypted": "Mesazhet në këtë dhomë janë të fshehtëzuara skaj-më-skaj.",
         "room_encrypted_detail": "Mesazhet tuaj janë të sigurt dhe vetëm ju dhe marrësi kanë kyçet unikë për t’i shkyçur.",
         "room_unencrypted": "Mesazhet në këtë dhomë nuk janë të fshehtëzuara skaj-më-skaj.",
@@ -3584,7 +3500,6 @@
         "already_in_call_person": "Gjendeni tashmë në thirrje me këtë person.",
         "answered_elsewhere": "Përgjigjur Gjetkë",
         "answered_elsewhere_description": "Thirrjes iu përgjigj në një tjetër pajisje.",
-        "audio_devices": "Pajisje audio",
         "call_failed": "Thirrja Dështoi",
         "call_failed_description": "Thirrja s’u nis dot",
         "call_failed_media": "Thirrja dështoi, ngaqë s’u hy dot kamera ose mikrofoni. Kontrolloni që:",
@@ -3668,7 +3583,6 @@
         "user_is_presenting": "%(sharerName)s përfaqëson",
         "video_call": "Thirrje video",
         "video_call_started": "Nisi thirrje me video",
-        "video_devices": "Pajisje video",
         "voice_call": "Thirrje audio",
         "you_are_presenting": "Përfaqësoni"
     },

@@ -40,6 +40,7 @@
         "create_a_room": "建立聊天室",
         "decline": "拒絕",
         "delete": "刪除",
+        "deny": "拒絕",
         "disable": "停用",
         "disconnect": "中斷連線",
         "dismiss": "關閉",
@@ -239,23 +240,12 @@
             "approve_access_warning": "透過批准此裝置的存取權限，其將對您的帳號有完全的存取權限。",
             "completing_setup": "完成您新裝置的設定",
             "confirm_code_match": "請確認下列代碼與您另一台裝置上的代碼相符：",
-            "connecting": "連線中…",
-            "devices_connected": "裝置已連線",
-            "error_device_already_signed_in": "其他裝置已登入。",
-            "error_device_not_signed_in": "其他裝置未登入。",
-            "error_device_unsupported": "不支援與此裝置連結。",
-            "error_homeserver_lacks_support": "家伺服器不支援在其他裝置上登入。",
-            "error_invalid_scanned_code": "掃描的代碼無效。",
-            "error_linking_incomplete": "未在要求的時間內完成連結。",
-            "error_request_cancelled": "請求已取消。",
-            "error_request_declined": "請求在另一台裝置上被拒絕。",
+            "error_rate_limited": "短時間內嘗試太多次，請稍待一段時間後再嘗試。",
             "error_unexpected": "發生預料之外的錯誤。",
-            "review_and_approve": "審閱並批准登入",
             "scan_code_instruction": "請用您已登出的裝置掃描下列 QR Code。",
             "scan_qr_code": "掃描 QR Code",
             "select_qr_code": "選取「%(scanQRCode)s」",
             "sign_in_new_device": "登入新裝置",
-            "start_at_sign_in_screen": "從登入畫面開始",
             "waiting_for_device": "正在等待裝置登入"
         },
         "register_action": "建立帳號",
@@ -422,6 +412,7 @@
             "other": "與另 %(count)s 個人…",
             "one": "與另 1 個人…"
         },
+        "android": "安卓",
         "appearance": "外觀",
         "application": "應用程式",
         "are_you_sure": "您確定嗎？",
@@ -438,7 +429,6 @@
         "description": "描述",
         "deselect_all": "取消選取",
         "device": "裝置",
-        "display_name": "顯示名稱",
         "edited": "已編輯",
         "email_address": "電子郵件地址",
         "emoji": "表情符號",
@@ -460,6 +450,7 @@
         "identity_server": "身分伺服器",
         "image": "圖片",
         "integration_manager": "整合管理員",
+        "ios": "iOS",
         "joined": "已加入",
         "labs": "實驗室",
         "legal": "法律",
@@ -467,6 +458,7 @@
         "loading": "載入中…",
         "location": "位置",
         "low_priority": "低優先度",
+        "matrix": "Matrix",
         "message": "訊息",
         "message_layout": "訊息佈局",
         "microphone": "麥克風",
@@ -476,10 +468,6 @@
         "n_members": {
             "one": "%(count)s 位成員",
             "other": "%(count)s 位成員"
-        },
-        "n_participants": {
-            "one": "1 位成員",
-            "other": "%(count)s 個參與者"
         },
         "n_rooms": {
             "one": "%(count)s 個聊天室",
@@ -728,7 +716,6 @@
         "notification_state": "通知狀態為 <strong>%(notificationState)s</strong>",
         "notifications_debug": "通知除錯",
         "number_of_users": "使用者數量",
-        "observe_only": "僅觀察",
         "original_event_source": "原始活動來源",
         "phase": "階段",
         "phase_cancelled": "已取消",
@@ -736,7 +723,6 @@
         "phase_requested": "已請求",
         "phase_started": "已開始",
         "phase_transaction": "交易",
-        "requester": "請求者",
         "room_encrypted": "聊天室<strong>已加密 ✅</strong>",
         "room_id": "聊天室 ID：%(roomId)s",
         "room_not_encrypted": "聊天室<strong>未加密 🚨</strong>",
@@ -748,7 +734,6 @@
         "room_notifications_total": "總共： ",
         "room_notifications_type": "類型： ",
         "room_status": "聊天室狀態",
-        "room_unread_status": "聊天室未讀狀態：<strong>%(status)s</strong>",
         "room_unread_status_count": {
             "other": "聊天室未讀狀態：<strong>%(status)s</strong>，數量：<strong>%(count)s</strong>"
         },
@@ -1042,7 +1027,6 @@
         "unknown_error_code": "未知的錯誤代碼",
         "update_power_level": "無法變更權限等級"
     },
-    "error_database_closed_description": "這個問題可能是因為在多個分頁中開啟此應用程式，或是清除瀏覽資料所導致。",
     "error_database_closed_title": "資料庫意外關閉",
     "error_dialog": {
         "copy_room_link_failed": {
@@ -1246,7 +1230,6 @@
         "failed_generic": "無法操作",
         "failed_title": "無法邀請",
         "invalid_address": "無法識別的位址",
-        "key_share_warning": "被邀請的人將能閱讀舊訊息。",
         "name_email_mxid_share_room": "使用某人的名字、電子郵件地址、使用者名稱（如 <userId/>）或<a>分享此聊天空間</a>來邀請人。",
         "name_email_mxid_share_space": "使用某人的名字、電子郵件地址、使用者名稱（如 <userId/>）或<a>分享此聊天空間</a>來邀請人。",
         "name_mxid_share_room": "使用某人的名字、使用者名稱（如 <userId/>）或<a>分享此聊天室</a>來邀請人。",
@@ -1306,6 +1289,7 @@
         "composer_toggle_quote": "切換引用",
         "composer_undo": "復原編輯",
         "dismiss_read_marker_and_jump_bottom": "清除讀取標記並跳至底部",
+        "end": "",
         "go_home_view": "前往主畫面",
         "home": "首頁",
         "jump_first_message": "跳至第一則訊息",
@@ -1320,6 +1304,8 @@
         "next_room": "下一個聊天室或私人訊息",
         "next_unread_room": "下一個未讀的聊天室或私人訊息",
         "open_user_settings": "開啟使用者設定",
+        "page_down": "下頁",
+        "page_up": "上頁",
         "prev_room": "上一個聊天室或私人訊息",
         "prev_unread_room": "上一個未讀的聊天室或私人訊息",
         "room_list_collapse_section": "折疊聊天室清單段落",
@@ -1377,6 +1363,7 @@
         "group_rooms": "聊天室",
         "group_spaces": "聊天空間",
         "group_themes": "主題",
+        "group_threads": "討論串",
         "group_voip": "語音與視訊",
         "group_widgets": "小工具",
         "hidebold": "隱藏通知點（僅顯示計數器徽章）",
@@ -1399,20 +1386,10 @@
         "pinning": "訊息釘選功能",
         "report_to_moderators": "回報給版主",
         "report_to_moderators_description": "在支援審核的聊天室中，「回報」按鈕讓您可以回報濫用行為給聊天室管理員。",
-        "rust_crypto": "Rust 密碼學實作",
-        "rust_crypto_disabled_notice": "目前僅能透過 config.json 啟用",
         "sliding_sync": "滑動同步模式",
-        "sliding_sync_checking": "正在檢查…",
-        "sliding_sync_configuration": "滑動同步設定",
         "sliding_sync_description": "正在積極開發中，無法停用。",
-        "sliding_sync_disable_warning": "要停用，您必須登出並重新登入，請小心使用！",
         "sliding_sync_disabled_notice": "登出並重新登入以停用",
-        "sliding_sync_proxy_url_label": "代理伺服器網址",
-        "sliding_sync_proxy_url_optional_label": "代理伺服器網址（選填）",
         "sliding_sync_server_no_support": "您的伺服器缺乏原生支援",
-        "sliding_sync_server_specify_proxy": "您的伺服器缺乏原生支援，您必須指定代理",
-        "sliding_sync_server_support": "您的伺服器有原生支援",
-        "state_counters": "在聊天室標頭顯示簡單的計數器",
         "under_active_development": "正在積極開發中。",
         "video_rooms": "視訊聊天室",
         "video_rooms_a_new_way_to_chat": "在 %(brand)s 中透過語音及視訊聊天的新方式。",
@@ -1460,14 +1437,6 @@
         "view_rules": "檢視規則"
     },
     "language_dropdown_label": "語言下拉式選單",
-    "lazy_loading": {
-        "disabled_action": "清除快取並重新同步",
-        "disabled_description1": "您之前曾在 %(host)s 上使用 %(brand)s 並啟用成員列表的延遲載入。在此版本中延遲載入已停用。由於本機快取在這兩個設定間不相容，%(brand)s 必須重新同步您的帳號。",
-        "disabled_description2": "如果其他版本的 %(brand)s 仍在其他分頁中開啟，請關閉它，因為在同一主機上使用同時啟用與停用惰性載入的 %(brand)s 可能會造成問題。",
-        "disabled_title": "不相容的本機快取",
-        "resync_description": "%(brand)s 現在僅使用低於原本3-5倍的記憶體，僅在需要時才會載入其他使用者的資訊。請等待我們與伺服器重新同步！",
-        "resync_title": "正在更新 %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "您是這裡唯一的人。如果您離開，包含您在內的任何人都無法加入。",
         "leave_room_question": "您確定要離開聊天室「%(roomName)s」嗎？",
@@ -1554,11 +1523,6 @@
         "all_messages_description": "收到所有訊息的通知",
         "class_global": "全域",
         "class_other": "其他",
-        "colour_bold": "粗體",
-        "colour_grey": "灰",
-        "colour_none": "無",
-        "colour_red": "紅",
-        "colour_unsent": "未傳送",
         "default": "預設",
         "email_pusher_app_display_name": "電子郵件通知",
         "enable_prompt_toast_description": "啟用桌面通知",
@@ -1567,6 +1531,9 @@
         "error_change_title": "變更通知設定",
         "keyword": "關鍵字",
         "keyword_new": "新關鍵字",
+        "level_activity": "訊息順序",
+        "level_none": "無",
+        "level_unsent": "未傳送",
         "mark_all_read": "全部標示為已讀",
         "mentions_and_keywords": "@提及與關鍵字",
         "mentions_and_keywords_description": "僅在提及您與您在<a>設定</a>中列出的關鍵字時收到通知",
@@ -1960,14 +1927,11 @@
         "rejecting": "正在回絕邀請…",
         "rejoin_button": "重新加入",
         "search": {
-            "all_rooms": "所有聊天室",
             "all_rooms_button": "搜尋所有聊天室",
-            "field_placeholder": "搜尋…",
             "result_count": {
                 "one": "（~%(count)s 結果）",
                 "other": "（~%(count)s 結果）"
             },
-            "this_room": "這個聊天室",
             "this_room_button": "搜尋此聊天室"
         },
         "show_labs_settings": "顯示「實驗室」設定",
@@ -2321,10 +2285,8 @@
         "help_about": {
             "access_token_detail": "您的存取權杖可提供您帳號完整的存取權限。請勿分享給任何人。",
             "brand_version": "%(brand)s 版本：",
-            "chat_bot": "與 %(brand)s 機器人聊天",
             "clear_cache_reload": "清除快取並重新載入",
             "help_link": "若需 %(brand)s 的使用說明，請點擊<a>這裡</a>。",
-            "help_link_chat_bot": "對於使用 %(brand)s 的說明，點選<a>這裡</a>或是使用下面的按鈕開始與我們的聊天機器人聊天。",
             "homeserver": "家伺服器為 <code>%(homeserverUrl)s</code>",
             "identity_server": "身分伺服器為 <code>%(identityServerUrl)s</code>",
             "title": "說明與關於",
@@ -2340,24 +2302,15 @@
             "custom_font_description": "設定您系統上安裝的字型名稱，%(brand)s 將會嘗試使用它。",
             "custom_font_name": "系統字型名稱",
             "custom_font_size": "使用自訂大小",
-            "custom_theme_add_button": "新增佈景主題",
             "custom_theme_error_downloading": "下載佈景主題資訊時發生錯誤。",
             "custom_theme_invalid": "無效的佈景主題架構。",
-            "custom_theme_success": "已新增佈景主題！",
-            "custom_theme_url": "自訂佈景主題網址",
             "font_size": "字型大小",
-            "font_size_limit": "自訂字型大小僅能為 %(min)s 點至 %(max)s 點間",
-            "font_size_nan": "大小必須為數字",
-            "font_size_valid": "使用 %(min)s 點至 %(max)s 點間",
-            "heading": "自訂您的外觀",
             "image_size_default": "預設",
             "image_size_large": "大",
             "layout_bubbles": "訊息泡泡",
             "layout_irc": "IRC（實驗性）",
             "match_system_theme": "符合系統佈景主題",
-            "subheading": "外觀設定僅會影響此 %(brand)s 工作階段。",
-            "timeline_image_size": "時間軸中的圖片大小",
-            "use_high_contrast": "使用高對比"
+            "timeline_image_size": "時間軸中的圖片大小"
         },
         "automatic_language_detection_syntax_highlight": "啟用語法突顯的自動語言偵測",
         "autoplay_gifs": "自動播放 GIF",
@@ -2384,7 +2337,6 @@
             "confirm_adding_email_body": "點擊下方按鈕以確認新增此電子郵件地址。",
             "confirm_adding_email_title": "確認新增電子郵件",
             "deactivate_confirm_body": "確定您想要停用您的帳號嗎？此為不可逆的操作。",
-            "deactivate_confirm_body_password": "請輸入您的 Matrix 帳號密碼繼續：",
             "deactivate_confirm_body_sso": "透過使用單一登入系統來證您的身分以確認停用您的帳號。",
             "deactivate_confirm_content": "確認您要停用您的帳號。若您繼續：",
             "deactivate_confirm_content_1": "您將無法重新啟用您的帳號",
@@ -2401,7 +2353,6 @@
             "discovery_email_verification_instructions": "驗證您收件匣中的連結",
             "discovery_msisdn_empty": "在上方加入電話號碼後，就會出現探索選項。",
             "discovery_needs_terms": "需同意身分伺服器（%(serverName)s）的使用條款，讓其他人可以使用電子郵件地址或電話號碼找到您。",
-            "discovery_section": "探索",
             "email_address_in_use": "這個電子郵件地址已被使用",
             "email_address_label": "電子郵件地址",
             "email_not_verified": "您的電子郵件地址尚未被驗證",
@@ -2422,11 +2373,8 @@
             "error_remove_3pid": "無法移除聯絡人資訊",
             "error_revoke_email_discovery": "無法撤回電子郵件的分享",
             "error_revoke_msisdn_discovery": "無法撤回電話號碼的分享",
-            "error_saving_profile": "無法完成操作",
-            "error_saving_profile_title": "無法儲存您的設定檔",
             "error_share_email_discovery": "無法分享電子郵件",
             "error_share_msisdn_discovery": "無法分享電話號碼",
-            "external_account_management": "您的帳號詳細資訊在 <code>%(hostname)s</code> 中單獨管理。",
             "identity_server_no_token": "找不到身分存取權杖",
             "identity_server_not_set": "身分伺服器未設定",
             "incorrect_msisdn_verification": "驗證碼錯誤",
@@ -2442,8 +2390,7 @@
             "password_change_success": "您的密碼已成功變更。",
             "remove_email_prompt": "移除 %(email)s？",
             "remove_msisdn_prompt": "移除 %(phone)s？",
-            "spell_check_locale_placeholder": "選擇語系",
-            "spell_check_section": "拼字檢查"
+            "spell_check_locale_placeholder": "選擇語系"
         },
         "image_thumbnails": "顯示圖片的預覽／縮圖",
         "inline_url_previews_default": "預設啟用行內網址預覽",
@@ -2615,7 +2562,6 @@
             "delete_backup_confirm_description": "您確定嗎？如果沒有正確備份金鑰的話，將會遺失所有加密訊息。",
             "e2ee_default_disabled_warning": "您的伺服器管理員已停用在私密聊天室與私人訊息中預設的端對端加密。",
             "enable_message_search": "在已加密的聊天室中啟用訊息搜尋",
-            "encryption_individual_verification_mode": "逐一手動驗證使用者的工作階段，將其標記為受信任階段，不透過裝置的交叉簽署機制來信任。",
             "encryption_section": "加密",
             "error_loading_key_backup_status": "無法載入金鑰備份狀態",
             "export_megolm_keys": "匯出聊天室的端對端加密金鑰",
@@ -2631,7 +2577,6 @@
             "key_backup_in_progress": "正在備份 %(sessionsRemaining)s 把金鑰…",
             "key_backup_inactive": "此工作階段<b>並未備份您的金鑰</b>，您可還原先前的備份後再繼續新增金鑰到備份內容中。",
             "key_backup_inactive_warning": "您<b>並未備份此裝置的金鑰</b>。",
-            "manually_verify_all_sessions": "手動驗證所有遠端工作階段",
             "message_search_disable_warning": "若停用，從加密聊天室傳來的訊息將不會出現在搜尋結果中。",
             "message_search_disabled": "將加密的訊息安全地在本機快取以出現在顯示結果中。",
             "message_search_enabled": {
@@ -3059,17 +3004,11 @@
             "one": "%(count)s 回覆",
             "other": "%(count)s 回覆"
         },
-        "empty_explainer": "「討論串」功能可以協助您的對話不離題且易於追蹤。",
-        "empty_has_threads_tip": "將滑鼠游標停留在訊息上來開始新的討論串時，回覆正在進行的討論串或使用「%(replyInThread)s」。",
-        "empty_heading": "使用「討論串」功能，讓討論保持有條不紊",
-        "empty_tip": "<b>秘訣：</b>在滑鼠游標停於訊息上時使用「%(replyInThread)s」。",
         "error_start_thread_existing_relation": "無法從討論串既有的關係建立活動",
         "my_threads": "我的討論串",
         "my_threads_description": "顯示您參與的所有討論串",
         "open_thread": "開啟討論串",
-        "show_all_threads": "顯示所有討論串",
-        "show_thread_filter": "顯示：",
-        "unable_to_decrypt": "無法解密訊息"
+        "show_thread_filter": "顯示："
     },
     "time": {
         "about_day_ago": "大約一天前",
@@ -3108,7 +3047,6 @@
         },
         "creation_summary_dm": "%(creator)s 建立了此私人訊息。",
         "creation_summary_room": "%(creator)s 建立並設定了聊天室。",
-        "decryption_failure_blocked": "傳送者已封鎖您，因此無法接收此訊息",
         "download_action_decrypting": "正在解密",
         "download_action_downloading": "正在下載",
         "edits": {
@@ -3116,7 +3054,6 @@
             "tooltip_sub": "點擊以檢視編輯",
             "tooltip_title": "編輯於 %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "在此之前的加密訊息不可用。",
         "error_no_renderer": "此活動無法顯示",
         "error_rendering_message": "無法載入此訊息",
         "historical_messages_unavailable": "您看不到更早的訊息",
@@ -3179,20 +3116,8 @@
             "sent": "%(senderDisplayName)s 傳了一張圖片。",
             "show_image": "顯示圖片"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s 已取消驗證",
-            "you_cancelled": "您已取消驗證 %(name)s"
-        },
-        "m.key.verification.done": "您驗證了 %(name)s",
         "m.key.verification.request": {
-            "declining": "正在拒絕…",
-            "user_accepted": "%(name)s 已接受",
-            "user_cancelled": "%(name)s 已取消",
-            "user_declined": "%(name)s 拒絕了",
             "user_wants_to_verify": "%(name)s 想要驗證",
-            "you_accepted": "您已接受",
-            "you_cancelled": "您已取消",
-            "you_declined": "您拒絕了",
             "you_started": "您已傳送了驗證請求"
         },
         "m.location": {
@@ -3366,8 +3291,7 @@
         "pending_moderation_reason": "待審核的訊息：%(reason)s",
         "reactions": {
             "add_reaction_prompt": "新增反應",
-            "label": "%(reactors)s 使用了 %(content)s 反應",
-            "tooltip": "<reactors/><reactedWith> 反應時使用 %(shortName)s</reactedWith>"
+            "label": "%(reactors)s 使用了 %(content)s 反應"
         },
         "read_receipt_title": {
             "one": "已被 %(count)s 個人看過",
@@ -3648,7 +3572,6 @@
         },
         "redact_button": "移除最近的訊息",
         "revoke_invite": "撤銷邀請",
-        "role_label": "<RoomName/> 中的角色",
         "room_encrypted": "此聊天室內的訊息有端對端加密。",
         "room_encrypted_detail": "您的訊息已受保護，只有您與收件人才有獨特的金鑰將其解鎖。",
         "room_unencrypted": "此聊天室內的訊息未經端到端加密。",
@@ -3705,7 +3628,6 @@
         "already_in_call_person": "您正在與此人通話。",
         "answered_elsewhere": "在其他地方回答",
         "answered_elsewhere_description": "通話已在其他裝置上回應。",
-        "audio_devices": "音訊裝置",
         "call_failed": "無法通話",
         "call_failed_description": "無法建立通話",
         "call_failed_media": "無法通話，因為無法存取網路攝影機或麥克風。請檢查：",
@@ -3792,7 +3714,6 @@
         "user_is_presenting": "%(sharerName)s 正在投影",
         "video_call": "視訊通話",
         "video_call_started": "視訊通話已開始",
-        "video_devices": "視訊裝置",
         "voice_call": "語音通話",
         "you_are_presenting": "您正在投影"
     },

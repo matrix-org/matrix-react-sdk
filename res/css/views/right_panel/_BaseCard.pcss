@@ -27,7 +27,7 @@ limitations under the License.
 
     .mx_BaseCard_header {
         height: 64px;
-        padding: var(--cpd-space-3x);
+        padding: var(--cpd-space-4x);
         box-sizing: border-box;
         /* changing the color from $separator to transparent as it is
            the best visual output during the transition period. This will be
@@ -36,8 +36,13 @@ limitations under the License.
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--cpd-space-2x);
+        gap: var(--cpd-space-3x);
         flex-shrink: 0;
+        border-block-end: var(--cpd-border-width-1) solid $separator;
+
+        .mx_BaseCard_header_spacer {
+            flex: 1;
+        }
 
         > h2 {
             margin: 0 44px;
@@ -90,6 +95,7 @@ limitations under the License.
         min-height: 0;
         width: 100%;
         height: 100%;
+        scrollbar-gutter: stable;
     }
 
     .mx_BaseCard_Group {
@@ -154,51 +160,6 @@ limitations under the License.
     }
 }
 
-.mx_BaseCard_back,
-.mx_BaseCard_close {
-    flex-shrink: 0;
-    position: relative;
-    // @TODO(kerrya) background colours here are not semantic
-    // these buttons to be replaced with IconButton after secondary variant is added
-    // https://github.com/vector-im/compound/issues/279
-    background-color: var(--cpd-color-bg-subtle-secondary);
-    width: var(--BaseCard_header-button-size);
-    height: var(--BaseCard_header-button-size);
-    border-radius: 50%;
-
-    &:hover {
-        background-color: var(--cpd-color-bg-subtle-primary);
-    }
-
-    &::before {
-        content: "";
-        position: absolute;
-        height: inherit;
-        width: inherit;
-        top: 0;
-        left: 0;
-        mask-repeat: no-repeat;
-        mask-position: center;
-        background-color: var(--cpd-color-icon-secondary);
-    }
-}
-
-.mx_BaseCard_back {
-    order: 0; /* always first! */
-    &::before {
-        transform: rotate(90deg);
-        mask-size: 22px;
-        mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
-    }
-}
-
-.mx_BaseCard_close {
-    order: 999; /* always last */
-    &::before {
-        mask-image: url("$(res)/img/icons-close.svg");
-    }
-}
-
 .mx_ContextualMenu_wrapper.mx_BaseCard_header_title {
     .mx_ContextualMenu {
         position: initial;
@@ -214,26 +175,22 @@ limitations under the License.
         padding-top: 10px;
         padding-bottom: 10px;
 
-        border: 1px solid $quinary-content;
-        box-shadow: 0px 1px 3px rgba(23, 25, 28, 0.05);
+        border: var(--cpd-border-width-1) solid var(--cpd-color-border-interactive-secondary);
+        box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.1);
     }
 
     .mx_ContextualMenu_chevron_top {
         left: auto;
         right: 22px;
-        border-bottom-color: $quinary-content;
+        border-bottom-color: var(--cpd-color-border-interactive-secondary);
 
         &::after {
             content: "";
             border: inherit;
-            border-bottom-color: $menu-bg-color;
+            border-bottom-color: var(--cpd-color-bg-canvas-default);
             position: absolute;
             top: 1px;
             left: -8px;
         }
     }
-}
-
-.mx_BaseCard_headerProp {
-    flex: 1 1 100%;
 }

@@ -20,7 +20,7 @@ import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import Field from "../elements/Field";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { AccessibleButtonKind } from "../elements/AccessibleButton";
 import Spinner from "../elements/Spinner";
 import withValidation, { IFieldState, IValidationResult } from "../elements/Validation";
 import { UserFriendlyError, _t, _td } from "../../../languageHandler";
@@ -45,7 +45,7 @@ interface IProps {
     onError: (error: Error) => void;
     rowClassName?: string;
     buttonClassName?: string;
-    buttonKind?: string;
+    buttonKind?: AccessibleButtonKind;
     buttonLabel?: string;
     confirm?: boolean;
     // Whether to autoFocus the new password input
@@ -99,9 +99,6 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                 type: "m.id.user",
                 user: cli.credentials.userId,
             },
-            // TODO: Remove `user` once servers support proper UIA
-            // See https://github.com/matrix-org/synapse/issues/5665
-            user: cli.credentials.userId ?? undefined,
             password: oldPassword,
         };
 
@@ -250,7 +247,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
         const newPassword = this.state.newPassword;
         const confirmPassword = this.state.newPasswordConfirm;
         try {
-            // TODO: We can remove this check (but should add some Cypress tests to
+            // TODO: We can remove this check (but should add some Playwright tests to
             // sanity check this flow). This logic is redundant with the input field
             // validation we do and `verifyFieldsBeforeSubmit()` above. See
             // https://github.com/matrix-org/matrix-react-sdk/pull/10615#discussion_r1167364214

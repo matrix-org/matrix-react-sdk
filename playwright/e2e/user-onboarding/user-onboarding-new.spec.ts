@@ -35,17 +35,29 @@ test.describe("User Onboarding (new user)", () => {
     });
 
     test("page is shown and preference exists", async ({ page, app }) => {
-        await expect(page.locator(".mx_UserOnboardingPage")).toHaveScreenshot();
-        await app.openUserSettings("Preferences");
+        await expect(page.locator(".mx_UserOnboardingPage")).toMatchScreenshot(
+            "User-Onboarding-new-user-page-is-shown-and-preference-exists-1.png",
+        );
+        await app.settings.openUserSettings("Preferences");
         await expect(page.getByText("Show shortcut to welcome checklist above the room list")).toBeVisible();
     });
 
     test("app download dialog", async ({ page }) => {
         await page.getByRole("button", { name: "Download apps" }).click();
         await expect(
-            page.getByRole("dialog").getByRole("heading", { level: 2, name: "Download Element" }),
+            page.getByRole("dialog").getByRole("heading", { level: 1, name: "Download Element" }),
         ).toBeVisible();
-        await expect(page.getByRole("dialog")).toHaveScreenshot();
+        await expect(page.locator(".mx_Dialog")).toMatchScreenshot(
+            "User-Onboarding-new-user-app-download-dialog-1.png",
+            {
+                // Set a constant bg behind the modal to ensure screenshot stability
+                css: `
+                    .mx_AppDownloadDialog_wrapper {
+                        background: black;
+                    }
+                `,
+            },
+        );
     });
 
     test("using find friends action should increase progress", async ({ page, homeserver }) => {

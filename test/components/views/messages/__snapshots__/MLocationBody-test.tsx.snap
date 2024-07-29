@@ -34,8 +34,7 @@ exports[`MLocationBody <MLocationBody> without error renders map correctly 1`] =
     class="mx_MLocationBody"
   >
     <div
-      aria-describedby="mx_TooltipTarget_9K38QgU2"
-      tabindex="0"
+      class="mx_MLocationBody_map"
     >
       <div
         class="mx_Map mx_MLocationBody_map"
@@ -67,8 +66,7 @@ exports[`MLocationBody <MLocationBody> without error renders marker correctly fo
     class="mx_MLocationBody"
   >
     <div
-      aria-describedby="mx_TooltipTarget_9K38QgU2"
-      tabindex="0"
+      class="mx_MLocationBody_map"
     >
       <div
         class="mx_Map mx_MLocationBody_map"
@@ -83,8 +81,8 @@ exports[`MLocationBody <MLocationBody> without error renders marker correctly fo
               class="mx_Marker_border"
             >
               <span
-                class="_avatar_1o69u_17 mx_BaseAvatar _avatar-imageless_1o69u_60"
-                data-color="1"
+                class="_avatar_mcap2_17 mx_BaseAvatar _avatar-imageless_mcap2_61"
+                data-color="3"
                 data-testid="avatar-img"
                 data-type="round"
                 role="presentation"

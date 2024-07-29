@@ -18,10 +18,7 @@ import fetchMock from "fetch-mock-jest";
 import { TextDecoder, TextEncoder } from "util";
 import { Response } from "node-fetch";
 
-// jest 27 removes setImmediate from jsdom
-// polyfill until setImmediate use in client can be removed
-// @ts-ignore - we know the contract is wrong. That's why we're stubbing it.
-global.setImmediate = (callback) => window.setTimeout(callback, 0);
+import { mocks } from "./mocks";
 
 // Stub ResizeObserver
 // @ts-ignore - we know it's a duplicate (that's why we're stubbing it)
@@ -81,6 +78,7 @@ global.TextDecoder = TextDecoder;
 
 // prevent errors whenever a component tries to manually scroll.
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
+window.HTMLAudioElement.prototype.canPlayType = jest.fn((format) => (format === "audio/mpeg" ? "probably" : ""));
 
 // set up fetch API mock
 fetchMock.config.overwriteRoutes = false;
@@ -92,3 +90,6 @@ window.fetch = fetchMock.sandbox();
 
 // @ts-ignore
 window.Response = Response;
+
+// set up AudioContext API mock
+global.AudioContext = jest.fn().mockImplementation(() => ({ ...mocks.AudioContext }));

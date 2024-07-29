@@ -51,6 +51,52 @@ limitations under the License.
         }
     }
 
+    .mx_RoomSummaryCard_topic {
+        padding: 0 12px;
+
+        .mx_Box {
+            width: 100%;
+        }
+
+        .mx_RoomSummaryCard_topic_container {
+            display: flex;
+        }
+
+        .mx_RoomSummaryCard_topic_edit {
+            width: max-content;
+        }
+
+        p {
+            white-space: pre-wrap;
+            width: 100%;
+            min-width: 0;
+            margin: 0;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        .mx_RoomSummaryCard_topic_chevron {
+            transition: transform 0.3s;
+        }
+
+        &.mx_RoomSummaryCard_topic_collapsed {
+            p {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: normal;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+
+            .mx_RoomSummaryCard_topic_chevron {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+
     .mx_RoomSummaryCard_appsGroup {
         .mx_RoomSummaryCard_Button {
             /* this button is special so we have to override some of the original styling */
@@ -189,28 +235,15 @@ limitations under the License.
 }
 
 .mx_RoomSummaryCard_header {
-    padding: 15px 12px;
+    padding: 24px 12px 15px;
 }
 
-.mx_RoomSummaryCard_search input {
-    /* Overriding very broad CSS rules */
-    border: 0 !important;
-    margin: 0 !important;
-    cursor: pointer;
-}
+.mx_RoomSummaryCard_search {
+    flex-grow: 1;
+    min-width: 0;
 
-.mx_RoomSummaryCard_searchBtn {
-    background: var(--cpd-color-bg-canvas-default);
-    color: var(--cpd-color-icon-primary);
-    border: 1px solid var(--cpd-color-gray-400);
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    padding: var(--cpd-space-2x);
-    cursor: pointer;
-
-    &:hover {
-        background: var(--cpd-color-bg-subtle-primary);
+    input[type="search"]::-webkit-search-cancel-button {
+        display: unset; /* override _common.pcss which inhibits this */
     }
 }
 

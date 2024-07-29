@@ -16,7 +16,8 @@ limitations under the License.
 
 import { mocked } from "jest-mock";
 import { PostHog } from "posthog-js";
-import { CryptoApi, MatrixClient } from "matrix-js-sdk/src/matrix";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { CryptoApi } from "matrix-js-sdk/src/crypto-api";
 
 import { Anonymity, getRedactedCurrentLocation, IPosthogEvent, PosthogAnalytics } from "../src/PosthogAnalytics";
 import SdkConfig from "../src/SdkConfig";
@@ -36,10 +37,10 @@ const getFakePosthog = (): PostHog =>
         register: jest.fn(),
         get_distinct_id: jest.fn(),
         persistence: {
-            get_user_state: jest.fn(),
+            get_property: jest.fn(),
         },
         identifyUser: jest.fn(),
-    } as unknown as PostHog);
+    }) as unknown as PostHog;
 
 interface ITestEvent extends IPosthogEvent {
     eventName: "JestTestEvents";
@@ -288,7 +289,7 @@ describe("PosthogAnalytics", () => {
                     id: "0000000",
                     pseudonymousAnalyticsOptIn: true,
                 }),
-            } as unknown as MatrixClient);
+            }) as unknown as MatrixClient;
 
         beforeEach(async () => {
             SdkConfig.put({

@@ -18,7 +18,7 @@ import React from "react";
 
 import { Icon as ContextMenuIcon } from "../../../../res/img/element-icons/context-menu.svg";
 import { ChevronFace, ContextMenuButton, MenuProps, useContextMenu } from "../../structures/ContextMenu";
-import AccessibleButton from "../elements/AccessibleButton";
+import { ButtonProps } from "../elements/AccessibleButton";
 import IconizedContextMenu, { IconizedContextMenuOptionList } from "./IconizedContextMenu";
 
 const contextMenuBelow = (elementRect: DOMRect): MenuProps => {
@@ -29,17 +29,17 @@ const contextMenuBelow = (elementRect: DOMRect): MenuProps => {
     return { left, top, chevronFace };
 };
 
-interface KebabContextMenuProps extends Partial<React.ComponentProps<typeof AccessibleButton>> {
+type KebabContextMenuProps = Partial<ButtonProps<any>> & {
     options: React.ReactNode[];
     title: string;
-}
+};
 
 export const KebabContextMenu: React.FC<KebabContextMenuProps> = ({ options, title, ...props }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     return (
         <>
-            <ContextMenuButton {...props} onClick={openMenu} title={title} isExpanded={menuDisplayed} inputRef={button}>
+            <ContextMenuButton {...props} onClick={openMenu} title={title} isExpanded={menuDisplayed} ref={button}>
                 <ContextMenuIcon className="mx_KebabContextMenu_icon" />
             </ContextMenuButton>
             {menuDisplayed && (

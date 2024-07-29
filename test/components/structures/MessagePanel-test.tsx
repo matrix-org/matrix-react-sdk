@@ -18,6 +18,7 @@ limitations under the License.
 import React from "react";
 import { EventEmitter } from "events";
 import { MatrixEvent, Room, RoomMember, Thread, ReceiptType } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { render } from "@testing-library/react";
 
 import MessagePanel, { shouldFormContinuation } from "../../../src/components/structures/MessagePanel";
@@ -99,7 +100,6 @@ describe("MessagePanel", function () {
             <RoomContext.Provider value={{ ...defaultRoomContext, ...roomContext }}>
                 <MessagePanel {...defaultProps} {...props} />
             </RoomContext.Provider>
-            );
         </MatrixClientContext.Provider>
     );
 
@@ -169,8 +169,8 @@ describe("MessagePanel", function () {
                     user: "@user:id",
                     target: bobMember,
                     ts: ts0 + i * 1000,
-                    mship: "join",
-                    prevMship: "join",
+                    mship: KnownMembership.Join,
+                    prevMship: KnownMembership.Join,
                     name: "A user",
                 }),
             );
@@ -203,8 +203,8 @@ describe("MessagePanel", function () {
                     user: "@user:id",
                     target: bobMember,
                     ts: ts0 + i * 1000,
-                    mship: "join",
-                    prevMship: "join",
+                    mship: KnownMembership.Join,
+                    prevMship: KnownMembership.Join,
                     name: "A user",
                 }),
             );
@@ -243,7 +243,7 @@ describe("MessagePanel", function () {
                 user: alice,
                 target: aliceMember,
                 ts: ts0 + 1,
-                mship: "join",
+                mship: KnownMembership.Join,
                 name: "Alice",
             }),
             mkEvent({
@@ -283,7 +283,7 @@ describe("MessagePanel", function () {
                 skey: "@bob:example.org",
                 target: bobMember,
                 ts: ts0 + 5,
-                mship: "invite",
+                mship: KnownMembership.Invite,
                 name: "Bob",
             }),
         ];
@@ -540,8 +540,8 @@ describe("MessagePanel", function () {
                 user: "@user:id",
                 target: bobMember,
                 ts: Date.now(),
-                mship: "join",
-                prevMship: "join",
+                mship: KnownMembership.Join,
+                prevMship: KnownMembership.Join,
                 name: "A user",
             }),
         ];
@@ -569,8 +569,8 @@ describe("MessagePanel", function () {
                 user: "@user:id",
                 target: bobMember,
                 ts: Date.now(),
-                mship: "join",
-                prevMship: "join",
+                mship: KnownMembership.Join,
+                prevMship: KnownMembership.Join,
                 name: "A user",
             }),
             ...events,
@@ -693,8 +693,8 @@ describe("MessagePanel", function () {
         for (let i = 0; i < 100; i++) {
             events.push(
                 TestUtilsMatrix.mkMembership({
-                    mship: "join",
-                    prevMship: "join",
+                    mship: KnownMembership.Join,
+                    prevMship: KnownMembership.Join,
                     room: "!room:id",
                     user: "@user:id",
                     event: true,
@@ -714,8 +714,8 @@ describe("MessagePanel", function () {
         for (let i = 0; i < 100; i++) {
             events.push(
                 TestUtilsMatrix.mkMembership({
-                    mship: "join",
-                    prevMship: "join",
+                    mship: KnownMembership.Join,
+                    prevMship: KnownMembership.Join,
                     room: "!room:id",
                     user: "@user:id",
                     event: true,

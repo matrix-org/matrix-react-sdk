@@ -8,6 +8,58 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
     <div
       class="mx_SettingsTab_sections"
     >
+      <label
+        class="mx_SetIntegrationManager"
+        data-testid="mx_SetIntegrationManager"
+        for="toggle_integration"
+      >
+        <div
+          class="mx_SettingsFlag"
+        >
+          <div
+            class="mx_SetIntegrationManager_heading_manager"
+          >
+            <h3
+              class="mx_Heading_h3"
+            >
+              Manage integrations
+            </h3>
+            <h4
+              class="mx_Heading_h4"
+            >
+              (scalar.vector.im)
+            </h4>
+          </div>
+          <div
+            aria-checked="true"
+            aria-disabled="false"
+            class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_on mx_ToggleSwitch_enabled"
+            id="toggle_integration"
+            role="switch"
+            tabindex="0"
+          >
+            <div
+              class="mx_ToggleSwitch_ball"
+            />
+          </div>
+        </div>
+        <div
+          class="mx_SettingsSubsection_text"
+        >
+          <span>
+            Use an integration manager 
+            <b>
+              (scalar.vector.im)
+            </b>
+             to manage bots, widgets, and sticker packs.
+          </span>
+        </div>
+        <div
+          class="mx_SettingsSubsection_text"
+        >
+          Integration managers receive configuration data, and can modify widgets, send room invites, and set power levels on your behalf.
+        </div>
+      </label>
       <div
         class="mx_SettingsSection"
       >
@@ -175,66 +227,68 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                 <table
                   class="mx_CrossSigningPanel_statusList"
                 >
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Cross-signing public keys:
-                    </th>
-                    <td>
-                      not found
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Cross-signing private keys:
-                    </th>
-                    <td>
-                      not found in storage
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Master private key:
-                    </th>
-                    <td>
-                      not found locally
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Self signing private key:
-                    </th>
-                    <td>
-                      not found locally
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      User signing private key:
-                    </th>
-                    <td>
-                      not found locally
-                    </td>
-                  </tr>
-                  <tr>
-                    <th
-                      scope="row"
-                    >
-                      Homeserver feature support:
-                    </th>
-                    <td>
-                      not found
-                    </td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Cross-signing public keys:
+                      </th>
+                      <td>
+                        not found
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Cross-signing private keys:
+                      </th>
+                      <td>
+                        not found in storage
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Master private key:
+                      </th>
+                      <td>
+                        not found locally
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Self signing private key:
+                      </th>
+                      <td>
+                        not found locally
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        User signing private key:
+                      </th>
+                      <td>
+                        not found locally
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        scope="row"
+                      >
+                        Homeserver feature support:
+                      </th>
+                      <td>
+                        not found
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </details>
             </div>
@@ -291,6 +345,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
               >
                 <label
                   class="mx_SettingsFlag_label"
+                  for="mx_SettingsFlag_vY7Q4uEh9K38"
                 >
                   <span
                     class="mx_SettingsFlag_labelText"
@@ -303,6 +358,7 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                   aria-disabled="false"
                   aria-label="Never send encrypted messages to unverified sessions from this session"
                   class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
+                  id="mx_SettingsFlag_vY7Q4uEh9K38"
                   role="switch"
                   tabindex="0"
                 >
@@ -345,53 +401,6 @@ exports[`<SecurityUserSettingsTab /> renders security section 1`] = `
                 class="mx_SettingsSubsection_text"
               >
                 You have no ignored users.
-              </div>
-            </div>
-          </div>
-          <div
-            class="mx_SettingsSubsection"
-          >
-            <div
-              class="mx_SettingsSubsectionHeading"
-            >
-              <h3
-                class="mx_Heading_h4 mx_SettingsSubsectionHeading_heading"
-              >
-                Encryption
-              </h3>
-            </div>
-            <div
-              class="mx_SettingsSubsection_content"
-            >
-              <div
-                class="mx_SettingsFlag"
-              >
-                <label
-                  class="mx_SettingsFlag_label"
-                >
-                  <span
-                    class="mx_SettingsFlag_labelText"
-                  >
-                    Manually verify all remote sessions
-                  </span>
-                </label>
-                <div
-                  aria-checked="false"
-                  aria-disabled="false"
-                  aria-label="Manually verify all remote sessions"
-                  class="mx_AccessibleButton mx_ToggleSwitch mx_ToggleSwitch_enabled"
-                  role="switch"
-                  tabindex="0"
-                >
-                  <div
-                    class="mx_ToggleSwitch_ball"
-                  />
-                </div>
-              </div>
-              <div
-                class="mx_SettingsSubsection_text"
-              >
-                Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.
               </div>
             </div>
           </div>

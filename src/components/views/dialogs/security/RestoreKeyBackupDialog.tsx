@@ -16,10 +16,10 @@ limitations under the License.
 */
 
 import React, { ChangeEvent } from "react";
-import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
-import { IKeyBackupInfo, IKeyBackupRestoreResult } from "matrix-js-sdk/src/crypto/keybackup";
-import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
+import { MatrixClient, MatrixError, SecretStorage } from "matrix-js-sdk/src/matrix";
+import { IKeyBackupRestoreResult } from "matrix-js-sdk/src/crypto/keybackup";
 import { logger } from "matrix-js-sdk/src/logger";
+import { KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
 
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import { _t } from "../../../../languageHandler";
@@ -52,8 +52,8 @@ interface IProps {
 }
 
 interface IState {
-    backupInfo: IKeyBackupInfo | null;
-    backupKeyStored: Record<string, ISecretStorageKeyInfo> | null;
+    backupInfo: KeyBackupInfo | null;
+    backupKeyStored: Record<string, SecretStorage.SecretStorageKeyDescription> | null;
     loading: boolean;
     loadError: boolean | null;
     restoreError: unknown | null;
@@ -247,7 +247,7 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
         }
     }
 
-    private async restoreWithCachedKey(backupInfo: IKeyBackupInfo | null): Promise<boolean> {
+    private async restoreWithCachedKey(backupInfo: KeyBackupInfo | null): Promise<boolean> {
         if (!backupInfo) return false;
         try {
             const recoverInfo = await MatrixClientPeg.safeGet().restoreKeyBackupWithCache(

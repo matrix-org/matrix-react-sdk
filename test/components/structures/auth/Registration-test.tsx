@@ -37,7 +37,9 @@ jest.mock("matrix-js-sdk/src/matrix", () => ({
     ...jest.requireActual("matrix-js-sdk/src/matrix"),
     createClient: jest.fn(),
 }));
-jest.useFakeTimers();
+
+/** The matrix versions our mock server claims to support */
+const SERVER_SUPPORTED_MATRIX_VERSIONS = ["v1.1", "v1.5", "v1.6", "v1.8", "v1.9"];
 
 describe("Registration", function () {
     let mockClient!: MockedObject<MatrixClient>;
@@ -50,7 +52,7 @@ describe("Registration", function () {
         mockClient = getMockClientWithEventEmitter({
             registerRequest: jest.fn(),
             loginFlows: jest.fn(),
-            getVersions: jest.fn().mockResolvedValue({ versions: ["v1.1"] }),
+            getVersions: jest.fn().mockResolvedValue({ versions: SERVER_SUPPORTED_MATRIX_VERSIONS }),
         });
         mockClient.registerRequest.mockRejectedValueOnce(
             new MatrixError(
@@ -69,7 +71,7 @@ describe("Registration", function () {
         fetchMock.catch(404);
         fetchMock.get("https://matrix.org/_matrix/client/versions", {
             unstable_features: {},
-            versions: ["v1.1"],
+            versions: SERVER_SUPPORTED_MATRIX_VERSIONS,
         });
         mockPlatformPeg({
             startSingleSignOn: jest.fn(),
@@ -138,7 +140,7 @@ describe("Registration", function () {
 
         fetchMock.get("https://server2/_matrix/client/versions", {
             unstable_features: {},
-            versions: ["v1.1"],
+            versions: SERVER_SUPPORTED_MATRIX_VERSIONS,
         });
         rerender(getRawComponent("https://server2"));
         await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
@@ -157,11 +159,17 @@ describe("Registration", function () {
             // mock a statically registered client to avoid dynamic registration
             SdkConfig.put({
                 oidc_static_clients: {
-                    [authConfig.issuer]: {
+                    [authConfig.metadata.issuer]: {
                         client_id: clientId,
                     },
                 },
             });
+
+            fetchMock.get(`${defaultHsUrl}/_matrix/client/unstable/org.matrix.msc2965/auth_issuer`, {
+                issuer: authConfig.metadata.issuer,
+            });
+            fetchMock.get("https://auth.org/.well-known/openid-configuration", authConfig.metadata);
+            fetchMock.get(authConfig.metadata.jwks_uri!, { keys: [] });
         });
 
         describe("when oidc native flow is not enabled in settings", () => {
@@ -189,14 +197,14 @@ describe("Registration", function () {
                 // no form
                 expect(container.querySelector("form")).toBeFalsy();
 
-                expect(screen.getByText("Continue")).toBeTruthy();
+                expect(await screen.findByText("Continue")).toBeTruthy();
             });
 
             it("should start OIDC login flow as registration on button click", async () => {
                 getComponent(defaultHsUrl, defaultIsUrl, authConfig);
                 await waitForElementToBeRemoved(() => screen.queryAllByLabelText("Loading…"));
 
-                fireEvent.click(screen.getByText("Continue"));
+                fireEvent.click(await screen.findByText("Continue"));
 
                 expect(startOidcLogin).toHaveBeenCalledWith(
                     authConfig,

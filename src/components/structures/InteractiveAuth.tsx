@@ -18,7 +18,7 @@ import React, { createRef } from "react";
 import {
     AuthType,
     IAuthData,
-    IAuthDict,
+    AuthDict,
     IInputs,
     InteractiveAuth,
     IStageStatus,
@@ -26,7 +26,10 @@ import {
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import getEntryComponentForLoginType, { IStageComponent } from "../views/auth/InteractiveAuthEntryComponents";
+import getEntryComponentForLoginType, {
+    ContinueKind,
+    IStageComponent,
+} from "../views/auth/InteractiveAuthEntryComponents";
 import Spinner from "../views/elements/Spinner";
 
 export const ERROR_USER_CANCELLED = new Error("User cancelled auth session");
@@ -59,9 +62,9 @@ export interface InteractiveAuthProps<T> {
     continueIsManaged?: boolean;
     // continueText and continueKind are passed straight through to the AuthEntryComponent.
     continueText?: string;
-    continueKind?: string;
+    continueKind?: ContinueKind;
     // callback
-    makeRequest(auth: IAuthDict | null): Promise<T>;
+    makeRequest(auth: AuthDict | null): Promise<T>;
     // callback called when the auth process has finished,
     // successfully or unsuccessfully.
     // @param {boolean} status True if the operation requiring
@@ -210,7 +213,7 @@ export default class InteractiveAuthComponent<T> extends React.Component<Interac
         );
     };
 
-    private requestCallback = (auth: IAuthDict | null, background: boolean): Promise<T> => {
+    private requestCallback = (auth: AuthDict | null, background: boolean): Promise<T> => {
         // This wrapper just exists because the js-sdk passes a second
         // 'busy' param for backwards compat. This throws the tests off
         // so discard it here.
@@ -243,7 +246,7 @@ export default class InteractiveAuthComponent<T> extends React.Component<Interac
         this.stageComponent.current?.focus?.();
     }
 
-    private submitAuthDict = (authData: IAuthDict): void => {
+    private submitAuthDict = (authData: AuthDict): void => {
         this.authLogic.submitAuthDict(authData);
     };
 

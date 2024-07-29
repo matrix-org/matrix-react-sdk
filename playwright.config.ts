@@ -16,16 +16,19 @@ limitations under the License.
 
 import { defineConfig } from "@playwright/test";
 
-import { TestOptions } from "./playwright/element-web-test";
-
 const baseURL = process.env["BASE_URL"] ?? "http://localhost:8080";
 
-export default defineConfig<TestOptions>({
+export default defineConfig({
     use: {
         viewport: { width: 1280, height: 720 },
         ignoreHTTPSErrors: true,
-        video: "on-first-retry",
+        video: "retain-on-failure",
         baseURL,
+        permissions: ["clipboard-write", "clipboard-read", "microphone"],
+        launchOptions: {
+            args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream", "--mute-audio"],
+        },
+        trace: "on-first-retry",
     },
     webServer: {
         command: process.env.CI ? "npx serve -p 8080 -L ../webapp" : "yarn --cwd ../element-web start",
@@ -35,15 +38,9 @@ export default defineConfig<TestOptions>({
     testDir: "playwright/e2e",
     outputDir: "playwright/test-results",
     workers: 1,
-    reporter: process.env.CI ? "blob" : [["html", { outputFolder: "playwright/html-report" }]],
-    projects: [
-        {
-            name: "Legacy Crypto",
-            use: { crypto: "legacy" },
-        },
-        {
-            name: "Rust Crypto",
-            use: { crypto: "rust" },
-        },
-    ],
+    retries: process.env.CI ? 2 : 0,
+    reporter: process.env.CI ? [["blob"], ["github"]] : [["html", { outputFolder: "playwright/html-report" }]],
+    snapshotDir: "playwright/snapshots",
+    snapshotPathTemplate: "{snapshotDir}/{testFilePath}/{arg}-{platform}{ext}",
+    forbidOnly: !!process.env.CI,
 });

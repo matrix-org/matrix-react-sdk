@@ -25,7 +25,10 @@ export class MockedCall extends Call {
     public static readonly EVENT_TYPE = "org.example.mocked_call";
     public readonly STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
-    private constructor(room: Room, public readonly event: MatrixEvent) {
+    private constructor(
+        room: Room,
+        public readonly event: MatrixEvent,
+    ) {
         super(
             {
                 id: event.getStateKey()!,
@@ -35,9 +38,8 @@ export class MockedCall extends Call {
                 url: "https://example.org",
                 name: "Group call",
                 creatorUserId: "@alice:example.org",
-                // waitForIframeLoad = false, makes the widget API wait for the 'contentLoaded' event instead.
-                // This is how the EC is designed, but for backwards compatibility (full mesh) we currently need to use waitForIframeLoad = true
-                // waitForIframeLoad: false
+                // waitForIframeLoad = false, makes the widget API wait for the 'contentLoaded' event.
+                waitForIframeLoad: false,
             },
             room.client,
         );

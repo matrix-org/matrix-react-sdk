@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixError, MatrixClient, EventType, HistoryVisibility } from "matrix-js-sdk/src/matrix";
+import { MatrixError, MatrixClient, EventType } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { defer, IDeferred } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -82,10 +83,9 @@ export default class MultiInviter {
      *
      * @param {array} addresses Array of addresses to invite
      * @param {string} reason Reason for inviting (optional)
-     * @param {boolean} sendSharedHistoryKeys whether to share e2ee keys with the invitees if applicable.
      * @returns {Promise} Resolved when all invitations in the queue are complete
      */
-    public invite(addresses: string[], reason?: string, sendSharedHistoryKeys = false): Promise<CompletionStates> {
+    public invite(addresses: string[], reason?: string): Promise<CompletionStates> {
         if (this.addresses.length > 0) {
             throw new Error("Already inviting/invited");
         }
@@ -104,31 +104,7 @@ export default class MultiInviter {
         this.deferred = defer<CompletionStates>();
         this.inviteMore(0);
 
-        if (!sendSharedHistoryKeys || !this.roomId || !this.matrixClient.isRoomEncrypted(this.roomId)) {
-            return this.deferred.promise;
-        }
-
-        const room = this.matrixClient.getRoom(this.roomId);
-        const visibilityEvent = room?.currentState.getStateEvents(EventType.RoomHistoryVisibility, "");
-        const visibility = visibilityEvent?.getContent().history_visibility;
-
-        if (visibility !== HistoryVisibility.WorldReadable && visibility !== HistoryVisibility.Shared) {
-            return this.deferred.promise;
-        }
-
-        return this.deferred.promise.then(async (states): Promise<CompletionStates> => {
-            const invitedUsers: string[] = [];
-            for (const [addr, state] of Object.entries(states)) {
-                if (state === InviteState.Invited && getAddressType(addr) === AddressType.MatrixUserId) {
-                    invitedUsers.push(addr);
-                }
-            }
-
-            logger.log("Sharing history with", invitedUsers);
-            this.matrixClient.sendSharedHistoryKeys(this.roomId, invitedUsers); // do this in the background
-
-            return states;
-        });
+        return this.deferred.promise;
     }
 
     /**
@@ -159,17 +135,17 @@ export default class MultiInviter {
             if (!room) throw new Error("Room not found");
 
             const member = room.getMember(addr);
-            if (member?.membership === "join") {
+            if (member?.membership === KnownMembership.Join) {
                 throw new MatrixError({
                     errcode: USER_ALREADY_JOINED,
                     error: "Member already joined",
                 });
-            } else if (member?.membership === "invite") {
+            } else if (member?.membership === KnownMembership.Invite) {
                 throw new MatrixError({
                     errcode: USER_ALREADY_INVITED,
                     error: "Member already invited",
                 });
-            } else if (member?.membership === "ban") {
+            } else if (member?.membership === KnownMembership.Ban) {
                 let proceed = false;
                 // Check if we can unban the invitee.
                 // See https://spec.matrix.org/v1.7/rooms/v10/#authorization-rules, particularly 4.5.3 and 4.5.4.

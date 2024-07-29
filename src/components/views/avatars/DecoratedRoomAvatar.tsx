@@ -16,8 +16,9 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { Room, RoomEvent, MatrixEvent, User, UserEvent, EventType, JoinRule } from "matrix-js-sdk/src/matrix";
+import { EventType, JoinRule, MatrixEvent, Room, RoomEvent, User, UserEvent } from "matrix-js-sdk/src/matrix";
 import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
+import { Tooltip } from "@vector-im/compound-web";
 
 import RoomAvatar from "./RoomAvatar";
 import NotificationBadge from "../rooms/NotificationBadge";
@@ -26,19 +27,24 @@ import { NotificationState } from "../../../stores/notifications/NotificationSta
 import { isPresenceEnabled } from "../../../utils/presence";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
-import TextWithTooltip from "../elements/TextWithTooltip";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
-import TooltipTarget from "../elements/TooltipTarget";
+import { getJoinedNonFunctionalMembers } from "../../../utils/room/getJoinedNonFunctionalMembers";
 
 interface IProps {
     room: Room;
     size: string;
     displayBadge?: boolean;
-    forceCount?: boolean;
+    /**
+     * If true, show nothing if the notification would only cause a dot to be shown rather than
+     * a badge. That is: only display badges and not dots. Default: false.
+     */
+    hideIfDot?: boolean;
     oobData?: IOOBData;
     viewAvatarOnClick?: boolean;
-    tooltipProps?: Omit<React.ComponentProps<typeof TooltipTarget>, "label" | "tooltipClassName" | "className">;
+    tooltipProps?: {
+        tabIndex?: number;
+    };
 }
 
 interface IState {
@@ -94,9 +100,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
     }
 
     private get isPublicRoom(): boolean {
-        const joinRules = this.props.room.currentState.getStateEvents(EventType.RoomJoinRules, "");
-        const joinRule = joinRules && joinRules.getContent().join_rule;
-        return joinRule === JoinRule.Public;
+        return this.props.room.getJoinRule() === JoinRule.Public;
     }
 
     private get dmUser(): User | null {
@@ -159,7 +163,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
         // We look at the DMRoomMap and not the tag here so that we don't exclude DMs in Favourites
         const otherUserId = DMRoomMap.shared().getUserIdForRoomId(this.props.room.roomId);
-        if (otherUserId && this.props.room.getJoinedMemberCount() === 2) {
+        if (otherUserId && getJoinedNonFunctionalMembers(this.props.room).length === 2) {
             // Track presence, if available
             if (isPresenceEnabled(this.props.room.client)) {
                 this.dmUser = MatrixClientPeg.safeGet().getUser(otherUserId);
@@ -177,12 +181,15 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
     }
 
     public render(): React.ReactNode {
+        // Spread the remaining props to make it work with compound component
+        const { room, size, displayBadge, hideIfDot, oobData, viewAvatarOnClick, tooltipProps, ...props } = this.props;
+
         let badge: React.ReactNode;
         if (this.props.displayBadge && this.state.notificationState) {
             badge = (
                 <NotificationBadge
                     notification={this.state.notificationState}
-                    forceCount={this.props.forceCount}
+                    hideIfDot={this.props.hideIfDot}
                     roomId={this.props.room.roomId}
                 />
             );
@@ -191,10 +198,9 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         let icon: JSX.Element | undefined;
         if (this.state.icon !== Icon.None) {
             icon = (
-                <TextWithTooltip
-                    tooltip={tooltipText(this.state.icon)}
-                    tooltipProps={this.props.tooltipProps}
-                    class={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${this.state.icon.toLowerCase()}`}
+                <div
+                    tabIndex={this.props.tooltipProps?.tabIndex ?? 0}
+                    className={`mx_DecoratedRoomAvatar_icon mx_DecoratedRoomAvatar_icon_${this.state.icon.toLowerCase()}`}
                 />
             );
         }
@@ -204,14 +210,18 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         });
 
         return (
-            <div className={classes}>
+            <div className={classes} {...props}>
                 <RoomAvatar
                     room={this.props.room}
                     size={this.props.size}
                     oobData={this.props.oobData}
                     viewAvatarOnClick={this.props.viewAvatarOnClick}
                 />
-                {icon}
+                {icon && (
+                    <Tooltip label={tooltipText(this.state.icon)!} placement="bottom">
+                        {icon}
+                    </Tooltip>
+                )}
                 {badge}
             </div>
         );

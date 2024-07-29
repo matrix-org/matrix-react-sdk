@@ -43,7 +43,7 @@ describe("AutocompleteInput", () => {
     const constructMockProvider = (data: ICompletion[]) =>
         ({
             getCompletions: jest.fn().mockImplementation(async () => data),
-        } as unknown as AutocompleteProvider);
+        }) as unknown as AutocompleteProvider;
 
     beforeEach(() => {
         TestUtils.stubClient();
@@ -244,6 +244,36 @@ describe("AutocompleteInput", () => {
         });
 
         expect(onSelectionChangeMock).toHaveBeenCalledWith([mockCompletion[0]]);
+    });
+
+    it("should clear text field and suggestions when a suggestion is accepted", async () => {
+        const mockProvider = constructMockProvider(mockCompletion);
+        const onSelectionChangeMock = jest.fn();
+
+        const { container } = render(
+            <AutocompleteInput
+                provider={mockProvider}
+                placeholder="Search ..."
+                selection={[]}
+                onSelectionChange={onSelectionChangeMock}
+            />,
+        );
+
+        const input = getEditorInput();
+
+        act(() => {
+            fireEvent.focus(input);
+            fireEvent.change(input, { target: { value: "user" } });
+        });
+
+        const suggestions = await within(container).findAllByTestId("autocomplete-suggestion-item", { exact: false });
+
+        act(() => {
+            fireEvent.mouseDown(suggestions[0]);
+        });
+
+        expect(input).toHaveValue("");
+        expect(within(container).queryAllByTestId("autocomplete-suggestion-item", { exact: false })).toHaveLength(0);
     });
 
     afterAll(() => {

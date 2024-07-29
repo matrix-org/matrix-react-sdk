@@ -341,7 +341,6 @@
         "description": "Descrição",
         "deselect_all": "Desmarcar todos",
         "device": "Dispositivo",
-        "display_name": "Nome e sobrenome",
         "edited": "editado",
         "email_address": "Endereço de e-mail",
         "encrypted": "Criptografada",
@@ -372,10 +371,6 @@
         "n_members": {
             "one": "%(count)s integrante",
             "other": "%(count)s integrantes"
-        },
-        "n_participants": {
-            "other": "%(count)s participantes",
-            "one": "1 participante"
         },
         "name": "Nome",
         "no_results": "Nenhum resultado",
@@ -1001,10 +996,10 @@
         "group_rooms": "Salas",
         "group_spaces": "Espaços",
         "group_themes": "Temas",
+        "group_threads": "Tópicos",
         "group_voip": "Voz e vídeo",
         "latex_maths": "Renderizar fórmulas matemáticas LaTeX em mensagens",
         "pinning": "Fixar mensagem",
-        "state_counters": "Renderizar contadores simples no cabeçalho da sala",
         "video_rooms": "Salas de vídeo"
     },
     "labs_mjolnir": {
@@ -1040,14 +1035,6 @@
         "view_rules": "Ver regras"
     },
     "language_dropdown_label": "Menu suspenso de idiomas",
-    "lazy_loading": {
-        "disabled_action": "Limpar cache e ressincronizar",
-        "disabled_description1": "Você já usou o %(brand)s em %(host)s com o carregamento Lazy de participantes ativado. Nesta versão, o carregamento Lazy está desativado. Como o cache local não é compatível entre essas duas configurações, o %(brand)s precisa ressincronizar sua conta.",
-        "disabled_description2": "Se a outra versão do %(brand)s ainda estiver aberta em outra aba, por favor, feche-a pois usar o %(brand)s no mesmo host com o carregamento Lazy ativado e desativado simultaneamente causará problemas.",
-        "disabled_title": "Cache local incompatível",
-        "resync_description": "%(brand)s agora usa de 3 a 5 vezes menos memória, pois carrega as informações dos outros usuários apenas quando for necessário. Por favor, aguarde enquanto ressincronizamos com o servidor!",
-        "resync_title": "Atualizando o %(brand)s"
-    },
     "leave_room_dialog": {
         "leave_room_question": "Tem certeza de que deseja sair da sala '%(roomName)s'?",
         "leave_space_question": "Tem certeza de que deseja sair desse espaço '%(spaceName)s'?",
@@ -1085,8 +1072,6 @@
         "all_messages": "Todas as mensagens novas",
         "all_messages_description": "Seja notificado para cada mensagem",
         "class_other": "Outros",
-        "colour_bold": "Negrito",
-        "colour_none": "Nenhuma",
         "default": "Padrão",
         "enable_prompt_toast_description": "Ativar notificações na área de trabalho",
         "enable_prompt_toast_title": "Notificações",
@@ -1094,6 +1079,8 @@
         "error_change_title": "Alterar configuração de notificações",
         "keyword": "Palavra-chave",
         "keyword_new": "Nova palavra-chave",
+        "level_activity": "Atividade recente",
+        "level_none": "Nenhuma",
         "mark_all_read": "Marcar tudo como lido",
         "mentions_and_keywords": "@menções e palavras-chave",
         "mentions_and_keywords_description": "Receba notificações apenas com menções e palavras-chave conforme definido em suas <a>configurações</a>",
@@ -1309,13 +1296,10 @@
         "peek_join_prompt": "Você está visualizando %(roomName)s. Deseja participar?",
         "rejoin_button": "Entrar novamente",
         "search": {
-            "all_rooms": "Todas as salas",
-            "field_placeholder": "Buscar…",
             "result_count": {
                 "one": "(~%(count)s resultado)",
                 "other": "(~%(count)s resultados)"
-            },
-            "this_room": "Esta sala"
+            }
         },
         "status_bar": {
             "exceeded_resource_limit": "Sua mensagem não foi enviada porque este servidor local excedeu o limite de recursos. Por favor, <a>entre em contato com o seu administrador de serviços</a> para continuar usando o serviço.",
@@ -1608,10 +1592,8 @@
         "help_about": {
             "access_token_detail": "Seu token de acesso dá acesso total à sua conta. Não o compartilhe com ninguém.",
             "brand_version": "versão do %(brand)s:",
-            "chat_bot": "Converse com o bot do %(brand)s",
             "clear_cache_reload": "Limpar cache e recarregar",
             "help_link": "Para obter ajuda com o uso do %(brand)s, clique <a>aqui</a>.",
-            "help_link_chat_bot": "Para obter ajuda com o uso do %(brand)s, clique <a>aqui</a> ou inicie um bate-papo com nosso bot usando o botão abaixo.",
             "title": "Ajuda e sobre",
             "versions": "Versões"
         }
@@ -1625,24 +1607,15 @@
             "custom_font_description": "Defina o nome de uma fonte instalada no seu sistema e o %(brand)s tentará usá-la.",
             "custom_font_name": "Nome da fonte do sistema",
             "custom_font_size": "Usar tamanho personalizado",
-            "custom_theme_add_button": "Adicionar tema",
             "custom_theme_error_downloading": "Erro ao baixar as informações do tema.",
             "custom_theme_invalid": "Esquema inválido de tema.",
-            "custom_theme_success": "Tema adicionado!",
-            "custom_theme_url": "Link do tema personalizado",
             "font_size": "Tamanho da fonte",
-            "font_size_limit": "O tamanho da fonte personalizada só pode estar entre %(min)s pt e %(max)s pt",
-            "font_size_nan": "O tamanho deve ser um número",
-            "font_size_valid": "Use entre %(min)s pt e %(max)s pt",
-            "heading": "Personalize sua aparência",
             "image_size_default": "Padrão",
             "image_size_large": "Grande",
             "layout_bubbles": "Balões de mensagem",
             "layout_irc": "IRC (experimental)",
             "match_system_theme": "Se adaptar ao tema do sistema",
-            "subheading": "As configurações de aparência afetam apenas esta sessão do %(brand)s.",
-            "timeline_image_size": "Tamanho da imagem na linha do tempo",
-            "use_high_contrast": "Usar alto contraste"
+            "timeline_image_size": "Tamanho da imagem na linha do tempo"
         },
         "automatic_language_detection_syntax_highlight": "Ativar detecção automática de idioma para ressaltar erros de ortografia",
         "autoplay_gifs": "Reproduzir GIFs automaticamente",
@@ -1673,7 +1646,6 @@
             "discovery_email_verification_instructions": "Verifique o link na sua caixa de e-mails",
             "discovery_msisdn_empty": "As opções de descoberta aparecerão assim que você adicione um número de telefone acima.",
             "discovery_needs_terms": "Concorde com os Termos de Serviço do servidor de identidade (%(serverName)s), para que você possa ser descoberto por endereço de e-mail ou por número de celular.",
-            "discovery_section": "Contatos",
             "email_address_in_use": "Este endereço de email já está em uso",
             "email_address_label": "Endereço de e-mail",
             "email_not_verified": "Seu endereço de e-mail ainda não foi confirmado",
@@ -1691,8 +1663,6 @@
             "error_remove_3pid": "Não foi possível remover informação de contato",
             "error_revoke_email_discovery": "Não foi possível revogar o compartilhamento do endereço de e-mail",
             "error_revoke_msisdn_discovery": "Não foi possível revogar o compartilhamento do número de celular",
-            "error_saving_profile": "A operação não foi concluída",
-            "error_saving_profile_title": "Houve uma falha ao salvar o seu perfil",
             "error_share_email_discovery": "Não foi possível compartilhar o endereço de e-mail",
             "error_share_msisdn_discovery": "Não foi possível compartilhar o número de celular",
             "incorrect_msisdn_verification": "Código de confirmação incorreto",
@@ -1831,7 +1801,6 @@
             "delete_backup_confirm_description": "Tem certeza? Você perderá suas mensagens criptografadas se não tiver feito o backup de suas chaves.",
             "e2ee_default_disabled_warning": "O administrador do servidor desativou a criptografia de ponta a ponta por padrão em salas privadas e em conversas.",
             "enable_message_search": "Ativar busca de mensagens em salas criptografadas",
-            "encryption_individual_verification_mode": "Verifique individualmente cada sessão usada por um usuário para marcá-la como confiável, em vez de confirmar em aparelhos autoverificados.",
             "encryption_section": "Criptografia",
             "error_loading_key_backup_status": "Não foi possível carregar o status do backup da chave",
             "export_megolm_keys": "Exportar chaves ponta-a-ponta da sala",
@@ -1845,7 +1814,6 @@
             "key_backup_connect_prompt": "Autorize esta sessão a fazer o backup de chaves antes de se desconectar, para evitar perder chaves que possam estar apenas nesta sessão.",
             "key_backup_inactive": "Esta sessão <b>não está fazendo backup de suas chaves</b>, mas você tem um backup existente que pode restaurar para continuar.",
             "key_backup_inactive_warning": "Suas chaves <b>não estão sendo copiadas desta sessão</b>.",
-            "manually_verify_all_sessions": "Verificar manualmente todas as sessões remotas",
             "message_search_disable_warning": "Se desativado, as mensagens de salas criptografadas não aparecerão em resultados de buscas.",
             "message_search_disabled": "Armazene mensagens criptografadas de forma segura localmente para que possam aparecer nos resultados das buscas.",
             "message_search_enabled": {
@@ -2158,7 +2126,6 @@
             "tooltip_sub": "Clicar para ver edições",
             "tooltip_title": "Editado em %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "As mensagens criptografadas antes deste ponto não estão disponíveis.",
         "error_no_renderer": "Este evento não pôde ser exibido",
         "error_rendering_message": "Não foi possível carregar esta mensagem",
         "historical_messages_unavailable": "Você não pode ver as mensagens anteriores",
@@ -2210,19 +2177,8 @@
             "sent": "%(senderDisplayName)s enviou uma imagem.",
             "show_image": "Mostrar imagem"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s cancelou a confirmação",
-            "you_cancelled": "Você cancelou a confirmação de %(name)s"
-        },
-        "m.key.verification.done": "Você confirmou %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s aceitou",
-            "user_cancelled": "%(name)s cancelou",
-            "user_declined": "%(name)s recusou",
             "user_wants_to_verify": "%(name)s solicita confirmação",
-            "you_accepted": "Você aceitou",
-            "you_cancelled": "Você cancelou",
-            "you_declined": "Você recusou",
             "you_started": "Você enviou uma solicitação de confirmação"
         },
         "m.location": {
@@ -2380,8 +2336,7 @@
         },
         "reactions": {
             "add_reaction_prompt": "Adicionar reação",
-            "label": "%(reactors)s reagiram com %(content)s",
-            "tooltip": "<reactors/><reactedWith>reagiu com %(shortName)s</reactedWith>"
+            "label": "%(reactors)s reagiram com %(content)s"
         },
         "read_receipt_title": {
             "one": "Visto por %(count)s pessoa",
@@ -2595,7 +2550,6 @@
         },
         "redact_button": "Apagar mensagens desta pessoa na sala",
         "revoke_invite": "Revogar o convite",
-        "role_label": "Cargo em <RoomName/>",
         "room_encrypted": "As mensagens nesta sala estão criptografadas de ponta a ponta.",
         "room_encrypted_detail": "Suas mensagens são protegidas e somente você e o destinatário têm as chaves exclusivas para desbloqueá-las.",
         "room_unencrypted": "As mensagens nesta sala não estão criptografadas de ponta a ponta.",
@@ -2633,7 +2587,6 @@
         "already_in_call_person": "Você já está em uma chamada com essa pessoa.",
         "answered_elsewhere": "Respondido em algum lugar",
         "answered_elsewhere_description": "A chamada foi atendida em outro aparelho.",
-        "audio_devices": "Dispositivos de áudio",
         "call_failed": "A chamada falhou",
         "call_failed_description": "Não foi possível iniciar a chamada",
         "call_failed_media": "A chamada falhou porque a câmera ou o microfone não puderam ser acessados. Verifique se:",
@@ -2706,7 +2659,6 @@
         "user_is_presenting": "%(sharerName)s está apresentando",
         "video_call": "Chamada de vídeo",
         "video_call_started": "Videochamada iniciada",
-        "video_devices": "Dispositivos de vídeo",
         "voice_call": "Chamada de voz",
         "you_are_presenting": "Você está apresentando"
     },

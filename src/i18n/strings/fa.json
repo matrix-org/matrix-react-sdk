@@ -20,8 +20,10 @@
         "add_existing_room": "اضافه‌کردن اتاق موجود",
         "approve": "تایید",
         "back": "بازگشت",
+        "call": "تماس",
         "cancel": "لغو",
         "change": "تغییر بده",
+        "clear": "پاک کردن",
         "click_to_copy": "برای گرفتن رونوشت کلیک کنید",
         "close": "بستن",
         "complete": "تکمیل",
@@ -72,6 +74,7 @@
         "reject": "پس زدن",
         "reload": "بارگذاری مجدد",
         "remove": "حذف کن",
+        "rename": "تغییر نام",
         "reply": "پاسخ",
         "report_content": "گزارش محتوا",
         "resend": "بازفرست",
@@ -336,7 +339,6 @@
         "cross_signing": "امضاء متقابل",
         "dark": "تاریک",
         "description": "توضیحات",
-        "display_name": "نام نمایشی",
         "edited": "ویرایش شده",
         "email_address": "آدرس ایمیل",
         "emoji": "شکلک",
@@ -419,12 +421,14 @@
         "unmute": "صدادار",
         "unnamed_room": "اتاق بدون نام",
         "unnamed_space": "فضای کاری بدون نام",
+        "user": "کاربر",
         "user_avatar": "تصویر پروفایل",
         "username": "نام کاربری",
         "verification_cancelled": "تأیید هویت لغو شد",
         "video": "ویدئو",
         "view_message": "مشاهده پیام",
-        "warning": "هشدار"
+        "warning": "هشدار",
+        "welcome": "خوش آمدید"
     },
     "composer": {
         "autocomplete": {
@@ -735,7 +739,6 @@
         "unknown_error_code": "کد خطای ناشناخته",
         "update_power_level": "تغییر سطح قدرت انجام نشد"
     },
-    "error_database_closed_description": "این ممکن است به دلیل باز بودن برنامه در چندین برگه یا به دلیل پاک کردن داده های مرورگر باشد.",
     "error_database_closed_title": "پایگاه داده به طور غیرمنتظره ای بسته شد",
     "error_dialog": {
         "error_loading_user_profile": "امکان نمایش پروفایل کاربر میسر نیست",
@@ -874,7 +877,6 @@
         "failed_generic": "عملیات انجام نشد",
         "failed_title": "دعوت موفقیت‌آمیز نبود",
         "invalid_address": "آدرس ناشناخته",
-        "key_share_warning": "افراد دعوت‌شده خواهند توانست پیام‌های قدیمی را بخوانند.",
         "name_email_mxid_share_room": "با استفاده از نام، آدرس ایمیل، نام کاربری (مانند <userId/>) از فردی دعوت کرده و یا <a>این اتاق را به اشتراک بگذارید</a>.",
         "name_email_mxid_share_space": "با استفاده از نام ، آدرس ایمیل ، نام کاربری (مانند <userId/>) کسی را دعوت کرده یا <a>این فضای کاری را به اشتراک بگذارید</a>.",
         "name_mxid_share_room": "با استفاده از نام یا نام کاربری (مانند <userId/>) از افراد دعوت کرده و یا <a>این اتاق را به اشتراک بگذارید</a>.",
@@ -984,7 +986,6 @@
         "latex_maths": "نمایش لاتکس ریاضیات در پیام‌ها",
         "leave_beta": "ترک نسخه‌ی بتا",
         "pinning": "پین کردن پیام",
-        "state_counters": "شمارنده‌های ساده‌ای در سرآیند اتاق نمایش بده",
         "video_rooms": "اتاق های تصویری",
         "video_rooms_a_new_way_to_chat": "راهکار جدیدی برای گفتگوی صوتی و تصویری در%(brand)sوجود دارد.",
         "voice_broadcast": "صدای جمعی"
@@ -1022,14 +1023,6 @@
         "view_rules": "مشاهده قوانین"
     },
     "language_dropdown_label": "منو زبان",
-    "lazy_loading": {
-        "disabled_action": "پاک کردن حافظه‌ی کش و همگام سازی مجدد",
-        "disabled_description1": "شما از %(brand)s بر روی %(host)s با قابلیت بارگیری اعضا به شکل تکه‌تکه استفاده می‌کنید. در این نسخه قابلیت بارگیری تکه‌تکه غیرفعال است. از آن‌جایی که حافظه‌ی کش مورد استفاده برای این دو پیکربندی با هم سازگار نیست، %(brand)s نیاز به همگام‌سازی مجدد حساب کاربری شما دارد.",
-        "disabled_description2": "اگر نسخه دیگری از %(brand)s هنوز در تب‌های دیگر باز است، لطفاً آن را ببندید زیرا استفاده از %(brand)s با قابلیت بارگیری تکه‌تکه‌ی فعال روی یکی و غیرفعال روی دیگری، باعث ایجاد مشکل می شود.",
-        "disabled_title": "حافظه‌ی محلی ناسازگار",
-        "resync_description": "هم‌اکنون %(brand)s از طریق بارگیری و نمایش اطلاعات کاربران تنها در زمان‌هایی که نیاز است، حدود ۳ تا ۵ مرتبه حافظه‌ی کمتری استفاده می‌کند. لطفا تا همگام‌سازی با سرور منتظر بمانید!",
-        "resync_title": "به‌روزرسانی %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "شما در این‌جا تنها هستید. اگر اینجا را ترک کنید، دیگر هیچ‌کس حتی خودتان امکان پیوستن مجدد را نخواهید داشت.",
         "leave_room_question": "آیا مطمئن هستید که می خواهید از اتاق '2%(roomName)s' خارج شوید؟",
@@ -1074,8 +1067,6 @@
     "notifications": {
         "all_messages": "همه‌ی پیام‌ها",
         "class_other": "دیگر",
-        "colour_bold": "پررنگ",
-        "colour_none": "هیچ‌کدام",
         "default": "پیشفرض",
         "enable_prompt_toast_description": "فعال‌کردن اعلان‌های دسکتاپ",
         "enable_prompt_toast_title": "آگاهی‌ها",
@@ -1263,13 +1254,10 @@
         "peek_join_prompt": "شما در حال پیش نمایش %(roomName)s هستید. می خواهید به آن بپیوندید؟",
         "rejoin_button": "دوباره بپیوندید",
         "search": {
-            "all_rooms": "همه‌ی گپ‌ها",
-            "field_placeholder": "جستجو…",
             "result_count": {
                 "one": "(~%(count)s نتیجه)",
                 "other": "(~%(count)s نتیجه)"
-            },
-            "this_room": "این گپ"
+            }
         },
         "status_bar": {
             "delete_all": "حذف همه",
@@ -1489,10 +1477,8 @@
         "help_about": {
             "access_token_detail": "توکن دسترسی شما، دسترسی کامل به حساب کاربری شما را میسر می‌سازد. لطفا آن را در اختیار فرد دیگری قرار ندهید.",
             "brand_version": "نسخه‌ی %(brand)s:",
-            "chat_bot": "گفتگو با بات %(brand)s",
             "clear_cache_reload": "پاک‌کردن حافظه‌ی کش و راه‌اندازی مجدد",
             "help_link": "برای گرفتن کمک در استفاده از %(brand)s، <a>اینجا</a> کلیک کنید.",
-            "help_link_chat_bot": "برای گرفتن کمک در استفاده از %(brand)s، <a>اینجا</a> کلید کرده یا با استفاده از دکمه‌ی زیر اقدام به شروع گفتگو با بات ما نمائید.",
             "title": "کمک و درباره‌ی‌ ما",
             "versions": "نسخه‌ها"
         }
@@ -1506,19 +1492,11 @@
             "custom_font_description": "نام فونتی که بر روی سیستم‌تان نصب است را وارد کرده و %(brand)s سعی می‌کند از آن استفاده کند.",
             "custom_font_name": "نام فونت سیستمی",
             "custom_font_size": "از اندازه‌ی دلخواه استفاده کنید",
-            "custom_theme_add_button": "افزودن پوسته",
             "custom_theme_error_downloading": "بارگیری اطلاعات پوسته با خطا همراه بود.",
             "custom_theme_invalid": "ساختار پوسته صحیح نیست.",
-            "custom_theme_success": "پوسته اضافه شد!",
-            "custom_theme_url": "آدرس پوسته دلخواه",
             "font_size": "اندازه فونت",
-            "font_size_limit": "اندازه فونت دلخواه تنها می‌تواند عددی بین %(min)s pt و %(max)s pt باشد",
-            "font_size_nan": "سایز باید یک عدد باشد",
-            "font_size_valid": "از عددی بین %(min)s pt و %(max)s pt استفاده کنید",
-            "heading": "ظاهر پیام‌رسان خود را سفارشی‌سازی کنید",
             "image_size_default": "پیشفرض",
-            "match_system_theme": "با پوسته‌ی سیستم تطبیق پیدا کن",
-            "subheading": "تنظیمات ظاهری برنامه تنها همین نشست %(brand)s را تحت تاثیر قرار می‌دهد."
+            "match_system_theme": "با پوسته‌ی سیستم تطبیق پیدا کن"
         },
         "automatic_language_detection_syntax_highlight": "فعال‌سازی تشخیص خودکار زبان برای پررنگ‌سازی نحوی",
         "big_emoji": "نمایش شکلک‌های بزرگ در گفتگوها را فعال کن",
@@ -1548,7 +1526,6 @@
             "discovery_email_verification_instructions": "لینک موجود در صندوق دریافت خود را تائید کنید",
             "discovery_msisdn_empty": "امکانات کاوش و جستجو بلافاصله بعد از اضافه‌کردن شماره تلفن در بالا ظاهر خواهند شد.",
             "discovery_needs_terms": "با شرایط و ضوایط سرویس سرور هویت‌سنجی (%(serverName)s) موافقت کرده تا بتوانید از طریق آدرس ایمیل و شماره تلفن قابل یافته‌شدن باشید.",
-            "discovery_section": "کاوش",
             "email_address_in_use": "این آدرس ایمیل در حال حاضر در حال استفاده است",
             "email_address_label": "آدرس ایمیل",
             "email_not_verified": "آدرس ایمیل شما هنوز تائید نشده‌است",
@@ -1566,8 +1543,6 @@
             "error_remove_3pid": "حذف اطلاعات تماس امکان‌پذیر نیست",
             "error_revoke_email_discovery": "لغو اشتراک گذاری برای آدرس ایمیل ممکن نیست",
             "error_revoke_msisdn_discovery": "لغو اشتراک‌گذاری شماره تلفن امکان‌پذیر نیست",
-            "error_saving_profile": "امکان تکمیل عملیات وجود ندارد",
-            "error_saving_profile_title": "ذخیره‌ی تنظیمات شما موفقیت‌آمیز نبود",
             "error_share_email_discovery": "به اشتراک‌گذاری آدرس ایمیل ممکن نیست",
             "error_share_msisdn_discovery": "امکان به اشتراک‌گذاری شماره تلفن وجود ندارد",
             "identity_server_not_set": "سرور هویت تنظیم نشده است",
@@ -1697,7 +1672,6 @@
             "delete_backup_confirm_description": "آیا اطمینان دارید؟ در صورتی که از کلیدهای شما به درستی پشتیبان‌گیری نشده باشد، تمام پیام‌های رمزشده‌ی خود را از دست خواهید داد.",
             "e2ee_default_disabled_warning": "مدیر سرور شما قابلیت رمزنگاری سرتاسر برای اتاق‌ها و گفتگوهای خصوصی را به صورت پیش‌فرض غیرفعال کرده‌است.",
             "enable_message_search": "فعال‌سازی قابلیت جستجو در اتاق‌های رمزشده",
-            "encryption_individual_verification_mode": "به صورت جداگانه هر نشستی که با بقیه‌ی کاربران دارید را تائید کنید تا به عنوان نشست قابل اعتماد نشانه‌گذاری شود، با این کار می‌توانید به دستگاه‌های امضاء متقابل اعتماد نکنید.",
             "encryption_section": "رمزنگاری",
             "error_loading_key_backup_status": "امکان بارگیری و نمایش وضعیت کلید پشتیبان وجود ندارد",
             "export_megolm_keys": "استخراج (Export) کلیدهای رمزنگاری اتاق‌ها",
@@ -1711,7 +1685,6 @@
             "key_backup_connect_prompt": "پیش از خروج از حساب کاربری، این نشست را به کلید پشتیبان‌گیر متصل نمائید. با این کار مانع از گم‌شدن کلیدهای که فقط بر روی این نشست وجود دارند می‌شوید.",
             "key_backup_inactive": "این نشست <b>از کلیدهای شما پشتیبان‌گیری نمی‌کند</b>، با این حال شما یک نسخه‌ی پشتیبان موجود دارید که می‌توانید آن را بازیابی کنید.",
             "key_backup_inactive_warning": "کلید‌های شما <b>از این نشست پشتیبان‌گیری نمی‌شود</b>.",
-            "manually_verify_all_sessions": "به صورت دستی همه‌ی نشست‌ها را تائید نمائید",
             "message_search_disable_warning": "اگر غیر فعال شود، پیام‌های اتاق‌های رمزشده در نتایج جستجوها نمایش داده نمی‌شوند.",
             "message_search_disabled": "پیام‌های رمزشده را به صورتی محلی و امن ذخیره کرده تا در نتایج جستجو ظاهر شوند.",
             "message_search_enabled": {
@@ -2011,19 +1984,8 @@
             "sent": "%(senderDisplayName)s تصویری ارسال کرد.",
             "show_image": "نمایش تصویر"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s تأیید هویت را لغو کرد",
-            "you_cancelled": "شما تأیید هویت %(name)s را لغو کردید"
-        },
-        "m.key.verification.done": "شما هویت %(name)s را تأیید کردید",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s پذیرفت",
-            "user_cancelled": "%(name)s لغو کرد",
-            "user_declined": "%(name)s رد کرد",
             "user_wants_to_verify": "%(name)s می‌خواهد تأیید هویت کند",
-            "you_accepted": "پذیرفتید",
-            "you_cancelled": "شما لغو کردید",
-            "you_declined": "شما رد کردید",
             "you_started": "شما یک درخواست تأیید هویت ارسال کرده‌اید"
         },
         "m.location": {
@@ -2169,8 +2131,7 @@
             "updated_rule_users": "%(senderName)s قاعده تحریم کاربران را که با %(glob)s تطابق داشت، به دلیل (دلایل) %(reason)s به‌روزرسانی کرد"
         },
         "reactions": {
-            "add_reaction_prompt": "افزودن واکنش",
-            "tooltip": "<reactors/><reactedWith> واکنش نشان داد با %(shortName)s</reactedWith>"
+            "add_reaction_prompt": "افزودن واکنش"
         },
         "redacted": {
             "tooltip": "پیام در %(date)s حذف شد"

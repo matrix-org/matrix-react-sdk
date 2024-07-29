@@ -35,7 +35,10 @@ export default class LocalEchoWrapper extends SettingsHandler {
      * @param {SettingsHandler} handler The handler to wrap
      * @param {SettingLevel} level The level to notify updates at
      */
-    public constructor(private readonly handler: SettingsHandler, private readonly level: SettingLevel) {
+    public constructor(
+        private readonly handler: SettingsHandler,
+        private readonly level: SettingLevel,
+    ) {
         super();
     }
 
@@ -79,5 +82,10 @@ export default class LocalEchoWrapper extends SettingsHandler {
 
     public isSupported(): boolean {
         return this.handler.isSupported();
+    }
+
+    public reset(): void {
+        this.cache = {};
+        this.handler.reset();
     }
 }

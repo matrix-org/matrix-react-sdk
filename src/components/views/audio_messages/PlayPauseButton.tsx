@@ -17,25 +17,24 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import classNames from "classnames";
 
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { _t } from "../../../languageHandler";
 import { Playback, PlaybackState } from "../../../audio/Playback";
+import AccessibleButton, { ButtonProps } from "../elements/AccessibleButton";
 
-// omitted props are handled by render function
-interface IProps extends Omit<React.ComponentProps<typeof AccessibleTooltipButton>, "title" | "onClick" | "disabled"> {
+type Props = Omit<ButtonProps<"div">, "title" | "onClick" | "disabled" | "element" | "ref"> & {
     // Playback instance to manipulate. Cannot change during the component lifecycle.
     playback: Playback;
 
     // The playback phase to render. Able to change during the component lifecycle.
     playbackPhase: PlaybackState;
-}
+};
 
 /**
  * Displays a play/pause button (activating the play/pause function of the recorder)
  * to be displayed in reference to a recording.
  */
-export default class PlayPauseButton extends React.PureComponent<IProps> {
-    public constructor(props: IProps) {
+export default class PlayPauseButton extends React.PureComponent<Props> {
+    public constructor(props: Props) {
         super(props);
     }
 
@@ -59,7 +58,7 @@ export default class PlayPauseButton extends React.PureComponent<IProps> {
         });
 
         return (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 data-testid="play-pause-button"
                 className={classes}
                 title={isPlaying ? _t("action|pause") : _t("action|play")}

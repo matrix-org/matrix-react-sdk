@@ -22,7 +22,7 @@ import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import { useNotificationState } from "../../../../hooks/useRoomNotificationState";
 import { _t, _td } from "../../../../languageHandler";
 import { determineUnreadState } from "../../../../RoomNotifs";
-import { humanReadableNotificationColor } from "../../../../stores/notifications/NotificationColor";
+import { humanReadableNotificationLevel } from "../../../../stores/notifications/NotificationLevel";
 import { doesRoomOrThreadHaveUnreadMessages } from "../../../../Unread";
 import BaseTool, { DevtoolsContext, IDevtoolsProps } from "./BaseTool";
 
@@ -68,7 +68,7 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
     const { room } = useContext(DevtoolsContext);
     const cli = useContext(MatrixClientContext);
 
-    const { color, count } = determineUnreadState(room);
+    const { level, count } = determineUnreadState(room, undefined, false);
     const [notificationState] = useNotificationState(room);
 
     return (
@@ -77,26 +77,16 @@ export default function RoomNotifications({ onBack }: IDevtoolsProps): JSX.Eleme
                 <h2>{_t("devtools|room_status")}</h2>
                 <ul>
                     <li>
-                        {count > 0
-                            ? _t(
-                                  "devtools|room_unread_status_count",
-                                  {
-                                      status: humanReadableNotificationColor(color),
-                                      count,
-                                  },
-                                  {
-                                      strong: (sub) => <strong>{sub}</strong>,
-                                  },
-                              )
-                            : _t(
-                                  "devtools|room_unread_status",
-                                  {
-                                      status: humanReadableNotificationColor(color),
-                                  },
-                                  {
-                                      strong: (sub) => <strong>{sub}</strong>,
-                                  },
-                              )}
+                        {_t(
+                            "devtools|room_unread_status_count",
+                            {
+                                status: humanReadableNotificationLevel(level),
+                                count,
+                            },
+                            {
+                                strong: (sub) => <strong>{sub}</strong>,
+                            },
+                        )}
                     </li>
                     <li>
                         {_t(

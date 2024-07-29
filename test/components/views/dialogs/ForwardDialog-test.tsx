@@ -24,8 +24,9 @@ import {
     M_TIMESTAMP,
     M_TEXT,
 } from "matrix-js-sdk/src/matrix";
-import { act, fireEvent, getByTestId, render, RenderResult, screen } from "@testing-library/react";
+import { act, fireEvent, getByTestId, render, RenderResult, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import ForwardDialog from "../../../../src/components/views/dialogs/ForwardDialog";
@@ -43,6 +44,13 @@ import {
 } from "../../../test-utils";
 import { TILE_SERVER_WK_KEY } from "../../../../src/utils/WellKnownUtils";
 import SettingsStore from "../../../../src/settings/SettingsStore";
+
+// mock offsetParent
+Object.defineProperty(HTMLElement.prototype, "offsetParent", {
+    get() {
+        return this.parentNode;
+    },
+});
 
 describe("ForwardDialog", () => {
     const sourceRoom = "!111111111111111111:example.org";
@@ -123,9 +131,40 @@ describe("ForwardDialog", () => {
         expect(container.querySelectorAll(".mx_ForwardList_entry")).toHaveLength(3);
 
         const searchInput = getByTestId(container, "searchbox-input");
-        act(() => userEvent.type(searchInput, "a"));
+        await userEvent.type(searchInput, "a");
 
-        expect(container.querySelectorAll(".mx_ForwardList_entry")).toHaveLength(3);
+        expect(container.querySelectorAll(".mx_ForwardList_entry")).toHaveLength(2);
+    });
+
+    it("should be navigable using arrow keys", async () => {
+        const { container } = mountForwardDialog();
+
+        const searchBox = getByTestId(container, "searchbox-input");
+        searchBox.focus();
+        await waitFor(() =>
+            expect(container.querySelectorAll(".mx_ForwardList_entry")[0]).toHaveClass("mx_ForwardList_entry_active"),
+        );
+
+        await userEvent.keyboard("[ArrowDown]");
+        await waitFor(() =>
+            expect(container.querySelectorAll(".mx_ForwardList_entry")[1]).toHaveClass("mx_ForwardList_entry_active"),
+        );
+
+        await userEvent.keyboard("[ArrowDown]");
+        await waitFor(() =>
+            expect(container.querySelectorAll(".mx_ForwardList_entry")[2]).toHaveClass("mx_ForwardList_entry_active"),
+        );
+
+        await userEvent.keyboard("[ArrowUp]");
+        await waitFor(() =>
+            expect(container.querySelectorAll(".mx_ForwardList_entry")[1]).toHaveClass("mx_ForwardList_entry_active"),
+        );
+
+        await userEvent.keyboard("[Enter]");
+        expect(mockClient.sendEvent).toHaveBeenCalledWith("A", "m.room.message", {
+            body: "Hello world!",
+            msgtype: "m.text",
+        });
     });
 
     it("tracks message sending progress across multiple rooms", async () => {
@@ -161,7 +200,7 @@ describe("ForwardDialog", () => {
         await act(async () => {
             cancelSend();
             // Wait one tick for the button to realize the send failed
-            await new Promise((resolve) => setImmediate(resolve));
+            await sleep(0);
         });
         update();
         expect(firstButton.className).toContain("mx_ForwardList_sendFailed");
@@ -177,7 +216,7 @@ describe("ForwardDialog", () => {
         await act(async () => {
             finishSend();
             // Wait one tick for the button to realize the send succeeded
-            await new Promise((resolve) => setImmediate(resolve));
+            await sleep(0);
         });
         update();
         expect(secondButton.className).toContain("mx_ForwardList_sent");

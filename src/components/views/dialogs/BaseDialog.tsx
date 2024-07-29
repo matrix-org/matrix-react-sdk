@@ -53,7 +53,7 @@ interface IProps {
     "top"?: React.ReactNode;
 
     // Title for the dialog.
-    "title"?: JSX.Element | string;
+    "title"?: React.ReactNode;
     // Specific aria label to use, if not provided will set aria-labelledBy to mx_Dialog_title
     "aria-label"?: string;
 
@@ -128,6 +128,8 @@ export default class BaseDialog extends React.Component<IProps> {
                     onClick={this.onCancelClick}
                     className="mx_Dialog_cancelButton"
                     aria-label={_t("dialog_close_label")}
+                    title={_t("action|close")}
+                    placement="bottom"
                 />
             );
         }
@@ -155,9 +157,6 @@ export default class BaseDialog extends React.Component<IProps> {
             lockProps["aria-labelledby"] = "mx_BaseDialog_title";
         }
 
-        const isHeaderWithCancelOnly =
-            !!cancelButton && !this.props.title && !this.props.headerButton && !this.props.headerImage;
-
         return (
             <MatrixClientContext.Provider value={this.matrixClient}>
                 {this.props.screenName && <PosthogScreenTracker screenName={this.props.screenName} />}
@@ -172,14 +171,12 @@ export default class BaseDialog extends React.Component<IProps> {
                     <div
                         className={classNames("mx_Dialog_header", {
                             mx_Dialog_headerWithButton: !!this.props.headerButton,
-                            mx_Dialog_headerWithCancel: !!cancelButton,
-                            mx_Dialog_headerWithCancelOnly: isHeaderWithCancelOnly,
                         })}
                     >
                         {!!(this.props.title || headerImage) && (
                             <Heading
                                 size="3"
-                                as="h2"
+                                as="h1"
                                 className={classNames("mx_Dialog_title", this.props.titleClass)}
                                 id="mx_BaseDialog_title"
                             >
@@ -188,9 +185,9 @@ export default class BaseDialog extends React.Component<IProps> {
                             </Heading>
                         )}
                         {this.props.headerButton}
-                        {cancelButton}
                     </div>
                     {this.props.children}
+                    {cancelButton}
                 </FocusLock>
             </MatrixClientContext.Provider>
         );

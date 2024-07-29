@@ -19,6 +19,7 @@ export interface HomeserverConfig {
     readonly baseUrl: string;
     readonly port: number;
     readonly registrationSecret: string;
+    readonly dockerUrl: string;
 }
 
 export interface HomeserverInstance {
@@ -31,6 +32,22 @@ export interface HomeserverInstance {
      * @param displayName optional display name to set on the newly registered user
      */
     registerUser(username: string, password: string, displayName?: string): Promise<Credentials>;
+
+    /**
+     * Logs into synapse with the given username/password
+     * @param userId login username
+     * @param password login password
+     */
+    loginUser(userId: string, password: string): Promise<Credentials>;
+
+    /**
+     * Sets a third party identifier for the given user. This only supports setting a single 3pid and will
+     * replace any others.
+     * @param userId The full ID of the user to edit (as returned from registerUser)
+     * @param medium The medium of the 3pid to set
+     * @param address The address of the 3pid to set
+     */
+    setThreepid(userId: string, medium: string, address: string): Promise<void>;
 }
 
 export interface StartHomeserverOpts {
@@ -46,7 +63,12 @@ export interface StartHomeserverOpts {
 
 export interface Homeserver {
     start(opts: StartHomeserverOpts): Promise<HomeserverInstance>;
-    stop(): Promise<void>;
+    /**
+     * Stop this test homeserver instance.
+     *
+     * @returns A list of paths relative to the cwd for logfiles generated during this test run.
+     */
+    stop(): Promise<string[]>;
 }
 
 export interface Credentials {
@@ -55,4 +77,5 @@ export interface Credentials {
     deviceId: string;
     homeServer: string;
     password: string | null; // null for password-less users
+    displayName?: string;
 }

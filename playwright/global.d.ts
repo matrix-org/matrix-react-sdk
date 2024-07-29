@@ -14,12 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { type MatrixClient } from "matrix-js-sdk/src/matrix";
+import type * as Matrix from "matrix-js-sdk/src/matrix";
+import { type SettingLevel } from "../src/settings/SettingLevel";
 
 declare global {
     interface Window {
         mxMatrixClientPeg: {
-            get(): MatrixClient;
+            get(): Matrix.MatrixClient;
         };
+        mxSettingsStore: {
+            setValue(settingName: string, roomId: string | null, level: SettingLevel, value: any): Promise<void>;
+        };
+        mxActiveWidgetStore: {
+            setWidgetPersistence(widgetId: string, roomId: string | null, val: boolean): void;
+        };
+        matrixcs: typeof Matrix;
+    }
+}
+
+// Workaround for lack of strict mode not resolving complex types correctly
+declare module "matrix-js-sdk/src/http-api/index.ts" {
+    interface UploadResponse {
+        json(): Promise<object>;
     }
 }

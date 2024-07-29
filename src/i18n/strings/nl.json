@@ -221,20 +221,9 @@
             "approve_access_warning": "Door de toegang voor dit apparaat goed te keuren, heeft het volledige toegang tot jouw account.",
             "completing_setup": "De configuratie van je nieuwe apparaat voltooien",
             "confirm_code_match": "Controleer of de onderstaande code overeenkomt met je andere apparaat:",
-            "devices_connected": "Verbonden apparaten",
-            "error_device_already_signed_in": "Het andere apparaat is al aangemeld.",
-            "error_device_not_signed_in": "Het andere apparaat is niet ingelogd.",
-            "error_device_unsupported": "Koppelen met dit apparaat wordt niet ondersteund.",
-            "error_homeserver_lacks_support": "De server ondersteunt het inloggen op een ander apparaat niet.",
-            "error_invalid_scanned_code": "De gescande code is ongeldig.",
-            "error_linking_incomplete": "De koppeling is niet binnen de vereiste tijd voltooid.",
-            "error_request_cancelled": "Het verzoek is geannuleerd.",
-            "error_request_declined": "Het verzoek is afgewezen op het andere apparaat.",
             "error_unexpected": "Er is een onverwachte fout opgetreden.",
-            "review_and_approve": "Controleer en keur de aanmelding goed",
             "scan_code_instruction": "Scan de onderstaande QR-code met je apparaat dat is uitgelogd.",
             "sign_in_new_device": "Aanmelden nieuw apparaat",
-            "start_at_sign_in_screen": "Begin bij het inlogscherm",
             "waiting_for_device": "Wachten op apparaat om in te loggen"
         },
         "register_action": "Registreren",
@@ -397,7 +386,6 @@
         "description": "Omschrijving",
         "deselect_all": "Allemaal deselecteren",
         "device": "Apparaat",
-        "display_name": "Weergavenaam",
         "edited": "bewerkt",
         "email_address": "E-mailadres",
         "encrypted": "Versleuteld",
@@ -425,10 +413,6 @@
         "n_members": {
             "other": "%(count)s personen",
             "one": "%(count)s persoon"
-        },
-        "n_participants": {
-            "one": "1 deelnemer",
-            "other": "%(count)s deelnemers"
         },
         "n_rooms": {
             "one": "%(count)s kamer",
@@ -634,7 +618,6 @@
         "methods": "Methoden",
         "no_verification_requests_found": "Geen verificatieverzoeken gevonden",
         "number_of_users": "Aantal personen",
-        "observe_only": "Alleen observeren",
         "original_event_source": "Originele gebeurtenisbron",
         "phase": "Fase",
         "phase_cancelled": "Geannuleerd",
@@ -642,7 +625,6 @@
         "phase_requested": "Aangevraagd",
         "phase_started": "Begonnen",
         "phase_transaction": "Transactie",
-        "requester": "Aanvrager",
         "room_id": "Kamer ID: %(roomId)s",
         "save_setting_values": "Instelling waardes opslaan",
         "send_custom_account_data_event": "Aangepaste accountgegevens gebeurtenis versturen",
@@ -1087,7 +1069,6 @@
         "failed_generic": "Handeling is mislukt",
         "failed_title": "Uitnodigen is mislukt",
         "invalid_address": "Adres niet herkend",
-        "key_share_warning": "Uitgenodigde personen kunnen de oude berichten lezen.",
         "name_email_mxid_share_room": "Nodig iemand uit door gebruik te maken van hun naam, e-mailadres, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
         "name_email_mxid_share_space": "Nodig iemand uit per naam, e-mail, inlognaam (zoals <userId/>) of <a>deel deze Space</a>.",
         "name_mxid_share_room": "Nodig iemand uit door gebruik te maken van hun naam, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
@@ -1212,13 +1193,7 @@
         "leave_beta_reload": "Als je de bèta verlaat, wordt %(brand)s opnieuw geladen.",
         "msc3531_hide_messages_pending_moderation": "Laat moderators berichten verbergen in afwachting van moderatie.",
         "pinning": "Berichten vastprikken",
-        "sliding_sync_configuration": "Scrollende Synchronisatie-configuratie",
-        "sliding_sync_disable_warning": "Om uit te schakelen moet je uitloggen en weer inloggen, wees voorzichtig!",
-        "sliding_sync_proxy_url_optional_label": "Proxy-URL (optioneel)",
         "sliding_sync_server_no_support": "Jouw server heeft geen native ondersteuning",
-        "sliding_sync_server_specify_proxy": "Jouw server heeft geen native ondersteuning, je moet een proxy opgeven",
-        "sliding_sync_server_support": "Jouw server heeft native ondersteuning",
-        "state_counters": "Eenvoudige tellers bovenaan de kamer tonen",
         "video_rooms": "Video kamers",
         "video_rooms_a_new_way_to_chat": "Een nieuwe manier om te chatten via spraak en video in %(brand)s.",
         "video_rooms_always_on_voip_channels": "Videoruimten zijn altijd-aan VoIP-kanalen die zijn geïntegreerd in een kamer in %(brand)s.",
@@ -1262,14 +1237,6 @@
         "view_rules": "Bekijk regels"
     },
     "language_dropdown_label": "Taalselectie",
-    "lazy_loading": {
-        "disabled_action": "Cache wissen en hersynchroniseren",
-        "disabled_description1": "Je hebt voorheen %(brand)s op %(host)s gebruikt met lui laden van leden ingeschakeld. In deze versie is lui laden uitgeschakeld. De lokale cache is niet compatibel tussen deze twee instellingen, zodat %(brand)s je account moet hersynchroniseren.",
-        "disabled_description2": "Indien de andere versie van %(brand)s nog open staat in een ander tabblad kan je dat beter sluiten, want het geeft problemen als %(brand)s op dezelfde host gelijktijdig met lui laden ingeschakeld en uitgeschakeld draait.",
-        "disabled_title": "Incompatibele lokale cache",
-        "resync_description": "%(brand)s verbruikt nu 3-5x minder geheugen, door informatie over andere personen enkel te laden wanneer nodig. Even geduld, we synchroniseren met de server!",
-        "resync_title": "%(brand)s wordt bijgewerkt"
-    },
     "leave_room_dialog": {
         "last_person_warning": "Je bent de enige persoon hier. Als je weggaat, zal niemand in de toekomst kunnen toetreden, jij ook niet.",
         "leave_room_question": "Weet je zeker dat je de kamer ‘%(roomName)s’ wil verlaten?",
@@ -1351,9 +1318,6 @@
         "all_messages_description": "Ontvang een melding bij elk bericht",
         "class_global": "Overal",
         "class_other": "Overige",
-        "colour_bold": "Vet",
-        "colour_none": "Geen",
-        "colour_unsent": "niet verstuurd",
         "default": "Standaard",
         "enable_prompt_toast_description": "Bureaubladmeldingen inschakelen",
         "enable_prompt_toast_title": "Meldingen",
@@ -1361,6 +1325,9 @@
         "error_change_title": "Meldingsinstellingen wijzigen",
         "keyword": "Trefwoord",
         "keyword_new": "Nieuw trefwoord",
+        "level_activity": "Activiteit",
+        "level_none": "Geen",
+        "level_unsent": "niet verstuurd",
         "mark_all_read": "Alles markeren als gelezen",
         "mentions_and_keywords": "@vermeldingen & trefwoorden",
         "mentions_and_keywords_description": "Krijg alleen meldingen met vermeldingen en trefwoorden zoals ingesteld in je <a>instellingen</a>",
@@ -1688,13 +1655,10 @@
         "read_topic": "Klik om het onderwerp te lezen",
         "rejoin_button": "Opnieuw toetreden",
         "search": {
-            "all_rooms": "Alle kamers",
-            "field_placeholder": "Zoeken…",
             "result_count": {
                 "one": "(~%(count)s resultaat)",
                 "other": "(~%(count)s resultaten)"
-            },
-            "this_room": "Deze kamer"
+            }
         },
         "show_labs_settings": "Lab instellingen weergeven",
         "status_bar": {
@@ -2032,10 +1996,8 @@
         "help_about": {
             "access_token_detail": "Jouw toegangstoken geeft je toegang tot je account. Deel hem niet met anderen.",
             "brand_version": "%(brand)s-versie:",
-            "chat_bot": "Met %(brand)s-robot chatten",
             "clear_cache_reload": "Cache wissen en herladen",
             "help_link": "Klik <a>hier</a> voor hulp bij het gebruiken van %(brand)s.",
-            "help_link_chat_bot": "Klik <a>hier</a> voor hulp bij het gebruiken van %(brand)s of begin een kamer met onze robot met de knop hieronder.",
             "title": "Hulp & info",
             "versions": "Versies"
         }
@@ -2049,24 +2011,15 @@
             "custom_font_description": "Stel de naam in van een lettertype dat op uw systeem is geïnstalleerd en %(brand)s zal proberen het te gebruiken.",
             "custom_font_name": "Systeemlettertypenaam",
             "custom_font_size": "Aangepaste lettergrootte gebruiken",
-            "custom_theme_add_button": "Thema toevoegen",
             "custom_theme_error_downloading": "Fout bij het downloaden van de thema-informatie.",
             "custom_theme_invalid": "Ongeldig themaschema.",
-            "custom_theme_success": "Thema toegevoegd!",
-            "custom_theme_url": "Aangepaste thema-URL",
             "font_size": "Lettergrootte",
-            "font_size_limit": "Aangepaste lettergrootte kan alleen een getal tussen %(min)s pt en %(max)s pt zijn",
-            "font_size_nan": "Grootte moet een getal zijn",
-            "font_size_valid": "Gebruik een getal tussen %(min)s pt en %(max)s pt",
-            "heading": "Weergave aanpassen",
             "image_size_default": "Standaard",
             "image_size_large": "Groot",
             "layout_bubbles": "Berichtenbubbels",
             "layout_irc": "IRC (Experimenteel)",
             "match_system_theme": "Aanpassen aan systeemthema",
-            "subheading": "Weergave-instellingen zijn alleen van toepassing op deze %(brand)s sessie.",
-            "timeline_image_size": "Afbeeldingformaat in de tijdlijn",
-            "use_high_contrast": "Hoog contrast inschakelen"
+            "timeline_image_size": "Afbeeldingformaat in de tijdlijn"
         },
         "automatic_language_detection_syntax_highlight": "Automatische taaldetectie voor zinsbouwmarkeringen inschakelen",
         "autoplay_gifs": "GIF's automatisch afspelen",
@@ -2089,7 +2042,6 @@
             "confirm_adding_email_body": "Klik op de knop hieronder om dit e-mailadres toe te voegen.",
             "confirm_adding_email_title": "Bevestig toevoegen van het e-mailadres",
             "deactivate_confirm_body": "Weet je zeker dat je jouw account wil sluiten? Dit is onomkeerbaar.",
-            "deactivate_confirm_body_password": "Voer je wachtwoord in om verder te gaan:",
             "deactivate_confirm_body_sso": "Bevestig de deactivering van je account door gebruik te maken van eenmalige aanmelding om je identiteit te bewijzen.",
             "deactivate_confirm_content": "Bevestig dat je jouw account wil deactiveren. Als je doorgaat:",
             "deactivate_confirm_content_1": "Zal je jouw account niet kunnen heractiveren",
@@ -2106,7 +2058,6 @@
             "discovery_email_verification_instructions": "Verifieer de koppeling in je postvak",
             "discovery_msisdn_empty": "Vindbaarheidopties zullen verschijnen wanneer je een telefoonnummer hebt toegevoegd.",
             "discovery_needs_terms": "Aanvaard de gebruiksvoorwaarden van de identiteitsserver (%(serverName)s) om vindbaar te zijn op e-mailadres of telefoonnummer.",
-            "discovery_section": "Vindbaarheid",
             "email_address_in_use": "Dit e-mailadres is al in gebruik",
             "email_address_label": "E-mailadres",
             "email_not_verified": "Jouw e-mailadres is nog niet geverifieerd",
@@ -2124,8 +2075,6 @@
             "error_remove_3pid": "Kan contactinformatie niet verwijderen",
             "error_revoke_email_discovery": "Kan delen voor dit e-mailadres niet intrekken",
             "error_revoke_msisdn_discovery": "Kan delen voor dit telefoonnummer niet intrekken",
-            "error_saving_profile": "De handeling kon niet worden voltooid",
-            "error_saving_profile_title": "Profiel opslaan mislukt",
             "error_share_email_discovery": "Kan e-mailadres niet delen",
             "error_share_msisdn_discovery": "Kan telefoonnummer niet delen",
             "incorrect_msisdn_verification": "Onjuiste verificatiecode",
@@ -2139,8 +2088,7 @@
             "password_change_success": "Wachtwoord veranderen geslaagd.",
             "remove_email_prompt": "%(email)s verwijderen?",
             "remove_msisdn_prompt": "%(phone)s verwijderen?",
-            "spell_check_locale_placeholder": "Kies een landinstelling",
-            "spell_check_section": "Spellingscontrole"
+            "spell_check_locale_placeholder": "Kies een landinstelling"
         },
         "image_thumbnails": "Miniaturen voor afbeeldingen tonen",
         "inline_url_previews_default": "Inline URL-voorvertoning standaard inschakelen",
@@ -2278,7 +2226,6 @@
             "delete_backup_confirm_description": "Weet je het zeker? Je zal je versleutelde berichten verliezen als je sleutels niet correct geback-upt zijn.",
             "e2ee_default_disabled_warning": "De beheerder van je server heeft eind-tot-eind-versleuteling standaard uitgeschakeld in alle privékamers en directe gesprekken.",
             "enable_message_search": "Zoeken in versleutelde kamers inschakelen",
-            "encryption_individual_verification_mode": "Verifieer elke sessie die door een persoon wordt gebruikt afzonderlijk. Dit markeert hen als vertrouwd zonder te vertrouwen op kruislings ondertekende apparaten.",
             "encryption_section": "Versleuteling",
             "error_loading_key_backup_status": "Kan sleutelback-upstatus niet laden",
             "export_megolm_keys": "E2E-kamersleutels exporteren",
@@ -2292,7 +2239,6 @@
             "key_backup_connect_prompt": "Verbind deze sessie met de sleutelback-up voordat je jezelf afmeldt. Dit voorkomt dat je sleutels verliest die alleen op deze sessie voorkomen.",
             "key_backup_inactive": "Deze sessie <b>maakt geen back-ups van je sleutels</b>, maar je beschikt over een reeds bestaande back-up waaruit je kan herstellen en waaraan je nieuwe sleutels vanaf nu kunt toevoegen.",
             "key_backup_inactive_warning": "Jouw sleutels worden <b>niet geback-upt van deze sessie</b>.",
-            "manually_verify_all_sessions": "Handmatig alle externe sessies verifiëren",
             "message_search_disable_warning": "Dit moet aan staan om te kunnen zoeken in versleutelde kamers.",
             "message_search_disabled": "Sla versleutelde berichten veilig lokaal op om ze doorzoekbaar te maken.",
             "message_search_enabled": {
@@ -2674,15 +2620,10 @@
             "one": "%(count)s reactie",
             "other": "%(count)s reacties"
         },
-        "empty_explainer": "Threads helpen jou gesprekken on-topic te houden en gemakkelijk bij te houden.",
-        "empty_has_threads_tip": "Reageer op een lopende thread of gebruik \"%(replyInThread)s\" wanneer je de muisaanwijzer op een bericht plaatst om een nieuwe te starten.",
-        "empty_heading": "Houd threads georganiseerd",
-        "empty_tip": "<b>Tip:</b> Gebruik “%(replyInThread)s” met de muiscursor boven een bericht.",
         "error_start_thread_existing_relation": "Kan geen discussie maken van een gebeurtenis met een bestaande relatie",
         "my_threads": "Mijn discussies",
         "my_threads_description": "Toon alle threads waarin je hebt bijgedragen",
         "open_thread": "Open discussie",
-        "show_all_threads": "Threads weergeven",
         "show_thread_filter": "Toon:"
     },
     "time": {
@@ -2724,7 +2665,6 @@
             "tooltip_sub": "Klik om bewerkingen te zien",
             "tooltip_title": "Bewerkt op %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "Versleutelde berichten vóór dit punt zijn niet beschikbaar.",
         "error_no_renderer": "Deze gebeurtenis kon niet weergegeven worden",
         "error_rendering_message": "Dit bericht kan niet geladen worden",
         "historical_messages_unavailable": "Je kan eerdere berichten niet zien",
@@ -2779,19 +2719,8 @@
             "sent": "%(senderDisplayName)s heeft een afbeelding gestuurd.",
             "show_image": "Afbeelding tonen"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s heeft de verificatie geannuleerd",
-            "you_cancelled": "Je hebt de verificatie van %(name)s geannuleerd"
-        },
-        "m.key.verification.done": "Je hebt %(name)s geverifieerd",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s heeft aanvaard",
-            "user_cancelled": "%(name)s heeft geannuleerd",
-            "user_declined": "%(name)s heeft geweigerd",
             "user_wants_to_verify": "%(name)s wil verifiëren",
-            "you_accepted": "Je hebt aanvaard",
-            "you_cancelled": "Je hebt geannuleerd",
-            "you_declined": "Je hebt geweigerd",
             "you_started": "Je hebt een verificatieverzoek verstuurd"
         },
         "m.location": {
@@ -2877,7 +2806,7 @@
             "reject_invite": "%(targetName)s heeft de uitnodiging geweigerd",
             "remove_avatar": "%(senderName)s profielfoto is verwijderd",
             "remove_name": "%(senderName)s weergavenaam (%(oldDisplayName)s) is verwijderd",
-            "set_avatar": "%(senderName)s profielfoto is ingesteld",
+            "set_avatar": "%(senderName)s heeft een profielfoto ingesteld",
             "set_name": "%(senderName)s heeft de weergavenaam %(displayName)s aangenomen",
             "unban": "%(senderName)s heeft %(targetName)s ontbannen",
             "withdrew_invite": "%(senderName)s heeft de uitnodiging van %(targetName)s ingetrokken",
@@ -2958,8 +2887,7 @@
         "pending_moderation_reason": "Bericht in afwachting van moderatie: %(reason)s",
         "reactions": {
             "add_reaction_prompt": "Reactie toevoegen",
-            "label": "%(reactors)s reageerde met %(content)s",
-            "tooltip": "<reactors/><reactedWith>heeft gereageerd met %(shortName)s</reactedWith>"
+            "label": "%(reactors)s reageerde met %(content)s"
         },
         "read_receipt_title": {
             "one": "Gezien door %(count)s persoon",
@@ -3223,7 +3151,6 @@
         },
         "redact_button": "Recente berichten verwijderen",
         "revoke_invite": "Uitnodiging intrekken",
-        "role_label": "Rol in <RoomName/>",
         "room_encrypted": "De berichten in deze kamer worden eind-tot-eind-versleuteld.",
         "room_encrypted_detail": "Jouw berichten zijn beveiligd, en enkel de ontvanger en jij hebben de unieke sleutels om ze te ontsleutelen.",
         "room_unencrypted": "De berichten in deze kamer worden niet eind-tot-eind-versleuteld.",
@@ -3262,7 +3189,6 @@
         "already_in_call_person": "Je bent al in gesprek met deze persoon.",
         "answered_elsewhere": "Ergens anders beantwoord",
         "answered_elsewhere_description": "De oproep werd op een ander toestel beantwoord.",
-        "audio_devices": "Audio-apparaten",
         "call_failed": "Oproep mislukt",
         "call_failed_description": "De oproep kon niet worden volbracht",
         "call_failed_media": "Oproep mislukt omdat er geen toegang is tot de webcam of de microfoon. Kijk na dat:",
@@ -3344,7 +3270,6 @@
         "user_is_presenting": "%(sharerName)s is aan het presenteren",
         "video_call": "Video-oproep",
         "video_call_started": "Videogesprek gestart",
-        "video_devices": "Video-apparaten",
         "voice_call": "Spraakoproep",
         "you_are_presenting": "Je bent aan het presenteren"
     },

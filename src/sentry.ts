@@ -16,6 +16,7 @@ limitations under the License.
 
 import * as Sentry from "@sentry/browser";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { type Integration } from "@sentry/types/build/types/integration";
 
 import SdkConfig from "./SdkConfig";
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -121,10 +122,11 @@ async function getCryptoContext(client: MatrixClient): Promise<CryptoContext> {
     if (!cryptoApi) {
         return {};
     }
-    const keys = [`ed25519:${client.getDeviceEd25519Key()}`];
-    if (client.getDeviceCurve25519Key) {
-        keys.push(`curve25519:${client.getDeviceCurve25519Key()}`);
-    }
+
+    const ownDeviceKeys = await cryptoApi.getOwnDeviceKeys();
+
+    const keys = [`curve25519:${ownDeviceKeys.curve25519}`, `ed25519:${ownDeviceKeys.ed25519}`];
+
     const crossSigningStatus = await cryptoApi.getCrossSigningStatus();
     const secretStorage = client.secretStorage;
     const sessionBackupKeyFromCache = await cryptoApi.getSessionBackupPrivateKey();
@@ -202,17 +204,17 @@ export function setSentryUser(mxid: string): void {
 export async function initSentry(sentryConfig: IConfigOptions["sentry"]): Promise<void> {
     if (!sentryConfig) return;
     // Only enable Integrations.GlobalHandlers, which hooks uncaught exceptions, if automaticErrorReporting is true
-    const integrations = [
-        new Sentry.Integrations.InboundFilters(),
-        new Sentry.Integrations.FunctionToString(),
-        new Sentry.Integrations.Breadcrumbs(),
-        new Sentry.Integrations.HttpContext(),
-        new Sentry.Integrations.Dedupe(),
+    const integrations: Integration[] = [
+        Sentry.inboundFiltersIntegration(),
+        Sentry.functionToStringIntegration(),
+        Sentry.breadcrumbsIntegration(),
+        Sentry.httpContextIntegration(),
+        Sentry.dedupeIntegration(),
     ];
 
     if (SettingsStore.getValue("automaticErrorReporting")) {
-        integrations.push(new Sentry.Integrations.GlobalHandlers({ onerror: false, onunhandledrejection: true }));
-        integrations.push(new Sentry.Integrations.TryCatch());
+        integrations.push(Sentry.globalHandlersIntegration({ onerror: false, onunhandledrejection: true }));
+        integrations.push(Sentry.browserApiErrorsIntegration());
     }
 
     Sentry.init({

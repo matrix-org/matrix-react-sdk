@@ -16,7 +16,6 @@ limitations under the License.
 
 import React, { createRef, SyntheticEvent, MouseEvent } from "react";
 import ReactDOM from "react-dom";
-import highlight from "highlight.js";
 import { MsgType } from "matrix-js-sdk/src/matrix";
 
 import * as HtmlUtils from "../../../HtmlUtils";
@@ -32,7 +31,6 @@ import { tooltipifyLinks, unmountTooltips } from "../../../utils/tooltipify";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import { isPermalinkHost, tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../../utils/strings";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import UIStore from "../../../stores/UIStore";
 import { Action } from "../../../dispatcher/actions";
 import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
@@ -237,7 +235,9 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         pre.append(document.createElement("span"));
     }
 
-    private highlightCode(code: HTMLElement): void {
+    private async highlightCode(code: HTMLElement): Promise<void> {
+        const { default: highlight } = await import("highlight.js");
+
         if (code.textContent && code.textContent.length > MAX_HIGHLIGHT_LENGTH) {
             console.log(
                 "Code block is bigger than highlight limit (" +
@@ -521,22 +521,16 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const date = this.props.mxEvent.replacingEventDate();
         const dateString = date && formatDate(date);
 
-        const tooltip = (
-            <div>
-                <div className="mx_Tooltip_title">{_t("timeline|edits|tooltip_title", { date: dateString })}</div>
-                <div className="mx_Tooltip_sub">{_t("timeline|edits|tooltip_sub")}</div>
-            </div>
-        );
-
         return (
-            <AccessibleTooltipButton
+            <AccessibleButton
                 className="mx_EventTile_edited"
                 onClick={this.openHistoryDialog}
-                title={_t("timeline|edits|tooltip_label", { date: dateString })}
-                tooltip={tooltip}
+                aria-label={_t("timeline|edits|tooltip_label", { date: dateString })}
+                title={_t("timeline|edits|tooltip_title", { date: dateString })}
+                caption={_t("timeline|edits|tooltip_sub")}
             >
                 <span>{`(${_t("common|edited")})`}</span>
-            </AccessibleTooltipButton>
+            </AccessibleButton>
         );
     }
 

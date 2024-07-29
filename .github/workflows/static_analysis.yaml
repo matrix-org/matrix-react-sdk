@@ -25,9 +25,10 @@ jobs:
             - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
+                  node-version: "lts/*"
 
             - name: Install Deps
-              run: "./scripts/ci/install-deps.sh --ignore-scripts"
+              run: "./scripts/ci/install-deps.sh"
 
             - name: Typecheck
               run: "yarn run lint:types"
@@ -56,6 +57,13 @@ jobs:
     i18n_lint:
         name: "i18n Check"
         uses: matrix-org/matrix-web-i18n/.github/workflows/i18n_check.yml@main
+        with:
+            hardcoded-words: "Element"
+            allowed-hardcoded-keys: |
+                console_dev_note
+                labs|element_call_video_rooms
+                labs|feature_disable_call_per_sender_encryption
+                voip|element_call
 
     rethemendex_lint:
         name: "Rethemendex Check"
@@ -76,6 +84,7 @@ jobs:
             - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
+                  node-version: "lts/*"
 
             # Does not need branch matching as only analyses this layer
             - name: Install Deps
@@ -93,6 +102,7 @@ jobs:
             - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
+                  node-version: "lts/*"
 
             # Does not need branch matching as only analyses this layer
             - name: Install Deps
@@ -110,6 +120,7 @@ jobs:
             - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
+                  node-version: "lts/*"
 
             # Does not need branch matching as only analyses this layer
             - name: Install Deps
@@ -127,6 +138,7 @@ jobs:
             - uses: actions/setup-node@v4
               with:
                   cache: "yarn"
+                  node-version: "lts/*"
 
             - name: Install Deps
               run: "scripts/ci/layered.sh"

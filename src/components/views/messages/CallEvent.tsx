@@ -28,13 +28,12 @@ import {
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import type { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../../dispatcher/actions";
-import type { ButtonEvent } from "../elements/AccessibleButton";
+import AccessibleButton, { AccessibleButtonKind, ButtonEvent } from "../elements/AccessibleButton";
 import MemberAvatar from "../avatars/MemberAvatar";
 import { LiveContentSummary, LiveContentType } from "../rooms/LiveContentSummary";
 import FacePile from "../elements/FacePile";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { CallDuration, SessionDuration } from "../voip/CallDuration";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 
 const MAX_FACES = 8;
 
@@ -43,7 +42,7 @@ interface ActiveCallEventProps {
     call: ElementCall | null;
     participatingMembers: RoomMember[];
     buttonText: string;
-    buttonKind: string;
+    buttonKind: AccessibleButtonKind;
     buttonDisabledTooltip?: string;
     onButtonClick: ((ev: ButtonEvent) => void) | null;
 }
@@ -78,15 +77,15 @@ const ActiveCallEvent = forwardRef<any, ActiveCallEventProps>(
                             <FacePile members={facePileMembers} size="24px" overflow={facePileOverflow} />
                         </div>
                         {call && <SessionDuration session={call.session} />}
-                        <AccessibleTooltipButton
+                        <AccessibleButton
                             className="mx_CallEvent_button"
                             kind={buttonKind}
                             disabled={onButtonClick === null || buttonDisabledTooltip !== undefined}
                             onClick={onButtonClick}
-                            tooltip={buttonDisabledTooltip}
+                            title={buttonDisabledTooltip}
                         >
                             {buttonText}
-                        </AccessibleTooltipButton>
+                        </AccessibleButton>
                     </div>
                 </div>
             </div>
@@ -125,16 +124,20 @@ const ActiveLoadedCallEvent = forwardRef<any, ActiveLoadedCallEventProps>(({ mxE
         [call],
     );
 
-    const [buttonText, buttonKind, onButtonClick] = useMemo(() => {
+    const [buttonText, buttonKind, onButtonClick] = useMemo<
+        [string, AccessibleButtonKind, null | ((ev: ButtonEvent) => void)]
+    >(() => {
         switch (connectionState) {
             case ConnectionState.Disconnected:
                 return [_t("action|join"), "primary", connect];
-            case ConnectionState.Connecting:
-                return [_t("action|join"), "primary", null];
             case ConnectionState.Connected:
                 return [_t("action|leave"), "danger", disconnect];
             case ConnectionState.Disconnecting:
                 return [_t("action|leave"), "danger", null];
+            case ConnectionState.Connecting:
+            case ConnectionState.Lobby:
+            case ConnectionState.WidgetLoading:
+                return [_t("action|join"), "primary", null];
         }
     }, [connectionState, connect, disconnect]);
 

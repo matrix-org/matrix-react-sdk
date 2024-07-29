@@ -19,6 +19,7 @@ limitations under the License.
 import React, { ReactNode } from "react";
 import * as utils from "matrix-js-sdk/src/utils";
 import { MatrixError, JoinRule, Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ViewRoom as ViewRoomEvent } from "@matrix-org/analytics-events/types/typescript/ViewRoom";
 import { JoinedRoom as JoinedRoomEvent } from "@matrix-org/analytics-events/types/typescript/JoinedRoom";
@@ -62,6 +63,7 @@ import { ActionPayload } from "../dispatcher/payloads";
 import { CancelAskToJoinPayload } from "../dispatcher/payloads/CancelAskToJoinPayload";
 import { SubmitAskToJoinPayload } from "../dispatcher/payloads/SubmitAskToJoinPayload";
 import { ModuleRunner } from "../modules/ModuleRunner";
+import { setMarkedUnreadState } from "../utils/notifications";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -119,6 +121,10 @@ interface State {
      * Whether we're viewing a call or call lobby in this room
      */
     viewingCall: boolean;
+    /**
+     * If we want the call to skip the lobby and immediately join
+     */
+    skipLobby?: boolean;
 
     promptAskToJoin: boolean;
 
@@ -160,7 +166,10 @@ export class RoomViewStore extends EventEmitter {
     private dis?: MatrixDispatcher;
     private dispatchToken?: string;
 
-    public constructor(dis: MatrixDispatcher, private readonly stores: SdkContextClass) {
+    public constructor(
+        dis: MatrixDispatcher,
+        private readonly stores: SdkContextClass,
+    ) {
         super();
         this.resetDispatcher(dis);
         this.stores.voiceBroadcastRecordingsStore.addListener(
@@ -319,14 +328,14 @@ export class RoomViewStore extends EventEmitter {
                         numMembers > 1000
                             ? "MoreThanAThousand"
                             : numMembers > 100
-                            ? "OneHundredAndOneToAThousand"
-                            : numMembers > 10
-                            ? "ElevenToOneHundred"
-                            : numMembers > 2
-                            ? "ThreeToTen"
-                            : numMembers > 1
-                            ? "Two"
-                            : "One";
+                              ? "OneHundredAndOneToAThousand"
+                              : numMembers > 10
+                                ? "ElevenToOneHundred"
+                                : numMembers > 2
+                                  ? "ThreeToTen"
+                                  : numMembers > 1
+                                    ? "Two"
+                                    : "One";
 
                     this.stores.posthogAnalytics.trackEvent<JoinedRoomEvent>({
                         eventName: "JoinedRoom",
@@ -459,6 +468,7 @@ export class RoomViewStore extends EventEmitter {
                 replyingToEvent: null,
                 viaServers: payload.via_servers ?? [],
                 wasContextSwitch: payload.context_switch ?? false,
+                skipLobby: payload.skipLobby,
                 viewingCall:
                     payload.view_call ??
                     (payload.room_id === this.state.roomId
@@ -489,6 +499,8 @@ export class RoomViewStore extends EventEmitter {
             if (room) {
                 pauseNonLiveBroadcastFromOtherRoom(room, this.stores.voiceBroadcastPlaybacksStore);
                 this.doMaybeSetCurrentVoiceBroadcastPlayback(room);
+
+                await setMarkedUnreadState(room, MatrixClientPeg.safeGet(), false);
             }
         } else if (payload.room_alias) {
             // Try the room alias to room ID navigation cache first to avoid
@@ -509,6 +521,7 @@ export class RoomViewStore extends EventEmitter {
                     viaServers: payload.via_servers,
                     wasContextSwitch: payload.context_switch,
                     viewingCall: payload.view_call ?? false,
+                    skipLobby: payload.skipLobby,
                 });
                 try {
                     const result = await MatrixClientPeg.safeGet().getRoomIdForAlias(payload.room_alias);
@@ -598,7 +611,7 @@ export class RoomViewStore extends EventEmitter {
     private getInvitingUserId(roomId: string): string | undefined {
         const cli = MatrixClientPeg.safeGet();
         const room = cli.getRoom(roomId);
-        if (room?.getMyMembership() === "invite") {
+        if (room?.getMyMembership() === KnownMembership.Invite) {
             const myMember = room.getMember(cli.getSafeUserId());
             const inviteEvent = myMember ? myMember.events.member : null;
             return inviteEvent?.getSender();
@@ -769,6 +782,10 @@ export class RoomViewStore extends EventEmitter {
 
     public isViewingCall(): boolean {
         return this.state.viewingCall;
+    }
+
+    public skipCallLobby(): boolean | undefined {
+        return this.state.skipLobby;
     }
 
     /**

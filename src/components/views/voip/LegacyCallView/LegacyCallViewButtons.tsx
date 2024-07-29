@@ -16,14 +16,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, useState } from "react";
+import React, { createRef, useState, forwardRef } from "react";
 import classNames from "classnames";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 
-import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
 import LegacyCallContextMenu from "../../context_menus/LegacyCallContextMenu";
 import DialpadContextMenu from "../../context_menus/DialpadContextMenu";
-import { Alignment } from "../../elements/Tooltip";
 import {
     alwaysMenuProps,
     alwaysAboveRightOf,
@@ -34,7 +32,7 @@ import {
 import { _t } from "../../../../languageHandler";
 import DeviceContextMenu from "../../context_menus/DeviceContextMenu";
 import { MediaDeviceKindEnum } from "../../../../MediaDeviceHandler";
-import { ButtonEvent } from "../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent, ButtonProps as AccessibleButtonProps } from "../../elements/AccessibleButton";
 
 // Height of the header duplicated from CSS because we need to subtract it from our max
 // height to get the max height of the video
@@ -42,39 +40,39 @@ const CONTEXT_MENU_VPADDING = 8; // How far the context menu sits above the butt
 
 const CONTROLS_HIDE_DELAY = 2000;
 
-interface IButtonProps extends Omit<React.ComponentProps<typeof AccessibleTooltipButton>, "title"> {
+type ButtonProps = Omit<AccessibleButtonProps<"div">, "title" | "element"> & {
     state: boolean;
-    className: string;
     onLabel?: string;
     offLabel?: string;
-}
-
-const LegacyCallViewToggleButton: React.FC<IButtonProps> = ({
-    children,
-    state: isOn,
-    className,
-    onLabel,
-    offLabel,
-    ...props
-}) => {
-    const classes = classNames("mx_LegacyCallViewButtons_button", className, {
-        mx_LegacyCallViewButtons_button_on: isOn,
-        mx_LegacyCallViewButtons_button_off: !isOn,
-    });
-
-    return (
-        <AccessibleTooltipButton
-            className={classes}
-            title={isOn ? onLabel : offLabel}
-            alignment={Alignment.Top}
-            {...props}
-        >
-            {children}
-        </AccessibleTooltipButton>
-    );
+    forceHide?: boolean;
+    onHover?: (hovering: boolean) => void;
 };
 
-interface IDropdownButtonProps extends IButtonProps {
+const LegacyCallViewToggleButton = forwardRef<HTMLElement, ButtonProps>(
+    ({ children, state: isOn, className, onLabel, offLabel, forceHide, onHover, ...props }, ref) => {
+        const classes = classNames("mx_LegacyCallViewButtons_button", className, {
+            mx_LegacyCallViewButtons_button_on: isOn,
+            mx_LegacyCallViewButtons_button_off: !isOn,
+        });
+
+        const title = forceHide ? undefined : isOn ? onLabel : offLabel;
+
+        return (
+            <AccessibleButton
+                ref={ref}
+                className={classes}
+                title={title}
+                placement="top"
+                onTooltipOpenChange={onHover}
+                {...props}
+            >
+                {children}
+            </AccessibleButton>
+        );
+    },
+);
+
+interface IDropdownButtonProps extends ButtonProps {
     deviceKinds: MediaDeviceKindEnum[];
 }
 
@@ -93,7 +91,7 @@ const LegacyCallViewDropdownButton: React.FC<IDropdownButtonProps> = ({ state, d
 
     return (
         <LegacyCallViewToggleButton
-            inputRef={buttonRef}
+            ref={buttonRef}
             forceHide={menuDisplayed || hoveringDropdown}
             state={state}
             {...props}
@@ -266,11 +264,11 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                 {this.props.buttonsVisibility.dialpad && (
                     <ContextMenuTooltipButton
                         className="mx_LegacyCallViewButtons_button mx_LegacyCallViewButtons_dialpad"
-                        inputRef={this.dialpadButton}
+                        ref={this.dialpadButton}
                         onClick={this.onDialpadClick}
                         isExpanded={this.state.showDialpad}
                         title={_t("voip|dialpad")}
-                        alignment={Alignment.Top}
+                        placement="top"
                     />
                 )}
                 <LegacyCallViewDropdownButton
@@ -313,17 +311,17 @@ export default class LegacyCallViewButtons extends React.Component<IProps, IStat
                     <ContextMenuTooltipButton
                         className="mx_LegacyCallViewButtons_button mx_LegacyCallViewButtons_button_more"
                         onClick={this.onMoreClick}
-                        inputRef={this.contextMenuButton}
+                        ref={this.contextMenuButton}
                         isExpanded={this.state.showMoreMenu}
                         title={_t("voip|more_button")}
-                        alignment={Alignment.Top}
+                        placement="top"
                     />
                 )}
-                <AccessibleTooltipButton
+                <AccessibleButton
                     className="mx_LegacyCallViewButtons_button mx_LegacyCallViewButtons_button_hangup"
                     onClick={this.props.handlers.onHangupClick}
                     title={_t("voip|hangup")}
-                    alignment={Alignment.Top}
+                    placement="top"
                 />
             </div>
         );

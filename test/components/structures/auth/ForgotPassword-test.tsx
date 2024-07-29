@@ -235,7 +235,9 @@ describe("<ForgotPassword>", () => {
                         expect.any(String),
                         2, // second send attempt
                     );
-                    expect(screen.getByText("Verification link email resent!")).toBeInTheDocument();
+                    expect(
+                        screen.getByRole("tooltip", { name: "Verification link email resent!" }),
+                    ).toBeInTheDocument();
                 });
             });
 
@@ -300,10 +302,6 @@ describe("<ForgotPassword>", () => {
                                         client_secret: expect.any(String),
                                         sid: testSid,
                                     },
-                                    threepidCreds: {
-                                        client_secret: expect.any(String),
-                                        sid: testSid,
-                                    },
                                 },
                                 testPassword,
                                 false,
@@ -329,10 +327,6 @@ describe("<ForgotPassword>", () => {
                                 {
                                     type: "m.login.email.identity",
                                     threepid_creds: {
-                                        client_secret: expect.any(String),
-                                        sid: testSid,
-                                    },
-                                    threepidCreds: {
                                         client_secret: expect.any(String),
                                         sid: testSid,
                                     },
@@ -425,10 +419,6 @@ describe("<ForgotPassword>", () => {
                                 {
                                     type: "m.login.email.identity",
                                     threepid_creds: {
-                                        client_secret: expect.any(String),
-                                        sid: testSid,
-                                    },
-                                    threepidCreds: {
                                         client_secret: expect.any(String),
                                         sid: testSid,
                                     },

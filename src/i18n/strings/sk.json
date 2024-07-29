@@ -243,23 +243,11 @@
             "approve_access_warning": "Schválením prístupu pre toto zariadenie bude mať plný prístup k vášmu účtu.",
             "completing_setup": "Dokončenie nastavenia nového zariadenia",
             "confirm_code_match": "Skontrolujte, či sa nižšie uvedený kód zhoduje s vaším druhým zariadením:",
-            "connecting": "Pripájanie…",
-            "devices_connected": "Zariadenia pripojené",
-            "error_device_already_signed_in": "Druhé zariadenie je už prihlásené.",
-            "error_device_not_signed_in": "Druhé zariadenie nie je prihlásené.",
-            "error_device_unsupported": "Prepojenie s týmto zariadením nie je podporované.",
-            "error_homeserver_lacks_support": "Domovský server nepodporuje prihlasovanie do iného zariadenia.",
-            "error_invalid_scanned_code": "Naskenovaný kód je neplatný.",
-            "error_linking_incomplete": "Prepojenie nebolo dokončené v požadovanom čase.",
-            "error_request_cancelled": "Žiadosť bola zrušená.",
-            "error_request_declined": "Žiadosť bola na druhom zariadení zamietnutá.",
             "error_unexpected": "Vyskytla sa neočakávaná chyba.",
-            "review_and_approve": "Skontrolujte a schváľte prihlásenie",
             "scan_code_instruction": "Naskenujte nižšie uvedený QR kód pomocou zariadenia, ktoré je odhlásené.",
             "scan_qr_code": "Skenovať QR kód",
             "select_qr_code": "Vyberte '%(scanQRCode)s'",
             "sign_in_new_device": "Prihlásiť nové zariadenie",
-            "start_at_sign_in_screen": "Začnite na prihlasovacej obrazovke",
             "waiting_for_device": "Čaká sa na prihlásenie zariadenia"
         },
         "register_action": "Vytvoriť účet",
@@ -445,7 +433,6 @@
         "description": "Popis",
         "deselect_all": "Zrušiť výber všetkých",
         "device": "Zariadenie",
-        "display_name": "Zobrazované meno",
         "edited": "upravené",
         "email_address": "Emailová adresa",
         "emoji": "Emotikon",
@@ -485,10 +472,6 @@
         "n_members": {
             "one": "%(count)s člen",
             "other": "%(count)s členov"
-        },
-        "n_participants": {
-            "one": "1 účastník",
-            "other": "%(count)s účastníkov"
         },
         "n_rooms": {
             "one": "%(count)s miestnosť",
@@ -739,7 +722,6 @@
         "notification_state": "Stav oznámenia je <strong>%(notificationState)s</strong>",
         "notifications_debug": "Ladenie oznámení",
         "number_of_users": "Počet používateľov",
-        "observe_only": "Iba pozorovať",
         "original_event_source": "Pôvodný zdroj udalosti",
         "phase": "Fáza",
         "phase_cancelled": "Zrušené",
@@ -747,7 +729,6 @@
         "phase_requested": "Vyžiadané",
         "phase_started": "Spustené",
         "phase_transaction": "Transakcia",
-        "requester": "Žiadateľ",
         "room_encrypted": "Miestnosť je <strong>šifrovaná ✅</strong>",
         "room_id": "ID miestnosti: %(roomId)s",
         "room_not_encrypted": "Miestnosť <strong>nie je šifrovaná 🚨</strong>",
@@ -759,8 +740,9 @@
         "room_notifications_total": "Celkom: ",
         "room_notifications_type": "Typ: ",
         "room_status": "Stav miestnosti",
-        "room_unread_status": "Stav neprečítaných v miestnosti: <strong>%(status)s</strong>",
         "room_unread_status_count": {
+            "one": "Stav neprečítaných v miestnosti: <strong>%(status)s</strong>, počet: <strong>%(count)s</strong>",
+            "few": "Stav neprečítaných v miestnosti: <strong>%(status)s</strong>, počet: <strong>%(count)s</strong>",
             "other": "Stav neprečítaných v miestnosti: <strong>%(status)s</strong>, počet: <strong>%(count)s</strong>"
         },
         "save_setting_values": "Uložiť hodnoty nastavenia",
@@ -780,6 +762,7 @@
         "show_hidden_events": "Zobrazovať skryté udalosti v histórii obsahu miestností",
         "spaces": {
             "one": "<priestor>",
+            "few": "<%(count)s priestory>",
             "other": "<%(count)s priestorov>"
         },
         "state_key": "Stavový kľúč",
@@ -1057,8 +1040,8 @@
         "update_power_level": "Nepodarilo sa zmeniť úroveň oprávnenia"
     },
     "error_app_open_in_another_tab": "Aplikácia %(brand)s bola otvorená na inej karte.",
+    "error_app_open_in_another_tab_title": "%(brand)s je pripojený na inej karte",
     "error_app_opened_in_another_window": "%(brand)s je otvorený v inom okne. Kliknutím na \"%(label)s\" použijete túto aplikáciu %(brand)s a odpojíte druhé okno.",
-    "error_database_closed_description": "Môže to byť spôsobené otvorením aplikácie na viacerých kartách alebo vymazaním údajov prehliadača.",
     "error_database_closed_title": "Databáza sa neočakávane zatvorila",
     "error_dialog": {
         "copy_room_link_failed": {
@@ -1115,20 +1098,24 @@
         "export_successful": "Export úspešný!",
         "exported_n_events_in_time": {
             "one": "Exportovaná %(count)s udalosť za %(seconds)s sekúnd",
+            "few": "Exportovaných %(count)s udalosti za %(seconds)s sekúnd",
             "other": "Exportovaných %(count)s udalostí za %(seconds)s sekúnd"
         },
         "exporting_your_data": "Exportovanie vašich údajov",
         "fetched_n_events": {
             "one": "Zatiaľ získaná %(count)s udalosť",
-            "other": "Zatiaľ získané %(count)s udalosti"
+            "few": "Zatiaľ získané %(count)s udalosti",
+            "other": "Zatiaľ získaných %(count)s udalostí"
         },
         "fetched_n_events_in_time": {
             "one": "Načítaná %(count)s udalosť za %(seconds)ss",
+            "few": "Načítané %(count)s udaloszi za %(seconds)ss",
             "other": "Načítaných %(count)s udalostí za %(seconds)ss"
         },
         "fetched_n_events_with_total": {
             "one": "Získaná %(count)s udalosť z %(total)s",
-            "other": "Získané %(count)s udalosti z %(total)s"
+            "few": "Získané %(count)s udalosti z %(total)s",
+            "other": "Získaných %(count)s udalostí z %(total)s"
         },
         "fetching_events": "Získavanie udalostí…",
         "file_attached": "Priložený súbor",
@@ -1268,7 +1255,6 @@
         "failed_generic": "Operácia zlyhala",
         "failed_title": "Pozvanie zlyhalo",
         "invalid_address": "Nerozpoznaná adresa",
-        "key_share_warning": "Pozvaní ľudia si budú môcť prečítať staré správy.",
         "name_email_mxid_share_room": "Pozvite niekoho pomocou jeho mena, e-mailovej adresy, používateľského mena (napríklad <userId/>) alebo <a>zdieľajte túto miestnosť</a>.",
         "name_email_mxid_share_space": "Pozvite niekoho pomocou jeho mena, e-mailovej adresy, používateľského mena (napríklad <userId/>) alebo <a>zdieľajte tento priestor</a>.",
         "name_mxid_share_room": "Pozvite niekoho pomocou jeho mena, používateľského mena (napríklad <userId/>) alebo <a>zdieľate túto miestnosť</a>.",
@@ -1397,6 +1383,7 @@
         "element_call_video_rooms": "Element Call video miestnosti",
         "experimental_description": "Chcete experimentovať? Vyskúšajte naše najnovšie nápady vo vývojovom štádiu. Tieto funkcie nie sú dokončené; môžu byť nestabilné, môžu sa zmeniť alebo môžu byť úplne zrušené. <a>Zistiť viac</a>.",
         "experimental_section": "Predbežné ukážky",
+        "feature_disable_call_per_sender_encryption": "Zakázať šifrovanie pre jednotlivých odosielateľov pre Element Call",
         "feature_wysiwyg_composer_description": "Použiť rozšírený text namiesto Markdown v správach.",
         "group_calls": "Nový zážitok zo skupinových hovorov",
         "group_developer": "Vývojárske",
@@ -1435,20 +1422,10 @@
         "render_reaction_images_description": "Niekedy sa označujú ako „vlastné emotikony“.",
         "report_to_moderators": "Nahlásiť moderátorom",
         "report_to_moderators_description": "V miestnostiach, ktoré podporujú moderovanie, môžete pomocou tlačidla \"Nahlásiť\" nahlásiť porušovanie pravidiel moderátorom miestnosti.",
-        "rust_crypto": "Implementácia kryptografie Rust",
-        "rust_crypto_disabled_notice": "V súčasnosti sa dá povoliť len prostredníctvom súboru config.json",
         "sliding_sync": "Režim kĺzavej synchronizácie",
-        "sliding_sync_checking": "Kontrolovanie…",
-        "sliding_sync_configuration": "Konfigurácia kĺzavej synchronizácie",
         "sliding_sync_description": "V štádiu aktívneho vývoja, nie je možné to vypnúť.",
-        "sliding_sync_disable_warning": "Pre vypnutie sa musíte odhlásiť a znova prihlásiť, používajte opatrne!",
         "sliding_sync_disabled_notice": "Odhláste sa a znova sa prihláste, aby sa to vyplo",
-        "sliding_sync_proxy_url_label": "URL adresa proxy servera",
-        "sliding_sync_proxy_url_optional_label": "URL adresa proxy servera (voliteľná)",
         "sliding_sync_server_no_support": "Váš server nemá natívnu podporu",
-        "sliding_sync_server_specify_proxy": "Váš server nemá natívnu podporu, musíte zadať proxy server",
-        "sliding_sync_server_support": "Váš server má natívnu podporu",
-        "state_counters": "Zobraziť jednoduchú štatistiku v záhlaví miestnosti",
         "under_active_development": "V štádiu aktívneho vývoja.",
         "unrealiable_e2e": "Nespoľahlivé v šifrovaných miestnostiach",
         "video_rooms": "Video miestnosti",
@@ -1498,14 +1475,6 @@
         "view_rules": "Zobraziť pravidlá"
     },
     "language_dropdown_label": "Rozbaľovací zoznam jazykov",
-    "lazy_loading": {
-        "disabled_action": "Vymazať vyrovnávaciu pamäť a synchronizovať znovu",
-        "disabled_description1": "Použili ste aj %(brand)s na adrese %(host)s so zapnutou voľbou Načítanie zoznamu členov pri prvom zobrazení. V tejto verzii je Načítanie zoznamu členov pri prvom zobrazení vypnuté. Keď že lokálna vyrovnávacia pamäť nie je vzájomne kompatibilná s takýmito nastaveniami, %(brand)s potrebuje znovu synchronizovať údaje z vašeho účtu.",
-        "disabled_description2": "Ak máte %(brand)s s iným nastavením otvorený na ďalšej karte, prosím zatvorte ju, pretože použitie %(brand)s s rôznym nastavením na jednom zariadení vám spôsobí len problémy.",
-        "disabled_title": "Nekompatibilná lokálna vyrovnávacia pamäť",
-        "resync_description": "%(brand)s teraz vyžaduje 3-5× menej pamäte, pretože informácie o ostatných používateľoch načítava len podľa potreby. Prosím počkajte na dokončenie synchronizácie so serverom!",
-        "resync_title": "Prebieha aktualizácia %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "Ste tu jediný človek. Ak odídete, nikto sa už v budúcnosti nebude môcť pripojiť do tejto miestnosti, vrátane vás.",
         "leave_room_question": "Ste si istí, že chcete opustiť miestnosť '%(roomName)s'?",
@@ -1593,12 +1562,6 @@
         "all_messages_description": "Dostávajte upozornenia na každú správu",
         "class_global": "Celosystémové",
         "class_other": "Ďalšie",
-        "colour_bold": "Tučné",
-        "colour_grey": "Sivá",
-        "colour_muted": "Stlmené",
-        "colour_none": "Žiadne",
-        "colour_red": "Červená",
-        "colour_unsent": "Neodoslané",
         "default": "Predvolené",
         "email_pusher_app_display_name": "Emailové oznámenia",
         "enable_prompt_toast_description": "Povoliť oznámenia na ploche",
@@ -1652,6 +1615,7 @@
         "no_avatar_label": "Pridajte fotografiu, aby ľudia vedeli, že ste to vy.",
         "only_n_steps_to_go": {
             "one": "Zostáva už len %(count)s krok",
+            "few": "Zostávajú už len %(count)s kroky",
             "other": "Zostáva už len %(count)s krokov"
         },
         "personal_messaging_action": "Spustite svoju prvú konverzáciu",
@@ -1933,6 +1897,7 @@
             "show_widgets_button": "Zobraziť widgety",
             "video_call_button_ec": "Videohovor (%(brand)s)",
             "video_call_button_jitsi": "Videohovor (Jitsi)",
+            "video_call_button_legacy": "Starší typ videohovoru",
             "video_call_ec_change_layout": "Zmeniť rozloženie",
             "video_call_ec_layout_freedom": "Sloboda",
             "video_call_ec_layout_spotlight": "Stredobod",
@@ -2012,14 +1977,11 @@
         "rejecting": "Odmietnutie pozvania …",
         "rejoin_button": "Znovu sa pripojiť",
         "search": {
-            "all_rooms": "Vo všetkých miestnostiach",
             "all_rooms_button": "Vyhľadávať vo všetkých miestnostiach",
-            "field_placeholder": "Hľadať…",
             "result_count": {
                 "other": "(~%(count)s výsledkov)",
                 "one": "(~%(count)s výsledok)"
             },
-            "this_room": "V tejto miestnosti",
             "this_room_button": "Vyhľadávať v tejto miestnosti"
         },
         "show_labs_settings": "Zobraziť nastavenia laboratórií",
@@ -2382,11 +2344,9 @@
         "help_about": {
             "access_token_detail": "Váš prístupový token poskytuje úplný prístup k vášmu účtu. S nikým ho nezdieľajte.",
             "brand_version": "Verzia %(brand)s:",
-            "chat_bot": "Konverzácia s %(brand)s Bot",
             "clear_cache_reload": "Vymazať vyrovnávaciu pamäť a načítať znovu",
             "crypto_version": "Krypto verzia:",
             "help_link": "Pomoc pri používaní %(brand)s môžete získať kliknutím <a>sem</a>.",
-            "help_link_chat_bot": "Pomoc pri používaní aplikácie %(brand)s môžete získať kliknutím <a>sem</a>, alebo začnite konverzáciu s našim robotom pomocou tlačidla dole.",
             "homeserver": "Domovský server je <code>%(homeserverUrl)s</code>",
             "identity_server": "Server identity je <code>%(identityServerUrl)s</code>",
             "title": "Pomocník a o programe",
@@ -2398,28 +2358,20 @@
         "all_rooms_home_description": "Všetky miestnosti, v ktorých sa nachádzate, sa zobrazia na domovskej obrazovke.",
         "always_show_message_timestamps": "Vždy zobrazovať časovú značku správ",
         "appearance": {
+            "bundled_emoji_font": "Použiť pribalené písmo emotikonov",
             "custom_font": "Použiť systémové písmo",
             "custom_font_description": "Nastavte názov písma, ktoré máte nainštalované na vašom systéme & %(brand)s sa ho pokúsi použiť.",
             "custom_font_name": "Meno systémového písma",
             "custom_font_size": "Použiť vlastnú veľkosť",
-            "custom_theme_add_button": "Pridať vzhľad",
             "custom_theme_error_downloading": "Chyba pri stiahnutí informácií o vzhľade.",
             "custom_theme_invalid": "Neplatná schéma vzhľadu.",
-            "custom_theme_success": "Vzhľad pridaný!",
-            "custom_theme_url": "URL adresa vlastného vzhľadu",
             "font_size": "Veľkosť písma",
-            "font_size_limit": "Vlastná veľkosť písma môže byť len v rozmedzí %(min)s pt až %(max)s pt",
-            "font_size_nan": "Veľkosť musí byť číslo",
-            "font_size_valid": "Použite veľkosť mezi %(min)s pt a %(max)s pt",
-            "heading": "Upravte svoj vzhľad",
             "image_size_default": "Predvolené",
             "image_size_large": "Veľký",
             "layout_bubbles": "Správy v bublinách",
             "layout_irc": "IRC (experimentálne)",
             "match_system_theme": "Prispôsobiť sa vzhľadu systému",
-            "subheading": "Nastavenia vzhľadu ovplyvnia len túto reláciu %(brand)s.",
-            "timeline_image_size": "Veľkosť obrázku na časovej osi",
-            "use_high_contrast": "Použiť vysoký kontrast"
+            "timeline_image_size": "Veľkosť obrázku na časovej osi"
         },
         "automatic_language_detection_syntax_highlight": "Povoliť automatickú detekciu jazyka pre zvýraznenie syntaxe",
         "autoplay_gifs": "Automaticky prehrať GIF animácie",
@@ -2446,7 +2398,6 @@
             "confirm_adding_email_body": "Kliknutím na tlačidlo nižšie potvrdíte pridanie emailovej adresy.",
             "confirm_adding_email_title": "Potvrdiť pridanie emailu",
             "deactivate_confirm_body": "Ste si istí, že chcete deaktivovať svoje konto? Je to nezvratné.",
-            "deactivate_confirm_body_password": "Aby ste mohli pokračovať, prosím zadajte svoje heslo:",
             "deactivate_confirm_body_sso": "Potvrďte deaktiváciu konta pomocou jednotného prihlásenia SSO na preukázanie svojej totožnosti.",
             "deactivate_confirm_content": "Potvrďte, že chcete deaktivovať svoje konto. Ak budete pokračovať:",
             "deactivate_confirm_content_1": "Svoje konto nebudete môcť opätovne aktivovať",
@@ -2463,7 +2414,6 @@
             "discovery_email_verification_instructions": "Overte odkaz vo vašej emailovej schránke",
             "discovery_msisdn_empty": "Možnosti nastavenia verejného profilu sa objavia po pridaní telefónneho čísla vyššie.",
             "discovery_needs_terms": "Súhlaste s podmienkami používania servera totožností (%(serverName)s), aby ste mohli byť nájdení zadaním emailovej adresy alebo telefónneho čísla.",
-            "discovery_section": "Objavovanie",
             "email_address_in_use": "Táto emailová adresa sa už používa",
             "email_address_label": "Emailová adresa",
             "email_not_verified": "Vaša emailová adresa nebola zatiaľ overená",
@@ -2484,11 +2434,8 @@
             "error_remove_3pid": "Nie je možné odstrániť kontaktné informácie",
             "error_revoke_email_discovery": "Nepodarilo sa zrušiť zdieľanie emailovej adresy",
             "error_revoke_msisdn_discovery": "Nepodarilo sa zrušiť zdieľanie telefónneho čísla",
-            "error_saving_profile": "Operáciu nebolo možné dokončiť",
-            "error_saving_profile_title": "Nepodarilo sa uložiť váš profil",
             "error_share_email_discovery": "Nepodarilo sa zdieľať emailovú adresu",
             "error_share_msisdn_discovery": "Nepodarilo sa zdieľanie telefónneho čísla",
-            "external_account_management": "Údaje o vašom účte sú spravované samostatne na adrese <code>%(hostname)s</code>.",
             "identity_server_no_token": "Nenašiel sa prístupový token totožnosti",
             "identity_server_not_set": "Server totožnosti nie je nastavený",
             "incorrect_msisdn_verification": "Nesprávny overovací kód",
@@ -2504,8 +2451,7 @@
             "password_change_success": "Vaše heslo bolo úspešne zmenené.",
             "remove_email_prompt": "Odstrániť adresu %(email)s?",
             "remove_msisdn_prompt": "Odstrániť číslo %(phone)s?",
-            "spell_check_locale_placeholder": "Vyberte si jazyk",
-            "spell_check_section": "Kontrola pravopisu"
+            "spell_check_locale_placeholder": "Vyberte si jazyk"
         },
         "image_thumbnails": "Zobrazovať ukážky/náhľady obrázkov",
         "inline_url_previews_default": "Predvolene povoliť náhľady URL adries",
@@ -2679,7 +2625,6 @@
             "delete_backup_confirm_description": "Ste si istí? Ak nemáte správne zálohované šifrovacie kľúče, prídete o históriu šifrovaných konverzácií.",
             "e2ee_default_disabled_warning": "Správca vášho servera predvolene vypol end-to-end šifrovanie v súkromných miestnostiach a v priamych správach.",
             "enable_message_search": "Povoliť vyhľadávanie správ v šifrovaných miestnostiach",
-            "encryption_individual_verification_mode": "Individuálne overte každú používateľskú reláciu a označte ju za dôveryhodnú, bez dôvery krížovo podpísaných zariadení.",
             "encryption_section": "Šifrovanie",
             "error_loading_key_backup_status": "Nie je možné načítať stav zálohy kľúčov",
             "export_megolm_keys": "Exportovať end-to-end šifrovacie kľúče miestnosti",
@@ -2698,7 +2643,6 @@
             "key_backup_inactive": "Táto relácia <b>nezálohuje vaše kľúče</b>, ale máte jednu existujúcu zálohu, ktorú môžete obnoviť a pridať do budúcnosti.",
             "key_backup_inactive_warning": "Vaše kľúče <b>nie sú zálohované z tejto relácie</b>.",
             "key_backup_latest_version": "Najnovšia verzia zálohy na serveri:",
-            "manually_verify_all_sessions": "Manuálne overiť všetky relácie",
             "message_search_disable_warning": "Ak nie je povolené, správy zo zašifrovaných miestností sa nezobrazia vo výsledkoch vyhľadávania.",
             "message_search_disabled": "Bezpečne lokálne ukladať zašifrované správy do vyrovnávacej pamäte, aby sa zobrazovali vo výsledkoch vyhľadávania.",
             "message_search_enabled": {
@@ -3133,17 +3077,11 @@
             "one": "%(count)s odpoveď",
             "other": "%(count)s odpovedí"
         },
-        "empty_explainer": "Vlákna pomáhajú udržiavať konverzácie v téme a uľahčujú ich sledovanie.",
-        "empty_has_threads_tip": "Odpovedzte na prebiehajúce vlákno alebo použite \"%(replyInThread)s\", keď prejdete nad správu a začnete novú.",
-        "empty_heading": "Udržujte diskusie organizované pomocou vlákien",
-        "empty_tip": "<b>Tip:</b> Použite položku “%(replyInThread)s”, keď prejdete ponad správu.",
         "error_start_thread_existing_relation": "Nie je možné vytvoriť vlákno z udalosti s existujúcim vzťahom",
         "my_threads": "Moje vlákna",
         "my_threads_description": "Zobrazí všetky vlákna, v ktorých ste sa zúčastnili",
         "open_thread": "Otvoriť vlákno",
-        "show_all_threads": "Zobraziť všetky vlákna",
-        "show_thread_filter": "Zobraziť:",
-        "unable_to_decrypt": "Nie je možné dešifrovať správu"
+        "show_thread_filter": "Zobraziť:"
     },
     "time": {
         "about_day_ago": "asi pred jedným dňom",
@@ -3186,7 +3124,6 @@
         },
         "creation_summary_dm": "%(creator)s vytvoril/a túto priamu správu.",
         "creation_summary_room": "%(creator)s vytvoril a nastavil miestnosť.",
-        "decryption_failure_blocked": "Odosielateľ vám zablokoval príjem tejto správy",
         "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
         "download_action_decrypting": "Dešifrovanie",
         "download_action_downloading": "Preberanie",
@@ -3195,7 +3132,6 @@
             "tooltip_sub": "Kliknutím zobrazíte úpravy",
             "tooltip_title": "Upravené %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "Šifrované správy pred týmto bodom nie sú k dispozícii.",
         "error_no_renderer": "Nie je možné zobraziť túto udalosť",
         "error_rendering_message": "Nemožno načítať túto správu",
         "historical_messages_unavailable": "Nemôžete vidieť predchádzajúce správy",
@@ -3259,20 +3195,8 @@
             "sent": "%(senderDisplayName)s poslal obrázok.",
             "show_image": "Zobraziť obrázok"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s zrušil/a overovanie",
-            "you_cancelled": "Zrušili ste overenie používateľa %(name)s"
-        },
-        "m.key.verification.done": "Overili ste používateľa %(name)s",
         "m.key.verification.request": {
-            "declining": "Odmietanie …",
-            "user_accepted": "%(name)s prijal",
-            "user_cancelled": "%(name)s zrušil/a",
-            "user_declined": "%(name)s odmietol/a",
             "user_wants_to_verify": "%(name)s chce overiť",
-            "you_accepted": "Prijali ste",
-            "you_cancelled": "Zrušili ste overenie",
-            "you_declined": "Zamietli ste overenie",
             "you_started": "Odoslali ste žiadosť o overenie"
         },
         "m.location": {
@@ -3449,8 +3373,7 @@
         "reactions": {
             "add_reaction_prompt": "Pridať reakciu",
             "custom_reaction_fallback_label": "Vlastná reakcia",
-            "label": "%(reactors)s reagovali %(content)s",
-            "tooltip": "<reactors/><reactedWith>reagoval %(shortName)s</reactedWith>"
+            "label": "%(reactors)s reagovali %(content)s"
         },
         "read_receipt_title": {
             "one": "Videl %(count)s človek",
@@ -3477,28 +3400,34 @@
         "send_state_sent": "Vaša správa bola odoslaná",
         "summary": {
             "banned": {
-                "other": "mal %(count)s krát zakázaný vstup",
-                "one": "mal zakázaný vstup"
+                "one": "mal zakázaný vstup",
+                "few": "mal %(count)s-krát zakázaný vstup",
+                "other": "mal %(count)s-krát zakázaný vstup"
             },
             "banned_multiple": {
-                "other": "mali %(count)s krát zakázaný vstup",
-                "one": "mali zakázaný vstup"
+                "one": "mali zakázaný vstup",
+                "few": "mali %(count)s-krát zakázaný vstup",
+                "other": "mali %(count)s-krát zakázaný vstup"
             },
             "changed_avatar": {
-                "other": "%(oneUser)s si zmenil svoj profilový obrázok %(count)s-krát",
-                "one": "%(oneUser)s zmenil/a svoj profilový obrázok"
+                "one": "%(oneUser)s zmenil/a svoj profilový obrázok",
+                "few": "%(oneUser)s si zmenil svoj profilový obrázok %(count)s-krát",
+                "other": "%(oneUser)s si zmenil svoj profilový obrázok %(count)s-krát"
             },
             "changed_avatar_multiple": {
-                "other": "%(severalUsers)ssi zmenili %(count)s-krát profilový obrázok",
-                "one": "%(severalUsers)szmenilo svoj profilový obrázok"
+                "one": "%(severalUsers)szmenilo svoj profilový obrázok",
+                "few": "%(severalUsers)ssi zmenili %(count)s-krát profilový obrázok",
+                "other": "%(severalUsers)ssi zmenilo %(count)s-krát profilový obrázok"
             },
             "changed_name": {
-                "other": "%(oneUser)ssi %(count)s krát zmenil meno",
-                "one": "%(oneUser)ssi zmenil meno"
+                "one": "%(oneUser)ssi zmenil meno",
+                "few": "%(oneUser)ssi %(count)s-krát zmenil meno",
+                "other": "%(oneUser)ssi %(count)s-krát zmenil meno"
             },
             "changed_name_multiple": {
-                "other": "%(severalUsers)ssi %(count)s krát zmenili meno",
-                "one": "%(severalUsers)ssi zmenili meno"
+                "one": "%(severalUsers)ssi zmenili meno",
+                "few": "%(severalUsers)ssi %(count)s-krát zmenili meno",
+                "other": "%(severalUsers)ssi %(count)s-krát zmenili meno"
             },
             "format": "%(nameList)s %(transitionList)s",
             "hidden_event": {
@@ -3510,100 +3439,123 @@
                 "one": "%(severalUsers)sposlalo skrytú správu"
             },
             "invite_withdrawn": {
-                "other": "%(oneUser)smal %(count)s krát stiahnuté pozvanie",
-                "one": "%(oneUser)smal stiahnuté pozvanie"
+                "one": "%(oneUser)s ",
+                "few": "%(oneUser)s odvolal svoje pozvanie %(count)s-krát",
+                "other": "%(oneUser)s odvolal svoje pozvanie %(count)s-krát"
             },
             "invite_withdrawn_multiple": {
-                "other": "%(severalUsers)smali %(count)s krát stiahnuté pozvanie",
-                "one": "%(severalUsers)smali stiahnuté pozvanie"
+                "one": "%(severalUsers)s odvolali svoje pozvanie",
+                "few": "%(severalUsers)s odvolali svoje pozvanie %(count)s-krát",
+                "other": "%(severalUsers)s odvolali svoje pozvanie %(count)s-krát"
             },
             "invited": {
-                "other": "bol %(count)s krát pozvaný",
-                "one": "bol pozvaný"
+                "one": "bol pozvaný",
+                "few": "bol %(count)s-krát pozvaný",
+                "other": "bol %(count)s-krát pozvaný"
             },
             "invited_multiple": {
-                "other": "boli %(count)s krát pozvaní",
-                "one": "boli pozvaní"
+                "one": "boli pozvaní",
+                "few": "boli %(count)s-krát pozvaní",
+                "other": "boli %(count)s-krát pozvaní"
             },
             "joined": {
-                "other": "%(oneUser)s%(count)s krát vstúpil",
-                "one": "%(oneUser)svstúpil"
+                "one": "%(oneUser)ssa pripojil",
+                "few": "%(oneUser)ssa pripojil %(count)s-krát",
+                "other": "%(oneUser)ssa pripojil %(count)s-krát"
             },
             "joined_and_left": {
-                "other": "%(oneUser)s%(count)s krát vstúpil a opustil",
-                "one": "%(oneUser)svstúpil a opustil"
+                "one": "%(oneUser)svstúpil a odišiel",
+                "few": "%(oneUser)s%(count)s-krát vstúpil a odišiel",
+                "other": "%(oneUser)s%(count)s-krát vstúpil a odišiel"
             },
             "joined_and_left_multiple": {
-                "other": "%(severalUsers)s%(count)s krát vstúpili a opustili",
-                "one": "%(severalUsers)svstúpili a opustili"
+                "one": "%(severalUsers)svstúpili a odišli",
+                "few": "%(severalUsers)s%(count)s-krát vstúpili a odišli",
+                "other": "%(severalUsers)s%(count)s-krát vstúpili a odišli"
             },
             "joined_multiple": {
-                "other": "%(severalUsers)s%(count)s krát vstúpili",
-                "one": "%(severalUsers)svstúpili"
+                "one": "%(severalUsers)svstúpili",
+                "few": "%(severalUsers)s%(count)s-krát vstúpili",
+                "other": "%(severalUsers)s%(count)s-krát vstúpili"
             },
             "kicked": {
-                "other": "bol odstránený %(count)s krát",
-                "one": "bol odstránený"
+                "one": "bol odstránený",
+                "few": "bol odstránený %(count)s-krát",
+                "other": "bol odstránený %(count)s-krát"
             },
             "kicked_multiple": {
                 "one": "bol odstránený",
-                "other": "boli odstránení %(count)s krát"
+                "few": "boli odstránení %(count)s-krát",
+                "other": "boli odstránení %(count)s-krát"
             },
             "left": {
-                "other": "%(oneUser)s%(count)s krát opustil",
-                "one": "%(oneUser)sodišiel/a"
+                "one": "%(oneUser)sodišiel/a",
+                "few": "%(oneUser)s%(count)s-krát odišiel",
+                "other": "%(oneUser)s%(count)s-krát odišiel"
             },
             "left_multiple": {
-                "other": "%(severalUsers)s%(count)s krát opustili",
-                "one": "%(severalUsers)sopustili"
+                "one": "%(severalUsers)sopustili",
+                "few": "%(severalUsers)s%(count)s-krát opustili",
+                "other": "%(severalUsers)s%(count)s-krát opustili"
             },
             "no_change": {
                 "one": "%(oneUser)snespravil žiadne zmeny",
-                "other": "%(oneUser)s nevykonal žiadne zmeny %(count)s krát"
+                "few": "%(oneUser)s nevykonal žiadne zmeny %(count)s-krát",
+                "other": "%(oneUser)s nevykonal žiadne zmeny %(count)s-krát"
             },
             "no_change_multiple": {
                 "one": "%(severalUsers)snespravili žiadne zmeny",
-                "other": "%(severalUsers)s nevykonali žiadne zmeny %(count)s krát"
+                "few": "%(severalUsers)s nevykonali žiadne zmeny %(count)s-krát",
+                "other": "%(severalUsers)s nevykonali žiadne zmeny %(count)s-krát"
             },
             "pinned_events": {
-                "other": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti %(count)s krát",
-                "one": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti"
+                "one": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti",
+                "few": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti %(count)s-krát",
+                "other": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti %(count)s-krát"
             },
             "pinned_events_multiple": {
-                "other": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti %(count)s krát",
-                "one": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti"
+                "one": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti",
+                "few": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti %(count)s-krát",
+                "other": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti %(count)s-krát"
             },
             "redacted": {
                 "other": "%(oneUser)s odstránil/a %(count)s správ",
                 "one": "%(oneUser)sodstránil správu"
             },
             "redacted_multiple": {
-                "other": "%(severalUsers)sodstránili %(count)s správ",
-                "one": "%(severalUsers)s odstránili správu"
+                "one": "%(severalUsers)s odstránili správu",
+                "few": "%(severalUsers)sodstránili %(count)s správy",
+                "other": "%(severalUsers)sodstránili %(count)s správ"
             },
             "rejected_invite": {
-                "other": "%(oneUser)s%(count)s krát odmietol pozvanie",
-                "one": "%(oneUser)sodmietol pozvanie"
+                "one": "%(oneUser)sodmietol pozvanie",
+                "few": "%(oneUser)s%(count)s-krát odmietol pozvanie",
+                "other": "%(oneUser)s%(count)s-krát odmietol pozvanie"
             },
             "rejected_invite_multiple": {
-                "other": "%(severalUsers)s%(count)s krát odmietli pozvanie",
-                "one": "%(severalUsers)sodmietly pozvanie"
+                "one": "%(severalUsers)sodmietli pozvanie",
+                "few": "%(severalUsers)s%(count)s-krát odmietli pozvanie",
+                "other": "%(severalUsers)s%(count)s-krát odmietli pozvanie"
             },
             "rejoined": {
-                "other": "%(oneUser)s%(count)s krát opustil a znovu vstúpil",
-                "one": "%(oneUser)sopustil a znovu vstúpil"
+                "one": "%(oneUser)sodišiel a znovu vstúpil",
+                "few": "%(oneUser)s%(count)s-krát odišiel a znovu vstúpil",
+                "other": "%(oneUser)s%(count)s-krát odišiel a znovu vstúpil"
             },
             "rejoined_multiple": {
-                "other": "%(severalUsers)s%(count)s krát opustili a znovu vstúpili",
-                "one": "%(severalUsers)sopustili a znovu vstúpili"
+                "one": "%(severalUsers)sopustili a znovu vstúpili",
+                "few": "%(severalUsers)s%(count)s-krát odišli a znovu vstúpili",
+                "other": "%(severalUsers)s%(count)s-krát odišli a znovu vstúpili"
             },
             "server_acls": {
-                "other": "%(oneUser)szmenil ACL servera %(count)s krát",
-                "one": "%(oneUser)s zmenil ACL servera"
+                "one": "%(oneUser)s zmenil ACL servera",
+                "few": "%(oneUser)szmenil ACL servera %(count)s-krát",
+                "other": "%(oneUser)szmenil ACL servera %(count)s-krát"
             },
             "server_acls_multiple": {
-                "other": "%(severalUsers)szmenilo ACL servera %(count)s krát",
-                "one": "%(severalUsers)s zmenilo ACL servera"
+                "one": "%(severalUsers)s zmenilo ACL servera",
+                "few": "%(severalUsers)szmenilo ACL servera %(count)s-krát",
+                "other": "%(severalUsers)szmenilo ACL servera %(count)s-krát"
             },
             "unbanned": {
                 "other": "mal %(count)s krát povolený vstup",
@@ -3732,7 +3684,6 @@
         },
         "redact_button": "Odstrániť posledné správy",
         "revoke_invite": "Odvolať pozvánku",
-        "role_label": "Rola v <RoomName/>",
         "room_encrypted": "Správy v tejto miestnosti sú šifrované od vás až k príjemcovi.",
         "room_encrypted_detail": "Vaše správy sú zabezpečené a jedinečné kľúče na ich odomknutie máte len vy a príjemca.",
         "room_unencrypted": "Správy v tejto miestnosti nie sú šifrované od vás až k príjemcovi.",
@@ -3789,7 +3740,6 @@
         "already_in_call_person": "S touto osobou už hovor prebieha.",
         "answered_elsewhere": "Hovor prijatý inde",
         "answered_elsewhere_description": "Hovor bol prijatý na inom zariadení.",
-        "audio_devices": "Zvukové zariadenia",
         "call_failed": "Zlyhanie hovoru",
         "call_failed_description": "Hovor nemohol byť realizovaný",
         "call_failed_media": "Hovor zlyhal, pretože nebolo možné získať prístup k webkamere alebo mikrofónu. Skontrolujte, či:",
@@ -3876,7 +3826,6 @@
         "user_is_presenting": "%(sharerName)s prezentuje",
         "video_call": "Video hovor",
         "video_call_started": "Videohovor bol spustený",
-        "video_devices": "Video zariadenia",
         "voice_call": "Hlasový hovor",
         "you_are_presenting": "Prezentujete"
     },

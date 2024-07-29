@@ -17,17 +17,16 @@ limitations under the License.
 import React, { createRef, ReactNode, SyntheticEvent } from "react";
 import classNames from "classnames";
 import { RoomMember, Room, MatrixError, EventType } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
 import { uniqBy } from "lodash";
 
-import { Icon as InfoIcon } from "../../../../res/img/element-icons/info.svg";
 import { Icon as EmailPillAvatarIcon } from "../../../../res/img/icon-email-pill-avatar.svg";
 import { _t, _td } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { makeRoomPermalink, makeUserPermalink } from "../../../utils/permalinks/Permalinks";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import SdkConfig from "../../../SdkConfig";
 import * as Email from "../../../email";
 import { getDefaultIdentityServerUrl, setToDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
 import { buildActivityScores, buildMemberScores, compareMembers } from "../../../utils/SortMembers";
@@ -369,17 +368,14 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         this.profilesStore = SdkContextClass.instance.userProfilesStore;
 
         const excludedIds = new Set([MatrixClientPeg.safeGet().getUserId()!]);
-        const welcomeUserId = SdkConfig.get("welcome_user_id");
-        if (welcomeUserId) excludedIds.add(welcomeUserId);
-
         if (isRoomInvite(props)) {
             const room = MatrixClientPeg.safeGet().getRoom(props.roomId);
             const isFederated = room?.currentState.getStateEvents(EventType.RoomCreate, "")?.getContent()["m.federate"];
             if (!room) throw new Error("Room ID given to InviteDialog does not look like a room");
-            room.getMembersWithMembership("invite").forEach((m) => excludedIds.add(m.userId));
-            room.getMembersWithMembership("join").forEach((m) => excludedIds.add(m.userId));
+            room.getMembersWithMembership(KnownMembership.Invite).forEach((m) => excludedIds.add(m.userId));
+            room.getMembersWithMembership(KnownMembership.Join).forEach((m) => excludedIds.add(m.userId));
             // add banned users, so we don't try to invite them
-            room.getMembersWithMembership("ban").forEach((m) => excludedIds.add(m.userId));
+            room.getMembersWithMembership(KnownMembership.Ban).forEach((m) => excludedIds.add(m.userId));
             if (isFederated === false) {
                 // exclude users from external servers
                 const homeserver = props.roomId.split(":")[1];
@@ -627,7 +623,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         }
 
         try {
-            const result = await inviteMultipleToRoom(cli, this.props.roomId, targetIds, true);
+            const result = await inviteMultipleToRoom(cli, this.props.roomId, targetIds);
             if (!this.shouldAbortAfterInviteError(result, room)) {
                 // handles setting error message too
                 this.props.onFinished(true);
@@ -1282,7 +1278,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         let consultConnectSection;
         let extraSection;
         let footer;
-        let keySharingWarning = <span />;
 
         const identityServersEnabled = SettingsStore.getValue(UIFeature.IdentityServer);
 
@@ -1394,21 +1389,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
             buttonText = _t("action|invite");
             goButtonFn = this.inviteUsers;
-
-            if (cli.isRoomEncrypted(this.props.roomId)) {
-                const room = cli.getRoom(this.props.roomId)!;
-                const visibilityEvent = room.currentState.getStateEvents("m.room.history_visibility", "");
-                const visibility =
-                    visibilityEvent && visibilityEvent.getContent() && visibilityEvent.getContent().history_visibility;
-                if (visibility === "world_readable" || visibility === "shared") {
-                    keySharingWarning = (
-                        <p className="mx_InviteDialog_helpText">
-                            <InfoIcon height={14} width={14} />
-                            {" " + _t("invite|key_share_warning")}
-                        </p>
-                    );
-                }
-            }
         } else if (this.props.kind === InviteKind.CallTransfer) {
             title = _t("action|transfer");
 
@@ -1474,7 +1454,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                         {spinner}
                     </div>
                 </div>
-                {keySharingWarning}
                 {this.renderIdentityServerWarning()}
                 <div className="error">{this.state.errorText}</div>
                 {onlyOneThreepidNote}
@@ -1539,9 +1518,9 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             );
             dialogContent = (
                 <React.Fragment>
-                    <TabbedView
+                    <TabbedView<TabId>
                         tabs={tabs}
-                        initialTabId={this.state.currentTabId}
+                        activeTabId={this.state.currentTabId}
                         tabLocation={TabLocation.TOP}
                         onChange={this.onTabChange}
                     />

@@ -25,7 +25,12 @@ import { Docker } from "../../docker";
 import { HomeserverConfig, HomeserverInstance, Homeserver, StartHomeserverOpts, Credentials } from "..";
 import { randB64Bytes } from "../../utils/rand";
 
-async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<HomeserverConfig> {
+// Docker tag to use for `matrixdotorg/synapse` image.
+// We target a specific digest as every now and then a Synapse update will break our CI.
+// This digest is updated by the playwright-image-updates.yaml workflow periodically.
+const DOCKER_TAG = "develop@sha256:b73edc968e2f21f9e04502526de61fd3e1eeb8fcaa1d962a4de70e81debedec4";
+
+async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Omit<HomeserverConfig, "dockerUrl">> {
     const templateDir = path.join(__dirname, "templates", opts.template);
 
     const stats = await fse.stat(templateDir);
@@ -57,20 +62,9 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Homeserver
     if (opts.oAuthServerPort) {
         hsYaml = hsYaml.replace(/{{OAUTH_SERVER_PORT}}/g, opts.oAuthServerPort.toString());
     }
-    hsYaml = hsYaml.replace(/{{HOST_DOCKER_INTERNAL}}/g, await Docker.hostnameOfHost());
     if (opts.variables) {
-        let fetchedHostContainer: Awaited<ReturnType<typeof Docker.hostnameOfHost>> | null = null;
         for (const key in opts.variables) {
-            let value = String(opts.variables[key]);
-
-            if (value === "{{HOST_DOCKER_INTERNAL}}") {
-                if (!fetchedHostContainer) {
-                    fetchedHostContainer = await Docker.hostnameOfHost();
-                }
-                value = fetchedHostContainer;
-            }
-
-            hsYaml = hsYaml.replace(new RegExp("%" + key + "%", "g"), value);
+            hsYaml = hsYaml.replace(new RegExp("%" + key + "%", "g"), String(opts.variables[key]));
         }
     }
 
@@ -84,6 +78,10 @@ async function cfgDirFromTemplate(opts: StartHomeserverOpts): Promise<Homeserver
     console.log(`Gen -> ${outputSigningKey}`);
     await fse.writeFile(outputSigningKey, `ed25519 x ${signingKey}`);
 
+    // Allow anyone to read, write and execute in the /temp/react-sdk-synapsedocker-xxx directory
+    // so that the DIND setup that we use to update the playwright screenshots work without any issues.
+    await fse.chmod(tempDir, 0o757);
+
     return {
         port,
         baseUrl,
@@ -96,34 +94,23 @@ export class Synapse implements Homeserver, HomeserverInstance {
     protected docker: Docker = new Docker();
     public config: HomeserverConfig & { serverId: string };
 
+    private adminToken?: string;
+
     public constructor(private readonly request: APIRequestContext) {}
 
     /**
      * Start a synapse instance: the template must be the name of
      * one of the templates in the playwright/plugins/synapsedocker/templates
      * directory.
-     *
-     * Any value in `opts.variables` that is set to `{{HOST_DOCKER_INTERNAL}}'
-     * will be replaced with 'host.docker.internal' (if we are on Docker) or
-     * 'host.containers.internal' if we are on Podman.
      */
     public async start(opts: StartHomeserverOpts): Promise<HomeserverInstance> {
         if (this.config) await this.stop();
 
         const synCfg = await cfgDirFromTemplate(opts);
         console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
-        const dockerSynapseParams = ["--rm", "-v", `${synCfg.configDir}:/data`, "-p", `${synCfg.port}:8008/tcp`];
-        if (await Docker.isPodman()) {
-            // Make host.containers.internal work to allow Synapse to talk to the test OIDC server.
-            dockerSynapseParams.push("--network");
-            dockerSynapseParams.push("slirp4netns:allow_host_loopback=true");
-        } else {
-            // Make host.docker.internal work to allow Synapse to talk to the test OIDC server.
-            dockerSynapseParams.push("--add-host");
-            dockerSynapseParams.push("host.docker.internal:host-gateway");
-        }
+        const dockerSynapseParams = ["-v", `${synCfg.configDir}:/data`, "-p", `${synCfg.port}:8008/tcp`];
         const synapseId = await this.docker.run({
-            image: "matrixdotorg/synapse:develop",
+            image: `matrixdotorg/synapse:${DOCKER_TAG}`,
             containerName: `react-sdk-playwright-synapse`,
             params: dockerSynapseParams,
             cmd: ["run"],
@@ -142,18 +129,19 @@ export class Synapse implements Homeserver, HomeserverInstance {
             "--silent",
             "http://localhost:8008/health",
         ]);
-
+        const dockerUrl = `http://${await this.docker.getContainerIp()}:8008`;
         this.config = {
             ...synCfg,
             serverId: synapseId,
+            dockerUrl,
         };
         return this;
     }
 
-    public async stop(): Promise<void> {
+    public async stop(): Promise<string[]> {
         if (!this.config) throw new Error("Missing existing synapse instance, did you call stop() before start()?");
         const id = this.config.serverId;
-        const synapseLogsPath = path.join("playwright", "synapselogs", id);
+        const synapseLogsPath = path.join("playwright", "logs", "synapse", id);
         await fse.ensureDir(synapseLogsPath);
         await this.docker.persistLogsToFile({
             stdoutFile: path.join(synapseLogsPath, "stdout.log"),
@@ -162,14 +150,21 @@ export class Synapse implements Homeserver, HomeserverInstance {
         await this.docker.stop();
         await fse.remove(this.config.configDir);
         console.log(`Stopped synapse id ${id}.`);
+
+        return [path.join(synapseLogsPath, "stdout.log"), path.join(synapseLogsPath, "stderr.log")];
     }
 
-    public async registerUser(username: string, password: string, displayName?: string): Promise<Credentials> {
+    private async registerUserInternal(
+        username: string,
+        password: string,
+        displayName?: string,
+        admin = false,
+    ): Promise<Credentials> {
         const url = `${this.config.baseUrl}/_synapse/admin/v1/register`;
         const { nonce } = await this.request.get(url).then((r) => r.json());
         const mac = crypto
             .createHmac("sha1", this.config.registrationSecret)
-            .update(`${nonce}\0${username}\0${password}\0notadmin`)
+            .update(`${nonce}\0${username}\0${password}\0${admin ? "" : "not"}admin`)
             .digest("hex");
         const res = await this.request.post(url, {
             data: {
@@ -177,7 +172,7 @@ export class Synapse implements Homeserver, HomeserverInstance {
                 username,
                 password,
                 mac,
-                admin: false,
+                admin,
                 displayname: displayName,
             },
         });
@@ -193,6 +188,60 @@ export class Synapse implements Homeserver, HomeserverInstance {
             userId: data.user_id,
             deviceId: data.device_id,
             password,
+            displayName,
         };
+    }
+
+    public registerUser(username: string, password: string, displayName?: string): Promise<Credentials> {
+        return this.registerUserInternal(username, password, displayName, false);
+    }
+
+    public async loginUser(userId: string, password: string): Promise<Credentials> {
+        const url = `${this.config.baseUrl}/_matrix/client/v3/login`;
+        const res = await this.request.post(url, {
+            data: {
+                type: "m.login.password",
+                identifier: {
+                    type: "m.id.user",
+                    user: userId,
+                },
+                password: password,
+            },
+        });
+        const json = await res.json();
+
+        return {
+            password,
+            accessToken: json.access_token,
+            userId: json.user_id,
+            deviceId: json.device_id,
+            homeServer: json.home_server,
+        };
+    }
+
+    public async setThreepid(userId: string, medium: string, address: string): Promise<void> {
+        if (this.adminToken === undefined) {
+            const result = await this.registerUserInternal("admin", "totalyinsecureadminpassword", undefined, true);
+            this.adminToken = result.accessToken;
+        }
+
+        const url = `${this.config.baseUrl}/_synapse/admin/v2/users/${userId}`;
+        const res = await this.request.put(url, {
+            data: {
+                threepids: [
+                    {
+                        medium,
+                        address,
+                    },
+                ],
+            },
+            headers: {
+                Authorization: `Bearer ${this.adminToken}`,
+            },
+        });
+
+        if (!res.ok()) {
+            throw await res.json();
+        }
     }
 }
