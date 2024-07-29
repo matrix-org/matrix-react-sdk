@@ -6,28 +6,36 @@ exports[`GenericToast should render as expected with detail content 1`] = `
     <div
       class="mx_Toast_description"
     >
+      <p
+        class="_typography_yh5dq_162 _font-body-sm-regular_yh5dq_40"
+      />
       <div>
         Description
       </div>
+      <p />
     </div>
     <div
       aria-live="off"
       class="mx_Toast_buttons"
     >
-      <div
-        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_outline"
+      <button
+        class="_button_zt6rp_17"
+        data-kind="secondary"
+        data-size="sm"
         role="button"
         tabindex="0"
       >
         Reject
-      </div>
-      <div
-        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      </button>
+      <button
+        class="_button_zt6rp_17"
+        data-kind="primary"
+        data-size="sm"
         role="button"
         tabindex="0"
       >
         Accept
-      </div>
+      </button>
     </div>
   </div>
 </DocumentFragment>
@@ -39,9 +47,13 @@ exports[`GenericToast should render as expected without detail content 1`] = `
     <div
       class="mx_Toast_description"
     >
+      <p
+        class="_typography_yh5dq_162 _font-body-sm-regular_yh5dq_40"
+      />
       <div>
         Description
       </div>
+      <p />
       <div
         class="mx_Toast_detail"
       >
@@ -52,20 +64,24 @@ exports[`GenericToast should render as expected without detail content 1`] = `
       aria-live="off"
       class="mx_Toast_buttons"
     >
-      <div
-        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_outline"
+      <button
+        class="_button_zt6rp_17"
+        data-kind="secondary"
+        data-size="sm"
         role="button"
         tabindex="0"
       >
         Reject
-      </div>
-      <div
-        class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      </button>
+      <button
+        class="_button_zt6rp_17"
+        data-kind="primary"
+        data-size="sm"
         role="button"
         tabindex="0"
       >
         Accept
-      </div>
+      </button>
     </div>
   </div>
 </DocumentFragment>
