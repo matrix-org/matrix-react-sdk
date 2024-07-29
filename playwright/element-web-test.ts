@@ -314,7 +314,7 @@ export const expect = baseExpect.extend({
         options?: {
             mask?: Array<Locator>;
             omitBackground?: boolean;
-            hideTooltips?: boolean;
+            showTooltips?: boolean;
             timeout?: number;
             css?: string;
         },
@@ -325,7 +325,7 @@ export const expect = baseExpect.extend({
         const page = "page" in receiver ? receiver.page() : receiver;
 
         let hideTooltipsCss: string | undefined;
-        if (options?.hideTooltips) {
+        if (!options?.showTooltips) {
             hideTooltipsCss = `
                 .mx_Tooltip_visible {
                     visibility: hidden !important;
