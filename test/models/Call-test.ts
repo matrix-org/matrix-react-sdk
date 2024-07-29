@@ -28,12 +28,12 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import { Widget } from "matrix-widget-api";
-// eslint-disable-next-line no-restricted-imports
-import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
-// eslint-disable-next-line no-restricted-imports
-import { CallMembership } from "matrix-js-sdk/src/matrixrtc/CallMembership";
-// eslint-disable-next-line no-restricted-imports
-import { MatrixRTCSession, MatrixRTCSessionEvent } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
+import {
+    CallMembership,
+    MatrixRTCSessionManagerEvents,
+    MatrixRTCSession,
+    MatrixRTCSessionEvent,
+} from "matrix-js-sdk/src/matrixrtc";
 
 import type { Mocked } from "jest-mock";
 import type { MatrixClient, IMyDevice, RoomMember } from "matrix-js-sdk/src/matrix";
@@ -963,6 +963,18 @@ describe("ElementCall", () => {
 
             await call.setLayout(Layout.Tile);
             expect(messaging.transport.send).toHaveBeenCalledWith(ElementWidgetActions.TileLayout, {});
+        });
+
+        it("acknowledges mute_device widget action", async () => {
+            await callConnectProcedure(call);
+            const preventDefault = jest.fn();
+            const mockEv = {
+                preventDefault,
+                detail: { video_enabled: false },
+            };
+            messaging.emit(`action:${ElementWidgetActions.DeviceMute}`, mockEv);
+            expect(messaging.transport.reply).toHaveBeenCalledWith({ video_enabled: false }, {});
+            expect(preventDefault).toHaveBeenCalled();
         });
 
         it("emits events when connection state changes", async () => {
