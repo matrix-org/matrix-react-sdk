@@ -115,21 +115,6 @@ interface IAppsSectionProps {
     room: Room;
 }
 
-export const useWidgets = (room: Room): IApp[] => {
-    const [apps, setApps] = useState<IApp[]>(() => WidgetStore.instance.getApps(room.roomId));
-
-    const updateApps = useCallback(() => {
-        // Copy the array so that we always trigger a re-render, as some updates mutate the array of apps/settings
-        setApps([...WidgetStore.instance.getApps(room.roomId)]);
-    }, [room]);
-
-    useEffect(updateApps, [room, updateApps]);
-    useEventEmitter(WidgetStore.instance, room.roomId, updateApps);
-    useEventEmitter(WidgetLayoutStore.instance, WidgetLayoutStore.emissionForRoom(room), updateApps);
-
-    return apps;
-};
-
 interface IAppRowProps {
     app: IApp;
     room: Room;
