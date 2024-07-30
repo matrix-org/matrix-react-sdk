@@ -305,6 +305,9 @@ const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element | null
     const topic = useTopic(room);
     const body = topicToHtml(topic?.text, topic?.html);
 
+    const canEditTopic = useRoomState(room, (state) =>
+        state.maySendStateEvent(EventType.RoomTopic, room.client.getSafeUserId()),
+    );
     const onEditClick = (e: SyntheticEvent): void => {
         e.preventDefault();
         e.stopPropagation();
@@ -364,7 +367,7 @@ const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element | null
                     <ChevronDownIcon />
                 </IconButton>
             </Box>
-            {expanded && (
+            {expanded && canEditTopic && (
                 <Box flex="1" className="mx_RoomSummaryCard_topic_edit">
                     <Link kind="primary" onClick={onEditClick}>
                         <Text size="sm" weight="regular">
