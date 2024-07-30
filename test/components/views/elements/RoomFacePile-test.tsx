@@ -14,6 +14,7 @@ limitations under the License.
 
 import { render } from "@testing-library/react";
 import React from "react";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import { mkRoom, mkRoomMember, stubClient, withClientContextRenderOptions } from "../../../test-utils";
 import RoomFacePile from "../../../../src/components/views/elements/RoomFacePile";
@@ -26,7 +27,9 @@ describe("<RoomFacePile />", () => {
         DMRoomMap.makeShared(cli);
         const room = mkRoom(cli, "!123");
 
-        jest.spyOn(room, "getJoinedMembers").mockReturnValue([mkRoomMember(room.roomId, "@bob:example.org", "join")]);
+        jest.spyOn(room, "getJoinedMembers").mockReturnValue([
+            mkRoomMember(room.roomId, "@bob:example.org", KnownMembership.Join),
+        ]);
 
         const { asFragment } = render(
             <RoomFacePile onlyKnownUsers={false} room={room} />,

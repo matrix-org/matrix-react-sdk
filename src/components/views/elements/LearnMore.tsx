@@ -19,14 +19,14 @@ import React from "react";
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import InfoDialog from "../dialogs/InfoDialog";
-import AccessibleButton, { IAccessibleButtonProps } from "./AccessibleButton";
+import AccessibleButton, { ButtonProps } from "./AccessibleButton";
 
-export interface LearnMoreProps extends IAccessibleButtonProps {
+type Props = Omit<ButtonProps<"div">, "element" | "kind" | "onClick" | "className"> & {
     title: string;
     description: string | React.ReactNode;
-}
+};
 
-const LearnMore: React.FC<LearnMoreProps> = ({ title, description, ...rest }) => {
+const LearnMore: React.FC<Props> = ({ title, description, ...rest }) => {
     const onClick = (): void => {
         Modal.createDialog(InfoDialog, {
             title,

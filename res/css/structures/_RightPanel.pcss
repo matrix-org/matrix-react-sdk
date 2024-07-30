@@ -25,6 +25,7 @@ limitations under the License.
     box-sizing: border-box;
     height: 100%;
     contain: strict;
+    background-color: var(--cpd-color-bg-canvas-default);
 
     .mx_RoomView_MessageList {
         padding: 14px 18px; /* top and bottom is 4px smaller to balance with the padding set above */
@@ -70,44 +71,4 @@ limitations under the License.
 .mx_RightPanel .mx_RoomView_messagePanelSpinner {
     order: 2;
     margin: auto;
-}
-
-.mx_RightPanel_empty {
-    margin-right: -28px;
-
-    h2 {
-        font-weight: 700;
-        margin: 16px 0;
-    }
-
-    h2,
-    p {
-        font: var(--cpd-font-body-md-regular);
-    }
-
-    &::before {
-        content: "";
-        display: block;
-        margin: 11px auto 29px auto;
-        height: 42px;
-        width: 42px;
-        background-color: $header-panel-text-primary-color;
-        mask-image: var(--maskImage);
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        mask-position: center;
-    }
-}
-
-.mx_RightPanel_scopeHeader {
-    margin: 24px;
-    text-align: center;
-    font-weight: var(--cpd-font-weight-semibold);
-    font-size: $font-18px;
-    line-height: $font-22px;
-
-    .mx_BaseAvatar {
-        margin-right: 8px;
-        vertical-align: middle;
-    }
 }

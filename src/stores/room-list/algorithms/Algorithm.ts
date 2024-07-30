@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/matrix";
+import { JoinRule, Room } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { EventEmitter } from "events";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -84,11 +85,11 @@ export class Algorithm extends EventEmitter {
     public updatesInhibited = false;
 
     public start(): void {
-        CallStore.instance.on(CallStoreEvent.ActiveCalls, this.onActiveCalls);
+        CallStore.instance.on(CallStoreEvent.ConnectedCalls, this.onConnectedCalls);
     }
 
     public stop(): void {
-        CallStore.instance.off(CallStoreEvent.ActiveCalls, this.onActiveCalls);
+        CallStore.instance.off(CallStoreEvent.ConnectedCalls, this.onConnectedCalls);
     }
 
     public get stickyRoom(): Room | null {
@@ -172,7 +173,7 @@ export class Algorithm extends EventEmitter {
     }
 
     private doUpdateStickyRoom(val: Room | null): void {
-        if (val?.isSpaceRoom() && val.getMyMembership() !== "invite") {
+        if (val?.isSpaceRoom() && val.getMyMembership() !== KnownMembership.Invite) {
             // no-op sticky rooms for spaces - they're effectively virtual rooms
             val = null;
         }
@@ -301,7 +302,7 @@ export class Algorithm extends EventEmitter {
         return this._stickyRoom;
     }
 
-    private onActiveCalls = (): void => {
+    private onConnectedCalls = (): void => {
         // In case we're unsticking a room, sort it back into natural order
         this.recalculateStickyRoom();
 
@@ -395,12 +396,12 @@ export class Algorithm extends EventEmitter {
             return;
         }
 
-        if (CallStore.instance.activeCalls.size) {
+        if (CallStore.instance.connectedCalls.size) {
             // We operate on the sticky rooms map
             if (!this._cachedStickyRooms) this.initCachedStickyRooms();
             const rooms = this._cachedStickyRooms![updatedTag];
 
-            const activeRoomIds = new Set([...CallStore.instance.activeCalls].map((call) => call.roomId));
+            const activeRoomIds = new Set([...CallStore.instance.connectedCalls].map((call) => call.roomId));
             const activeRooms: Room[] = [];
             const inactiveRooms: Room[] = [];
 
@@ -498,6 +499,8 @@ export class Algorithm extends EventEmitter {
             newTags[DefaultTagID.Invite].push(room);
         }
         for (const room of memberships[EffectiveMembership.Leave]) {
+            // We may not have had an archived section previously, so make sure its there.
+            if (newTags[DefaultTagID.Archived] === undefined) newTags[DefaultTagID.Archived] = [];
             newTags[DefaultTagID.Archived].push(room);
         }
 
@@ -573,6 +576,9 @@ export class Algorithm extends EventEmitter {
             if (DMRoomMap.shared().getUserIdForRoomId(room.roomId)) {
                 tags = [DefaultTagID.DM];
             }
+        }
+        if (room.isCallRoom() && (room.getJoinRule() === JoinRule.Public || room.getJoinRule() === JoinRule.Knock)) {
+            tags.push(DefaultTagID.Conference);
         }
 
         return tags;

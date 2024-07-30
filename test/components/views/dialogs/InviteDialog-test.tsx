@@ -18,12 +18,14 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RoomType, MatrixClient, MatrixError, Room } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { mocked, Mocked } from "jest-mock";
 
 import InviteDialog from "../../../../src/components/views/dialogs/InviteDialog";
 import { InviteKind } from "../../../../src/components/views/dialogs/InviteDialogTypes";
 import {
+    clearAllModals,
     filterConsole,
     flushPromises,
     getMockClientWithEventEmitter,
@@ -39,7 +41,6 @@ import { SdkContextClass } from "../../../../src/contexts/SDKContext";
 import { IProfileInfo } from "../../../../src/hooks/useProfileInfo";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
 import SettingsStore from "../../../../src/settings/SettingsStore";
-import Modal from "../../../../src/Modal";
 
 const mockGetAccessToken = jest.fn().mockResolvedValue("getAccessToken");
 jest.mock("../../../../src/IdentityAuthClient", () =>
@@ -163,7 +164,7 @@ describe("InviteDialog", () => {
             mkMembership({
                 event: true,
                 room: roomId,
-                mship: "join",
+                mship: KnownMembership.Join,
                 user: aliceId,
                 skey: aliceId,
             }),
@@ -177,8 +178,8 @@ describe("InviteDialog", () => {
         SdkContextClass.instance.client = mockClient;
     });
 
-    afterEach(() => {
-        Modal.closeCurrentModal();
+    afterEach(async () => {
+        await clearAllModals();
         SdkContextClass.instance.onLoggedOut();
         SdkContextClass.instance.client = undefined;
     });
@@ -479,7 +480,6 @@ describe("InviteDialog", () => {
     });
 
     it("should not suggest users from other server when room has m.federate=false", async () => {
-        SdkConfig.add({ welcome_user_id: "@bot:example.org" });
         room.currentState.setStateEvents([mkRoomCreateEvent(bobId, roomId, { "m.federate": false })]);
 
         render(

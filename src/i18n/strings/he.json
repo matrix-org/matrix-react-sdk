@@ -191,7 +191,8 @@
         "msisdn_field_required_invalid": "הזן טלפון",
         "no_hs_url_provided": "לא סופקה כתובת של שרת הראשי",
         "oidc": {
-            "error_title": "לא הצלחנו להתחבר אליך"
+            "error_title": "לא הצלחנו להתחבר אליך",
+            "missing_or_invalid_stored_state": "ביקשנו מהדפדפן לזכור באיזה שרת בית אתה משתמש כדי לאפשר לך להיכנס, אך למרבה הצער הדפדפן שלך שכח אותו. עבור לדף הכניסה ונסה שוב."
         },
         "password_field_label": "הזן סיסמה",
         "password_field_strong_label": "יפה, סיסמה חזקה!",
@@ -322,7 +323,6 @@
         "spaceinvaders_message": "שולח פולשים לחלל"
     },
     "common": {
-        "about": "אודות",
         "accessibility": "נגישות",
         "advanced": "מתקדם",
         "all_rooms": "כל החדרים",
@@ -344,7 +344,6 @@
         "dark": "כהה",
         "description": "תאור",
         "deselect_all": "הסר סימון מהכל",
-        "display_name": "שם לתצוגה",
         "edited": "נערך",
         "email_address": "כתובת דוא\"ל",
         "emoji": "אימוג'י",
@@ -1022,8 +1021,7 @@
         "jump_to_date": "קיפצו לתאריך (מוסיף /jumptodate וקפוץ לכותרות תאריך)",
         "latex_maths": "בצע מתמטיקה של LaTeX בהודעות",
         "leave_beta_reload": "עזיבת הניסוי תטען מחדש את %(brand)s.",
-        "pinning": "נעיצת הודעות",
-        "state_counters": "הצג ספירה בראש החדר"
+        "pinning": "נעיצת הודעות"
     },
     "labs_mjolnir": {
         "advanced_warning": "⚠ הגדרות אלה מיועדות למשתמשים מתקדמים.",
@@ -1058,14 +1056,6 @@
         "view_rules": "צפה בכללים"
     },
     "language_dropdown_label": "תפריט שפות",
-    "lazy_loading": {
-        "disabled_action": "נקה מטמון וסנכרן מחדש",
-        "disabled_description1": "השתמשת בעבר ב- %(brand)s ב- %(host)s עם טעינה עצלה של חברים מופעלת. בגרסה זו טעינה עצלה מושבתת. מכיוון שהמטמון המקומי אינו תואם בין שתי ההגדרות הללו, %(brand)s צריך לסנכרן מחדש את חשבונך.",
-        "disabled_description2": "אם הגרסה האחרת של %(brand)s עדיין פתוחה בכרטיסייה אחרת, אנא סגור אותה כשימוש ב-%(brand)s באותו מארח כאשר טעינה עצלה מופעלת וגם מושבתת בו זמנית תגרום לבעיות.",
-        "disabled_title": "מטמון מקומי לא תואם",
-        "resync_description": "%(brand)s משתמש כעת בזכרון פחות פי 3-5, על ידי טעינת מידע רק על משתמשים אחרים בעת הצורך. אנא המתן בזמן שאנחנו מסתנכרנים מחדש עם השרת!",
-        "resync_title": "מעדכן %(brand)s"
-    },
     "leave_room_dialog": {
         "leave_room_question": "האם אתה בטוח שברצונך לעזוב את החדר '%(roomName)s'?",
         "room_rejoin_warning": "חדר זה אינו ציבורי. לא תוכל להצטרף שוב ללא הזמנה."
@@ -1113,8 +1103,6 @@
         "all_messages_description": "קבלת התראות על כל הודעה",
         "class_global": "כללי",
         "class_other": "אחר",
-        "colour_bold": "מודגש",
-        "colour_none": "ללא",
         "default": "ברירת מחדל",
         "enable_prompt_toast_description": "אשרו התראות שולחן עבודה",
         "enable_prompt_toast_title": "התראות",
@@ -1122,6 +1110,8 @@
         "error_change_title": "שינוי הגדרת התרעות",
         "keyword": "מילת מפתח",
         "keyword_new": "מילת מפתח חדשה",
+        "level_activity": "פעילות",
+        "level_none": "ללא",
         "mark_all_read": "סמן הכל כנקרא",
         "mentions_and_keywords": "אזכורים ומילות מפתח",
         "mentions_and_keywords_description": "קבלו התראה רק עם אזכורים ומילות מפתח כפי שהוגדרו ב<a>הגדרות</a> שלכם",
@@ -1254,9 +1244,6 @@
         "room_summary_card": {
             "title": "מידע על החדר"
         },
-        "search_button": "חפש",
-        "settings_button": "הגדרות חדר",
-        "share_button": "שתף חדר",
         "thread_list": {
             "context_menu_label": "אפשרויות שרשור"
         },
@@ -1334,13 +1321,10 @@
         "peek_join_prompt": "אתם צופים ב־%(roomName)s. האם תרצו להצטרף?",
         "rejoin_button": "הצטרפות מחדש",
         "search": {
-            "all_rooms": "כל החדרים",
-            "field_placeholder": "חפש…",
             "result_count": {
                 "one": "(תוצאת %(count)s)",
                 "other": "(תוצאת %(count)s)"
-            },
-            "this_room": "החדר הזה"
+            }
         },
         "show_labs_settings": "הצג את אופציית מעבדת הפיתוח",
         "status_bar": {
@@ -1616,10 +1600,8 @@
     "setting": {
         "help_about": {
             "brand_version": "גרסאת %(brand)s:",
-            "chat_bot": "דבר עם הבוט של %(brand)s",
             "clear_cache_reload": "נקה מטמון ואתחל",
             "help_link": "בשביל לעזור בקידום ושימוש ב- %(brand)s, לחצו <a>כאן</a>.",
-            "help_link_chat_bot": "לעזרה בשימוש ב-%(brand)s לחץ על <a> כאן </a> או התחל צ'אט עם הבוט שלנו באמצעות הלחצן למטה.",
             "title": "עזרה ואודות",
             "versions": "גרסאות"
         }
@@ -1633,21 +1615,13 @@
             "custom_font_description": "הגדר את שם הגופן המותקן במערכת שלך ו- %(brand)s ים ינסו להשתמש בו.",
             "custom_font_name": "שם גופן מערכת",
             "custom_font_size": "השתמשו בגודל מותאם אישית",
-            "custom_theme_add_button": "הוסף ערכת נושא חדשה",
             "custom_theme_error_downloading": "שגיאה בהורדת מידע אודות ערכת הנושא.",
             "custom_theme_invalid": "סכמת תבנית לא תקינה.",
-            "custom_theme_success": "ערכת נושא התווספה בהצלחה!",
-            "custom_theme_url": "כתובת ערכת נושא מותאמת אישית",
             "font_size": "גודל אותיות",
-            "font_size_limit": "גודל גופן מותאם אישית יכול להיות רק בין %(min)s ל %(max)s נקודות",
-            "font_size_nan": "הגדול חייב להיות מספר",
-            "font_size_valid": "השתמש בין %(min)s ל %(max)s נקודות",
-            "heading": "התאם את התצוגה שלך",
             "image_size_default": "ברירת מחדל",
             "image_size_large": "גדול",
             "layout_bubbles": "בועות הודעות",
             "match_system_theme": "התאם לתבנית המערכת",
-            "subheading": "התאמת תצוגה משפיעה רק על התחברות זו %(brand)s.",
             "timeline_image_size": "גודל תמונה בציר הזמן"
         },
         "automatic_language_detection_syntax_highlight": "החל זיהוי שפה אוטומטי עבור הדגשת מבנה הכתיבה",
@@ -1680,7 +1654,6 @@
             "discovery_email_verification_instructions": "אמת את הקישור בתיבת הדואר הנכנס שלך",
             "discovery_msisdn_empty": "אפשרויות גילוי יופיעו לאחר הוספת מספר טלפון לעיל.",
             "discovery_needs_terms": "הסכים לתנאי השירות של שרת הזהות (%(serverName)s) כדי לאפשר לעצמך להיות גלוי על ידי כתובת דוא\"ל או מספר טלפון.",
-            "discovery_section": "מציאה",
             "email_address_in_use": "כתובת הדואר הזו כבר בשימוש",
             "email_address_label": "כתובת דוא\"ל",
             "email_not_verified": "כתובת הדוא\"ל שלך עדיין לא אומתה",
@@ -1698,8 +1671,6 @@
             "error_remove_3pid": "לא ניתן להסיר את פרטי הקשר",
             "error_revoke_email_discovery": "לא ניתן לבטל את השיתוף לכתובת הדוא\"ל",
             "error_revoke_msisdn_discovery": "לא ניתן לבטל את השיתוף למספר טלפון",
-            "error_saving_profile": "לא ניתן היה להשלים את הפעולה",
-            "error_saving_profile_title": "שמירת הפרופיל שלך נכשלה",
             "error_share_email_discovery": "לא ניתן לשתף את כתובת הדוא\"ל",
             "error_share_msisdn_discovery": "לא ניתן לשתף מספר טלפון",
             "incorrect_msisdn_verification": "קוד אימות שגוי",
@@ -1839,7 +1810,6 @@
             "delete_backup_confirm_description": "האם אתה בטוח? תאבד את ההודעות המוצפנות שלך אם המפתחות שלך לא מגובים כראוי.",
             "e2ee_default_disabled_warning": "מנהל השרת שלך השבית הצפנה מקצה לקצה כברירת מחדל בחדרים פרטיים ובהודעות ישירות.",
             "enable_message_search": "אפשר חיפוש הודעות בחדרים מוצפנים",
-            "encryption_individual_verification_mode": "אמת בנפרד כל מושב שמשתמש בו כדי לסמן אותו כאמצעי מהימן, ולא אמון על מכשירים חתומים צולבים.",
             "encryption_section": "הצפנה",
             "error_loading_key_backup_status": "לא ניתן לטעון את מצב גיבוי המפתח",
             "export_megolm_keys": "ייצא מפתחות חדר E2E",
@@ -1853,7 +1823,6 @@
             "key_backup_connect_prompt": "חבר את ההפעלה הזו לגיבוי המפתח לפני היציאה, כדי למנוע אובדן מפתחות שיכולים להיות רק בפגישה זו.",
             "key_backup_inactive": "הפעלה זו <b> אינה מגבה את המפתחות שלך </b>, אך יש לך גיבוי קיים ממנו תוכל לשחזר ולהוסיף להמשך.",
             "key_backup_inactive_warning": "המפתחות שלך <b> אינם מגובים מהתחברות זו </b>.",
-            "manually_verify_all_sessions": "אמת באופן ידני את כל ההתחברויות",
             "message_search_disable_warning": "אם מושבת, הודעות מחדרים מוצפנים לא יופיעו בתוצאות החיפוש.",
             "message_search_disabled": "שמור באופן מאובטח הודעות מוצפנות באופן מקומי כדי שיופיעו בתוצאות החיפוש.",
             "message_search_enabled": {
@@ -2107,15 +2076,10 @@
     "threads": {
         "all_threads": "כל הקישורים",
         "all_threads_description": "הצג את כל הקישורים מחדר זה",
-        "empty_explainer": "שרשורים עוזרים לשמור על השיחות שלכם בנושא וקל למעקב.",
-        "empty_has_threads_tip": "השיבו לשרשור מתמשך או השתמשו ב-\"%(replyInThread)s\" כשאתם מרחפים מעל הודעה כדי להתחיל הודעה חדשה.",
-        "empty_heading": "שימרו על דיונים מאורגנים בשרשורים",
-        "empty_tip": "<b>טיפ:</b> השתמש ב-\"%(replyInThread)s\" כשאתם מרחפים מעל הודעה.",
         "error_start_thread_existing_relation": "לא ניתן ליצור שרשור מאירוע עם קשר קיים",
         "my_threads": "הקישורים שלי",
         "my_threads_description": "הצג את כל השרשורים שאתם משתתפים בהם",
         "open_thread": "פתיחת שרשור",
-        "show_all_threads": "הצג את כל השרשורים",
         "show_thread_filter": "הצג:"
     },
     "time": {
@@ -2186,19 +2150,8 @@
             "sent": "%(senderDisplayName)s שלח תמונה.",
             "show_image": "הצג תמונה"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s ביטל את האימות",
-            "you_cancelled": "בטלתם אימות עם %(name)s"
-        },
-        "m.key.verification.done": "אימתת את %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s אישרו",
-            "user_cancelled": "%(name)s ביטל",
-            "user_declined": "%(name)s סרב",
             "user_wants_to_verify": "%(name)s רוצה לאמת",
-            "you_accepted": "אשרתם",
-            "you_cancelled": "ביטלתם",
-            "you_declined": "דחיתם",
             "you_started": "שלחתם בקשה לקוד אימות"
         },
         "m.location": {
@@ -2337,9 +2290,6 @@
             "updated_rule_rooms": "%(senderName)s עדכן את הכלל שפאפשר חסימה של חדרים התואמים ל%(glob)s עבור %(reason)s",
             "updated_rule_servers": "%(senderName)s עדכן את הכללים המאפשרים חסימת שרתים התואמים ל%(glob)s עבור %(reason)s",
             "updated_rule_users": "%(senderName)s עדכן את הכלל שמאפשר חסימת משתמשים התואמים ל%(glob)s עבור %(reason)s"
-        },
-        "reactions": {
-            "tooltip": "<reactors/><reactedWith> הגיבו עם %(shortName)s</reactedWith>"
         },
         "redacted": {
             "tooltip": "הודעה נמחקה בתאריך %(date)s"
@@ -2553,7 +2503,6 @@
         },
         "redact_button": "הסר הודעות אחרונות",
         "revoke_invite": "שלול הזמנה",
-        "role_label": "תפקיד בחדר <RoomName/>",
         "room_encrypted": "ההודעות בחדר זה מוצפנות מקצה לקצה.",
         "room_encrypted_detail": "ההודעות שלך מאובטחות ורק לך ולמקבל יש את המפתחות הייחודיים לפתיחתן.",
         "room_unencrypted": "הודעות בחדר זה אינן מוצפנות מקצה לקצה.",

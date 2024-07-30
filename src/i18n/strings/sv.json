@@ -1,6 +1,8 @@
 {
     "a11y": {
+        "emoji_picker": "Emojiväljare",
         "jump_first_invite": "Hoppa till första inbjudan.",
+        "message_composer": "Meddelanderedigerare",
         "n_unread_messages": {
             "other": "%(count)s olästa meddelanden.",
             "one": "1 oläst meddelande."
@@ -9,7 +11,10 @@
             "other": "%(count)s olästa meddelanden inklusive omnämnanden.",
             "one": "1 oläst omnämnande."
         },
+        "recent_rooms": "Nyliga rum",
         "room_name": "Rum %(name)s",
+        "room_status_bar": "Rumsstatusfält",
+        "seek_bar_label": "Förloppsfält för ljud",
         "unread_messages": "Olästa meddelanden.",
         "user_menu": "Användarmeny"
     },
@@ -40,6 +45,7 @@
         "create_a_room": "Skapa ett rum",
         "decline": "Avvisa",
         "delete": "Radera",
+        "deny": "Neka",
         "disable": "Inaktivera",
         "disconnect": "Koppla ifrån",
         "dismiss": "Avvisa",
@@ -77,9 +83,11 @@
         "new_video_room": "Nytt videorum",
         "next": "Nästa",
         "no": "Nej",
+        "ok": "OK",
         "pause": "Pausa",
         "pin": "Häftstift",
         "play": "Spela",
+        "proceed": "Fortsätt",
         "quote": "Citera",
         "react": "Reagera",
         "refresh": "Ladda om",
@@ -160,6 +168,7 @@
         "autodiscovery_invalid_is_base_url": "Ogiltig base_url för m.identity_server",
         "autodiscovery_invalid_is_response": "Ogiltigt identitetsserverupptäcktssvar",
         "autodiscovery_invalid_json": "Ogiltig JSON",
+        "autodiscovery_no_well_known": "Ingen .well-known-JSON-fil hittades",
         "autodiscovery_unexpected_error_hs": "Oväntat fel vid inläsning av hemserverkonfiguration",
         "autodiscovery_unexpected_error_is": "Oväntat fel vid inläsning av identitetsserverkonfiguration",
         "captcha_description": "Denna hemserver vill se till att du inte är en robot.",
@@ -224,8 +233,10 @@
         "msisdn_field_required_invalid": "Ange telefonnummer",
         "no_hs_url_provided": "Ingen hemserver-URL angiven",
         "oidc": {
-            "error_generic": "Nånting gick snett.",
-            "error_title": "Vi kunde inte logga in dig"
+            "error_title": "Vi kunde inte logga in dig",
+            "generic_auth_error": "Något gick fel under autentiseringen. Gå till inloggningssidan och försök igen.",
+            "logout_redirect_warning": "Du kommer att omdirigeras till din servers autentiseringsleverantör för att slutföra utloggningen.",
+            "missing_or_invalid_stored_state": "Vi bad webbläsaren att komma ihåg vilken hemserver du använder för att logga in, men tyvärr har din webbläsare glömt det. Gå till inloggningssidan och försök igen."
         },
         "password_field_keep_going_prompt": "Fortsätter …",
         "password_field_label": "Skriv in lösenord",
@@ -237,23 +248,12 @@
             "approve_access_warning": "Genom att godkänna åtkomst för den här enheten så får den full åtkomst till ditt konto.",
             "completing_setup": "Slutför inställning av din nya enhet",
             "confirm_code_match": "Kolla att koden nedan matchar din andra enhet:",
-            "connecting": "Kopplar upp …",
-            "devices_connected": "Enheter anslutna",
-            "error_device_already_signed_in": "Den andra enheten är redan inloggad.",
-            "error_device_not_signed_in": "Den andra enheten är inte inloggad.",
-            "error_device_unsupported": "Länkning med den här enheten stöds inte.",
-            "error_homeserver_lacks_support": "Hemservern stöder inte inloggning av en annan enhet.",
-            "error_invalid_scanned_code": "Den skannade koden är ogiltig.",
-            "error_linking_incomplete": "Länkningen slutfördes inte inom den krävda tiden.",
-            "error_request_cancelled": "Förfrågan avbröts.",
-            "error_request_declined": "Förfrågan nekades på den andra enheten.",
+            "error_rate_limited": "För många försök under för kort tid. Vänta ett tag innan du försöker igen.",
             "error_unexpected": "Ett oväntade fel inträffade.",
-            "review_and_approve": "Granska och godkänn inloggningen",
             "scan_code_instruction": "Skanna QR-koden nedan med din andra enhet som är utloggad.",
             "scan_qr_code": "Skanna QR-kod",
             "select_qr_code": "Välj '%(scanQRCode)s'",
             "sign_in_new_device": "Logga in ny enhet",
-            "start_at_sign_in_screen": "Börja på inloggningsskärmen",
             "waiting_for_device": "Väntar på att enheter loggar in"
         },
         "register_action": "Skapa konto",
@@ -282,6 +282,7 @@
             "sign_out_other_devices": "Logga ut ur alla enheter"
         },
         "reset_password_action": "Återställ lösenord",
+        "reset_password_button": "Glömt lösenordet?",
         "reset_password_email_field_description": "Använd en a-postadress för att återställa ditt konto",
         "reset_password_email_field_required_invalid": "Skriv in e-postadress (krävs på den här hemservern)",
         "reset_password_email_not_associated": "Din e-postadress verkar inte vara associerad med ett Matrix-ID på den här hemservern.",
@@ -356,6 +357,7 @@
             "terms": "Granska och acceptera policyn för denna hemserver:",
             "terms_invalid": "Vänligen granska och acceptera alla hemserverns policyer"
         },
+        "unsupported_auth": "Den här hemservern erbjuder inga inloggningsflöden som stöds av den här klienten.",
         "unsupported_auth_email": "Denna hemserver stöder inte inloggning med e-postadress.",
         "unsupported_auth_msisdn": "Denna server stöder inte autentisering via telefonnummer.",
         "username_field_required_invalid": "Skriv in användarnamn",
@@ -410,7 +412,6 @@
         "spaceinvaders_message": "skickar Space Invaders"
     },
     "common": {
-        "about": "Om",
         "access_token": "Åtkomsttoken",
         "accessibility": "Tillgänglighet",
         "advanced": "Avancerat",
@@ -420,11 +421,14 @@
             "other": "och %(count)s andra…",
             "one": "och en annan…"
         },
+        "android": "Android",
         "appearance": "Utseende",
         "application": "Applikation",
         "are_you_sure": "Är du säker?",
         "attachment": "Bilaga",
         "authentication": "Autentisering",
+        "avatar": "Avatar",
+        "beta": "Beta",
         "camera": "Kamera",
         "cameras": "Kameror",
         "capabilities": "Förmågor",
@@ -435,12 +439,13 @@
         "description": "Beskrivning",
         "deselect_all": "Välj bort alla",
         "device": "Enhet",
-        "display_name": "Visningsnamn",
         "edited": "redigerat",
         "email_address": "E-postadress",
+        "emoji": "Emoji",
         "encrypted": "Krypterat",
         "encryption_enabled": "Kryptering aktiverad",
         "error": "Fel",
+        "faq": "Vanliga frågor",
         "favourites": "Favoriter",
         "feedback": "Återkoppling",
         "filter_results": "Filtrera resultaten",
@@ -455,13 +460,16 @@
         "identity_server": "Identitetsserver",
         "image": "Bild",
         "integration_manager": "Integrationshanterare",
+        "ios": "iOS",
         "joined": "Gick med",
         "labs": "Experiment",
         "legal": "Juridiskt",
         "light": "Ljust",
         "loading": "Laddar …",
+        "lobby": "Lobby",
         "location": "Plats",
         "low_priority": "Låg prioritet",
+        "matrix": "Matrix",
         "message": "Meddelande",
         "message_layout": "Meddelandearrangemang",
         "microphone": "Mikrofon",
@@ -472,10 +480,6 @@
             "one": "%(count)s medlem",
             "other": "%(count)s medlemmar"
         },
-        "n_participants": {
-            "one": "1 deltagare",
-            "other": "%(count)s deltagare"
-        },
         "n_rooms": {
             "one": "%(count)s rum",
             "other": "%(count)s rum"
@@ -485,6 +489,7 @@
         "no_results_found": "Inga resultat funna",
         "not_trusted": "Inte betrodd",
         "off": "Av",
+        "offline": "Nedkopplad",
         "on": "På",
         "options": "Alternativ",
         "orphan_rooms": "Andra rum",
@@ -512,6 +517,7 @@
         "secure_backup": "Säker säkerhetskopiering",
         "security": "Säkerhet",
         "select_all": "Välj alla",
+        "server": "Server",
         "settings": "Inställningar",
         "setup_secure_messages": "Ställ in säkra meddelanden",
         "show_more": "Visa mer",
@@ -541,6 +547,8 @@
         "username": "Användarnamn",
         "verification_cancelled": "Verifiering avbruten",
         "verified": "Verifierad",
+        "version": "Version",
+        "video": "Video",
         "video_room": "Videorum",
         "view_message": "Visa meddelande",
         "warning": "Varning",
@@ -577,6 +585,7 @@
         "formatting_toolbar_label": "Formatering",
         "link_modal": {
             "link_field_label": "Länk",
+            "text_field_label": "Text",
             "title_create": "Skapa en länk",
             "title_edit": "Redigera länk"
         },
@@ -616,6 +625,7 @@
         "join_rule_change_notice": "Du kan ändra detta när som helst i rumsinställningarna.",
         "join_rule_invite": "Privat rum (endast inbjudan)",
         "join_rule_invite_label": "Bara inbjudna personer kommer kunna hitta och gå med i det här rummet.",
+        "join_rule_knock_label": "Vem som helst kan begära att få gå med, men administratörer eller moderatorer måste bevilja åtkomst. Du kan ändra detta senare.",
         "join_rule_public_label": "Vem som helst kommer kunna hitta och gå med i det här rummet.",
         "join_rule_public_parent_space_label": "Vem som helst kommer kunna hitta och gå med i det här rummet, inta bara medlemmar i <SpaceName/>.",
         "join_rule_restricted": "Synligt för utrymmesmedlemmar",
@@ -661,6 +671,7 @@
         "private_space_description": "Ett privat utrymme för dig och dina teamkamrater",
         "public_description": "Öppna utrymmet för alla, bäst för gemenskaper",
         "public_heading": "Ditt offentliga utrymme",
+        "search_public_button": "Sök efter offentliga utrymmen",
         "setup_rooms_community_description": "Låt oss skapa ett rum för varje.",
         "setup_rooms_community_heading": "Vad är några saker du vill diskutera i %(spaceName)s?",
         "setup_rooms_description": "Du kan lägga till flera senare också, inklusive redan existerande.",
@@ -706,6 +717,7 @@
         "failed_to_load": "Kunde inte ladda.",
         "failed_to_save": "Kunde inte spara inställningar.",
         "failed_to_send": "Misslyckades att skicka händelse!",
+        "id": "ID: ",
         "invalid_json": "Det ser inte ut som giltig JSON.",
         "level": "Nivå",
         "low_bandwidth_mode": "Lågt bandbreddsläge",
@@ -717,7 +729,6 @@
         "notification_state": "Aviseringsstatus är <strong>%(notificationState)s</strong>",
         "notifications_debug": "Aviseringsfelsökning",
         "number_of_users": "Antal användare",
-        "observe_only": "Bara kolla",
         "original_event_source": "Ursprunglig händelsekällkod",
         "phase": "Fas",
         "phase_cancelled": "Avbruten",
@@ -725,7 +736,6 @@
         "phase_requested": "Efterfrågad",
         "phase_started": "Påbörjad",
         "phase_transaction": "Transaktion",
-        "requester": "Den som skickat förfrågan",
         "room_encrypted": "Rummet är <strong>krypterat ✅</strong>",
         "room_id": "Rums-ID: %(roomId)s",
         "room_not_encrypted": "Rummet är <strong>inte krypterat 🚨</strong>",
@@ -737,11 +747,12 @@
         "room_notifications_total": "Totalt: ",
         "room_notifications_type": "Typ: ",
         "room_status": "Rumsstatus",
-        "room_unread_status": "Rummets oläst-status: <strong>%(status)s</strong>",
         "room_unread_status_count": {
+            "one": "Rummets oläst-status: <strong>%(status)s</strong>, antal: <strong>%(count)s</strong>",
             "other": "Rummets oläst-status: <strong>%(status)s</strong>, antal: <strong>%(count)s</strong>"
         },
         "save_setting_values": "Spara inställningsvärden",
+        "see_history": "Se historik",
         "send_custom_account_data_event": "Skicka event med anpassad kontodata",
         "send_custom_room_account_data_event": "Skicka händelse med anpassad rumskontodata",
         "send_custom_state_event": "Skicka anpassad tillståndshändelse",
@@ -760,12 +771,17 @@
             "other": "<%(count)s mellanslag>"
         },
         "state_key": "Lägesnyckel",
+        "thread_root_id": "Trådroots-ID: %(threadRootId)s",
         "threads_timeline": "Trådtidslinje",
+        "timeout": "Timeout",
         "title": "Utvecklarverktyg",
         "toggle_event": "växla händelse",
         "toolbox": "Verktygslåda",
         "use_at_own_risk": "Det här UI:t kontrollerar inte typer för värden. Använd på egen risk.",
         "user_read_up_to": "Användaren har läst fram till: ",
+        "user_read_up_to_ignore_synthetic": "Användaren läste fram till (ignoreSynthetic): ",
+        "user_read_up_to_private": "Användaren läste fram till (m.read.private): ",
+        "user_read_up_to_private_ignore_synthetic": "Användaren läste fram till (m.read.private; IgnoreSynthetic): ",
         "value": "Värde",
         "value_colon": "Värde:",
         "value_in_this_room": "Värde i det här rummet",
@@ -841,6 +857,9 @@
         },
         "event_shield_reason_authenticity_not_guaranteed": "Det krypterade meddelandets äkthet kan inte garanteras på den här enheten.",
         "event_shield_reason_mismatched_sender_key": "Krypterat av en overifierad session",
+        "event_shield_reason_unknown_device": "Krypterad av en okänd eller raderad enhet.",
+        "event_shield_reason_unsigned_device": "Krypterad av en enhet som inte har verifierats av dess ägare.",
+        "event_shield_reason_unverified_identity": "Krypterad av en overifierad användare.",
         "export_unsupported": "Din webbläsare stödjer inte nödvändiga kryptografitillägg",
         "import_invalid_keyfile": "Inte en giltig %(brand)s-nyckelfil",
         "import_invalid_passphrase": "Autentiseringskontroll misslyckades: felaktigt lösenord?",
@@ -1025,8 +1044,14 @@
         "unknown_error_code": "okänd felkod",
         "update_power_level": "Misslyckades att ändra behörighetsnivå"
     },
-    "error_database_closed_description": "Det här kan orsakas av att ha appen öppen i flera flikar eller av rensning av webbläsardata.",
-    "error_database_closed_title": "Databasen stängdes oväntat",
+    "error_app_open_in_another_tab": "Byt till den andra fliken för att ansluta till %(brand)s. Den här fliken kan nu stängas",
+    "error_app_open_in_another_tab_title": "%(brand)s är ansluten i en annan flik",
+    "error_app_opened_in_another_window": "%(brand)s är öppen i ett annat fönster. Klicka på \"%(label)s\" för att använda %(brand)s här och koppla bort det andra fönstret.",
+    "error_database_closed_description": {
+        "for_desktop": "Din hårddisk kan vara full. Vänligen frigör lite utrymme och ladda om.",
+        "for_web": "Om du rensade webbläsardata förväntas detta meddelande. %(brand)s kanske också är öppen i en annan flik, eller så är din hårddisk är full. Vänligen rensa lite utrymme och ladda om"
+    },
+    "error_database_closed_title": "%(brand)s slutade fungera",
     "error_dialog": {
         "copy_room_link_failed": {
             "description": "Kunde inte kopiera en länk till rummet till klippbordet.",
@@ -1060,10 +1085,13 @@
             "user": "%(senderName)s startade ett samtal",
             "you": "Du startade ett samtal"
         },
+        "m.emote": "* %(senderName)s %(emote)s",
         "m.reaction": {
             "user": "%(sender)s reagerade med %(reaction)s till %(message)s",
             "you": "Du reagerade med %(reaction)s till %(message)s"
-        }
+        },
+        "m.sticker": "%(senderName)s: %(stickerName)s",
+        "m.text": "%(senderName)s: %(message)s"
     },
     "export_chat": {
         "cancelled": "Exportering avbruten",
@@ -1096,10 +1124,13 @@
         },
         "fetching_events": "Hämtar händelser …",
         "file_attached": "Fil bifogad",
+        "format": "Format",
         "from_the_beginning": "Från början",
         "generating_zip": "Genererar en ZIP",
+        "html": "HTML",
         "html_title": "Exportera data",
         "include_attachments": "Inkludera bilagor",
+        "json": "JSON",
         "media_omitted": "Media uteslutet",
         "media_omitted_file_size": "Media uteslutet - filstorleksgräns överskriden",
         "messages": "Meddelanden",
@@ -1113,6 +1144,7 @@
         "select_option": "Välj från alternativen nedan för att exportera chattar från din tidslinje",
         "size_limit": "Storleksgräns",
         "size_limit_min_max": "Storlek kan bara vara ett nummer mellan %(min)s MB och %(max)s MB",
+        "size_limit_postfix": "MB",
         "starting_export": "Påbörjar export …",
         "successful": "Export lyckades",
         "successful_detail": "Din export lyckades. Hitta den i din hämtningsmapp.",
@@ -1181,6 +1213,7 @@
         "one": "I %(spaceName)s och %(count)s annat utrymme.",
         "other": "I %(spaceName)s och %(count)s andra utrymmen."
     },
+    "info_tooltip_title": "Information",
     "integration_manager": {
         "connecting": "Kontaktar integrationshanteraren …",
         "error_connecting": "Integrationshanteraren är offline eller kan inte nå din hemserver.",
@@ -1218,6 +1251,8 @@
         "error_permissions_space": "Du är inte behörig att bjuda in folk till det här utrymmet.",
         "error_profile_undisclosed": "Användaren kanske eller kanske inte finns",
         "error_transfer_multiple_target": "Ett samtal kan bara överlåtas till en enskild användare.",
+        "error_unfederated_room": "Det här rummet är ofedererat. Du kan inte bjuda in personer från externa servrar.",
+        "error_unfederated_space": "Det här utrymmet är ofedererat. Du kan inte bjuda in personer från externa servrar.",
         "error_unknown": "Okänt serverfel",
         "error_user_not_found": "Användaren finns inte",
         "error_version_unsupported_room": "Användarens hemserver stöder inte versionen av rummet.",
@@ -1225,7 +1260,6 @@
         "failed_generic": "Handlingen misslyckades",
         "failed_title": "Inbjudan misslyckades",
         "invalid_address": "Okänd adress",
-        "key_share_warning": "Inbjudna personer kommer att kunna läsa gamla meddelanden.",
         "name_email_mxid_share_room": "Bjud in någon med deras namn, e-postadress eller användarnamn (som <userId/>) eller <a>dela det här rummet</a>.",
         "name_email_mxid_share_space": "Bjud in någon med deras namn, e-postadress eller användarnamn (som <userId/>), eller <a>dela det här rummet</a>.",
         "name_mxid_share_room": "Bjud in någon med deras namn eller användarnamn (som <userId/>) eller <a>dela det här rummet</a>.",
@@ -1261,6 +1295,7 @@
     },
     "keyboard": {
         "activate_button": "Aktivera den valda knappen",
+        "alt": "Alt",
         "autocomplete_cancel": "Stäng autokomplettering",
         "autocomplete_force": "Tvinga komplettering",
         "autocomplete_navigate_next": "Nästa autokompletteringsförslag",
@@ -1284,7 +1319,11 @@
         "composer_toggle_link": "Växla länk av/på",
         "composer_toggle_quote": "Växla citat",
         "composer_undo": "Ångra redigering",
+        "control": "Ctrl",
         "dismiss_read_marker_and_jump_bottom": "Avfärda läsmarkering och hoppa till botten",
+        "end": "End",
+        "enter": "Enter",
+        "escape": "Esc",
         "go_home_view": "Gå till hemvyn",
         "home": "Hem",
         "jump_first_message": "Hoppa till första meddelandet",
@@ -1300,6 +1339,8 @@
         "next_unread_room": "Nästa olästa rum eller DM",
         "number": "[nummer]",
         "open_user_settings": "Öppna användarinställningar",
+        "page_down": "Page Down",
+        "page_up": "Page Up",
         "prev_room": "Förra rummet eller DM:en",
         "prev_unread_room": "Förra olästa rummet eller DM:en",
         "room_list_collapse_section": "Kollapsa rumslistsektionen",
@@ -1311,6 +1352,7 @@
         "scroll_up_timeline": "Skrolla upp i tidslinjen",
         "search": "Sök (måste vara aktiverat)",
         "send_sticker": "Skicka en dekal",
+        "shift": "Skift",
         "space": "Utrymme",
         "switch_to_space": "Byt till utrymme med nummer",
         "toggle_hidden_events": "Växla synlighet för dolda händelser",
@@ -1346,6 +1388,7 @@
         "element_call_video_rooms": "Element Call videorum",
         "experimental_description": "Känner du dig äventyrlig? Pröva våra senaste idéer under utveckling. Dessa funktioner är inte slutförda; de kan vara instabila, kan ändras, eller kan tas bort helt. <a>Läs mer</a>.",
         "experimental_section": "Tidiga förhandstittar",
+        "feature_disable_call_per_sender_encryption": "Inaktivera kryptering per avsändare för Element Call",
         "feature_wysiwyg_composer_description": "Använd rik text istället för Markdown i meddelanderedigeraren.",
         "group_calls": "Ny gruppsamtalsupplevelse",
         "group_developer": "Utvecklare",
@@ -1357,7 +1400,9 @@
         "group_rooms": "Rum",
         "group_spaces": "Utrymmen",
         "group_themes": "Teman",
+        "group_threads": "Trådar",
         "group_voip": "Röst & video",
+        "group_widgets": "Widgets",
         "hidebold": "Dölj aviseringspunkt (visa bara räknarmärken)",
         "html_topic": "Visa HTML-representation av rumsämnen",
         "join_beta": "Gå med i betan",
@@ -1373,26 +1418,22 @@
         "msc3531_hide_messages_pending_moderation": "Låt moderatorer dölja meddelanden i väntan på moderering.",
         "new_room_decoration_ui": "Under aktiv utveckling, ny rumsrubrik & detaljgränssnitt",
         "notification_settings": "Nya aviseringsinställningar",
+        "notification_settings_beta_caption": "Vi introducerar ett enklare sätt att ändra dina aviseringsinställningar. Anpassa din %(brand)s precis som du vill ha den.",
         "notification_settings_beta_title": "Aviseringsinställningar",
-        "oidc_native_flow": "Aktivera nya inbyggda OIDC-flöden (Under aktiv utveckling)",
+        "notifications": "Aktivera aviseringspanelen i rumshuvudet",
+        "oidc_native_flow": "Inbyggd OIDC-autentisering",
+        "oidc_native_flow_description": "⚠ VARNING: Experimentellt. Använd inbyggd OIDC-autentisering när den stöds av servern.",
         "pinning": "Fastnålning av meddelanden",
+        "render_reaction_images": "Återge anpassade bilder i reaktioner",
+        "render_reaction_images_description": "Ibland kallat för ”anpassade emojis”.",
         "report_to_moderators": "Rapportera till moderatorer",
         "report_to_moderators_description": "I rum som stöder moderering så låter \"Rapportera\"-knappen dig rapportera trakasseri till rumsmoderatorer.",
-        "rust_crypto": "Kryptografiimplementering i Rust",
-        "rust_crypto_disabled_notice": "Kan för närvarande endast aktiveras via config.json",
-        "sliding_sync": "Glidande synkroniseringsläge",
-        "sliding_sync_checking": "Kontrollerar …",
-        "sliding_sync_configuration": "Glidande synk-läge",
+        "sliding_sync": "Sliding sync-läge",
         "sliding_sync_description": "Under aktiv utveckling, kan inte inaktiveras.",
-        "sliding_sync_disable_warning": "För att inaktivera det här så behöver du logga ut och logga in igen, använd varsamt!",
         "sliding_sync_disabled_notice": "Logga ut och in igen för att inaktivera",
-        "sliding_sync_proxy_url_label": "Proxy-URL",
-        "sliding_sync_proxy_url_optional_label": "Proxy-URL (valfritt)",
         "sliding_sync_server_no_support": "Din server saknar nativt stöd",
-        "sliding_sync_server_specify_proxy": "Din server saknar nativt stöd, du måste ange en proxy",
-        "sliding_sync_server_support": "Din server har nativt stöd",
-        "state_counters": "Rendera enkla räknare i rumsrubriken",
         "under_active_development": "Under aktiv utveckling.",
+        "unrealiable_e2e": "Otillförlitlig i krypterade rum",
         "video_rooms": "Videorum",
         "video_rooms_a_new_way_to_chat": "Ett nytt sätt att chatta över röst och video i %(brand)s.",
         "video_rooms_always_on_voip_channels": "Videorum är ständigt aktiva VoIP-kanaler inbäddade i ett rum i %(brand)s.",
@@ -1401,6 +1442,7 @@
         "video_rooms_faq1_question": "Hur skapar jag ett videorum?",
         "video_rooms_faq2_answer": "Ja, chattidslinjen visas tillsammans med videon.",
         "video_rooms_faq2_question": "Kan jag använda textchatt tillsammans med videosamtalet?",
+        "video_rooms_feedbackSubheading": "Tack för att du prövar betan, vänligen ge så många detaljer du kan så att vi kan förbättra den.",
         "voice_broadcast": "Röstsändning",
         "voice_broadcast_force_small_chunks": "Tvinga dellängd på 15s för röstsändning",
         "wysiwyg_composer": "Riktextredigerare"
@@ -1439,14 +1481,6 @@
         "view_rules": "Visa regler"
     },
     "language_dropdown_label": "Språkmeny",
-    "lazy_loading": {
-        "disabled_action": "Töm cache och synkronisera om",
-        "disabled_description1": "Du har tidigare använt %(brand)s på %(host)s med fördröjd inladdning av medlemmar aktiverat. I den här versionen är fördröjd inladdning inaktiverat. Eftersom den lokala cachen inte är kompatibel mellan dessa två inställningar behöver %(brand)s synkronisera om ditt konto.",
-        "disabled_description2": "Om den andra versionen av %(brand)s fortfarande är öppen i en annan flik, stäng den eftersom användning av %(brand)s på samma värd med fördröjd inladdning både aktiverad och inaktiverad samtidigt kommer att orsaka problem.",
-        "disabled_title": "Inkompatibel lokal cache",
-        "resync_description": "%(brand)s använder nu 3-5 gånger mindre minne, genom att bara ladda information om andra användare när det behövs. Vänta medan vi återsynkroniserar med servern!",
-        "resync_title": "Uppdaterar %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "Du är den enda personen här. Om du lämnar så kommer ingen kunna gå med igen, inklusive du.",
         "leave_room_question": "Vill du lämna rummet '%(roomName)s'?",
@@ -1518,11 +1552,13 @@
     },
     "member_list_back_action_label": "Rumsmedlemmar",
     "message_edit_dialog_title": "Meddelanderedigeringar",
+    "migrating_crypto": "Häng kvar. Vi uppdaterar Element för att göra kryptering snabbare och mer tillförlitlig.",
     "mobile_guide": {
         "toast_accept": "Använd app",
         "toast_description": "%(brand)s är experimentell i mobila webbläsare. För en bättre upplevelse och de senaste funktionerna använd våran nativa app.",
         "toast_title": "Använd appen för en bättre upplevelse"
     },
+    "name_and_id": "%(name)s (%(userId)s)",
     "no_more_results": "Inga fler resultat",
     "notif_panel": {
         "empty_description": "Du har inga synliga aviseringar.",
@@ -1533,18 +1569,20 @@
         "all_messages_description": "Bli aviserad för varje meddelande",
         "class_global": "Globalt",
         "class_other": "Annat",
-        "colour_bold": "Fet",
-        "colour_grey": "Grå",
-        "colour_none": "Ingen",
-        "colour_red": "Röd",
-        "colour_unsent": "Ej skickat",
         "default": "Standard",
+        "email_pusher_app_display_name": "E-postaviseringar",
         "enable_prompt_toast_description": "Aktivera skrivbordsaviseringar",
         "enable_prompt_toast_title": "Aviseringar",
         "enable_prompt_toast_title_from_message_send": "Missa inte ett svar",
         "error_change_title": "Ändra aviseringsinställningar",
         "keyword": "Nyckelord",
         "keyword_new": "Nytt nyckelord",
+        "level_activity": "Aktivitet",
+        "level_highlight": "Markera",
+        "level_muted": "Tystad",
+        "level_none": "Ingen",
+        "level_notification": "Avisering",
+        "level_unsent": "Oskickad",
         "mark_all_read": "Markera alla som lästa",
         "mentions_and_keywords": "@omnämnanden och nyckelord",
         "mentions_and_keywords_description": "Bli endast aviserad om omnämnanden och nyckelord i enlighet med dina <a>inställningar</a>",
@@ -1663,6 +1701,8 @@
         "custom_level": "Anpassad nivå",
         "default": "Standard",
         "label": "Behörighetsnivå",
+        "mod": "Mod",
+        "moderator": "Moderator",
         "restricted": "Begränsad"
     },
     "presence": {
@@ -1670,10 +1710,13 @@
         "busy": "Upptagen",
         "idle": "Inaktiv",
         "idle_for": "Inaktiv i %(duration)s",
+        "offline": "Offline",
         "offline_for": "Offline i %(duration)s",
+        "online": "Online",
         "online_for": "Online i %(duration)s",
         "unknown": "Okänt",
-        "unknown_for": "Okänt i %(duration)s"
+        "unknown_for": "Okänt i %(duration)s",
+        "unreachable": "Användarens server kan inte nås"
     },
     "quick_settings": {
         "all_settings": "Alla inställningar",
@@ -1701,6 +1744,7 @@
     "report_content": {
         "description": "Att rapportera det här meddelandet kommer att skicka dess unika 'händelse-ID' till administratören för din hemserver. Om meddelanden i det här rummet är krypterade kommer din hemserveradministratör inte att kunna läsa meddelandetexten eller se några filer eller bilder.",
         "disagree": "Håll inte med",
+        "error_create_room_moderation_bot": "Kunde inte skapa rum med modereringsbot",
         "hide_messages_from_user": "Bocka i om du vill dölja alla nuvarande och framtida meddelanden från den här användaren.",
         "ignore_user": "Ignorera användare",
         "illegal_content": "Olagligt innehåll",
@@ -1708,6 +1752,8 @@
         "nature": "Välj en art och beskriv vad som gör detta meddelande kränkande.",
         "nature_disagreement": "Vad användaren skriver är fel.\nDetta kommer att anmälas till rumsmoderatorerna.",
         "nature_illegal": "Användaren påvisar olagligt beteende, som att doxa folk eller hota med våld.\nDetta kommer att rapporteras till rumsmoderatorerna som kanske eskalerar detta till juridiska myndigheter.",
+        "nature_nonstandard_admin": "Detta rum är dedikerat till olagligt eller toxiskt innehåll eller moderatorerna misslyckas med att moderera olagligt eller toxiskt innehåll.\nDetta kommer att rapporteras till administratörerna för%(homeserver)s.",
+        "nature_nonstandard_admin_encrypted": "Detta rum är dedikerat till olagligt eller giftigt innehåll eller moderatorerna misslyckas med att moderera olagligt eller toxiskt innehåll.\nDetta kommer att rapporteras till administratörerna för%(homeserver)s. Administratörerna kommer INTE kunna läsa krypterat innehåll i det här rummet.",
         "nature_other": "Annan orsak. Beskriv problemet tack.\nDetta kommer att rapporteras till rumsmoderatorerna.",
         "nature_spam": "Användaren spammar rummet med reklam eller länkar till reklam eller propaganda.\nDetta kommer att rapporteras till rumsmoderatorerna.",
         "nature_toxic": "Den här användaren uppvisar ett stötande beteende, till exempel genom att förolämpa andra användare eller dela vuxenmaterial i familjevänliga rum, eller på annat sätt bryter mot rummets regler.\nDetta kommer att rapporteras till rummets moderatorer.",
@@ -1782,15 +1828,13 @@
         "room_summary_card": {
             "title": "Rumsinfo"
         },
-        "search_button": "Sök",
-        "settings_button": "Rumsinställningar",
-        "share_button": "Dela rum",
         "thread_list": {
             "context_menu_label": "Trådalternativ"
         },
         "video_room_chat": {
             "title": "Chatt"
-        }
+        },
+        "widgets_section": "Widgets"
     },
     "room": {
         "3pid_invite_email_not_found_account": "Denna inbjudan skickades till %(email)s vilken inte är associerad med ditt konto",
@@ -1822,6 +1866,7 @@
         "dm_invite_title": "Vill du chatta med %(user)s?",
         "drop_file_prompt": "Släpp en fil här för att ladda upp",
         "edit_topic": "Redigera ämne",
+        "error_3pid_invite_email_lookup": "Kan inte hitta användaren via e-post",
         "error_cancel_knock_title": "Misslyckades att avbryta",
         "error_join_403": "Du behöver en inbjudan för att komma åt det här rummet.",
         "error_join_404_1": "Du försökte gå med med ett rums-ID utan att tillhandahålla en lista över servrar att gå med via. Rums-ID:n är interna identifierare och kan inte användas för att gå med i ett rum utan ytterligare information.",
@@ -1855,15 +1900,22 @@
             "close_call_button": "Stäng samtal",
             "forget_room_button": "Glöm bort rum",
             "hide_widgets_button": "Dölj widgets",
+            "n_people_asking_to_join": {
+                "one": "Ber om att gå med",
+                "other": "%(count)s personer ber om att gå med"
+            },
             "room_is_public": "Det här rummet är offentligt",
             "show_widgets_button": "Visa widgets",
             "video_call_button_ec": "Videosamtal (%(brand)s)",
             "video_call_button_jitsi": "Videosamtal (Jitsi)",
+            "video_call_button_legacy": "Äldre videosamtalsmetod",
             "video_call_ec_change_layout": "Byt utseende",
             "video_call_ec_layout_freedom": "Frihet",
             "video_call_ec_layout_spotlight": "Rampljus",
             "video_room_view_chat_button": "Visa chattidslinje"
         },
+        "header_face_pile_tooltip": "Växla medlemslista",
+        "header_untrusted_label": "Ej betrodd",
         "inaccessible": "Det är rummet eller utrymmet är inte åtkomligt för tillfället.",
         "inaccessible_name": "%(roomName)s är inte tillgängligt för tillfället.",
         "inaccessible_subtitle_1": "Pröva igen senare eller be en rums- eller utrymmesadministratör att kolla om du har åtkomst.",
@@ -1911,6 +1963,16 @@
         "kick_reason": "Anledning: %(reason)s",
         "kicked_by": "Du togs bort av %(memberName)s",
         "kicked_from_room_by": "Du togs bort från %(roomName)s av %(memberName)s",
+        "knock_cancel_action": "Avbryt begäran",
+        "knock_denied_subtitle": "Eftersom du har nekats åtkomst kan du inte gå med igen om du inte är inbjuden av administratören eller moderatorn för gruppen.",
+        "knock_denied_title": "Du har nekats åtkomst",
+        "knock_message_field_placeholder": "Meddelande (valfritt)",
+        "knock_prompt": "Be om att gå med?",
+        "knock_prompt_name": "Be om att gå med i %(roomName)s?",
+        "knock_send_action": "Begär åtkomst",
+        "knock_sent": "Förfrågan om att gå med skickad",
+        "knock_sent_subtitle": "Din begäran om att gå med är väntande.",
+        "knock_subtitle": "Du måste beviljas åtkomst till detta rum för att kunna se eller delta i konversationen. Du kan skicka en förfrågan om att gå med nedan.",
         "leave_error_title": "Fel när rummet lämnades",
         "leave_server_notices_description": "Detta rum används för viktiga meddelanden från hemservern, så du kan inte lämna det.",
         "leave_server_notices_title": "Kan inte lämna serveraviseringsrummet",
@@ -1927,14 +1989,11 @@
         "rejecting": "Nekar inbjudan …",
         "rejoin_button": "Gå med igen",
         "search": {
-            "all_rooms": "Alla rum",
             "all_rooms_button": "Sök i alla rum",
-            "field_placeholder": "Sök…",
             "result_count": {
                 "other": "(~%(count)s resultat)",
                 "one": "(~%(count)s resultat)"
             },
-            "this_room": "Det här rummet",
             "this_room_button": "Sök i det här rummet"
         },
         "show_labs_settings": "Visa experimentinställningar",
@@ -2038,6 +2097,7 @@
             "upgrade_warning_dialog_invite_label": "Bjud automatiskt in medlemmar från det här rummet till det nya",
             "upgrade_warning_dialog_report_bug_prompt": "Detta påverkar normalt bara hur rummet hanteras på serven. Om du upplever problem med din %(brand)s, vänligen rapportera en bugg.",
             "upgrade_warning_dialog_report_bug_prompt_link": "Detta påverkar vanligtvis bara hur rummet bearbetas på servern. Om du har problem med %(brand)s, vänligen <a>rapportera ett fel</a>.",
+            "upgrade_warning_dialog_title": "Uppgradera rum",
             "upgrade_warning_dialog_title_private": "Uppgradera privat rum"
         },
         "alias_not_specified": "inte specificerad",
@@ -2106,6 +2166,12 @@
             "sounds_section": "Ljud",
             "upload_sound_label": "Ladda upp anpassat ljud",
             "uploaded_sound": "Uppladdat ljud"
+        },
+        "people": {
+            "knock_empty": "Inga förfrågningar",
+            "knock_section": "Ber om att gå med",
+            "see_less": "Visa mindre",
+            "see_more": "Visa mer"
         },
         "permissions": {
             "add_privileged_user_description": "Ge en eller flera användare i det här rummet fler privilegier",
@@ -2191,6 +2257,7 @@
             "join_rule_restricted_dialog_description": "Bestäm vilka utrymmen som kan komma åt det hör rummet. Om ett utrymme väljs så kan dess medlemmar hitta och gå med i <RoomName/>.",
             "join_rule_restricted_dialog_empty_warning": "Du tar bort alla utrymmen. Åtkomst kommer att sättas som förval till endast inbjudan",
             "join_rule_restricted_dialog_filter_placeholder": "Sök i utrymmen",
+            "join_rule_restricted_dialog_heading_known": "Andra utrymmen du känner till",
             "join_rule_restricted_dialog_heading_other": "Andra utrymmen du kanske inte känner till",
             "join_rule_restricted_dialog_heading_room": "Utrymmen du känner till som innehåller det här rummet",
             "join_rule_restricted_dialog_heading_space": "Utrymmen du känner till som innehåller det här utrymmet",
@@ -2218,6 +2285,8 @@
             },
             "join_rule_upgrade_upgrading_room": "Uppgraderar rum",
             "public_without_alias_warning": "För att länka till det här rummet, lägg till en adress.",
+            "publish_room": "Gör det här rummet synligt i den offentliga rumskatalogen.",
+            "publish_space": "Gör det här utrymmet synligt i den offentliga rumskatalogen.",
             "strict_encryption": "Skicka aldrig krypterade meddelanden till overifierade sessioner i det här rummet från den här sessionen",
             "title": "Säkerhet & sekretess"
         },
@@ -2287,13 +2356,11 @@
         "help_about": {
             "access_token_detail": "Din åtkomsttoken ger full åtkomst till ditt konto. Dela den inte med någon.",
             "brand_version": "%(brand)s-version:",
-            "chat_bot": "Chatta med %(brand)s-bott",
             "clear_cache_reload": "Rensa cache och ladda om",
+            "crypto_version": "Kryptoversion:",
             "help_link": "För hjälp med att använda %(brand)s, klicka <a>här</a>.",
-            "help_link_chat_bot": "För hjälp med att använda %(brand)s, klicka <a>här</a> eller starta en chatt med vår bott med knappen nedan.",
             "homeserver": "Hemservern är <code>%(homeserverUrl)s</code>",
             "identity_server": "Identitetsservern är <code>%(identityServerUrl)s</code>",
-            "olm_version": "Olm-version:",
             "title": "Hjälp & om",
             "versions": "Versioner"
         }
@@ -2303,28 +2370,20 @@
         "all_rooms_home_description": "Alla rum du är in kommer att visas i Hem.",
         "always_show_message_timestamps": "Visa alltid tidsstämplar för meddelanden",
         "appearance": {
+            "bundled_emoji_font": "Använd medföljande emoji-teckensnitt",
             "custom_font": "Använd systemets teckensnitt",
             "custom_font_description": "Sätt namnet för ett teckensnitt installerat på ditt system så kommer %(brand)s att försöka använda det.",
             "custom_font_name": "Namn på systemets teckensnitt",
             "custom_font_size": "Använd anpassad storlek",
-            "custom_theme_add_button": "Lägg till tema",
             "custom_theme_error_downloading": "Fel vid nedladdning av temainformation.",
             "custom_theme_invalid": "Ogiltigt temaschema.",
-            "custom_theme_success": "Tema tillagt!",
-            "custom_theme_url": "Anpassad tema-URL",
             "font_size": "Teckenstorlek",
-            "font_size_limit": "Anpassad teckenstorlek kan bara vara mellan %(min)s pt och %(max)s pt",
-            "font_size_nan": "Storleken måste vara ett nummer",
-            "font_size_valid": "Använd mellan %(min)s pt och %(max)s pt",
-            "heading": "Anpassa ditt utseende",
             "image_size_default": "Standard",
             "image_size_large": "Stor",
             "layout_bubbles": "Meddelandebubblor",
             "layout_irc": "IRC (Experimentellt)",
             "match_system_theme": "Matcha systemtema",
-            "subheading": "Utseende inställningar påverkar bara den här %(brand)s-sessionen.",
-            "timeline_image_size": "Bildstorlek i tidslinjen",
-            "use_high_contrast": "Använd högkontrast"
+            "timeline_image_size": "Bildstorlek i tidslinjen"
         },
         "automatic_language_detection_syntax_highlight": "Aktivera automatisk språkdetektering för syntaxmarkering",
         "autoplay_gifs": "Autospela GIF:ar",
@@ -2351,7 +2410,6 @@
             "confirm_adding_email_body": "Klicka på knappen nedan för att bekräfta tilläggning av e-postadressen.",
             "confirm_adding_email_title": "Bekräfta tilläggning av e-postadressen",
             "deactivate_confirm_body": "Är du säker på att du vill inaktivera ditt konto? Detta är oåterkalleligt.",
-            "deactivate_confirm_body_password": "För att fortsätta, vänligen ange ditt kontolösenord:",
             "deactivate_confirm_body_sso": "Bekräfta din kontoinaktivering genom att använda samlad inloggning för att bevisa din identitet.",
             "deactivate_confirm_content": "Bekräfta att du vill inaktivera ditt konto. Om du fortsätter så:",
             "deactivate_confirm_content_1": "Kommer du inte kunna återaktivera ditt konto",
@@ -2368,7 +2426,6 @@
             "discovery_email_verification_instructions": "Verifiera länken i din inkorg",
             "discovery_msisdn_empty": "Upptäcktsalternativ kommer att visas när du har lagt till ett telefonnummer ovan.",
             "discovery_needs_terms": "Samtyck till identitetsserverns (%(serverName)s) användarvillkor för att låta dig själv vara upptäckbar med e-postadress eller telefonnummer.",
-            "discovery_section": "Upptäckt",
             "email_address_in_use": "Den här e-postadressen används redan",
             "email_address_label": "E-postadress",
             "email_not_verified": "Din e-postadress har inte verifierats än",
@@ -2389,11 +2446,8 @@
             "error_remove_3pid": "Kunde inte ta bort kontaktuppgifter",
             "error_revoke_email_discovery": "Kunde inte återkalla delning för e-postadress",
             "error_revoke_msisdn_discovery": "Kunde inte återkalla delning för telefonnummer",
-            "error_saving_profile": "Operationen kunde inte slutföras",
-            "error_saving_profile_title": "Misslyckades att spara din profil",
             "error_share_email_discovery": "Kunde inte dela e-postadress",
             "error_share_msisdn_discovery": "Kunde inte dela telefonnummer",
-            "external_account_management": "Dina rumsdetaljer hanteras separat av <code>%(hostname)s</code>.",
             "identity_server_no_token": "Ingen identitetsåtkomsttoken hittades",
             "identity_server_not_set": "Identitetsserver inte inställd",
             "incorrect_msisdn_verification": "Fel verifieringskod",
@@ -2409,8 +2463,7 @@
             "password_change_success": "Ditt lösenord byttes framgångsrikt.",
             "remove_email_prompt": "Ta bort %(email)s?",
             "remove_msisdn_prompt": "Ta bort %(phone)s?",
-            "spell_check_locale_placeholder": "Välj en lokalisering",
-            "spell_check_section": "Rättstavning"
+            "spell_check_locale_placeholder": "Välj en lokalisering"
         },
         "image_thumbnails": "Visa förhandsgranskning/miniatyr för bilder",
         "inline_url_previews_default": "Aktivera inbäddad URL-förhandsgranskning som standard",
@@ -2460,18 +2513,26 @@
             "confirm_passphrase": "Bekräfta lösenfrasen",
             "enter_passphrase": "Ange lösenfras",
             "export_description_1": "Denna process låter dig exportera nycklarna för meddelanden som du har fått i krypterade rum till en lokal fil. Du kommer sedan att kunna importera filen i en annan Matrix-klient i framtiden, så att den klienten också kan avkryptera meddelandena.",
+            "export_description_2": "Den exporterade filen låter alla som kan läsa den avkryptera alla krypterade meddelanden som du kan se, så du bör vara noga med att hålla den säker. För att hjälpa till med detta bör du ange en unik lösenfras nedan, som endast kommer att användas för att kryptera exporterade data. Det kommer bara att vara möjligt att importera datan med samma lösenfras.",
             "export_title": "Exportera rumsnycklar",
             "file_to_import": "Fil att importera",
             "import_description_1": "Denna process möjliggör import av krypteringsnycklar som tidigare exporterats från en annan Matrix-klient. Du kommer då kunna avkryptera alla meddelanden som den andra klienten kunde avkryptera.",
             "import_description_2": "Den exporterade filen kommer vara skyddad med en lösenfras. Du måste ange lösenfrasen här, för att avkryptera filen.",
             "import_title": "Importera rumsnycklar",
             "phrase_cannot_be_empty": "Lösenfrasen får inte vara tom",
-            "phrase_must_match": "Lösenfraser måste matcha"
+            "phrase_must_match": "Lösenfraser måste matcha",
+            "phrase_strong_enough": "Bra! Den här lösenfrasen ser tillräckligt stark ut"
         },
         "keyboard": {
             "title": "Tangentbord"
         },
         "notifications": {
+            "default_setting_description": "Denna inställning kommer att tillämpas som standard för alla dina rum.",
+            "default_setting_section": "Jag vill bli meddelad för (Standardinställning)",
+            "desktop_notification_message_preview": "Visa förhandsgranskning av meddelanden i skrivbordsmeddelanden",
+            "email_description": "Få en sammanfattning av missade aviseringar via e-post",
+            "email_section": "E-postsammanfattning",
+            "email_select": "Välj vilka e-postadresser du vill skicka sammanfattningar till. Hantera dina e-postadresser i <button>Allmänt</button>.",
             "enable_audible_notifications_session": "Aktivera ljudaviseringar för den här sessionen",
             "enable_desktop_notifications_session": "Aktivera skrivbordsaviseringar för den här sessionen",
             "enable_email_notifications": "Aktivera e-postaviseringar för %(email)s",
@@ -2485,9 +2546,27 @@
             "error_saving_detail": "Ett fel inträffade när dina aviseringsinställningar sparades.",
             "error_title": "Det går inte att aktivera aviseringar",
             "error_updating": "Ett fel uppstod när du uppdaterade dina aviseringsinställningar. Pröva att växla alternativet igen.",
+            "invites": "Inbjuden till ett rum",
+            "keywords": "Visa ett märke <badge/> när nyckelord används i ett rum.",
+            "keywords_prompt": "Ange nyckelord här, eller använd för stavningsvariationer eller smeknamn",
+            "labs_notice_prompt": "<strong>Uppdatering:</strong> Vi har förenklat aviseringsinställningarna för att göra alternativen enklare att hitta. Vissa anpassade inställningar som du har valt tidigare visas inte här, men de är fortfarande aktiva. Om du fortsätter kan vissa av dina inställningar ändras. <a>Läs mer</a>",
+            "mentions_keywords": "Omnämnanden och nyckelord",
+            "mentions_keywords_only": "Endast omnämnanden och nyckelord",
             "messages_containing_keywords": "Meddelanden som innehåller nyckelord",
             "noisy": "Högljudd",
+            "notices": "Meddelanden skickade av bottar",
+            "notify_at_room": "Meddela när någon nämner genom att använda @room",
+            "notify_keyword": "Meddela när någon använder ett nyckelord",
+            "notify_mention": "Meddela när någon nämner genom att använda @visningsnamn eller %(mxid)s",
+            "other_section": "Andra saker vi tror att du kan vara intresserad av:",
+            "people_mentions_keywords": "Personer, omnämnanden och nyckelord",
+            "play_sound_for_description": "Tillämpas som standard för alla rum på alla enheter.",
+            "play_sound_for_section": "Spela ett ljud för",
             "push_targets": "Aviseringsmål",
+            "quick_actions_mark_all_read": "Markera alla meddelanden som lästa",
+            "quick_actions_reset": "Återställ till standardinställningar",
+            "quick_actions_section": "Snabbåtgärder",
+            "room_activity": "Ny rumsaktivitet, uppgraderingar och statusmeddelanden inträffar",
             "rule_call": "Inbjudan till samtal",
             "rule_contains_display_name": "Meddelanden som innehåller mitt visningsnamn",
             "rule_contains_user_name": "Meddelanden som innehåller mitt användarnamn",
@@ -2499,9 +2578,11 @@
             "rule_roomnotif": "Meddelanden som innehåller @room",
             "rule_suppress_notices": "Meddelanden från bottar",
             "rule_tombstone": "När rum uppgraderas",
-            "show_message_desktop_notification": "Visa meddelande i skrivbordsavisering"
+            "show_message_desktop_notification": "Visa meddelande i skrivbordsavisering",
+            "voip": "Ljud- och videosamtal"
         },
         "preferences": {
+            "Electron.enableHardwareAcceleration": "Aktivera hårdvaruacceleration (starta om%(appName)s att träda i kraft)",
             "always_show_menu_bar": "Visa alltid fönstermenyn",
             "autocomplete_delay": "Autokompletteringsfördröjning (ms)",
             "code_blocks_heading": "Kodblock",
@@ -2528,6 +2609,7 @@
         "security": {
             "4s_public_key_in_account_data": "i kontodata",
             "4s_public_key_status": "Publik nyckel för hemlig lagring:",
+            "analytics_description": "Dela anonyma data för att hjälpa oss att identifiera problem. Inget personligt. Inga tredje parter.",
             "backup_key_cached_status": "Cachad säkerhetskopieringsnyckel:",
             "backup_key_stored_status": "Lagrad säkerhetskopieringsnyckel:",
             "backup_key_unexpected_type": "oväntad typ",
@@ -2555,7 +2637,6 @@
             "delete_backup_confirm_description": "Är du säker? Du kommer att förlora dina krypterade meddelanden om dina nycklar inte säkerhetskopieras ordentligt.",
             "e2ee_default_disabled_warning": "Din serveradministratör har inaktiverat totalsträckskryptering som förval för privata rum och direktmeddelanden.",
             "enable_message_search": "Aktivera meddelandesökning i krypterade rum",
-            "encryption_individual_verification_mode": "Verifiera individuellt varje session som används av en användare för att markera den som betrodd, och lita inte på korssignerade enheter.",
             "encryption_section": "Kryptering",
             "error_loading_key_backup_status": "Kunde inte ladda status för nyckelsäkerhetskopiering",
             "export_megolm_keys": "Exportera krypteringsrumsnycklar",
@@ -2563,15 +2644,17 @@
             "ignore_users_section": "Ignorerade användare",
             "import_megolm_keys": "Importera rumskrypteringsnycklar",
             "key_backup_active": "Den här sessionen säkerhetskopierar dina nycklar.",
+            "key_backup_active_version": "Aktiv säkerhetskopieringsversion:",
             "key_backup_active_version_none": "Ingen",
             "key_backup_algorithm": "Algoritm:",
+            "key_backup_can_be_restored": "Säkerhetskopian kan återställas på den här sessionen",
             "key_backup_complete": "Alla nycklar säkerhetskopierade",
             "key_backup_connect": "Anslut den här sessionen till nyckelsäkerhetskopiering",
             "key_backup_connect_prompt": "Anslut den här sessionen till nyckelsäkerhetskopiering innan du loggar ut för att undvika att du blir av med nycklar som kanske bara finns på den här sessionen.",
             "key_backup_in_progress": "Säkerhetskopierar %(sessionsRemaining)s nycklar …",
             "key_backup_inactive": "Den här servern <b>säkerhetskopierar inte dina nycklar</b>, men du har en existerande säkerhetskopia du kan återställa ifrån och lägga till till i framtiden.",
             "key_backup_inactive_warning": "Dina nycklar <b>säkerhetskopieras inte från den här sessionen</b>.",
-            "manually_verify_all_sessions": "Verifiera alla fjärrsessioner manuellt",
+            "key_backup_latest_version": "Senaste säkerhetskopieringsversionen på servern:",
             "message_search_disable_warning": "Om den är inaktiverad visas inte meddelanden från krypterade rum i sökresultaten.",
             "message_search_disabled": "Cachar krypterade meddelanden säkert lokalt för att de ska visas i sökresultat.",
             "message_search_enabled": {
@@ -2604,6 +2687,7 @@
         "send_read_receipts_unsupported": "Din server stöder inte inaktivering av läskvitton.",
         "send_typing_notifications": "Skicka \"skriver\"-statusar",
         "sessions": {
+            "best_security_note": "För bästa säkerhet, verifiera dina sessioner och logga ut från sessioner som du inte känner igen eller använder längre.",
             "browser": "Webbläsare",
             "confirm_sign_out": {
                 "one": "Bekräfta utloggning av denna enhet",
@@ -2629,6 +2713,7 @@
             "device_verified_description": "Den här sessionen är redo för säkra meddelanden.",
             "device_verified_description_current": "Din nuvarande session är redo för säkra meddelanden.",
             "error_pusher_state": "Misslyckades att sätta pusharläge",
+            "error_set_name": "Misslyckades att ange sessionsnamn",
             "filter_all": "Alla",
             "filter_inactive": "Inaktiv",
             "filter_inactive_description": "Inaktiv i %(inactiveAgeDays)s dagar eller längre",
@@ -2689,6 +2774,7 @@
             "unverified_sessions_explainer_1": "Overifierade sessioner är sessioner där du har loggat in med dina uppgifter men som inte har korsverifierats.",
             "unverified_sessions_explainer_2": "Du bör speciellt försäkra dig om att du känner igen alla dessa sessioner eftersom att de kan representera en oauktoriserad användning av ditt konto.",
             "unverified_sessions_list_description": "Verifiera dina sessioner för förbättrad säker meddelandehantering eller logga ut ur de du inte känner igen eller använder längre.",
+            "url": "URL",
             "verified_session": "Verifierad session",
             "verified_sessions": "Verifierade sessioner",
             "verified_sessions_explainer_1": "Verifierade sessioner är alla ställen där du använder det här kontot efter att ha angett din lösenfras eller bekräftat din identitet med en annan verifierad session.",
@@ -2716,6 +2802,7 @@
             "metaspaces_orphans_description": "Gruppera alla dina rum som inte är en del av ett utrymme på ett ställe.",
             "metaspaces_people_description": "Gruppera alla dina personer på ett ställe.",
             "metaspaces_subsection": "Utrymmen att visa",
+            "spaces_explainer": "Utrymmen är sätt att gruppera rum och personer. Vid sidan av de utrymmen du befinner dig i kan du också använda några förbyggda.",
             "title": "Sidofält"
         },
         "start_automatically": "Starta automatiskt vid systeminloggning",
@@ -2778,7 +2865,9 @@
         "devtools": "Öppna dialogrutan Utvecklarverktyg",
         "discardsession": "Tvingar den aktuella externa gruppsessionen i ett krypterat rum att överges",
         "error_invalid_rendering_type": "Kommandofel: Kunde inte hitta renderingstyp (%(renderingType)s)",
+        "error_invalid_room": "Kommandot misslyckades: Kunde inte hitta rum (%(roomId)s)",
         "error_invalid_runfn": "Kommandofel: Kunde inte hantera snedstreckskommando.",
+        "error_invalid_user_in_room": "Kunde inte hitta användaren i rummet",
         "help": "Visar lista över kommandon med användande beskrivningar",
         "help_dialog_title": "Kommandohjälp",
         "holdcall": "Parkerar samtalet i det aktuella rummet",
@@ -2798,6 +2887,7 @@
         "me": "Visar åtgärd",
         "msg": "Skickar ett meddelande till den valda användaren",
         "myavatar": "Byter din profilbild i alla rum",
+        "myroomavatar": "Byter din profilbild endast i det aktuella rummet",
         "myroomnick": "Byter ditt visningsnamn endast i detta rum",
         "nick": "Byter ditt visningsnamn",
         "no_active_call": "Inget aktivt samtal i det här rummet",
@@ -2945,6 +3035,8 @@
             "other": "%(count)s medlemmar"
         },
         "create_new_room_button": "Skapa nytt rum",
+        "failed_querying_public_rooms": "Misslyckades med att fråga efter offentliga rum",
+        "failed_querying_public_spaces": "Underlåtit att fråga efter offentliga utrymmen",
         "group_chat_section_title": "Andra alternativ",
         "heading_with_query": "Använd \"%(query)s\" för att söka",
         "heading_without_query": "Sök efter",
@@ -2953,6 +3045,7 @@
         "message_search_section_title": "Andra sökningar",
         "other_rooms_in_space": "Andra rum i %(spaceName)s",
         "public_rooms_label": "Offentliga rum",
+        "public_spaces_label": "Offentliga utrymmen",
         "recent_searches_section_title": "Nyliga sökningar",
         "recently_viewed_section_title": "Nyligen sedda",
         "remove_filter": "Ta bort sökfilter för %(filter)s",
@@ -2996,17 +3089,14 @@
             "one": "%(count)s svar",
             "other": "%(count)s svar"
         },
-        "empty_explainer": "Trådar underlättar för att hålla konversationer till ämnet och gör dem lättare att följa.",
-        "empty_has_threads_tip": "Svara i en pågående tråd eller använd \"%(replyInThread)s\" när du håller över ett meddelande för att starta en ny tråd.",
-        "empty_heading": "Håll diskussioner organiserade med trådar",
-        "empty_tip": "<b>Tips:</b> Välj \"%(replyInThread)s\" när du håller över ett meddelande.",
         "error_start_thread_existing_relation": "Kan inte skapa tråd från en händelse med en existerande relation",
         "my_threads": "Mina trådar",
         "my_threads_description": "Visar alla trådar du har medverkat i",
         "open_thread": "Öppna tråd",
-        "show_all_threads": "Visa alla trådar",
-        "show_thread_filter": "Visa:",
-        "unable_to_decrypt": "Kunde inte avkryptera meddelande"
+        "show_thread_filter": "Visa:"
+    },
+    "threads_activity_centre": {
+        "header": "Aktivitet för trådar"
     },
     "time": {
         "about_day_ago": "cirka en dag sedan",
@@ -3028,9 +3118,13 @@
         "n_hours_ago": "%(num)s timmar sedan",
         "n_minutes_ago": "%(num)s minuter sedan",
         "seconds_left": "%(seconds)ss kvar",
+        "short_days": "%(value)sd",
         "short_days_hours_minutes_seconds": "%(days)sd %(hours)st %(minutes)sm %(seconds)ss",
         "short_hours": "%(value)st",
-        "short_hours_minutes_seconds": "%(hours)st %(minutes)sm %(seconds)ss"
+        "short_hours_minutes_seconds": "%(hours)st %(minutes)sm %(seconds)ss",
+        "short_minutes": "%(value)sm",
+        "short_minutes_seconds": "%(minutes)sm %(seconds)ss",
+        "short_seconds": "%(value)ss"
     },
     "timeline": {
         "context_menu": {
@@ -3045,7 +3139,7 @@
         },
         "creation_summary_dm": "%(creator)s skapade den här DM:en.",
         "creation_summary_room": "%(creator)s skapade och konfigurerade rummet.",
-        "decryption_failure_blocked": "Avsändaren har blockerat dig från att ta emot det här meddelandet",
+        "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
         "download_action_decrypting": "Avkrypterar",
         "download_action_downloading": "Laddar ner",
         "edits": {
@@ -3053,7 +3147,6 @@
             "tooltip_sub": "Klicka för att visa redigeringar",
             "tooltip_title": "Redigerat vid %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "Krypterade meddelanden innan den här tidpunkten är otillgängliga.",
         "error_no_renderer": "Den här händelsen kunde inte visas",
         "error_rendering_message": "Kan inte ladda det här meddelandet",
         "historical_messages_unavailable": "Du kan inte se tidigare meddelanden",
@@ -3063,6 +3156,7 @@
             "you": "Du avslutade en <a>röstsändning</a>"
         },
         "io.element.widgets.layout": "%(senderName)s har uppdaterat rummets arrangemang",
+        "late_event_separator": "Ursprungligen skickad %(dateTime)s",
         "load_error": {
             "no_permission": "Försökte ladda en viss punkt i det här rummets tidslinje, men du är inte behörig att visa det aktuella meddelandet.",
             "title": "Misslyckades att hämta positionen på tidslinjen",
@@ -3116,20 +3210,8 @@
             "sent": "%(senderDisplayName)s skickade en bild.",
             "show_image": "Visa bild"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s avbröt verifiering",
-            "you_cancelled": "Du avbröt verifiering av %(name)s"
-        },
-        "m.key.verification.done": "Du verifierade %(name)s",
         "m.key.verification.request": {
-            "declining": "Nekar…",
-            "user_accepted": "%(name)s accepterade",
-            "user_cancelled": "%(name)s avbröt",
-            "user_declined": "%(name)s avslog",
             "user_wants_to_verify": "%(name)s vill verifiera",
-            "you_accepted": "Du accepterade",
-            "you_cancelled": "Du avbröt",
-            "you_declined": "Du avslog",
             "you_started": "Du skickade en verifieringsbegäran"
         },
         "m.location": {
@@ -3178,6 +3260,8 @@
         "m.room.encryption": {
             "disable_attempt": "Ignorerade försök att inaktivera kryptering",
             "disabled": "Kryptering är inte aktiverad",
+            "enabled": "Meddelanden i det här rummet är totalsträckskrypterade. När personer går med kan du verifiera dem i deras profil genom att trycka på deras profilbild.",
+            "enabled_dm": "Meddelanden här är totalsträckskrypterade. Verifiera %(displayName)s i deras profil - tryck på deras profilbild.",
             "enabled_local": "Meddelanden i den här chatten kommer att vara totalsträckskypterade.",
             "parameters_changed": "Vissa krypteringsparametrar har ändrats.",
             "unsupported": "Krypteringen som används i det här rummet stöds inte."
@@ -3275,6 +3359,8 @@
             "label": "Meddelandeåtgärder",
             "view_in_room": "Visa i rum"
         },
+        "message_timestamp_received_at": "Mottagen vid: %(dateTime)s",
+        "message_timestamp_sent_at": "Skickat vid: %(dateTime)s",
         "mjolnir": {
             "changed_rule_glob": "%(senderName)s uppdaterade en bannregel som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
             "changed_rule_rooms": "%(senderName)s ändrade en regel som bannade rum som matchade %(oldGlob)s till att matcha %(newGlob)s på grund av %(reason)s",
@@ -3301,8 +3387,8 @@
         "pending_moderation_reason": "Meddelandet inväntar moderering: %(reason)s",
         "reactions": {
             "add_reaction_prompt": "Lägg till reaktion",
-            "label": "%(reactors)s reagerade med %(content)s",
-            "tooltip": "<reactors/><reactedWith>reagerade med %(shortName)s</reactedWith>"
+            "custom_reaction_fallback_label": "Anpassad reaktion",
+            "label": "%(reactors)s reagerade med %(content)s"
         },
         "read_receipt_title": {
             "one": "Sedd av %(count)s person",
@@ -3336,6 +3422,14 @@
                 "other": "blev bannade %(count)s gånger",
                 "one": "blev bannade"
             },
+            "changed_avatar": {
+                "one": "%(oneUser)sbytte sin profilbild",
+                "other": "%(oneUser)sbytte sin profilbild %(count)s gånger"
+            },
+            "changed_avatar_multiple": {
+                "one": "%(severalUsers)sbytte sina profilbilder",
+                "other": "%(severalUsers)sbytte sina profilbilder %(count)s gånger"
+            },
             "changed_name": {
                 "other": "%(oneUser)sbytte namn %(count)s gånger",
                 "one": "%(oneUser)sbytte namn"
@@ -3344,6 +3438,7 @@
                 "other": "%(severalUsers)sbytte namn %(count)s gånger",
                 "one": "%(severalUsers)sbytte namn"
             },
+            "format": "%(nameList)s %(transitionList)s",
             "hidden_event": {
                 "one": "%(oneUser)sskickade ett dolt meddelande",
                 "other": "%(oneUser)sskickade %(count)s dolda meddelanden"
@@ -3575,7 +3670,6 @@
         },
         "redact_button": "Ta bort nyliga meddelanden",
         "revoke_invite": "Återkalla inbjudan",
-        "role_label": "Roll i <RoomName/>",
         "room_encrypted": "Meddelanden i det här rummet är totalsträckskrypterade.",
         "room_encrypted_detail": "Dina meddelanden är säkrade och endast du och mottagaren har de unika nycklarna för att låsa upp dem.",
         "room_unencrypted": "Meddelanden i detta rum är inte totalsträckskrypterade.",
@@ -3632,7 +3726,6 @@
         "already_in_call_person": "Du är redan i ett samtal med den här personen.",
         "answered_elsewhere": "Mottaget någon annanstans",
         "answered_elsewhere_description": "Samtalet mottogs på en annan enhet.",
-        "audio_devices": "Ljudenheter",
         "call_failed": "Samtal misslyckades",
         "call_failed_description": "Samtalet kunde inte etableras",
         "call_failed_media": "Samtal misslyckades eftersom webbkamera eller mikrofon inte kunde kommas åt. Kolla att:",
@@ -3648,6 +3741,7 @@
         "camera_enabled": "Din kamera är fortfarande på",
         "cannot_call_yourself_description": "Du kan inte ringa till dig själv.",
         "change_input_device": "Byt ingångsenhet",
+        "close_lobby": "Stäng lobbyn",
         "connecting": "Ansluter",
         "connection_lost": "Anslutningen till servern har förlorats",
         "connection_lost_description": "Du kan inte ringa samtal utan en anslutning till servern.",
@@ -3661,6 +3755,7 @@
         "disabled_no_perms_start_video_call": "Du är inte behörig att starta videosamtal",
         "disabled_no_perms_start_voice_call": "Du är inte behörig att starta röstsamtal",
         "disabled_ongoing_call": "Pågående samtal",
+        "element_call": "Element Call",
         "enable_camera": "Sätt på kamera",
         "enable_microphone": "Slå på mikrofonen",
         "expand": "Återgå till samtal",
@@ -3669,9 +3764,13 @@
         "hangup": "Lägg på",
         "hide_sidebar_button": "Göm sidopanel",
         "input_devices": "Ingångsenheter",
+        "jitsi_call": "Jitsi-gruppsamtal",
         "join_button_tooltip_call_full": "Tyvärr - det här samtalet är för närvarande fullt",
         "join_button_tooltip_connecting": "Ansluter",
+        "legacy_call": "Gammal samtalsfunktion",
         "maximise": "Fyll skärmen",
+        "maximise_call": "Maximera samtal",
+        "minimise_call": "Minimera samtal",
         "misconfigured_server": "Anrop misslyckades på grund av felkonfigurerad server",
         "misconfigured_server_description": "Be administratören för din hemserver (<code>%(homeserverDomain)s</code>) att konfigurera en TURN-server för att samtal ska fungera pålitligt.",
         "misconfigured_server_fallback": "Alternativt kan du försöka använda den offentliga servern på <server/>, men det kommer inte att vara lika tillförlitligt och det kommer att dela din IP-adress med den servern. Du kan också hantera detta i Inställningar.",
@@ -3719,7 +3818,7 @@
         "user_is_presenting": "%(sharerName)s presenterar",
         "video_call": "Videosamtal",
         "video_call_started": "Videosamtal startat",
-        "video_devices": "Videoenheter",
+        "video_call_using": "Videosamtal med hjälp av:",
         "voice_call": "Röstsamtal",
         "you_are_presenting": "Du presenterar"
     },
@@ -3827,6 +3926,7 @@
         },
         "popout": "Poppa ut widget",
         "set_room_layout": "Sätt mitt rumsarrangemang för alla",
+        "shared_data_avatar": "URL för din profilbild",
         "shared_data_device_id": "Ditt enhets-ID",
         "shared_data_lang": "Ditt språk",
         "shared_data_mxid": "Ditt användar-ID",
@@ -3851,6 +3951,7 @@
             "l33t": "Förutsägbara ersättningar som '@' istället för 'a' hjälper inte särskilt mycket",
             "longerKeyboardPattern": "Använd ett längre tangentbordsmönster med fler riktningsbyten",
             "noNeed": "Specialtecken, siffror eller stora bokstäver behövs inte",
+            "pwned": "Om du använder det här lösenordet någon annanstans bör du ändra det.",
             "recentYears": "Undvik nyliga år",
             "repeated": "Undvik upprepade ord och bokstäver",
             "reverseWords": "Ord skrivna baklänges är inte mycket svårare att gissa",
@@ -3864,6 +3965,7 @@
             "extendedRepeat": "Upprepningar som \"abcabcabc\" är bara aningen svårare att gissa än \"abc\"",
             "keyPattern": "Korta tangentbordsmönster är enkla att gissa",
             "namesByThemselves": "Enstaka för- och efternamn är enkla att gissa",
+            "pwned": "Ditt lösenord avslöjades av ett dataintrång på Internet.",
             "recentYears": "Nyliga årtal är enkla att gissa",
             "sequences": "Sekvenser som abc eller 6543 är enkla att gissa",
             "similarToCommon": "Det här liknar ett vanligt lösenord",
@@ -3871,6 +3973,7 @@
             "straightRow": "Raka rader på tangentbordet är enkla att gissa",
             "topHundred": "Det här är ett av de 100 vanligaste lösenorden",
             "topTen": "Det här är ett av de 10 vanligaste lösenorden",
+            "userInputs": "Det bör inte finnas några personliga eller sidrelaterade data.",
             "wordByItself": "Enstaka ord är enkla att gissa"
         }
     }

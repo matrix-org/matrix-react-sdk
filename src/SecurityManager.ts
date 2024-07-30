@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { DeviceVerificationStatus, ICryptoCallbacks, MatrixClient, encodeBase64 } from "matrix-js-sdk/src/matrix";
-import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
+import { Crypto, ICryptoCallbacks, encodeBase64, SecretStorage } from "matrix-js-sdk/src/matrix";
 import { deriveKey } from "matrix-js-sdk/src/crypto/key_passphrase";
 import { decodeRecoveryKey } from "matrix-js-sdk/src/crypto/recoverykey";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -26,9 +25,8 @@ import { MatrixClientPeg } from "./MatrixClientPeg";
 import { _t } from "./languageHandler";
 import { isSecureBackupRequired } from "./utils/WellKnownUtils";
 import AccessSecretStorageDialog, { KeyParams } from "./components/views/dialogs/security/AccessSecretStorageDialog";
-import RestoreKeyBackupDialog from "./components/views/dialogs/security/RestoreKeyBackupDialog";
 import SettingsStore from "./settings/SettingsStore";
-import SecurityCustomisations from "./customisations/Security";
+import { ModuleRunner } from "./modules/ModuleRunner";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDialog";
 
@@ -38,19 +36,13 @@ import InteractiveAuthDialog from "./components/views/dialogs/InteractiveAuthDia
 // single secret storage operation, as it will clear the cached keys once the
 // operation ends.
 let secretStorageKeys: Record<string, Uint8Array> = {};
-let secretStorageKeyInfo: Record<string, ISecretStorageKeyInfo> = {};
+let secretStorageKeyInfo: Record<string, SecretStorage.SecretStorageKeyDescription> = {};
 let secretStorageBeingAccessed = false;
-
-let nonInteractive = false;
 
 let dehydrationCache: {
     key?: Uint8Array;
-    keyInfo?: ISecretStorageKeyInfo;
+    keyInfo?: SecretStorage.SecretStorageKeyDescription;
 } = {};
-
-function isCachingAllowed(): boolean {
-    return secretStorageBeingAccessed;
-}
 
 /**
  * This can be used by other components to check if secret storage access is in
@@ -80,7 +72,9 @@ async function confirmToDismiss(): Promise<boolean> {
     return !sure;
 }
 
-function makeInputToKey(keyInfo: ISecretStorageKeyInfo): (keyParams: KeyParams) => Promise<Uint8Array> {
+function makeInputToKey(
+    keyInfo: SecretStorage.SecretStorageKeyDescription,
+): (keyParams: KeyParams) => Promise<Uint8Array> {
     return async ({ passphrase, recoveryKey }): Promise<Uint8Array> => {
         if (passphrase) {
             return deriveKey(passphrase, keyInfo.passphrase.salt, keyInfo.passphrase.iterations);
@@ -94,11 +88,11 @@ function makeInputToKey(keyInfo: ISecretStorageKeyInfo): (keyParams: KeyParams) 
 async function getSecretStorageKey({
     keys: keyInfos,
 }: {
-    keys: Record<string, ISecretStorageKeyInfo>;
+    keys: Record<string, SecretStorage.SecretStorageKeyDescription>;
 }): Promise<[string, Uint8Array]> {
     const cli = MatrixClientPeg.safeGet();
     let keyId = await cli.getDefaultSecretStorageKeyId();
-    let keyInfo!: ISecretStorageKeyInfo;
+    let keyInfo!: SecretStorage.SecretStorageKeyDescription;
     if (keyId) {
         // use the default SSSS key if set
         keyInfo = keyInfos[keyId];
@@ -117,30 +111,30 @@ async function getSecretStorageKey({
         }
         [keyId, keyInfo] = keyInfoEntries[0];
     }
+    logger.debug(`getSecretStorageKey: request for 4S keys [${Object.keys(keyInfos)}]: looking for key ${keyId}`);
 
     // Check the in-memory cache
-    if (isCachingAllowed() && secretStorageKeys[keyId]) {
+    if (secretStorageBeingAccessed && secretStorageKeys[keyId]) {
+        logger.debug(`getSecretStorageKey: returning key ${keyId} from cache`);
         return [keyId, secretStorageKeys[keyId]];
     }
 
     if (dehydrationCache.key) {
         if (await MatrixClientPeg.safeGet().checkSecretStorageKey(dehydrationCache.key, keyInfo)) {
+            logger.debug("getSecretStorageKey: returning key from dehydration cache");
             cacheSecretStorageKey(keyId, keyInfo, dehydrationCache.key);
             return [keyId, dehydrationCache.key];
         }
     }
 
-    const keyFromCustomisations = SecurityCustomisations.getSecretStorageKey?.();
+    const keyFromCustomisations = ModuleRunner.instance.extensions.cryptoSetup.getSecretStorageKey();
     if (keyFromCustomisations) {
-        logger.log("Using key from security customisations (secret storage)");
+        logger.log("getSecretStorageKey: Using secret storage key from CryptoSetupExtension");
         cacheSecretStorageKey(keyId, keyInfo, keyFromCustomisations);
         return [keyId, keyFromCustomisations];
     }
 
-    if (nonInteractive) {
-        throw new Error("Could not unlock non-interactively");
-    }
-
+    logger.debug("getSecretStorageKey: prompting user for key");
     const inputToKey = makeInputToKey(keyInfo);
     const { finished } = Modal.createDialog(
         AccessSecretStorageDialog,
@@ -168,6 +162,7 @@ async function getSecretStorageKey({
     if (!keyParams) {
         throw new AccessCancelledError();
     }
+    logger.debug("getSecretStorageKey: got key from user");
     const key = await inputToKey(keyParams);
 
     // Save to cache to avoid future prompts in the current session
@@ -177,12 +172,12 @@ async function getSecretStorageKey({
 }
 
 export async function getDehydrationKey(
-    keyInfo: ISecretStorageKeyInfo,
+    keyInfo: SecretStorage.SecretStorageKeyDescription,
     checkFunc: (data: Uint8Array) => void,
 ): Promise<Uint8Array> {
-    const keyFromCustomisations = SecurityCustomisations.getSecretStorageKey?.();
+    const keyFromCustomisations = ModuleRunner.instance.extensions.cryptoSetup.getSecretStorageKey();
     if (keyFromCustomisations) {
-        logger.log("Using key from security customisations (dehydration)");
+        logger.log("CryptoSetupExtension: Using key from extension (dehydration)");
         return keyFromCustomisations;
     }
 
@@ -226,8 +221,12 @@ export async function getDehydrationKey(
     return key;
 }
 
-function cacheSecretStorageKey(keyId: string, keyInfo: ISecretStorageKeyInfo, key: Uint8Array): void {
-    if (isCachingAllowed()) {
+function cacheSecretStorageKey(
+    keyId: string,
+    keyInfo: SecretStorage.SecretStorageKeyDescription,
+    key: Uint8Array,
+): void {
+    if (secretStorageBeingAccessed) {
         secretStorageKeys[keyId] = key;
         secretStorageKeyInfo[keyId] = keyInfo;
     }
@@ -238,7 +237,7 @@ async function onSecretRequested(
     deviceId: string,
     requestId: string,
     name: string,
-    deviceTrust: DeviceVerificationStatus,
+    deviceTrust: Crypto.DeviceVerificationStatus,
 ): Promise<string | undefined> {
     logger.log("onSecretRequested", userId, deviceId, requestId, name, deviceTrust);
     const client = MatrixClientPeg.safeGet();
@@ -279,24 +278,26 @@ export const crossSigningCallbacks: ICryptoCallbacks = {
     getDehydrationKey,
 };
 
-export async function promptForBackupPassphrase(): Promise<Uint8Array> {
-    let key!: Uint8Array;
-
-    const { finished } = Modal.createDialog(
-        RestoreKeyBackupDialog,
-        {
-            showSummary: false,
-            keyCallback: (k: Uint8Array) => (key = k),
-        },
-        undefined,
-        /* priority = */ false,
-        /* static = */ true,
-    );
-
-    const success = await finished;
-    if (!success) throw new Error("Key backup prompt cancelled");
-
-    return key;
+/**
+ * Carry out an operation that may require multiple accesses to secret storage, caching the key.
+ *
+ * Use this helper to wrap an operation that may require multiple accesses to secret storage; the user will be prompted
+ * to enter the 4S key or passphrase on the first access, and the key will be cached for the rest of the operation.
+ *
+ * @param func - The operation to be wrapped.
+ */
+export async function withSecretStorageKeyCache<T>(func: () => Promise<T>): Promise<T> {
+    logger.debug("SecurityManager: enabling 4S key cache");
+    secretStorageBeingAccessed = true;
+    try {
+        return await func();
+    } finally {
+        // Clear secret storage key cache now that work is complete
+        logger.debug("SecurityManager: disabling 4S key cache");
+        secretStorageBeingAccessed = false;
+        secretStorageKeys = {};
+        secretStorageKeyInfo = {};
+    }
 }
 
 /**
@@ -321,10 +322,28 @@ export async function promptForBackupPassphrase(): Promise<Uint8Array> {
  * @param {bool} [forceReset] Reset secret storage even if it's already set up
  */
 export async function accessSecretStorage(func = async (): Promise<void> => {}, forceReset = false): Promise<void> {
-    secretStorageBeingAccessed = true;
+    await withSecretStorageKeyCache(() => doAccessSecretStorage(func, forceReset));
+}
+
+/** Helper for {@link #accessSecretStorage} */
+async function doAccessSecretStorage(func: () => Promise<void>, forceReset: boolean): Promise<void> {
     try {
         const cli = MatrixClientPeg.safeGet();
-        if (!(await cli.hasSecretStorageKey()) || forceReset) {
+        const crypto = cli.getCrypto();
+        if (!crypto) {
+            throw new Error("End-to-end encryption is disabled - unable to access secret storage.");
+        }
+
+        let createNew = false;
+        if (forceReset) {
+            logger.debug("accessSecretStorage: resetting 4S");
+            createNew = true;
+        } else if (!(await cli.secretStorage.hasKey())) {
+            logger.debug("accessSecretStorage: no 4S key configured, creating a new one");
+            createNew = true;
+        }
+
+        if (createNew) {
             // This dialog calls bootstrap itself after guiding the user through
             // passphrase creation.
             const { finished } = Modal.createDialogAsync(
@@ -352,8 +371,10 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
                 throw new Error("Secret storage creation canceled");
             }
         } else {
-            await cli.bootstrapCrossSigning({
+            logger.debug("accessSecretStorage: bootstrapCrossSigning");
+            await crypto.bootstrapCrossSigning({
                 authUploadDeviceSigningKeys: async (makeRequest): Promise<void> => {
+                    logger.debug("accessSecretStorage: performing UIA to upload cross-signing keys");
                     const { finished } = Modal.createDialog(InteractiveAuthDialog, {
                         title: _t("encryption|bootstrap_title"),
                         matrixClient: cli,
@@ -363,11 +384,11 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
                     if (!confirmed) {
                         throw new Error("Cross-signing key upload auth canceled");
                     }
+                    logger.debug("accessSecretStorage: Cross-signing key upload successful");
                 },
             });
-            await cli.bootstrapSecretStorage({
-                getKeyBackupPassphrase: promptForBackupPassphrase,
-            });
+            logger.debug("accessSecretStorage: bootstrapSecretStorage");
+            await crypto.bootstrapSecretStorage({});
 
             const keyId = Object.keys(secretStorageKeys)[0];
             if (keyId && SettingsStore.getValue("feature_dehydration")) {
@@ -375,78 +396,24 @@ export async function accessSecretStorage(func = async (): Promise<void> => {}, 
                 if (secretStorageKeyInfo[keyId] && secretStorageKeyInfo[keyId].passphrase) {
                     dehydrationKeyInfo = { passphrase: secretStorageKeyInfo[keyId].passphrase };
                 }
-                logger.log("Setting dehydration key");
+                logger.log("accessSecretStorage: Setting dehydration key");
                 await cli.setDehydrationKey(secretStorageKeys[keyId], dehydrationKeyInfo, "Backup device");
             } else if (!keyId) {
-                logger.warn("Not setting dehydration key: no SSSS key found");
+                logger.warn("accessSecretStorage: Not setting dehydration key: no SSSS key found");
             } else {
-                logger.log("Not setting dehydration key: feature disabled");
+                logger.log("accessSecretStorage: Not setting dehydration key: feature disabled");
             }
         }
 
+        logger.debug("accessSecretStorage: 4S now ready");
         // `return await` needed here to ensure `finally` block runs after the
         // inner operation completes.
-        return await func();
+        await func();
+        logger.debug("accessSecretStorage: operation complete");
     } catch (e) {
-        SecurityCustomisations.catchAccessSecretStorageError?.(e);
-        logger.error(e);
+        ModuleRunner.instance.extensions.cryptoSetup.catchAccessSecretStorageError(e as Error);
+        logger.error("accessSecretStorage: error during operation", e);
         // Re-throw so that higher level logic can abort as needed
         throw e;
-    } finally {
-        // Clear secret storage key cache now that work is complete
-        secretStorageBeingAccessed = false;
-        if (!isCachingAllowed()) {
-            secretStorageKeys = {};
-            secretStorageKeyInfo = {};
-        }
-    }
-}
-
-// FIXME: this function name is a bit of a mouthful
-export async function tryToUnlockSecretStorageWithDehydrationKey(client: MatrixClient): Promise<void> {
-    const key = dehydrationCache.key;
-    let restoringBackup = false;
-    if (key && (await client.isSecretStorageReady())) {
-        logger.log("Trying to set up cross-signing using dehydration key");
-        secretStorageBeingAccessed = true;
-        nonInteractive = true;
-        try {
-            await client.checkOwnCrossSigningTrust();
-
-            // we also need to set a new dehydrated device to replace the
-            // device we rehydrated
-            let dehydrationKeyInfo = {};
-            if (dehydrationCache.keyInfo && dehydrationCache.keyInfo.passphrase) {
-                dehydrationKeyInfo = { passphrase: dehydrationCache.keyInfo.passphrase };
-            }
-            await client.setDehydrationKey(key, dehydrationKeyInfo, "Backup device");
-
-            // and restore from backup
-            const backupInfo = await client.getKeyBackupVersion();
-            if (backupInfo) {
-                restoringBackup = true;
-                // don't await, because this can take a long time
-                client.restoreKeyBackupWithSecretStorage(backupInfo).finally(() => {
-                    secretStorageBeingAccessed = false;
-                    nonInteractive = false;
-                    if (!isCachingAllowed()) {
-                        secretStorageKeys = {};
-                        secretStorageKeyInfo = {};
-                    }
-                });
-            }
-        } finally {
-            dehydrationCache = {};
-            // the secret storage cache is needed for restoring from backup, so
-            // don't clear it yet if we're restoring from backup
-            if (!restoringBackup) {
-                secretStorageBeingAccessed = false;
-                nonInteractive = false;
-                if (!isCachingAllowed()) {
-                    secretStorageKeys = {};
-                    secretStorageKeyInfo = {};
-                }
-            }
-        }
     }
 }

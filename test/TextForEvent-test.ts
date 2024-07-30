@@ -23,6 +23,7 @@ import {
     Room,
     RoomMember,
 } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { render } from "@testing-library/react";
 import { ReactElement } from "react";
 import { Mocked, mocked } from "jest-mock";
@@ -48,8 +49,10 @@ function mockPinnedEvent(pinnedMessageIds?: string[], prevPinnedMessageIds?: str
         content: {
             pinned: pinnedMessageIds,
         },
-        prev_content: {
-            pinned: prevPinnedMessageIds,
+        unsigned: {
+            prev_content: {
+                pinned: prevPinnedMessageIds,
+            },
         },
     });
 }
@@ -182,9 +185,11 @@ describe("TextForEvent", () => {
                     users_default: usersDefault,
                     users,
                 },
-                prev_content: {
-                    users: prevUsers,
-                    users_default: prevDefault,
+                unsigned: {
+                    prev_content: {
+                        users: prevUsers,
+                        users_default: prevDefault,
+                    },
                 },
             });
             mxEvent.sender = { name: userA.name } as RoomMember;
@@ -314,9 +319,11 @@ describe("TextForEvent", () => {
                     alias,
                     alt_aliases: altAliases,
                 },
-                prev_content: {
-                    alias: prevAlias,
-                    alt_aliases: prevAltAliases,
+                unsigned: {
+                    prev_content: {
+                        alias: prevAlias,
+                        alt_aliases: prevAltAliases,
+                    },
                 },
             });
 
@@ -418,7 +425,7 @@ describe("TextForEvent", () => {
         });
 
         it("returns correct message for redacted poll start", () => {
-            pollEvent.makeRedacted(pollEvent);
+            pollEvent.makeRedacted(pollEvent, new Room(pollEvent.getRoomId()!, mockClient, mockClient.getSafeUserId()));
 
             expect(textForEvent(pollEvent, mockClient)).toEqual("@a: Message deleted");
         });
@@ -444,7 +451,10 @@ describe("TextForEvent", () => {
         });
 
         it("returns correct message for redacted message", () => {
-            messageEvent.makeRedacted(messageEvent);
+            messageEvent.makeRedacted(
+                messageEvent,
+                new Room(messageEvent.getRoomId()!, mockClient, mockClient.getSafeUserId()),
+            );
 
             expect(textForEvent(messageEvent, mockClient)).toEqual("@a: Message deleted");
         });
@@ -504,14 +514,16 @@ describe("TextForEvent", () => {
                         type: "m.room.member",
                         sender: "@a:foo",
                         content: {
-                            membership: "join",
+                            membership: KnownMembership.Join,
                             avatar_url: "b",
                             displayname: "Bob",
                         },
-                        prev_content: {
-                            membership: "join",
-                            avatar_url: "a",
-                            displayname: "Andy",
+                        unsigned: {
+                            prev_content: {
+                                membership: KnownMembership.Join,
+                                avatar_url: "a",
+                                displayname: "Andy",
+                            },
                         },
                         state_key: "@a:foo",
                     }),

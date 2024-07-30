@@ -15,20 +15,14 @@ exports[`LogoutDialog Prompts user to connect backup if there is a backup on the
     role="dialog"
   >
     <div
-      class="mx_Dialog_header mx_Dialog_headerWithCancel"
+      class="mx_Dialog_header"
     >
-      <h2
+      <h1
         class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         You'll lose access to your encrypted messages
-      </h2>
-      <div
-        aria-label="Close dialog"
-        class="mx_AccessibleButton mx_Dialog_cancelButton"
-        role="button"
-        tabindex="0"
-      />
+      </h1>
     </div>
     <div>
       <div
@@ -78,6 +72,13 @@ exports[`LogoutDialog Prompts user to connect backup if there is a backup on the
         </p>
       </details>
     </div>
+    <div
+      aria-describedby="floating-ui-22"
+      aria-label="Close dialog"
+      class="mx_AccessibleButton mx_Dialog_cancelButton"
+      role="button"
+      tabindex="0"
+    />
   </div>
   <div
     data-focus-guard="true"
@@ -102,20 +103,14 @@ exports[`LogoutDialog Prompts user to set up backup if there is no backup on the
     role="dialog"
   >
     <div
-      class="mx_Dialog_header mx_Dialog_headerWithCancel"
+      class="mx_Dialog_header"
     >
-      <h2
+      <h1
         class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         You'll lose access to your encrypted messages
-      </h2>
-      <div
-        aria-label="Close dialog"
-        class="mx_AccessibleButton mx_Dialog_cancelButton"
-        role="button"
-        tabindex="0"
-      />
+      </h1>
     </div>
     <div>
       <div
@@ -165,6 +160,13 @@ exports[`LogoutDialog Prompts user to set up backup if there is no backup on the
         </p>
       </details>
     </div>
+    <div
+      aria-describedby="floating-ui-28"
+      aria-label="Close dialog"
+      class="mx_AccessibleButton mx_Dialog_cancelButton"
+      role="button"
+      tabindex="0"
+    />
   </div>
   <div
     data-focus-guard="true"
@@ -189,20 +191,14 @@ exports[`LogoutDialog shows a regular dialog when crypto is disabled 1`] = `
     role="dialog"
   >
     <div
-      class="mx_Dialog_header mx_Dialog_headerWithCancel"
+      class="mx_Dialog_header"
     >
-      <h2
+      <h1
         class="mx_Heading_h3 mx_Dialog_title"
         id="mx_BaseDialog_title"
       >
         Sign out
-      </h2>
-      <div
-        aria-label="Close dialog"
-        class="mx_AccessibleButton mx_Dialog_cancelButton"
-        role="button"
-        tabindex="0"
-      />
+      </h1>
     </div>
     <div
       class="mx_Dialog_content"
@@ -231,6 +227,12 @@ exports[`LogoutDialog shows a regular dialog when crypto is disabled 1`] = `
         </button>
       </span>
     </div>
+    <div
+      aria-label="Close dialog"
+      class="mx_AccessibleButton mx_Dialog_cancelButton"
+      role="button"
+      tabindex="0"
+    />
   </div>
   <div
     data-focus-guard="true"

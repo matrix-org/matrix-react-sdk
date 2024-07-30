@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-@import url("@vector-im/compound-design-tokens/assets/web/css/compound-design-tokens.css");
+@import url("@vector-im/compound-design-tokens/assets/web/css/compound-design-tokens.css") layer(compound);
 @import url("@vector-im/compound-web/dist/style.css");
 @import "./_font-sizes.pcss";
 @import "./_animations.pcss";
@@ -25,8 +25,6 @@ limitations under the License.
 @import url("maplibre-gl/dist/maplibre-gl.css");
 
 :root {
-    font-size: 10px;
-
     --container-border-width: 8px;
     --container-gap-width: 8px; /* only even numbers should be used because otherwise we get 0.5px margin values. */
     --transition-short: 0.1s;
@@ -52,6 +50,18 @@ limitations under the License.
     --dialog-zIndex-standard: calc(var(--dialog-zIndex-standard-background) + 1); /* 4012 */
 }
 
+#matrixchat {
+    /* This is required to ensure Compound tooltips correctly draw where they should with z-index: auto */
+    contain: strict;
+}
+#mx_ContextualMenu_Container,
+#mx_PersistedElement_container,
+#mx_Dialog_Container,
+#mx_Dialog_StaticContainer {
+    /* This is required to ensure Compound tooltips correctly draw where they should with z-index: auto */
+    isolation: isolate;
+}
+
 /**
  * We need to increase the specificity of the selector to override the
  * custom property set by the design tokens package
@@ -64,14 +74,6 @@ limitations under the License.
      * system ones
      */
     --cpd-font-family-sans: $font-family;
-}
-
-@media only percy {
-    :root {
-        --percy-color-avatar: $username-variant2-color;
-        --percy-color-displayName: $username-variant1-color;
-        --percy-color-replyChain-border: $username-variant1-color;
-    }
 }
 
 @media (prefers-reduced-motion) {
@@ -100,7 +102,10 @@ body {
      * `font-feature-settings` allows us to override this behaviour and have the
      * correct ligatures and the proper dynamic metric spacing.
      */
-    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    font-feature-settings:
+        "kern" 1,
+        "liga" 1,
+        "calt" 1;
 
     background-color: $background;
     color: $primary-content;
@@ -170,9 +175,9 @@ a:visited {
     color: $accent-alt;
 }
 
-input[type="text"],
-input[type="search"],
-input[type="password"] {
+:not(.mx_no_textinput):not(.mx_textinput):not(.mx_Field) > input[type="text"],
+:not(.mx_no_textinput):not(.mx_textinput):not(.mx_Field) > input[type="search"],
+:not(.mx_no_textinput):not(.mx_textinput):not(.mx_Field) > input[type="password"] {
     padding: 9px;
     font: var(--cpd-font-body-md-semibold);
     font-weight: var(--cpd-font-weight-semibold);
@@ -322,16 +327,30 @@ legend {
     justify-content: center;
 }
 
+.mx_Dialog_border {
+    z-index: var(--dialog-zIndex-standard);
+    position: relative;
+    width: 100%;
+    max-width: fit-content;
+    box-sizing: border-box;
+    max-height: calc(100% - var(--cpd-space-6x));
+    display: flex;
+    flex-direction: column;
+
+    .mx_Dialog_lightbox & {
+        /* The lightbox isn't so much of a dialog as a fullscreen overlay. We
+        don't want the glass border. */
+        display: contents;
+    }
+}
+
 .mx_Dialog {
     background-color: $background;
     color: $light-fg-color;
-    z-index: var(--dialog-zIndex-standard);
     font-size: $font-15px;
     position: relative;
-    padding: 24px;
-    max-height: 80%;
-    box-shadow: 2px 15px 30px 0 $dialog-shadow-color;
-    border-radius: 8px;
+    padding: var(--cpd-space-8x) var(--cpd-space-10x);
+    box-sizing: border-box;
     overflow-y: auto;
 
     .mx_Dialog_staticWrapper & {
@@ -357,6 +376,7 @@ legend {
         font-family: inherit !important;
         white-space: normal !important;
         line-height: inherit !important;
+        background-color: inherit;
         color: inherit; /* inherit the colour from the dark or light theme by default (but not for code blocks) */
 
         pre,
@@ -432,7 +452,6 @@ legend {
     width: 100%;
     height: 100%;
     background-color: $dialog-backdrop-color;
-    opacity: 0.8;
     z-index: var(--dialog-zIndex-standard-background);
 
     &.mx_Dialog_staticBackground {
@@ -467,6 +486,7 @@ legend {
     display: inline-block;
     width: 100%;
     box-sizing: border-box;
+    letter-spacing: var(--cpd-font-letter-spacing-heading-lg);
 
     &.danger {
         color: $alert;
@@ -475,42 +495,47 @@ legend {
 
 .mx_Dialog_header {
     position: relative;
-    padding: 3px 0;
-    margin-bottom: 10px;
+    padding: 0;
+    padding-inline-end: 20px; /* Reserve room for the close button */
+    margin-bottom: var(--cpd-space-2x);
 
     &.mx_Dialog_headerWithButton > .mx_Dialog_title {
         text-align: center;
     }
-
-    &.mx_Dialog_headerWithCancel {
-        padding-right: 20px; /* leave space for the 'X' cancel button */
-    }
-
-    &.mx_Dialog_headerWithCancelOnly {
-        padding: 0 20px 0 0;
-        margin: 0;
-    }
 }
 
 @define-mixin customisedCancelButton {
-    mask: url("$(res)/img/cancel.svg");
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: cover;
-    background-color: $dialog-close-fg-color;
     cursor: pointer;
-    position: unset;
-    width: unset;
-    height: unset;
+    position: relative;
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    background-color: var(--cpd-color-bg-subtle-secondary);
+
+    &:hover {
+        background-color: var(--cpd-color-bg-subtle-primary);
+    }
+
+    &::before {
+        content: "";
+        width: 28px;
+        height: 28px;
+        left: 0;
+        top: 0;
+        position: absolute;
+        mask-image: url("@vector-im/compound-design-tokens/icons/close.svg");
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: 20px;
+        background-color: var(--cpd-color-icon-secondary);
+    }
 }
 
 .mx_Dialog_cancelButton {
     @mixin customisedCancelButton;
-    width: 18px;
-    height: 18px;
     position: absolute;
-    top: 10px;
-    right: 0;
+    top: var(--cpd-space-4x);
+    right: var(--cpd-space-4x);
 }
 
 .mx_Dialog_content {
@@ -551,10 +576,10 @@ legend {
     /* align images in buttons (eg spinners) */
     vertical-align: middle;
     border: 0px;
-    border-radius: 8px;
+    border-radius: 24px;
     font: var(--cpd-font-body-md-regular);
     color: $button-fg-color;
-    background-color: $accent;
+    background-color: var(--cpd-color-bg-action-primary-rest);
     width: auto;
     padding: 7px;
     padding-left: 1.5em;
@@ -576,7 +601,10 @@ legend {
  * Elements that should not be styled like a dialog button are mentioned in a :not() pseudo-class.
  * For the widest browser support, we use multiple :not pseudo-classes instead of :not(.a, .b).
  */
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton),
+.mx_Dialog
+    button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton):not(
+        .mx_UserProfileSettings button
+    ):not(.mx_ThemeChoicePanel_CustomTheme button),
 .mx_Dialog input[type="submit"],
 .mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton),
 .mx_Dialog_buttons input[type="submit"] {
@@ -587,17 +615,23 @@ legend {
 
     /* flip colours for the secondary ones */
     font-weight: var(--cpd-font-weight-semibold);
-    border: 1px solid currentColor;
-    color: $accent;
+    border: 1px solid var(--cpd-color-border-interactive-secondary);
+    color: var(--cpd-color-text-primary);
     background-color: transparent;
     font-family: inherit;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton):last-child {
+.mx_Dialog
+    button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton):not(
+        .mx_UserProfileSettings button
+    ):not(.mx_ThemeChoicePanel_CustomTheme button):last-child {
     margin-right: 0px;
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton):focus,
+.mx_Dialog
+    button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton):not(
+        .mx_UserProfileSettings button
+    ):not(.mx_ThemeChoicePanel_CustomTheme button):focus,
 .mx_Dialog input[type="submit"]:focus,
 .mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):focus,
 .mx_Dialog_buttons input[type="submit"]:focus {
@@ -606,29 +640,39 @@ legend {
 
 .mx_Dialog button.mx_Dialog_primary:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]),
 .mx_Dialog input[type="submit"].mx_Dialog_primary,
-.mx_Dialog_buttons button.mx_Dialog_primary:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton),
+.mx_Dialog_buttons
+    button.mx_Dialog_primary:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):not(
+        .mx_UserProfileSettings button
+    ):not(.mx_ThemeChoicePanel_CustomTheme button),
 .mx_Dialog_buttons input[type="submit"].mx_Dialog_primary {
-    color: $accent-fg-color;
-    background-color: $accent;
+    color: var(--cpd-color-text-on-solid-primary);
+    background-color: var(--cpd-color-bg-action-primary-rest);
+    border-color: var(--cpd-color-bg-action-primary-rest);
     min-width: 156px;
 }
 
 .mx_Dialog button.danger:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]),
 .mx_Dialog input[type="submit"].danger,
-.mx_Dialog_buttons button.danger:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton),
+.mx_Dialog_buttons
+    button.danger:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):not(.mx_UserProfileSettings button):not(
+        .mx_ThemeChoicePanel_CustomTheme button
+    ),
 .mx_Dialog_buttons input[type="submit"].danger {
-    background-color: $alert;
-    border: solid 1px $alert;
-    color: $accent-fg-color;
+    background-color: var(--cpd-color-bg-critical-primary);
+    border: solid 1px var(--cpd-color-bg-critical-primary);
+    color: var(--cpd-color-text-on-solid-primary);
 }
 
 .mx_Dialog button.warning:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]),
 .mx_Dialog input[type="submit"].warning {
-    border: solid 1px $alert;
-    color: $alert;
+    border: solid 1px var(--cpd-color-border-critical-subtle);
+    color: var(--cpd-color-text-critical-primary);
 }
 
-.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton):disabled,
+.mx_Dialog
+    button:not(.mx_Dialog_nonDialogButton):not([class|="maplibregl"]):not(.mx_AccessibleButton):not(
+        .mx_UserProfileSettings button
+    ):not(.mx_ThemeChoicePanel_CustomTheme button):disabled,
 .mx_Dialog input[type="submit"]:disabled,
 .mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):disabled,
 .mx_Dialog_buttons input[type="submit"]:disabled {
@@ -638,15 +682,23 @@ legend {
 }
 
 /* Spinner Dialog overide */
-.mx_Dialog_wrapper.mx_Dialog_spinner .mx_Dialog {
-    width: auto;
-    border-radius: 8px;
-    padding: 8px;
-    box-shadow: none;
+.mx_Dialog_wrapper.mx_Dialog_spinner {
+    /* This is not a real dialog, so we shouldn't show a glass border */
+    .mx_Dialog_border {
+        display: contents;
+    }
 
-    /* Don't show scroll-bars on spinner dialogs */
-    overflow-x: hidden;
-    overflow-y: hidden;
+    .mx_Dialog {
+        inline-size: auto;
+        block-size: auto;
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: none;
+
+        /* Don't show scroll-bars on spinner dialogs */
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
 }
 
 /* TODO: Review mx_GeneralButton usage to see if it can use a different class */
@@ -701,14 +753,6 @@ legend {
 
 .mx_Username_color6 {
     color: $username-variant6-color;
-}
-
-.mx_Username_color7 {
-    color: $username-variant7-color;
-}
-
-.mx_Username_color8 {
-    color: $username-variant8-color;
 }
 
 .mx_AppWarning,
@@ -805,7 +849,7 @@ legend {
 @define-mixin ThreadSummaryIcon {
     content: "";
     display: inline-block;
-    mask-image: url("$(res)/img/element-icons/thread-summary.svg");
+    mask-image: url("@vector-im/compound-design-tokens/icons/threads.svg");
     mask-position: center;
     mask-repeat: no-repeat;
     mask-size: contain;
@@ -815,11 +859,9 @@ legend {
 }
 
 @define-mixin composerButtonHighLight {
-    /* TODO: Refactor as this will break for apps that override the accent color */
-    background: var(--cpd-color-green-300);
-    /* make the icon the accent color too */
+    background: var(--cpd-color-bg-subtle-primary);
     &::before {
-        background-color: $accent !important;
+        background-color: var(--cpd-color-icon-primary) !important;
     }
 }
 

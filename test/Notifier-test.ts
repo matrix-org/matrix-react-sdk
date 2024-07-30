@@ -13,7 +13,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 import { mocked, MockedObject } from "jest-mock";
 import {
     ClientEvent,
@@ -27,9 +26,9 @@ import {
     SyncState,
 } from "matrix-js-sdk/src/matrix";
 import { waitFor } from "@testing-library/react";
+import { CallMembership, MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc";
 
 import BasePlatform from "../src/BasePlatform";
-import { ElementCall } from "../src/models/Call";
 import Notifier from "../src/Notifier";
 import SettingsStore from "../src/settings/SettingsStore";
 import ToastStore from "../src/stores/ToastStore";
@@ -44,7 +43,7 @@ import {
     mockClientMethodsUser,
     mockPlatformPeg,
 } from "./test-utils";
-import { IncomingCallToast } from "../src/toasts/IncomingCallToast";
+import { getIncomingCallToastKey, IncomingCallToast } from "../src/toasts/IncomingCallToast";
 import { SdkContextClass } from "../src/contexts/SDKContext";
 import UserActivity from "../src/UserActivity";
 import Modal from "../src/Modal";
@@ -60,6 +59,11 @@ jest.mock("../src/utils/notifications", () => ({
     // @ts-ignore
     ...jest.requireActual("../src/utils/notifications"),
     createLocalNotificationSettingsIfNeeded: jest.fn(),
+}));
+
+jest.mock("../src/audio/compat", () => ({
+    ...jest.requireActual("../src/audio/compat"),
+    createAudioContext: jest.fn(),
 }));
 
 describe("Notifier", () => {
@@ -105,6 +109,19 @@ describe("Notifier", () => {
         });
     };
 
+    const mockAudioBufferSourceNode = {
+        addEventListener: jest.fn(),
+        connect: jest.fn(),
+        start: jest.fn(),
+    };
+    const mockAudioContext = {
+        decodeAudioData: jest.fn(),
+        suspend: jest.fn(),
+        resume: jest.fn(),
+        createBufferSource: jest.fn().mockReturnValue(mockAudioBufferSourceNode),
+        currentTime: 1337,
+    };
+
     beforeEach(() => {
         accountDataStore = {};
         mockClient = getMockClientWithEventEmitter({
@@ -123,6 +140,11 @@ describe("Notifier", () => {
             getRoom: jest.fn(),
             getPushActionsForEvent: jest.fn(),
             supportsThreads: jest.fn().mockReturnValue(false),
+            matrixRTC: {
+                on: jest.fn(),
+                off: jest.fn(),
+                getRoomSession: jest.fn(),
+            },
         });
 
         mockClient.pushRules = {
@@ -146,6 +168,9 @@ describe("Notifier", () => {
             if (id) return new Room(id, mockClient, mockClient.getSafeUserId());
             return null;
         });
+
+        // @ts-ignore
+        Notifier.backgroundAudio.audioContext = mockAudioContext;
     });
 
     describe("triggering notification from events", () => {
@@ -389,12 +414,17 @@ describe("Notifier", () => {
             jest.resetAllMocks();
         });
 
-        const callOnEvent = (type?: string) => {
+        const emitCallNotifyEvent = (type?: string, roomMention = true) => {
             const callEvent = mkEvent({
-                type: type ?? ElementCall.CALL_EVENT_TYPE.name,
+                type: type ?? EventType.CallNotify,
                 user: "@alice:foo",
                 room: roomId,
-                content: {},
+                content: {
+                    "application": "m.call",
+                    "m.mentions": { user_ids: [], room: roomMention },
+                    "notify_type": "ring",
+                    "call_id": "abc123",
+                },
                 event: true,
             });
             emitLiveEvent(callEvent);
@@ -410,15 +440,15 @@ describe("Notifier", () => {
         it("should show toast when group calls are supported", () => {
             setGroupCallsEnabled(true);
 
-            const callEvent = callOnEvent();
+            const notifyEvent = emitCallNotifyEvent();
 
             expect(ToastStore.sharedInstance().addOrReplaceToast).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    key: `call_${callEvent.getStateKey()}`,
+                    key: getIncomingCallToastKey(notifyEvent.getContent().call_id ?? "", roomId),
                     priority: 100,
                     component: IncomingCallToast,
                     bodyClassName: "mx_IncomingCallToast",
-                    props: { callEvent },
+                    props: { notifyEvent },
                 }),
             );
         });
@@ -426,15 +456,44 @@ describe("Notifier", () => {
         it("should not show toast when group calls are not supported", () => {
             setGroupCallsEnabled(false);
 
-            callOnEvent();
+            emitCallNotifyEvent();
 
             expect(ToastStore.sharedInstance().addOrReplaceToast).not.toHaveBeenCalled();
+        });
+
+        it("should not show toast when group call is already connected", () => {
+            setGroupCallsEnabled(true);
+            const spyCallMemberships = jest.spyOn(MatrixRTCSession, "callMembershipsForRoom").mockReturnValue([
+                new CallMembership(
+                    mkEvent({
+                        event: true,
+                        room: testRoom.roomId,
+                        user: userId,
+                        type: EventType.GroupCallMemberPrefix,
+                        content: {},
+                    }),
+                    {
+                        call_id: "123",
+                        application: "m.call",
+                        focus_active: { type: "livekit" },
+                        foci_preferred: [],
+                        device_id: "DEVICE",
+                    },
+                ),
+            ]);
+
+            const roomSession = MatrixRTCSession.roomSessionForRoom(mockClient, testRoom);
+
+            mockClient.matrixRTC.getRoomSession.mockReturnValue(roomSession);
+            emitCallNotifyEvent();
+            expect(ToastStore.sharedInstance().addOrReplaceToast).not.toHaveBeenCalled();
+            spyCallMemberships.mockRestore();
         });
 
         it("should not show toast when calling with non-group call event", () => {
             setGroupCallsEnabled(true);
 
-            callOnEvent("event_type");
+            emitCallNotifyEvent("event_type");
 
             expect(ToastStore.sharedInstance().addOrReplaceToast).not.toHaveBeenCalled();
         });

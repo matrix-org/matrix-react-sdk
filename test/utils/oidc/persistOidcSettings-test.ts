@@ -15,23 +15,30 @@ limitations under the License.
 */
 
 import { IdTokenClaims } from "oidc-client-ts";
+import { decodeIdToken } from "matrix-js-sdk/src/matrix";
+import { mocked } from "jest-mock";
 
 import {
     getStoredOidcClientId,
+    getStoredOidcIdToken,
     getStoredOidcIdTokenClaims,
     getStoredOidcTokenIssuer,
     persistOidcAuthenticatedSettings,
 } from "../../../src/utils/oidc/persistOidcSettings";
 
-describe("persist OIDC settings", () => {
-    beforeEach(() => {
-        jest.spyOn(sessionStorage.__proto__, "getItem").mockClear().mockReturnValue(null);
+jest.mock("matrix-js-sdk/src/matrix");
 
-        jest.spyOn(sessionStorage.__proto__, "setItem").mockClear();
+describe("persist OIDC settings", () => {
+    jest.spyOn(Storage.prototype, "getItem");
+    jest.spyOn(Storage.prototype, "setItem");
+
+    beforeEach(() => {
+        localStorage.clear();
     });
 
     const clientId = "test-client-id";
     const issuer = "https://auth.org/";
+    const idToken = "test-id-token";
     const idTokenClaims: IdTokenClaims = {
         // audience is this client
         aud: "123",
@@ -43,48 +50,65 @@ describe("persist OIDC settings", () => {
     };
 
     describe("persistOidcAuthenticatedSettings", () => {
-        it("should set clientId and issuer in session storage", () => {
-            persistOidcAuthenticatedSettings(clientId, issuer, idTokenClaims);
-            expect(sessionStorage.setItem).toHaveBeenCalledWith("mx_oidc_client_id", clientId);
-            expect(sessionStorage.setItem).toHaveBeenCalledWith("mx_oidc_token_issuer", issuer);
-            expect(sessionStorage.setItem).toHaveBeenCalledWith(
-                "mx_oidc_id_token_claims",
-                JSON.stringify(idTokenClaims),
-            );
+        it("should set clientId and issuer in localStorage", () => {
+            persistOidcAuthenticatedSettings(clientId, issuer, idToken);
+            expect(localStorage.setItem).toHaveBeenCalledWith("mx_oidc_client_id", clientId);
+            expect(localStorage.setItem).toHaveBeenCalledWith("mx_oidc_token_issuer", issuer);
+            expect(localStorage.setItem).toHaveBeenCalledWith("mx_oidc_id_token", idToken);
         });
     });
 
     describe("getStoredOidcTokenIssuer()", () => {
-        it("should return issuer from session storage", () => {
-            jest.spyOn(sessionStorage.__proto__, "getItem").mockReturnValue(issuer);
+        it("should return issuer from localStorage", () => {
+            localStorage.setItem("mx_oidc_token_issuer", issuer);
             expect(getStoredOidcTokenIssuer()).toEqual(issuer);
-            expect(sessionStorage.getItem).toHaveBeenCalledWith("mx_oidc_token_issuer");
+            expect(localStorage.getItem).toHaveBeenCalledWith("mx_oidc_token_issuer");
         });
 
-        it("should return undefined when no issuer in session storage", () => {
+        it("should return undefined when no issuer in localStorage", () => {
             expect(getStoredOidcTokenIssuer()).toBeUndefined();
         });
     });
 
     describe("getStoredOidcClientId()", () => {
-        it("should return clientId from session storage", () => {
-            jest.spyOn(sessionStorage.__proto__, "getItem").mockReturnValue(clientId);
+        it("should return clientId from localStorage", () => {
+            localStorage.setItem("mx_oidc_client_id", clientId);
             expect(getStoredOidcClientId()).toEqual(clientId);
-            expect(sessionStorage.getItem).toHaveBeenCalledWith("mx_oidc_client_id");
+            expect(localStorage.getItem).toHaveBeenCalledWith("mx_oidc_client_id");
         });
-        it("should throw when no clientId in session storage", () => {
+        it("should throw when no clientId in localStorage", () => {
             expect(() => getStoredOidcClientId()).toThrow("Oidc client id not found in storage");
         });
     });
 
-    describe("getStoredOidcIdTokenClaims()", () => {
-        it("should return issuer from session storage", () => {
-            jest.spyOn(sessionStorage.__proto__, "getItem").mockReturnValue(JSON.stringify(idTokenClaims));
-            expect(getStoredOidcIdTokenClaims()).toEqual(idTokenClaims);
-            expect(sessionStorage.getItem).toHaveBeenCalledWith("mx_oidc_id_token_claims");
+    describe("getStoredOidcIdToken()", () => {
+        it("should return token from localStorage", () => {
+            localStorage.setItem("mx_oidc_id_token", idToken);
+            expect(getStoredOidcIdToken()).toEqual(idToken);
+            expect(localStorage.getItem).toHaveBeenCalledWith("mx_oidc_id_token");
         });
 
-        it("should return undefined when no issuer in session storage", () => {
+        it("should return undefined when no token in localStorage", () => {
+            expect(getStoredOidcIdToken()).toBeUndefined();
+        });
+    });
+
+    describe("getStoredOidcIdTokenClaims()", () => {
+        it("should return claims from localStorage", () => {
+            localStorage.setItem("mx_oidc_id_token_claims", JSON.stringify(idTokenClaims));
+            expect(getStoredOidcIdTokenClaims()).toEqual(idTokenClaims);
+            expect(localStorage.getItem).toHaveBeenCalledWith("mx_oidc_id_token_claims");
+        });
+
+        it("should return claims extracted from id_token in localStorage", () => {
+            localStorage.setItem("mx_oidc_id_token", idToken);
+            mocked(decodeIdToken).mockReturnValue(idTokenClaims);
+            expect(getStoredOidcIdTokenClaims()).toEqual(idTokenClaims);
+            expect(decodeIdToken).toHaveBeenCalledWith(idToken);
+            expect(localStorage.getItem).toHaveBeenCalledWith("mx_oidc_id_token_claims");
+        });
+
+        it("should return undefined when no claims in localStorage", () => {
             expect(getStoredOidcIdTokenClaims()).toBeUndefined();
         });
     });

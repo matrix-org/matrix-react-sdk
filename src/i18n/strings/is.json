@@ -209,7 +209,8 @@
         "msisdn_field_required_invalid": "Settu inn símanúmer",
         "no_hs_url_provided": "Engin slóð heimaþjóns tilgreind",
         "oidc": {
-            "error_title": "Við gátum ekki skráð þig inn"
+            "error_title": "Við gátum ekki skráð þig inn",
+            "missing_or_invalid_stored_state": "Við báðum vafrann þinn að muna hvaða heimaþjón þú notar til að skrá þig inn, en því miður virðist það hafa gleymst. Farðu á innskráningarsíðuna og reyndu aftur."
         },
         "password_field_label": "Settu inn lykilorð",
         "password_field_strong_label": "Fínt, sterkt lykilorð!",
@@ -217,8 +218,6 @@
         "phone_label": "Sími",
         "phone_optional_label": "Sími (valfrjálst)",
         "qr_code_login": {
-            "error_invalid_scanned_code": "Skannaði kóðinn er ógildur.",
-            "review_and_approve": "Yfirfarðu og samþykktu innskráninguna",
             "sign_in_new_device": "Skrá inn nýtt tæki",
             "waiting_for_device": "Bíð eftir að tækið skráist inn"
         },
@@ -351,7 +350,6 @@
         "spaceinvaders_message": "sendir geimverur til árásar"
     },
     "common": {
-        "about": "Um hugbúnaðinn",
         "access_token": "Aðgangsteikn",
         "accessibility": "Auðveldað aðgengi",
         "advanced": "Nánar",
@@ -378,7 +376,6 @@
         "description": "Lýsing",
         "deselect_all": "Afvelja allt",
         "device": "Tæki",
-        "display_name": "Birtingarnafn",
         "edited": "breytti",
         "email_address": "Tölvupóstfang",
         "emoji": "Tjáningartáknmynd",
@@ -414,10 +411,6 @@
         "mute": "Þagga niður",
         "n_members": {
             "one": "%(count)s þátttakandi",
-            "other": "%(count)s þátttakendur"
-        },
-        "n_participants": {
-            "one": "1 þáttakandi",
             "other": "%(count)s þátttakendur"
         },
         "n_rooms": {
@@ -634,14 +627,12 @@
         "methods": "Aðferðir",
         "no_verification_requests_found": "Engar staðfestingarbeiðnir fundust",
         "number_of_users": "Fjöldi notenda",
-        "observe_only": "Aðeins fylgjast með",
         "phase": "Fasi",
         "phase_cancelled": "Hætt við",
         "phase_ready": "Tilbúið",
         "phase_requested": "Umbeðið",
         "phase_started": "Hafið",
         "phase_transaction": "Færsluaðgerð",
-        "requester": "Beiðandi",
         "room_id": "Auðkenni spjallrásar: %(roomId)s",
         "save_setting_values": "Vista gildi valkosta",
         "send_custom_state_event": "Senda sérsniðinn stöðuatburð",
@@ -1037,7 +1028,6 @@
         "failed_generic": "Aðgerð tókst ekki",
         "failed_title": "Mistókst að bjóða",
         "invalid_address": "Óþekkjanlegt vistfang",
-        "key_share_warning": "Fólk sem er boðið mun geta lesið eldri skilaboð.",
         "name_email_mxid_share_room": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessari spjallrás</a>.",
         "name_email_mxid_share_space": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessu svæði</a>.",
         "name_mxid_share_room": "Bjóddu einhverjum með því að nota nafn, notandanafn (eins og <userId/>) eða <a>deildu þessari spjallrás</a>.",
@@ -1158,6 +1148,7 @@
         "group_rooms": "Spjallrásir",
         "group_spaces": "Svæði",
         "group_themes": "Þemu",
+        "group_threads": "Spjallþræðir",
         "group_voip": "Tal og myndmerki",
         "group_widgets": "Viðmótshlutar",
         "html_topic": "Birta HTML-framsetningu umfjöllunarefnis spjallrása",
@@ -1173,9 +1164,6 @@
         "pinning": "Festing skilaboða",
         "report_to_moderators": "Tilkynna til umsjónarmanna",
         "report_to_moderators_description": "Í spjallrásum sem styðja eftirlit umsjónarmanna, mun 'Kæra'-hnappurinn gefa þér færi á að tilkynna misnotkun til umsjónarmanna spjallrása.",
-        "sliding_sync_proxy_url_label": "Slóð milliþjóns",
-        "sliding_sync_proxy_url_optional_label": "Slóð milliþjóns (valfrjálst)",
-        "state_counters": "Myndgera einfalda teljara í haus spjallrása",
         "under_active_development": "Í virkri þróun.",
         "video_rooms": "Myndspjallrásir",
         "video_rooms_a_new_way_to_chat": "Ný leið til að spjalla með tali og myndmerki í %(brand)s.",
@@ -1217,11 +1205,6 @@
         "view_rules": "Skoða reglur"
     },
     "language_dropdown_label": "Fellilisti tungumála",
-    "lazy_loading": {
-        "disabled_action": "Hreinsa skyndiminni og endursamstilla",
-        "disabled_title": "Ósamhæft staðvært skyndiminni",
-        "resync_title": "Uppfæri %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "Þú ert eini eintaklingurinn hérna. Ef þú ferð út, mun enginn framar geta tekið þátt, að þér meðtöldum.",
         "leave_room_question": "Ertu viss um að þú viljir yfirgefa spjallrásina '%(roomName)s'?",
@@ -1295,9 +1278,6 @@
         "all_messages_description": "Fáðu tilkynningu fyrir öll skilaboð",
         "class_global": "Víðvært",
         "class_other": "Annað",
-        "colour_bold": "Feitletrað",
-        "colour_none": "Ekkert",
-        "colour_unsent": "Ósent",
         "default": "Sjálfgefið",
         "enable_prompt_toast_description": "Virkja tilkynningar á skjáborði",
         "enable_prompt_toast_title": "Tilkynningar",
@@ -1305,6 +1285,9 @@
         "error_change_title": "Breytta tilkynningastillingum",
         "keyword": "Stikkorð",
         "keyword_new": "Nýtt stikkorð",
+        "level_activity": "Virkni",
+        "level_none": "Ekkert",
+        "level_unsent": "Ósent",
         "mark_all_read": "Merkja allt sem lesið",
         "mentions_and_keywords": "@minnst á og stikkorð",
         "mentions_keywords": "Tilvísanir og stikkorð",
@@ -1504,9 +1487,6 @@
         "room_summary_card": {
             "title": "Upplýsingar um spjallrás"
         },
-        "search_button": "Leita",
-        "settings_button": "Stillingar spjallrásar",
-        "share_button": "Deila spjallrás",
         "thread_list": {
             "context_menu_label": "Valkostir spjallþráðar"
         },
@@ -1625,13 +1605,10 @@
         "read_topic": "Smelltu til að lesa umfjöllunarefni",
         "rejoin_button": "Taka þátt aftur",
         "search": {
-            "all_rooms": "Allar spjallrásir",
-            "field_placeholder": "Leita…",
             "result_count": {
                 "one": "(~%(count)s niðurstaða)",
                 "other": "(~%(count)s niðurstöður)"
-            },
-            "this_room": "Þessi spjallrás"
+            }
         },
         "show_labs_settings": "Sýna tilraunastillingar",
         "status_bar": {
@@ -1923,11 +1900,8 @@
         "help_about": {
             "access_token_detail": "Aðgangsteiknið þitt gefur fullan aðgang að notandaaðgangnum þínum. Ekki deila því með neinum.",
             "brand_version": "Útgáfa %(brand)s:",
-            "chat_bot": "Spjalla við %(brand)s vélmenni",
             "clear_cache_reload": "Hreinsa skyndiminni og endurhlaða",
             "help_link": "Til að fá aðstoð við að nota %(brand)s, smelltu <a>hér</a>.",
-            "help_link_chat_bot": "Til að fá aðstoð við að nota %(brand)s, smelltu <a>hér</a> eða byrjaðu að spjalla við vélmennið okkar með hnappnum hér fyrir neðan.",
-            "olm_version": "Útgáfa olm:",
             "title": "Hjálp og um hugbúnaðinn",
             "versions": "Útgáfur"
         }
@@ -1941,24 +1915,15 @@
             "custom_font_description": "Settu inn heiti á letri sem er uppsett á kerfinu þínu og %(brand)s mun reyna að nota það.",
             "custom_font_name": "Nafn kerfisleturs",
             "custom_font_size": "Nota sérsniðna stærð",
-            "custom_theme_add_button": "Bæta við þema",
             "custom_theme_error_downloading": "Villa við að niðurhala þemaupplýsingum.",
             "custom_theme_invalid": "Ógilt þemaskema.",
-            "custom_theme_success": "Þema bætt við!",
-            "custom_theme_url": "Slóð á sérsniðið þema",
             "font_size": "Leturstærð",
-            "font_size_limit": "Sérsniðin stærð á letri getur aðeins verið á milli %(min)s pt og %(max)s pt",
-            "font_size_nan": "Stærð verður að vera tala",
-            "font_size_valid": "Nota á milli %(min)s pt og %(max)s pt",
-            "heading": "Sérsníddu útlitið þitt",
             "image_size_default": "Sjálfgefið",
             "image_size_large": "Stórt",
             "layout_bubbles": "Skilaboðablöðrur",
             "layout_irc": "IRC (á tilraunastigi)",
             "match_system_theme": "Samsvara þema kerfis",
-            "subheading": "Stillingar útlits hafa einungis áhrif á þessa %(brand)s setu.",
-            "timeline_image_size": "Stærð myndar í tímalínunni",
-            "use_high_contrast": "Nota mikil birtuskil"
+            "timeline_image_size": "Stærð myndar í tímalínunni"
         },
         "automatic_language_detection_syntax_highlight": "Virkja greiningu á forritunarmálum fyrir málskipunarlitun",
         "autoplay_gifs": "Spila GIF-myndir sjálfkrafa",
@@ -1989,7 +1954,6 @@
             "discovery_email_verification_instructions": "Athugaðu tengilinn í pósthólfinu þínu",
             "discovery_msisdn_empty": "Valkostir fyrir uppgötvun munu birtast um leið og þú hefur bætt inn símanúmeri hér fyrir ofan.",
             "discovery_needs_terms": "Samþykktu þjónustuskilmála auðkennisþjónsins (%(serverName)s) svo hægt sé að finna þig með tölvupóstfangi eða símanúmeri.",
-            "discovery_section": "Uppgötvun",
             "email_address_in_use": "Þetta tölvupóstfang er nú þegar í notkun",
             "email_address_label": "Tölvupóstfang",
             "email_not_verified": "Tölvupóstfangið þitt hefur ekki ennþá verið staðfest",
@@ -2003,8 +1967,6 @@
             "error_remove_3pid": "Ekki tókst að fjarlægja upplýsingar um tengilið",
             "error_revoke_email_discovery": "Ekki er hægt að afturkalla að deila tölvupóstfangi",
             "error_revoke_msisdn_discovery": "Ekki er hægt að afturkalla að deila símanúmeri",
-            "error_saving_profile": "Ekki tókst að ljúka aðgerðinni",
-            "error_saving_profile_title": "Mistókst að vista sniðið þitt",
             "error_share_email_discovery": "Get ekki deilt tölvupóstfangi",
             "error_share_msisdn_discovery": "Ekki er hægt að deila símanúmeri",
             "incorrect_msisdn_verification": "Rangur sannvottunarkóði",
@@ -2018,8 +1980,7 @@
             "password_change_success": "Það tókst að breyta lykilorðinu þínu.",
             "remove_email_prompt": "Fjarlægja %(email)s?",
             "remove_msisdn_prompt": "Fjarlægja %(phone)s?",
-            "spell_check_locale_placeholder": "Veldu staðfærslu",
-            "spell_check_section": "Stafsetningaryfirferð"
+            "spell_check_locale_placeholder": "Veldu staðfærslu"
         },
         "image_thumbnails": "Birta forskoðun/smámyndir fyrir myndir",
         "inline_url_previews_default": "Sjálfgefið virkja forskoðun innfelldra vefslóða",
@@ -2150,7 +2111,6 @@
             "delete_backup_confirm_description": "Ertu viss? Þú munt tapa dulrituðu skilaboðunum þínum ef dulritunarlyklarnir þínir eru ekki rétt öryggisafritaðir.",
             "e2ee_default_disabled_warning": "Kerfisstjóri netþjónsins þíns hefur lokað á sjálfvirka dulritun í einkaspjallrásum og beinum skilaboðum.",
             "enable_message_search": "Virka skilaboðleit í dulrituðum spjallrásum",
-            "encryption_individual_verification_mode": "Sannreyndu hverja setu sem notandinn notar til að merkja hana sem treysta, án þess að treyta kross-undirrituðum tækjum.",
             "encryption_section": "Dulritun",
             "error_loading_key_backup_status": "Tókst ekki að hlaða inn stöðu öryggisafritunar dulritunarlykla",
             "export_megolm_keys": "Flytja út E2E dulritunarlykla spjallrásar",
@@ -2163,7 +2123,6 @@
             "key_backup_connect": "Tengja þessa setu við öryggisafrit af lykli",
             "key_backup_inactive": "Þessi seta er <b>ekki að öryggisafrita dulritunarlyklana þína</b>, en þú ert með fyrirliggjandi öryggisafrit sem þú getur endurheimt úr og notað til að halda áfram.",
             "key_backup_inactive_warning": "Dulritunarlyklarnir þínir eru <b>ekki öryggisafritaðir úr þessari setu</b>.",
-            "manually_verify_all_sessions": "Sannreyna handvirkt allar fjartengdar setur",
             "message_search_disable_warning": "Ef þetta er óvirkt, munu skilaboð frá dulrituðum spjallrásum ekki birtast í leitarniðurstöðum.",
             "message_search_disabled": "Setja dulrituð skilaboð leynilega í skyndiminni á tækinu svo þau birtist í leitarniðurstöðum.",
             "message_search_enabled": {
@@ -2546,14 +2505,10 @@
             "one": "%(count)s svar",
             "other": "%(count)s svör"
         },
-        "empty_explainer": "Spjallþræðir hjálpa til við að halda samræðum við efnið og gerir auðveldara að rekja þær.",
-        "empty_heading": "Haltu umræðum skipulögðum með spjallþráðum",
         "my_threads": "Spjallþræðirnir mínir",
         "my_threads_description": "Birtir alla spjallþræði sem þú hefur tekið þátt í",
         "open_thread": "Opna spjallþráð",
-        "show_all_threads": "Birta alla spjallþræði",
-        "show_thread_filter": "Sýna:",
-        "unable_to_decrypt": "Tókst ekki að afkóða skilaboð"
+        "show_thread_filter": "Sýna:"
     },
     "time": {
         "about_day_ago": "fyrir um degi síðan",
@@ -2660,19 +2615,8 @@
             "sent": "%(senderDisplayName)s sendi mynd.",
             "show_image": "Birta mynd"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "%(name)s hætti við sannvottun",
-            "you_cancelled": "Þú hættir við sannvottun á %(name)s"
-        },
-        "m.key.verification.done": "Þú sannreyndir %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "%(name)s samþykkti",
-            "user_cancelled": "%(name)s hætti við",
-            "user_declined": "%(name)s hafnaði",
             "user_wants_to_verify": "%(name)s vill sannreyna",
-            "you_accepted": "Þú samþykktir",
-            "you_cancelled": "Þú hættir við",
-            "you_declined": "Þú hafnaðir",
             "you_started": "Þú sendir beiðni um sannvottun"
         },
         "m.location": {
@@ -2838,8 +2782,7 @@
         "pending_moderation_reason": "Efni sem bíður yfirferðar: %(reason)s",
         "reactions": {
             "add_reaction_prompt": "Bæta við viðbrögðum",
-            "label": "%(reactors)s brást við með %(content)s",
-            "tooltip": "<reactors/><reactedWith>brást við %(shortName)s</reactedWith>"
+            "label": "%(reactors)s brást við með %(content)s"
         },
         "read_receipt_title": {
             "one": "Séð af %(count)s aðila",
@@ -3074,7 +3017,6 @@
         },
         "redact_button": "Fjarlægja nýleg skilaboð",
         "revoke_invite": "Afturkalla boð",
-        "role_label": "Hlutverk í <RoomName/>",
         "room_encrypted": "Skilaboð í þessari spjallrás eru enda-í-enda dulrituð.",
         "room_encrypted_detail": "Öryggi skilaboðanna þinna er tryggt og einungis þú og viðtakendurnir hafa dulritunarlyklana til að opna skilaboðin.",
         "room_unencrypted": "Skilaboð í þessari spjallrás eru ekki enda-í-enda dulrituð.",
@@ -3119,7 +3061,6 @@
         "already_in_call_person": "Þú ert nú þegar í símtali við þennan aðila.",
         "answered_elsewhere": "Svarað annars staðar",
         "answered_elsewhere_description": "Símtalinu var svarað á öðru tæki.",
-        "audio_devices": "Hljóðtæki",
         "call_failed": "Símtal mistókst",
         "call_failed_description": "Ekki tókst að koma símtalinu á",
         "call_failed_media": "Símtal mistókst þar sem ekki tókst að fá aðgang að vefmyndavél eða hljóðnema. Athugaðu þetta:",
@@ -3202,7 +3143,6 @@
         "user_is_presenting": "%(sharerName)s er að kynna",
         "video_call": "Myndsímtal",
         "video_call_started": "Myndsímtal er byrjað",
-        "video_devices": "Myndmerkistæki",
         "voice_call": "Raddsímtal",
         "you_are_presenting": "Þú ert að kynna"
     },

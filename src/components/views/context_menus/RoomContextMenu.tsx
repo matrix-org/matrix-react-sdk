@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React, { useContext } from "react";
-import { Room } from "matrix-js-sdk/src/matrix";
-import { logger } from "matrix-js-sdk/src/logger";
+import { Room, RoomMemberEvent } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 
 import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
 import IconizedContextMenu, {
@@ -30,7 +30,6 @@ import { ButtonEvent } from "../elements/AccessibleButton";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import dis from "../../../dispatcher/dispatcher";
-import RoomListActions from "../../../actions/RoomListActions";
 import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
 import { RoomNotifState } from "../../../RoomNotifs";
 import Modal from "../../../Modal";
@@ -52,6 +51,7 @@ import { SdkContextClass } from "../../../contexts/SDKContext";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { DeveloperToolsOption } from "./DeveloperToolsOption";
+import { tagRoom } from "../../../utils/room/tagRoom";
 
 interface IProps extends IContextMenuProps {
     room: Room;
@@ -117,9 +117,9 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
     const elementCallVideoRoomsEnabled = useFeatureEnabled("feature_element_call_video_rooms");
     const isVideoRoom =
         videoRoomsEnabled && (room.isElementVideoRoom() || (elementCallVideoRoomsEnabled && room.isCallRoom()));
-
+    const canInvite = useEventEmitterState(cli, RoomMemberEvent.PowerLevel, () => room.canInvite(cli.getUserId()!));
     let inviteOption: JSX.Element | undefined;
-    if (room.canInvite(cli.getUserId()!) && !isDm && shouldShowComponent(UIComponent.InviteUsers)) {
+    if (canInvite && !isDm && shouldShowComponent(UIComponent.InviteUsers)) {
         const onInviteClick = (ev: ButtonEvent): void => {
             ev.preventDefault();
             ev.stopPropagation();
@@ -145,7 +145,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
     let favouriteOption: JSX.Element | undefined;
     let lowPriorityOption: JSX.Element | undefined;
     let notificationOption: JSX.Element | undefined;
-    if (room.getMyMembership() === "join") {
+    if (room.getMyMembership() === KnownMembership.Join) {
         const isFavorite = roomTags.includes(DefaultTagID.Favourite);
         favouriteOption = (
             <IconizedContextMenuCheckbox
@@ -333,15 +333,7 @@ const RoomContextMenu: React.FC<IProps> = ({ room, onFinished, ...props }) => {
         ev.preventDefault();
         ev.stopPropagation();
 
-        if (tagId === DefaultTagID.Favourite || tagId === DefaultTagID.LowPriority) {
-            const inverseTag = tagId === DefaultTagID.Favourite ? DefaultTagID.LowPriority : DefaultTagID.Favourite;
-            const isApplied = RoomListStore.instance.getTagsForRoom(room).includes(tagId);
-            const removeTag = isApplied ? tagId : inverseTag;
-            const addTag = isApplied ? null : tagId;
-            dis.dispatch(RoomListActions.tagRoom(cli, room, removeTag, addTag, 0));
-        } else {
-            logger.warn(`Unexpected tag ${tagId} applied to ${room.roomId}`);
-        }
+        tagRoom(room, tagId);
 
         const action = getKeyBindingsManager().getAccessibilityAction(ev as React.KeyboardEvent);
         switch (action) {

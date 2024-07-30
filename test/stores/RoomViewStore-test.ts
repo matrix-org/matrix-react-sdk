@@ -17,6 +17,7 @@ limitations under the License.
 import { mocked } from "jest-mock";
 import { MatrixError, Room } from "matrix-js-sdk/src/matrix";
 import { sleep } from "matrix-js-sdk/src/utils";
+import { RoomViewLifecycle, ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 import { RoomViewStore } from "../../src/stores/RoomViewStore";
 import { Action } from "../../src/dispatcher/actions";
@@ -43,6 +44,7 @@ import ErrorDialog from "../../src/components/views/dialogs/ErrorDialog";
 import { CancelAskToJoinPayload } from "../../src/dispatcher/payloads/CancelAskToJoinPayload";
 import { JoinRoomErrorPayload } from "../../src/dispatcher/payloads/JoinRoomErrorPayload";
 import { SubmitAskToJoinPayload } from "../../src/dispatcher/payloads/SubmitAskToJoinPayload";
+import { ModuleRunner } from "../../src/modules/ModuleRunner";
 
 jest.mock("../../src/Modal");
 
@@ -82,6 +84,9 @@ jest.mock("../../src/utils/DMRoomMap", () => {
     };
 });
 
+jest.mock("../../src/stores/WidgetStore");
+jest.mock("../../src/stores/widgets/WidgetLayoutStore");
+
 describe("RoomViewStore", function () {
     const userId = "@alice:server";
     const roomId = "!randomcharacters:aser.ver";
@@ -103,6 +108,7 @@ describe("RoomViewStore", function () {
         relations: jest.fn(),
         knockRoom: jest.fn(),
         leave: jest.fn(),
+        setRoomAccountData: jest.fn(),
     });
     const room = new Room(roomId, mockClient, userId);
     const room2 = new Room(roomId2, mockClient, userId);
@@ -130,6 +136,11 @@ describe("RoomViewStore", function () {
     const dispatchCancelAskToJoin = async (roomId: string) => {
         dis.dispatch<CancelAskToJoinPayload>({ action: Action.CancelAskToJoin, roomId });
         await untilDispatch(Action.CancelAskToJoin, dis);
+    };
+
+    const dispatchRoomLoaded = async () => {
+        dis.dispatch({ action: Action.RoomLoaded });
+        await untilDispatch(Action.RoomLoaded, dis);
     };
 
     let roomViewStore: RoomViewStore;
@@ -327,6 +338,17 @@ describe("RoomViewStore", function () {
 
         // Check the modal props
         expect(mocked(Modal).createDialog.mock.calls[0][1]).toMatchSnapshot();
+    });
+
+    it("clears the unread flag when viewing a room", async () => {
+        room.getAccountData = jest.fn().mockReturnValue({
+            getContent: jest.fn().mockReturnValue({ unread: true }),
+        });
+        dis.dispatch({ action: Action.ViewRoom, room_id: roomId });
+        await untilDispatch(Action.ActiveRoomChanged, dis);
+        expect(mockClient.setRoomAccountData).toHaveBeenCalledWith(roomId, "com.famedly.marked_unread", {
+            unread: false,
+        });
     });
 
     describe("when listening to a voice broadcast", () => {
@@ -567,6 +589,32 @@ describe("RoomViewStore", function () {
                 description: error.message,
                 title: "Failed to cancel",
             });
+        });
+    });
+
+    describe("getViewRoomOpts", () => {
+        it("returns viewRoomOpts", () => {
+            expect(roomViewStore.getViewRoomOpts()).toEqual({ buttons: [] });
+        });
+    });
+
+    describe("Action.RoomLoaded", () => {
+        it("updates viewRoomOpts", async () => {
+            const buttons: ViewRoomOpts["buttons"] = [
+                {
+                    icon: "test-icon",
+                    id: "test-id",
+                    label: () => "test-label",
+                    onClick: () => {},
+                },
+            ];
+            jest.spyOn(ModuleRunner.instance, "invoke").mockImplementation((lifecycleEvent, opts) => {
+                if (lifecycleEvent === RoomViewLifecycle.ViewRoom) {
+                    opts.buttons = buttons;
+                }
+            });
+            await dispatchRoomLoaded();
+            expect(roomViewStore.getViewRoomOpts()).toEqual({ buttons });
         });
     });
 });

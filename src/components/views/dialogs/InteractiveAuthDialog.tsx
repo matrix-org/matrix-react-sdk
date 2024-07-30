@@ -27,8 +27,9 @@ import InteractiveAuth, {
     InteractiveAuthCallback,
     InteractiveAuthProps,
 } from "../../structures/InteractiveAuth";
-import { SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
+import { ContinueKind, SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
 import BaseDialog from "./BaseDialog";
+import { Linkify } from "../../../Linkify";
 
 type DialogAesthetics = Partial<{
     [x in AuthType]: {
@@ -36,7 +37,7 @@ type DialogAesthetics = Partial<{
             title: string;
             body: string;
             continueText: string;
-            continueKind: string;
+            continueKind: ContinueKind;
         };
     };
 }>;
@@ -146,7 +147,7 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
         let title = this.state.authError ? "Error" : this.props.title || _t("common|authentication");
         let body = this.state.authError ? null : this.props.body;
         let continueText: string | undefined;
-        let continueKind: string | undefined;
+        let continueKind: ContinueKind | undefined;
         const dialogAesthetics = this.props.aestheticsForStagePhases || this.getDefaultDialogAesthetics();
         if (!this.state.authError && dialogAesthetics) {
             if (
@@ -168,7 +169,9 @@ export default class InteractiveAuthDialog<T> extends React.Component<Interactiv
         if (this.state.authError) {
             content = (
                 <div id="mx_Dialog_content">
-                    <div role="alert">{this.state.authError.message || this.state.authError.toString()}</div>
+                    <Linkify>
+                        <div role="alert">{this.state.authError.message || this.state.authError.toString()}</div>
+                    </Linkify>
                     <br />
                     <AccessibleButton onClick={this.onDismissClick} className="mx_GeneralButton" autoFocus={true}>
                         {_t("action|dismiss")}

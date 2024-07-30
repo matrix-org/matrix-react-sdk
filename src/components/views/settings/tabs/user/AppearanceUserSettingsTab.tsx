@@ -25,69 +25,34 @@ import Field from "../../../elements/Field";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
-import { Layout } from "../../../../../settings/enums/Layout";
-import LayoutSwitcher from "../../LayoutSwitcher";
+import { LayoutSwitcher } from "../../LayoutSwitcher";
 import FontScalingPanel from "../../FontScalingPanel";
-import ThemeChoicePanel from "../../ThemeChoicePanel";
+import { ThemeChoicePanel } from "../../ThemeChoicePanel";
 import ImageSizePanel from "../../ImageSizePanel";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
-import SettingsSubsection, { SettingsSubsectionText } from "../../shared/SettingsSubsection";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
+import SettingsSubsection from "../../shared/SettingsSubsection";
 
 interface IProps {}
 
 interface IState {
+    useBundledEmojiFont: boolean;
     useSystemFont: boolean;
     systemFont: string;
     showAdvanced: boolean;
-    layout: Layout;
-    // User profile data for the message preview
-    userId?: string;
-    displayName?: string;
-    avatarUrl?: string;
 }
 
 export default class AppearanceUserSettingsTab extends React.Component<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-
-    private readonly MESSAGE_PREVIEW_TEXT = _t("common|preview_message");
-
-    private unmounted = false;
-
     public constructor(props: IProps) {
         super(props);
 
         this.state = {
+            useBundledEmojiFont: SettingsStore.getValue("useBundledEmojiFont"),
             useSystemFont: SettingsStore.getValue("useSystemFont"),
             systemFont: SettingsStore.getValue("systemFont"),
             showAdvanced: false,
-            layout: SettingsStore.getValue("layout"),
         };
     }
-
-    public async componentDidMount(): Promise<void> {
-        // Fetch the current user profile for the message preview
-        const client = this.context;
-        const userId = client.getUserId()!;
-        const profileInfo = await client.getProfileInfo(userId);
-        if (this.unmounted) return;
-
-        this.setState({
-            userId,
-            displayName: profileInfo.displayname,
-            avatarUrl: profileInfo.avatar_url,
-        });
-    }
-
-    public componentWillUnmount(): void {
-        this.unmounted = true;
-    }
-
-    private onLayoutChanged = (layout: Layout): void => {
-        this.setState({ layout: layout });
-    };
 
     private renderAdvancedSection(): ReactNode {
         if (!SettingsStore.getValue(UIFeature.AdvancedSettings)) return null;
@@ -111,6 +76,12 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
                 <>
                     <SettingsFlag name="useCompactLayout" level={SettingLevel.DEVICE} useCheckbox={true} />
 
+                    <SettingsFlag
+                        name="useBundledEmojiFont"
+                        level={SettingLevel.DEVICE}
+                        useCheckbox={true}
+                        onChange={(checked) => this.setState({ useBundledEmojiFont: checked })}
+                    />
                     <SettingsFlag
                         name="useSystemFont"
                         level={SettingLevel.DEVICE}
@@ -144,20 +115,11 @@ export default class AppearanceUserSettingsTab extends React.Component<IProps, I
     }
 
     public render(): React.ReactNode {
-        const brand = SdkConfig.get().brand;
-
         return (
             <SettingsTab data-testid="mx_AppearanceUserSettingsTab">
-                <SettingsSection heading={_t("settings|appearance|heading")}>
-                    <SettingsSubsectionText>{_t("settings|appearance|subheading", { brand })}</SettingsSubsectionText>
+                <SettingsSection>
                     <ThemeChoicePanel />
-                    <LayoutSwitcher
-                        userId={this.state.userId}
-                        displayName={this.state.displayName}
-                        avatarUrl={this.state.avatarUrl}
-                        messagePreviewText={this.MESSAGE_PREVIEW_TEXT}
-                        onLayoutChanged={this.onLayoutChanged}
-                    />
+                    <LayoutSwitcher />
                     <FontScalingPanel />
                     {this.renderAdvancedSection()}
                     <ImageSizePanel />

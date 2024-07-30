@@ -21,7 +21,7 @@ import { AvatarStack, Tooltip } from "@vector-im/compound-web";
 import MemberAvatar from "../avatars/MemberAvatar";
 import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
 
-interface IProps extends HTMLAttributes<HTMLSpanElement> {
+interface IProps extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
     members: RoomMember[];
     size: string;
     overflow: boolean;
@@ -32,6 +32,11 @@ interface IProps extends HTMLAttributes<HTMLSpanElement> {
     onClick?: (e: ButtonEvent) => void | Promise<void>;
 }
 
+/**
+ * A component which displays a list of avatars in a row, with a tooltip showing the names of the users.
+ *
+ * Any additional props, not named explicitly here, are passed to the underlying {@link AccessibleButton}.
+ */
 const FacePile: FC<IProps> = ({
     members,
     size,
@@ -40,19 +45,15 @@ const FacePile: FC<IProps> = ({
     tooltipShortcut,
     children,
     viewUserOnClick = true,
+    onClick,
     ...props
 }) => {
     const faces = members.map(
         tooltipLabel
             ? (m) => <MemberAvatar key={m.userId} member={m} size={size} hideTitle />
             : (m) => (
-                  <Tooltip key={m.userId} label={m.name} shortcut={tooltipShortcut}>
-                      <MemberAvatar
-                          member={m}
-                          size={size}
-                          viewUserOnClick={!props.onClick && viewUserOnClick}
-                          hideTitle
-                      />
+                  <Tooltip key={m.userId} label={m.name} caption={tooltipShortcut}>
+                      <MemberAvatar member={m} size={size} viewUserOnClick={!onClick && viewUserOnClick} hideTitle />
                   </Tooltip>
               ),
     );
@@ -65,14 +66,14 @@ const FacePile: FC<IProps> = ({
     );
 
     const content = (
-        <AccessibleButton className="mx_FacePile" kind="link_inline" onClick={props.onClick ?? null}>
+        <AccessibleButton {...props} className="mx_FacePile" onClick={onClick ?? null}>
             <AvatarStack>{pileContents}</AvatarStack>
             {children}
         </AccessibleButton>
     );
 
     return tooltipLabel ? (
-        <Tooltip label={tooltipLabel} shortcut={tooltipShortcut}>
+        <Tooltip label={tooltipLabel} caption={tooltipShortcut}>
             {content}
         </Tooltip>
     ) : (

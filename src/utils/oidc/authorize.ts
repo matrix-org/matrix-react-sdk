@@ -21,6 +21,7 @@ import { randomString } from "matrix-js-sdk/src/randomstring";
 import { IdTokenClaims } from "oidc-client-ts";
 
 import { OidcClientError } from "./error";
+import PlatformPeg from "../../PlatformPeg";
 
 /**
  * Start OIDC authorization code flow
@@ -39,7 +40,7 @@ export const startOidcLogin = async (
     identityServerUrl?: string,
     isRegistration?: boolean,
 ): Promise<void> => {
-    const redirectUri = window.location.origin;
+    const redirectUri = PlatformPeg.get()!.getOidcCallbackUrl().href;
 
     const nonce = randomString(10);
 
@@ -53,6 +54,7 @@ export const startOidcLogin = async (
         identityServerUrl,
         nonce,
         prompt,
+        urlState: PlatformPeg.get()?.getOidcClientState(),
     });
 
     window.location.href = authorizationUrl;
@@ -84,6 +86,8 @@ type CompleteOidcLoginResponse = {
     accessToken: string;
     // refreshToken gained from OIDC token issuer, when falsy token cannot be refreshed
     refreshToken?: string;
+    // idToken gained from OIDC token issuer
+    idToken: string;
     // this client's id as registered with the OIDC issuer
     clientId: string;
     // issuer used during authentication
@@ -107,6 +111,7 @@ export const completeOidcLogin = async (queryParams: QueryDict): Promise<Complet
         identityServerUrl,
         accessToken: tokenResponse.access_token,
         refreshToken: tokenResponse.refresh_token,
+        idToken: tokenResponse.id_token,
         clientId: oidcClientSettings.clientId,
         issuer: oidcClientSettings.issuer,
         idTokenClaims,

@@ -15,15 +15,8 @@ limitations under the License.
 */
 
 import React, { ChangeEvent, ReactNode } from "react";
-import {
-    Room,
-    RoomMember,
-    EventType,
-    RoomType,
-    IJoinRuleEventContent,
-    JoinRule,
-    MatrixError,
-} from "matrix-js-sdk/src/matrix";
+import { Room, RoomMember, EventType, RoomType, JoinRule, MatrixError } from "matrix-js-sdk/src/matrix";
+import { KnownMembership, RoomJoinRulesEventContent } from "matrix-js-sdk/src/types";
 import classNames from "classnames";
 import { RoomPreviewOpts, RoomViewLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
@@ -106,6 +99,7 @@ interface IProps {
     onRejectAndIgnoreClick?(): void;
     onForgetClick?(): void;
 
+    canAskToJoinAndMembershipIsLeave?: boolean;
     promptAskToJoin?: boolean;
     knocked?: boolean;
     onSubmitAskToJoin?(reason?: string): void;
@@ -191,11 +185,13 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
         if (myMember) {
             const previousMembership = myMember.events.member?.getPrevContent().membership;
             if (myMember.isKicked()) {
-                if (previousMembership === "knock") {
+                if (previousMembership === KnownMembership.Knock) {
                     return MessageCase.RequestDenied;
+                } else if (this.props.promptAskToJoin) {
+                    return MessageCase.PromptAskToJoin;
                 }
                 return MessageCase.Kicked;
-            } else if (myMember.membership === "ban") {
+            } else if (myMember.membership === KnownMembership.Ban) {
                 return MessageCase.Banned;
             }
         }
@@ -208,7 +204,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             return MessageCase.Loading;
         } else if (this.props.knocked) {
             return MessageCase.Knocked;
-        } else if (this.props.promptAskToJoin) {
+        } else if (this.props.canAskToJoinAndMembershipIsLeave || this.props.promptAskToJoin) {
             return MessageCase.PromptAskToJoin;
         }
 
@@ -253,7 +249,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
         return (
             this.props.room?.currentState
                 .getStateEvents(EventType.RoomJoinRules, "")
-                ?.getContent<IJoinRuleEventContent>().join_rule ?? null
+                ?.getContent<RoomJoinRulesEventContent>().join_rule ?? null
         );
     }
 
@@ -281,7 +277,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             return false;
         }
         const memberContent = myMember.events.member?.getContent();
-        return memberContent?.membership === "invite" && memberContent.is_direct;
+        return memberContent?.membership === KnownMembership.Invite && memberContent.is_direct;
     }
 
     private makeScreenAfterLogin(): { screen: string; params: Record<string, any> } {
@@ -717,7 +713,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
         );
 
         return (
-            <div className={classes}>
+            <div role="complementary" className={classes}>
                 <div className="mx_RoomPreviewBar_message">
                     {titleElement}
                     {subTitleElements}

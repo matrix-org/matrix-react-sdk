@@ -17,6 +17,7 @@ limitations under the License.
 import isIp from "is-ip";
 import * as utils from "matrix-js-sdk/src/utils";
 import { Room, MatrixClient, RoomStateEvent, EventType } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixToPermalinkConstructor, {
@@ -93,7 +94,11 @@ export class RoomPermalinkCreator {
     // Some of the tests done by this class are relatively expensive, so normally
     // throttled to not happen on every update. Pass false as the shouldThrottle
     // param to disable this behaviour, eg. for tests.
-    public constructor(private room: Room | null, roomId: string | null = null, shouldThrottle = true) {
+    public constructor(
+        private room: Room | null,
+        roomId: string | null = null,
+        shouldThrottle = true,
+    ) {
         this.roomId = room ? room.roomId : roomId!;
 
         if (!this.roomId) {
@@ -174,7 +179,7 @@ export class RoomPermalinkCreator {
                     const entries = Object.entries(users);
                     const allowedEntries = entries.filter(([userId]) => {
                         const member = this.room?.getMember(userId);
-                        if (!member || member.membership !== "join") {
+                        if (!member || member.membership !== KnownMembership.Join) {
                             return false;
                         }
                         const serverName = getServerName(userId);

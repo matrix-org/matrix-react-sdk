@@ -18,25 +18,18 @@ import React from "react";
 import { fireEvent, render, screen, waitFor, cleanup, act, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Mocked, mocked } from "jest-mock";
-import {
-    Room,
-    User,
-    MatrixClient,
-    RoomMember,
-    MatrixEvent,
-    EventType,
-    CryptoApi,
-    DeviceVerificationStatus,
-    Device,
-} from "matrix-js-sdk/src/matrix";
-import {
-    Phase,
-    VerificationRequest,
-    VerificationRequestEvent,
-} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { Room, User, MatrixClient, RoomMember, MatrixEvent, EventType, Device } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { defer } from "matrix-js-sdk/src/utils";
 import { EventEmitter } from "events";
-import { UserVerificationStatus } from "matrix-js-sdk/src/crypto-api";
+import {
+    UserVerificationStatus,
+    VerificationRequest,
+    VerificationPhase as Phase,
+    VerificationRequestEvent,
+    CryptoApi,
+    DeviceVerificationStatus,
+} from "matrix-js-sdk/src/crypto-api";
 
 import UserInfo, {
     BanToggleButton,
@@ -61,6 +54,11 @@ import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { DirectoryMember, startDmOnFirstMessage } from "../../../../src/utils/direct-messages";
 import { clearAllModals, flushPromises } from "../../../test-utils";
 import ErrorDialog from "../../../../src/components/views/dialogs/ErrorDialog";
+import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
+import { UIComponent } from "../../../../src/settings/UIFeature";
+import { Action } from "../../../../src/dispatcher/actions";
+import ShareDialog from "../../../../src/components/views/dialogs/ShareDialog";
+import BulkRedactDialog from "../../../../src/components/views/dialogs/BulkRedactDialog";
 
 jest.mock("../../../../src/utils/direct-messages", () => ({
     ...jest.requireActual("../../../../src/utils/direct-messages"),
@@ -84,6 +82,13 @@ jest.mock("../../../../src/utils/DMRoomMap", () => {
     return {
         shared: jest.fn().mockReturnValue(mock),
         sharedInstance: mock,
+    };
+});
+
+jest.mock("../../../../src/customisations/helpers/UIComponents", () => {
+    const original = jest.requireActual("../../../../src/customisations/helpers/UIComponents");
+    return {
+        shouldShowComponent: jest.fn().mockImplementation(original.shouldShowComponent),
     };
 });
 
@@ -147,6 +152,7 @@ beforeEach(() => {
         isCryptoEnabled: jest.fn(),
         getUserId: jest.fn(),
         getSafeUserId: jest.fn(),
+        getDomain: jest.fn(),
         on: jest.fn(),
         off: jest.fn(),
         isSynapseAdministrator: jest.fn().mockResolvedValue(false),
@@ -283,7 +289,8 @@ describe("<UserInfo />", () => {
 
         it("renders close button correctly when encryption panel with a pending verification request", () => {
             renderComponent({ phase: RightPanelPhases.EncryptionPanel, verificationRequest });
-            expect(screen.getByTestId("base-card-close-button")).toHaveAttribute("title", "Cancel");
+            screen.getByTestId("base-card-close-button").focus();
+            expect(screen.getByRole("tooltip")).toHaveTextContent("Cancel");
         });
     });
 
@@ -298,15 +305,6 @@ describe("<UserInfo />", () => {
             expect(screen.queryByTestId("space-header")).not.toBeInTheDocument();
         });
 
-        it("renders space header when room is a space room", () => {
-            const spaceRoom = {
-                ...mockRoom,
-                isSpaceRoom: jest.fn().mockReturnValue(true),
-            };
-            renderComponent({ room: spaceRoom });
-            expect(screen.getByTestId("space-header")).toBeInTheDocument();
-        });
-
         it("renders encryption info panel without pending verification", () => {
             renderComponent({ phase: RightPanelPhases.EncryptionPanel, room: mockRoom });
             expect(screen.getByRole("heading", { name: /encryption/i })).toBeInTheDocument();
@@ -319,6 +317,91 @@ describe("<UserInfo />", () => {
             // the verificationRequest has phase of Phase.Ready but .otherPartySupportsMethod
             // will not return true, so we expect to see the noCommonMethod error from VerificationPanel
             expect(screen.getByText(/try with a different client/i)).toBeInTheDocument();
+        });
+
+        it("renders the message button", () => {
+            render(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <UserInfo {...defaultProps} />
+                </MatrixClientContext.Provider>,
+            );
+
+            screen.getByRole("button", { name: "Send message" });
+        });
+
+        it("hides the message button if the visibility customisation hides all create room features", () => {
+            mocked(shouldShowComponent).withImplementation(
+                (component) => {
+                    return component !== UIComponent.CreateRooms;
+                },
+                () => {
+                    render(
+                        <MatrixClientContext.Provider value={mockClient}>
+                            <UserInfo {...defaultProps} />
+                        </MatrixClientContext.Provider>,
+                    );
+
+                    expect(screen.queryByRole("button", { name: "Message" })).toBeNull();
+                },
+            );
+        });
+
+        describe("Ignore", () => {
+            const member = new RoomMember(defaultRoomId, defaultUserId);
+
+            it("shows block button when member userId does not match client userId", () => {
+                // call to client.getUserId returns undefined, which will not match member.userId
+                renderComponent();
+
+                expect(screen.getByRole("button", { name: "Ignore" })).toBeInTheDocument();
+            });
+
+            it("shows a modal before ignoring the user", async () => {
+                const originalCreateDialog = Modal.createDialog;
+                const modalSpy = (Modal.createDialog = jest.fn().mockReturnValue({
+                    finished: Promise.resolve([true]),
+                    close: () => {},
+                }));
+
+                try {
+                    mockClient.getIgnoredUsers.mockReturnValue([]);
+                    renderComponent();
+
+                    await userEvent.click(screen.getByRole("button", { name: "Ignore" }));
+                    expect(modalSpy).toHaveBeenCalled();
+                    expect(mockClient.setIgnoredUsers).toHaveBeenLastCalledWith([member.userId]);
+                } finally {
+                    Modal.createDialog = originalCreateDialog;
+                }
+            });
+
+            it("cancels ignoring the user", async () => {
+                const originalCreateDialog = Modal.createDialog;
+                const modalSpy = (Modal.createDialog = jest.fn().mockReturnValue({
+                    finished: Promise.resolve([false]),
+                    close: () => {},
+                }));
+
+                try {
+                    mockClient.getIgnoredUsers.mockReturnValue([]);
+                    renderComponent();
+
+                    await userEvent.click(screen.getByRole("button", { name: "Ignore" }));
+                    expect(modalSpy).toHaveBeenCalled();
+                    expect(mockClient.setIgnoredUsers).not.toHaveBeenCalled();
+                } finally {
+                    Modal.createDialog = originalCreateDialog;
+                }
+            });
+
+            it("unignores the user", async () => {
+                mockClient.isUserIgnored.mockReturnValue(true);
+                mockClient.getIgnoredUsers.mockReturnValue([member.userId]);
+                renderComponent();
+
+                await userEvent.click(screen.getByRole("button", { name: "Unignore" }));
+                expect(mockClient.setIgnoredUsers).toHaveBeenCalledWith([]);
+            });
         });
     });
 
@@ -350,11 +433,8 @@ describe("<UserInfo />", () => {
             // click it
             await userEvent.click(devicesButton);
 
-            // there should now be a button with the device id ...
-            const deviceButton = screen.getByRole("button", { description: "d1" });
-
-            // ... which should contain the device name
-            expect(within(deviceButton).getByText("my device")).toBeInTheDocument();
+            // there should now be a button with the device id which should contain the device name
+            expect(screen.getByRole("button", { name: "my device" })).toBeInTheDocument();
         });
 
         it("renders <BasicUserInfo />", async () => {
@@ -368,6 +448,198 @@ describe("<UserInfo />", () => {
             await act(flushPromises);
 
             await waitFor(() => expect(screen.getByRole("button", { name: "Verify" })).toBeInTheDocument());
+            expect(container).toMatchSnapshot();
+        });
+
+        describe("device dehydration", () => {
+            it("hides a verified dehydrated device (unverified user)", async () => {
+                const device1 = new Device({
+                    deviceId: "d1",
+                    userId: defaultUserId,
+                    displayName: "my device",
+                    algorithms: [],
+                    keys: new Map(),
+                });
+                const device2 = new Device({
+                    deviceId: "d2",
+                    userId: defaultUserId,
+                    displayName: "dehydrated device",
+                    algorithms: [],
+                    keys: new Map(),
+                    dehydrated: true,
+                });
+                const devicesMap = new Map<string, Device>([
+                    [device1.deviceId, device1],
+                    [device2.deviceId, device2],
+                ]);
+                const userDeviceMap = new Map<string, Map<string, Device>>([[defaultUserId, devicesMap]]);
+                mockCrypto.getUserDeviceInfo.mockResolvedValue(userDeviceMap);
+
+                renderComponent({ room: mockRoom });
+                await act(flushPromises);
+
+                // check the button exists with the expected text (the dehydrated device shouldn't be counted)
+                const devicesButton = screen.getByRole("button", { name: "1 session" });
+
+                // click it
+                await act(() => {
+                    return userEvent.click(devicesButton);
+                });
+
+                // there should now be a button with the non-dehydrated device ID
+                expect(screen.getByRole("button", { name: "my device" })).toBeInTheDocument();
+
+                // but not for the dehydrated device ID
+                expect(screen.queryByRole("button", { name: "dehydrated device" })).not.toBeInTheDocument();
+
+                // there should be a line saying that the user has "Offline device" enabled
+                expect(screen.getByText("Offline device enabled")).toBeInTheDocument();
+            });
+
+            it("hides a verified dehydrated device (verified user)", async () => {
+                const device1 = new Device({
+                    deviceId: "d1",
+                    userId: defaultUserId,
+                    displayName: "my device",
+                    algorithms: [],
+                    keys: new Map(),
+                });
+                const device2 = new Device({
+                    deviceId: "d2",
+                    userId: defaultUserId,
+                    displayName: "dehydrated device",
+                    algorithms: [],
+                    keys: new Map(),
+                    dehydrated: true,
+                });
+                const devicesMap = new Map<string, Device>([
+                    [device1.deviceId, device1],
+                    [device2.deviceId, device2],
+                ]);
+                const userDeviceMap = new Map<string, Map<string, Device>>([[defaultUserId, devicesMap]]);
+                mockCrypto.getUserDeviceInfo.mockResolvedValue(userDeviceMap);
+                mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(true, true, true));
+                mockCrypto.getDeviceVerificationStatus.mockResolvedValue({
+                    isVerified: () => true,
+                } as DeviceVerificationStatus);
+
+                renderComponent({ room: mockRoom });
+                await act(flushPromises);
+
+                // check the button exists with the expected text (the dehydrated device shouldn't be counted)
+                const devicesButton = screen.getByRole("button", { name: "1 verified session" });
+
+                // click it
+                await act(() => {
+                    return userEvent.click(devicesButton);
+                });
+
+                // there should now be a button with the non-dehydrated device ID
+                expect(screen.getByTitle("d1")).toBeInTheDocument();
+
+                // but not for the dehydrated device ID
+                expect(screen.queryByTitle("d2")).not.toBeInTheDocument();
+
+                // there should be a line saying that the user has "Offline device" enabled
+                expect(screen.getByText("Offline device enabled")).toBeInTheDocument();
+            });
+
+            it("shows an unverified dehydrated device", async () => {
+                const device1 = new Device({
+                    deviceId: "d1",
+                    userId: defaultUserId,
+                    displayName: "my device",
+                    algorithms: [],
+                    keys: new Map(),
+                });
+                const device2 = new Device({
+                    deviceId: "d2",
+                    userId: defaultUserId,
+                    displayName: "dehydrated device",
+                    algorithms: [],
+                    keys: new Map(),
+                    dehydrated: true,
+                });
+                const devicesMap = new Map<string, Device>([
+                    [device1.deviceId, device1],
+                    [device2.deviceId, device2],
+                ]);
+                const userDeviceMap = new Map<string, Map<string, Device>>([[defaultUserId, devicesMap]]);
+                mockCrypto.getUserDeviceInfo.mockResolvedValue(userDeviceMap);
+                mockCrypto.getUserVerificationStatus.mockResolvedValue(new UserVerificationStatus(true, true, true));
+
+                renderComponent({ room: mockRoom });
+                await act(flushPromises);
+
+                // the dehydrated device should be shown as an unverified device, which means
+                // there should now be a button with the device id ...
+                const deviceButton = screen.getByRole("button", { name: "dehydrated device" });
+
+                // ... which should contain the device name
+                expect(within(deviceButton).getByText("dehydrated device")).toBeInTheDocument();
+            });
+
+            it("shows dehydrated devices if there is more than one", async () => {
+                const device1 = new Device({
+                    deviceId: "d1",
+                    userId: defaultUserId,
+                    displayName: "dehydrated device 1",
+                    algorithms: [],
+                    keys: new Map(),
+                    dehydrated: true,
+                });
+                const device2 = new Device({
+                    deviceId: "d2",
+                    userId: defaultUserId,
+                    displayName: "dehydrated device 2",
+                    algorithms: [],
+                    keys: new Map(),
+                    dehydrated: true,
+                });
+                const devicesMap = new Map<string, Device>([
+                    [device1.deviceId, device1],
+                    [device2.deviceId, device2],
+                ]);
+                const userDeviceMap = new Map<string, Map<string, Device>>([[defaultUserId, devicesMap]]);
+                mockCrypto.getUserDeviceInfo.mockResolvedValue(userDeviceMap);
+
+                renderComponent({ room: mockRoom });
+                await act(flushPromises);
+
+                // check the button exists with the expected text (the dehydrated device shouldn't be counted)
+                const devicesButton = screen.getByRole("button", { name: "2 sessions" });
+
+                // click it
+                await act(() => {
+                    return userEvent.click(devicesButton);
+                });
+
+                // the dehydrated devices should be shown as an unverified device, which means
+                // there should now be a button with the first dehydrated device...
+                const device1Button = screen.getByRole("button", { name: "dehydrated device 1" });
+                expect(device1Button).toBeVisible();
+
+                // ... which should contain the device name
+                expect(within(device1Button).getByText("dehydrated device 1")).toBeInTheDocument();
+                // and a button with the second dehydrated device...
+                const device2Button = screen.getByRole("button", { name: "dehydrated device 2" });
+                expect(device2Button).toBeVisible();
+
+                // ... which should contain the device name
+                expect(within(device2Button).getByText("dehydrated device 2")).toBeInTheDocument();
+            });
+        });
+
+        it("should render a deactivate button for users of the same server if we are a server admin", async () => {
+            mockClient.isSynapseAdministrator.mockResolvedValue(true);
+            mockClient.getDomain.mockReturnValue("example.com");
+
+            const { container } = renderComponent({
+                phase: RightPanelPhases.RoomMemberInfo,
+                room: mockRoom,
+            });
+
+            await waitFor(() => expect(screen.getByRole("button", { name: "Deactivate user" })).toBeInTheDocument());
             expect(container).toMatchSnapshot();
         });
     });
@@ -493,7 +765,8 @@ describe("<DeviceItem />", () => {
         renderComponent({ isUserVerified: true });
         await act(flushPromises);
 
-        expect(screen.getByRole("button", { name: `${device.displayName} Not trusted` })).toBeInTheDocument();
+        const button = screen.getByRole("button", { name: device.displayName });
+        expect(button).toHaveTextContent(`${device.displayName}Not trusted`);
     });
 
     it("with verified device only, displays no button without a label", async () => {
@@ -589,7 +862,7 @@ describe("<DeviceItem />", () => {
 
 describe("<UserOptionsSection />", () => {
     const member = new RoomMember(defaultRoomId, defaultUserId);
-    const defaultProps = { member, isIgnored: false, canInvite: false, isSpace: false };
+    const defaultProps = { member, canInvite: false, isSpace: false };
 
     const renderComponent = (props = {}) => {
         const Wrapper = (wrapperProps = {}) => {
@@ -616,9 +889,13 @@ describe("<UserOptionsSection />", () => {
         inviteSpy.mockRestore();
     });
 
-    it("always shows share user button", () => {
+    it("always shows share user button and clicking it should produce a ShareDialog", async () => {
+        const spy = jest.spyOn(Modal, "createDialog");
+
         renderComponent();
-        expect(screen.getByRole("button", { name: /share link to user/i })).toBeInTheDocument();
+        await userEvent.click(screen.getByRole("button", { name: "Share profile" }));
+
+        expect(spy).toHaveBeenCalledWith(ShareDialog, { target: defaultProps.member });
     });
 
     it("does not show ignore or direct message buttons when member userId matches client userId", () => {
@@ -630,20 +907,31 @@ describe("<UserOptionsSection />", () => {
         expect(screen.queryByRole("button", { name: /message/i })).not.toBeInTheDocument();
     });
 
-    it("shows ignore, direct message and mention buttons when member userId does not match client userId", () => {
+    it("shows direct message and mention buttons when member userId does not match client userId", () => {
         // call to client.getUserId returns undefined, which will not match member.userId
         renderComponent();
 
-        expect(screen.getByRole("button", { name: /ignore/i })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: /message/i })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: /mention/i })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Send message" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Mention" })).toBeInTheDocument();
+    });
+
+    it("mention button fires ComposerInsert Action", async () => {
+        renderComponent();
+
+        const button = screen.getByRole("button", { name: "Mention" });
+        await userEvent.click(button);
+        expect(dis.dispatch).toHaveBeenCalledWith({
+            action: Action.ComposerInsert,
+            timelineRenderingType: "Room",
+            userId: "@user:example.com",
+        });
     });
 
     it("when call to client.getRoom is null, does not show read receipt button", () => {
         mockClient.getRoom.mockReturnValueOnce(null);
         renderComponent();
 
-        expect(screen.queryByRole("button", { name: /jump to read receipt/i })).not.toBeInTheDocument();
+        expect(screen.queryByRole("button", { name: "Jump to read receipt" })).not.toBeInTheDocument();
     });
 
     it("when call to client.getRoom is non-null and room.getEventReadUpTo is null, does not show read receipt button", () => {
@@ -651,7 +939,7 @@ describe("<UserOptionsSection />", () => {
         mockClient.getRoom.mockReturnValueOnce(mockRoom);
         renderComponent();
 
-        expect(screen.queryByRole("button", { name: /jump to read receipt/i })).not.toBeInTheDocument();
+        expect(screen.queryByRole("button", { name: "Jump to read receipt" })).not.toBeInTheDocument();
     });
 
     it("when calls to client.getRoom and room.getEventReadUpTo are non-null, shows read receipt button", () => {
@@ -659,7 +947,7 @@ describe("<UserOptionsSection />", () => {
         mockClient.getRoom.mockReturnValueOnce(mockRoom);
         renderComponent();
 
-        expect(screen.getByRole("button", { name: /jump to read receipt/i })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Jump to read receipt" })).toBeInTheDocument();
     });
 
     it("clicking the read receipt button calls dispatch with correct event_id", async () => {
@@ -668,7 +956,7 @@ describe("<UserOptionsSection />", () => {
         mockClient.getRoom.mockReturnValue(mockRoom);
         renderComponent();
 
-        const readReceiptButton = screen.getByRole("button", { name: /jump to read receipt/i });
+        const readReceiptButton = screen.getByRole("button", { name: "Jump to read receipt" });
 
         expect(readReceiptButton).toBeInTheDocument();
         await userEvent.click(readReceiptButton);
@@ -692,7 +980,7 @@ describe("<UserOptionsSection />", () => {
         mockClient.getRoom.mockReturnValue(mockRoom);
         renderComponent();
 
-        const readReceiptButton = screen.getByRole("button", { name: /jump to read receipt/i });
+        const readReceiptButton = screen.getByRole("button", { name: "Jump to read receipt" });
 
         expect(readReceiptButton).toBeInTheDocument();
         await userEvent.click(readReceiptButton);
@@ -752,52 +1040,6 @@ describe("<UserOptionsSection />", () => {
         });
     });
 
-    it("shows a modal before ignoring the user", async () => {
-        const originalCreateDialog = Modal.createDialog;
-        const modalSpy = (Modal.createDialog = jest.fn().mockReturnValue({
-            finished: Promise.resolve([true]),
-            close: () => {},
-        }));
-
-        try {
-            mockClient.getIgnoredUsers.mockReturnValue([]);
-            renderComponent({ isIgnored: false });
-
-            await userEvent.click(screen.getByRole("button", { name: "Ignore" }));
-            expect(modalSpy).toHaveBeenCalled();
-            expect(mockClient.setIgnoredUsers).toHaveBeenLastCalledWith([member.userId]);
-        } finally {
-            Modal.createDialog = originalCreateDialog;
-        }
-    });
-
-    it("cancels ignoring the user", async () => {
-        const originalCreateDialog = Modal.createDialog;
-        const modalSpy = (Modal.createDialog = jest.fn().mockReturnValue({
-            finished: Promise.resolve([false]),
-            close: () => {},
-        }));
-
-        try {
-            mockClient.getIgnoredUsers.mockReturnValue([]);
-            renderComponent({ isIgnored: false });
-
-            await userEvent.click(screen.getByRole("button", { name: "Ignore" }));
-            expect(modalSpy).toHaveBeenCalled();
-            expect(mockClient.setIgnoredUsers).not.toHaveBeenCalled();
-        } finally {
-            Modal.createDialog = originalCreateDialog;
-        }
-    });
-
-    it("unignores the user", async () => {
-        mockClient.getIgnoredUsers.mockReturnValue([member.userId]);
-        renderComponent({ isIgnored: true });
-
-        await userEvent.click(screen.getByRole("button", { name: "Unignore" }));
-        expect(mockClient.setIgnoredUsers).toHaveBeenCalledWith([]);
-    });
-
     it.each([
         ["for a RoomMember", member, member.getMxcAvatarUrl()],
         ["for a User", defaultUser, defaultUser.avatarUrl],
@@ -808,10 +1050,10 @@ describe("<UserOptionsSection />", () => {
             mocked(startDmOnFirstMessage).mockReturnValue(deferred.promise);
 
             renderComponent({ member });
-            await userEvent.click(screen.getByText("Message"));
+            await userEvent.click(screen.getByRole("button", { name: "Send message" }));
 
             // Checking the attribute, because the button is a DIV and toBeDisabled() does not work.
-            expect(screen.getByText("Message")).toHaveAttribute("disabled");
+            expect(screen.getByRole("button", { name: "Send message" })).toBeDisabled();
 
             expect(startDmOnFirstMessage).toHaveBeenCalledWith(mockClient, [
                 new DirectoryMember({
@@ -827,7 +1069,7 @@ describe("<UserOptionsSection />", () => {
             });
 
             // Checking the attribute, because the button is a DIV and toBeDisabled() does not work.
-            expect(screen.getByText("Message")).not.toHaveAttribute("disabled");
+            expect(screen.getByRole("button", { name: "Send message" })).not.toBeDisabled();
         },
     );
 });
@@ -887,19 +1129,14 @@ describe("<PowerLevelEditor />", () => {
         // firing the event will raise a dialog warning about self demotion, wait for this to appear then click on it
         await userEvent.click(await screen.findByText("Demote", { exact: true }));
         expect(mockClient.setPowerLevel).toHaveBeenCalledTimes(1);
-        expect(mockClient.setPowerLevel).toHaveBeenCalledWith(
-            mockRoom.roomId,
-            defaultMember.userId,
-            changedPowerLevel,
-            powerLevelEvent,
-        );
+        expect(mockClient.setPowerLevel).toHaveBeenCalledWith(mockRoom.roomId, defaultMember.userId, changedPowerLevel);
     });
 });
 
 describe("<RoomKickButton />", () => {
     const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
-    const memberWithInviteMembership = { ...defaultMember, membership: "invite" };
-    const memberWithJoinMembership = { ...defaultMember, membership: "join" };
+    const memberWithInviteMembership = { ...defaultMember, membership: KnownMembership.Invite };
+    const memberWithJoinMembership = { ...defaultMember, membership: KnownMembership.Join };
 
     let defaultProps: Parameters<typeof RoomKickButton>[0];
     beforeEach(() => {
@@ -986,7 +1223,7 @@ describe("<RoomKickButton />", () => {
         // null vs their member followed by
         // my member vs their member
         const mockMyMember = { powerLevel: 1 };
-        const mockTheirMember = { membership: "invite", powerLevel: 0 };
+        const mockTheirMember = { membership: KnownMembership.Invite, powerLevel: 0 };
 
         const mockRoom = {
             getMember: jest
@@ -1007,7 +1244,7 @@ describe("<RoomKickButton />", () => {
 
 describe("<BanToggleButton />", () => {
     const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
-    const memberWithBanMembership = { ...defaultMember, membership: "ban" };
+    const memberWithBanMembership = { ...defaultMember, membership: KnownMembership.Ban };
     let defaultProps: Parameters<typeof BanToggleButton>[0];
     beforeEach(() => {
         defaultProps = {
@@ -1116,7 +1353,7 @@ describe("<BanToggleButton />", () => {
         // null vs their member followed by
         // my member vs their member
         const mockMyMember = { powerLevel: 1 };
-        const mockTheirMember = { membership: "ban", powerLevel: 0 };
+        const mockTheirMember = { membership: KnownMembership.Ban, powerLevel: 0 };
 
         const mockRoom = {
             getMember: jest
@@ -1137,7 +1374,7 @@ describe("<BanToggleButton />", () => {
 
 describe("<RoomAdminToolsContainer />", () => {
     const defaultMember = new RoomMember(defaultRoomId, defaultUserId);
-    defaultMember.membership = "invite";
+    defaultMember.membership = KnownMembership.Invite;
 
     let defaultProps: Parameters<typeof RoomAdminToolsContainer>[0];
     beforeEach(() => {
@@ -1189,10 +1426,30 @@ describe("<RoomAdminToolsContainer />", () => {
 
         renderComponent({ member: defaultMemberWithPowerLevel });
 
-        expect(screen.getByRole("heading", { name: /admin tools/i })).toBeInTheDocument();
-        expect(screen.getByText(/disinvite from room/i)).toBeInTheDocument();
-        expect(screen.getByText(/ban from room/i)).toBeInTheDocument();
-        expect(screen.getByText(/remove recent messages/i)).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Disinvite from room" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Ban from room" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Remove messages" })).toBeInTheDocument();
+    });
+
+    it("should show BulkRedactDialog upon clicking the Remove messages button", async () => {
+        const spy = jest.spyOn(Modal, "createDialog");
+
+        mockClient.getRoom.mockReturnValue(mockRoom);
+        mockClient.getUserId.mockReturnValue("@arbitraryId:server");
+        const mockMeMember = new RoomMember(mockRoom.roomId, mockClient.getUserId()!);
+        mockMeMember.powerLevel = 51; // defaults to 50
+        const defaultMemberWithPowerLevel = { ...defaultMember, powerLevel: 0 } as RoomMember;
+        mockRoom.getMember.mockImplementation((userId) =>
+            userId === mockClient.getUserId() ? mockMeMember : defaultMemberWithPowerLevel,
+        );
+
+        renderComponent({ member: defaultMemberWithPowerLevel });
+        await userEvent.click(screen.getByRole("button", { name: "Remove messages" }));
+
+        expect(spy).toHaveBeenCalledWith(
+            BulkRedactDialog,
+            expect.objectContaining({ member: defaultMemberWithPowerLevel }),
+        );
     });
 
     it("returns mute toggle button if conditions met", () => {
@@ -1200,7 +1457,11 @@ describe("<RoomAdminToolsContainer />", () => {
         mockMeMember.powerLevel = 51; // defaults to 50
         mockRoom.getMember.mockReturnValueOnce(mockMeMember);
 
-        const defaultMemberWithPowerLevelAndJoinMembership = { ...defaultMember, powerLevel: 0, membership: "join" };
+        const defaultMemberWithPowerLevelAndJoinMembership = {
+            ...defaultMember,
+            powerLevel: 0,
+            membership: KnownMembership.Join,
+        };
 
         renderComponent({
             member: defaultMemberWithPowerLevelAndJoinMembership,
@@ -1218,7 +1479,11 @@ describe("<RoomAdminToolsContainer />", () => {
         mockMeMember.powerLevel = 51; // defaults to 50
         mockRoom.getMember.mockReturnValueOnce(mockMeMember);
 
-        const defaultMemberWithPowerLevelAndJoinMembership = { ...defaultMember, powerLevel: 0, membership: "join" };
+        const defaultMemberWithPowerLevelAndJoinMembership = {
+            ...defaultMember,
+            powerLevel: 0,
+            membership: KnownMembership.Join,
+        };
 
         renderComponent({
             member: defaultMemberWithPowerLevelAndJoinMembership,
@@ -1226,10 +1491,9 @@ describe("<RoomAdminToolsContainer />", () => {
             isUpdating: true,
         });
 
-        const button = screen.getByText(/mute/i);
+        const button = screen.getByRole("button", { name: "Mute" });
         expect(button).toBeInTheDocument();
-        expect(button).toHaveAttribute("disabled");
-        expect(button).toHaveAttribute("aria-disabled", "true");
+        expect(button).toBeDisabled();
     });
 
     it("should not show mute button for one's own member", () => {

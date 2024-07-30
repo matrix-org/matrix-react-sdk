@@ -205,7 +205,8 @@
         "msisdn_field_required_invalid": "ໃສ່ເບີໂທລະສັບ",
         "no_hs_url_provided": "ບໍ່ມີການສະໜອງ URL homeserver",
         "oidc": {
-            "error_title": "ພວກເຮົາບໍ່ສາມາດເຂົ້າສູ່ລະບົບທ່ານໄດ້"
+            "error_title": "ພວກເຮົາບໍ່ສາມາດເຂົ້າສູ່ລະບົບທ່ານໄດ້",
+            "missing_or_invalid_stored_state": "ພວກເຮົາໃຫ້ບຣາວເຊີຈື່ homeserver ທີ່ທ່ານໃຊ້ ເຂົ້າສູ່ລະບົບ, ແຕ່ເສຍດາຍບຣາວເຊີຂອງທ່ານລືມມັນ. ກັບໄປທີ່ໜ້າເຂົ້າສູ່ລະບົບແລ້ວ ລອງໃໝ່ອີກຄັ້ງ."
         },
         "password_field_label": "ໃສ່ລະຫັດຜ່ານ",
         "password_field_strong_label": "ດີ, ລະຫັດຜ່ານທີ່ເຂັ້ມແຂງ!",
@@ -349,7 +350,6 @@
         "spaceinvaders_message": "ສົ່ງຜູ້ຮຸກຮານພື້ນທີ່"
     },
     "common": {
-        "about": "ກ່ຽວກັບ",
         "access_token": "ເຂົ້າເຖິງToken",
         "accessibility": "ການເຂົ້າເຖິງ",
         "advanced": "ຂັ້ນສູງ",
@@ -374,7 +374,6 @@
         "dark": "ມືດ",
         "description": "ລາຍລະອຽດ",
         "deselect_all": "ຍົກເລີກການເລືອກທັງໝົດ",
-        "display_name": "ຊື່ສະແດງ",
         "edited": "ດັດແກ້",
         "email_address": "ທີ່ຢູ່ອີເມວ",
         "emoji": "ອີໂມຈິ",
@@ -409,10 +408,6 @@
         "n_members": {
             "one": "ສະມາຊິກ %(count)s",
             "other": "ສະມາຊິກ %(count)s"
-        },
-        "n_participants": {
-            "one": "ຜູ້ເຂົ້າຮ່ວມ 1ຄົນ",
-            "other": "ຜູ້ເຂົ້າຮ່ວມ %(count)s ຄົນ"
         },
         "n_rooms": {
             "one": "%(count)s ຫ້ອງ",
@@ -620,7 +615,6 @@
         "methods": "ວິທີການ",
         "no_verification_requests_found": "ບໍ່ພົບການຮ້ອງຂໍການຢັ້ງຢືນ",
         "number_of_users": "ຈໍານວນຜູ້ໃຊ້",
-        "observe_only": "ສັງເກດເທົ່ານັ້ນ",
         "original_event_source": "ແຫຼ່ງຕົ້ນສະບັບ",
         "phase": "ໄລຍະ",
         "phase_cancelled": "ຍົກເລີກ",
@@ -628,7 +622,6 @@
         "phase_requested": "ຮ້ອງຂໍ",
         "phase_started": "ໄດ້ເລີ່ມແລ້ວ",
         "phase_transaction": "ທຸລະກໍາ",
-        "requester": "ຜູ້ຮ້ອງຂໍ",
         "room_id": "ID ຫ້ອງ: %(roomId)s",
         "save_setting_values": "ບັນທຶກຄ່າການຕັ້ງຄ່າ",
         "send_custom_account_data_event": "ສົ່ງຂໍ້ມູນບັນຊີແບບກຳນົດເອງທຸກເຫດການ",
@@ -1066,7 +1059,6 @@
         "failed_generic": "ການດໍາເນີນງານບໍ່ສຳເລັດ",
         "failed_title": "ການເຊີນບໍ່ສຳເລັດ",
         "invalid_address": "ບໍ່ຮັບຮູ້ທີ່ຢູ່",
-        "key_share_warning": "ຄົນທີ່ໄດ້ຮັບເຊີນຈະສາມາດອ່ານຂໍ້ຄວາມເກົ່າໄດ້.",
         "name_email_mxid_share_room": "ເຊີນຄົນທີ່ໃຊ້ຊື່ຂອງເຂົາເຈົ້າ, ທີ່ຢູ່ອີເມວ, ຊື່ຜູ້ໃຊ້ (ເຊັ່ນ <userId/>) ຫຼື <a>ແບ່ງປັນຫ້ອງນີ້</a>.",
         "name_email_mxid_share_space": "ເຊີນບຸຄົນອຶ່ນໂດຍໃຊ້ຊື່, ທີ່ຢູ່ອີເມວ, ຊື່ຜູ້ໃຊ້ (ເຊັ່ນ<userId/> ຫຼື <a>share this space</a>.",
         "name_mxid_share_room": "ເຊີນຄົນທີ່ໃຊ້ຊື່ຂອງເຂົາເຈົ້າ, ຊື່ຜູ້ໃຊ້ (ເຊັ່ນ <userId/>) ຫຼື <a>ແບ່ງປັນຫ້ອງນີ້</a>.",
@@ -1188,6 +1180,7 @@
         "group_rooms": "ຫ້ອງ",
         "group_spaces": "ພື້ນທີ່",
         "group_themes": "ຫົວຂໍ້",
+        "group_threads": "ກະທູ້",
         "group_voip": "ສຽງ & ວິດີໂອ",
         "group_widgets": "ວິດເຈັດ",
         "join_beta": "ເຂົ້າຮ່ວມເບຕ້າ",
@@ -1195,8 +1188,7 @@
         "latex_maths": "ສະແດງຜົນຄະນິດສາດ LaTeX ໃນຂໍ້ຄວາມ",
         "leave_beta": "ອອກຈາກເບຕ້າ",
         "msc3531_hide_messages_pending_moderation": "ໃຫ້ຜູ້ຄວບຄຸມການເຊື່ອງຂໍ້ຄວາມທີ່ລໍຖ້າການກັ່ນຕອງ.",
-        "pinning": "ການປັກໝຸດຂໍ້ຄວາມ",
-        "state_counters": "ສະເເດງຕົວຢ່າງກົງກັນຂ້າມໃຫ້ຫົວຂໍ້ຂອງຫ້ອງ"
+        "pinning": "ການປັກໝຸດຂໍ້ຄວາມ"
     },
     "labs_mjolnir": {
         "advanced_warning": "⚠ ການຕັ້ງຄ່າເຫຼົ່ານີ້ແມ່ນຫມາຍເຖິງຜູ້ໃຊ້ຂັ້ນສູງ.",
@@ -1231,14 +1223,6 @@
         "view_rules": "ເບິ່ງກົດລະບຽບ"
     },
     "language_dropdown_label": "ເລື່ອນພາສາລົງ",
-    "lazy_loading": {
-        "disabled_action": "ລຶບ cache ແລະ resync",
-        "disabled_description1": "ກ່ອນໜ້ານີ້ທ່ານເຄີຍໃຊ້ %(brand)sກັບ %(host)s ດ້ວຍການເປີດໂຫຼດສະມາຊິກ. ໃນເວີຊັ້ນນີ້ ໄດ້ປິດການໃຊ້ງານ. ເນື່ອງຈາກ cache ໃນເຄື່ອງບໍ່ເຂົ້າກັນລະຫວ່າງສອງການຕັ້ງຄ່ານີ້, %(brand)s ຕ້ອງການ sync ບັນຊີຂອງທ່ານຄືນໃໝ່.",
-        "disabled_description2": "ຖ້າເວີຊັ້ນອື່ນຂອງ %(brand)s ເປີດຢູ່ໃນແຖບອື່ນ, ກະລຸນາປິດການໃຊ້ %(brand)s ຢູ່ໃນໂຮດດຽວກັນທັງການໂຫຼດແບບ lazy ເປີດໃຊ້ງານ ແລະປິດໃຊ້ງານພ້ອມກັນຈະເຮັດໃຫ້ເກີດບັນຫາ.",
-        "disabled_title": "ແຄດໃນເຄື່ອງບໍ່ເຂົ້າກັນໄດ້",
-        "resync_description": "ຕອນນີ້ %(brand)s ໃຊ້ຄວາມຈຳໜ້ອຍກວ່າ 3-5x, ໂດຍການໂຫຼດຂໍ້ມູນກ່ຽວກັບຜູ້ໃຊ້ອື່ນເມື່ອຕ້ອງການເທົ່ານັ້ນ. ກະລຸນາລໍຖ້າໃນຂະນະທີ່ພວກເຮົາ synchronise ກັບເຊີບເວີ!",
-        "resync_title": "ກຳລັງອັບເດດ %(brand)s"
-    },
     "leave_room_dialog": {
         "last_person_warning": "ເຈົ້າເປັນພຽງຄົນດຽວຢູ່ທີ່ນີ້. ຖ້າທ່ານອອກໄປ, ບໍ່ມີໃຜຈະສາມາດເຂົ້າຮ່ວມໃນອະນາຄົດໄດ້, ລວມທັງທ່ານ.",
         "leave_room_question": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການອອກຈາກຫ້ອງ '%(roomName)s'?",
@@ -1312,9 +1296,6 @@
         "all_messages_description": "ໄດ້ຮັບການແຈ້ງເຕືອນສໍາລັບທຸກໆຂໍ້ຄວາມ",
         "class_global": "ທົ່ວໂລກ",
         "class_other": "ອື່ນໆ",
-        "colour_bold": "ຕົວໜາ",
-        "colour_none": "ບໍ່ມີ",
-        "colour_unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
         "default": "ຄ່າເລີ່ມຕົ້ນ",
         "enable_prompt_toast_description": "ເປີດໃຊ້ການແຈ້ງເຕືອນເດັສທັອບ",
         "enable_prompt_toast_title": "ການແຈ້ງເຕືອນ",
@@ -1322,6 +1303,9 @@
         "error_change_title": "ປ່ຽນການຕັ້ງຄ່າການແຈ້ງເຕືອນ",
         "keyword": "ຄໍາສໍາຄັນ",
         "keyword_new": "ຄໍາສໍາຄັນໃຫມ່",
+        "level_activity": "ກິດຈະກໍາ",
+        "level_none": "ບໍ່ມີ",
+        "level_unsent": "ຍັງບໍ່ໄດ້ສົ່ງ",
         "mark_all_read": "ໝາຍທັງໝົດວ່າອ່ານແລ້ວ",
         "mentions_and_keywords": "@ກ່າວເຖິງ & ຄໍາສໍາຄັນ",
         "mentions_and_keywords_description": "ຮັບການແຈ້ງເຕືອນພຽງແຕ່ມີການກ່າວເຖິງ ແລະ ຄໍາທີ່ກຳນົດໄວ້ໃນ<a>settings</a>ຂອງທ່ານ",
@@ -1484,9 +1468,6 @@
                 "other": "ຜົນສຸດທ້າຍໂດຍອີງໃສ່ %(count)s ຄະແນນສຽງ"
             }
         },
-        "search_button": "ຊອກຫາ",
-        "settings_button": "ການຕັ້ງຄ່າຫ້ອງ",
-        "share_button": "ແບ່ງປັນຫ້ອງ",
         "thread_list": {
             "context_menu_label": "ຕົວເລືອກກະທູ້"
         },
@@ -1603,13 +1584,10 @@
         "read_topic": "ກົດເພື່ອອ່ານຫົວຂໍ້",
         "rejoin_button": "ເຂົ້າຮ່ວມອີກຄັ້ງ",
         "search": {
-            "all_rooms": "ຫ້ອງທັງໝົດ",
-            "field_placeholder": "ຊອກຫາ…",
             "result_count": {
                 "one": "(~%(count)sຜົນຮັບ)",
                 "other": "(~%(count)sຜົນຮັບ)"
-            },
-            "this_room": "ຫ້ອງນີ້"
+            }
         },
         "show_labs_settings": "ໂຊການຕັ້ງຄ່າສູນທົດລອງ",
         "status_bar": {
@@ -1936,11 +1914,8 @@
         "help_about": {
             "access_token_detail": "ການເຂົ້າເຖິງໂທເຄັນຂອງທ່ານເປັນການເຂົ້າເຖິງບັນຊີຂອງທ່ານຢ່າງເຕັມທີ່. ຢ່າແບ່ງປັນໃຫ້ຄົນອຶ່ນ.",
             "brand_version": "%(brand)sເວີຊັ້ນ:",
-            "chat_bot": "ສົນທະນາກັບ %(brand)s Bot",
             "clear_cache_reload": "ລຶບ cache ແລະ ໂຫຼດໃຫມ່",
             "help_link": "ສໍາລັບການຊ່ວຍເຫຼືອໃນການນໍາໃຊ້ %(brand)s, ກົດ <a>ທີ່ນີ້</a>.",
-            "help_link_chat_bot": "ສໍາລັບການຊ່ວຍເຫຼືອໃນການນໍາໃຊ້ %(brand)s, ກົດ <a>ທີ່ນີ້</a> ຫຼືເລີ່ມການສົນທະນາກັບ bot ຂອງພວກເຮົາໂດຍໃຊ້ປຸ່ມຂ້າງລຸ່ມນີ້.",
-            "olm_version": "ເວີຊັ້ນ Olm:",
             "title": "ຊ່ວຍເຫຼືອ & ກ່ຽວກັບ",
             "versions": "ເວິຊັ້ນ"
         }
@@ -1954,24 +1929,15 @@
             "custom_font_description": "ກຳນົດຊື່ຕົວອັກສອນທີ່ຕິດຕັ້ງຢູ່ໃນລະບົບຂອງທ່ານ & %(brand)sຈະພະຍາຍາມໃຊ້ມັນ.",
             "custom_font_name": "ຊື່ຕົວອັກສອນລະບົບ",
             "custom_font_size": "ໃຊ້ຂະຫນາດທີ່ກໍາຫນົດເອງ",
-            "custom_theme_add_button": "ເພີ່ມຫົວຂໍ້",
             "custom_theme_error_downloading": "ເກີດຄວາມຜິດພາດໃນການດາວໂຫຼດຂໍ້ມູນ.",
             "custom_theme_invalid": "ຮູບແບບschemaບໍ່ຖືກຕ້ອງ.",
-            "custom_theme_success": "ເພີ່ມຫົວຂໍ້!",
-            "custom_theme_url": "ການ ກຳນົດເອງຫົວຂໍ້ URL",
             "font_size": "ຂະໜາດຕົວອັກສອນ",
-            "font_size_limit": "ຂະໜາດຕົວອັກສອນທີ່ກຳນົດເອງສາມາດຢູ່ໃນລະຫວ່າງ %(min)s pt ແລະ %(max)s pt",
-            "font_size_nan": "ຂະໜາດຕ້ອງເປັນຕົວເລກ",
-            "font_size_valid": "ໃຊ້ລະຫວ່າງ %(min)s pt ແລະ %(max)s pt",
-            "heading": "ປັບແຕ່ງຮູບລັກສະນະຂອງທ່ານ",
             "image_size_default": "ຄ່າເລີ່ມຕົ້ນ",
             "image_size_large": "ຂະຫນາດໃຫຍ່",
             "layout_bubbles": "ຟອງຂໍ້ຄວາມ",
             "layout_irc": "(ທົດລອງ)IRC",
             "match_system_theme": "ລະບົບຈັບຄູ່ຫົວຂໍ້",
-            "subheading": "ການຕັ້ງຄ່າຮູບລັກສະນະມີຜົນກະທົບພຽງແຕ່ %(brand)s ໃນລະບົບ ນີ້.",
-            "timeline_image_size": "ຂະຫນາດຮູບພາບຢູ່ໃນທາມລາຍ",
-            "use_high_contrast": "ໃຊ້ຄວາມຄົມຊັດສູງ"
+            "timeline_image_size": "ຂະຫນາດຮູບພາບຢູ່ໃນທາມລາຍ"
         },
         "automatic_language_detection_syntax_highlight": "ເປີດໃຊ້ການກວດຫາພາສາອັດຕະໂນມັດສຳລັບການເນັ້ນໄວຍະກອນ",
         "autoplay_gifs": "ຫຼິ້ນ GIFs ອັດຕະໂນມັດ",
@@ -1995,7 +1961,6 @@
             "confirm_adding_email_body": "ກົດປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
             "confirm_adding_email_title": "ຢືນຢັນການເພີ່ມອີເມວ",
             "deactivate_confirm_body": "ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການປິດການນຳໃຊ້ບັນຊີຂອງທ່ານ? ນີ້ແມ່ນບໍ່ສາມາດປີ້ນກັບກັນໄດ້.",
-            "deactivate_confirm_body_password": "ເພື່ອສືບຕໍ່, ກະລຸນາໃສ່ລະຫັດຜ່ານບັນຊີຂອງທ່ານ:",
             "deactivate_confirm_body_sso": "ຢືນຢັນການປິດບັນຊີຂອງທ່ານໂດຍການໃຊ້ການເຂົ້າສູ່ລະບົບດຽວເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
             "deactivate_confirm_content": "ຢືນຢັນວ່າທ່ານຕ້ອງການປິດການນຳໃຊ້ບັນຊີຂອງທ່ານ. ຖ້າທ່ານດໍາເນີນການ:",
             "deactivate_confirm_content_1": "ທ່ານຈະບໍ່ສາມາດເປີດໃຊ້ບັນຊີຂອງທ່ານຄືນໄດ້",
@@ -2011,7 +1976,6 @@
             "discovery_email_verification_instructions": "ຢືນຢັນການເຊື່ອມຕໍ່ໃນ inbox ຂອງທ່ານ",
             "discovery_msisdn_empty": "ຕົວເລືອກການຄົ້ນພົບຈະປາກົດເມື່ອທ່ານໄດ້ເພີ່ມເບີໂທລະສັບຂ້າງເທິງ.",
             "discovery_needs_terms": "ຕົກລົງເຫັນດີກັບ ເຊີບເວີ(%(serverName)s) ເງື່ອນໄຂການໃຫ້ບໍລິການເພື່ອອະນຸຍາດໃຫ້ຕົວທ່ານເອງສາມາດຄົ້ນພົບໄດ້ໂດຍທີ່ຢູ່ອີເມວ ຫຼືເບີໂທລະສັບ.",
-            "discovery_section": "ການຄົ້ນພົບ",
             "email_address_in_use": "ອີເມວນີ້ຖືກໃຊ້ແລ້ວ",
             "email_address_label": "ທີ່ຢູ່ອີເມວ",
             "email_not_verified": "ທີ່ຢູ່ອີເມວຂອງທ່ານຍັງບໍ່ໄດ້ຖືກຢືນຢັນເທື່ອ",
@@ -2029,8 +1993,6 @@
             "error_remove_3pid": "ບໍ່ສາມາດລຶບຂໍ້ມູນການຕິດຕໍ່ໄດ້",
             "error_revoke_email_discovery": "ບໍ່ສາມາດຖອນການແບ່ງປັນສໍາລັບທີ່ຢູ່ອີເມວໄດ້",
             "error_revoke_msisdn_discovery": "ບໍ່ສາມາດຖອນການແບ່ງປັນສຳລັບເບີໂທລະສັບໄດ້",
-            "error_saving_profile": "ການດໍາເນີນງານບໍ່ສໍາເລັດ",
-            "error_saving_profile_title": "ບັນທຶກໂປຣໄຟລ໌ຂອງທ່ານບໍ່ສຳເລັດ",
             "error_share_email_discovery": "ບໍ່ສາມາດແບ່ງປັນທີ່ຢູ່ອີເມວໄດ້",
             "error_share_msisdn_discovery": "ບໍ່ສາມາດແບ່ງປັນເບີໂທລະສັບໄດ້",
             "incorrect_msisdn_verification": "ລະຫັດຢືນຢັນບໍ່ຖືກຕ້ອງ",
@@ -2174,7 +2136,6 @@
             "delete_backup_confirm_description": "ທ່ານແນ່ໃຈບໍ່? ທ່ານຈະສູນເສຍຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້ຫາກກະແຈຂອງທ່ານບໍ່ຖືກສຳຮອງຂໍ້ມູນຢ່າງຖືກຕ້ອງ.",
             "e2ee_default_disabled_warning": "ຜູ້ຄຸມເຊີບເວີຂອງທ່ານໄດ້ປິດການນຳໃຊ້ການເຂົ້າລະຫັດແບບຕົ້ນທາງຮອດປາຍທາງໂດຍຄ່າເລີ່ມຕົ້ນໃນຫ້ອງສ່ວນຕົວ ແລະ ຂໍ້ຄວາມໂດຍກົງ.",
             "enable_message_search": "ເປີດໃຊ້ການຊອກຫາຂໍ້ຄວາມຢູ່ໃນຫ້ອງທີ່ຖືກເຂົ້າລະຫັດ",
-            "encryption_individual_verification_mode": "ຢືນຢັນແຕ່ລະລະບົບທີ່ໃຊ້ໂດຍຜູ້ໃຊ້ເພື່ອໝາຍວ່າເປັນທີ່ໜ້າເຊື່ອຖືໄດ້, ບໍ່ໄວ້ໃຈອຸປະກອນທີ່ cross-signed.",
             "encryption_section": "ການເຂົ້າລະຫັດ",
             "error_loading_key_backup_status": "ບໍ່ສາມາດໂຫຼດສະຖານະສຳຮອງລະຫັດໄດ້",
             "export_megolm_keys": "ສົ່ງກະແຈຫ້ອງ E2E ອອກ",
@@ -2188,7 +2149,6 @@
             "key_backup_connect_prompt": "ເຊື່ອມຕໍ່ລະບົບນີ້ກັບການສໍາຮອງກະແຈກ່ອນທີ່ຈະອອກຈາກລະບົບເພື່ອຫຼີກເວັ້ນການສູນເສຍກະແຈທີ່ອາດຢູ່ໃນລະບົບນີ້ເທົ່ານັ້ນ.",
             "key_backup_inactive": "ລະບົບນີ້ແມ່ນ <b>ບໍ່ໄດ້ສໍາຮອງລະຫັດຂອງທ່ານ</b>, ແຕ່ທ່ານມີການສໍາຮອງຂໍ້ມູນທີ່ມີຢູ່ແລ້ວທີ່ທ່ານສາມາດກູ້ຄືນຈາກ ແລະເພີ່ມຕໍ່ໄປ.",
             "key_backup_inactive_warning": "ກະແຈຂອງທ່ານ <b>ບໍ່ຖືກສຳຮອງຂໍ້ມູນຈາກລະບົບນີ້</b>.",
-            "manually_verify_all_sessions": "ຢັ້ງຢືນທຸກລະບົບທາງໄກດ້ວຍຕົນເອງ",
             "message_search_disable_warning": "ຖ້າປິດໃຊ້ງານ, ຂໍ້ຄວາມຈາກຫ້ອງທີ່ເຂົ້າລະຫັດຈະບໍ່ປາກົດຢູ່ໃນຜົນການຄົ້ນຫາ.",
             "message_search_disabled": "ເກັບຮັກສາຂໍ້ຄວາມທີ່ຖືກເຂົ້າລະຫັດໄວ້ຢ່າງປອດໄພຢູ່ໃນເຄື່ອງເພື່ອໃຫ້ປາກົດໃນຜົນການຄົ້ນຫາ.",
             "message_search_enabled": {
@@ -2497,15 +2457,10 @@
             "one": "%(count)s ຕອບກັບ",
             "other": "%(count)s ຕອບກັບ"
         },
-        "empty_explainer": "ກະທູ້ຊ່ວຍໃຫ້ການສົນທະນາຂອງທ່ານຢູ່ໃນຫົວຂໍ້ ແລະ ງ່າຍຕໍ່ການຕິດຕາມ.",
-        "empty_has_threads_tip": "ຕອບກັບຫາກະທູ້ທີ່ກຳລັງດຳເນີນ ຫຼືໃຊ້ ຢູ່“%(replyInThread)s” ເມື່ອເລື່ອນໃສ່ຂໍ້ຄວາມເພື່ອເລີ່ມຕົ້ນອັນໃໝ່.",
-        "empty_heading": "ຮັກສາການສົນທະນາທີ່ມີການຈັດລະບຽບ",
-        "empty_tip": "<b>ເຄັດລັບ:</b> ໃຊ້ “%(replyInThread)s” ເມື່ອເລື່ອນໃສ່ຂໍ້ຄວາມ.",
         "error_start_thread_existing_relation": "ບໍ່ສາມາດສ້າງກະທູ້ຈາກເຫດການທີ່ມີຄວາມສໍາພັນທີ່ມີຢູ່ແລ້ວ",
         "my_threads": "ກະທູ້ຂອງຂ້ອຍ",
         "my_threads_description": "ສະແດງຫົວຂໍ້ທັງໝົດທີ່ທ່ານໄດ້ເຂົ້າຮ່ວມ",
         "open_thread": "ເປີດກະທູ້",
-        "show_all_threads": "ສະແດງຫົວຂໍ້ທັງໝົດ",
         "show_thread_filter": "ສະແດງ:"
     },
     "time": {
@@ -2546,7 +2501,6 @@
             "tooltip_sub": "ກົດເພື່ອເບິ່ງການແກ້ໄຂ",
             "tooltip_title": "ແກ້ໄຂເມື່ອ %(date)s"
         },
-        "encrypted_historical_messages_unavailable": "ຂໍ້ຄວາມທີ່ເຂົ້າລະຫັດໄວ້ກ່ອນຈຸດນີ້ບໍ່ສາມາດໃຊ້ໄດ້.",
         "error_no_renderer": "ເຫດການນີ້ບໍ່ສາມາດສະແດງໄດ້",
         "error_rendering_message": "ບໍ່ສາມາດໂຫຼດຂໍ້ຄວາມນີ້ໄດ້",
         "historical_messages_unavailable": "ທ່ານບໍ່ສາມາດເຫັນຂໍ້ຄວາມກ່ອນໜ້ານີ້",
@@ -2595,19 +2549,8 @@
             "sent": "%(senderDisplayName)s ສົ່ງຮູບ.",
             "show_image": "ສະແດງຮູບພາບ"
         },
-        "m.key.verification.cancel": {
-            "user_cancelled": "ຍົກເລີກການຢັ້ງຢືນ %(name)s",
-            "you_cancelled": "ທ່ານໄດ້ຍົກເລີກການຢືນຢັນ %(name)s"
-        },
-        "m.key.verification.done": "ທ່ານໄດ້ຢັ້ງຢືນ %(name)s",
         "m.key.verification.request": {
-            "user_accepted": "ຍອມຮັບ %(name)s",
-            "user_cancelled": "%(name)s ຖືກຍົກເລີກ",
-            "user_declined": "%(name)s ປະຕິເສດ",
             "user_wants_to_verify": "%(name)s ຕ້ອງການກວດສອບ",
-            "you_accepted": "ທ່ານຍອມຮັບ",
-            "you_cancelled": "ທ່ານໄດ້ຍົກເລີກ",
-            "you_declined": "ທ່ານປະຕິເສດ",
             "you_started": "ທ່ານໄດ້ສົ່ງຄໍາຮ້ອງຂໍການຢັ້ງຢືນ"
         },
         "m.location": {
@@ -2773,8 +2716,7 @@
         "pending_moderation_reason": "ຂໍ້ຄວາມທີ່ລໍຖ້າການກວດກາ: %(reason)s",
         "reactions": {
             "add_reaction_prompt": "ເພີ່ມການຕອບໂຕ້",
-            "label": "%(reactors)sປະຕິກິລິຍາກັບ %(content)s",
-            "tooltip": "<reactors/><reactedWith>ປະຕິກິລິຍາດ້ວຍ %(shortName)s</reactedWith>"
+            "label": "%(reactors)sປະຕິກິລິຍາກັບ %(content)s"
         },
         "read_receipt_title": {
             "one": "ເຫັນໂດຍ %(count)s ຄົນ",
@@ -3039,7 +2981,6 @@
         },
         "redact_button": "ລຶບຂໍ້ຄວາມຫຼ້າສຸດອອກ",
         "revoke_invite": "ຍົກເລີກຄຳເຊີນ",
-        "role_label": "ບົດບາດໃນ <RoomName />",
         "room_encrypted": "ຂໍ້ຄວາມຢູ່ໃນຫ້ອງນີ້ຖືກເຂົ້າລະຫັດແບບຕົ້ນທາງຮອດປາຍທາງ.",
         "room_encrypted_detail": "ຂໍ້ຄວາມຂອງທ່ານປອດໄພ ແລະມີແຕ່ທ່ານ ແລະຜູ້ຮັບເທົ່ານັ້ນທີ່ມີກະແຈສະເພາະເພື່ອປົດລັອກພວກມັນ.",
         "room_unencrypted": "ຂໍ້ຄວາມຢູ່ໃນຫ້ອງນີ້ບໍ່ໄດ້ຖືກເຂົ້າລະຫັດແບບຕົ້ນທາງ-ປາຍທາງ.",
@@ -3064,7 +3005,6 @@
         "already_in_call_person": "ທ່ານຢູ່ໃນການໂທກັບບຸກຄົນນີ້ແລ້ວ.",
         "answered_elsewhere": "ຕອບຢູ່ບ່ອນອື່ນແລ້ວ",
         "answered_elsewhere_description": "ການຮັບສາຍຢູ່ໃນອຸປະກອນອື່ນ.",
-        "audio_devices": "ອຸປະກອນສຽງ",
         "call_failed": "ໂທບໍ່ສຳເລັດ",
         "call_failed_description": "ບໍ່ສາມາດໂທຫາໄດ້",
         "call_failed_media": "ການໂທບໍ່ສຳເລັດ ເນື່ອງຈາກເວັບແຄມ ຫຼື ບໍ່ສາມາດເຂົ້າເຖິງ ໄມໂຄຣໂຟນໄດ້. ກະລຸນາກວດເບິ່ງ:",
@@ -3137,7 +3077,6 @@
         "user_busy_description": "ຜູ້ໃຊ້ທີ່ທ່ານໂທຫາຍັງບໍ່ຫວ່າງ.",
         "user_is_presenting": "%(sharerName)s ກຳລັງນຳສະເໜີ",
         "video_call": "ໂທດ້ວວິດີໂອ",
-        "video_devices": "ອຸປະກອນວິດີໂອ",
         "voice_call": "ໂທດ້ວຍສຽງ",
         "you_are_presenting": "ທ່ານກໍາລັງນໍາສະເຫນີ"
     },

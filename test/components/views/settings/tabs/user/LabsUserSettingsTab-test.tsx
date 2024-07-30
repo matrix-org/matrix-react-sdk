@@ -22,8 +22,6 @@ import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import SdkConfig from "../../../../../../src/SdkConfig";
 
 describe("<LabsUserSettingsTab />", () => {
-    const sdkConfigSpy = jest.spyOn(SdkConfig, "get");
-
     const defaultProps = {
         closeSettingsFn: jest.fn(),
     };
@@ -34,7 +32,9 @@ describe("<LabsUserSettingsTab />", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         settingsValueSpy.mockReturnValue(false);
-        sdkConfigSpy.mockReturnValue(false);
+        SdkConfig.reset();
+        SdkConfig.add({ brand: "BrandedClient" });
+        localStorage.clear();
     });
 
     it("renders settings marked as beta as beta cards", () => {
@@ -43,6 +43,7 @@ describe("<LabsUserSettingsTab />", () => {
     });
 
     it("does not render non-beta labs settings when disabled in config", () => {
+        const sdkConfigSpy = jest.spyOn(SdkConfig, "get");
         render(getComponent());
         expect(sdkConfigSpy).toHaveBeenCalledWith("show_labs_settings");
 
@@ -52,12 +53,12 @@ describe("<LabsUserSettingsTab />", () => {
 
     it("renders non-beta labs settings when enabled in config", () => {
         // enable labs
-        sdkConfigSpy.mockImplementation((configName) => configName === "show_labs_settings");
+        SdkConfig.add({ show_labs_settings: true });
         const { container } = render(getComponent());
 
         // non-beta labs section
         expect(screen.getByText("Early previews")).toBeInTheDocument();
         const labsSections = container.getElementsByClassName("mx_SettingsSubsection");
-        expect(labsSections).toHaveLength(9);
+        expect(labsSections).toHaveLength(10);
     });
 });

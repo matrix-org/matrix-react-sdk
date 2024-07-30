@@ -17,7 +17,7 @@ limitations under the License.
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import * as StorageManager from "../StorageManager";
+import * as StorageAccess from "../StorageAccess";
 
 /**
  * Utility functions related to the storage and retrieval of access tokens
@@ -50,10 +50,10 @@ async function pickleKeyToAesKey(pickleKey: string): Promise<Uint8Array> {
     for (let i = 0; i < pickleKey.length; i++) {
         pickleKeyBuffer[i] = pickleKey.charCodeAt(i);
     }
-    const hkdfKey = await window.crypto.subtle.importKey("raw", pickleKeyBuffer, "HKDF", false, ["deriveBits"]);
+    const hkdfKey = await crypto.subtle.importKey("raw", pickleKeyBuffer, "HKDF", false, ["deriveBits"]);
     pickleKeyBuffer.fill(0);
     return new Uint8Array(
-        await window.crypto.subtle.deriveBits(
+        await crypto.subtle.deriveBits(
             {
                 name: "HKDF",
                 hash: "SHA-256",
@@ -126,22 +126,23 @@ export async function persistTokenInStorage(
 
     if (pickleKey) {
         let encryptedToken: IEncryptedPayload | undefined;
-        try {
-            if (!token) {
-                throw new Error("No token: not attempting encryption");
+        if (token) {
+            try {
+                // try to encrypt the access token using the pickle key
+                const encrKey = await pickleKeyToAesKey(pickleKey);
+                encryptedToken = await encryptAES(token, encrKey, initializationVector);
+                encrKey.fill(0);
+            } catch (e) {
+                // This is likely due to the browser not having WebCrypto or somesuch.
+                // Warn about it, but fall back to storing the unencrypted token.
+                logger.warn(`Could not encrypt token for ${storageKey}`, e);
             }
-            // try to encrypt the access token using the pickle key
-            const encrKey = await pickleKeyToAesKey(pickleKey);
-            encryptedToken = await encryptAES(token, encrKey, initializationVector);
-            encrKey.fill(0);
-        } catch (e) {
-            logger.warn("Could not encrypt access token", e);
         }
         try {
-            // save either the encrypted access token, or the plain access
-            // token if we were unable to encrypt (e.g. if the browser doesn't
+            // Save either the encrypted access token, or the plain access
+            // token if there is no token or we were unable to encrypt (e.g. if the browser doesn't
             // have WebCrypto).
-            await StorageManager.idbSave("account", storageKey, encryptedToken || token);
+            await StorageAccess.idbSave("account", storageKey, encryptedToken || token);
         } catch (e) {
             // if we couldn't save to indexedDB, fall back to localStorage.  We
             // store the access token unencrypted since localStorage only saves
@@ -154,7 +155,7 @@ export async function persistTokenInStorage(
         }
     } else {
         try {
-            await StorageManager.idbSave("account", storageKey, token);
+            await StorageAccess.idbSave("account", storageKey, token);
         } catch (e) {
             if (!!token) {
                 localStorage.setItem(storageKey, token);

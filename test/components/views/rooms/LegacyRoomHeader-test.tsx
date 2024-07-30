@@ -24,11 +24,15 @@ import {
     RoomStateEvent,
     PendingEventOrdering,
     ISearchResults,
+    IContent,
 } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
 import EventEmitter from "events";
 import { setupJestCanvasMock } from "jest-canvas-mock";
+import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
+import { MatrixRTCSession, MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc";
 
 import type { MatrixClient, MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import type { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
@@ -39,11 +43,11 @@ import {
     resetAsyncStoreWithClient,
     mockPlatformPeg,
     mkEvent,
+    filterConsole,
 } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import RoomHeader, { IProps as RoomHeaderProps } from "../../../../src/components/views/rooms/LegacyRoomHeader";
-import { SearchScope } from "../../../../src/components/views/rooms/SearchBar";
 import { E2EStatus } from "../../../../src/utils/ShieldUtils";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
 import RoomContext from "../../../../src/contexts/RoomContext";
@@ -56,11 +60,12 @@ import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
 import WidgetStore from "../../../../src/stores/WidgetStore";
 import { WidgetMessagingStore } from "../../../../src/stores/widgets/WidgetMessagingStore";
-import WidgetUtils from "../../../../src/utils/WidgetUtils";
-import { ElementWidgetActions } from "../../../../src/stores/widgets/ElementWidgetActions";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../../src/MediaDeviceHandler";
 import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
 import { UIComponent } from "../../../../src/settings/UIFeature";
+import WidgetUtils from "../../../../src/utils/WidgetUtils";
+import { ElementWidgetActions } from "../../../../src/stores/widgets/ElementWidgetActions";
+import { SearchScope } from "../../../../src/Searching";
 
 jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
     shouldShowComponent: jest.fn(),
@@ -72,6 +77,10 @@ describe("LegacyRoomHeader", () => {
     let alice: RoomMember;
     let bob: RoomMember;
     let carol: RoomMember;
+
+    filterConsole(
+        "Age for event was not available, using `now - origin_server_ts` as a fallback. If the device clock is not correct issues might occur.",
+    );
 
     beforeEach(async () => {
         // some of our tests rely on the jest canvas mock, and `afterEach` will have reset the mock, so we need to
@@ -100,7 +109,7 @@ describe("LegacyRoomHeader", () => {
                 room: roomId,
                 user: alice.userId,
                 skey: stateKey,
-                content,
+                content: content as IContent,
             });
             room.addLiveEvents([event]);
             return { event_id: event.getId()! };
@@ -266,6 +275,7 @@ describe("LegacyRoomHeader", () => {
                 expect(dispatcherSpy).toHaveBeenCalledWith({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
+                    skipLobby: false,
                     view_call: true,
                 }),
             );
@@ -341,6 +351,8 @@ describe("LegacyRoomHeader", () => {
             placeCallSpy.mockClear();
             fireEvent.click(screen.getByRole("button", { name: "Video call" }));
             await act(() => Promise.resolve()); // Allow effects to settle
+            fireEvent.click(screen.getByRole("menuitem", { name: "Legacy video call" }));
+            await act(() => Promise.resolve()); // Allow effects to settle
             expect(placeCallSpy).toHaveBeenCalledWith(room.roomId, CallType.Video);
         },
     );
@@ -397,6 +409,7 @@ describe("LegacyRoomHeader", () => {
                 expect(dispatcherSpy).toHaveBeenCalledWith({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
+                    skipLobby: false,
                     view_call: true,
                 }),
             );
@@ -422,6 +435,7 @@ describe("LegacyRoomHeader", () => {
                 expect(dispatcherSpy).toHaveBeenCalledWith({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
+                    skipLobby: false,
                     view_call: true,
                 }),
             );
@@ -552,7 +566,20 @@ describe("LegacyRoomHeader", () => {
         mockEnabledSettings(["feature_group_calls"]);
 
         await withCall(async (call) => {
-            await call.connect();
+            // We set the call to skip lobby because otherwise the connection will wait until
+            // the user clicks the "join" button, inside the widget lobby which is hard to mock.
+            call.widget.data = { ...call.widget.data, skipLobby: true };
+            // The connect method will wait until the session actually connected. Otherwise it will timeout.
+            // Emitting SessionStarted will trigger the connect method to resolve.
+            setTimeout(
+                () =>
+                    client.matrixRTC.emit(MatrixRTCSessionManagerEvents.SessionStarted, room.roomId, {
+                        room,
+                    } as MatrixRTCSession),
+                100,
+            );
+            await call.start();
+
             const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(call.widget))!;
             renderHeader({ viewingCall: true, activeCall: call });
 
@@ -738,6 +765,34 @@ describe("LegacyRoomHeader", () => {
             expect(wrapper.container.querySelector(".mx_LegacyRoomHeader_name.mx_AccessibleButton")).toBeFalsy();
         },
     );
+
+    it("renders additionalButtons", async () => {
+        const additionalButtons: ViewRoomOpts["buttons"] = [
+            {
+                icon: () => <>test-icon</>,
+                id: "test-id",
+                label: () => "test-label",
+                onClick: () => {},
+            },
+        ];
+        renderHeader({ additionalButtons });
+        expect(screen.getByRole("button", { name: "test-icon" })).toBeInTheDocument();
+    });
+
+    it("calls onClick-callback on additionalButtons", () => {
+        const callback = jest.fn();
+        const additionalButtons: ViewRoomOpts["buttons"] = [
+            {
+                icon: () => <>test-icon</>,
+                id: "test-id",
+                label: () => "test-label",
+                onClick: callback,
+            },
+        ];
+        renderHeader({ additionalButtons });
+        fireEvent.click(screen.getByRole("button", { name: "test-icon" }));
+        expect(callback).toHaveBeenCalled();
+    });
 });
 
 interface IRoomCreationInfo {
@@ -754,8 +809,11 @@ function createRoom(info: IRoomCreationInfo) {
     const userId = client.getUserId()!;
     if (info.isDm) {
         client.getAccountData = (eventType) => {
-            expect(eventType).toEqual("m.direct");
-            return mkDirectEvent(roomId, userId, info.userIds);
+            if (eventType === "m.direct") {
+                return mkDirectEvent(roomId, userId, info.userIds);
+            } else {
+                return undefined;
+            }
         };
     }
 
@@ -844,7 +902,7 @@ function mkJoinEvent(roomId: string, userId: string) {
         room: roomId,
         user: userId,
         content: {
-            membership: "join",
+            membership: KnownMembership.Join,
             avatar_url: "mxc://example.org/" + userId,
         },
     });

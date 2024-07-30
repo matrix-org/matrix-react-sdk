@@ -34,7 +34,6 @@ import { _t } from "../../../languageHandler";
 import { useContextMenu } from "../../structures/ContextMenu";
 import SpaceCreateMenu from "./SpaceCreateMenu";
 import { SpaceButton, SpaceItem } from "./SpaceTreeLevel";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import {
@@ -63,15 +62,19 @@ import QuickSettingsButton from "./QuickSettingsButton";
 import { useSettingValue } from "../../../hooks/useSettings";
 import UserMenu from "../../structures/UserMenu";
 import IndicatorScrollbar from "../../structures/IndicatorScrollbar";
-import { IS_MAC, Key } from "../../../Keyboard";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { Action } from "../../../dispatcher/actions";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
-import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import { ThreadsActivityCentre } from "./threads-activity-centre/";
+import AccessibleButton from "../elements/AccessibleButton";
+import { Landmark, LandmarkNavigation } from "../../../accessibility/LandmarkNavigation";
+import { KeyboardShortcut } from "../settings/KeyboardShortcut";
 
 const useSpaces = (): [Room[], MetaSpace[], Room[], SpaceKey] => {
     const invites = useEventEmitterState<Room[]>(SpaceStore.instance, UPDATE_INVITED_SPACES, () => {
@@ -208,6 +211,20 @@ const OrphansButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCollap
     );
 };
 
+const VideoRoomsButton: React.FC<MetaSpaceButtonProps> = ({ selected, isPanelCollapsed }) => {
+    return (
+        <MetaSpaceButton
+            spaceKey={MetaSpace.VideoRooms}
+            className="mx_SpaceButton_videoRooms"
+            selected={selected}
+            isPanelCollapsed={isPanelCollapsed}
+            label={getMetaSpaceName(MetaSpace.VideoRooms)}
+            notificationState={SpaceStore.instance.getNotificationState(MetaSpace.VideoRooms)}
+            size="32px"
+        />
+    );
+};
+
 const CreateSpaceButton: React.FC<Pick<IInnerSpacePanelProps, "isPanelCollapsed" | "setPanelCollapsed">> = ({
     isPanelCollapsed,
     setPanelCollapsed,
@@ -262,6 +279,7 @@ const metaSpaceComponentMap: Record<MetaSpace, typeof HomeButton> = {
     [MetaSpace.Favourites]: FavouritesButton,
     [MetaSpace.People]: PeopleButton,
     [MetaSpace.Orphans]: OrphansButton,
+    [MetaSpace.VideoRooms]: VideoRoomsButton,
 };
 
 interface IInnerSpacePanelProps extends DroppableProvidedProps {
@@ -278,10 +296,12 @@ const InnerSpacePanel = React.memo<IInnerSpacePanelProps>(
         const [invites, metaSpaces, actualSpaces, activeSpace] = useSpaces();
         const activeSpaces = activeSpace ? [activeSpace] : [];
 
-        const metaSpacesSection = metaSpaces.map((key) => {
-            const Component = metaSpaceComponentMap[key];
-            return <Component key={key} selected={activeSpace === key} isPanelCollapsed={isPanelCollapsed} />;
-        });
+        const metaSpacesSection = metaSpaces
+            .filter((key) => !(key === MetaSpace.VideoRooms && !SettingsStore.getValue("feature_video_rooms")))
+            .map((key) => {
+                const Component = metaSpaceComponentMap[key];
+                return <Component key={key} selected={activeSpace === key} isPanelCollapsed={isPanelCollapsed} />;
+            });
 
         return (
             <IndicatorScrollbar
@@ -364,30 +384,37 @@ const SpacePanel: React.FC = () => {
                         onDragEndHandler();
                     }}
                 >
-                    <div
+                    <nav
                         className={classNames("mx_SpacePanel", { collapsed: isPanelCollapsed })}
-                        onKeyDown={onKeyDownHandler}
+                        onKeyDown={(ev) => {
+                            const navAction = getKeyBindingsManager().getNavigationAction(ev);
+                            if (
+                                navAction === KeyBindingAction.NextLandmark ||
+                                navAction === KeyBindingAction.PreviousLandmark
+                            ) {
+                                LandmarkNavigation.findAndFocusNextLandmark(
+                                    Landmark.ACTIVE_SPACE_BUTTON,
+                                    navAction === KeyBindingAction.PreviousLandmark,
+                                );
+                                ev.stopPropagation();
+                                ev.preventDefault();
+                                return;
+                            }
+                            onKeyDownHandler(ev);
+                        }}
                         ref={ref}
+                        aria-label={_t("common|spaces")}
                     >
                         <UserMenu isPanelCollapsed={isPanelCollapsed}>
-                            <AccessibleTooltipButton
+                            <AccessibleButton
                                 className={classNames("mx_SpacePanel_toggleCollapse", { expanded: !isPanelCollapsed })}
                                 onClick={() => setPanelCollapsed(!isPanelCollapsed)}
                                 title={isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
-                                tooltip={
-                                    <div>
-                                        <div className="mx_Tooltip_title">
-                                            {isPanelCollapsed ? _t("action|expand") : _t("action|collapse")}
-                                        </div>
-                                        <div className="mx_Tooltip_sub">
-                                            {IS_MAC
-                                                ? "⌘ + ⇧ + D"
-                                                : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) +
-                                                  " + " +
-                                                  _t(ALTERNATE_KEY_NAME[Key.SHIFT]) +
-                                                  " + D"}
-                                        </div>
-                                    </div>
+                                caption={
+                                    <KeyboardShortcut
+                                        value={{ ctrlOrCmdKey: true, shiftKey: true, key: "d" }}
+                                        className="mx_SpacePanel_Tooltip_KeyboardShortcut"
+                                    />
                                 }
                             />
                         </UserMenu>
@@ -405,8 +432,10 @@ const SpacePanel: React.FC = () => {
                             )}
                         </Droppable>
 
+                        <ThreadsActivityCentre displayButtonLabel={!isPanelCollapsed} />
+
                         <QuickSettingsButton isPanelCollapsed={isPanelCollapsed} />
-                    </div>
+                    </nav>
                 </DragDropContext>
             )}
         </RovingTabIndexProvider>

@@ -15,8 +15,11 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import { render, fireEvent, screen, waitFor } from "@testing-library/react";
+import { EventType, MatrixEvent, Room, MatrixClient, JoinRule } from "matrix-js-sdk/src/matrix";
+import { KnownMembership } from "matrix-js-sdk/src/types";
+import { mocked, MockedObject } from "jest-mock";
+import userEvent from "@testing-library/user-event";
 
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import RoomSummaryCard from "../../../../src/components/views/right_panel/RoomSummaryCard";
@@ -28,56 +31,77 @@ import * as settingsHooks from "../../../../src/hooks/useSettings";
 import Modal from "../../../../src/Modal";
 import RightPanelStore from "../../../../src/stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../../../src/stores/right-panel/RightPanelStorePhases";
-import { getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
+import { flushPromises, getMockClientWithEventEmitter, mockClientMethodsUser } from "../../../test-utils";
 import { PollHistoryDialog } from "../../../../src/components/views/dialogs/PollHistoryDialog";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
 import { _t } from "../../../../src/languageHandler";
+import { tagRoom } from "../../../../src/utils/room/tagRoom";
+import { DefaultTagID } from "../../../../src/stores/room-list/models";
+import { Action } from "../../../../src/dispatcher/actions";
+import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
+
+jest.mock("../../../../src/utils/room/tagRoom");
 
 describe("<RoomSummaryCard />", () => {
     const userId = "@alice:domain.org";
-    const mockClient = getMockClientWithEventEmitter({
-        ...mockClientMethodsUser(userId),
-        isRoomEncrypted: jest.fn(),
-        getRoom: jest.fn(),
-    });
+
     const roomId = "!room:domain.org";
-    const room = new Room(roomId, mockClient, userId);
-    const roomCreateEvent = new MatrixEvent({
-        type: "m.room.create",
-        room_id: roomId,
-        sender: userId,
-        content: {
-            creator: userId,
-            room_version: "5",
-        },
-        state_key: "",
-    });
-    room.currentState.setStateEvents([roomCreateEvent]);
-    const defaultProps = {
-        room,
-        onClose: jest.fn(),
-        permalinkCreator: new RoomPermalinkCreator(room),
-    };
-    const getComponent = (props = {}) =>
-        render(<RoomSummaryCard {...defaultProps} {...props} />, {
+    let mockClient!: MockedObject<MatrixClient>;
+    let room!: Room;
+
+    const getComponent = (props = {}) => {
+        const defaultProps = {
+            room,
+            onClose: jest.fn(),
+            permalinkCreator: new RoomPermalinkCreator(room),
+        };
+
+        return render(<RoomSummaryCard {...defaultProps} {...props} />, {
             wrapper: ({ children }) => (
                 <MatrixClientContext.Provider value={mockClient}>{children}</MatrixClientContext.Provider>
             ),
         });
-
-    const modalSpy = jest.spyOn(Modal, "createDialog");
-    const dispatchSpy = jest.spyOn(defaultDispatcher, "dispatch");
-    const rightPanelCardSpy = jest.spyOn(RightPanelStore.instance, "pushCard");
-    const featureEnabledSpy = jest.spyOn(settingsHooks, "useFeatureEnabled");
+    };
 
     beforeEach(() => {
+        mockClient = getMockClientWithEventEmitter({
+            ...mockClientMethodsUser(userId),
+            getAccountData: jest.fn(),
+            isRoomEncrypted: jest.fn(),
+            getOrCreateFilter: jest.fn().mockResolvedValue({ filterId: 1 }),
+            getRoom: jest.fn(),
+            isGuest: jest.fn().mockReturnValue(false),
+            deleteRoomTag: jest.fn().mockResolvedValue({}),
+            setRoomTag: jest.fn().mockResolvedValue({}),
+        });
+        room = new Room(roomId, mockClient, userId);
+        const roomCreateEvent = new MatrixEvent({
+            type: "m.room.create",
+            room_id: roomId,
+            sender: userId,
+            content: {
+                creator: userId,
+                room_version: "5",
+            },
+            state_key: "",
+        });
+        room.currentState.setStateEvents([roomCreateEvent]);
+        room.updateMyMembership(KnownMembership.Join);
+
+        jest.spyOn(Modal, "createDialog");
+        jest.spyOn(RightPanelStore.instance, "pushCard");
+        jest.spyOn(settingsHooks, "useFeatureEnabled").mockReturnValue(false);
+        jest.spyOn(defaultDispatcher, "dispatch");
         jest.clearAllMocks();
         DMRoomMap.makeShared(mockClient);
 
         mockClient.getRoom.mockReturnValue(room);
         jest.spyOn(room, "isElementVideoRoom").mockRestore();
         jest.spyOn(room, "isCallRoom").mockRestore();
-        featureEnabledSpy.mockReset().mockReturnValue(false);
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it("renders the room summary", () => {
@@ -85,23 +109,114 @@ describe("<RoomSummaryCard />", () => {
         expect(container).toMatchSnapshot();
     });
 
-    it("opens the search", async () => {
-        const onSearchClick = jest.fn();
-        const { getByLabelText } = getComponent({
-            onSearchClick,
-        });
-
-        const searchBtn = getByLabelText(_t("action|search"));
-        fireEvent.click(searchBtn);
-        expect(onSearchClick).toHaveBeenCalled();
+    it("renders the room topic in the summary", () => {
+        room.currentState.setStateEvents([
+            new MatrixEvent({
+                type: "m.room.topic",
+                room_id: roomId,
+                sender: userId,
+                content: {
+                    topic: "This is the room's topic.",
+                },
+                state_key: "",
+            }),
+        ]);
+        const { container } = getComponent();
+        expect(container).toMatchSnapshot();
     });
 
-    it("opens room members list on button click", () => {
-        const { getByText } = getComponent();
+    it("has button to edit topic when expanded", () => {
+        room.currentState.setStateEvents([
+            new MatrixEvent({
+                type: "m.room.topic",
+                room_id: roomId,
+                sender: userId,
+                content: {
+                    topic: "This is the room's topic.",
+                },
+                state_key: "",
+            }),
+        ]);
+        const { container, getByText } = getComponent();
+        fireEvent.click(screen.getByText("This is the room's topic."));
+        expect(getByText("Edit")).toBeInTheDocument();
+        expect(container).toMatchSnapshot();
+    });
 
-        fireEvent.click(getByText("People"));
+    describe("search", () => {
+        it("has the search field", async () => {
+            const onSearchChange = jest.fn();
+            const { getByPlaceholderText } = getComponent({
+                onSearchChange,
+            });
+            expect(getByPlaceholderText("Search messages…")).toBeVisible();
+        });
 
-        expect(rightPanelCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.RoomMemberList }, true);
+        it("should focus the search field if Action.FocusMessageSearch is fired", async () => {
+            const onSearchChange = jest.fn();
+            const { getByPlaceholderText } = getComponent({
+                onSearchChange,
+            });
+            expect(getByPlaceholderText("Search messages…")).not.toHaveFocus();
+            defaultDispatcher.fire(Action.FocusMessageSearch);
+            await waitFor(() => {
+                expect(getByPlaceholderText("Search messages…")).toHaveFocus();
+            });
+        });
+
+        it("should focus the search field if focusRoomSearch=true", () => {
+            const onSearchChange = jest.fn();
+            const { getByPlaceholderText } = getComponent({
+                onSearchChange,
+                focusRoomSearch: true,
+            });
+            expect(getByPlaceholderText("Search messages…")).toHaveFocus();
+        });
+
+        it("should cancel search on escape", () => {
+            const onSearchChange = jest.fn();
+            const onSearchCancel = jest.fn();
+            const { getByPlaceholderText } = getComponent({
+                onSearchChange,
+                onSearchCancel,
+                focusRoomSearch: true,
+            });
+            expect(getByPlaceholderText("Search messages…")).toHaveFocus();
+            fireEvent.keyDown(getByPlaceholderText("Search messages…"), { key: "Escape" });
+            expect(onSearchCancel).toHaveBeenCalled();
+        });
+
+        it("should empty search field when the timeline rendering type changes away", async () => {
+            const onSearchChange = jest.fn();
+            const { rerender } = render(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <RoomContext.Provider value={{ timelineRenderingType: TimelineRenderingType.Search } as any}>
+                        <RoomSummaryCard
+                            room={room}
+                            permalinkCreator={new RoomPermalinkCreator(room)}
+                            onSearchChange={onSearchChange}
+                            focusRoomSearch={true}
+                        />
+                    </RoomContext.Provider>
+                </MatrixClientContext.Provider>,
+            );
+
+            await userEvent.type(screen.getByPlaceholderText("Search messages…"), "test");
+            expect(screen.getByPlaceholderText("Search messages…")).toHaveValue("test");
+
+            rerender(
+                <MatrixClientContext.Provider value={mockClient}>
+                    <RoomContext.Provider value={{ timelineRenderingType: TimelineRenderingType.Room } as any}>
+                        <RoomSummaryCard
+                            room={room}
+                            permalinkCreator={new RoomPermalinkCreator(room)}
+                            onSearchChange={onSearchChange}
+                        />
+                    </RoomContext.Provider>
+                </MatrixClientContext.Provider>,
+            );
+            expect(screen.getByPlaceholderText("Search messages…")).toHaveValue("");
+        });
     });
 
     it("opens room file panel on button click", () => {
@@ -109,36 +224,52 @@ describe("<RoomSummaryCard />", () => {
 
         fireEvent.click(getByText("Files"));
 
-        expect(rightPanelCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.FilePanel }, true);
+        expect(RightPanelStore.instance.pushCard).toHaveBeenCalledWith({ phase: RightPanelPhases.FilePanel }, true);
     });
 
     it("opens room export dialog on button click", () => {
         const { getByText } = getComponent();
 
-        fireEvent.click(getByText("Export chat"));
+        fireEvent.click(getByText(_t("export_chat|title")));
 
-        expect(modalSpy).toHaveBeenCalledWith(ExportDialog, { room });
+        expect(Modal.createDialog).toHaveBeenCalledWith(ExportDialog, { room });
     });
 
     it("opens share room dialog on button click", () => {
         const { getByText } = getComponent();
 
-        fireEvent.click(getByText("Share room"));
+        fireEvent.click(getByText(_t("action|copy_link")));
 
-        expect(modalSpy).toHaveBeenCalledWith(ShareDialog, { target: room });
+        expect(Modal.createDialog).toHaveBeenCalledWith(ShareDialog, { target: room });
+    });
+
+    it("opens invite dialog on button click", () => {
+        const { getByText } = getComponent();
+
+        fireEvent.click(getByText(_t("action|invite")));
+
+        expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({ action: "view_invite", roomId: room.roomId });
+    });
+
+    it("fires favourite dispatch on button click", () => {
+        const { getByText } = getComponent();
+
+        fireEvent.click(getByText(_t("room|context_menu|favourite")));
+
+        expect(tagRoom).toHaveBeenCalledWith(room, DefaultTagID.Favourite);
     });
 
     it("opens room settings on button click", () => {
         const { getByText } = getComponent();
 
-        fireEvent.click(getByText("Room settings"));
+        fireEvent.click(getByText(_t("common|settings")));
 
-        expect(dispatchSpy).toHaveBeenCalledWith({ action: "open_room_settings" });
+        expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({ action: "open_room_settings" });
     });
 
     describe("pinning", () => {
         it("renders pins options when pinning feature is enabled", () => {
-            featureEnabledSpy.mockImplementation((feature) => feature === "feature_pinning");
+            mocked(settingsHooks.useFeatureEnabled).mockImplementation((feature) => feature === "feature_pinning");
             const { getByText } = getComponent();
 
             expect(getByText("Pinned")).toBeInTheDocument();
@@ -153,14 +284,15 @@ describe("<RoomSummaryCard />", () => {
         });
 
         it("opens poll history dialog on button click", () => {
-            const { getByText } = getComponent();
+            const permalinkCreator = new RoomPermalinkCreator(room);
+            const { getByText } = getComponent({ permalinkCreator });
 
             fireEvent.click(getByText("Poll history"));
 
-            expect(modalSpy).toHaveBeenCalledWith(PollHistoryDialog, {
+            expect(Modal.createDialog).toHaveBeenCalledWith(PollHistoryDialog, {
                 room,
                 matrixClient: mockClient,
-                permalinkCreator: defaultProps.permalinkCreator,
+                permalinkCreator: permalinkCreator,
             });
         });
     });
@@ -168,7 +300,7 @@ describe("<RoomSummaryCard />", () => {
     describe("video rooms", () => {
         it("does not render irrelevant options for element video room", () => {
             jest.spyOn(room, "isElementVideoRoom").mockReturnValue(true);
-            featureEnabledSpy.mockImplementation(
+            mocked(settingsHooks.useFeatureEnabled).mockImplementation(
                 (feature) => feature === "feature_video_rooms" || feature === "feature_pinning",
             );
             const { queryByText } = getComponent();
@@ -181,7 +313,7 @@ describe("<RoomSummaryCard />", () => {
 
         it("does not render irrelevant options for element call room", () => {
             jest.spyOn(room, "isCallRoom").mockReturnValue(true);
-            featureEnabledSpy.mockImplementation(
+            mocked(settingsHooks.useFeatureEnabled).mockImplementation(
                 (feature) =>
                     feature === "feature_element_call_video_rooms" ||
                     feature === "feature_video_rooms" ||
@@ -193,6 +325,51 @@ describe("<RoomSummaryCard />", () => {
             expect(queryByText("Files")).not.toBeInTheDocument();
             expect(queryByText("Pinned")).not.toBeInTheDocument();
             expect(queryByText("Export chat")).not.toBeInTheDocument();
+        });
+    });
+
+    describe("public room label", () => {
+        beforeEach(() => {
+            jest.spyOn(room.currentState, "getJoinRule").mockReturnValue(JoinRule.Public);
+        });
+
+        it("does not show public room label for a DM", async () => {
+            mockClient.getAccountData.mockImplementation(
+                (eventType) =>
+                    ({
+                        [EventType.Direct]: new MatrixEvent({
+                            type: EventType.Direct,
+                            content: {
+                                "@bob:sesame.st": ["some-room-id"],
+                                // this room is a DM with ernie
+                                "@ernie:sesame.st": ["some-other-room-id", room.roomId],
+                            },
+                        }),
+                    })[eventType],
+            );
+            getComponent();
+
+            await flushPromises();
+
+            expect(screen.queryByText("Public room")).not.toBeInTheDocument();
+        });
+
+        it("does not show public room label for non public room", async () => {
+            jest.spyOn(room.currentState, "getJoinRule").mockReturnValue(JoinRule.Invite);
+            getComponent();
+
+            await flushPromises();
+
+            expect(screen.queryByText("Public room")).not.toBeInTheDocument();
+        });
+
+        it("shows a public room label for a public room", async () => {
+            jest.spyOn(room.currentState, "getJoinRule").mockReturnValue(JoinRule.Public);
+            getComponent();
+
+            await flushPromises();
+
+            expect(screen.queryByText("Public room")).toBeInTheDocument();
         });
     });
 });

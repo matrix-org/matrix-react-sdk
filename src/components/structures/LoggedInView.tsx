@@ -38,7 +38,6 @@ import SettingsStore from "../../settings/SettingsStore";
 import { SettingLevel } from "../../settings/SettingLevel";
 import ResizeHandle from "../views/elements/ResizeHandle";
 import { CollapseDistributor, Resizer } from "../../resizer";
-import MatrixClientContext from "../../contexts/MatrixClientContext";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import PlatformPeg from "../../PlatformPeg";
 import { DefaultTagID } from "../../stores/room-list/models";
@@ -75,6 +74,8 @@ import { UserOnboardingPage } from "../views/user-onboarding/UserOnboardingPage"
 import { PipContainer } from "./PipContainer";
 import { monitorSyncedPushRules } from "../../utils/pushRules/monitorSyncedPushRules";
 import { ConfigOptions } from "../../SdkConfig";
+import { MatrixClientContextProvider } from "./MatrixClientContextProvider";
+import { Landmark, LandmarkNavigation } from "../../accessibility/LandmarkNavigation";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -458,9 +459,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 handled = true;
                 break;
             case KeyBindingAction.SearchInRoom:
-                dis.dispatch({
-                    action: "focus_search",
-                });
+                dis.fire(Action.FocusMessageSearch);
                 handled = true;
                 break;
         }
@@ -472,6 +471,14 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         const navAction = getKeyBindingsManager().getNavigationAction(ev);
         switch (navAction) {
+            case KeyBindingAction.NextLandmark:
+            case KeyBindingAction.PreviousLandmark:
+                LandmarkNavigation.findAndFocusNextLandmark(
+                    Landmark.MESSAGE_COMPOSER_OR_HOME,
+                    navAction === KeyBindingAction.PreviousLandmark,
+                );
+                handled = true;
+                break;
             case KeyBindingAction.FilterRooms:
                 dis.dispatch({
                     action: "focus_room_filter",
@@ -490,11 +497,15 @@ class LoggedInView extends React.Component<IProps, IState> {
                 handled = true;
                 break;
             case KeyBindingAction.GoToHome:
+                // even if we cancel because there are modals open, we still
+                // handled it: nothing else should happen.
+                handled = true;
+                if (Modal.hasDialogs()) {
+                    return;
+                }
                 dis.dispatch({
                     action: Action.ViewHomePage,
                 });
-                Modal.closeCurrentModal("homeKeyboardShortcut");
-                handled = true;
                 break;
             case KeyBindingAction.ToggleSpacePanel:
                 dis.fire(Action.ToggleSpacePanel);
@@ -672,7 +683,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         });
 
         return (
-            <MatrixClientContext.Provider value={this._matrixClient}>
+            <MatrixClientContextProvider client={this._matrixClient}>
                 <div
                     onPaste={this.onPaste}
                     onKeyDown={this.onReactKeyDown}
@@ -683,7 +694,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                     <div className={bodyClasses}>
                         <div className="mx_LeftPanel_outerWrapper">
                             <LeftPanelLiveShareWarning isMinimized={this.props.collapseLhs || false} />
-                            <nav className="mx_LeftPanel_wrapper">
+                            <div className="mx_LeftPanel_wrapper">
                                 <BackdropPanel blurMultiplier={0.5} backgroundImage={this.state.backgroundImage} />
                                 <SpacePanel />
                                 <BackdropPanel backgroundImage={this.state.backgroundImage} />
@@ -698,7 +709,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                                         resizeNotifier={this.props.resizeNotifier}
                                     />
                                 </div>
-                            </nav>
+                            </div>
                         </div>
                         <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
                         <div className="mx_RoomView_wrapper">{pageElement}</div>
@@ -707,7 +718,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 <PipContainer />
                 <NonUrgentToastContainer />
                 {audioFeedArraysForCalls}
-            </MatrixClientContext.Provider>
+            </MatrixClientContextProvider>
         );
     }
 }

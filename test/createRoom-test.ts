@@ -15,7 +15,9 @@ limitations under the License.
 */
 
 import { mocked, Mocked } from "jest-mock";
-import { CryptoApi, MatrixClient, Device, Preset, RoomType } from "matrix-js-sdk/src/matrix";
+import { MatrixClient, Device, Preset, RoomType } from "matrix-js-sdk/src/matrix";
+import { CryptoApi } from "matrix-js-sdk/src/crypto-api";
+import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc";
 
 import { stubClient, setupAsyncStoreWithClient, mockPlatformPeg, getMockClientWithEventEmitter } from "./test-utils";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
@@ -68,12 +70,15 @@ describe("createRoom", () => {
         // widget should be immutable for admins
         expect(widgetPower).toBeGreaterThan(100);
         // and we should have been reset back to admin
-        expect(client.setPowerLevel).toHaveBeenCalledWith(roomId, userId, 100, null);
+        expect(client.setPowerLevel).toHaveBeenCalledWith(roomId, userId, 100);
     });
 
     it("sets up Element video rooms correctly", async () => {
         const userId = client.getUserId()!;
         const createCallSpy = jest.spyOn(ElementCall, "create");
+        const callMembershipSpy = jest.spyOn(MatrixRTCSession, "callMembershipsForRoom");
+        callMembershipSpy.mockReturnValue([]);
+
         const roomId = await createRoom(client, { roomType: RoomType.UnstableCall });
 
         const userPower = client.createRoom.mock.calls[0][0].power_level_content_override?.users?.[userId];
@@ -94,7 +99,7 @@ describe("createRoom", () => {
         // call should be immutable for admins
         expect(callPower).toBeGreaterThan(100);
         // and we should have been reset back to admin
-        expect(client.setPowerLevel).toHaveBeenCalledWith(roomId, userId, 100, null);
+        expect(client.setPowerLevel).toHaveBeenCalledWith(roomId, userId, 100);
     });
 
     it("doesn't create calls in non-video-rooms", async () => {
@@ -122,7 +127,7 @@ describe("createRoom", () => {
             ];
 
         expect(callPower).toBe(100);
-        expect(callMemberPower).toBe(100);
+        expect(callMemberPower).toBe(0);
     });
 
     it("should upload avatar if one is passed", async () => {

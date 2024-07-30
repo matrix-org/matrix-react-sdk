@@ -16,7 +16,7 @@ limitations under the License.
 
 import classNames from "classnames";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { AuthType, IAuthDict, IInputs, IStageStatus } from "matrix-js-sdk/src/interactive-auth";
+import { AuthType, AuthDict, IInputs, IStageStatus } from "matrix-js-sdk/src/interactive-auth";
 import { logger } from "matrix-js-sdk/src/logger";
 import React, { ChangeEvent, createRef, FormEvent, Fragment } from "react";
 
@@ -25,11 +25,9 @@ import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import { LocalisedPolicy, Policies } from "../../../Terms";
 import { AuthHeaderModifier } from "../../structures/auth/header/AuthHeaderModifier";
-import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import AccessibleButton, { AccessibleButtonKind, ButtonEvent } from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
-import { Alignment } from "../elements/Tooltip";
 import CaptchaForm from "./CaptchaForm";
 
 /* This file contains a collection of components which are used by the
@@ -89,7 +87,7 @@ interface IAuthEntryProps {
     // Is the auth logic currently waiting for something to happen?
     busy?: boolean;
     onPhaseChange: (phase: number) => void;
-    submitAuthDict: (auth: IAuthDict) => void;
+    submitAuthDict: (auth: AuthDict) => void;
     requestEmailToken?: () => Promise<void>;
     fail: (error: Error) => void;
     clientSecret: string;
@@ -121,9 +119,6 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
 
         this.props.submitAuthDict({
             type: AuthType.Password,
-            // TODO: Remove `user` once servers support proper UIA
-            // See https://github.com/vector-im/element-web/issues/10312
-            user: this.props.matrixClient.credentials.userId ?? undefined,
             identifier: {
                 type: "m.id.user",
                 user: this.props.matrixClient.credentials.userId,
@@ -504,15 +499,16 @@ export class EmailIdentityAuthEntry extends React.Component<
                                 {},
                                 {
                                     a: (text: string) => (
-                                        <AccessibleTooltipButton
+                                        <AccessibleButton
                                             kind="link_inline"
                                             title={
                                                 this.state.requested ? _t("auth|uia|email_resent") : _t("action|resend")
                                             }
-                                            alignment={Alignment.Right}
-                                            onHideTooltip={
+                                            onTooltipOpenChange={
                                                 this.state.requested
-                                                    ? () => this.setState({ requested: false })
+                                                    ? (open) => {
+                                                          if (!open) this.setState({ requested: false });
+                                                      }
                                                     : undefined
                                             }
                                             onClick={async (): Promise<void> => {
@@ -527,7 +523,7 @@ export class EmailIdentityAuthEntry extends React.Component<
                                             }}
                                         >
                                             {text}
-                                        </AccessibleTooltipButton>
+                                        </AccessibleButton>
                                     ),
                                 },
                             )}
@@ -634,11 +630,7 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
                 };
                 this.props.submitAuthDict({
                     type: AuthType.Msisdn,
-                    // TODO: Remove `threepid_creds` once servers support proper UIA
-                    // See https://github.com/vector-im/element-web/issues/10312
-                    // See https://github.com/matrix-org/matrix-doc/issues/2220
                     threepid_creds: creds,
-                    threepidCreds: creds,
                 });
             } else {
                 this.setState({
@@ -780,9 +772,12 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
     }
 }
 
+// Subset of AccessibleButtonKind which can be specified for the continue button
+export type ContinueKind = Extract<AccessibleButtonKind, "primary" | "danger">;
+
 interface ISSOAuthEntryProps extends IAuthEntryProps {
     continueText?: string;
-    continueKind?: string;
+    continueKind?: ContinueKind;
     onCancel?: () => void;
 }
 
@@ -866,7 +861,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
         const cancelButton = (
             <AccessibleButton
                 onClick={this.props.onCancel ?? null}
-                kind={this.props.continueKind ? this.props.continueKind + "_outline" : "primary_outline"}
+                kind={this.props.continueKind ? `${this.props.continueKind}_outline` : "primary_outline"}
             >
                 {_t("action|cancel")}
             </AccessibleButton>
@@ -971,7 +966,7 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
         }
         return (
             <div>
-                <AccessibleButton kind="link" inputRef={this.fallbackButton} onClick={this.onShowFallbackClick}>
+                <AccessibleButton kind="link" ref={this.fallbackButton} onClick={this.onShowFallbackClick}>
                     {_t("auth|uia|fallback_button")}
                 </AccessibleButton>
                 {errorSection}
@@ -985,7 +980,7 @@ export interface IStageComponentProps extends IAuthEntryProps {
     inputs?: IInputs;
     stageState?: IStageStatus;
     continueText?: string;
-    continueKind?: string;
+    continueKind?: ContinueKind;
     setEmailSid?(sid: string): void;
     onCancel?(): void;
     requestEmailToken?(): Promise<void>;

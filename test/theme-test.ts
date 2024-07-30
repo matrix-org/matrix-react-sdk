@@ -15,37 +15,36 @@ limitations under the License.
 */
 
 import SettingsStore from "../src/settings/SettingsStore";
-import { enumerateThemes, setTheme } from "../src/theme";
+import { enumerateThemes, getOrderedThemes, setTheme } from "../src/theme";
 
 describe("theme", () => {
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
     describe("setTheme", () => {
         let lightTheme: HTMLStyleElement;
         let darkTheme: HTMLStyleElement;
+        let lightCustomTheme: HTMLStyleElement;
 
         let spyQuerySelectorAll: jest.MockInstance<NodeListOf<Element>, [selectors: string]>;
         let spyClassList: jest.SpyInstance<void, string[], any>;
 
         beforeEach(() => {
-            const styles = [
-                {
-                    dataset: {
-                        mxTheme: "light",
-                    },
-                    disabled: true,
-                    href: "urlLight",
-                    onload: (): void => void 0,
-                } as unknown as HTMLStyleElement,
-                {
-                    dataset: {
-                        mxTheme: "dark",
-                    },
-                    disabled: true,
-                    href: "urlDark",
-                    onload: (): void => void 0,
-                } as unknown as HTMLStyleElement,
-            ];
+            const styles = ["light", "dark", "light-custom", "dark-custom"].map(
+                (theme) =>
+                    ({
+                        dataset: {
+                            mxTheme: theme,
+                        },
+                        disabled: true,
+                        href: "fake URL",
+                        onload: (): void => void 0,
+                    }) as unknown as HTMLStyleElement,
+            );
             lightTheme = styles[0];
             darkTheme = styles[1];
+            lightCustomTheme = styles[2];
 
             jest.spyOn(document.body, "style", "get").mockReturnValue([] as any);
             spyQuerySelectorAll = jest.spyOn(document, "querySelectorAll").mockReturnValue(styles as any);
@@ -53,7 +52,6 @@ describe("theme", () => {
         });
 
         afterEach(() => {
-            jest.restoreAllMocks();
             jest.useRealTimers();
         });
 
@@ -124,6 +122,27 @@ describe("theme", () => {
                 jest.advanceTimersByTime(200 * 10);
             });
         });
+
+        it("applies a custom Compound theme", async () => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue([
+                {
+                    name: "blue",
+                    compound: {
+                        "--cpd-color-icon-accent-tertiary": "var(--cpd-color-blue-800)",
+                        "--cpd-color-text-action-accent": "var(--cpd-color-blue-900)",
+                    },
+                },
+            ]);
+
+            const spy = jest.spyOn(document.head, "appendChild").mockImplementation();
+            await new Promise((resolve) => {
+                setTheme("custom-blue").then(resolve);
+                lightCustomTheme.onload!({} as Event);
+            });
+            expect(spy).toHaveBeenCalled();
+            expect(spy.mock.calls[0][0].textContent).toMatchSnapshot();
+            spy.mockRestore();
+        });
     });
 
     describe("enumerateThemes", () => {
@@ -144,6 +163,18 @@ describe("theme", () => {
                 "light-high-contrast": "Light high contrast",
                 "dark": "Dark",
             });
+        });
+    });
+
+    describe("getOrderedThemes", () => {
+        it("should return a list of themes in the correct order", () => {
+            jest.spyOn(SettingsStore, "getValue").mockReturnValue([{ name: "Zebra Striped" }, { name: "Apple Green" }]);
+            expect(getOrderedThemes()).toEqual([
+                { id: "light", name: "Light" },
+                { id: "dark", name: "Dark" },
+                { id: "custom-Apple Green", name: "Apple Green" },
+                { id: "custom-Zebra Striped", name: "Zebra Striped" },
+            ]);
         });
     });
 });
