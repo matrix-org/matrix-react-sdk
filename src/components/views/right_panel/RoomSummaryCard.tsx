@@ -314,6 +314,10 @@ const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element | null
         defaultDispatcher.dispatch({ action: "open_room_settings" });
     };
 
+    if (!body && !canEditTopic) {
+        return null;
+    }
+
     if (!body) {
         return (
             <Flex
