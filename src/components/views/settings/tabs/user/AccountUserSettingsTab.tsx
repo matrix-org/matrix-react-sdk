@@ -48,7 +48,7 @@ interface IState {
     canSetAvatar: boolean;
 }
 
-export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
+export default class AccountUserSettingsTab extends React.Component<IProps, IState> {
     public static contextType = SDKContext;
     public context!: React.ContextType<typeof SDKContext>;
 

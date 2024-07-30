@@ -20,7 +20,7 @@ import React, { useState } from "react";
 
 import TabbedView, { Tab, useActiveTabWithDefault } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
-import GeneralUserSettingsTab from "../settings/tabs/user/GeneralUserSettingsTab";
+import AccountUserSettingsTab from "../settings/tabs/user/AccountUserSettingsTab";
 import SettingsStore from "../../../settings/SettingsStore";
 import LabsUserSettingsTab, { showLabsFlags } from "../settings/tabs/user/LabsUserSettingsTab";
 import AppearanceUserSettingsTab from "../settings/tabs/user/AppearanceUserSettingsTab";
@@ -53,8 +53,8 @@ function titleForTabID(tabId: UserTab): React.ReactNode {
         strong: (sub: string) => <span className="mx_UserSettingsDialog_title_strong">{sub}</span>,
     };
     switch (tabId) {
-        case UserTab.General:
-            return _t("settings|general|dialog_title", undefined, subs);
+        case UserTab.Account:
+            return _t("settings|account|dialog_title", undefined, subs);
         case UserTab.SessionManager:
             return _t("settings|sessions|dialog_title", undefined, subs);
         case UserTab.Appearance:
@@ -91,10 +91,10 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
 
         tabs.push(
             new Tab(
-                UserTab.General,
-                _td("common|general"),
+                UserTab.Account,
+                _td("settings|account|title"),
                 "mx_UserSettingsDialog_settingsIcon",
-                <GeneralUserSettingsTab closeSettingsFn={props.onFinished} />,
+                <AccountUserSettingsTab closeSettingsFn={props.onFinished} />,
                 "UserSettingsGeneral",
             ),
         );
@@ -210,7 +210,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
         return tabs as NonEmptyArray<Tab<UserTab>>;
     };
 
-    const [activeTabId, _setActiveTabId] = useActiveTabWithDefault(getTabs(), UserTab.General, props.initialTabId);
+    const [activeTabId, _setActiveTabId] = useActiveTabWithDefault(getTabs(), UserTab.Account, props.initialTabId);
     const setActiveTabId = (tabId: UserTab): void => {
         _setActiveTabId(tabId);
         // Clear this so switching away from the tab and back to it will not show the QR code again

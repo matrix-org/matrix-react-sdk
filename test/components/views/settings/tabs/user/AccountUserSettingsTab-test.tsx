@@ -16,7 +16,7 @@ import React from "react";
 import { ThreepidMedium } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import GeneralUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/GeneralUserSettingsTab";
+import AccountUserSettingsTab from "../../../../../../src/components/views/settings/tabs/user/AccountUserSettingsTab";
 import { SdkContextClass, SDKContext } from "../../../../../../src/contexts/SDKContext";
 import SettingsStore from "../../../../../../src/settings/SettingsStore";
 import {
@@ -30,7 +30,7 @@ import { UIFeature } from "../../../../../../src/settings/UIFeature";
 import { OidcClientStore } from "../../../../../../src/stores/oidc/OidcClientStore";
 import MatrixClientContext from "../../../../../../src/contexts/MatrixClientContext";
 
-describe("<GeneralUserSettingsTab />", () => {
+describe("<AccountUserSettingsTab />", () => {
     const defaultProps = {
         closeSettingsFn: jest.fn(),
     };
@@ -50,7 +50,7 @@ describe("<GeneralUserSettingsTab />", () => {
     const getComponent = () => (
         <MatrixClientContext.Provider value={mockClient}>
             <SDKContext.Provider value={stores}>
-                <GeneralUserSettingsTab {...defaultProps} />
+                <AccountUserSettingsTab {...defaultProps} />
             </SDKContext.Provider>
         </MatrixClientContext.Provider>
     );
