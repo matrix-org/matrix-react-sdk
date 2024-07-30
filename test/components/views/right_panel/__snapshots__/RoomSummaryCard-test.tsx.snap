@@ -972,7 +972,7 @@ exports[`<RoomSummaryCard /> renders the room topic in the summary 1`] = `
           </svg>
           <label
             class="_typography_yh5dq_162 _font-body-md-medium_yh5dq_69 _label_1gwvj_53"
-            for=":r1:"
+            for=":r2:"
           >
             Favourite
           </label>
@@ -981,7 +981,7 @@ exports[`<RoomSummaryCard /> renders the room topic in the summary 1`] = `
           >
             <input
               class="_input_qnvru_32"
-              id=":r1:"
+              id=":r2:"
               type="checkbox"
             />
             <div
