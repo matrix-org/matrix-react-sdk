@@ -300,7 +300,7 @@ const onRoomSettingsClick = (ev: Event): void => {
 };
 
 const RoomTopic: React.FC<Pick<IProps, "room">> = ({ room }): JSX.Element | null => {
-    const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useState(true);
 
     const topic = useTopic(room);
     const body = topicToHtml(topic?.text, topic?.html);
