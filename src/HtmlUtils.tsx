@@ -290,7 +290,7 @@ export function formatEmojis(message: string | undefined, isHtmlMessage?: boolea
     return result;
 }
 
-interface IEventAnalysis {
+interface EventAnalysis {
     bodyHasEmoji: boolean;
     isHtmlMessage: boolean;
     strippedBody: string;
@@ -298,7 +298,7 @@ interface IEventAnalysis {
     isFormattedBody: boolean;
 }
 
-export interface IEventRenderOpts {
+export interface EventRenderOpts {
     highlightLink?: string;
     disableBigEmoji?: boolean;
     stripReplyFallback?: boolean;
@@ -306,7 +306,7 @@ export interface IEventRenderOpts {
     ref?: React.Ref<HTMLSpanElement>;
 }
 
-function analyseEvent(content: IContent, highlights: Optional<string[]>, opts: IEventRenderOpts = {}): IEventAnalysis {
+function analyseEvent(content: IContent, highlights: Optional<string[]>, opts: EventRenderOpts = {}): EventAnalysis {
     let sanitizeParams = sanitizeHtmlParams;
     if (opts.forComposerQuote) {
         sanitizeParams = composerSanitizeHtmlParams;
@@ -375,7 +375,7 @@ function analyseEvent(content: IContent, highlights: Optional<string[]>, opts: I
     }
 }
 
-export function bodyToNode(content: IContent, highlights: Optional<string[]>, opts: IEventRenderOpts = {}): ReactNode {
+export function bodyToNode(content: IContent, highlights: Optional<string[]>, opts: EventRenderOpts = {}): ReactNode {
     const eventInfo = analyseEvent(content, highlights, opts);
 
     let emojiBody = false;
@@ -447,7 +447,7 @@ export function bodyToNode(content: IContent, highlights: Optional<string[]>, op
  * opts.forComposerQuote: optional param to lessen the url rewriting done by sanitization, for quoting into composer
  * opts.ref: React ref to attach to any React components returned (not compatible with opts.returnString)
  */
-export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: IEventRenderOpts = {}): string {
+export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: EventRenderOpts = {}): string {
     const eventInfo = analyseEvent(content, highlights, opts);
 
     return eventInfo.safeBody ?? eventInfo.strippedBody;
