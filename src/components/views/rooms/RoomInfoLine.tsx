@@ -45,7 +45,7 @@ const RoomInfoLine: FC<IProps> = ({ room }) => {
     const membership = useMyRoomMembership(room);
     const memberCount = useRoomMemberCount(room);
 
-    const isVideoRoom = useIsVideoRoom(room);
+    const isVideoRoom = useIsVideoRoom(room, true);
 
     let iconClass: string;
     let roomType: string;
