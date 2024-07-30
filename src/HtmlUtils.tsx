@@ -450,7 +450,13 @@ export function bodyToNode(content: IContent, highlights: Optional<string[]>, op
 export function bodyToHtml(content: IContent, highlights: Optional<string[]>, opts: EventRenderOpts = {}): string {
     const eventInfo = analyseEvent(content, highlights, opts);
 
-    return eventInfo.safeBody ?? eventInfo.strippedBody;
+    let formattedBody = eventInfo.safeBody;
+    if (eventInfo.isFormattedBody && eventInfo.bodyHasEmoji && formattedBody) {
+        // This has to be done after the emojiBody check above as to not break big emoji on replies
+        formattedBody = formatEmojis(eventInfo.safeBody, true).join("");
+    }
+
+    return formattedBody ?? eventInfo.strippedBody;
 }
 
 /**
