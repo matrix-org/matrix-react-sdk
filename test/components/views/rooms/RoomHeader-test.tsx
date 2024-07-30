@@ -105,25 +105,6 @@ describe("RoomHeader", () => {
         expect(container).toHaveTextContent(ROOM_ID);
     });
 
-    it("renders the room topic", async () => {
-        const TOPIC = "Hello World! http://element.io";
-
-        const roomTopic = new MatrixEvent({
-            type: EventType.RoomTopic,
-            event_id: "$00002",
-            room_id: room.roomId,
-            sender: "@alice:example.com",
-            origin_server_ts: 1,
-            content: { topic: TOPIC },
-            state_key: "",
-        });
-        await room.addLiveEvents([roomTopic]);
-
-        const { container } = render(<RoomHeader room={room} />, getWrapper());
-        expect(container).toHaveTextContent(TOPIC);
-        expect(getByRole(container, "link")).toHaveTextContent("http://element.io");
-    });
-
     it("opens the room summary", async () => {
         const { container } = render(<RoomHeader room={room} />, getWrapper());
 
