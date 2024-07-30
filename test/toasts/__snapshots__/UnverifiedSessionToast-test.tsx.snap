@@ -29,9 +29,6 @@ exports[`UnverifiedSessionToast when rendering the toast should render as expect
             <div
               class="mx_Toast_description"
             >
-              <p
-                class="_typography_yh5dq_162 _font-body-sm-regular_yh5dq_40"
-              />
               <div
                 class="mx_Toast_detail"
               >

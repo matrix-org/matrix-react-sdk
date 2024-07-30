@@ -6,11 +6,7 @@ exports[`VerificationRequestToast should render a cross-user verification 1`] = 
     <div
       class="mx_Toast_description"
     >
-      <p
-        class="_typography_yh5dq_162 _font-body-sm-regular_yh5dq_40"
-      >
-        @alice:domain (@other:user)
-      </p>
+      @alice:domain (@other:user)
     </div>
     <div
       aria-live="off"
@@ -45,11 +41,7 @@ exports[`VerificationRequestToast should render a self-verification 1`] = `
     <div
       class="mx_Toast_description"
     >
-      <p
-        class="_typography_yh5dq_162 _font-body-sm-regular_yh5dq_40"
-      >
-        my other device
-      </p>
+      my other device
       <div
         class="mx_Toast_detail"
       >

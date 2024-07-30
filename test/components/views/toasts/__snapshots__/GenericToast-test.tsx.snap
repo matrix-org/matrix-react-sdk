@@ -6,13 +6,9 @@ exports[`GenericToast should render as expected with detail content 1`] = `
     <div
       class="mx_Toast_description"
     >
-      <p
-        class="_typography_yh5dq_162 _font-body-sm-regular_yh5dq_40"
-      />
       <div>
         Description
       </div>
-      <p />
     </div>
     <div
       aria-live="off"
@@ -47,13 +43,9 @@ exports[`GenericToast should render as expected without detail content 1`] = `
     <div
       class="mx_Toast_description"
     >
-      <p
-        class="_typography_yh5dq_162 _font-body-sm-regular_yh5dq_40"
-      />
       <div>
         Description
       </div>
-      <p />
       <div
         class="mx_Toast_detail"
       >
