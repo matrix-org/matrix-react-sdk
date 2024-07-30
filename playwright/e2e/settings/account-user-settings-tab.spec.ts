@@ -19,23 +19,23 @@ import { test, expect } from "../../element-web-test";
 const USER_NAME = "Bob";
 const USER_NAME_NEW = "Alice";
 
-test.describe("General user settings tab", () => {
+test.describe("Account user settings tab", () => {
     test.use({
         displayName: USER_NAME,
         config: {
             default_country_code: "US", // For checking the international country calling code
         },
         uut: async ({ app, user }, use) => {
-            const locator = await app.settings.openUserSettings("General");
+            const locator = await app.settings.openUserSettings("Account");
             await use(locator);
         },
     });
 
     test("should be rendered properly", async ({ uut, user }) => {
-        await expect(uut).toMatchScreenshot("general.png");
+        await expect(uut).toMatchScreenshot("account.png");
 
         // Assert that the top heading is rendered
-        await expect(uut.getByRole("heading", { name: "General" })).toBeVisible();
+        await expect(uut.getByRole("heading", { name: "Account" })).toBeVisible();
 
         const profile = uut.locator(".mx_UserProfileSettings_profile");
         await profile.scrollIntoViewIfNeeded();
@@ -82,13 +82,13 @@ test.describe("General user settings tab", () => {
 
     test("should respond to small screen sizes", async ({ page, uut }) => {
         await page.setViewportSize({ width: 700, height: 600 });
-        await expect(uut).toMatchScreenshot("general-smallscreen.png");
+        await expect(uut).toMatchScreenshot("account-smallscreen.png");
     });
 
     test("should show tooltips on narrow screen", async ({ page, uut }) => {
         await page.setViewportSize({ width: 700, height: 600 });
-        await page.getByRole("tab", { name: "General" }).hover();
-        await expect(page.getByRole("tooltip")).toHaveText("General");
+        await page.getByRole("tab", { name: "Account" }).hover();
+        await expect(page.getByRole("tooltip")).toHaveText("Account");
     });
 
     test("should support adding and removing a profile picture", async ({ uut, page }) => {
