@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ComponentType, ReactNode } from "react";
-import { Button, Text } from "@vector-im/compound-web";
+import { Button } from "@vector-im/compound-web";
 
 import { XOR } from "../../../@types/common";
 
@@ -51,7 +51,7 @@ const GenericToast: React.FC<XOR<IPropsExtended, IProps>> = ({
     return (
         <div>
             <div className="mx_Toast_description">
-                <Text size="sm">{description}</Text>
+                {description}
                 {detailContent}
             </div>
             <div className="mx_Toast_buttons" aria-live="off">
