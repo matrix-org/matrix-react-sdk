@@ -18,10 +18,11 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { Notifier } from "../Notifier";
+import { Notifier, NotifierEvent } from "../Notifier";
 import DMRoomMap from "../utils/DMRoomMap";
 import { useMatrixClientContext } from "../contexts/MatrixClientContext";
 import { useSettingValue } from "./useSettings";
+import { useEventEmitter } from "./useEventEmitter";
 
 export interface UserOnboardingContext {
     hasAvatar: boolean;
@@ -85,13 +86,9 @@ function useUserOnboardingContextValue<T>(defaultValue: T, callback: (cli: Matri
 
 function useShowNotificationsPrompt(): boolean {
     const [value, setValue] = useState<boolean>(Notifier.shouldShowPrompt());
-    useEffect(() => {
-        window.addEventListener("storage", (event) => {
-            if (event.storageArea === window.localStorage && event.key === "notifications_hidden") {
-                setValue(Notifier.shouldShowPrompt());
-            }
-        });
-    }, []);
+    useEventEmitter(Notifier, NotifierEvent.NotificationHiddenChange, () => {
+        setValue(Notifier.shouldShowPrompt());
+    });
     const setting = useSettingValue("notificationsEnabled");
     useEffect(() => {
         setValue(Notifier.shouldShowPrompt());

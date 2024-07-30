@@ -57,7 +57,7 @@ describe("useUserOnboardingTasks", () => {
     it("should mark desktop notifications task completed on click", async () => {
         jest.spyOn(PlatformPeg, "get").mockReturnValue({
             supportsNotifications: jest.fn().mockReturnValue(true),
-            maySendNotifications: jest.fn().mockReturnValue(true),
+            maySendNotifications: jest.fn().mockReturnValue(false),
         } as any);
 
         const cli = stubClient();
@@ -79,9 +79,11 @@ describe("useUserOnboardingTasks", () => {
                 return <MatrixClientContext.Provider value={cli}>{props.children}</MatrixClientContext.Provider>;
             },
         });
-        const { result } = renderHook(() => useUserOnboardingTasks(context.result.current));
+        const { result, rerender } = renderHook(() => useUserOnboardingTasks(context.result.current));
         expect(result.current[4].id).toBe("permission-notifications");
+        await waitFor(() => expect(result.current[4].completed).toBe(false));
         result.current[4].action!.onClick!({ type: "click" } as any);
+        rerender();
         await waitFor(() => expect(result.current[4].completed).toBe(true));
     });
 });
