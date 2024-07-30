@@ -31,7 +31,6 @@ import {
     fireEvent,
     getAllByLabelText,
     getByLabelText,
-    getByRole,
     getByText,
     queryAllByLabelText,
     queryByLabelText,
