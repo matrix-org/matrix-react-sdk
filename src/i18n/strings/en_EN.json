@@ -474,6 +474,7 @@
         "encrypted": "Encrypted",
         "encryption_enabled": "Encryption enabled",
         "error": "Error",
+        "extensions": "Extensions",
         "faq": "FAQ",
         "favourites": "Favourites",
         "feedback": "Feedback",
@@ -1652,8 +1653,8 @@
         "download_brand_desktop": "Download %(brand)s Desktop",
         "download_f_droid": "Get it on F-Droid",
         "download_google_play": "Get it on Google Play",
-        "enable_notifications": "Turn on notifications",
-        "enable_notifications_action": "Enable notifications",
+        "enable_notifications": "Turn on desktop notifications",
+        "enable_notifications_action": "Open settings",
         "enable_notifications_description": "Don’t miss a reply or important message",
         "explore_rooms": "Explore Public Rooms",
         "find_community_members": "Find and invite your community members",
@@ -1830,10 +1831,11 @@
         "restore_failed_error": "Unable to restore backup"
     },
     "right_panel": {
-        "add_integrations": "Add widgets, bridges & bots",
+        "add_integrations": "Add extensions",
         "add_topic": "Add topic",
-        "edit_integrations": "Edit widgets, bridges & bots",
         "export_chat_button": "Export chat",
+        "extensions_empty_description": "Select “%(addIntegrations)s” to browse and add extensions to this room",
+        "extensions_empty_title": "Boost productivity with more tools, widgets and bots",
         "files_button": "Files",
         "info": "Info",
         "pinned_messages": {
@@ -3262,6 +3264,8 @@
         "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
         "download_action_decrypting": "Decrypting",
         "download_action_downloading": "Downloading",
+        "download_failed": "Download failed",
+        "download_failed_description": "An error occurred while downloading this file",
         "edits": {
             "tooltip_label": "Edited at %(date)s. Click to view edits.",
             "tooltip_sub": "Click to view edits",
@@ -3694,6 +3698,10 @@
     "truncated_list_n_more": {
         "other": "And %(count)s more..."
     },
+    "unsupported_browser": {
+        "description": "If you continue, some features may stop working and there is a risk that you may lose data in the future. Update your browser to continue using %(brand)s.",
+        "title": "%(brand)s does not support this browser"
+    },
     "unsupported_server_description": "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.",
     "unsupported_server_title": "Your server is unsupported",
     "update": {
@@ -4063,7 +4071,7 @@
             "title": "Allow this widget to verify your identity"
         },
         "popout": "Popout widget",
-        "set_room_layout": "Set my room layout for everyone",
+        "set_room_layout": "Set layout for everyone",
         "shared_data_avatar": "Your profile picture URL",
         "shared_data_device_id": "Your device ID",
         "shared_data_lang": "Your language",
