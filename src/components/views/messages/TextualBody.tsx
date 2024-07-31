@@ -587,7 +587,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
         if (this.props.replacingEventId) {
             body = (
-                <div dir="auto" style={{ display: "flex" }}>
+                <div dir="auto" className="mx_EventTile_annotated">
                     {body}
                     {this.renderEditedMarker()}
                 </div>
@@ -595,7 +595,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
         if (this.props.isSeeingThroughMessageHiddenForModeration) {
             body = (
-                <div dir="auto" style={{ display: "flex" }}>
+                <div dir="auto" className="mx_EventTile_annotated">
                     {body}
                     {this.renderPendingModerationMarker()}
                 </div>
