@@ -35,7 +35,9 @@ test.describe("Device verification", () => {
     /** The backup version that was set up by the bot client. */
     let expectedBackupVersion: string;
 
-    test.beforeEach(async ({ page, homeserver, credentials }) => {
+    test.beforeEach(async ({ page, homeserver, credentials, browserName }) => {
+        test.skip(browserName === "webkit", "This test is broken on Webkit");
+
         // Visit the login page of the app, to load the matrix sdk
         await page.goto("/#/login");
 

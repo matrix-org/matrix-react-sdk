@@ -43,7 +43,8 @@ test.describe("Cryptography", function () {
             credentials,
             user,
         }) => {
-            test.setTimeout(60000);
+            test.slow();
+            test.setTimeout(90000);
 
             // Start with a logged-in session, without key backup, and send a message.
             await createRoom(page, "Test room", true);

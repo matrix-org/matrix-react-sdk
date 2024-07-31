@@ -130,7 +130,9 @@ test.describe("Audio player", () => {
         );
     };
 
-    test.beforeEach(async ({ page, app, user }) => {
+    test.beforeEach(async ({ page, app, user, browserName }) => {
+        test.skip(browserName === "firefox", "Firefox doesn't like our ogg files");
+
         await app.client.createRoom({ name: "Test Room" });
         await app.viewRoomByName("Test Room");
 
