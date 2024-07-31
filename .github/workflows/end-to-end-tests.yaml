@@ -167,7 +167,7 @@ jobs:
               run: yarn playwright install --with-deps
 
             - name: Run Playwright tests
-              run: yarn playwright test --project "$BROWSER" --shard ${{ matrix.runner }}/${{ strategy.job-total }} $IGNORE_SNAPSHOTS
+              run: yarn playwright test --project "$BROWSER" --shard ${{ matrix.runner }}/${{ needs.prepare.outputs.parallelism }} $IGNORE_SNAPSHOTS
               working-directory: matrix-react-sdk
               env:
                   BROWSER: ${{ matrix.browser }}
