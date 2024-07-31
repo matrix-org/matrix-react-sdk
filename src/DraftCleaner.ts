@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { EDITOR_STATE_STORAGE_PREFIX } from "./components/views/rooms/SendMessageComposer";
 
@@ -26,7 +27,7 @@ export const DRAFT_CLEANUP_PERIOD = 1000 * 60 * 60 * 24 * 30;
 /**
  * Checks if `DRAFT_CLEANUP_PERIOD` has expired, if so, deletes any stord editor drafts that exist for rooms that are not in the known list.
  */
-export function cleanUpDraftsIfRequired() {
+export function cleanUpDraftsIfRequired(): void {
     if (!shouldCleanupDrafts()) {
         return;
     }
@@ -62,7 +63,7 @@ function shouldCleanupDrafts(): boolean {
 /**
  * Clear all drafts for the CIDER editor if the room does not exist in the known rooms.
  */
-function cleaupDrafts() {
+function cleaupDrafts(): void {
     for (let i = 0; i < localStorage.length; i++) {
         const keyName = localStorage.key(i);
         if (!keyName?.startsWith(EDITOR_STATE_STORAGE_PREFIX)) continue;
