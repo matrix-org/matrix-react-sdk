@@ -106,12 +106,10 @@ jobs:
 
             - name: Calculate parallelism
               id: parallelism
-              run: echo "parallelism=$(python3 -c 'print([*range(1, 1 + $PARALLELISM)])')" >> $GITHUB_OUTPUT
-              env:
-                  PARALLELISM: ${{ inputs.parallelism }}
+              run: echo "parallelism=$(python3 -c 'print([*range(1, 1 + ${{ inputs.parallelism }})])')" >> $GITHUB_OUTPUT
 
     playwright:
-        name: "Run Tests ${{ matrix.runner }}/${{ strategy.job-total }}"
+        name: "Run Tests ${{ matrix.runner }}/${{ strategy.job-total }} [${{ matrix.browser }}]"
         needs: prepare
         if: inputs.skip != true
         runs-on: ubuntu-latest
@@ -177,7 +175,7 @@ jobs:
               if: always()
               uses: actions/upload-artifact@v4
               with:
-                  name: all-blob-reports-${{ matrix.runner }}
+                  name: all-blob-reports-${{ matrix.browser }}-${{ matrix.runner }}
                   path: matrix-react-sdk/blob-report
                   retention-days: 1
 
