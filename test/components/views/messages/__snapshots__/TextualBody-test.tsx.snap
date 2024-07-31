@@ -350,12 +350,11 @@ exports[`<TextualBody /> renders formatted m.text correctly spoilers get injecte
 `;
 
 exports[`<TextualBody /> renders m.emote correctly 1`] = `
-<div
+<span
   class="mx_EventTile_body translate"
-  dir="auto"
 >
   winks
-</div>
+</span>
 `;
 
 exports[`<TextualBody /> renders m.notice correctly 1`] = `

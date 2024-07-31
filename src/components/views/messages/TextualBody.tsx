@@ -566,15 +566,14 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
         const mxEvent = this.props.mxEvent;
         const content = mxEvent.getContent();
-        let isNotice = false;
-        let isEmote = false;
+        const isNotice = content.msgtype === MsgType.Notice;
+        const isEmote = content.msgtype === MsgType.Emote;
 
-        const willHaveWrapper = this.props.replacingEventId || this.props.isSeeingThroughMessageHiddenForModeration;
+        const willHaveWrapper =
+            this.props.replacingEventId || this.props.isSeeingThroughMessageHiddenForModeration || isEmote;
 
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
         const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
-        isEmote = content.msgtype === MsgType.Emote;
-        isNotice = content.msgtype === MsgType.Notice;
 
         const htmlOpts = {
             disableBigEmoji: isEmote || !SettingsStore.getValue<boolean>("TextualBody.enableBigEmoji"),
@@ -629,7 +628,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
         if (isEmote) {
             return (
-                <div className="mx_MEmoteBody mx_EventTile_content" onClick={this.onBodyLinkClick}>
+                <div className="mx_MEmoteBody mx_EventTile_content" onClick={this.onBodyLinkClick} dir="auto">
                     *&nbsp;
                     <span className="mx_MEmoteBody_sender" onClick={this.onEmoteSenderClick}>
                         {mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender()}
