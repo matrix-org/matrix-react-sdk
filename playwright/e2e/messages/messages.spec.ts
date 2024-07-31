@@ -20,9 +20,13 @@ import { Locator, Page } from "playwright-core";
 
 import { test, expect } from "../../element-web-test";
 
-async function sendMessage(page: Page, message: string): Promise<void> {
+async function sendMessage(page: Page, message: string): Promise<Locator> {
     await page.getByRole("textbox", { name: "Send a message…" }).fill(message);
     await page.getByRole("button", { name: "Send message" }).click();
+
+    const msgTile = await page.locator(".mx_EventTile_last");
+    await msgTile.locator(".mx_EventTile_receiptSent").waitFor();
+    return msgTile;
 }
 
 async function editMessage(page: Page, message: Locator, newMsg: string): Promise<void> {
@@ -33,10 +37,6 @@ async function editMessage(page: Page, message: Locator, newMsg: string): Promis
     await editComposer.hover(); // Just to un-hover the message line
     await editComposer.fill(newMsg);
     await editComposer.press("Enter");
-}
-
-async function getLastMessage(page: Page): Promise<Locator> {
-    return await page.locator(".mx_EventTile_last");
 }
 
 test.describe("Message rendering", () => {
@@ -56,9 +56,8 @@ test.describe("Message rendering", () => {
             test("should render a basic LTR text message", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);
 
-                await sendMessage(page, "Hello, world!");
-                const lastMsg = await getLastMessage(page);
-                await expect(lastMsg).toMatchScreenshot(`basic-message-ltr-${direction}displayname.png`, {
+                const msgTile = await sendMessage(page, "Hello, world!");
+                await expect(msgTile).toMatchScreenshot(`basic-message-ltr-${direction}displayname.png`, {
                     mask: [page.locator(".mx_MessageTimestamp")],
                 });
             });
@@ -66,20 +65,18 @@ test.describe("Message rendering", () => {
             test("should render an LTR emote", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);
 
-                await sendMessage(page, "/me lays an egg");
-                const lastMsg = await getLastMessage(page);
-                await expect(lastMsg).toMatchScreenshot(`emote-ltr-${direction}displayname.png`);
+                const msgTile = await sendMessage(page, "/me lays an egg");
+                await expect(msgTile).toMatchScreenshot(`emote-ltr-${direction}displayname.png`);
             });
 
             test("should render an edited LTR message", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);
 
-                await sendMessage(page, "Hello, world!");
-                const lastMsg = await getLastMessage(page);
+                const msgTile = await sendMessage(page, "Hello, world!");
 
-                await editMessage(page, lastMsg, "Hello, universe!");
+                await editMessage(page, msgTile, "Hello, universe!");
 
-                await expect(lastMsg).toMatchScreenshot(`edited-message-ltr-${direction}displayname.png`, {
+                await expect(msgTile).toMatchScreenshot(`edited-message-ltr-${direction}displayname.png`, {
                     mask: [page.locator(".mx_MessageTimestamp")],
                 });
             });
@@ -87,9 +84,8 @@ test.describe("Message rendering", () => {
             test("should render a basic RTL text message", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);
 
-                await sendMessage(page, "مرحبا بالعالم!");
-                const lastMsg = await getLastMessage(page);
-                await expect(lastMsg).toMatchScreenshot(`basic-message-rtl-${direction}displayname.png`, {
+                const msgTile = await sendMessage(page, "مرحبا بالعالم!");
+                await expect(msgTile).toMatchScreenshot(`basic-message-rtl-${direction}displayname.png`, {
                     mask: [page.locator(".mx_MessageTimestamp")],
                 });
             });
@@ -97,20 +93,18 @@ test.describe("Message rendering", () => {
             test("should render an RTL emote", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);
 
-                await sendMessage(page, "/me يضع بيضة");
-                const lastMsg = await getLastMessage(page);
-                await expect(lastMsg).toMatchScreenshot(`emote-rtl-${direction}displayname.png`);
+                const msgTile = await sendMessage(page, "/me يضع بيضة");
+                await expect(msgTile).toMatchScreenshot(`emote-rtl-${direction}displayname.png`);
             });
 
             test("should render an edited RTL message", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);
 
-                await sendMessage(page, "مرحبا بالعالم!");
-                const lastMsg = await getLastMessage(page);
+                const msgTile = await sendMessage(page, "مرحبا بالعالم!");
 
-                await editMessage(page, lastMsg, "مرحبا بالكون!");
+                await editMessage(page, msgTile, "مرحبا بالكون!");
 
-                await expect(lastMsg).toMatchScreenshot(`edited-message-rtl-${direction}displayname.png`, {
+                await expect(msgTile).toMatchScreenshot(`edited-message-rtl-${direction}displayname.png`, {
                     mask: [page.locator(".mx_MessageTimestamp")],
                 });
             });
