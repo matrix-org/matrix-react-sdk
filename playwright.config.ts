@@ -18,16 +18,19 @@ import { defineConfig, devices } from "@playwright/test";
 
 const baseURL = process.env["BASE_URL"] ?? "http://localhost:8080";
 
+const chromeOptions = {
+    permissions: ["clipboard-write", "clipboard-read", "microphone"],
+    launchOptions: {
+        args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream", "--mute-audio"],
+    },
+};
+
 export default defineConfig({
     use: {
         viewport: { width: 1280, height: 720 },
         ignoreHTTPSErrors: true,
         video: "retain-on-failure",
         baseURL,
-        permissions: ["clipboard-write", "clipboard-read", "microphone"],
-        launchOptions: {
-            args: ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream", "--mute-audio"],
-        },
         trace: "on-first-retry",
     },
     webServer: {
@@ -39,11 +42,23 @@ export default defineConfig({
         /* Test against desktop browsers */
         {
             name: "chromium",
-            use: { ...devices["Desktop Chrome"] },
+            use: {
+                ...devices["Desktop Chrome"],
+                contextOptions: chromeOptions,
+            },
         },
         {
             name: "firefox",
-            use: { ...devices["Desktop Firefox"] },
+            use: {
+                ...devices["Desktop Firefox"],
+                launchOptions: {
+                    firefoxUserPrefs: {
+                        "dom.events.asyncClipboard.writeText": true,
+                        "dom.events.asyncClipboard.readText": true,
+                        "dom.events.testing.asyncClipboard": true,
+                    },
+                },
+            },
         },
         {
             name: "webkit",
@@ -51,11 +66,19 @@ export default defineConfig({
         },
         {
             name: "chrome",
-            use: { ...devices["Desktop Chrome"], channel: "chrome" },
+            use: {
+                ...devices["Desktop Chrome"],
+                channel: "chrome",
+                contextOptions: chromeOptions,
+            },
         },
         {
             name: "edge",
-            use: { ...devices["Desktop Edge"], channel: "msedge" },
+            use: {
+                ...devices["Desktop Edge"],
+                channel: "msedge",
+                contextOptions: chromeOptions,
+            },
         },
     ],
     testDir: "playwright/e2e",

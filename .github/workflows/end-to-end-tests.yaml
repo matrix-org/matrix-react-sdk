@@ -57,6 +57,7 @@ jobs:
         if: inputs.skip != true
         outputs:
             parallelism: ${{ steps.parallelism.outputs.parallelism }}
+            parallelism_matrix: ${{ steps.parallelism.outputs.parallelism_matrix }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -103,10 +104,14 @@ jobs:
 
             - name: Calculate parallelism
               id: parallelism
-              run: echo "parallelism=$(python3 -c 'print([*range(1, 1 + ${{ inputs.parallelism || 6 }})])')" >> $GITHUB_OUTPUT
+              run: |
+                  echo "parallelism=$PARALLELISM" >> $GITHUB_OUTPUT
+                  echo "parallelism_matrix=$(python3 -c 'print([*range(1, 1 + ${{ env.PARALLELISM }})])')" >> $GITHUB_OUTPUT
+              env:
+                  PARALLELISM: ${{ inputs.parallelism || 6 }}
 
     playwright:
-        name: "Run Tests ${{ matrix.runner }}/${{ strategy.job-total }} [${{ matrix.browser }}]"
+        name: "Run Tests ${{ matrix.runner }}/${{ needs.prepare.outputs.parallelism }} [${{ matrix.browser }}]"
         needs: prepare
         if: inputs.skip != true
         runs-on: ubuntu-latest
@@ -118,8 +123,8 @@ jobs:
             fail-fast: false
             matrix:
                 # Run multiple instances in parallel to speed up the tests
-                runner: ${{ fromJson(needs.prepare.outputs.parallelism) }}
-                browser: ${{ fromJson(inputs.browsers || '["chromium", "firefox"]') }}
+                runner: ${{ fromJson(needs.prepare.outputs.parallelism_matrix) }}
+                browser: ${{ fromJson(inputs.browsers || '["chromium", "firefox", "chrome", "edge", "webkit"]') }}
         steps:
             - uses: actions/checkout@v4
               with:
