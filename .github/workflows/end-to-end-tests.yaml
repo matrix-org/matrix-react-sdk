@@ -22,14 +22,11 @@ on:
             parallelism:
                 type: number
                 required: false
-                default: 6
-                description: "The number of runners to spread the tests across."
+                description: "The number of runners to spread the tests across. Defaults to 6."
             browsers:
                 type: string
                 required: false
-                # TEST
-                default: '["chromium", "firefox"]'
-                description: "The browser to run the tests in. Some of 'chromium', 'chrome', 'firefox', 'webkit', 'edge'"
+                description: "The browser to run the tests in. Some of 'chromium', 'chrome', 'firefox', 'webkit', 'edge'. Defaults to chromium."
 
             react-sdk-repository:
                 type: string
@@ -106,7 +103,7 @@ jobs:
 
             - name: Calculate parallelism
               id: parallelism
-              run: echo "parallelism=$(python3 -c 'print([*range(1, 1 + ${{ inputs.parallelism }})])')" >> $GITHUB_OUTPUT
+              run: echo "parallelism=$(python3 -c 'print([*range(1, 1 + ${{ inputs.parallelism || 6 }})])')" >> $GITHUB_OUTPUT
 
     playwright:
         name: "Run Tests ${{ matrix.runner }}/${{ strategy.job-total }} [${{ matrix.browser }}]"
@@ -122,7 +119,7 @@ jobs:
             matrix:
                 # Run multiple instances in parallel to speed up the tests
                 runner: ${{ needs.prepare.outputs.parallelism }}
-                browser: ${{ fromJson(inputs.browsers) }}
+                browser: ${{ fromJson(inputs.browsers || '["chromium", "firefox"]') }}
         steps:
             - uses: actions/checkout@v4
               with:
