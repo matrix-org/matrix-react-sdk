@@ -19,6 +19,11 @@ on:
                 required: false
                 default: false
                 description: "A boolean to skip the playwright check itself while still creating the passing check. Useful when only running in Merge Queues."
+            parallelism:
+                type: number
+                required: false
+                default: 6
+                description: "The number of runners to spread the tests across."
 
             react-sdk-repository:
                 type: string
@@ -43,10 +48,12 @@ env:
     PR_NUMBER: ${{ github.event.pull_request.number }}
 
 jobs:
-    build:
+    prepare:
         name: "Build Element-Web"
         runs-on: ubuntu-latest
         if: inputs.skip != true
+        outputs:
+            parallelism: ${{ steps.parallelism.outputs.parallelism }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -91,9 +98,15 @@ jobs:
                   path: element-web/webapp
                   retention-days: 1
 
+            - name: Calculate parallelism
+              id: parallelism
+              run: echo "parallelism=$(python3 -c 'print([*range(1, 1 + $PARALLELISM)])')" >> $GITHUB_OUTPUT
+              env:
+                  PARALLELISM: ${{ inputs.parallelism }}
+
     playwright:
         name: "Run Tests ${{ matrix.runner }}/${{ strategy.job-total }}"
-        needs: build
+        needs: prepare
         if: inputs.skip != true
         runs-on: ubuntu-latest
         permissions:
@@ -104,7 +117,7 @@ jobs:
             fail-fast: false
             matrix:
                 # Run multiple instances in parallel to speed up the tests
-                runner: [1, 2, 3, 4, 5, 6]
+                runner: ${{ needs.prepare.outputs.parallelism }}
         steps:
             - uses: actions/checkout@v4
               with:
