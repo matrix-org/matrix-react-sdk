@@ -34,7 +34,7 @@ async function editMessage(page: Page, message: Locator, newMsg: string): Promis
     await line.hover();
     await line.getByRole("button", { name: "Edit" }).click();
     const editComposer = page.getByRole("textbox", { name: "Edit message" });
-    await editComposer.hover(); // Just to un-hover the message line
+    await page.getByLabel("User menu").hover(); // Just to un-hover the message line
     await editComposer.fill(newMsg);
     await editComposer.press("Enter");
 }
