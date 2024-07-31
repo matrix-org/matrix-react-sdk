@@ -59,7 +59,7 @@ interface IState {
 }
 
 export default class TextualBody extends React.Component<IBodyProps, IState> {
-    private readonly contentRef = createRef<HTMLSpanElement>();
+    private readonly contentRef = createRef<HTMLDivElement>();
 
     private unmounted = false;
     private pills: Element[] = [];
@@ -575,15 +575,15 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
         isEmote = content.msgtype === MsgType.Emote;
         isNotice = content.msgtype === MsgType.Notice;
-        let body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
+
+        const htmlOpts = {
             disableBigEmoji: isEmote || !SettingsStore.getValue<boolean>("TextualBody.enableBigEmoji"),
             // Part of Replies fallback support
             stripReplyFallback: stripReply,
-            ref: this.contentRef,
-            returnString: false,
-            includeDir: !willHaveWrapper,
-            asElement: willHaveWrapper ? "span" : "div",
-        });
+        };
+        let body = willHaveWrapper
+            ? HtmlUtils.bodyToSpan(content, this.props.highlights, htmlOpts, this.contentRef, false)
+            : HtmlUtils.bodyToDiv(content, this.props.highlights, htmlOpts, this.contentRef);
 
         if (this.props.replacingEventId) {
             body = (
