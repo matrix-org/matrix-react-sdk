@@ -143,6 +143,7 @@ import { checkSessionLockFree, getSessionLock } from "../../utils/SessionLock";
 import { SessionLockStolenView } from "./auth/SessionLockStolenView";
 import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView";
 import { LoginSplashView } from "./auth/LoginSplashView";
+import { cleanUpDraftsIfRequired } from "../../DraftCleaner";
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -1541,6 +1542,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (Notifier.shouldShowPrompt() && !MatrixClientPeg.userRegisteredWithinLastHours(24)) {
                 showNotificationsToast(false);
             }
+
+            cleanUpDraftsIfRequired();
 
             dis.fire(Action.FocusSendMessageComposer);
             this.setState({
