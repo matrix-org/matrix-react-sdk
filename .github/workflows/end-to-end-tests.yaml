@@ -27,7 +27,8 @@ on:
             browsers:
                 type: string
                 required: false
-                default: '["chromium"]'
+                # TEST
+                default: '["chromium", "firefox"]'
                 description: "The browser to run the tests in. Some of 'chromium', 'chrome', 'firefox', 'webkit', 'edge'"
 
             react-sdk-repository:
