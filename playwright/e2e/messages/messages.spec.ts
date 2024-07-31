@@ -56,7 +56,7 @@ test.describe("Message rendering", () => {
             test("should render a basic LTR text message", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);
 
-                sendMessage(page, "Hello, world!");
+                await sendMessage(page, "Hello, world!");
                 const lastMsg = await getLastMessage(page);
                 await expect(lastMsg).toMatchScreenshot(`basic-message-ltr-${direction}displayname.png`, {
                     mask: [page.locator(".mx_MessageTimestamp")],
@@ -66,7 +66,7 @@ test.describe("Message rendering", () => {
             test("should render an LTR emote", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);
 
-                sendMessage(page, "/me lays an egg");
+                await sendMessage(page, "/me lays an egg");
                 const lastMsg = await getLastMessage(page);
                 await expect(lastMsg).toMatchScreenshot(`emote-ltr-${direction}displayname.png`);
             });
@@ -74,7 +74,7 @@ test.describe("Message rendering", () => {
             test("should render an edited LTR message", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);
 
-                sendMessage(page, "Hello, world!");
+                await sendMessage(page, "Hello, world!");
                 const lastMsg = await getLastMessage(page);
 
                 await editMessage(page, lastMsg, "Hello, universe!");
@@ -87,7 +87,7 @@ test.describe("Message rendering", () => {
             test("should render a basic RTL text message", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);
 
-                sendMessage(page, "مرحبا بالعالم!");
+                await sendMessage(page, "مرحبا بالعالم!");
                 const lastMsg = await getLastMessage(page);
                 await expect(lastMsg).toMatchScreenshot(`basic-message-rtl-${direction}displayname.png`, {
                     mask: [page.locator(".mx_MessageTimestamp")],
@@ -97,7 +97,7 @@ test.describe("Message rendering", () => {
             test("should render an RTL emote", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);
 
-                sendMessage(page, "/me يضع بيضة");
+                await sendMessage(page, "/me يضع بيضة");
                 const lastMsg = await getLastMessage(page);
                 await expect(lastMsg).toMatchScreenshot(`emote-rtl-${direction}displayname.png`);
             });
@@ -105,7 +105,7 @@ test.describe("Message rendering", () => {
             test("should render an edited RTL message", async ({ page, user, app, room }) => {
                 await page.goto(`#/room/${room.roomId}`);
 
-                sendMessage(page, "مرحبا بالعالم!");
+                await sendMessage(page, "مرحبا بالعالم!");
                 const lastMsg = await getLastMessage(page);
 
                 await editMessage(page, lastMsg, "مرحبا بالكون!");
