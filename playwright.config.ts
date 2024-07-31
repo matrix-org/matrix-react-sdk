@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { defineConfig } from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 
 const baseURL = process.env["BASE_URL"] ?? "http://localhost:8080";
 
@@ -35,6 +35,29 @@ export default defineConfig({
         url: `${baseURL}/config.json`,
         reuseExistingServer: true,
     },
+    projects: [
+        /* Test against desktop browsers */
+        {
+            name: "chromium",
+            use: { ...devices["Desktop Chrome"] },
+        },
+        {
+            name: "firefox",
+            use: { ...devices["Desktop Firefox"] },
+        },
+        {
+            name: "webkit",
+            use: { ...devices["Desktop Safari"] },
+        },
+        {
+            name: "chrome",
+            use: { ...devices["Desktop Chrome"], channel: "chrome" },
+        },
+        {
+            name: "edge",
+            use: { ...devices["Desktop Edge"], channel: "msedge" },
+        },
+    ],
     testDir: "playwright/e2e",
     outputDir: "playwright/test-results",
     workers: 1,

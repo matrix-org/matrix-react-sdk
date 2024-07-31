@@ -24,6 +24,11 @@ on:
                 required: false
                 default: 6
                 description: "The number of runners to spread the tests across."
+            browsers:
+                type: string
+                required: false
+                default: '["chromium"]'
+                description: "The browser to run the tests in. Some of 'chromium', 'chrome', 'firefox', 'webkit', 'edge'"
 
             react-sdk-repository:
                 type: string
@@ -118,6 +123,7 @@ jobs:
             matrix:
                 # Run multiple instances in parallel to speed up the tests
                 runner: ${{ needs.prepare.outputs.parallelism }}
+                browser: ${{ fromJson(inputs.browsers) }}
         steps:
             - uses: actions/checkout@v4
               with:
@@ -152,7 +158,7 @@ jobs:
               with:
                   path: |
                       ~/.cache/ms-playwright
-                  key: ${{ runner.os }}-playwright-${{ steps.playwright.outputs.version }}
+                  key: ${{ runner.os }}-playwright-${{ steps.playwright.outputs.version }}-${{ matrix.browser }}
 
             - name: Install Playwright browsers
               if: steps.playwright-cache.outputs.cache-hit != 'true'
@@ -160,8 +166,11 @@ jobs:
               run: yarn playwright install --with-deps
 
             - name: Run Playwright tests
-              run: yarn playwright test --shard ${{ matrix.runner }}/${{ strategy.job-total }}
+              run: yarn playwright test --project "$BROWSER" --shard ${{ matrix.runner }}/${{ strategy.job-total }} $IGNORE_SNAPSHOTS
               working-directory: matrix-react-sdk
+              env:
+                  BROWSER: ${{ matrix.browser }}
+                  IGNORE_SNAPSHOTS: ${{ matrix.browser != 'chromium' && '--ignore-snapshots' || '' }}
 
             - name: Upload blob report to GitHub Actions Artifacts
               if: always()
