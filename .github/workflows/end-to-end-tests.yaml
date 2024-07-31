@@ -118,7 +118,7 @@ jobs:
             fail-fast: false
             matrix:
                 # Run multiple instances in parallel to speed up the tests
-                runner: ${{ needs.prepare.outputs.parallelism }}
+                runner: ${{ fromJson(needs.prepare.outputs.parallelism) }}
                 browser: ${{ fromJson(inputs.browsers || '["chromium", "firefox"]') }}
         steps:
             - uses: actions/checkout@v4
