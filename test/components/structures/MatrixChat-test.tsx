@@ -617,6 +617,9 @@ describe("<MatrixChat />", () => {
                 localStorage.setItem(`mx_cider_state_${roomId}`, "fake_content");
                 localStorage.setItem(`mx_cider_state_${unknownRoomId}`, "fake_content");
                 await getComponentAndWaitForReady();
+                mockClient.emit(ClientEvent.Sync, SyncState.Syncing, SyncState.Syncing);
+                // let things settle
+                await flushPromises();
                 expect(localStorage.getItem(`mx_cider_state_${roomId}`)).not.toBeNull();
                 expect(localStorage.getItem(`mx_cider_state_${unknownRoomId}`)).toBeNull();
             });
