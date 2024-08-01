@@ -15,7 +15,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import React, { ReactNode } from "react";
 
 import { _t, _td, TranslationKey } from "../languageHandler";
@@ -24,7 +23,6 @@ import {
     NotificationsEnabledController,
 } from "./controllers/NotificationControllers";
 import ThemeController from "./controllers/ThemeController";
-import PushToMatrixClientController from "./controllers/PushToMatrixClientController";
 import ReloadOnChangeController from "./controllers/ReloadOnChangeController";
 import FontSizeController from "./controllers/FontSizeController";
 import SystemFontController from "./controllers/SystemFontController";
@@ -33,7 +31,6 @@ import SettingController from "./controllers/SettingController";
 import { IS_MAC } from "../Keyboard";
 import UIFeatureController from "./controllers/UIFeatureController";
 import { UIFeature } from "./UIFeature";
-import { OrderedMultiController } from "./controllers/OrderedMultiController";
 import { Layout } from "./enums/Layout";
 import ReducedMotionController from "./controllers/ReducedMotionController";
 import IncompatibleController from "./controllers/IncompatibleController";
@@ -42,11 +39,9 @@ import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
 import SlidingSyncController from "./controllers/SlidingSyncController";
 import { FontWatcher } from "./watchers/FontWatcher";
-import RustCryptoSdkController from "./controllers/RustCryptoSdkController";
 import ServerSupportUnstableFeatureController from "./controllers/ServerSupportUnstableFeatureController";
 import { WatchManager } from "./WatchManager";
 import { CustomTheme } from "../theme";
-import SettingsStore from "./SettingsStore";
 import AnalyticsController from "./controllers/AnalyticsController";
 
 export const defaultWatchManager = new WatchManager();
@@ -99,9 +94,14 @@ export enum Features {
     VoiceBroadcastForceSmallChunks = "feature_voice_broadcast_force_small_chunks",
     NotificationSettings2 = "feature_notification_settings2",
     OidcNativeFlow = "feature_oidc_native_flow",
-    // If true, every new login will use the new rust crypto implementation
-    RustCrypto = "feature_rust_crypto",
     ReleaseAnnouncement = "feature_release_announcement",
+
+    /** If true, use the Rust crypto implementation.
+     *
+     * This is no longer read, but we continue to populate it on all devices, to guard against people rolling back to
+     * old versions of EW that do not use rust crypto by default.
+     */
+    RustCrypto = "feature_rust_crypto",
 }
 
 export const labGroupNames: Record<LabGroup, TranslationKey> = {
@@ -480,29 +480,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: false,
     },
     [Features.RustCrypto]: {
-        // use the rust matrix-sdk-crypto-wasm for crypto.
-        isFeature: true,
-        labsGroup: LabGroup.Developer,
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        displayName: _td("labs|rust_crypto"),
-        description: () => {
-            if (SettingsStore.getValueAt(SettingLevel.CONFIG, Features.RustCrypto)) {
-                // It's enabled in the config, so you can't get rid of it even by logging out.
-                return _t("labs|rust_crypto_in_config_description");
-            } else {
-                return _t("labs|rust_crypto_optin_warning");
-            }
-        },
-        shouldWarn: true,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: true,
-        controller: new RustCryptoSdkController(),
-    },
-    // Must be set under `setting_defaults` in config.json.
-    // If set to 100 in conjunction with `feature_rust_crypto`, all existing users will migrate to the new crypto.
-    // Default is 0, meaning no existing users on legacy crypto will migrate.
-    "RustCrypto.staged_rollout_percent": {
-        supportedLevels: [SettingLevel.CONFIG],
-        default: 0,
     },
     /**
      * @deprecated in favor of {@link fontSizeDelta}
@@ -607,11 +586,13 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         displayName: _td("labs|new_room_decoration_ui"),
-        description: _td("labs|under_active_development"),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
-        supportedLevelsAreOrdered: true,
-        default: false,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        default: true,
         controller: new ReloadOnChangeController(),
+        betaInfo: {
+            title: _td("labs|new_room_decoration_ui_beta_title"),
+            caption: () => <p>{_t("labs|new_room_decoration_ui_beta_caption")}</p>,
+        },
     },
     "feature_notifications": {
         isFeature: true,
@@ -1023,18 +1004,6 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: true,
         controller: new UIFeatureController(UIFeature.Voip),
-    },
-    "e2ee.manuallyVerifyAllSessions": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td("settings|security|manually_verify_all_sessions"),
-        default: false,
-        controller: new OrderedMultiController([
-            // Apply the feature controller first to ensure that the setting doesn't
-            // show up and can't be toggled. PushToMatrixClientController doesn't
-            // do any overrides anyways.
-            new UIFeatureController(UIFeature.AdvancedEncryption),
-            new PushToMatrixClientController(MatrixClient.prototype.setCryptoTrustCrossSignedDevices, true),
-        ]),
     },
     "ircDisplayNameWidth": {
         // We specifically want to have room-device > device so that users may set a device default

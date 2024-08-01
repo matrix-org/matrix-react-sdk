@@ -1296,13 +1296,10 @@
         "peek_join_prompt": "Você está visualizando %(roomName)s. Deseja participar?",
         "rejoin_button": "Entrar novamente",
         "search": {
-            "all_rooms": "Todas as salas",
-            "field_placeholder": "Buscar…",
             "result_count": {
                 "one": "(~%(count)s resultado)",
                 "other": "(~%(count)s resultados)"
-            },
-            "this_room": "Esta sala"
+            }
         },
         "status_bar": {
             "exceeded_resource_limit": "Sua mensagem não foi enviada porque este servidor local excedeu o limite de recursos. Por favor, <a>entre em contato com o seu administrador de serviços</a> para continuar usando o serviço.",
@@ -1610,19 +1607,15 @@
             "custom_font_description": "Defina o nome de uma fonte instalada no seu sistema e o %(brand)s tentará usá-la.",
             "custom_font_name": "Nome da fonte do sistema",
             "custom_font_size": "Usar tamanho personalizado",
-            "custom_theme_add_button": "Adicionar tema",
             "custom_theme_error_downloading": "Erro ao baixar as informações do tema.",
             "custom_theme_invalid": "Esquema inválido de tema.",
-            "custom_theme_success": "Tema adicionado!",
-            "custom_theme_url": "Link do tema personalizado",
             "font_size": "Tamanho da fonte",
             "image_size_default": "Padrão",
             "image_size_large": "Grande",
             "layout_bubbles": "Balões de mensagem",
             "layout_irc": "IRC (experimental)",
             "match_system_theme": "Se adaptar ao tema do sistema",
-            "timeline_image_size": "Tamanho da imagem na linha do tempo",
-            "use_high_contrast": "Usar alto contraste"
+            "timeline_image_size": "Tamanho da imagem na linha do tempo"
         },
         "automatic_language_detection_syntax_highlight": "Ativar detecção automática de idioma para ressaltar erros de ortografia",
         "autoplay_gifs": "Reproduzir GIFs automaticamente",
@@ -1653,7 +1646,6 @@
             "discovery_email_verification_instructions": "Verifique o link na sua caixa de e-mails",
             "discovery_msisdn_empty": "As opções de descoberta aparecerão assim que você adicione um número de telefone acima.",
             "discovery_needs_terms": "Concorde com os Termos de Serviço do servidor de identidade (%(serverName)s), para que você possa ser descoberto por endereço de e-mail ou por número de celular.",
-            "discovery_section": "Contatos",
             "email_address_in_use": "Este endereço de email já está em uso",
             "email_address_label": "Endereço de e-mail",
             "email_not_verified": "Seu endereço de e-mail ainda não foi confirmado",
@@ -1809,7 +1801,6 @@
             "delete_backup_confirm_description": "Tem certeza? Você perderá suas mensagens criptografadas se não tiver feito o backup de suas chaves.",
             "e2ee_default_disabled_warning": "O administrador do servidor desativou a criptografia de ponta a ponta por padrão em salas privadas e em conversas.",
             "enable_message_search": "Ativar busca de mensagens em salas criptografadas",
-            "encryption_individual_verification_mode": "Verifique individualmente cada sessão usada por um usuário para marcá-la como confiável, em vez de confirmar em aparelhos autoverificados.",
             "encryption_section": "Criptografia",
             "error_loading_key_backup_status": "Não foi possível carregar o status do backup da chave",
             "export_megolm_keys": "Exportar chaves ponta-a-ponta da sala",
@@ -1823,7 +1814,6 @@
             "key_backup_connect_prompt": "Autorize esta sessão a fazer o backup de chaves antes de se desconectar, para evitar perder chaves que possam estar apenas nesta sessão.",
             "key_backup_inactive": "Esta sessão <b>não está fazendo backup de suas chaves</b>, mas você tem um backup existente que pode restaurar para continuar.",
             "key_backup_inactive_warning": "Suas chaves <b>não estão sendo copiadas desta sessão</b>.",
-            "manually_verify_all_sessions": "Verificar manualmente todas as sessões remotas",
             "message_search_disable_warning": "Se desativado, as mensagens de salas criptografadas não aparecerão em resultados de buscas.",
             "message_search_disabled": "Armazene mensagens criptografadas de forma segura localmente para que possam aparecer nos resultados das buscas.",
             "message_search_enabled": {
@@ -2560,7 +2550,6 @@
         },
         "redact_button": "Apagar mensagens desta pessoa na sala",
         "revoke_invite": "Revogar o convite",
-        "role_label": "Cargo em <RoomName/>",
         "room_encrypted": "As mensagens nesta sala estão criptografadas de ponta a ponta.",
         "room_encrypted_detail": "Suas mensagens são protegidas e somente você e o destinatário têm as chaves exclusivas para desbloqueá-las.",
         "room_unencrypted": "As mensagens nesta sala não estão criptografadas de ponta a ponta.",

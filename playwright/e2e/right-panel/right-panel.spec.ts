@@ -63,9 +63,9 @@ test.describe("RightPanel", () => {
             await app.closeDialog();
 
             // Close and reopen the right panel to render the room address
-            await page.getByRole("button", { name: "Room info" }).click();
+            await app.toggleRoomInfoPanel();
             await expect(page.locator(".mx_RightPanel")).not.toBeVisible();
-            await page.getByRole("button", { name: "Room info" }).click();
+            await app.toggleRoomInfoPanel();
 
             await expect(page.locator(".mx_RightPanel")).toMatchScreenshot("with-name-and-address.png");
         });
@@ -73,7 +73,8 @@ test.describe("RightPanel", () => {
         test("should handle clicking add widgets", async ({ page, app }) => {
             await viewRoomSummaryByName(page, app, ROOM_NAME);
 
-            await page.getByRole("button", { name: "Add widgets, bridges & bots" }).click();
+            await page.getByRole("tab", { name: "Extensions" }).click();
+            await page.getByRole("button", { name: "Add extensions" }).click();
             await expect(page.locator(".mx_IntegrationManager")).toBeVisible();
         });
 
@@ -104,26 +105,26 @@ test.describe("RightPanel", () => {
 
             await page.getByRole("menuitem", { name: "Files" }).click();
             await expect(page.locator(".mx_FilePanel")).toBeVisible();
-            await expect(page.locator(".mx_FilePanel_empty")).toBeVisible();
+            await expect(page.locator(".mx_EmptyState")).toBeVisible();
 
-            await page.getByRole("button", { name: "Room information" }).click();
+            await page.getByTestId("base-card-back-button").click();
             await checkRoomSummaryCard(page, ROOM_NAME);
         });
 
         test("should handle viewing room member", async ({ page, app }) => {
             await viewRoomSummaryByName(page, app, ROOM_NAME);
 
-            await page.getByRole("menuitem", { name: "People" }).click();
+            await page.locator(".mx_RightPanelTabs").getByText("People").click();
             await expect(page.locator(".mx_MemberList")).toBeVisible();
 
             await getMemberTileByName(page, NAME).click();
             await expect(page.locator(".mx_UserInfo")).toBeVisible();
             await expect(page.locator(".mx_UserInfo_profile").getByText(NAME)).toBeVisible();
 
-            await page.getByRole("button", { name: "Room members" }).click();
+            await page.getByTestId("base-card-back-button").click();
             await expect(page.locator(".mx_MemberList")).toBeVisible();
 
-            await page.getByRole("button", { name: "Room information" }).click();
+            await page.locator(".mx_RightPanelTabs").getByText("Info").click();
             await checkRoomSummaryCard(page, ROOM_NAME);
         });
     });
@@ -138,14 +139,12 @@ test.describe("RightPanel", () => {
                 .getByRole("button", { name: /\d member/ })
                 .click();
             await expect(page.locator(".mx_MemberList")).toBeVisible();
-            await expect(page.locator(".mx_SpaceScopeHeader").getByText(SPACE_NAME)).toBeVisible();
 
             await getMemberTileByName(page, NAME).click();
             await expect(page.locator(".mx_UserInfo")).toBeVisible();
             await expect(page.locator(".mx_UserInfo_profile").getByText(NAME)).toBeVisible();
-            await expect(page.locator(".mx_SpaceScopeHeader").getByText(SPACE_NAME)).toBeVisible();
 
-            await page.getByRole("button", { name: "Back" }).click();
+            await page.getByTestId("base-card-back-button").click();
             await expect(page.locator(".mx_MemberList")).toBeVisible();
         });
     });

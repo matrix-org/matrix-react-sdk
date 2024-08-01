@@ -1150,7 +1150,6 @@
         "failed_generic": "操作失败",
         "failed_title": "邀请失败",
         "invalid_address": "无法识别地址",
-        "key_share_warning": "被邀请的人将能够阅读过去的消息。",
         "name_email_mxid_share_room": "使用名字、电子邮件地址、用户名（如<userId/>）邀请某人或<a>分享此房间</a>。",
         "name_email_mxid_share_space": "使用某人的名字、电子邮箱地址或用户名（如 <userId/>）邀请他们，或<a>分享此空间</a>。",
         "name_mxid_share_room": "使用某人的名字、用户名（如 <userId/>）或<a>分享此房间</a>来邀请他们。",
@@ -1303,7 +1302,6 @@
         "pinning": "消息置顶",
         "report_to_moderators": "报告给协管员",
         "report_to_moderators_description": "在支持审核的房间中，“报告”按钮将让你向房间协管员举报滥用行为。",
-        "rust_crypto": "Rust加密实现",
         "sliding_sync": "滑动同步模式",
         "sliding_sync_description": "正在积极开发中，不能禁用。",
         "sliding_sync_server_no_support": "你的服务器缺少原生支持",
@@ -1774,13 +1772,10 @@
         "read_topic": "点击阅读话题",
         "rejoin_button": "重新加入",
         "search": {
-            "all_rooms": "全部房间",
-            "field_placeholder": "搜索…",
             "result_count": {
                 "one": "（~%(count)s 个结果）",
                 "other": "（~%(count)s 个结果）"
-            },
-            "this_room": "此房间"
+            }
         },
         "show_labs_settings": "显示实验室设置",
         "status_bar": {
@@ -2143,19 +2138,15 @@
             "custom_font_description": "设置一个安装在你的系统上的字体名称，%(brand)s 会尝试使用它。",
             "custom_font_name": "系统字体名称",
             "custom_font_size": "使用自定义大小",
-            "custom_theme_add_button": "添加主题",
             "custom_theme_error_downloading": "下载主题信息时发生错误。",
             "custom_theme_invalid": "主题方案无效。",
-            "custom_theme_success": "主题已添加！",
-            "custom_theme_url": "自定义主题URL",
             "font_size": "字体大小",
             "image_size_default": "默认",
             "image_size_large": "大",
             "layout_bubbles": "消息气泡",
             "layout_irc": "IRC（实验性）",
             "match_system_theme": "匹配系统主题",
-            "timeline_image_size": "时间线中的图像大小",
-            "use_high_contrast": "使用高对比度"
+            "timeline_image_size": "时间线中的图像大小"
         },
         "automatic_language_detection_syntax_highlight": "启用语法高亮的自动语言检测",
         "autoplay_gifs": "自动播放 GIF",
@@ -2191,7 +2182,6 @@
             "discovery_email_verification_instructions": "验证你的收件箱中的链接",
             "discovery_msisdn_empty": "你添加电话号码后发现选项将会出现。",
             "discovery_needs_terms": "同意身份服务器（%(serverName)s）的服务协议以允许自己被通过邮件地址或电话号码发现。",
-            "discovery_section": "发现",
             "email_address_in_use": "此邮箱地址已被使用",
             "email_address_label": "电子邮箱地址",
             "email_not_verified": "你的邮件地址尚未被验证",
@@ -2225,8 +2215,7 @@
             "password_change_success": "你的密码已成功更改。",
             "remove_email_prompt": "删除 %(email)s 吗？",
             "remove_msisdn_prompt": "删除 %(phone)s 吗？",
-            "spell_check_locale_placeholder": "选择区域设置",
-            "spell_check_section": "拼写检查"
+            "spell_check_locale_placeholder": "选择区域设置"
         },
         "image_thumbnails": "显示图片的预览图",
         "inline_url_previews_default": "默认启用行内URL预览",
@@ -2364,7 +2353,6 @@
             "delete_backup_confirm_description": "你确定吗？如果密钥没有正确地备份你将失去你的加密消息。",
             "e2ee_default_disabled_warning": "你的服务器管理员默认关闭了私人房间和私聊中的端到端加密。",
             "enable_message_search": "在加密房间中启用消息搜索",
-            "encryption_individual_verification_mode": "逐一验证用户的每一个会话以将其标记为已信任，而不信任交叉签名的设备。",
             "encryption_section": "加密",
             "error_loading_key_backup_status": "无法载入密钥备份状态",
             "export_megolm_keys": "导出房间的端到端加密密钥",
@@ -2379,7 +2367,6 @@
             "key_backup_connect_prompt": "在登出前连接此会话到密钥备份以避免丢失可能仅在此会话上的密钥。",
             "key_backup_inactive": "此会话<b>未备份你的密钥</b>，但如果你已有现存备份，你可以继续并从中恢复和向其添加。",
             "key_backup_inactive_warning": "你的密钥<b>没有被此会话备份</b>。",
-            "manually_verify_all_sessions": "手动验证所有远程会话",
             "message_search_disable_warning": "如果被禁用，加密房间内的消息不会显示在搜索结果中。",
             "message_search_disabled": "在本地安全地缓存加密消息以使其出现在搜索结果中。",
             "message_search_enabled": {
@@ -2765,15 +2752,10 @@
             "one": "%(count)s 条回复",
             "other": "%(count)s 条回复"
         },
-        "empty_explainer": "消息列帮助保持你的对话切题并易于追踪。",
-        "empty_has_threads_tip": "回复进行中的消息列或当悬停在消息上时使用%(replyInThread)s来发起新的消息列。",
-        "empty_heading": "用消息列使讨论井然有序",
-        "empty_tip": "<b>实用提示：</b>悬停在消息上时使用“%(replyInThread)s”。",
         "error_start_thread_existing_relation": "无法从既有关系的事件创建消息列",
         "my_threads": "我的消息列",
         "my_threads_description": "显示您参与的所有消息列",
         "open_thread": "打开消息列",
-        "show_all_threads": "显示所有消息列",
         "show_thread_filter": "显示："
     },
     "time": {
@@ -3305,7 +3287,6 @@
         },
         "redact_button": "移除最近消息",
         "revoke_invite": "撤销邀请",
-        "role_label": "<RoomName/> 中的角色",
         "room_encrypted": "此房间内的消息端到端加密。",
         "room_encrypted_detail": "你的消息是安全的，只有你和接收者有解开它们的唯一密钥。",
         "room_unencrypted": "此房间内的消息未端到端加密。",

@@ -1106,7 +1106,6 @@
         "failed_generic": "Toiminto epäonnistui",
         "failed_title": "Kutsu epäonnistui",
         "invalid_address": "Osoitetta ei tunnistettu",
-        "key_share_warning": "Kutsutut ihmiset voivat lukea vanhoja viestejä.",
         "name_email_mxid_share_room": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä huone</a>.",
         "name_email_mxid_share_space": "Kutsu käyttäen nimeä, sähköpostiosoitetta, käyttäjänimeä (kuten <userId/>) tai <a>jaa tämä avaruus</a>.",
         "recents_section": "Viimeaikaiset keskustelut",
@@ -1242,7 +1241,6 @@
         "pinning": "Viestien kiinnittäminen",
         "report_to_moderators": "Ilmoita moderaattoreille",
         "report_to_moderators_description": "Moderointia tukevissa huoneissa väärinkäytökset voi ilmoittaa Ilmoita-painikkeella huoneen moderaattoreille.",
-        "rust_crypto": "Rust-kryptografiatoteutus",
         "sliding_sync": "Liukuvan synkronoinnin tila",
         "sliding_sync_description": "Työn alla, käytöstä poistaminen ei ole mahdollista.",
         "sliding_sync_disabled_notice": "Poista käytöstä kirjautumalla ulos ja takaisin sisään",
@@ -1717,13 +1715,10 @@
         "rejecting": "Hylätään kutsua…",
         "rejoin_button": "Liity uudelleen",
         "search": {
-            "all_rooms": "Kaikki huoneet",
-            "field_placeholder": "Haku…",
             "result_count": {
                 "one": "(~%(count)s tulos)",
                 "other": "(~%(count)s tulosta)"
-            },
-            "this_room": "Tämä huone"
+            }
         },
         "show_labs_settings": "Näytä laboratorion asetukset",
         "status_bar": {
@@ -2071,19 +2066,15 @@
             "custom_font_description": "Aseta käyttöjärjestelmääsi asennetun fontin nimi, niin %(brand)s pyrkii käyttämään sitä.",
             "custom_font_name": "Järjestelmän fontin nimi",
             "custom_font_size": "Käytä mukautettua kokoa",
-            "custom_theme_add_button": "Lisää teema",
             "custom_theme_error_downloading": "Virhe ladattaessa teematietoa.",
             "custom_theme_invalid": "Epäkelpo teeman skeema.",
-            "custom_theme_success": "Teema lisätty!",
-            "custom_theme_url": "Mukautettu teeman osoite",
             "font_size": "Fontin koko",
             "image_size_default": "Oletus",
             "image_size_large": "Suuri",
             "layout_bubbles": "Viestikuplat",
             "layout_irc": "IRC (kokeellinen)",
             "match_system_theme": "Käytä järjestelmän teemaa",
-            "timeline_image_size": "Kuvan koko aikajanalla",
-            "use_high_contrast": "Käytä suurta kontrastia"
+            "timeline_image_size": "Kuvan koko aikajanalla"
         },
         "automatic_language_detection_syntax_highlight": "Ota automaattinen kielentunnistus käyttöön syntaksikorostusta varten",
         "autoplay_gifs": "Toista GIF-tiedostot automaattisesti",
@@ -2107,7 +2098,6 @@
             "confirm_adding_email_body": "Napsauta alapuolella olevaa painiketta lisätäksesi tämän sähköpostiosoitteen.",
             "confirm_adding_email_title": "Vahvista sähköpostin lisääminen",
             "deactivate_confirm_body": "Haluatko varmasti poistaa tilisi pysyvästi?",
-            "deactivate_confirm_body_password": "Jatka kirjoittamalla tilisi salasana:",
             "deactivate_confirm_body_sso": "Vahvista tilin deaktivointi todistamalla henkilöllisyytesi kertakirjautumista käyttäen.",
             "deactivate_confirm_content": "Vahvista, että haluat deaktivoida eli poistaa tilisi. Jos jatkat:",
             "deactivate_confirm_content_1": "Et voi ottaa tiliäsi uudelleen käyttöön",
@@ -2123,7 +2113,6 @@
             "discovery_email_verification_instructions": "Varmista sähköpostiisi saapunut linkki",
             "discovery_msisdn_empty": "Etsinnän asetukset näkyvät sen jälkeen, kun olet lisännyt puhelinnumeron.",
             "discovery_needs_terms": "Hyväksy identiteettipalvelimen (%(serverName)s) käyttöehdot, jotta sinut voi löytää sähköpostiosoitteen tai puhelinnumeron perusteella.",
-            "discovery_section": "Käyttäjien etsintä",
             "email_address_in_use": "Tämä sähköpostiosoite on jo käytössä",
             "email_address_label": "Sähköpostiosoite",
             "email_not_verified": "Sähköpostiosoitettasi ei ole vielä varmistettu",
@@ -2159,8 +2148,7 @@
             "password_change_success": "Salasanasi vaihtaminen onnistui.",
             "remove_email_prompt": "Poista %(email)s?",
             "remove_msisdn_prompt": "Poista %(phone)s?",
-            "spell_check_locale_placeholder": "Valitse maa-asetusto",
-            "spell_check_section": "Oikeinkirjoituksen tarkistus"
+            "spell_check_locale_placeholder": "Valitse maa-asetusto"
         },
         "image_thumbnails": "Näytä kuvien esikatselut/pienoiskuvat",
         "inline_url_previews_default": "Ota linkkien esikatselu käyttöön oletusarvoisesti",
@@ -2290,7 +2278,6 @@
             "delete_backup_confirm_description": "Oletko varma? Et voi lukea salattuja viestejäsi, mikäli avaimesi eivät ole kunnolla varmuuskopioituna.",
             "e2ee_default_disabled_warning": "Palvelimesi ylläpitäjä on poistanut päästä päähän -salauksen oletuksena käytöstä yksityisissä huoneissa ja yksityisviesteissä.",
             "enable_message_search": "Ota viestihaku salausta käyttävissä huoneissa käyttöön",
-            "encryption_individual_verification_mode": "Varmenna jokainen istunto erikseen, äläkä luota ristiinvarmennettuihin laitteisiin.",
             "encryption_section": "Salaus",
             "error_loading_key_backup_status": "Avainten varmuuskopionnin tilan lukeminen epäonnistui",
             "export_megolm_keys": "Tallenna osapuolten välisen salauksen huoneavaimet",
@@ -2304,7 +2291,6 @@
             "key_backup_connect_prompt": "Yhdistä tämä istunto avainten varmuuskopiointiin ennen uloskirjautumista, jotta et menetä avaimia, jotka ovat vain tässä istunnossa.",
             "key_backup_inactive": "Tämä istunto <b>ei varmuuskopioi avaimiasi</b>, mutta sillä on olemassaoleva varmuuskopio, jonka voit palauttaa ja lisätä jatkaaksesi.",
             "key_backup_inactive_warning": "Avaimiasi <b>ei varmuuskopioida tästä istunnosta</b>.",
-            "manually_verify_all_sessions": "Varmenna kaikki etäistunnot käsin",
             "message_search_disable_warning": "Jos ei ole käytössä, salattujen huoneiden viestejä ei näytetä hakutuloksissa.",
             "message_search_disabled": "Pidä salatut viestit turvallisessa välimuistissa, jotta ne näkyvät hakutuloksissa.",
             "message_search_enabled": {
@@ -2709,12 +2695,9 @@
             "one": "%(count)s vastaus",
             "other": "%(count)s vastausta"
         },
-        "empty_explainer": "Ketjut auttavat pitämään keskustelut asiayhteyteen sopivina ja helposti seurattavina.",
-        "empty_heading": "Pidä keskustelut järjestyksessä ketjuissa",
         "my_threads": "Omat ketjut",
         "my_threads_description": "Näyttää kaikki ketjut, joissa olet ollut osallinen",
         "open_thread": "Avaa ketju",
-        "show_all_threads": "Näytä kaikki ketjut",
         "show_thread_filter": "Näytä:"
     },
     "time": {
@@ -3246,7 +3229,6 @@
         },
         "redact_button": "Poista viimeaikaiset viestit",
         "revoke_invite": "Kumoa kutsu",
-        "role_label": "Rooli huoneessa <RoomName/>",
         "room_encrypted": "Tämän huoneen viestit ovat päästä päähän -salattuja.",
         "room_encrypted_detail": "Viestisi ovat turvattu, ja vain sinulla ja vastaanottajalla on avaimet viestien lukemiseen.",
         "room_unencrypted": "Tämän huoneen viestit eivät ole päästä päähän -salattuja.",

@@ -807,7 +807,6 @@
         "failed_generic": "Operacija nepavyko",
         "failed_title": "Nepavyko pakviesti",
         "invalid_address": "Neatpažintas adresas",
-        "key_share_warning": "Pakviesti asmenys galės skaityti senus pranešimus.",
         "name_email_mxid_share_room": "Pakviesti ką nors, naudojant jų vardą, el. pašto adresą, vartotojo vardą (pvz.: <userId/>) arba <a>bendrinti šį kambarį</a>.",
         "name_mxid_share_room": "Pakviesti ką nors naudojant jų vardą, vartotojo vardą (pvz.: <userId/>) arba <a>bendrinti šį kambarį</a>.",
         "recents_section": "Pastarieji pokalbiai",
@@ -1195,13 +1194,10 @@
         "peek_join_prompt": "Jūs peržiūrite %(roomName)s. Norite prie jo prisijungti?",
         "rejoin_button": "Prisijungti iš naujo",
         "search": {
-            "all_rooms": "Visi pokalbių kambariai",
-            "field_placeholder": "Paieška…",
             "result_count": {
                 "other": "(~%(count)s rezultatų(-ai))",
                 "one": "(~%(count)s rezultatas)"
-            },
-            "this_room": "Šis pokalbių kambarys"
+            }
         },
         "show_labs_settings": "Rodyti laboratorijų nustatymus",
         "status_bar": {
@@ -1515,19 +1511,15 @@
             "custom_font_description": "Nustatykite sistemoje įdiegto šrifto pavadinimą ir %(brand)s bandys jį naudoti.",
             "custom_font_name": "Sistemos šrifto pavadinimas",
             "custom_font_size": "Naudoti pasirinktinį dydį",
-            "custom_theme_add_button": "Pridėti temą",
             "custom_theme_error_downloading": "Klaida atsisiunčiant temos informaciją.",
             "custom_theme_invalid": "Klaidinga temos schema.",
-            "custom_theme_success": "Tema pridėta!",
-            "custom_theme_url": "Pasirinktinės temos URL",
             "font_size": "Šrifto dydis",
             "image_size_default": "Numatytas",
             "image_size_large": "Didelis",
             "layout_bubbles": "Žinučių burbulai",
             "layout_irc": "IRC (eksperimentinis)",
             "match_system_theme": "Suderinti su sistemos tema",
-            "timeline_image_size": "Paveikslėlio dydis laiko juostoje",
-            "use_high_contrast": "Naudoti didelį kontrastą"
+            "timeline_image_size": "Paveikslėlio dydis laiko juostoje"
         },
         "automatic_language_detection_syntax_highlight": "Įjungti automatinį kalbos aptikimą sintaksės paryškinimui",
         "autoplay_gifs": "Automatinis GIF failų paleidimas",
@@ -1558,7 +1550,6 @@
             "discovery_email_verification_instructions": "Patvirtinkite nuorodą savo el. pašto dėžutėje",
             "discovery_msisdn_empty": "Radimo parinktys atsiras jums aukščiau pridėjus telefono numerį.",
             "discovery_needs_terms": "Sutikite su tapatybės serverio (%(serverName)s) paslaugų teikimo sąlygomis, kad leistumėte kitiems rasti jus pagal el. pašto adresą ar telefono numerį.",
-            "discovery_section": "Radimas",
             "email_address_in_use": "Šis el. pašto adresas jau naudojamas",
             "email_address_label": "El. pašto adresas",
             "email_not_verified": "Jūsų el. pašto adresas dar nebuvo patvirtintas",
@@ -1588,8 +1579,7 @@
             "name_placeholder": "Nėra rodomo vardo",
             "password_change_success": "Jūsų slaptažodis sėkmingai pakeistas.",
             "remove_email_prompt": "Pašalinti %(email)s?",
-            "remove_msisdn_prompt": "Pašalinti %(phone)s?",
-            "spell_check_section": "Rašybos tikrinimas"
+            "remove_msisdn_prompt": "Pašalinti %(phone)s?"
         },
         "image_thumbnails": "Rodyti vaizdų peržiūras/miniatiūras",
         "inline_url_previews_default": "Įjungti URL nuorodų peržiūras kaip numatytasias",
@@ -1713,7 +1703,6 @@
             "delete_backup_confirm_description": "Ar tikrai? Jūs prarasite savo šifruotas žinutes, jei jūsų raktams nebus tinkamai sukurtos atsarginės kopijos.",
             "e2ee_default_disabled_warning": "Serverio administratorius išjungė visapusį šifravimą, kaip numatytą, privačiuose kambariuose ir Tiesioginėse Žinutėse.",
             "enable_message_search": "Įjungti žinučių paiešką užšifruotuose kambariuose",
-            "encryption_individual_verification_mode": "Individualiai patikrinkite kiekvieną vartotojo naudojamą seansą, kad pažymėtumėte jį kaip patikimą, nepasitikint kryžminiu pasirašymu patvirtintais įrenginiais.",
             "encryption_section": "Šifravimas",
             "error_loading_key_backup_status": "Nepavyko įkelti atsarginės raktų kopijos būklės",
             "export_megolm_keys": "Eksportuoti E2E (visapusio šifravimo) kambarių raktus",
@@ -1727,7 +1716,6 @@
             "key_backup_connect_prompt": "Prieš atsijungdami prijunkite šį seansą prie atsarginės raktų kopijos, kad neprarastumėte raktų, kurie gali būti tik šiame seanse.",
             "key_backup_inactive": "Šis seansas <b>nekuria atsarginių raktų kopijų</b>, bet jūs jau turite atsarginę kopiją iš kurios galite atkurti ir pridėti.",
             "key_backup_inactive_warning": "Jūsų raktams <b>nėra daromos atsarginės kopijos iš šio seanso</b>.",
-            "manually_verify_all_sessions": "Rankiniu būdu patvirtinti visus nuotolinius seansus",
             "message_search_disabled": "Šifruotas žinutes saugiai talpinkite lokaliai, kad jos būtų rodomos paieškos rezultatuose.",
             "message_search_enabled": {
                 "one": "Saugiai talpinkite užšifruotas žinutes vietoje, kad jos būtų rodomos paieškos rezultatuose, naudojant %(size)s žinutėms iš %(rooms)s kambario saugoti.",
@@ -2410,7 +2398,6 @@
         },
         "redact_button": "Pašalinti paskutines žinutes",
         "revoke_invite": "Atšaukti kvietimą",
-        "role_label": "Rolė <RoomName/>",
         "room_encrypted": "Žinutės šiame kambaryje yra visapusiškai užšifruotos.",
         "room_encrypted_detail": "Jūsų žinutės yra apsaugotos ir tik jūs ir gavėjas turite unikalius raktus joms atrakinti.",
         "room_unencrypted": "Žinutės šiame kambaryje nėra visapusiškai užšifruotos.",

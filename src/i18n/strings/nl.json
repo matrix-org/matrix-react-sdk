@@ -1069,7 +1069,6 @@
         "failed_generic": "Handeling is mislukt",
         "failed_title": "Uitnodigen is mislukt",
         "invalid_address": "Adres niet herkend",
-        "key_share_warning": "Uitgenodigde personen kunnen de oude berichten lezen.",
         "name_email_mxid_share_room": "Nodig iemand uit door gebruik te maken van hun naam, e-mailadres, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
         "name_email_mxid_share_space": "Nodig iemand uit per naam, e-mail, inlognaam (zoals <userId/>) of <a>deel deze Space</a>.",
         "name_mxid_share_room": "Nodig iemand uit door gebruik te maken van hun naam, inlognaam (zoals <userId/>) of <a>deel deze kamer</a>.",
@@ -1656,13 +1655,10 @@
         "read_topic": "Klik om het onderwerp te lezen",
         "rejoin_button": "Opnieuw toetreden",
         "search": {
-            "all_rooms": "Alle kamers",
-            "field_placeholder": "Zoeken…",
             "result_count": {
                 "one": "(~%(count)s resultaat)",
                 "other": "(~%(count)s resultaten)"
-            },
-            "this_room": "Deze kamer"
+            }
         },
         "show_labs_settings": "Lab instellingen weergeven",
         "status_bar": {
@@ -2015,19 +2011,15 @@
             "custom_font_description": "Stel de naam in van een lettertype dat op uw systeem is geïnstalleerd en %(brand)s zal proberen het te gebruiken.",
             "custom_font_name": "Systeemlettertypenaam",
             "custom_font_size": "Aangepaste lettergrootte gebruiken",
-            "custom_theme_add_button": "Thema toevoegen",
             "custom_theme_error_downloading": "Fout bij het downloaden van de thema-informatie.",
             "custom_theme_invalid": "Ongeldig themaschema.",
-            "custom_theme_success": "Thema toegevoegd!",
-            "custom_theme_url": "Aangepaste thema-URL",
             "font_size": "Lettergrootte",
             "image_size_default": "Standaard",
             "image_size_large": "Groot",
             "layout_bubbles": "Berichtenbubbels",
             "layout_irc": "IRC (Experimenteel)",
             "match_system_theme": "Aanpassen aan systeemthema",
-            "timeline_image_size": "Afbeeldingformaat in de tijdlijn",
-            "use_high_contrast": "Hoog contrast inschakelen"
+            "timeline_image_size": "Afbeeldingformaat in de tijdlijn"
         },
         "automatic_language_detection_syntax_highlight": "Automatische taaldetectie voor zinsbouwmarkeringen inschakelen",
         "autoplay_gifs": "GIF's automatisch afspelen",
@@ -2050,7 +2042,6 @@
             "confirm_adding_email_body": "Klik op de knop hieronder om dit e-mailadres toe te voegen.",
             "confirm_adding_email_title": "Bevestig toevoegen van het e-mailadres",
             "deactivate_confirm_body": "Weet je zeker dat je jouw account wil sluiten? Dit is onomkeerbaar.",
-            "deactivate_confirm_body_password": "Voer je wachtwoord in om verder te gaan:",
             "deactivate_confirm_body_sso": "Bevestig de deactivering van je account door gebruik te maken van eenmalige aanmelding om je identiteit te bewijzen.",
             "deactivate_confirm_content": "Bevestig dat je jouw account wil deactiveren. Als je doorgaat:",
             "deactivate_confirm_content_1": "Zal je jouw account niet kunnen heractiveren",
@@ -2067,7 +2058,6 @@
             "discovery_email_verification_instructions": "Verifieer de koppeling in je postvak",
             "discovery_msisdn_empty": "Vindbaarheidopties zullen verschijnen wanneer je een telefoonnummer hebt toegevoegd.",
             "discovery_needs_terms": "Aanvaard de gebruiksvoorwaarden van de identiteitsserver (%(serverName)s) om vindbaar te zijn op e-mailadres of telefoonnummer.",
-            "discovery_section": "Vindbaarheid",
             "email_address_in_use": "Dit e-mailadres is al in gebruik",
             "email_address_label": "E-mailadres",
             "email_not_verified": "Jouw e-mailadres is nog niet geverifieerd",
@@ -2098,8 +2088,7 @@
             "password_change_success": "Wachtwoord veranderen geslaagd.",
             "remove_email_prompt": "%(email)s verwijderen?",
             "remove_msisdn_prompt": "%(phone)s verwijderen?",
-            "spell_check_locale_placeholder": "Kies een landinstelling",
-            "spell_check_section": "Spellingscontrole"
+            "spell_check_locale_placeholder": "Kies een landinstelling"
         },
         "image_thumbnails": "Miniaturen voor afbeeldingen tonen",
         "inline_url_previews_default": "Inline URL-voorvertoning standaard inschakelen",
@@ -2237,7 +2226,6 @@
             "delete_backup_confirm_description": "Weet je het zeker? Je zal je versleutelde berichten verliezen als je sleutels niet correct geback-upt zijn.",
             "e2ee_default_disabled_warning": "De beheerder van je server heeft eind-tot-eind-versleuteling standaard uitgeschakeld in alle privékamers en directe gesprekken.",
             "enable_message_search": "Zoeken in versleutelde kamers inschakelen",
-            "encryption_individual_verification_mode": "Verifieer elke sessie die door een persoon wordt gebruikt afzonderlijk. Dit markeert hen als vertrouwd zonder te vertrouwen op kruislings ondertekende apparaten.",
             "encryption_section": "Versleuteling",
             "error_loading_key_backup_status": "Kan sleutelback-upstatus niet laden",
             "export_megolm_keys": "E2E-kamersleutels exporteren",
@@ -2251,7 +2239,6 @@
             "key_backup_connect_prompt": "Verbind deze sessie met de sleutelback-up voordat je jezelf afmeldt. Dit voorkomt dat je sleutels verliest die alleen op deze sessie voorkomen.",
             "key_backup_inactive": "Deze sessie <b>maakt geen back-ups van je sleutels</b>, maar je beschikt over een reeds bestaande back-up waaruit je kan herstellen en waaraan je nieuwe sleutels vanaf nu kunt toevoegen.",
             "key_backup_inactive_warning": "Jouw sleutels worden <b>niet geback-upt van deze sessie</b>.",
-            "manually_verify_all_sessions": "Handmatig alle externe sessies verifiëren",
             "message_search_disable_warning": "Dit moet aan staan om te kunnen zoeken in versleutelde kamers.",
             "message_search_disabled": "Sla versleutelde berichten veilig lokaal op om ze doorzoekbaar te maken.",
             "message_search_enabled": {
@@ -2633,15 +2620,10 @@
             "one": "%(count)s reactie",
             "other": "%(count)s reacties"
         },
-        "empty_explainer": "Threads helpen jou gesprekken on-topic te houden en gemakkelijk bij te houden.",
-        "empty_has_threads_tip": "Reageer op een lopende thread of gebruik \"%(replyInThread)s\" wanneer je de muisaanwijzer op een bericht plaatst om een nieuwe te starten.",
-        "empty_heading": "Houd threads georganiseerd",
-        "empty_tip": "<b>Tip:</b> Gebruik “%(replyInThread)s” met de muiscursor boven een bericht.",
         "error_start_thread_existing_relation": "Kan geen discussie maken van een gebeurtenis met een bestaande relatie",
         "my_threads": "Mijn discussies",
         "my_threads_description": "Toon alle threads waarin je hebt bijgedragen",
         "open_thread": "Open discussie",
-        "show_all_threads": "Threads weergeven",
         "show_thread_filter": "Toon:"
     },
     "time": {
@@ -3169,7 +3151,6 @@
         },
         "redact_button": "Recente berichten verwijderen",
         "revoke_invite": "Uitnodiging intrekken",
-        "role_label": "Rol in <RoomName/>",
         "room_encrypted": "De berichten in deze kamer worden eind-tot-eind-versleuteld.",
         "room_encrypted_detail": "Jouw berichten zijn beveiligd, en enkel de ontvanger en jij hebben de unieke sleutels om ze te ontsleutelen.",
         "room_unencrypted": "De berichten in deze kamer worden niet eind-tot-eind-versleuteld.",

@@ -568,9 +568,9 @@ test.describe("Timeline", () => {
             );
         });
 
-        test("should set inline start padding to a hidden event line", async ({ page, app, room, cryptoBackend }) => {
+        test("should set inline start padding to a hidden event line", async ({ page, app, room }) => {
             test.skip(
-                cryptoBackend === "rust",
+                true,
                 "Disabled due to screenshot test being flaky - https://github.com/element-hq/element-web/issues/26890",
             );
             await sendEvent(app.client, room.roomId);
@@ -779,12 +779,12 @@ test.describe("Timeline", () => {
                 await sendEvent(app.client, room.roomId, true);
                 await page.goto(`/#/room/${room.roomId}`);
 
-                await page.locator(".mx_LegacyRoomHeader").getByRole("button", { name: "Search" }).click();
+                await app.toggleRoomInfoPanel();
 
-                await expect(page.locator(".mx_SearchBar")).toMatchScreenshot("search-bar-on-timeline.png");
+                await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").fill("Message");
+                await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").press("Enter");
 
-                await page.locator(".mx_SearchBar_input").getByRole("textbox").fill("Message");
-                await page.locator(".mx_SearchBar_input").getByRole("textbox").press("Enter");
+                await expect(page.locator(".mx_RoomSearchAuxPanel")).toMatchScreenshot("search-aux-panel.png");
 
                 for (const locator of await page
                     .locator(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight")
@@ -804,7 +804,7 @@ test.describe("Timeline", () => {
                 await page.goto(`/#/room/${room.roomId}`);
 
                 // Open a room setting dialog
-                await page.getByRole("button", { name: "Room options" }).click();
+                await app.toggleRoomInfoPanel();
                 await page.getByRole("menuitem", { name: "Settings" }).click();
 
                 // Set a room topic to render a TextualEvent
@@ -818,12 +818,9 @@ test.describe("Timeline", () => {
                     page.getByText(`${OLD_NAME} changed the topic to "This is a room for ${stringToSearch}.".`),
                 ).toHaveClass(/mx_TextualEvent/);
 
-                // Display the room search bar
-                await page.locator(".mx_LegacyRoomHeader").getByRole("button", { name: "Search" }).click();
-
                 // Search the string to display both the message and TextualEvent on search results panel
-                await page.locator(".mx_SearchBar").getByRole("textbox").fill(stringToSearch);
-                await page.locator(".mx_SearchBar").getByRole("textbox").press("Enter");
+                await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").fill(stringToSearch);
+                await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").press("Enter");
 
                 // On search results panel
                 const resultsPanel = page.locator(".mx_RoomView_searchResultsPanel");

@@ -1028,7 +1028,6 @@
         "failed_generic": "Aðgerð tókst ekki",
         "failed_title": "Mistókst að bjóða",
         "invalid_address": "Óþekkjanlegt vistfang",
-        "key_share_warning": "Fólk sem er boðið mun geta lesið eldri skilaboð.",
         "name_email_mxid_share_room": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessari spjallrás</a>.",
         "name_email_mxid_share_space": "Bjóddu einhverjum með því að nota nafn, tölvupóstfang, notandanafn (eins og <userId/>) eða <a>deildu þessu svæði</a>.",
         "name_mxid_share_room": "Bjóddu einhverjum með því að nota nafn, notandanafn (eins og <userId/>) eða <a>deildu þessari spjallrás</a>.",
@@ -1606,13 +1605,10 @@
         "read_topic": "Smelltu til að lesa umfjöllunarefni",
         "rejoin_button": "Taka þátt aftur",
         "search": {
-            "all_rooms": "Allar spjallrásir",
-            "field_placeholder": "Leita…",
             "result_count": {
                 "one": "(~%(count)s niðurstaða)",
                 "other": "(~%(count)s niðurstöður)"
-            },
-            "this_room": "Þessi spjallrás"
+            }
         },
         "show_labs_settings": "Sýna tilraunastillingar",
         "status_bar": {
@@ -1919,19 +1915,15 @@
             "custom_font_description": "Settu inn heiti á letri sem er uppsett á kerfinu þínu og %(brand)s mun reyna að nota það.",
             "custom_font_name": "Nafn kerfisleturs",
             "custom_font_size": "Nota sérsniðna stærð",
-            "custom_theme_add_button": "Bæta við þema",
             "custom_theme_error_downloading": "Villa við að niðurhala þemaupplýsingum.",
             "custom_theme_invalid": "Ógilt þemaskema.",
-            "custom_theme_success": "Þema bætt við!",
-            "custom_theme_url": "Slóð á sérsniðið þema",
             "font_size": "Leturstærð",
             "image_size_default": "Sjálfgefið",
             "image_size_large": "Stórt",
             "layout_bubbles": "Skilaboðablöðrur",
             "layout_irc": "IRC (á tilraunastigi)",
             "match_system_theme": "Samsvara þema kerfis",
-            "timeline_image_size": "Stærð myndar í tímalínunni",
-            "use_high_contrast": "Nota mikil birtuskil"
+            "timeline_image_size": "Stærð myndar í tímalínunni"
         },
         "automatic_language_detection_syntax_highlight": "Virkja greiningu á forritunarmálum fyrir málskipunarlitun",
         "autoplay_gifs": "Spila GIF-myndir sjálfkrafa",
@@ -1962,7 +1954,6 @@
             "discovery_email_verification_instructions": "Athugaðu tengilinn í pósthólfinu þínu",
             "discovery_msisdn_empty": "Valkostir fyrir uppgötvun munu birtast um leið og þú hefur bætt inn símanúmeri hér fyrir ofan.",
             "discovery_needs_terms": "Samþykktu þjónustuskilmála auðkennisþjónsins (%(serverName)s) svo hægt sé að finna þig með tölvupóstfangi eða símanúmeri.",
-            "discovery_section": "Uppgötvun",
             "email_address_in_use": "Þetta tölvupóstfang er nú þegar í notkun",
             "email_address_label": "Tölvupóstfang",
             "email_not_verified": "Tölvupóstfangið þitt hefur ekki ennþá verið staðfest",
@@ -1989,8 +1980,7 @@
             "password_change_success": "Það tókst að breyta lykilorðinu þínu.",
             "remove_email_prompt": "Fjarlægja %(email)s?",
             "remove_msisdn_prompt": "Fjarlægja %(phone)s?",
-            "spell_check_locale_placeholder": "Veldu staðfærslu",
-            "spell_check_section": "Stafsetningaryfirferð"
+            "spell_check_locale_placeholder": "Veldu staðfærslu"
         },
         "image_thumbnails": "Birta forskoðun/smámyndir fyrir myndir",
         "inline_url_previews_default": "Sjálfgefið virkja forskoðun innfelldra vefslóða",
@@ -2121,7 +2111,6 @@
             "delete_backup_confirm_description": "Ertu viss? Þú munt tapa dulrituðu skilaboðunum þínum ef dulritunarlyklarnir þínir eru ekki rétt öryggisafritaðir.",
             "e2ee_default_disabled_warning": "Kerfisstjóri netþjónsins þíns hefur lokað á sjálfvirka dulritun í einkaspjallrásum og beinum skilaboðum.",
             "enable_message_search": "Virka skilaboðleit í dulrituðum spjallrásum",
-            "encryption_individual_verification_mode": "Sannreyndu hverja setu sem notandinn notar til að merkja hana sem treysta, án þess að treyta kross-undirrituðum tækjum.",
             "encryption_section": "Dulritun",
             "error_loading_key_backup_status": "Tókst ekki að hlaða inn stöðu öryggisafritunar dulritunarlykla",
             "export_megolm_keys": "Flytja út E2E dulritunarlykla spjallrásar",
@@ -2134,7 +2123,6 @@
             "key_backup_connect": "Tengja þessa setu við öryggisafrit af lykli",
             "key_backup_inactive": "Þessi seta er <b>ekki að öryggisafrita dulritunarlyklana þína</b>, en þú ert með fyrirliggjandi öryggisafrit sem þú getur endurheimt úr og notað til að halda áfram.",
             "key_backup_inactive_warning": "Dulritunarlyklarnir þínir eru <b>ekki öryggisafritaðir úr þessari setu</b>.",
-            "manually_verify_all_sessions": "Sannreyna handvirkt allar fjartengdar setur",
             "message_search_disable_warning": "Ef þetta er óvirkt, munu skilaboð frá dulrituðum spjallrásum ekki birtast í leitarniðurstöðum.",
             "message_search_disabled": "Setja dulrituð skilaboð leynilega í skyndiminni á tækinu svo þau birtist í leitarniðurstöðum.",
             "message_search_enabled": {
@@ -2517,12 +2505,9 @@
             "one": "%(count)s svar",
             "other": "%(count)s svör"
         },
-        "empty_explainer": "Spjallþræðir hjálpa til við að halda samræðum við efnið og gerir auðveldara að rekja þær.",
-        "empty_heading": "Haltu umræðum skipulögðum með spjallþráðum",
         "my_threads": "Spjallþræðirnir mínir",
         "my_threads_description": "Birtir alla spjallþræði sem þú hefur tekið þátt í",
         "open_thread": "Opna spjallþráð",
-        "show_all_threads": "Birta alla spjallþræði",
         "show_thread_filter": "Sýna:"
     },
     "time": {
@@ -3032,7 +3017,6 @@
         },
         "redact_button": "Fjarlægja nýleg skilaboð",
         "revoke_invite": "Afturkalla boð",
-        "role_label": "Hlutverk í <RoomName/>",
         "room_encrypted": "Skilaboð í þessari spjallrás eru enda-í-enda dulrituð.",
         "room_encrypted_detail": "Öryggi skilaboðanna þinna er tryggt og einungis þú og viðtakendurnir hafa dulritunarlyklana til að opna skilaboðin.",
         "room_unencrypted": "Skilaboð í þessari spjallrás eru ekki enda-í-enda dulrituð.",

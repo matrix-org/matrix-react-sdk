@@ -83,6 +83,7 @@ import {
     tryDecryptToken,
 } from "./utils/tokens/tokens";
 import { TokenRefresher } from "./utils/oidc/TokenRefresher";
+import { checkBrowserSupport } from "./SupportedBrowser";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -586,7 +587,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
 
         const pickleKey = (await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "")) ?? undefined;
         if (pickleKey) {
-            logger.log("Got pickle key");
+            logger.log(`Got pickle key for ${userId}|${deviceId}`);
         } else {
             logger.log("No pickle key available");
         }
@@ -658,7 +659,7 @@ export async function setLoggedIn(credentials: IMatrixClientCreds): Promise<Matr
             : null;
 
     if (pickleKey) {
-        logger.log("Created pickle key");
+        logger.log(`Created pickle key for ${credentials.userId}|${credentials.deviceId}`);
     } else {
         logger.log("Pickle key not created");
     }
@@ -1001,6 +1002,7 @@ async function startMatrixClient(
     IntegrationManagers.sharedInstance().startWatching();
     ActiveWidgetStore.instance.start();
     LegacyCallHandler.instance.start();
+    checkBrowserSupport();
 
     // Start Mjolnir even though we haven't checked the feature flag yet. Starting
     // the thing just wastes CPU cycles, but should result in no actual functionality
@@ -1056,6 +1058,7 @@ export async function onLoggedOut(): Promise<void> {
     await clearStorage({ deleteEverything: true });
     LifecycleCustomisations.onLoggedOutAndStorageCleared?.();
     await PlatformPeg.get()?.clearStorage();
+    SettingsStore.reset();
 
     // Do this last, so we can make sure all storage has been cleared and all
     // customisations got the memo.
