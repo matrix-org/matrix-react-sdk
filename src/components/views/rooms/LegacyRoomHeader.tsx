@@ -54,7 +54,7 @@ import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../../LegacyCallHa
 import { useFeatureEnabled, useSettingValue } from "../../../hooks/useSettings";
 import SdkConfig from "../../../SdkConfig";
 import { useEventEmitterState, useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
-import { useWidgets } from "../right_panel/RoomSummaryCard";
+import { useWidgets } from "../../../utils/WidgetUtils";
 import { WidgetType } from "../../../widgets/WidgetType";
 import { useCall, useLayout } from "../../../hooks/useCall";
 import { getJoinedNonFunctionalMembers } from "../../../utils/room/getJoinedNonFunctionalMembers";
@@ -497,7 +497,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     private readonly client = this.props.room.client;
     private readonly featureAskToJoinWatcher: string;
 
-    public constructor(props: IProps, context: IState) {
+    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
         const notiStore = RoomNotificationStateStore.instance.getRoomState(props.room);
         notiStore.on(NotificationStateEvents.Update, this.onNotificationUpdate);
