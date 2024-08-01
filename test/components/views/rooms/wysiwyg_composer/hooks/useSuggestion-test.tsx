@@ -379,7 +379,7 @@ describe("findSuggestionInText", () => {
         expect(findSuggestionInText(mentionWithSpaceAfter, 2, true)).toBeNull();
     });
 
-    it("returns an object for a an emoji suggestion", () => {
+    it("returns an object for an emoji suggestion", () => {
         const emoiticon = ":)";
         const precedingText = "hello ";
         const mentionInput = precedingText + emoiticon;

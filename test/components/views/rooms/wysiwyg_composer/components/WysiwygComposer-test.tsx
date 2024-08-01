@@ -433,7 +433,7 @@ describe("WysiwygComposer", () => {
             customRender(onChange, onSend);
             await waitFor(() => expect(screen.getByRole("textbox")).toHaveAttribute("contentEditable", "true"));
         });
-        it("pressing up and down arrows allows us to change the autocomplete selection", async () => {
+        it("typing a space to trigger an emoji replacement", async () => {
             fireEvent.input(screen.getByRole("textbox"), {
                 data: ":P",
                 inputType: "insertText",

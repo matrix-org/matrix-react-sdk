@@ -144,7 +144,7 @@ export function usePlainTextListeners(
             if (isHandledByAutocomplete) {
                 return;
             }
-            // handling accepting of plain text emojicon to emoji suggestions
+            // handle accepting of plain text emojicon to emoji replacement
             if (event.key == Key.ENTER || event.key == Key.SPACE) {
                 handleEmojiReplacement();
             }
