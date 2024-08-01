@@ -1529,6 +1529,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
 
             if (state === SyncState.Syncing && prevState === SyncState.Syncing) {
+                // We know we have performabed a live update and known rooms should be in a good state.
+                // Now is a good time to clean up drafts.
+                cleanUpDraftsIfRequired();
                 return;
             }
             logger.debug(`MatrixClient sync state => ${state}`);
@@ -1542,8 +1545,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (Notifier.shouldShowPrompt() && !MatrixClientPeg.userRegisteredWithinLastHours(24)) {
                 showNotificationsToast(false);
             }
-
-            cleanUpDraftsIfRequired();
 
             dis.fire(Action.FocusSendMessageComposer);
             this.setState({
