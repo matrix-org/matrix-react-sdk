@@ -99,8 +99,9 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
 
-    public constructor(props: IProps, context: typeof MatrixClientContext) {
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
+        this.context = context; // XXX: workaround for lack of `declare` support on `public context!:` definition
 
         this.state = {
             syncState: this.context.getSyncState(),
