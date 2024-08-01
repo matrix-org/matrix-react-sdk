@@ -198,13 +198,9 @@ interface IItemState {
 }
 
 export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
-    public static contextType = MatrixClientContext;
-
     private buttonRef = createRef<HTMLDivElement>();
 
     public constructor(props: IItemProps) {
-        super(props);
-
         const collapsed = SpaceTreeLevelLayoutStore.instance.getSpaceCollapsedState(
             props.space.roomId,
             this.props.parents,
