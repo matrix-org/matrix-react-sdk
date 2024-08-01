@@ -125,7 +125,7 @@ describe("<RoomSummaryCard />", () => {
         expect(container).toMatchSnapshot();
     });
 
-    it("has button to edit topic when expanded", () => {
+    it("has button to edit topic", () => {
         room.currentState.setStateEvents([
             new MatrixEvent({
                 type: "m.room.topic",
@@ -138,7 +138,6 @@ describe("<RoomSummaryCard />", () => {
             }),
         ]);
         const { container, getByText } = getComponent();
-        fireEvent.click(screen.getByText("This is the room's topic."));
         expect(getByText("Edit")).toBeInTheDocument();
         expect(container).toMatchSnapshot();
     });
@@ -272,7 +271,7 @@ describe("<RoomSummaryCard />", () => {
             mocked(settingsHooks.useFeatureEnabled).mockImplementation((feature) => feature === "feature_pinning");
             const { getByText } = getComponent();
 
-            expect(getByText("Pinned")).toBeInTheDocument();
+            expect(getByText("Pinned messages")).toBeInTheDocument();
         });
     });
 
@@ -280,14 +279,14 @@ describe("<RoomSummaryCard />", () => {
         it("renders poll history option", () => {
             const { getByText } = getComponent();
 
-            expect(getByText("Poll history")).toBeInTheDocument();
+            expect(getByText("Polls")).toBeInTheDocument();
         });
 
         it("opens poll history dialog on button click", () => {
             const permalinkCreator = new RoomPermalinkCreator(room);
             const { getByText } = getComponent({ permalinkCreator });
 
-            fireEvent.click(getByText("Poll history"));
+            fireEvent.click(getByText("Polls"));
 
             expect(Modal.createDialog).toHaveBeenCalledWith(PollHistoryDialog, {
                 room,
