@@ -1243,6 +1243,26 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },
+    [UIFeature.ShowLeaveSpaceInContextMenu]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowMembersListForSpaces]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowPlusMenuForMetaSpace]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowStartChatPlusMenuForMetaSpace]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
+    [UIFeature.ShowAddRoomPlusMenuForMetaSpace]: {
+        supportedLevels: LEVELS_UI_FEATURE,
+        default: true,
+    },
     [UIFeature.ShowExploreRoomsButton]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,

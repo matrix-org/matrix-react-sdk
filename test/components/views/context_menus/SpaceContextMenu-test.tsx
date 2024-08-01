@@ -33,6 +33,7 @@ import { leaveSpace } from "../../../../src/utils/leave-behaviour";
 import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
 import { UIComponent, UIFeature } from "../../../../src/settings/UIFeature";
 import SettingsStore from "../../../../src/settings/SettingsStore";
+import { _t } from "../../../../src/languageHandler";
 
 jest.mock("../../../../src/customisations/helpers/UIComponents", () => ({
     shouldShowComponent: jest.fn(),
@@ -225,6 +226,28 @@ describe("<SpaceContextMenu />", () => {
         });
     });
 
+    describe("UIFeature.ShowLeaveSpaceInContextMenu", () => {
+        it("ShowLeaveSpaceInContextMenu = true, renders 'leave space' option", () => {
+            mocked(shouldShowSpaceSettings).mockReturnValue(false);
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((val) => {
+                return val === UIFeature.ShowLeaveSpaceInContextMenu ? true : "default";
+            });
+            renderComponent();
+
+            expect(screen.getByTestId("leave-option")).toBeInTheDocument();
+        });
+
+        it("ShowLeaveSpaceInContextMenu = false, does not render 'leave space' option", () => {
+            mocked(shouldShowSpaceSettings).mockReturnValue(false);
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((val) => {
+                return val === UIFeature.ShowLeaveSpaceInContextMenu ? false : "default";
+            });
+            renderComponent();
+
+            expect(screen.queryByTestId("leave-option")).not.toBeInTheDocument();
+        });
+    });
+
     describe("UIFeature.AddSubSpace feature flag", () => {
         const space = makeMockSpace();
 
@@ -259,6 +282,34 @@ describe("<SpaceContextMenu />", () => {
             expect(screen.getByTestId("add-to-space-header")).toBeInTheDocument();
             expect(screen.getByTestId("new-room-option")).toBeInTheDocument();
             expect(screen.queryByTestId("new-subspace-option")).not.toBeInTheDocument();
+        });
+    });
+
+    describe("UIFeature.ShowSpaceLandingPageDetails", () => {
+        it("ShowSpaceLandingPageDetails = true, renders 'Manage & explore rooms' | 'explore rooms' option", () => {
+            mocked(shouldShowSpaceSettings).mockReturnValue(false);
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((val) => {
+                return val === UIFeature.ShowSpaceLandingPageDetails ? true : "default";
+            });
+            renderComponent();
+
+            const textToFind = screen.queryByText(_t("space|context_menu|manage_and_explore"))
+                ? _t("space|context_menu|manage_and_explore")
+                : _t("space|context_menu|explore");
+            expect(screen.queryByText(textToFind)).toBeInTheDocument();
+        });
+
+        it("ShowSpaceLandingPageDetails = false, does not render 'Manage & explore rooms' | 'explore rooms' option", () => {
+            mocked(shouldShowSpaceSettings).mockReturnValue(false);
+            jest.spyOn(SettingsStore, "getValue").mockImplementation((val) => {
+                return val === UIFeature.ShowSpaceLandingPageDetails ? false : "default";
+            });
+            renderComponent();
+
+            const textToFind = screen.queryByText(_t("space|context_menu|manage_and_explore"))
+                ? _t("space|context_menu|manage_and_explore")
+                : _t("space|context_menu|explore");
+            expect(screen.queryByText(textToFind)).not.toBeInTheDocument();
         });
     });
 });

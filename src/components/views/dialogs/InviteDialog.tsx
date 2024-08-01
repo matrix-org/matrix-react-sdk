@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { createRef, ReactNode, SyntheticEvent } from "react";
 import classNames from "classnames";
-import { RoomMember, Room } from "matrix-js-sdk/src/matrix"; //VERJI remove: MatrixError, EventType
+import { RoomMember, Room, EventType } from "matrix-js-sdk/src/matrix"; //VERJI remove: MatrixError, EventType
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import { MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -613,26 +613,29 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         return !showAnyInviteErrors(result.states, room, result.inviter, userMap);
     }
 
-    private async convertFilter(): Promise<Member[] | void> {
+    private async convertFilter(): Promise<Member[]> {
         // rosberg start
         this.setState({ busy: true });
 
         let foundUser = false;
-        await MatrixClientPeg.get()
-            ?.searchUserDirectory({ term: this.state.filterText.trim().split(":")[0] ?? this.state.filterText })
-            .then(async (r) => {
-                this.setState({ busy: false });
+        try {
+            await MatrixClientPeg.get()
+                ?.searchUserDirectory({ term: this.state.filterText.trim().split(":")[0] ?? this.state.filterText })
+                .then(async (r) => {
+                    this.setState({ busy: false });
 
-                if (r.results.find((e) => e.user_id == this.state.filterText.trim())) {
-                    foundUser = true;
-                }
-            });
+                    if (r.results.find((e) => e.user_id == this.state.filterText.trim())) {
+                        foundUser = true;
+                    }
+                });
+        } catch (error) {
+            console.error("Failed to searchUserDirectory: ", error);
+        }
 
         const currentUserId: string | undefined = MatrixClientPeg.getCredentials()?.userId.trim();
-
         if (currentUserId && currentUserId == this.state.filterText.trim()) {
             this.setState({ busy: false });
-            return;
+            return [{ userId: currentUserId }] as Member[];
         }
 
         if (foundUser == false) {
@@ -643,7 +646,6 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
                 ...this.state.serverResultsMixin,
                 ...this.state.threepidResultsMixin,
             ];
-
             const toAdd = [];
             const potentialAddresses = this.state.filterText
                 .split(/[\s,]+/)
@@ -658,7 +660,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
             }
 
             if (!toAdd?.length || toAdd?.length == 0) {
-                return;
+                //return [] as Member[];
             }
         }
         // Check to see if there's anything to convert first
@@ -703,7 +705,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         console.log("[Verji.InviteDialog] - Onboarding: " + newTargetsToInvite);
         return newTargetsToInvite;
     }
-    private startInviteByEmail = async (): void => {
+    private startInviteByEmail = async (): Promise<void> => {
         this.props.onFinished(false);
 
         let _externals = this.state.targetEmails;
@@ -746,7 +748,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
 
         try {
             const cli = MatrixClientPeg.safeGet();
-            const targets = this.convertFilter();
+            const targets = await this.convertFilter(); // Verji: convert now async, await response
             await startDmOnFirstMessage(cli, targets);
             this.props.onFinished(true);
         } catch (err) {
@@ -781,7 +783,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (this.props.kind !== InviteKind.Invite) return;
         this.setState({ busy: true });
         this.convertFilter();
-        const targets = this.convertFilter();
+        const targets = await this.convertFilter(); // Verji: convert now async, await response
         const targetIds = targets.map((t) => t.userId);
 
         const cli = MatrixClientPeg.safeGet();
@@ -814,7 +816,7 @@ export default class InviteDialog extends React.PureComponent<Props, IInviteDial
         if (this.props.kind !== InviteKind.CallTransfer) return;
         if (this.state.currentTabId == TabId.UserDirectory) {
             this.convertFilter();
-            const targets = this.convertFilter();
+            const targets = await this.convertFilter(); // Verji: convert now async, await response
             const targetIds = targets.map((t) => t.userId);
             if (targetIds.length > 1) {
                 this.setState({
