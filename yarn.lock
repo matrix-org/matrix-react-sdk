@@ -1850,10 +1850,10 @@
   resolved "https://registry.yarnpkg.com/@matrix-org/matrix-sdk-crypto-wasm/-/matrix-sdk-crypto-wasm-7.0.0.tgz#8d6abdb9ded8656cc9e2a7909913a34bf3fc9b3a"
   integrity sha512-MOencXiW/gI5MuTtCNsuojjwT5DXCrjMqv9xOslJC9h2tPdLFFFMGr58dY5Lis4DRd9MRWcgrGowUIHOqieWTA==
 
-"@matrix-org/matrix-wysiwyg@2.37.7":
-  version "2.37.7"
-  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-2.37.7.tgz#e7d75e40cc42a2f9862de593fda3b139f0d7d89e"
-  integrity sha512-OV2hMMQ4KZuKBWQuw5tllTO7ONFJYff7pftAvsvDVe8WUL8j3ud9eMnZizma4JyyoEoLAs7MFRnfJga0Oz5BjA==
+"@matrix-org/matrix-wysiwyg@2.37.8":
+  version "2.37.8"
+  resolved "https://registry.yarnpkg.com/@matrix-org/matrix-wysiwyg/-/matrix-wysiwyg-2.37.8.tgz#0b61e9023e3c73ca8789e97c80d7282e8c823c6b"
+  integrity sha512-fx8KGpztmJvwiY1OvE9A7r08kNcUZQIZXPbWcXNtQ61GwV5VyKvMxCmxfRlZ6Ac8oagVxRPu4WySCRX44Y9Ylw==
   dependencies:
     eslint-plugin-unicorn "^54.0.0"
 
@@ -6758,7 +6758,7 @@ matrix-events-sdk@0.0.1:
   resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/6b261b98c9e7fad891f777a0786830206685de57"
   dependencies:
     "@babel/runtime" "^7.12.5"
-    "@matrix-org/matrix-sdk-crypto-wasm" "^7.0.0"
+    "@matrix-org/matrix-sdk-crypto-wasm" "^6.0.0"
     another-json "^0.2.0"
     bs58 "^6.0.0"
     content-type "^1.0.4"
