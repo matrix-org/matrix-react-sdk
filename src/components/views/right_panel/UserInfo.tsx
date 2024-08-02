@@ -424,6 +424,7 @@ export const UserOptionsSection: React.FC<{
     member: Member;
     canInvite: boolean;
     isSpace?: boolean;
+    children?: ReactNode;
 }> = ({ member, canInvite, isSpace, children }) => {
     const cli = useContext(MatrixClientContext);
 
