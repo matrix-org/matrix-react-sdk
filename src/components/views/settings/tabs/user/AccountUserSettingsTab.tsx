@@ -188,7 +188,7 @@ const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn }) => {
     }
 
     return (
-        <SettingsTab data-testid="mx_GeneralUserSettingsTab">
+        <SettingsTab data-testid="mx_AccountUserSettingsTab">
             <SettingsSection>
                 <UserProfileSettings
                     externalAccountManagementUrl={externalAccountManagementUrl}
