@@ -380,7 +380,7 @@ describe("<AccountUserSettingsTab />", () => {
             });
         });
 
-        it("should display adialog if password change succeeded", async () => {
+        it("should display a dialog if password change succeeded", async () => {
             const createDialogFn = jest.fn();
             jest.spyOn(Modal, "createDialog").mockImplementation(createDialogFn);
 
