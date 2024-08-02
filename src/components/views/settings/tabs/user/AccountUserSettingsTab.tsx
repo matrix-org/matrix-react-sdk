@@ -62,7 +62,6 @@ const AccountSection: React.FC<AccountSectionProps> = ({
             >
                 <SettingsSubsectionText>{_t("settings|general|password_change_section")}</SettingsSubsectionText>
                 <ChangePassword
-                    className="mx_GeneralUserSettingsTab_section--account_changePassword"
                     rowClassName=""
                     buttonKind="primary"
                     onError={onPasswordChangeError}
@@ -93,7 +92,7 @@ const ManagementSection: React.FC<ManagementSectionProps> = ({ onDeactivateClick
     );
 };
 
-const GeneralUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn }) => {
+const AccountUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn }) => {
     const [externalAccountManagementUrl, setExternalAccountManagementUrl] = React.useState<string | undefined>();
     const [canMake3pidChanges, setCanMake3pidChanges] = React.useState<boolean>(false);
     const [canSetDisplayName, setCanSetDisplayName] = React.useState<boolean>(false);
@@ -208,4 +207,4 @@ const GeneralUserSettingsTab: React.FC<IProps> = ({ closeSettingsFn }) => {
     );
 };
 
-export default GeneralUserSettingsTab;
+export default AccountUserSettingsTab;
