@@ -35,7 +35,7 @@ test.describe("Account user settings tab", () => {
         await expect(uut).toMatchScreenshot("account.png");
 
         // Assert that the top heading is rendered
-        await expect(uut.getByRole("heading", { name: "Account" })).toBeVisible();
+        await expect(uut.getByRole("heading", { name: "Account", exact: true })).toBeVisible();
 
         const profile = uut.locator(".mx_UserProfileSettings_profile");
         await profile.scrollIntoViewIfNeeded();
@@ -49,12 +49,11 @@ test.describe("Account user settings tab", () => {
         await expect(uut.getByTestId("discoverySection").locator(".mx_Spinner")).not.toBeVisible();
 
         const accountSection = uut.getByTestId("accountSection");
+        accountSection.scrollIntoViewIfNeeded();
         // Assert that input areas for changing a password exists
-        const changePassword = accountSection.locator("form.mx_GeneralUserSettingsTab_section--account_changePassword");
-        await changePassword.scrollIntoViewIfNeeded();
-        await expect(changePassword.getByLabel("Current password")).toBeVisible();
-        await expect(changePassword.getByLabel("New Password")).toBeVisible();
-        await expect(changePassword.getByLabel("Confirm password")).toBeVisible();
+        await expect(accountSection.getByLabel("Current password")).toBeVisible();
+        await expect(accountSection.getByLabel("New Password")).toBeVisible();
+        await expect(accountSection.getByLabel("Confirm password")).toBeVisible();
 
         // Check email addresses area
         const emailAddresses = uut.getByTestId("mx_AccountEmailAddresses");
