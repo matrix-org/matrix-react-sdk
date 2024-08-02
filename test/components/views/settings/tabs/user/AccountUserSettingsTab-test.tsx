@@ -238,7 +238,7 @@ describe("<AccountUserSettingsTab />", () => {
             expect(within(screen.getByTestId("mx_AccountPhoneNumbers")).getByLabelText("Loading…")).toBeInTheDocument();
         });
 
-        it.skip("should display 3pid email addresses and phone numbers", async () => {
+        it("should display 3pid email addresses and phone numbers", async () => {
             render(getComponent());
 
             await flushPromises();
