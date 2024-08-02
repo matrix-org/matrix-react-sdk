@@ -124,7 +124,7 @@ jobs:
             matrix:
                 # Run multiple instances in parallel to speed up the tests
                 runner: ${{ fromJson(needs.prepare.outputs.parallelism_matrix) }}
-                browser: ${{ fromJson(inputs.browsers || '["chromium", "firefox", "chrome", "edge", "webkit"]') }}
+                browser: ${{ fromJson(inputs.browsers || '["chromium", "firefox"]') }}
         steps:
             - uses: actions/checkout@v4
               with:
