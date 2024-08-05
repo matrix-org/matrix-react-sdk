@@ -536,7 +536,9 @@ describe("<Notifications />", () => {
             // oneToOneRule is set to 'on'
             // and is kind: 'underride'
             const offToggle = screen.getByTestId(section + oneToOneRule.rule_id).querySelector('input[type="radio"]')!;
-            await act(() => fireEvent.click(offToggle));
+            await act(() => {
+                fireEvent.click(offToggle);
+            });
 
             await flushPromises();
 
@@ -561,7 +563,9 @@ describe("<Notifications />", () => {
             // oneToOneRule is set to 'on'
             // and is kind: 'underride'
             const offToggle = screen.getByTestId(section + oneToOneRule.rule_id).querySelector('input[type="radio"]')!;
-            await act(() => fireEvent.click(offToggle));
+            await act(() => {
+                fireEvent.click(offToggle);
+            });
 
             await flushPromises();
 
@@ -585,7 +589,7 @@ describe("<Notifications />", () => {
 
             await flushPromises();
 
-            // no error after after successful change
+            // no error after successful change
             expect(
                 within(oneToOneRuleElement).queryByText(
                     "An error occurred when updating your notification preferences. Please try to toggle your option again.",
@@ -725,7 +729,9 @@ describe("<Notifications />", () => {
                 mockClient.setPushRuleActions.mockRejectedValue("oups");
 
                 const offToggle = oneToOneRuleElement.querySelector('input[type="radio"]')!;
-                await act(() => fireEvent.click(offToggle));
+                await act(() => {
+                    fireEvent.click(offToggle);
+                });
 
                 await flushPromises();
 
@@ -823,9 +829,9 @@ describe("<Notifications />", () => {
 
             mockClient.setPushRuleEnabled.mockRejectedValueOnce("oups");
 
-            await act(() =>
-                fireEvent.click(within(screen.getByTestId(section + keywordsRuleId)).getByLabelText("Off")),
-            );
+            await act(() => {
+                fireEvent.click(within(screen.getByTestId(section + keywordsRuleId)).getByLabelText("Off"));
+            });
 
             await flushPromises();
 
