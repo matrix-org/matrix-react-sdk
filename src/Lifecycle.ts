@@ -1087,7 +1087,6 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
         const registrationTime = window.localStorage.getItem("mx_registration_time");
 
         window.localStorage.clear();
-        AbstractLocalStorageSettingsHandler.clear();
 
         try {
             await StorageAccess.idbDelete("account", ACCESS_TOKEN_STORAGE_KEY);

@@ -35,8 +35,7 @@ export default abstract class AbstractLocalStorageSettingsHandler extends Settin
         }
     };
 
-    // Expose the clear event for Lifecycle to call, the storage listener only fires for changes from other tabs
-    public static clear(): void {
+    private static clear(): void {
         AbstractLocalStorageSettingsHandler.itemCache.clear();
         AbstractLocalStorageSettingsHandler.objectCache.clear();
     }
@@ -110,7 +109,6 @@ export default abstract class AbstractLocalStorageSettingsHandler extends Settin
     }
 
     public reset(): void {
-        AbstractLocalStorageSettingsHandler.clear();
         AbstractLocalStorageSettingsHandler.clear();
     }
 }
