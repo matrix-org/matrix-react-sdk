@@ -469,11 +469,6 @@ export const UserOptionsSection: React.FC<{
                 Icon={CheckIcon}
             />
         );
-        if (readReceiptButtonDisabled) {
-            readReceiptButton = (
-                <Tooltip label={_t("user_info|jump_to_rr_button_disabled")}>{readReceiptButton}</Tooltip>
-            );
-        }
 
         if (member instanceof RoomMember && member.roomId && !isSpace) {
             const onInsertPillButton = function (): void {

@@ -3782,7 +3782,6 @@
         "ignore_confirm_title": "Ignore %(user)s",
         "invited_by": "Invited by %(sender)s",
         "jump_to_rr_button": "Jump to read receipt",
-        "jump_to_rr_button_disabled": "This feature is disabled",
         "kick_button_room": "Remove from room",
         "kick_button_room_name": "Remove from %(roomName)s",
         "kick_button_space": "Remove from space",
