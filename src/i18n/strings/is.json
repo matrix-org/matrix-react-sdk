@@ -1467,7 +1467,6 @@
     },
     "right_panel": {
         "add_integrations": "Bæta við viðmótshlutum, brúm og vélmennum",
-        "edit_integrations": "Breyta viðmótshlutum, brúm og vélmennum",
         "export_chat_button": "Flytja út spjall",
         "files_button": "Skrár",
         "pinned_messages": {
@@ -2505,12 +2504,9 @@
             "one": "%(count)s svar",
             "other": "%(count)s svör"
         },
-        "empty_explainer": "Spjallþræðir hjálpa til við að halda samræðum við efnið og gerir auðveldara að rekja þær.",
-        "empty_heading": "Haltu umræðum skipulögðum með spjallþráðum",
         "my_threads": "Spjallþræðirnir mínir",
         "my_threads_description": "Birtir alla spjallþræði sem þú hefur tekið þátt í",
         "open_thread": "Opna spjallþráð",
-        "show_all_threads": "Birta alla spjallþræði",
         "show_thread_filter": "Sýna:"
     },
     "time": {

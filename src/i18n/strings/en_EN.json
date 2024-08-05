@@ -474,6 +474,7 @@
         "encrypted": "Encrypted",
         "encryption_enabled": "Encryption enabled",
         "error": "Error",
+        "extensions": "Extensions",
         "faq": "FAQ",
         "favourites": "Favourites",
         "feedback": "Feedback",
@@ -1652,8 +1653,8 @@
         "download_brand_desktop": "Download %(brand)s Desktop",
         "download_f_droid": "Get it on F-Droid",
         "download_google_play": "Get it on Google Play",
-        "enable_notifications": "Turn on notifications",
-        "enable_notifications_action": "Enable notifications",
+        "enable_notifications": "Turn on desktop notifications",
+        "enable_notifications_action": "Open settings",
         "enable_notifications_description": "Don’t miss a reply or important message",
         "explore_rooms": "Explore Public Rooms",
         "find_community_members": "Find and invite your community members",
@@ -1830,10 +1831,11 @@
         "restore_failed_error": "Unable to restore backup"
     },
     "right_panel": {
-        "add_integrations": "Add widgets, bridges & bots",
+        "add_integrations": "Add extensions",
         "add_topic": "Add topic",
-        "edit_integrations": "Edit widgets, bridges & bots",
         "export_chat_button": "Export chat",
+        "extensions_empty_description": "Select “%(addIntegrations)s” to browse and add extensions to this room",
+        "extensions_empty_title": "Boost productivity with more tools, widgets and bots",
         "files_button": "Files",
         "info": "Info",
         "pinned_messages": {
@@ -1844,7 +1846,7 @@
             },
             "title": "Pinned messages"
         },
-        "pinned_messages_button": "Pinned",
+        "pinned_messages_button": "Pinned messages",
         "poll": {
             "active_heading": "Active polls",
             "empty_active": "There are no active polls in this room",
@@ -1869,7 +1871,7 @@
             "view_in_timeline": "View poll in timeline",
             "view_poll": "View poll"
         },
-        "polls_button": "Poll history",
+        "polls_button": "Polls",
         "room_summary_card": {
             "title": "Room info"
         },
@@ -1950,6 +1952,8 @@
                 "one": "Asking to join",
                 "other": "%(count)s people asking to join"
             },
+            "release_announcement_description": "Enjoy a simpler, more accessible room header.",
+            "release_announcement_header": "New design!",
             "room_is_public": "This room is public",
             "show_widgets_button": "Show Widgets",
             "video_call_button_ec": "Video call (%(brand)s)",
@@ -1987,7 +1991,7 @@
         "invite_reject_ignore": "Reject & Ignore user",
         "invite_sent_to_email": "This invite was sent to %(email)s",
         "invite_sent_to_email_room": "This invite to %(roomName)s was sent to %(email)s",
-        "invite_subtitle": "<userName/> invited you",
+        "invite_subtitle": "Invited by <userName/>",
         "invite_this_room": "Invite to this room",
         "invite_title": "Do you want to join %(roomName)s?",
         "inviter_unknown": "Unknown",
@@ -3193,16 +3197,13 @@
             "one": "%(count)s reply",
             "other": "%(count)s replies"
         },
-        "empty_explainer": "Threads help keep your conversations on-topic and easy to track.",
-        "empty_has_threads_tip": "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.",
-        "empty_heading": "Keep discussions organised with threads",
-        "empty_tip": "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.",
+        "empty_description": "Use “%(replyInThread)s” when hovering over a message.",
+        "empty_title": "Threads help keep your conversations on-topic and easy to track.",
         "error_start_thread_existing_relation": "Can't create a thread from an event with an existing relation",
         "mark_all_read": "Mark all as read",
         "my_threads": "My threads",
         "my_threads_description": "Shows all threads you've participated in",
         "open_thread": "Open thread",
-        "show_all_threads": "Show all threads",
         "show_thread_filter": "Show:"
     },
     "threads_activity_centre": {
@@ -3263,6 +3264,8 @@
         "disambiguated_profile": "%(displayName)s (%(matrixId)s)",
         "download_action_decrypting": "Decrypting",
         "download_action_downloading": "Downloading",
+        "download_failed": "Download failed",
+        "download_failed_description": "An error occurred while downloading this file",
         "edits": {
             "tooltip_label": "Edited at %(date)s. Click to view edits.",
             "tooltip_sub": "Click to view edits",
@@ -3695,6 +3698,10 @@
     "truncated_list_n_more": {
         "other": "And %(count)s more..."
     },
+    "unsupported_browser": {
+        "description": "If you continue, some features may stop working and there is a risk that you may lose data in the future. Update your browser to continue using %(brand)s.",
+        "title": "%(brand)s does not support this browser"
+    },
     "unsupported_server_description": "This server is using an older version of Matrix. Upgrade to Matrix %(version)s to use %(brand)s without errors.",
     "unsupported_server_title": "Your server is unsupported",
     "update": {
@@ -4064,7 +4071,7 @@
             "title": "Allow this widget to verify your identity"
         },
         "popout": "Popout widget",
-        "set_room_layout": "Set my room layout for everyone",
+        "set_room_layout": "Set layout for everyone",
         "shared_data_avatar": "Your profile picture URL",
         "shared_data_device_id": "Your device ID",
         "shared_data_lang": "Your language",

@@ -17,7 +17,7 @@ limitations under the License.
 import React, { forwardRef, ReactNode, KeyboardEvent, Ref, MouseEvent } from "react";
 import classNames from "classnames";
 import { IconButton, Text } from "@vector-im/compound-web";
-import { Icon as CloseIcon } from "@vector-im/compound-design-tokens/icons/close.svg";
+import CloseIcon from "@vector-im/compound-design-tokens/assets/web/icons/close";
 import { Icon as ChevronLeftIcon } from "@vector-im/compound-design-tokens/icons/chevron-left.svg";
 
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
@@ -41,25 +41,10 @@ interface IProps {
     onKeyDown?(ev: KeyboardEvent): void;
     cardState?: any;
     ref?: Ref<HTMLDivElement>;
-    // Ref for the 'close' button the the card
+    // Ref for the 'close' button the card
     closeButtonRef?: Ref<HTMLButtonElement>;
     children: ReactNode;
 }
-
-interface IGroupProps {
-    className?: string;
-    title: string;
-    children: ReactNode;
-}
-
-export const Group: React.FC<IGroupProps> = ({ className, title, children }) => {
-    return (
-        <div className={classNames("mx_BaseCard_Group", className)}>
-            <h2>{title}</h2>
-            {children}
-        </div>
-    );
-};
 
 const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
     (
@@ -143,7 +128,7 @@ const BaseCard: React.FC<IProps> = forwardRef<HTMLDivElement, IProps>(
                                     {header}
                                 </Text>
                             ) : (
-                                header ?? <div className="mx_BaseCard_header_spacer" />
+                                (header ?? <div className="mx_BaseCard_header_spacer" />)
                             )}
                             {closeButton}
                         </div>

@@ -410,7 +410,6 @@ test.describe("Timeline", () => {
                 {
                     // Exclude timestamp from snapshot of mx_MainSplit
                     mask: [page.locator(".mx_MessageTimestamp")],
-                    hideTooltips: true,
                 },
             );
 
@@ -428,7 +427,6 @@ test.describe("Timeline", () => {
             await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("expanded-gels-and-messages-irc-layout.png", {
                 // Exclude timestamp from snapshot of mx_MainSplit
                 mask: [page.locator(".mx_MessageTimestamp")],
-                hideTooltips: true,
             });
 
             // 3. Alignment of expanded GELS and placeholder of deleted message
@@ -449,7 +447,6 @@ test.describe("Timeline", () => {
             await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("expanded-gels-redaction-placeholder.png", {
                 // Exclude timestamp from snapshot of mx_MainSplit
                 mask: [page.locator(".mx_MessageTimestamp")],
-                hideTooltips: true,
             });
 
             // 4. Alignment of expanded GELS, placeholder of deleted message, and emote
@@ -472,7 +469,6 @@ test.describe("Timeline", () => {
             await expect(page.locator(".mx_MainSplit")).toMatchScreenshot("expanded-gels-emote-irc-layout.png", {
                 // Exclude timestamp from snapshot of mx_MainSplit
                 mask: [page.locator(".mx_MessageTimestamp")],
-                hideTooltips: true,
             });
         });
 
@@ -485,7 +481,6 @@ test.describe("Timeline", () => {
                         display: none !important;
                     }
                 `,
-                hideTooltips: true,
             };
 
             await sendEvent(app.client, room.roomId);
@@ -784,7 +779,7 @@ test.describe("Timeline", () => {
                 await sendEvent(app.client, room.roomId, true);
                 await page.goto(`/#/room/${room.roomId}`);
 
-                await page.locator(".mx_LegacyRoomHeader").getByRole("button", { name: "Search" }).click();
+                await app.toggleRoomInfoPanel();
 
                 await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").fill("Message");
                 await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").press("Enter");
@@ -809,7 +804,7 @@ test.describe("Timeline", () => {
                 await page.goto(`/#/room/${room.roomId}`);
 
                 // Open a room setting dialog
-                await page.getByRole("button", { name: "Room options" }).click();
+                await app.toggleRoomInfoPanel();
                 await page.getByRole("menuitem", { name: "Settings" }).click();
 
                 // Set a room topic to render a TextualEvent
@@ -822,9 +817,6 @@ test.describe("Timeline", () => {
                 await expect(
                     page.getByText(`${OLD_NAME} changed the topic to "This is a room for ${stringToSearch}.".`),
                 ).toHaveClass(/mx_TextualEvent/);
-
-                // Display the room search bar
-                await page.locator(".mx_LegacyRoomHeader").getByRole("button", { name: "Search" }).click();
 
                 // Search the string to display both the message and TextualEvent on search results panel
                 await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").fill(stringToSearch);

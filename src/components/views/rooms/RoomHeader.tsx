@@ -18,19 +18,18 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Body as BodyText, Button, IconButton, Menu, MenuItem, Tooltip } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
-import { Icon as CloseCallIcon } from "@vector-im/compound-design-tokens/icons/close.svg";
+import CloseCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/close";
 import { Icon as ThreadsIcon } from "@vector-im/compound-design-tokens/icons/threads-solid.svg";
 import { Icon as RoomInfoIcon } from "@vector-im/compound-design-tokens/icons/info-solid.svg";
 import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/icons/notifications-solid.svg";
-import { Icon as VerifiedIcon } from "@vector-im/compound-design-tokens/icons/verified.svg";
-import { Icon as ErrorIcon } from "@vector-im/compound-design-tokens/icons/error.svg";
-import { Icon as PublicIcon } from "@vector-im/compound-design-tokens/icons/public.svg";
+import VerifiedIcon from "@vector-im/compound-design-tokens/assets/web/icons/verified";
+import ErrorIcon from "@vector-im/compound-design-tokens/assets/web/icons/error";
+import PublicIcon from "@vector-im/compound-design-tokens/assets/web/icons/public";
 import { EventType, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
 import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 import { useRoomName } from "../../../hooks/useRoomName";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
-import { useTopic } from "../../../hooks/room/useTopic";
 import { useAccountData } from "../../../hooks/useAccountData";
 import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 import { useRoomMemberCount, useRoomMembers } from "../../../hooks/useRoomMembers";
@@ -49,7 +48,6 @@ import { useRoomState } from "../../../hooks/useRoomState";
 import RoomAvatar from "../avatars/RoomAvatar";
 import { formatCount } from "../../../utils/FormattingUtils";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
-import { Linkify, topicToHtml } from "../../../HtmlUtils";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { VideoRoomChatButton } from "./RoomHeader/VideoRoomChatButton";
 import { RoomKnocksBar } from "./RoomKnocksBar";
@@ -57,6 +55,9 @@ import { isVideoRoom } from "../../../utils/video-rooms";
 import { notificationLevelToIndicator } from "../../../utils/notifications";
 import { CallGuestLinkButton } from "./RoomHeader/CallGuestLinkButton";
 import { ButtonEvent } from "../elements/AccessibleButton";
+import { ReleaseAnnouncement } from "../../structures/ReleaseAnnouncement";
+import { useIsReleaseAnnouncementOpen } from "../../../hooks/useIsReleaseAnnouncementOpen";
+import { ReleaseAnnouncementStore } from "../../../stores/ReleaseAnnouncementStore";
 
 export default function RoomHeader({
     room,
@@ -68,7 +69,6 @@ export default function RoomHeader({
     const client = useMatrixClientContext();
 
     const roomName = useRoomName(room);
-    const roomTopic = useTopic(room);
     const roomState = useRoomState(room);
 
     const members = useRoomMembers(room, 2500);
@@ -114,14 +114,12 @@ export default function RoomHeader({
 
     const notificationsEnabled = useFeatureEnabled("feature_notifications");
 
-    const roomTopicBody = useMemo(
-        () => topicToHtml(roomTopic?.text, roomTopic?.html),
-        [roomTopic?.html, roomTopic?.text],
-    );
-
     const askToJoinEnabled = useFeatureEnabled("feature_ask_to_join");
 
-    const videoClick = useCallback((ev) => videoCallClick(ev, callOptions[0]), [callOptions, videoCallClick]);
+    const videoClick = useCallback(
+        (ev: React.MouseEvent) => videoCallClick(ev, callOptions[0]),
+        [callOptions, videoCallClick],
+    );
 
     const toggleCallButton = (
         <Tooltip label={isViewingCall ? _t("voip|minimise_call") : _t("voip|maximise_call")}>
@@ -238,74 +236,78 @@ export default function RoomHeader({
         voiceCallButton = undefined;
     }
 
+    const isReleaseAnnouncementOpen = useIsReleaseAnnouncementOpen("newRoomHeader");
+
     return (
         <>
             <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
-                <button
-                    aria-label={_t("right_panel|room_summary_card|title")}
-                    tabIndex={0}
-                    onClick={() => {
-                        RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomSummary);
-                    }}
-                    className="mx_RoomHeader_infoWrapper"
+                <ReleaseAnnouncement
+                    feature="newRoomHeader"
+                    header={_t("room|header|release_announcement_header")}
+                    description={_t("room|header|release_announcement_description")}
+                    closeLabel={_t("action|ok")}
+                    placement="bottom"
                 >
-                    <RoomAvatar room={room} size="40px" />
-                    <Box flex="1" className="mx_RoomHeader_info">
-                        <BodyText
-                            as="div"
-                            size="lg"
-                            weight="semibold"
-                            dir="auto"
-                            role="heading"
-                            aria-level={1}
-                            className="mx_RoomHeader_heading"
-                        >
-                            <span className="mx_RoomHeader_truncated mx_lineClamp">{roomName}</span>
-
-                            {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
-                                <Tooltip label={_t("common|public_room")} placement="right">
-                                    <PublicIcon
-                                        width="16px"
-                                        height="16px"
-                                        className="mx_RoomHeader_icon text-secondary"
-                                        aria-label={_t("common|public_room")}
-                                    />
-                                </Tooltip>
-                            )}
-
-                            {isDirectMessage && e2eStatus === E2EStatus.Verified && (
-                                <Tooltip label={_t("common|verified")} placement="right">
-                                    <VerifiedIcon
-                                        width="16px"
-                                        height="16px"
-                                        className="mx_RoomHeader_icon mx_Verified"
-                                        aria-label={_t("common|verified")}
-                                    />
-                                </Tooltip>
-                            )}
-
-                            {isDirectMessage && e2eStatus === E2EStatus.Warning && (
-                                <Tooltip label={_t("room|header_untrusted_label")} placement="right">
-                                    <ErrorIcon
-                                        width="16px"
-                                        height="16px"
-                                        className="mx_RoomHeader_icon mx_Untrusted"
-                                        aria-label={_t("room|header_untrusted_label")}
-                                    />
-                                </Tooltip>
-                            )}
-                        </BodyText>
-                        {roomTopic && (
+                    <button
+                        aria-label={_t("right_panel|room_summary_card|title")}
+                        tabIndex={0}
+                        onClick={() => {
+                            if (isReleaseAnnouncementOpen) {
+                                ReleaseAnnouncementStore.instance.nextReleaseAnnouncement();
+                            }
+                            RightPanelStore.instance.showOrHidePanel(RightPanelPhases.RoomSummary);
+                        }}
+                        className="mx_RoomHeader_infoWrapper"
+                    >
+                        <RoomAvatar room={room} size="40px" />
+                        <Box flex="1" className="mx_RoomHeader_info">
                             <BodyText
                                 as="div"
-                                size="sm"
-                                className="mx_RoomHeader_topic mx_RoomHeader_truncated mx_lineClamp"
+                                size="lg"
+                                weight="semibold"
+                                dir="auto"
+                                role="heading"
+                                aria-level={1}
+                                className="mx_RoomHeader_heading"
                             >
-                                <Linkify>{roomTopicBody}</Linkify>
+                                <span className="mx_RoomHeader_truncated mx_lineClamp">{roomName}</span>
+
+                                {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
+                                    <Tooltip label={_t("common|public_room")} placement="right">
+                                        <PublicIcon
+                                            width="16px"
+                                            height="16px"
+                                            className="mx_RoomHeader_icon text-secondary"
+                                            aria-label={_t("common|public_room")}
+                                        />
+                                    </Tooltip>
+                                )}
+
+                                {isDirectMessage && e2eStatus === E2EStatus.Verified && (
+                                    <Tooltip label={_t("common|verified")} placement="right">
+                                        <VerifiedIcon
+                                            width="16px"
+                                            height="16px"
+                                            className="mx_RoomHeader_icon mx_Verified"
+                                            aria-label={_t("common|verified")}
+                                        />
+                                    </Tooltip>
+                                )}
+
+                                {isDirectMessage && e2eStatus === E2EStatus.Warning && (
+                                    <Tooltip label={_t("room|header_untrusted_label")} placement="right">
+                                        <ErrorIcon
+                                            width="16px"
+                                            height="16px"
+                                            className="mx_RoomHeader_icon mx_Untrusted"
+                                            aria-label={_t("room|header_untrusted_label")}
+                                        />
+                                    </Tooltip>
+                                )}
                             </BodyText>
-                        )}
-                    </Box>
-                </button>
+                        </Box>
+                    </button>
+                </ReleaseAnnouncement>
                 <Flex align="center" gap="var(--cpd-space-2x)">
                     {additionalButtons?.map((props) => {
                         const label = props.label();

@@ -63,9 +63,9 @@ test.describe("RightPanel", () => {
             await app.closeDialog();
 
             // Close and reopen the right panel to render the room address
-            await page.getByRole("button", { name: "Room info" }).click();
+            await app.toggleRoomInfoPanel();
             await expect(page.locator(".mx_RightPanel")).not.toBeVisible();
-            await page.getByRole("button", { name: "Room info" }).click();
+            await app.toggleRoomInfoPanel();
 
             await expect(page.locator(".mx_RightPanel")).toMatchScreenshot("with-name-and-address.png");
         });
@@ -73,7 +73,8 @@ test.describe("RightPanel", () => {
         test("should handle clicking add widgets", async ({ page, app }) => {
             await viewRoomSummaryByName(page, app, ROOM_NAME);
 
-            await page.getByRole("button", { name: "Add widgets, bridges & bots" }).click();
+            await page.getByRole("tab", { name: "Extensions" }).click();
+            await page.getByRole("button", { name: "Add extensions" }).click();
             await expect(page.locator(".mx_IntegrationManager")).toBeVisible();
         });
 
@@ -104,7 +105,7 @@ test.describe("RightPanel", () => {
 
             await page.getByRole("menuitem", { name: "Files" }).click();
             await expect(page.locator(".mx_FilePanel")).toBeVisible();
-            await expect(page.locator(".mx_FilePanel_empty")).toBeVisible();
+            await expect(page.locator(".mx_EmptyState")).toBeVisible();
 
             await page.getByTestId("base-card-back-button").click();
             await checkRoomSummaryCard(page, ROOM_NAME);
