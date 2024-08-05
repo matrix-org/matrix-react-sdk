@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { renderHook } from "@testing-library/react-hooks";
-import { waitFor } from "@testing-library/react";
+import { renderHook, waitFor } from "@testing-library/react";
 
 import { useUserOnboardingTasks } from "../../src/hooks/useUserOnboardingTasks";
 import { useUserOnboardingContext } from "../../src/hooks/useUserOnboardingContext";
@@ -81,9 +80,11 @@ describe("useUserOnboardingTasks", () => {
         });
         const { result, rerender } = renderHook(() => useUserOnboardingTasks(context.result.current));
         expect(result.current[4].id).toBe("permission-notifications");
-        await waitFor(() => expect(result.current[4].completed).toBe(false));
+        expect(result.current[4].completed).toBe(false);
         result.current[4].action!.onClick!({ type: "click" } as any);
-        rerender();
-        await waitFor(() => expect(result.current[4].completed).toBe(true));
+        await waitFor(() => {
+            rerender();
+            expect(result.current[4].completed).toBe(true);
+        });
     });
 });
