@@ -35,7 +35,7 @@ describe("<SearchWarning />", () => {
             const { asFragment, getByRole } = render(
                 <SearchWarning isRoomEncrypted={true} kind={WarningKind.Search} />,
             );
-            expect(getByRole("presentation")).toHaveAttribute("src", "https://logo");
+            expect(getByRole("img")).toHaveAttribute("src", "https://logo");
             expect(asFragment()).toMatchSnapshot();
         });
 

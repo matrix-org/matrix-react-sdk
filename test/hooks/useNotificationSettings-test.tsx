@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks/dom";
+import { waitFor } from "@testing-library/react";
 import { IPushRules, MatrixClient, PushRuleKind, RuleId } from "matrix-js-sdk/src/matrix";
 
 import { useNotificationSettings } from "../../src/hooks/useNotificationSettings";

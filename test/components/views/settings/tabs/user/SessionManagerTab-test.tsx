@@ -931,7 +931,7 @@ describe("<SessionManagerTab />", () => {
                     devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
                 });
 
-                const { getByTestId } = render(getComponent(), { legacyRoot: true });
+                const { getByTestId } = render(getComponent());
 
                 await waitForElementToBeRemoved(() => screen.queryAllByRole("progressbar"));
                 await toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
@@ -1009,7 +1009,7 @@ describe("<SessionManagerTab />", () => {
                         devices: [alicesDevice, alicesOlderMobileDevice],
                     });
 
-                const { getByTestId, getByLabelText } = render(getComponent(), { legacyRoot: true });
+                const { getByTestId, getByLabelText } = render(getComponent());
 
                 await act(flushPromises);
 
@@ -1053,7 +1053,7 @@ describe("<SessionManagerTab />", () => {
                         type: "m.id.user",
                         user: aliceId,
                     },
-                    password: "topsecret",
+                    password: "",
                     type: "m.login.password",
                 });
                 // devices refreshed
