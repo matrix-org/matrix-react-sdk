@@ -10,9 +10,7 @@ NodeList [
     role="tab"
     tabindex="0"
   >
-    <span
-      class="mx_TabbedView_maskedIcon mx_UserSettingsDialog_settingsIcon"
-    />
+    <div />
     <span
       class="mx_TabbedView_tabLabel_text"
       id="mx_tabpanel_USER_GENERAL_TAB_label"
@@ -28,9 +26,7 @@ NodeList [
     role="tab"
     tabindex="-1"
   >
-    <span
-      class="mx_TabbedView_maskedIcon mx_UserSettingsDialog_sessionsIcon"
-    />
+    <div />
     <span
       class="mx_TabbedView_tabLabel_text"
       id="mx_tabpanel_USER_SESSION_MANAGER_TAB_label"
@@ -46,9 +42,7 @@ NodeList [
     role="tab"
     tabindex="-1"
   >
-    <span
-      class="mx_TabbedView_maskedIcon mx_UserSettingsDialog_appearanceIcon"
-    />
+    <div />
     <span
       class="mx_TabbedView_tabLabel_text"
       id="mx_tabpanel_USER_APPEARANCE_TAB_label"
@@ -64,9 +58,7 @@ NodeList [
     role="tab"
     tabindex="-1"
   >
-    <span
-      class="mx_TabbedView_maskedIcon mx_UserSettingsDialog_bellIcon"
-    />
+    <div />
     <span
       class="mx_TabbedView_tabLabel_text"
       id="mx_tabpanel_USER_NOTIFICATIONS_TAB_label"
@@ -82,9 +74,7 @@ NodeList [
     role="tab"
     tabindex="-1"
   >
-    <span
-      class="mx_TabbedView_maskedIcon mx_UserSettingsDialog_preferencesIcon"
-    />
+    <div />
     <span
       class="mx_TabbedView_tabLabel_text"
       id="mx_tabpanel_USER_PREFERENCES_TAB_label"
@@ -100,9 +90,7 @@ NodeList [
     role="tab"
     tabindex="-1"
   >
-    <span
-      class="mx_TabbedView_maskedIcon mx_UserSettingsDialog_keyboardIcon"
-    />
+    <div />
     <span
       class="mx_TabbedView_tabLabel_text"
       id="mx_tabpanel_USER_KEYBOARD_TAB_label"
@@ -118,9 +106,7 @@ NodeList [
     role="tab"
     tabindex="-1"
   >
-    <span
-      class="mx_TabbedView_maskedIcon mx_UserSettingsDialog_sidebarIcon"
-    />
+    <div />
     <span
       class="mx_TabbedView_tabLabel_text"
       id="mx_tabpanel_USER_SIDEBAR_TAB_label"
@@ -136,9 +122,7 @@ NodeList [
     role="tab"
     tabindex="-1"
   >
-    <span
-      class="mx_TabbedView_maskedIcon mx_UserSettingsDialog_securityIcon"
-    />
+    <div />
     <span
       class="mx_TabbedView_tabLabel_text"
       id="mx_tabpanel_USER_SECURITY_TAB_label"
@@ -154,9 +138,7 @@ NodeList [
     role="tab"
     tabindex="-1"
   >
-    <span
-      class="mx_TabbedView_maskedIcon mx_UserSettingsDialog_labsIcon"
-    />
+    <div />
     <span
       class="mx_TabbedView_tabLabel_text"
       id="mx_tabpanel_USER_LABS_TAB_label"
@@ -172,9 +154,7 @@ NodeList [
     role="tab"
     tabindex="-1"
   >
-    <span
-      class="mx_TabbedView_maskedIcon mx_UserSettingsDialog_helpIcon"
-    />
+    <div />
     <span
       class="mx_TabbedView_tabLabel_text"
       id="mx_tabpanel_USER_HELP_TAB_label"
