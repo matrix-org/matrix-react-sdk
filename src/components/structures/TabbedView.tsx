@@ -98,10 +98,12 @@ function TabLabel<T extends string>({ tab, isActive, showToolip, onClick }: ITab
     });
 
     let tabIcon: JSX.Element | undefined;
-    if (tab.icon && typeof tab.icon === "object") {
-        tabIcon = tab.icon;
-    } else if (typeof tab.icon === "string") {
-        tabIcon = <span className={`mx_TabbedView_maskedIcon ${tab.icon}`} />;
+    if (tab.icon) {
+        if (typeof tab.icon === "object") {
+            tabIcon = tab.icon;
+        } else if (typeof tab.icon === "string") {
+            tabIcon = <span className={`mx_TabbedView_maskedIcon ${tab.icon}`} />;
+        }
     }
 
     const id = domIDForTabID(tab.id);
