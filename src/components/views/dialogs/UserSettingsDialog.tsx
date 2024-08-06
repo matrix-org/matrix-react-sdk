@@ -17,18 +17,18 @@ limitations under the License.
 
 import { Toast } from "@vector-im/compound-web";
 import React, { useState } from "react";
-import { Icon as UserProfileIcon } from "@vector-im/compound-design-tokens/icons/user-profile.svg";
-import { Icon as DevicesIcon } from "@vector-im/compound-design-tokens/icons/devices.svg";
-import { Icon as VisibilityOnIcon } from "@vector-im/compound-design-tokens/icons/visibility-on.svg";
-import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/icons/notifications.svg";
-import { Icon as PreferencesIcon } from "@vector-im/compound-design-tokens/icons/preferences.svg";
-import { Icon as KeyboardIcon } from "@vector-im/compound-design-tokens/icons/keyboard.svg";
-import { Icon as SidebarIcon } from "@vector-im/compound-design-tokens/icons/sidebar.svg";
-import { Icon as MicOnIcon } from "@vector-im/compound-design-tokens/icons/mic-on.svg";
-import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock.svg";
-import { Icon as LabsIcon } from "@vector-im/compound-design-tokens/icons/labs.svg";
-import { Icon as BlockIcon } from "@vector-im/compound-design-tokens/icons/block.svg";
-import { Icon as HelpIcon } from "@vector-im/compound-design-tokens/icons/help.svg";
+import UserProfileIcon from "@vector-im/compound-design-tokens/assets/web/icons/user-profile";
+import DevicesIcon from "@vector-im/compound-design-tokens/assets/web/icons/devices";
+import VisibilityOnIcon from "@vector-im/compound-design-tokens/assets/web/icons/visibility-on";
+import NotificationsIcon from "@vector-im/compound-design-tokens/assets/web/icons/notifications";
+import PreferencesIcon from "@vector-im/compound-design-tokens/assets/web/icons/preferences";
+import KeyboardIcon from "@vector-im/compound-design-tokens/assets/web/icons/keyboard";
+import SidebarIcon from "@vector-im/compound-design-tokens/assets/web/icons/sidebar";
+import MicOnIcon from "@vector-im/compound-design-tokens/assets/web/icons/mic-on";
+import LockIcon from "@vector-im/compound-design-tokens/assets/web/icons/lock";
+import LabsIcon from "@vector-im/compound-design-tokens/assets/web/icons/labs";
+import BlockIcon from "@vector-im/compound-design-tokens/assets/web/icons/block";
+import HelpIcon from "@vector-im/compound-design-tokens/assets/web/icons/help";
 
 import TabbedView, { Tab, useActiveTabWithDefault } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
