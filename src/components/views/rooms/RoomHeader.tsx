@@ -58,6 +58,7 @@ import { ButtonEvent } from "../elements/AccessibleButton";
 import { ReleaseAnnouncement } from "../../structures/ReleaseAnnouncement";
 import { useIsReleaseAnnouncementOpen } from "../../../hooks/useIsReleaseAnnouncementOpen";
 import { ReleaseAnnouncementStore } from "../../../stores/ReleaseAnnouncementStore";
+import WithPresenceIndicator from "../avatars/WithPresenceIndicator";
 
 export default function RoomHeader({
     room,
@@ -259,7 +260,9 @@ export default function RoomHeader({
                         }}
                         className="mx_RoomHeader_infoWrapper"
                     >
-                        <RoomAvatar room={room} size="40px" />
+                        <WithPresenceIndicator room={room} size="8px">
+                            <RoomAvatar room={room} size="40px" />
+                        </WithPresenceIndicator>
                         <Box flex="1" className="mx_RoomHeader_info">
                             <BodyText
                                 as="div"
