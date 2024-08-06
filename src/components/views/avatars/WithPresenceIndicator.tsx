@@ -55,7 +55,7 @@ function tooltipText(variant: Presence): string {
     }
 }
 
-const useDmMember = (room: Room): RoomMember | null => {
+export const useDmMember = (room: Room): RoomMember | null => {
     const [dmMember, setDmMember] = useState<RoomMember | null>(null);
     const updateDmMember = (): void => {
         const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);

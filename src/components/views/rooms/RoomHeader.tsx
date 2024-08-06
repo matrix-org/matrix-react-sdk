@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Body as BodyText, Button, IconButton, Menu, MenuItem, Tooltip } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
@@ -25,12 +25,11 @@ import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/ico
 import VerifiedIcon from "@vector-im/compound-design-tokens/assets/web/icons/verified";
 import ErrorIcon from "@vector-im/compound-design-tokens/assets/web/icons/error";
 import PublicIcon from "@vector-im/compound-design-tokens/assets/web/icons/public";
-import { EventType, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
+import { JoinRule, type Room } from "matrix-js-sdk/src/matrix";
 import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
 
 import { useRoomName } from "../../../hooks/useRoomName";
 import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
-import { useAccountData } from "../../../hooks/useAccountData";
 import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 import { useRoomMemberCount, useRoomMembers } from "../../../hooks/useRoomMembers";
 import { _t } from "../../../languageHandler";
@@ -58,7 +57,7 @@ import { ButtonEvent } from "../elements/AccessibleButton";
 import { ReleaseAnnouncement } from "../../structures/ReleaseAnnouncement";
 import { useIsReleaseAnnouncementOpen } from "../../../hooks/useIsReleaseAnnouncementOpen";
 import { ReleaseAnnouncementStore } from "../../../stores/ReleaseAnnouncementStore";
-import WithPresenceIndicator from "../avatars/WithPresenceIndicator";
+import WithPresenceIndicator, { useDmMember } from "../avatars/WithPresenceIndicator";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
 
 export default function RoomHeader({
@@ -73,7 +72,7 @@ export default function RoomHeader({
     const client = useMatrixClientContext();
 
     const roomName = useRoomName(room);
-    const roomState = useRoomState(room);
+    const joinRule = useRoomState(room, (state) => state.getJoinRule());
 
     const members = useRoomMembers(room, 2500);
     const memberCount = useRoomMemberCount(room, { throttleWait: 2500 });
@@ -104,16 +103,8 @@ export default function RoomHeader({
     const threadNotifications = useRoomThreadNotifications(room);
     const globalNotificationState = useGlobalNotificationState();
 
-    const directRoomsList = useAccountData<Record<string, string[]>>(client, EventType.Direct);
-    const [isDirectMessage, setDirectMessage] = useState(false);
-    useEffect(() => {
-        for (const [, dmRoomList] of Object.entries(directRoomsList)) {
-            if (dmRoomList.includes(room?.roomId ?? "")) {
-                setDirectMessage(true);
-                break;
-            }
-        }
-    }, [room, directRoomsList]);
+    const dmMember = useDmMember(room);
+    const isDirectMessage = !!dmMember;
     const e2eStatus = useEncryptionStatus(client, room);
 
     const notificationsEnabled = useFeatureEnabled("feature_notifications");
@@ -278,7 +269,7 @@ export default function RoomHeader({
                             >
                                 <span className="mx_RoomHeader_truncated mx_lineClamp">{roomName}</span>
 
-                                {!isDirectMessage && roomState.getJoinRule() === JoinRule.Public && (
+                                {!isDirectMessage && joinRule === JoinRule.Public && (
                                     <Tooltip label={_t("common|public_room")} placement="right">
                                         <PublicIcon
                                             width="16px"
