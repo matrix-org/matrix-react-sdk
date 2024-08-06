@@ -724,7 +724,7 @@ test.describe("Timeline", () => {
             axe.disableRules("color-contrast");
 
             await page.route(
-                "**/_matrix/media/v3/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*",
+                "**/_matrix/client/v1/media/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*",
                 async (route) => {
                     await route.fulfill({
                         path: "playwright/sample-files/riot.png",
@@ -750,7 +750,7 @@ test.describe("Timeline", () => {
 
             const requestPromises: Promise<any>[] = [
                 page.waitForResponse("**/_matrix/media/v3/preview_url?url=https%3A%2F%2Fcall.element.io%2F&ts=*"),
-                page.waitForResponse("**/_matrix/media/v3/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*"),
+                page.waitForResponse("**/_matrix/client/v1/media/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*"),
             ];
 
             await app.client.sendMessage(room.roomId, "https://call.element.io/");
