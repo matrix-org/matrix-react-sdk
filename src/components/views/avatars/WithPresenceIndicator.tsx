@@ -55,13 +55,15 @@ function tooltipText(variant: Presence): string {
     }
 }
 
+function getDmMember(room: Room): RoomMember | null {
+    const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
+    return otherUserId ? room.getMember(otherUserId) : null;
+}
+
 export const useDmMember = (room: Room): RoomMember | null => {
-    const [dmMember, setDmMember] = useState<RoomMember | null>(null);
+    const [dmMember, setDmMember] = useState<RoomMember | null>(getDmMember(room));
     const updateDmMember = (): void => {
-        const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
-        if (otherUserId && getJoinedNonFunctionalMembers(room).length === 2 && isPresenceEnabled(room.client)) {
-            setDmMember(room.getMember(otherUserId));
-        }
+        setDmMember(getDmMember(room));
     };
 
     useEventEmitter(room.currentState, RoomStateEvent.Members, updateDmMember);
@@ -71,7 +73,7 @@ export const useDmMember = (room: Room): RoomMember | null => {
     return dmMember;
 };
 
-function getPresenceIcon(member: RoomMember | null): Presence | null {
+function getPresence(member: RoomMember | null): Presence | null {
     if (!member?.user) return null;
 
     const presence = member.user.presence;
@@ -92,22 +94,23 @@ function getPresenceIcon(member: RoomMember | null): Presence | null {
     return null;
 }
 
-const usePresence = (member: RoomMember | null): Presence | null => {
-    const [presence, setPresence] = useState<Presence | null>(getPresenceIcon(member));
+const usePresence = (room: Room, member: RoomMember | null): Presence | null => {
+    const [presence, setPresence] = useState<Presence | null>(getPresence(member));
     const updatePresence = (): void => {
-        setPresence(getPresenceIcon(member));
+        setPresence(getPresence(member));
     };
 
     useEventEmitter(member?.user, UserEvent.Presence, updatePresence);
     useEventEmitter(member?.user, UserEvent.CurrentlyActive, updatePresence);
     useEffect(updatePresence, [member]);
 
+    if (getJoinedNonFunctionalMembers(room).length !== 2 || !isPresenceEnabled(room.client)) return null;
     return presence;
 };
 
 const WithPresenceIndicator: React.FC<Props> = ({ room, size, tooltipProps, children }) => {
     const dmMember = useDmMember(room);
-    const presence = usePresence(dmMember);
+    const presence = usePresence(room, dmMember);
 
     let icon: JSX.Element | undefined;
     if (presence) {
