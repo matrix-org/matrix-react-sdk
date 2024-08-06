@@ -59,13 +59,16 @@ import { ReleaseAnnouncement } from "../../structures/ReleaseAnnouncement";
 import { useIsReleaseAnnouncementOpen } from "../../../hooks/useIsReleaseAnnouncementOpen";
 import { ReleaseAnnouncementStore } from "../../../stores/ReleaseAnnouncementStore";
 import WithPresenceIndicator from "../avatars/WithPresenceIndicator";
+import { IOOBData } from "../../../stores/ThreepidInviteStore";
 
 export default function RoomHeader({
     room,
     additionalButtons,
+    oobData,
 }: {
     room: Room;
     additionalButtons?: ViewRoomOpts["buttons"];
+    oobData?: IOOBData;
 }): JSX.Element {
     const client = useMatrixClientContext();
 
@@ -261,7 +264,7 @@ export default function RoomHeader({
                         className="mx_RoomHeader_infoWrapper"
                     >
                         <WithPresenceIndicator room={room} size="8px">
-                            <RoomAvatar room={room} size="40px" />
+                            <RoomAvatar room={room} size="40px" oobData={oobData} />
                         </WithPresenceIndicator>
                         <Box flex="1" className="mx_RoomHeader_info">
                             <BodyText
