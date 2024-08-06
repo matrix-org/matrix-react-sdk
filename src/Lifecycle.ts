@@ -58,7 +58,6 @@ import { setSentryUser } from "./sentry";
 import SdkConfig from "./SdkConfig";
 import { DialogOpener } from "./utils/DialogOpener";
 import { Action } from "./dispatcher/actions";
-import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
 import { OverwriteLoginPayload } from "./dispatcher/payloads/OverwriteLoginPayload";
 import { SdkContextClass } from "./contexts/SDKContext";
 import { messageForLoginError } from "./utils/ErrorUtils";
@@ -83,6 +82,7 @@ import {
     tryDecryptToken,
 } from "./utils/tokens/tokens";
 import { TokenRefresher } from "./utils/oidc/TokenRefresher";
+import { checkBrowserSupport } from "./SupportedBrowser";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -102,7 +102,7 @@ dis.register((payload) => {
         // If we unset the client and the component is updated,  the render will fail and unmount everything.
         // (The module dialog closes and fires a `aria_unhide_main_app` that will trigger a re-render)
         stopMatrixClient(false);
-        doSetLoggedIn(typed.credentials, true).catch((e) => {
+        doSetLoggedIn(typed.credentials, true, true).catch((e) => {
             // XXX we might want to fire a new event here to let the app know that the login failed ?
             // The module api could use it to display a message to the user.
             logger.warn("Failed to overwrite login", e);
@@ -208,6 +208,7 @@ export async function loadSession(opts: ILoadSessionOpts = {}): Promise<boolean>
                     guest: true,
                 },
                 true,
+                false,
             ).then(() => true);
         }
         const success = await restoreFromLocalStorage({
@@ -465,6 +466,7 @@ function registerAsGuest(hsUrl: string, isUrl?: string, defaultDeviceDisplayName
                         guest: true,
                     },
                     true,
+                    true,
                 ).then(() => true);
             },
             (err) => {
@@ -586,7 +588,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
 
         const pickleKey = (await PlatformPeg.get()?.getPickleKey(userId, deviceId ?? "")) ?? undefined;
         if (pickleKey) {
-            logger.log("Got pickle key");
+            logger.log(`Got pickle key for ${userId}|${deviceId}`);
         } else {
             logger.log("No pickle key available");
         }
@@ -609,6 +611,7 @@ export async function restoreFromLocalStorage(opts?: { ignoreGuest?: boolean }):
                 pickleKey: pickleKey ?? undefined,
                 freshLogin: freshLogin,
             },
+            false,
             false,
         );
         return true;
@@ -658,12 +661,12 @@ export async function setLoggedIn(credentials: IMatrixClientCreds): Promise<Matr
             : null;
 
     if (pickleKey) {
-        logger.log("Created pickle key");
+        logger.log(`Created pickle key for ${credentials.userId}|${credentials.deviceId}`);
     } else {
         logger.log("Pickle key not created");
     }
 
-    return doSetLoggedIn(Object.assign({}, credentials, { pickleKey }), true);
+    return doSetLoggedIn(Object.assign({}, credentials, { pickleKey }), true, true);
 }
 
 /**
@@ -700,7 +703,7 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
             (await PlatformPeg.get()?.getPickleKey(credentials.userId, credentials.deviceId)) ?? undefined;
     }
 
-    return doSetLoggedIn(credentials, overwrite);
+    return doSetLoggedIn(credentials, overwrite, false);
 }
 
 /**
@@ -746,12 +749,17 @@ async function createOidcTokenRefresher(credentials: IMatrixClientCreds): Promis
  * optionally clears localstorage, persists new credentials
  * to localstorage, starts the new client.
  *
- * @param {IMatrixClientCreds} credentials
- * @param {Boolean} clearStorageEnabled
+ * @param {IMatrixClientCreds} credentials The credentials to use
+ * @param {Boolean} clearStorageEnabled True to clear storage before starting the new client
+ * @param {Boolean} isFreshLogin True if this is a fresh login, false if it is previous session being restored
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
-async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnabled: boolean): Promise<MatrixClient> {
+async function doSetLoggedIn(
+    credentials: IMatrixClientCreds,
+    clearStorageEnabled: boolean,
+    isFreshLogin: boolean,
+): Promise<MatrixClient> {
     checkSessionLock();
     credentials.guest = Boolean(credentials.guest);
 
@@ -839,6 +847,9 @@ async function doSetLoggedIn(credentials: IMatrixClientCreds, clearStorageEnable
     } finally {
         clientPegOpts.rustCryptoStoreKey?.fill(0);
     }
+
+    // Run the migrations after the MatrixClientPeg has been assigned
+    SettingsStore.runMigrations(isFreshLogin);
 
     return client;
 }
@@ -1001,6 +1012,7 @@ async function startMatrixClient(
     IntegrationManagers.sharedInstance().startWatching();
     ActiveWidgetStore.instance.start();
     LegacyCallHandler.instance.start();
+    checkBrowserSupport();
 
     // Start Mjolnir even though we haven't checked the feature flag yet. Starting
     // the thing just wastes CPU cycles, but should result in no actual functionality
@@ -1019,9 +1031,6 @@ async function startMatrixClient(
     }
 
     checkSessionLock();
-
-    // Run the migrations after the MatrixClientPeg has been assigned
-    SettingsStore.runMigrations();
 
     // This needs to be started after crypto is set up
     DeviceListener.sharedInstance().start(client);
@@ -1085,7 +1094,6 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
         const registrationTime = window.localStorage.getItem("mx_registration_time");
 
         window.localStorage.clear();
-        AbstractLocalStorageSettingsHandler.clear();
 
         try {
             await StorageAccess.idbDelete("account", ACCESS_TOKEN_STORAGE_KEY);
@@ -1165,5 +1173,6 @@ window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string): Prom
             userId,
         },
         true,
+        false,
     );
 };
