@@ -71,7 +71,11 @@ describe("WithPresenceIndicator", () => {
         expect(container.children[0].tagName).toBe("SPAN");
     });
 
-    it("renders presence indicator with tooltip for DM rooms", async () => {
+    it.each([
+        ["online", "Online"],
+        ["offline", "Offline"],
+        ["unavailable", "Away"],
+    ])("renders presence indicator with tooltip for DM rooms", async (presenceStr, renderedStr) => {
         mocked(isPresenceEnabled).mockReturnValue(true);
         const DM_USER_ID = "@bob:foo.bar";
         const dmRoomMap = {
@@ -83,7 +87,7 @@ describe("WithPresenceIndicator", () => {
         room.getMember = jest.fn((userId) => {
             const member = new RoomMember(room.roomId, userId);
             member.user = new User(userId);
-            member.user.presence = "online";
+            member.user.presence = presenceStr;
             return member;
         });
 
@@ -99,7 +103,7 @@ describe("WithPresenceIndicator", () => {
             expect(tooltip).toBeVisible();
             return tooltip;
         });
-        expect(tooltip).toHaveTextContent("Online");
+        expect(tooltip).toHaveTextContent(renderedStr);
 
         expect(asFragment()).toMatchSnapshot();
     });
