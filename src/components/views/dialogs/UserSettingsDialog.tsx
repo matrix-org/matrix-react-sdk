@@ -17,6 +17,18 @@ limitations under the License.
 
 import { Toast } from "@vector-im/compound-web";
 import React, { useState } from "react";
+import { Icon as UserProfileIcon } from "@vector-im/compound-design-tokens/icons/user-profile.svg";
+import { Icon as DevicesIcon } from "@vector-im/compound-design-tokens/icons/devices.svg";
+import { Icon as VisibilityOnIcon } from "@vector-im/compound-design-tokens/icons/visibility-on.svg";
+import { Icon as NotificationsIcon } from "@vector-im/compound-design-tokens/icons/notifications.svg";
+import { Icon as PreferencesIcon } from "@vector-im/compound-design-tokens/icons/preferences.svg";
+import { Icon as KeyboardIcon } from "@vector-im/compound-design-tokens/icons/keyboard.svg";
+import { Icon as SidebarIcon } from "@vector-im/compound-design-tokens/icons/sidebar.svg";
+import { Icon as MicOnIcon } from "@vector-im/compound-design-tokens/icons/mic-on.svg";
+import { Icon as LockIcon } from "@vector-im/compound-design-tokens/icons/lock.svg";
+import { Icon as LabsIcon } from "@vector-im/compound-design-tokens/icons/labs.svg";
+import { Icon as BlockIcon } from "@vector-im/compound-design-tokens/icons/block.svg";
+import { Icon as HelpIcon } from "@vector-im/compound-design-tokens/icons/help.svg";
 
 import TabbedView, { Tab, useActiveTabWithDefault } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
@@ -93,7 +105,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
             new Tab(
                 UserTab.General,
                 _td("common|general"),
-                "mx_UserSettingsDialog_settingsIcon",
+                <UserProfileIcon />,
                 <GeneralUserSettingsTab closeSettingsFn={props.onFinished} />,
                 "UserSettingsGeneral",
             ),
@@ -102,7 +114,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
             new Tab(
                 UserTab.SessionManager,
                 _td("settings|sessions|title"),
-                "mx_UserSettingsDialog_sessionsIcon",
+                <DevicesIcon />,
                 <SessionManagerTab showMsc4108QrCode={showMsc4108QrCode} />,
                 undefined,
             ),
@@ -111,7 +123,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
             new Tab(
                 UserTab.Appearance,
                 _td("common|appearance"),
-                "mx_UserSettingsDialog_appearanceIcon",
+                <VisibilityOnIcon />,
                 <AppearanceUserSettingsTab />,
                 "UserSettingsAppearance",
             ),
@@ -120,7 +132,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
             new Tab(
                 UserTab.Notifications,
                 _td("notifications|enable_prompt_toast_title"),
-                "mx_UserSettingsDialog_bellIcon",
+                <NotificationsIcon />,
                 <NotificationUserSettingsTab />,
                 "UserSettingsNotifications",
             ),
@@ -129,7 +141,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
             new Tab(
                 UserTab.Preferences,
                 _td("common|preferences"),
-                "mx_UserSettingsDialog_preferencesIcon",
+                <PreferencesIcon />,
                 <PreferencesUserSettingsTab closeSettingsFn={props.onFinished} />,
                 "UserSettingsPreferences",
             ),
@@ -138,7 +150,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
             new Tab(
                 UserTab.Keyboard,
                 _td("settings|keyboard|title"),
-                "mx_UserSettingsDialog_keyboardIcon",
+                <KeyboardIcon />,
                 <KeyboardUserSettingsTab />,
                 "UserSettingsKeyboard",
             ),
@@ -147,7 +159,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
             new Tab(
                 UserTab.Sidebar,
                 _td("settings|sidebar|title"),
-                "mx_UserSettingsDialog_sidebarIcon",
+                <SidebarIcon />,
                 <SidebarUserSettingsTab />,
                 "UserSettingsSidebar",
             ),
@@ -158,7 +170,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
                 new Tab(
                     UserTab.Voice,
                     _td("settings|voip|title"),
-                    "mx_UserSettingsDialog_voiceIcon",
+                    <MicOnIcon />,
                     <VoiceUserSettingsTab />,
                     "UserSettingsVoiceVideo",
                 ),
@@ -169,7 +181,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
             new Tab(
                 UserTab.Security,
                 _td("room_settings|security|title"),
-                "mx_UserSettingsDialog_securityIcon",
+                <LockIcon />,
                 <SecurityUserSettingsTab closeSettingsFn={props.onFinished} />,
                 "UserSettingsSecurityPrivacy",
             ),
@@ -177,13 +189,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
 
         if (showLabsFlags() || SettingsStore.getFeatureSettingNames().some((k) => SettingsStore.getBetaInfo(k))) {
             tabs.push(
-                new Tab(
-                    UserTab.Labs,
-                    _td("common|labs"),
-                    "mx_UserSettingsDialog_labsIcon",
-                    <LabsUserSettingsTab />,
-                    "UserSettingsLabs",
-                ),
+                new Tab(UserTab.Labs, _td("common|labs"), <LabsIcon />, <LabsUserSettingsTab />, "UserSettingsLabs"),
             );
         }
         if (mjolnirEnabled) {
@@ -191,7 +197,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
                 new Tab(
                     UserTab.Mjolnir,
                     _td("labs_mjolnir|title"),
-                    "mx_UserSettingsDialog_mjolnirIcon",
+                    <BlockIcon />,
                     <MjolnirUserSettingsTab />,
                     "UserSettingMjolnir",
                 ),
@@ -201,7 +207,7 @@ export default function UserSettingsDialog(props: IProps): JSX.Element {
             new Tab(
                 UserTab.Help,
                 _td("setting|help_about|title"),
-                "mx_UserSettingsDialog_helpIcon",
+                <HelpIcon />,
                 <HelpUserSettingsTab />,
                 "UserSettingsHelpAbout",
             ),
