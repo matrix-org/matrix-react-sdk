@@ -17,7 +17,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { encodeUnpaddedBase64 } from "matrix-js-sdk/src/matrix";
+// Note: we don't import the base64 utils from `matrix-js-sdk/src/matrix` because this file
+// is used by Element Web's service worker, and importing `matrix` brings in ~1mb of stuff
+// we don't need. Instead, we ignore the import restriction and only bring in what we actually
+// need.
+// eslint-disable-next-line no-restricted-imports
+import { encodeUnpaddedBase64 } from "matrix-js-sdk/src/base64";
 import { logger } from "matrix-js-sdk/src/logger";
 
 /**
