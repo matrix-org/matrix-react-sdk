@@ -131,11 +131,9 @@ const WithPresenceIndicator: React.FC<Props> = ({ room, size, tooltipProps, chil
     return (
         <div className="mx_WithPresenceIndicator">
             {children}
-            {icon && (
-                <Tooltip label={tooltipText(presence)} placement="bottom">
-                    {icon}
-                </Tooltip>
-            )}
+            <Tooltip label={tooltipText(presence)} placement="bottom">
+                {icon}
+            </Tooltip>
         </div>
     );
 };
