@@ -35,7 +35,6 @@ import { E2EStatus } from "../../../utils/ShieldUtils";
 import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import dis from "../../../dispatcher/dispatcher";
-import { _t } from "../../../languageHandler";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { Action } from "../../../dispatcher/actions";
 import ContentMessages from "../../../ContentMessages";
@@ -44,7 +43,6 @@ import SettingsStore from "../../../settings/SettingsStore";
 import JumpToBottomButton from "../rooms/JumpToBottomButton";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import Measured from "../elements/Measured";
-import Heading from "../typography/Heading";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { SdkContextClass } from "../../../contexts/SDKContext";
 
@@ -193,16 +191,6 @@ export default class TimelineCard extends React.Component<IProps, IState> {
         }
     };
 
-    private renderTimelineCardHeader = (): JSX.Element => {
-        return (
-            <div className="mx_BaseCard_header_title">
-                <Heading size="4" className="mx_BaseCard_header_title_heading">
-                    {_t("right_panel|video_room_chat|title")}
-                </Heading>
-            </div>
-        );
-    };
-
     public render(): React.ReactNode {
         const highlightedEventId = this.state.isInitialEventHighlighted ? this.state.initialEventId : undefined;
 
@@ -232,10 +220,11 @@ export default class TimelineCard extends React.Component<IProps, IState> {
             >
                 <BaseCard
                     className={this.props.classNames}
-                    onClose={this.props.onClose}
                     withoutScrollContainer={true}
-                    header={this.renderTimelineCardHeader()}
                     ref={this.card}
+                    hideHeaderButtons
+                    id="timeline-panel"
+                    ariaLabelledBy="timeline-panel-tab"
                 >
                     {this.card.current && <Measured sensor={this.card.current} onMeasurement={this.onMeasurement} />}
                     <div className="mx_TimelineCard_timeline">
