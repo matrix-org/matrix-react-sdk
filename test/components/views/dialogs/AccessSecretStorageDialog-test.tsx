@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { ComponentProps } from "react";
 import { SecretStorage, MatrixClient } from "matrix-js-sdk/src/matrix";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Mocked } from "jest-mock";
 
@@ -129,13 +129,11 @@ describe("AccessSecretStorageDialog", () => {
         expect(screen.getByPlaceholderText("Security Phrase")).toHaveValue(securityKey);
         await submitDialog();
 
-        await waitFor(() =>
-            expect(
-                screen.getByText(
-                    "👎 Unable to access secret storage. Please verify that you entered the correct Security Phrase.",
-                ),
-            ).toBeInTheDocument(),
-        );
+        await expect(
+            screen.findByText(
+                "👎 Unable to access secret storage. Please verify that you entered the correct Security Phrase.",
+            ),
+        ).resolves.toBeInTheDocument();
 
         expect(screen.getByPlaceholderText("Security Phrase")).toHaveFocus();
     });

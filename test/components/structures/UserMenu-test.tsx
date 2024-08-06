@@ -128,7 +128,7 @@ describe("<UserMenu>", () => {
 
             const spy = jest.spyOn(defaultDispatcher, "dispatch");
             screen.getByRole("button", { name: /User menu/i }).click();
-            await waitFor(() => screen.getByRole("menuitem", { name: /Sign out/i }).click());
+            (await screen.findByRole("menuitem", { name: /Sign out/i })).click();
             await waitFor(() => {
                 expect(spy).toHaveBeenCalledWith({ action: "logout" });
             });
