@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { MatrixEvent, Poll, Room, M_TEXT } from "matrix-js-sdk/src/matrix";
 
 import { PollListItemEnded } from "../../../../../src/components/views/polls/pollHistory/PollListItemEnded";
@@ -163,7 +163,7 @@ describe("<PollListItemEnded />", () => {
         await setupRoomWithPollEvents([pollStartEvent], responses, [pollEndEvent], mockClient, room);
         const poll = room.polls.get(pollId)!;
 
-        const { getByText, queryByText } = getComponent({ event: pollStartEvent, poll });
+        const { getByText, queryByText, findByText } = getComponent({ event: pollStartEvent, poll });
         // fetch relations
         await flushPromises();
 
@@ -174,7 +174,7 @@ describe("<PollListItemEnded />", () => {
         ]);
 
         // updated with more responses
-        await waitFor(() => expect(getByText("Final result based on 3 votes")).toBeInTheDocument());
+        await expect(findByText("Final result based on 3 votes")).resolves.toBeInTheDocument();
         expect(getByText("Nissan Silvia S15")).toBeInTheDocument();
         expect(queryByText("Mitsubishi Lancer Evolution IX")).not.toBeInTheDocument();
     });

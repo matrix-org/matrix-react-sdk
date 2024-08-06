@@ -310,7 +310,6 @@ describe("<PinnedMessagesCard />", () => {
     it("should show spinner whilst loading", async () => {
         const room = mkRoom([], [pin1]);
         mountPins(room);
-        const spinner = await screen.getByTestId("spinner");
-        await waitForElementToBeRemoved(spinner);
+        await waitForElementToBeRemoved(() => screen.queryAllByRole("progressbar"));
     });
 });

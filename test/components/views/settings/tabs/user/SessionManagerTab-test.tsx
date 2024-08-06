@@ -931,16 +931,14 @@ describe("<SessionManagerTab />", () => {
                     devices: [alicesDevice, alicesMobileDevice, alicesOlderMobileDevice],
                 });
 
-                const { getByTestId } = render(getComponent());
+                const { getByTestId, findByTestId } = render(getComponent());
 
                 await waitForElementToBeRemoved(() => screen.queryAllByRole("progressbar"));
                 await toggleDeviceDetails(getByTestId, alicesMobileDevice.device_id);
 
-                const signOutButton = await waitFor(() =>
-                    within(getByTestId(`device-detail-${alicesMobileDevice.device_id}`)).getByTestId(
-                        "device-detail-sign-out-cta",
-                    ),
-                );
+                const signOutButton = await within(
+                    await findByTestId(`device-detail-${alicesMobileDevice.device_id}`),
+                ).findByTestId("device-detail-sign-out-cta");
 
                 // pretend it was really deleted on refresh
                 mockClient.getDevices.mockResolvedValueOnce({

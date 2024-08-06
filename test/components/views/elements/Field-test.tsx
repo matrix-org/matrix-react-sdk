@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 import Field from "../../../../src/components/views/elements/Field";
 
@@ -66,7 +66,7 @@ describe("Field", () => {
             fireEvent.focus(screen.getByRole("textbox"));
 
             // Expect 'alert' role
-            await waitFor(() => expect(screen.getByRole("alert")).toBeInTheDocument());
+            await expect(screen.findByRole("alert")).resolves.toBeInTheDocument();
 
             // Close the feedback is Escape is pressed
             fireEvent.keyDown(screen.getByRole("textbox"), { key: "Escape" });
@@ -86,7 +86,7 @@ describe("Field", () => {
             fireEvent.focus(screen.getByRole("textbox"));
 
             // Expect 'status' role
-            await waitFor(() => expect(screen.queryByRole("status")).toBeInTheDocument());
+            await expect(screen.findByRole("status")).resolves.toBeInTheDocument();
 
             // Close the feedback is Escape is pressed
             fireEvent.keyDown(screen.getByRole("textbox"), { key: "Escape" });
@@ -107,7 +107,7 @@ describe("Field", () => {
             fireEvent.focus(screen.getByRole("textbox"));
 
             // Expect 'tooltip' role
-            await waitFor(() => expect(screen.queryByRole("tooltip")).toBeInTheDocument());
+            await expect(screen.findByRole("tooltip")).resolves.toBeInTheDocument();
 
             // Close the feedback is Escape is pressed
             fireEvent.keyDown(screen.getByRole("textbox"), { key: "Escape" });

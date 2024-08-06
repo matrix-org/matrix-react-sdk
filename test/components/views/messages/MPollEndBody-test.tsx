@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { render, waitFor } from "@testing-library/react";
+import { getByRole, render, waitFor } from "@testing-library/react";
 import { EventTimeline, MatrixEvent, Room, M_TEXT } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 

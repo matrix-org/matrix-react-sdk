@@ -290,7 +290,7 @@ describe("<UserInfo />", () => {
         it("renders close button correctly when encryption panel with a pending verification request", async () => {
             renderComponent({ phase: RightPanelPhases.EncryptionPanel, verificationRequest });
             screen.getByTestId("base-card-close-button").focus();
-            await waitFor(() => expect(screen.getByRole("tooltip")).toHaveTextContent("Cancel"));
+            await expect(screen.findByRole("tooltip", { name: "Cancel" })).resolves.toBeInTheDocument();
         });
     });
 
