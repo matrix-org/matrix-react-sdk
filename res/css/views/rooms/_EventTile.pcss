@@ -787,6 +787,17 @@ $left-gutter: 64px;
         ul {
             list-style-type: disc;
         }
+
+        /* override styles from the base markdown CSS that put markdown content on its own line,
+           as this isn't what we want for richtext emote content.
+         */
+        &::before {
+            display: none;
+        }
+
+        &::after {
+            display: none;
+        }
     }
 }
 
@@ -887,6 +898,10 @@ $left-gutter: 64px;
     &.markdown-body img {
         object-fit: contain;
         object-position: left top;
+
+        /* Override the default colors of the 'github-markdown-css' library 
+        (#fff for light theme, #000 for dark theme) to match the inherited theme */
+        background-color: inherit !important;
     }
 
     .mx_EventTile_clamp & {
