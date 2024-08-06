@@ -16,7 +16,7 @@ limitations under the License.
 
 import classNames from "classnames";
 import { IEventRelation } from "matrix-js-sdk/src/matrix";
-import React, { MutableRefObject, ReactNode, useEffect, useState } from "react";
+import React, { MutableRefObject, ReactNode } from "react";
 
 import { useComposerFunctions } from "../hooks/useComposerFunctions";
 import { useIsFocused } from "../hooks/useIsFocused";
@@ -26,7 +26,7 @@ import { useSetCursorPosition } from "../hooks/useSetCursorPosition";
 import { ComposerFunctions } from "../types";
 import { Editor } from "./Editor";
 import { WysiwygAutocomplete } from "./WysiwygAutocomplete";
-import SettingsStore from "../../../../../settings/SettingsStore";
+import { useSettingValue } from "../../../../../hooks/useSettings";
 
 interface PlainTextComposerProps {
     disabled?: boolean;
@@ -53,19 +53,7 @@ export function PlainTextComposer({
     rightComponent,
     eventRelation,
 }: PlainTextComposerProps): JSX.Element {
-    const [isAutoReplaceEmojiEnabled, setIsAutoReplaceEmojiEnabled] = useState(
-        SettingsStore.getValue<boolean>("MessageComposerInput.autoReplaceEmoji"),
-    );
-    useEffect(() => {
-        const ref = SettingsStore.watchSetting("MessageComposerInput.autoReplaceEmoji", null, (...[, , , value]) => {
-            setIsAutoReplaceEmojiEnabled(value as boolean);
-        });
-
-        // clean-up
-        return () => {
-            SettingsStore.unwatchSetting(ref);
-        };
-    });
+    const isAutoReplaceEmojiEnabled = useSettingValue<boolean>("MessageComposerInput.autoReplaceEmoji");
     const {
         ref: editorRef,
         autocompleteRef,

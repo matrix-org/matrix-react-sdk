@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { memo, MutableRefObject, ReactNode, useEffect, useRef, useState } from "react";
+import React, { memo, MutableRefObject, ReactNode, useEffect, useMemo, useRef } from "react";
 import { IEventRelation } from "matrix-js-sdk/src/matrix";
 import { EMOTICON_TO_EMOJI } from "@matrix-org/emojibase-bindings";
 import { useWysiwyg, FormattingFunctions } from "@matrix-org/matrix-wysiwyg";
@@ -32,7 +32,7 @@ import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import { Action } from "../../../../../dispatcher/actions";
 import { parsePermalink } from "../../../../../utils/permalinks/Permalinks";
 import { isNotNull } from "../../../../../Typeguards";
-import SettingsStore from "../../../../../settings/SettingsStore";
+import { useSettingValue } from "../../../../../hooks/useSettings";
 
 interface WysiwygComposerProps {
     disabled?: boolean;
@@ -69,20 +69,8 @@ export const WysiwygComposer = memo(function WysiwygComposer({
 
     const inputEventProcessor = useInputEventProcessor(onSend, autocompleteRef, initialContent, eventRelation);
 
-    const [emojiSuggestions, setEmojiSuggestions] = useState(
-        getEmojiSuggestions(SettingsStore.getValue<boolean>("MessageComposerInput.autoReplaceEmoji")),
-    );
-
-    useEffect(() => {
-        const ref = SettingsStore.watchSetting("MessageComposerInput.autoReplaceEmoji", null, (...[, , , value]) => {
-            setEmojiSuggestions(getEmojiSuggestions(value as boolean));
-        });
-
-        // clean-up
-        return () => {
-            SettingsStore.unwatchSetting(ref);
-        };
-    });
+    const isAutoReplaceEmojiEnabled = useSettingValue<boolean>("MessageComposerInput.autoReplaceEmoji");
+    const emojiSuggestions = useMemo(() => getEmojiSuggestions(isAutoReplaceEmojiEnabled), [isAutoReplaceEmojiEnabled]);
 
     const { ref, isWysiwygReady, content, actionStates, wysiwyg, suggestion, messageContent } = useWysiwyg({
         initialContent,
