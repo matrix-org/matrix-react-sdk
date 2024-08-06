@@ -205,7 +205,14 @@ const ExtensionsCard: React.FC<Props> = ({ room, onClose }) => {
     }
 
     return (
-        <BaseCard header={header} className="mx_ExtensionsCard" onClose={onClose} hideHeaderButtons>
+        <BaseCard
+            header={header}
+            className="mx_ExtensionsCard"
+            onClose={onClose}
+            hideHeaderButtons
+            id="extensions-panel"
+            ariaLabelledBy="extensions-panel-tab"
+        >
             {body}
         </BaseCard>
     );

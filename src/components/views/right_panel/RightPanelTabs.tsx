@@ -98,7 +98,7 @@ export const RightPanelTabs: React.FC<Props> = ({ phase, room }): JSX.Element | 
                 !isVideoRoom &&
                 shouldShowComponent(UIComponent.AddIntegrations) && (
                     <NavItem
-                        aria-controls="thread-panel"
+                        aria-controls="extensions-panel"
                         id="extensions-panel-tab"
                         onClick={() => {
                             RightPanelStore.instance.pushCard({ phase: RightPanelPhases.Extensions }, true);
