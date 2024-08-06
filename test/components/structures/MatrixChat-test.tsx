@@ -629,6 +629,7 @@ describe("<MatrixChat />", () => {
                 localStorage.setItem(`mx_cider_state_${unknownRoomId}`, "fake_content");
                 localStorage.setItem(DRAFT_LAST_CLEANUP_KEY, String(timestamp - 100));
                 await getComponentAndWaitForReady();
+                mockClient.emit(ClientEvent.Sync, SyncState.Syncing, SyncState.Syncing);
                 expect(localStorage.getItem(`mx_cider_state_${unknownRoomId}`)).not.toBeNull();
             });
         });
