@@ -15,50 +15,6 @@ limitations under the License.
 */
 
 .mx_PinnedMessagesCard {
-    .mx_PinnedMessagesCard_empty_wrapper {
-        display: flex;
-        height: 100%;
-
-        .mx_PinnedMessagesCard_empty {
-            height: max-content;
-            text-align: center;
-            margin: auto 40px;
-
-            .mx_PinnedMessagesCard_MessageActionBar {
-                pointer-events: none;
-                width: max-content;
-                margin: 0 auto;
-
-                /* Cancel the default values for non-interactivity */
-                position: unset;
-                visibility: visible;
-                cursor: unset;
-
-                &::before {
-                    content: unset;
-                }
-
-                .mx_MessageActionBar_optionsButton {
-                    background: var(--MessageActionBar-item-hover-background);
-                    border-radius: var(--MessageActionBar-item-hover-borderRadius);
-                    z-index: var(--MessageActionBar-item-hover-zIndex);
-                    color: var(--cpd-color-icon-primary);
-                }
-            }
-
-            .mx_PinnedMessagesCard_empty_header {
-                color: $primary-content;
-                margin-block: $spacing-24 $spacing-20;
-            }
-
-            > span {
-                font-size: $font-12px;
-                line-height: $font-15px;
-                color: $secondary-content;
-            }
-        }
-    }
-
     --unpin-height: 76px;
 
     .mx_PinnedMessagesCard_wrapper {

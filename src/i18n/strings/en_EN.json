@@ -1839,8 +1839,8 @@
         "files_button": "Files",
         "info": "Info",
         "pinned_messages": {
-            "empty": "Nothing pinned, yet",
-            "explainer": "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.",
+            "empty_description": "Select a message and choose “Pin message” to include here.",
+            "empty_title": "Pin important messages so that they can be easily discovered",
             "header": {
                 "one": "1 Pinned message",
                 "other": "%(count)s Pinned messages",
