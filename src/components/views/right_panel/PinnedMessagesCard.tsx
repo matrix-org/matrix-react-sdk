@@ -19,10 +19,8 @@ import { Room, RoomEvent, RoomStateEvent, MatrixEvent, EventType, RelationType }
 import { logger } from "matrix-js-sdk/src/logger";
 import { Button, Separator } from "@vector-im/compound-web";
 import classNames from "classnames";
+import PinIcon from "@vector-im/compound-design-tokens/assets/web/icons/pin";
 
-import { Icon as ContextMenuIcon } from "../../../../res/img/element-icons/context-menu.svg";
-import { Icon as EmojiIcon } from "../../../../res/img/element-icons/room/message-bar/emoji.svg";
-import { Icon as ReplyIcon } from "../../../../res/img/element-icons/room/message-bar/reply.svg";
 import { _t } from "../../../languageHandler";
 import BaseCard from "./BaseCard";
 import Spinner from "../elements/Spinner";
@@ -39,6 +37,7 @@ import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { filterBoolean } from "../../../utils/arrays";
 import Modal from "../../../Modal";
 import { UnpinAllDialog } from "../dialogs/UnpinAllDialog";
+import EmptyState from "./EmptyState";
 
 interface IProps {
     room: Room;
@@ -170,33 +169,11 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
     let content: JSX.Element[] | JSX.Element | undefined;
     if (!pinnedEventIds.length) {
         content = (
-            <div className="mx_PinnedMessagesCard_empty_wrapper">
-                <div className="mx_PinnedMessagesCard_empty">
-                    {/* XXX: We reuse the classes for simplicity, but deliberately not the components for non-interactivity. */}
-                    <div className="mx_MessageActionBar mx_PinnedMessagesCard_MessageActionBar">
-                        <div className="mx_MessageActionBar_iconButton">
-                            <EmojiIcon />
-                        </div>
-                        <div className="mx_MessageActionBar_iconButton">
-                            <ReplyIcon />
-                        </div>
-                        <div className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton">
-                            <ContextMenuIcon />
-                        </div>
-                    </div>
-
-                    <Heading size="4" className="mx_PinnedMessagesCard_empty_header">
-                        {_t("right_panel|pinned_messages|empty")}
-                    </Heading>
-                    {_t(
-                        "right_panel|pinned_messages|explainer",
-                        {},
-                        {
-                            b: (sub) => <b>{sub}</b>,
-                        },
-                    )}
-                </div>
-            </div>
+            <EmptyState
+                Icon={PinIcon}
+                title={_t("right_panel|pinned_messages|empty_title")}
+                description={_t("right_panel|pinned_messages|empty_description")}
+            />
         );
     } else if (pinnedEvents?.length) {
         content = (
