@@ -755,7 +755,7 @@ test.describe("Timeline", () => {
 
             const requestPromises: Promise<any>[] = [
                 page.waitForResponse("**/_matrix/media/v3/preview_url?url=https%3A%2F%2Fcall.element.io%2F&ts=*"),
-                // see page.route above for why we listen for the unauthenticated endpoint
+                // see context.route above for why we listen for the unauthenticated endpoint
                 page.waitForResponse("**/_matrix/media/v3/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*"),
             ];
 
