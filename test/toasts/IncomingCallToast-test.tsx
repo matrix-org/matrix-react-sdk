@@ -19,8 +19,7 @@ import { render, screen, cleanup, fireEvent, waitFor } from "@testing-library/re
 import { mocked, Mocked } from "jest-mock";
 import { Room, RoomStateEvent, MatrixEvent, MatrixEventEvent, MatrixClient } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
-// eslint-disable-next-line no-restricted-imports
-import { ICallNotifyContent } from "matrix-js-sdk/src/matrixrtc/types";
+import { ICallNotifyContent } from "matrix-js-sdk/src/matrixrtc";
 
 import type { RoomMember } from "matrix-js-sdk/src/matrix";
 import {
@@ -39,11 +38,10 @@ import { WidgetMessagingStore } from "../../src/stores/widgets/WidgetMessagingSt
 import DMRoomMap from "../../src/utils/DMRoomMap";
 import ToastStore from "../../src/stores/ToastStore";
 import { getIncomingCallToastKey, IncomingCallToast } from "../../src/toasts/IncomingCallToast";
-import { AudioID } from "../../src/LegacyCallHandler";
+import LegacyCallHandler, { AudioID } from "../../src/LegacyCallHandler";
 
-describe("IncomingCallEvent", () => {
+describe("IncomingCallToast", () => {
     useMockedCalls();
-    jest.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(async () => {});
 
     let client: Mocked<MatrixClient>;
     let room: Room;
@@ -133,10 +131,8 @@ describe("IncomingCallEvent", () => {
                 ...notifyContent,
                 notify_type: "ring",
             }) as any;
-        const playMock = jest.fn();
-        const audio = { play: playMock, paused: true };
 
-        jest.spyOn(document, "getElementById").mockReturnValue(audio as any);
+        const playMock = jest.spyOn(LegacyCallHandler.instance, "play");
         render(<IncomingCallToast notifyEvent={call.event} />);
         expect(playMock).toHaveBeenCalled();
     });

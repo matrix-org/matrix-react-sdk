@@ -720,11 +720,16 @@ test.describe("Timeline", () => {
             ).toBeVisible();
         });
 
-        test("should render url previews", async ({ page, app, room, axe, checkA11y }) => {
+        test("should render url previews", async ({ page, app, room, axe, checkA11y, context }) => {
             axe.disableRules("color-contrast");
 
-            await page.route(
-                "**/_matrix/media/v3/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*",
+            // Element Web uses a Service Worker to rewrite unauthenticated media requests to authenticated ones, but
+            // the page can't see this happening. We intercept the route at the BrowserContext to ensure we get it
+            // post-worker, but we can't waitForResponse on that, so the page context is still used there. Because
+            // the page doesn't see the rewrite, it waits for the unauthenticated route. This is only confusing until
+            // the js-sdk (and thus the app as a whole) switches to using authenticated endpoints by default, hopefully.
+            await context.route(
+                "**/_matrix/client/v1/media/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*",
                 async (route) => {
                     await route.fulfill({
                         path: "playwright/sample-files/riot.png",
@@ -750,6 +755,7 @@ test.describe("Timeline", () => {
 
             const requestPromises: Promise<any>[] = [
                 page.waitForResponse("**/_matrix/media/v3/preview_url?url=https%3A%2F%2Fcall.element.io%2F&ts=*"),
+                // see context.route above for why we listen for the unauthenticated endpoint
                 page.waitForResponse("**/_matrix/media/v3/thumbnail/matrix.org/2022-08-16_yaiSVSRIsNFfxDnV?*"),
             ];
 
@@ -779,12 +785,12 @@ test.describe("Timeline", () => {
                 await sendEvent(app.client, room.roomId, true);
                 await page.goto(`/#/room/${room.roomId}`);
 
-                await page.locator(".mx_LegacyRoomHeader").getByRole("button", { name: "Search" }).click();
+                await app.toggleRoomInfoPanel();
 
-                await expect(page.locator(".mx_SearchBar")).toMatchScreenshot("search-bar-on-timeline.png");
+                await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").fill("Message");
+                await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").press("Enter");
 
-                await page.locator(".mx_SearchBar_input").getByRole("textbox").fill("Message");
-                await page.locator(".mx_SearchBar_input").getByRole("textbox").press("Enter");
+                await expect(page.locator(".mx_RoomSearchAuxPanel")).toMatchScreenshot("search-aux-panel.png");
 
                 for (const locator of await page
                     .locator(".mx_EventTile:not(.mx_EventTile_contextual) .mx_EventTile_searchHighlight")
@@ -804,7 +810,7 @@ test.describe("Timeline", () => {
                 await page.goto(`/#/room/${room.roomId}`);
 
                 // Open a room setting dialog
-                await page.getByRole("button", { name: "Room options" }).click();
+                await app.toggleRoomInfoPanel();
                 await page.getByRole("menuitem", { name: "Settings" }).click();
 
                 // Set a room topic to render a TextualEvent
@@ -818,12 +824,9 @@ test.describe("Timeline", () => {
                     page.getByText(`${OLD_NAME} changed the topic to "This is a room for ${stringToSearch}.".`),
                 ).toHaveClass(/mx_TextualEvent/);
 
-                // Display the room search bar
-                await page.locator(".mx_LegacyRoomHeader").getByRole("button", { name: "Search" }).click();
-
                 // Search the string to display both the message and TextualEvent on search results panel
-                await page.locator(".mx_SearchBar").getByRole("textbox").fill(stringToSearch);
-                await page.locator(".mx_SearchBar").getByRole("textbox").press("Enter");
+                await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").fill(stringToSearch);
+                await page.locator(".mx_RoomSummaryCard_search").getByRole("searchbox").press("Enter");
 
                 // On search results panel
                 const resultsPanel = page.locator(".mx_RoomView_searchResultsPanel");

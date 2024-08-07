@@ -29,9 +29,11 @@ import {
     IRoomTimelineData,
     M_LOCATION,
     EventType,
+    TypedEventEmitter,
 } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { PermissionChanged as PermissionChangedEvent } from "@matrix-org/analytics-events/types/typescript/PermissionChanged";
+import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc";
 
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { PosthogAnalytics } from "./PosthogAnalytics";
@@ -58,6 +60,7 @@ import ToastStore from "./stores/ToastStore";
 import { VoiceBroadcastChunkEventType, VoiceBroadcastInfoEventType } from "./voice-broadcast";
 import { getSenderName } from "./utils/event/getSenderName";
 import { stripPlainReply } from "./utils/Reply";
+import { BackgroundAudio } from "./audio/BackgroundAudio";
 
 /*
  * Dispatches:
@@ -101,7 +104,15 @@ const msgTypeHandlers: Record<string, (event: MatrixEvent) => string | null> = {
     },
 };
 
-class NotifierClass {
+export const enum NotifierEvent {
+    NotificationHiddenChange = "notification_hidden_change",
+}
+
+interface EmittedEvents {
+    [NotifierEvent.NotificationHiddenChange]: (hidden: boolean) => void;
+}
+
+class NotifierClass extends TypedEventEmitter<keyof EmittedEvents, EmittedEvents> {
     private notifsByRoom: Record<string, Notification[]> = {};
 
     // A list of event IDs that we've received but need to wait until
@@ -111,6 +122,8 @@ class NotifierClass {
 
     private toolbarHidden?: boolean;
     private isSyncing?: boolean;
+
+    private backgroundAudio = new BackgroundAudio();
 
     public notificationMessageForEvent(ev: MatrixEvent): string | null {
         const msgType = ev.getContent().msgtype;
@@ -226,28 +239,14 @@ class NotifierClass {
             return;
         }
 
+        // Play notification sound here
         const sound = this.getSoundForRoom(room.roomId);
         logger.log(`Got sound ${(sound && sound.name) || "default"} for ${room.roomId}`);
 
-        try {
-            const selector = document.querySelector<HTMLAudioElement>(
-                sound ? `audio[src='${sound.url}']` : "#messageAudio",
-            );
-            let audioElement = selector;
-            if (!audioElement) {
-                if (!sound) {
-                    logger.error("No audio element or sound to play for notification");
-                    return;
-                }
-                audioElement = new Audio(sound.url);
-                if (sound.type) {
-                    audioElement.type = sound.type;
-                }
-                document.body.appendChild(audioElement);
-            }
-            await audioElement.play();
-        } catch (ex) {
-            logger.warn("Caught error when trying to fetch room notification sound:", ex);
+        if (sound) {
+            await this.backgroundAudio.play(sound.url);
+        } else {
+            await this.backgroundAudio.pickFormatAndPlay("media/message", ["mp3", "ogg"]);
         }
     }
 
@@ -367,6 +366,7 @@ class NotifierClass {
         if (persistent && global.localStorage) {
             global.localStorage.setItem("notifications_hidden", String(hidden));
         }
+        this.emit(NotifierEvent.NotificationHiddenChange, hidden);
     }
 
     public shouldShowPrompt(): boolean {
@@ -516,10 +516,16 @@ class NotifierClass {
      * Some events require special handling such as showing in-app toasts
      */
     private performCustomEventHandling(ev: MatrixEvent): void {
+        const cli = MatrixClientPeg.safeGet();
+        const room = cli.getRoom(ev.getRoomId());
+        const thisUserHasConnectedDevice =
+            room && MatrixRTCSession.callMembershipsForRoom(room).some((m) => m.sender === cli.getUserId());
+
         if (
             EventType.CallNotify === ev.getType() &&
             SettingsStore.getValue("feature_group_calls") &&
-            (ev.getAge() ?? 0) < 10000
+            (ev.getAge() ?? 0) < 10000 &&
+            !thisUserHasConnectedDevice
         ) {
             const content = ev.getContent();
             const roomId = ev.getRoomId();

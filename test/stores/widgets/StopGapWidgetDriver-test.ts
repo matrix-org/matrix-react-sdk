@@ -35,6 +35,7 @@ import {
     SimpleObservable,
     OpenIDRequestState,
     IOpenIDUpdate,
+    UpdateDelayedEventAction,
 } from "matrix-widget-api";
 import {
     ApprovalOpts,
@@ -95,10 +96,13 @@ describe("StopGapWidgetDriver", () => {
             "org.matrix.msc2762.timeline:!1:example.org",
             "org.matrix.msc2762.send.event:org.matrix.rageshake_request",
             "org.matrix.msc2762.receive.event:org.matrix.rageshake_request",
+            "org.matrix.msc2762.receive.state_event:m.room.create",
             "org.matrix.msc2762.receive.state_event:m.room.member",
             "org.matrix.msc2762.receive.state_event:org.matrix.msc3401.call",
             "org.matrix.msc2762.send.state_event:org.matrix.msc3401.call.member#@alice:example.org",
             "org.matrix.msc2762.receive.state_event:org.matrix.msc3401.call.member",
+            `org.matrix.msc2762.send.state_event:org.matrix.msc3401.call.member#_@alice:example.org_${client.deviceId}`,
+            `org.matrix.msc2762.send.state_event:org.matrix.msc3401.call.member#@alice:example.org_${client.deviceId}`,
             "org.matrix.msc3819.send.to_device:m.call.invite",
             "org.matrix.msc3819.receive.to_device:m.call.invite",
             "org.matrix.msc3819.send.to_device:m.call.candidates",
@@ -119,6 +123,8 @@ describe("StopGapWidgetDriver", () => {
             "org.matrix.msc3819.receive.to_device:org.matrix.call.sdp_stream_metadata_changed",
             "org.matrix.msc3819.send.to_device:m.call.replaces",
             "org.matrix.msc3819.receive.to_device:m.call.replaces",
+            "org.matrix.msc4157.send.delayed_event",
+            "org.matrix.msc4157.update_delayed_event",
         ]);
 
         // As long as this resolves, we'll know that it didn't try to pop up a modal
@@ -382,6 +388,125 @@ describe("StopGapWidgetDriver", () => {
             );
 
             expect(dis.dispatch).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("sendDelayedEvent", () => {
+        let driver: WidgetDriver;
+        const roomId = "!this-room-id";
+
+        beforeEach(() => {
+            driver = mkDefaultDriver();
+        });
+
+        it("cannot send delayed events with missing arguments", async () => {
+            await expect(driver.sendDelayedEvent(null, null, EventType.RoomMessage, {})).rejects.toThrow(
+                "Must provide at least one of",
+            );
+        });
+
+        it("sends delayed message events", async () => {
+            client._unstable_sendDelayedEvent.mockResolvedValue({
+                delay_id: "id",
+            });
+
+            await expect(driver.sendDelayedEvent(2000, null, EventType.RoomMessage, {})).resolves.toEqual({
+                roomId,
+                delayId: "id",
+            });
+
+            expect(client._unstable_sendDelayedEvent).toHaveBeenCalledWith(
+                roomId,
+                { delay: 2000 },
+                null,
+                EventType.RoomMessage,
+                {},
+            );
+        });
+
+        it("sends child action delayed message events", async () => {
+            client._unstable_sendDelayedEvent.mockResolvedValue({
+                delay_id: "id-child",
+            });
+
+            await expect(driver.sendDelayedEvent(null, "id-parent", EventType.RoomMessage, {})).resolves.toEqual({
+                roomId,
+                delayId: "id-child",
+            });
+
+            expect(client._unstable_sendDelayedEvent).toHaveBeenCalledWith(
+                roomId,
+                { parent_delay_id: "id-parent" },
+                null,
+                EventType.RoomMessage,
+                {},
+            );
+        });
+
+        it("sends delayed state events", async () => {
+            client._unstable_sendDelayedStateEvent.mockResolvedValue({
+                delay_id: "id",
+            });
+
+            await expect(driver.sendDelayedEvent(2000, null, EventType.RoomTopic, {}, "")).resolves.toEqual({
+                roomId,
+                delayId: "id",
+            });
+
+            expect(client._unstable_sendDelayedStateEvent).toHaveBeenCalledWith(
+                roomId,
+                { delay: 2000 },
+                EventType.RoomTopic,
+                {},
+                "",
+            );
+        });
+
+        it("sends child action delayed state events", async () => {
+            client._unstable_sendDelayedStateEvent.mockResolvedValue({
+                delay_id: "id-child",
+            });
+
+            await expect(driver.sendDelayedEvent(null, "id-parent", EventType.RoomTopic, {}, "")).resolves.toEqual({
+                roomId,
+                delayId: "id-child",
+            });
+
+            expect(client._unstable_sendDelayedStateEvent).toHaveBeenCalledWith(
+                roomId,
+                { parent_delay_id: "id-parent" },
+                EventType.RoomTopic,
+                {},
+                "",
+            );
+        });
+    });
+
+    describe("updateDelayedEvent", () => {
+        let driver: WidgetDriver;
+
+        beforeEach(() => {
+            driver = mkDefaultDriver();
+        });
+
+        it("updates delayed events", async () => {
+            client._unstable_updateDelayedEvent.mockResolvedValue({});
+            for (const action of [
+                UpdateDelayedEventAction.Cancel,
+                UpdateDelayedEventAction.Restart,
+                UpdateDelayedEventAction.Send,
+            ]) {
+                await expect(driver.updateDelayedEvent("id", action)).resolves.toBeUndefined();
+                expect(client._unstable_updateDelayedEvent).toHaveBeenCalledWith("id", action);
+            }
+        });
+
+        it("fails to update delayed events", async () => {
+            const errorMessage = "Cannot restart this delayed event";
+            client._unstable_updateDelayedEvent.mockRejectedValue(new Error(errorMessage));
+            await expect(driver.updateDelayedEvent("id", UpdateDelayedEventAction.Restart)).rejects.toThrow(
+                errorMessage,
+            );
         });
     });
 

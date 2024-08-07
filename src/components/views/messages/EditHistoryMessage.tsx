@@ -52,15 +52,14 @@ interface IState {
 
 export default class EditHistoryMessage extends React.PureComponent<IProps, IState> {
     public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
+    public declare context: React.ContextType<typeof MatrixClientContext>;
 
     private content = createRef<HTMLDivElement>();
     private pills: Element[] = [];
     private tooltips: Element[] = [];
 
     public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
-        super(props);
-        this.context = context;
+        super(props, context);
 
         const cli = this.context;
         const userId = cli.getSafeUserId();
@@ -172,9 +171,8 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
             if (this.props.previousEdit) {
                 contentElements = editBodyDiffToHtml(getReplacedContent(this.props.previousEdit), content);
             } else {
-                contentElements = HtmlUtils.bodyToHtml(content, null, {
+                contentElements = HtmlUtils.bodyToSpan(content, null, {
                     stripReplyFallback: true,
-                    returnString: false,
                 });
             }
             if (mxEvent.getContent().msgtype === MsgType.Emote) {

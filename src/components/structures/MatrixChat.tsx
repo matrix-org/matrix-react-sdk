@@ -31,7 +31,7 @@ import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { KeyBackupInfo } from "matrix-js-sdk/src/crypto-api";
 
 // what-input helps improve keyboard accessibility
 import "what-input";
@@ -143,6 +143,7 @@ import { checkSessionLockFree, getSessionLock } from "../../utils/SessionLock";
 import { SessionLockStolenView } from "./auth/SessionLockStolenView";
 import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView";
 import { LoginSplashView } from "./auth/LoginSplashView";
+import { cleanUpDraftsIfRequired } from "../../DraftCleaner";
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -551,7 +552,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             .then((loadedSession) => {
                 if (!loadedSession) {
                     // fall back to showing the welcome screen... unless we have a 3pid invite pending
-                    if (ThreepidInviteStore.instance.pickBestInvite()) {
+                    if (
+                        ThreepidInviteStore.instance.pickBestInvite() &&
+                        SettingsStore.getValue(UIFeature.Registration)
+                    ) {
                         dis.dispatch({ action: "start_registration" });
                     } else {
                         dis.dispatch({ action: "view_welcome_page" });
@@ -951,6 +955,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private async startRegistration(params: { [key: string]: string }): Promise<void> {
+        if (!SettingsStore.getValue(UIFeature.Registration)) {
+            this.showScreen("welcome");
+            return;
+        }
+
         const newState: Partial<IState> = {
             view: Views.REGISTER,
         };
@@ -1382,8 +1391,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     title: userNotice.title,
                     props: {
                         description: <Linkify>{userNotice.description}</Linkify>,
-                        acceptLabel: _t("action|ok"),
-                        onAccept: () => {
+                        primaryLabel: _t("action|ok"),
+                        onPrimaryClick: () => {
                             ToastStore.sharedInstance().dismissToast(key);
                             localStorage.setItem(key, "1");
                         },
@@ -1520,6 +1529,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
 
             if (state === SyncState.Syncing && prevState === SyncState.Syncing) {
+                // We know we have performabed a live update and known rooms should be in a good state.
+                // Now is a good time to clean up drafts.
+                cleanUpDraftsIfRequired();
                 return;
             }
             logger.debug(`MatrixClient sync state => ${state}`);
@@ -1544,7 +1556,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (Lifecycle.isLoggingOut()) return;
 
             // A modal might have been open when we were logged out by the server
-            Modal.closeCurrentModal("Session.logged_out");
+            Modal.forceCloseAllModals();
 
             if (errObj.httpStatus === 401 && errObj.data && errObj.data["soft_logout"]) {
                 logger.warn("Soft logout issued by server - avoiding data deletion");
@@ -1614,7 +1626,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
         cli.on(CryptoEvent.KeyBackupFailed, async (errcode): Promise<void> => {
             let haveNewVersion: boolean | undefined;
-            let newVersionInfo: IKeyBackupInfo | null = null;
+            let newVersionInfo: KeyBackupInfo | null = null;
             // if key backup is still enabled, there must be a new backup in place
             if (cli.getKeyBackupEnabled()) {
                 haveNewVersion = true;
