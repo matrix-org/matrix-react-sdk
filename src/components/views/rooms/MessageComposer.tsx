@@ -66,6 +66,9 @@ import { createCantStartVoiceMessageBroadcastDialog } from "../dialogs/CantStart
 import { UIFeature } from "../../../settings/UIFeature";
 import { formatTimeLeft } from "../../../DateUtils";
 
+// The prefix used when persisting editor drafts to localstorage.
+export const WYSIWYG_EDITOR_STATE_STORAGE_PREFIX = "mx_wysiwyg_state_";
+
 let instanceCount = 0;
 
 interface ISendButtonProps {
@@ -183,7 +186,7 @@ export class MessageComposer extends React.Component<IProps, IState> {
     }
 
     private get editorStateKey(): string {
-        let key = `mx_wysiwyg_state_${this.props.room.roomId}`;
+        let key = WYSIWYG_EDITOR_STATE_STORAGE_PREFIX + this.props.room.roomId;
         if (this.props.relation?.rel_type === THREAD_RELATION_TYPE.name) {
             key += `_${this.props.relation.event_id}`;
         }
