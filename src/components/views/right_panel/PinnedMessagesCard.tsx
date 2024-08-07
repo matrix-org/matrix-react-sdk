@@ -37,6 +37,8 @@ import { ReadPinsEventId } from "./types";
 import Heading from "../typography/Heading";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { filterBoolean } from "../../../utils/arrays";
+import Modal from "../../../Modal";
+import { UnpinAllDialog } from "../dialogs/UnpinAllDialog";
 
 interface IProps {
     room: Room;
@@ -262,10 +264,13 @@ function PinnedMessages({ events, room, permalinkCreator }: PinnedMessagesProps)
     );
 
     /**
-     * Unpin all events from the room.
+     * Opens the unpin all dialog.
      */
     const onUnpinAll = useCallback(async (): Promise<void> => {
-        await matrixClient.sendStateEvent(room.roomId, EventType.RoomPinnedEvents, { pinned: [] }, "");
+        Modal.createDialog(UnpinAllDialog, {
+            roomId: room.roomId,
+            matrixClient,
+        });
     }, [room, matrixClient]);
 
     return (
@@ -294,7 +299,7 @@ function PinnedMessages({ events, room, permalinkCreator }: PinnedMessagesProps)
             {canUnpin && (
                 <div className="mx_PinnedMessagesCard_unpin">
                     <Button kind="tertiary" onClick={onUnpinAll}>
-                        {_t("right_panel|pinned_messages|unpin_all")}
+                        {_t("right_panel|pinned_messages|unpin_all|button")}
                     </Button>
                 </div>
             )}

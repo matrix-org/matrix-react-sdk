@@ -1851,7 +1851,11 @@
             },
             "menu": "Open menu",
             "title": "Pinned messages",
-            "unpin_all": "Unpin all messages",
+            "unpin_all": {
+                "button": "Unpin all messages",
+                "content": "Make sure that you really want to remove all pinned messages. This action can’t be undone.",
+                "title": "Unpin all messages?"
+            },
             "view": "View in timeline"
         },
         "pinned_messages_button": "Pinned messages",
