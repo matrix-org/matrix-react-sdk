@@ -31,7 +31,9 @@ test.describe("Backups", () => {
         displayName: "Hanako",
     });
 
-    test("Create, delete and recreate a keys backup", async ({ page, user, app }, workerInfo) => {
+    test("Create, delete and recreate a keys backup", async ({ page, user, app, browserName }) => {
+        test.skip(browserName === "webkit", "This test is broken on Webkit");
+
         // Create a backup
         const securityTab = await app.settings.openUserSettings("Security & Privacy");
 

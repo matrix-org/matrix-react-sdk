@@ -19,6 +19,14 @@ on:
                 required: false
                 default: false
                 description: "A boolean to skip the playwright check itself while still creating the passing check. Useful when only running in Merge Queues."
+            parallelism:
+                type: number
+                required: false
+                description: "The number of runners to spread the tests across. Defaults to 6."
+            browsers:
+                type: string
+                required: false
+                description: "The browser to run the tests in. Some of 'chromium', 'chrome', 'firefox', 'webkit', 'edge'. Defaults to chromium."
 
             react-sdk-repository:
                 type: string
@@ -43,10 +51,13 @@ env:
     PR_NUMBER: ${{ github.event.pull_request.number }}
 
 jobs:
-    build:
+    prepare:
         name: "Build Element-Web"
         runs-on: ubuntu-latest
         if: inputs.skip != true
+        outputs:
+            parallelism: ${{ steps.parallelism.outputs.parallelism }}
+            parallelism_matrix: ${{ steps.parallelism.outputs.parallelism_matrix }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -91,9 +102,17 @@ jobs:
                   path: element-web/webapp
                   retention-days: 1
 
+            - name: Calculate parallelism
+              id: parallelism
+              run: |
+                  echo "parallelism=$PARALLELISM" >> $GITHUB_OUTPUT
+                  echo "parallelism_matrix=$(python3 -c 'print([*range(1, 1 + ${{ env.PARALLELISM }})])')" >> $GITHUB_OUTPUT
+              env:
+                  PARALLELISM: ${{ inputs.parallelism || 6 }}
+
     playwright:
-        name: "Run Tests ${{ matrix.runner }}/${{ strategy.job-total }}"
-        needs: build
+        name: "Run Tests ${{ matrix.runner }}/${{ needs.prepare.outputs.parallelism }} [${{ matrix.browser }}]"
+        needs: prepare
         if: inputs.skip != true
         runs-on: ubuntu-latest
         permissions:
@@ -104,7 +123,8 @@ jobs:
             fail-fast: false
             matrix:
                 # Run multiple instances in parallel to speed up the tests
-                runner: [1, 2, 3, 4, 5, 6]
+                runner: ${{ fromJson(needs.prepare.outputs.parallelism_matrix) }}
+                browser: ${{ fromJson(inputs.browsers || '["chromium", "firefox"]') }}
         steps:
             - uses: actions/checkout@v4
               with:
@@ -139,7 +159,7 @@ jobs:
               with:
                   path: |
                       ~/.cache/ms-playwright
-                  key: ${{ runner.os }}-playwright-${{ steps.playwright.outputs.version }}
+                  key: ${{ runner.os }}-playwright-${{ steps.playwright.outputs.version }}-${{ matrix.browser }}
 
             - name: Install Playwright browsers
               if: steps.playwright-cache.outputs.cache-hit != 'true'
@@ -147,14 +167,17 @@ jobs:
               run: yarn playwright install --with-deps
 
             - name: Run Playwright tests
-              run: yarn playwright test --shard ${{ matrix.runner }}/${{ strategy.job-total }}
+              run: yarn playwright test --project "$BROWSER" --shard ${{ matrix.runner }}/${{ needs.prepare.outputs.parallelism }} $IGNORE_SNAPSHOTS
               working-directory: matrix-react-sdk
+              env:
+                  BROWSER: ${{ matrix.browser }}
+                  IGNORE_SNAPSHOTS: ${{ matrix.browser != 'chromium' && '--ignore-snapshots' || '' }}
 
             - name: Upload blob report to GitHub Actions Artifacts
               if: always()
               uses: actions/upload-artifact@v4
               with:
-                  name: all-blob-reports-${{ matrix.runner }}
+                  name: all-blob-reports-${{ matrix.browser }}-${{ matrix.runner }}
                   path: matrix-react-sdk/blob-report
                   retention-days: 1
 
