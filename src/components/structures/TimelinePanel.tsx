@@ -66,6 +66,8 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
+import { isReply, textForReplyEvent } from "../../utils/exportUtils/exportUtils";
+import { textForEvent } from "../../TextForEvent";
 
 // These pagination sizes are higher than they may possibly need be
 // once https://github.com/matrix-org/matrix-spec-proposals/pull/3874 lands
@@ -327,6 +329,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
+        document.addEventListener("copy", this.formatCopy);
+
         if (this.props.manageReadReceipts) {
             this.updateReadReceiptOnUserActivity();
         }
@@ -404,6 +408,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
             client.removeListener(ClientEvent.Sync, this.onSync);
             this.props.timelineSet.room?.removeListener(ThreadEvent.Update, this.onThreadUpdate);
         }
+
+        document.removeEventListener("copy", this.formatCopy);
     }
 
     /**
@@ -1892,6 +1898,73 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         return null;
     }
+
+    private createFormattedCopyText = (events: MatrixEvent[]): string => {
+        let content = "";
+        const client = MatrixClientPeg.safeGet();
+
+        for (let i = 0; i < events.length; i++) {
+            const mxEv = events[i];
+            if (!mxEv || !haveRendererForEvent(mxEv, client, false)) continue;
+            const senderDisplayName = mxEv.sender && mxEv.sender.name ? mxEv.sender.name : mxEv.getSender();
+            let text = "";
+            if (isReply(mxEv)) text = senderDisplayName + ": " + textForReplyEvent(mxEv.getContent());
+            else text = textForEvent(mxEv, client);
+            content += text && `${new Date(mxEv.getTs()).toLocaleString()} - ${text}\n`;
+        }
+        return content;
+    };
+
+    private getClosestEvent = (el: HTMLElement, fromTop: boolean): string => {
+        let requiredElement: Element;
+        // if the selected element belongs to a date separator, assign its neighbouring element as the required element
+        if (el.parentElement?.classList.contains("mx_DateSeparator")) {
+            el = el.closest("li");
+            if (fromTop) requiredElement = el.nextElementSibling;
+            else requiredElement = el.previousElementSibling;
+        } else {
+            requiredElement = el.closest("[data-scroll-tokens]");
+        }
+        // if the element is a part of EventListSummary, and we're selecting from the top
+        // return the first event else return the last event of the list
+        if (requiredElement.classList.contains("mx_EventListSummary")) {
+            const eventsList = requiredElement.getAttribute("data-scroll-tokens").split(",");
+            return fromTop ? eventsList[0] : eventsList[eventsList.length - 1];
+        }
+        return requiredElement.getAttribute("data-scroll-tokens");
+    };
+
+    private formatCopy = (e: ClipboardEvent): void => {
+        const range = window.getSelection();
+        let anchorEl = range.anchorNode.parentElement;
+        let focusEl = range.focusNode.parentElement;
+        const timelinePanel = ReactDOM.findDOMNode(this) as Element;
+        const messageList = timelinePanel.querySelector(".mx_RoomView_MessageList");
+        // if both the elements are not inside messageList, then let the default behaviour continue
+        if (!messageList.contains(anchorEl) || !messageList.contains(focusEl)) return;
+        if (focusEl.getBoundingClientRect().top > anchorEl.getBoundingClientRect().top) {
+            // make anchorEl to be always at the bottom
+            [focusEl, anchorEl] = [anchorEl, focusEl];
+        }
+        // get closest eventIds to the bottom and top selected elements
+        const closestTopEvent = this.getClosestEvent(focusEl, true);
+        const closestBottomEvent = this.getClosestEvent(anchorEl, false);
+        // if both the eventIds are same, then the user is copying with in a single event. So, no need of any processing
+        if (closestTopEvent === closestBottomEvent) return;
+
+        e.preventDefault();
+
+        const events = this.getEvents().events;
+        const filteredEvents = [];
+
+        const closestTopEventIdx = events.findIndex((ev) => ev.getId() === closestTopEvent);
+
+        for (let i = closestTopEventIdx; i < events.length; i++) {
+            filteredEvents.push(events[i]);
+            if (events[i] && events[i].getId() === closestBottomEvent) break;
+        }
+        e.clipboardData.setData("text/plain", this.createFormattedCopyText(filteredEvents));
+    };
 
     /**
      * Get the id of the event corresponding to our user's latest read-receipt.

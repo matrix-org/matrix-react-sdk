@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room, IContent, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { Room, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import React from "react";
 
 import Exporter from "./Exporter";
 import { _t } from "../../languageHandler";
-import { ExportType, IExportOptions } from "./exportUtils";
+import { ExportType, IExportOptions, isReply, textForReplyEvent } from "./exportUtils";
 import { textForEvent } from "../../TextForEvent";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 import SettingsStore from "../../settings/SettingsStore";
@@ -47,39 +47,6 @@ export default class PlainTextExporter extends Exporter {
         return this.makeFileNameNoExtension() + ".txt";
     }
 
-    public textForReplyEvent = (content: IContent): string => {
-        const REPLY_REGEX = /> <(.*?)>(.*?)\n\n(.*)/s;
-        const REPLY_SOURCE_MAX_LENGTH = 32;
-
-        const match = REPLY_REGEX.exec(content.body);
-
-        // if the reply format is invalid, then return the body
-        if (!match) return content.body;
-
-        let rplSource: string;
-        const rplName = match[1];
-        const rplText = match[3];
-
-        rplSource = match[2].substring(1);
-        // Get the first non-blank line from the source.
-        const lines = rplSource.split("\n").filter((line) => !/^\s*$/.test(line));
-        if (lines.length > 0) {
-            // Cut to a maximum length.
-            rplSource = lines[0].substring(0, REPLY_SOURCE_MAX_LENGTH);
-            // Ellipsis if needed.
-            if (lines[0].length > REPLY_SOURCE_MAX_LENGTH) {
-                rplSource = rplSource + "...";
-            }
-            // Wrap in formatting
-            rplSource = ` "${rplSource}"`;
-        } else {
-            // Don't show a source because we couldn't format one.
-            rplSource = "";
-        }
-
-        return `<${rplName}${rplSource}> ${rplText}`;
-    };
-
     protected plainTextForEvent = async (mxEv: MatrixEvent): Promise<string> => {
         const senderDisplayName = mxEv.sender && mxEv.sender.name ? mxEv.sender.name : mxEv.getSender();
         let mediaText = "";
@@ -104,7 +71,7 @@ export default class PlainTextExporter extends Exporter {
                 }
             } else mediaText = ` (${this.mediaOmitText})`;
         }
-        if (this.isReply(mxEv)) return senderDisplayName + ": " + this.textForReplyEvent(mxEv.getContent()) + mediaText;
+        if (isReply(mxEv)) return senderDisplayName + ": " + textForReplyEvent(mxEv.getContent()) + mediaText;
         else return textForEvent(mxEv, this.room.client) + mediaText;
     };
 
