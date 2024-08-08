@@ -42,24 +42,20 @@ interface IState {
 
 export default class MVideoBody extends React.PureComponent<IBodyProps, IState> {
     public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    public declare context: React.ContextType<typeof RoomContext>;
 
     private videoRef = React.createRef<HTMLVideoElement>();
     private sizeWatcher?: string;
 
-    public constructor(props: IBodyProps) {
-        super(props);
-
-        this.state = {
-            fetchingData: false,
-            decryptedUrl: null,
-            decryptedThumbnailUrl: null,
-            decryptedBlob: null,
-            error: null,
-            posterLoading: false,
-            blurhashUrl: null,
-        };
-    }
+    public state = {
+        fetchingData: false,
+        decryptedUrl: null,
+        decryptedThumbnailUrl: null,
+        decryptedBlob: null,
+        error: null,
+        posterLoading: false,
+        blurhashUrl: null,
+    };
 
     private getContentUrl(): string | undefined {
         const content = this.props.mxEvent.getContent<MediaEventContent>();

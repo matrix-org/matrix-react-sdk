@@ -22,7 +22,7 @@ import { useFeatureEnabled } from "../useSettings";
 import SdkConfig from "../../SdkConfig";
 import { useEventEmitter, useEventEmitterState } from "../useEventEmitter";
 import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../LegacyCallHandler";
-import { useWidgets } from "../../components/views/right_panel/RoomSummaryCard";
+import { useWidgets } from "../../utils/WidgetUtils";
 import { WidgetType } from "../../widgets/WidgetType";
 import { useCall, useConnectionState, useParticipantCount } from "../useCall";
 import { useRoomMemberCount } from "../useRoomMembers";
@@ -271,8 +271,7 @@ export const useRoomCall = (
     }, [isViewingCall, room.roomId]);
 
     // We hide the voice call button if it'd have the same effect as the video call button
-    let hideVoiceCallButton =
-        isManagedHybridWidgetEnabled(room.roomId) || !callOptions.includes(PlatformCallType.LegacyCall);
+    let hideVoiceCallButton = isManagedHybridWidgetEnabled(room) || !callOptions.includes(PlatformCallType.LegacyCall);
     let hideVideoCallButton = false;
     // We hide both buttons if they require widgets but widgets are disabled.
     if (memberCount > 2 && !SettingsStore.getValue(UIFeature.Widgets)) {

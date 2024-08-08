@@ -43,6 +43,7 @@ $left-gutter: 64px;
 
     .mx_EventTile_body {
         overflow-y: hidden;
+        text-align: start;
     }
 
     .mx_EventTile_receiptSent,
@@ -676,7 +677,7 @@ $left-gutter: 64px;
         font-size: $font-12px;
         color: $secondary-content;
         display: inline-block;
-        margin-left: 9px;
+        margin-inline-start: 9px;
     }
 
     .mx_EventTile_edited {
@@ -786,6 +787,17 @@ $left-gutter: 64px;
         ul {
             list-style-type: disc;
         }
+
+        /* override styles from the base markdown CSS that put markdown content on its own line,
+           as this isn't what we want for richtext emote content.
+         */
+        &::before {
+            display: none;
+        }
+
+        &::after {
+            display: none;
+        }
     }
 }
 
@@ -886,6 +898,10 @@ $left-gutter: 64px;
     &.markdown-body img {
         object-fit: contain;
         object-position: left top;
+
+        /* Override the default colors of the 'github-markdown-css' library 
+        (#fff for light theme, #000 for dark theme) to match the inherited theme */
+        background-color: inherit !important;
     }
 
     .mx_EventTile_clamp & {
@@ -1024,7 +1040,7 @@ $left-gutter: 64px;
     $notification-dot-size: 8px; /* notification dot next to the timestamp */
 
     margin: calc(var(--topOffset) + $hrHeight) 0 var(--topOffset); /* include the height of horizontal line */
-    padding: $padding $spacing-24 $padding $padding;
+    padding: $padding;
     border-radius: $borderRadius;
 
     display: flex;
@@ -1039,7 +1055,7 @@ $left-gutter: 64px;
 
     &::after {
         $inset-block-start: auto;
-        $inset-inline-end: calc(32px - $padding);
+        $inset-inline-end: calc(-1 * var(--cpd-space-2x));
         $inset-block-end: calc(-1 * var(--topOffset) - $hrHeight); /* exclude the height of horizontal line */
         $inset-inline-start: calc(var(--leftOffset) + $padding);
         inset: $inset-block-start $inset-inline-end $inset-block-end $inset-inline-start;
@@ -1441,6 +1457,10 @@ $left-gutter: 64px;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+}
+
+.mx_EventTile_annotated {
+    display: flex;
 }
 
 /* Media query for mobile UI */

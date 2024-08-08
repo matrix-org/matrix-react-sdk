@@ -26,6 +26,7 @@ import {
     SyncState,
 } from "matrix-js-sdk/src/matrix";
 import { waitFor } from "@testing-library/react";
+import { CallMembership, MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc";
 
 import BasePlatform from "../src/BasePlatform";
 import Notifier from "../src/Notifier";
@@ -58,6 +59,11 @@ jest.mock("../src/utils/notifications", () => ({
     // @ts-ignore
     ...jest.requireActual("../src/utils/notifications"),
     createLocalNotificationSettingsIfNeeded: jest.fn(),
+}));
+
+jest.mock("../src/audio/compat", () => ({
+    ...jest.requireActual("../src/audio/compat"),
+    createAudioContext: jest.fn(),
 }));
 
 describe("Notifier", () => {
@@ -103,6 +109,19 @@ describe("Notifier", () => {
         });
     };
 
+    const mockAudioBufferSourceNode = {
+        addEventListener: jest.fn(),
+        connect: jest.fn(),
+        start: jest.fn(),
+    };
+    const mockAudioContext = {
+        decodeAudioData: jest.fn(),
+        suspend: jest.fn(),
+        resume: jest.fn(),
+        createBufferSource: jest.fn().mockReturnValue(mockAudioBufferSourceNode),
+        currentTime: 1337,
+    };
+
     beforeEach(() => {
         accountDataStore = {};
         mockClient = getMockClientWithEventEmitter({
@@ -121,6 +140,11 @@ describe("Notifier", () => {
             getRoom: jest.fn(),
             getPushActionsForEvent: jest.fn(),
             supportsThreads: jest.fn().mockReturnValue(false),
+            matrixRTC: {
+                on: jest.fn(),
+                off: jest.fn(),
+                getRoomSession: jest.fn(),
+            },
         });
 
         mockClient.pushRules = {
@@ -144,6 +168,9 @@ describe("Notifier", () => {
             if (id) return new Room(id, mockClient, mockClient.getSafeUserId());
             return null;
         });
+
+        // @ts-ignore
+        Notifier.backgroundAudio.audioContext = mockAudioContext;
     });
 
     describe("triggering notification from events", () => {
@@ -432,6 +459,35 @@ describe("Notifier", () => {
             emitCallNotifyEvent();
 
             expect(ToastStore.sharedInstance().addOrReplaceToast).not.toHaveBeenCalled();
+        });
+
+        it("should not show toast when group call is already connected", () => {
+            setGroupCallsEnabled(true);
+            const spyCallMemberships = jest.spyOn(MatrixRTCSession, "callMembershipsForRoom").mockReturnValue([
+                new CallMembership(
+                    mkEvent({
+                        event: true,
+                        room: testRoom.roomId,
+                        user: userId,
+                        type: EventType.GroupCallMemberPrefix,
+                        content: {},
+                    }),
+                    {
+                        call_id: "123",
+                        application: "m.call",
+                        focus_active: { type: "livekit" },
+                        foci_preferred: [],
+                        device_id: "DEVICE",
+                    },
+                ),
+            ]);
+
+            const roomSession = MatrixRTCSession.roomSessionForRoom(mockClient, testRoom);
+
+            mockClient.matrixRTC.getRoomSession.mockReturnValue(roomSession);
+            emitCallNotifyEvent();
+            expect(ToastStore.sharedInstance().addOrReplaceToast).not.toHaveBeenCalled();
+            spyCallMemberships.mockRestore();
         });
 
         it("should not show toast when calling with non-group call event", () => {

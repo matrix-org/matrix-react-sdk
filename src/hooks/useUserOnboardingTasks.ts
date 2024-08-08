@@ -127,7 +127,7 @@ const tasks: UserOnboardingTask[] = [
                 PosthogTrackers.trackInteraction("WebUserOnboardingTaskSetupProfile", ev);
                 defaultDispatcher.dispatch({
                     action: Action.ViewUserSettings,
-                    initialTabId: UserTab.General,
+                    initialTabId: UserTab.Account,
                 });
             },
         },
@@ -136,14 +136,18 @@ const tasks: UserOnboardingTask[] = [
         id: "permission-notifications",
         title: _t("onboarding|enable_notifications"),
         description: _t("onboarding|enable_notifications_description"),
-        completed: (ctx: UserOnboardingContext) => ctx.hasNotificationsEnabled,
+        completed: (ctx: UserOnboardingContext) => !ctx.showNotificationsPrompt,
         action: {
             label: _t("onboarding|enable_notifications_action"),
             onClick: (ev: ButtonEvent) => {
                 PosthogTrackers.trackInteraction("WebUserOnboardingTaskEnableNotifications", ev);
-                Notifier.setEnabled(true);
+                defaultDispatcher.dispatch({
+                    action: Action.ViewUserSettings,
+                    initialTabId: UserTab.Notifications,
+                });
+                Notifier.setPromptHidden(true);
             },
-            hideOnComplete: true,
+            hideOnComplete: !Notifier.isPossible(),
         },
     },
 ];

@@ -1789,7 +1789,6 @@
     },
     "right_panel": {
         "add_integrations": "Přidat widgety, propojení a boty",
-        "edit_integrations": "Upravujte widgety, propojení a boty",
         "export_chat_button": "Exportovat chat",
         "files_button": "Soubory",
         "pinned_messages": {
@@ -1992,14 +1991,11 @@
         "rejecting": "Odmítání pozvánky…",
         "rejoin_button": "Znovu vstoupit",
         "search": {
-            "all_rooms": "Všechny místnosti",
             "all_rooms_button": "Vyhledávat ve všech místnostech",
-            "field_placeholder": "Hledat…",
             "result_count": {
                 "other": "(~%(count)s výsledků)",
                 "one": "(~%(count)s výsledek)"
             },
-            "this_room": "Tato místnost",
             "this_room_button": "Vyhledávat v této místnosti"
         },
         "show_labs_settings": "Zobrazit nastavení Experimentálních funkcí",
@@ -2456,7 +2452,6 @@
             "error_revoke_msisdn_discovery": "Nepovedlo se zrušit sdílení telefonního čísla",
             "error_share_email_discovery": "Nepovedlo se nasdílet e-mailovou adresu",
             "error_share_msisdn_discovery": "Nepovedlo se nasdílet telefonní číslo",
-            "external_account_management": "Údaje o vašem účtu jsou spravovány samostatně na adrese <code>%(hostname)s</code>.",
             "identity_server_no_token": "Nebyl nalezen žádný přístupový token identity",
             "identity_server_not_set": "Server identit není nastaven",
             "incorrect_msisdn_verification": "Nesprávný ověřovací kód",
@@ -2472,8 +2467,7 @@
             "password_change_success": "Vaše heslo bylo úspěšně změněno.",
             "remove_email_prompt": "Odstranit adresu %(email)s?",
             "remove_msisdn_prompt": "Odstranit %(phone)s?",
-            "spell_check_locale_placeholder": "Zvolte jazyk",
-            "spell_check_section": "Kontrola pravopisu"
+            "spell_check_locale_placeholder": "Zvolte jazyk"
         },
         "image_thumbnails": "Zobrazovat náhledy obrázků",
         "inline_url_previews_default": "Nastavit povolení náhledů URL adres jako výchozí",
@@ -2647,7 +2641,6 @@
             "delete_backup_confirm_description": "Opravdu? Pokud klíče nejsou správně zálohované můžete přijít o šifrované zprávy.",
             "e2ee_default_disabled_warning": "Správce vašeho serveru vypnul ve výchozím nastavení koncové šifrování v soukromých místnostech a přímých zprávách.",
             "enable_message_search": "Povolit vyhledávání v šifrovaných místnostech",
-            "encryption_individual_verification_mode": "Individuálně ověřit každou uživatelovu relaci a označit jí za důvěryhodnou, bez důvěry v křížový podpis.",
             "encryption_section": "Šifrování",
             "error_loading_key_backup_status": "Nepovedlo se načíst stav zálohy",
             "export_megolm_keys": "Exportovat šifrovací klíče místností",
@@ -2666,7 +2659,6 @@
             "key_backup_inactive": "Tato relace <b>nezálohuje vaše klíče</b>, ale už máte zálohu ze které je můžete obnovit.",
             "key_backup_inactive_warning": "Vaše klíče <b>nejsou z této relace zálohovány</b>.",
             "key_backup_latest_version": "Nejnovější verze zálohy na serveru:",
-            "manually_verify_all_sessions": "Ručně ověřit všechny relace",
             "message_search_disable_warning": "Když je to zakázané, zprávy v šifrovaných místnostech se nebudou objevovat ve výsledcích vyhledávání.",
             "message_search_disabled": "Bezpečně uchovávat zprávy na tomto zařízení aby se v nich dalo vyhledávat.",
             "message_search_enabled": {
@@ -3104,15 +3096,10 @@
             "one": "%(count)s odpověď",
             "other": "%(count)s odpovědí"
         },
-        "empty_explainer": "Vlákna pomáhají udržovat konverzace k tématu a snadno je sledovat.",
-        "empty_has_threads_tip": "Odpovědět na probíhající vlákno nebo použít \"%(replyInThread)s\", když najedete na zprávu a začnete novou.",
-        "empty_heading": "Udržujte diskuse organizované pomocí vláken",
-        "empty_tip": "<b>Tip:</b> Použijte \"%(replyInThread)s\" při najetí na zprávu.",
         "error_start_thread_existing_relation": "Nelze založit vlákno ve vlákně",
         "my_threads": "Moje vlákna",
         "my_threads_description": "Zobrazit všechna vlákna, kterých jste se zúčastnili",
         "open_thread": "Otevřít vlákno",
-        "show_all_threads": "Zobrazit všechna vlákna",
         "show_thread_filter": "Zobrazit:"
     },
     "threads_activity_centre": {
@@ -3690,7 +3677,6 @@
         },
         "redact_button": "Odstranit nedávné zprávy",
         "revoke_invite": "Zrušit pozvání",
-        "role_label": "Role v <RoomName/>",
         "room_encrypted": "Zprávy jsou v této místnosti koncově šifrované.",
         "room_encrypted_detail": "Vaše zprávy jsou zabezpečené - pouze vy a jejich příjemci máte klíče potřebné k jejich přečtení.",
         "room_unencrypted": "Zprávy nejsou koncově šifrované.",

@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
+import NotificationsIcon from "@vector-im/compound-design-tokens/assets/web/icons/notifications";
 
 import { _t } from "../../languageHandler";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -26,6 +27,7 @@ import { Layout } from "../../settings/enums/Layout";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import Measured from "../views/elements/Measured";
 import Heading from "../views/typography/Heading";
+import EmptyState from "../views/right_panel/EmptyState";
 
 interface IProps {
     onClose(): void;
@@ -40,11 +42,12 @@ interface IState {
  */
 export default class NotificationPanel extends React.PureComponent<IProps, IState> {
     public static contextType = RoomContext;
+    public declare context: React.ContextType<typeof RoomContext>;
 
     private card = React.createRef<HTMLDivElement>();
 
-    public constructor(props: IProps) {
-        super(props);
+    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
+        super(props, context);
 
         this.state = {
             narrow: false,
@@ -57,10 +60,11 @@ export default class NotificationPanel extends React.PureComponent<IProps, IStat
 
     public render(): React.ReactNode {
         const emptyState = (
-            <div className="mx_RightPanel_empty mx_NotificationPanel_empty">
-                <h2>{_t("notif_panel|empty_heading")}</h2>
-                <p>{_t("notif_panel|empty_description")}</p>
-            </div>
+            <EmptyState
+                Icon={NotificationsIcon}
+                title={_t("notif_panel|empty_heading")}
+                description={_t("notif_panel|empty_description")}
+            />
         );
 
         let content: JSX.Element;

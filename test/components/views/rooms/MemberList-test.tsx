@@ -16,10 +16,17 @@ limitations under the License.
 */
 
 import React from "react";
-import { act, fireEvent, render, RenderResult, screen } from "@testing-library/react";
+import {
+    act,
+    fireEvent,
+    render,
+    RenderResult,
+    screen,
+    waitFor,
+    waitForElementToBeRemoved,
+} from "@testing-library/react";
 import { Room, MatrixClient, RoomState, RoomMember, User, MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
-import { compare } from "matrix-js-sdk/src/utils";
 import { mocked, MockedObject } from "jest-mock";
 
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -31,6 +38,7 @@ import {
     filterConsole,
     flushPromises,
     getMockClientWithEventEmitter,
+    mockClientMethodsRooms,
     mockClientMethodsUser,
 } from "../../../test-utils";
 import { shouldShowComponent } from "../../../../src/customisations/helpers/UIComponents";
@@ -145,7 +153,8 @@ describe("MemberList", () => {
             if (!groupChange) {
                 const nameA = memberA.name[0] === "@" ? memberA.name.slice(1) : memberA.name;
                 const nameB = memberB.name[0] === "@" ? memberB.name.slice(1) : memberB.name;
-                const nameCompare = compare(nameB, nameA);
+                const collator = new Intl.Collator();
+                const nameCompare = collator.compare(nameB, nameA);
                 console.log("Comparing name");
                 expect(nameCompare).toBeGreaterThanOrEqual(0);
             } else {
@@ -358,6 +367,7 @@ describe("MemberList", () => {
                 mocked(shouldShowComponent).mockReturnValue(true);
                 client = getMockClientWithEventEmitter({
                     ...mockClientMethodsUser(),
+                    ...mockClientMethodsRooms(),
                     getRoom: jest.fn(),
                     hasLazyLoadMembersEnabled: jest.fn(),
                 });
@@ -372,7 +382,7 @@ describe("MemberList", () => {
             const renderComponent = () => {
                 const context = new TestSdkContext();
                 context.client = client;
-                render(
+                return render(
                     <SDKContext.Provider value={context}>
                         <MemberList
                             searchQuery=""
@@ -407,7 +417,10 @@ describe("MemberList", () => {
                 await flushPromises();
 
                 // button rendered but disabled
-                expect(screen.getByText("Invite to this room")).toHaveAttribute("aria-disabled", "true");
+                expect(screen.getByRole("button", { name: "Invite to this room" })).toHaveAttribute(
+                    "aria-disabled",
+                    "true",
+                );
             });
 
             it("renders enabled invite button when current user is a member and has rights to invite", async () => {
@@ -425,10 +438,17 @@ describe("MemberList", () => {
                 jest.spyOn(room, "getMyMembership").mockReturnValue(KnownMembership.Join);
                 jest.spyOn(room, "canInvite").mockReturnValue(true);
 
-                renderComponent();
-                await flushPromises();
+                const { getByRole } = renderComponent();
+                await waitForElementToBeRemoved(() => screen.queryAllByRole("progressbar"));
 
-                fireEvent.click(screen.getByText("Invite to this room"));
+                await waitFor(() =>
+                    expect(getByRole("button", { name: "Invite to this room" })).not.toHaveAttribute(
+                        "aria-disabled",
+                        "true",
+                    ),
+                );
+
+                fireEvent.click(getByRole("button", { name: "Invite to this room" }));
 
                 expect(defaultDispatcher.dispatch).toHaveBeenCalledWith({
                     action: "view_invite",

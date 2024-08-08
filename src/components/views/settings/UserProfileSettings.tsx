@@ -14,9 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
+import React, { ChangeEvent, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EditInPlace, Alert, ErrorMessage } from "@vector-im/compound-web";
+import { Icon as PopOutIcon } from "@vector-im/compound-design-tokens/icons/pop-out.svg";
+import { Icon as SignOutIcon } from "@vector-im/compound-design-tokens/icons/sign-out.svg";
 
 import { _t } from "../../../languageHandler";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
@@ -29,8 +31,13 @@ import UserIdentifierCustomisations from "../../../customisations/UserIdentifier
 import { useId } from "../../../utils/useId";
 import CopyableText from "../elements/CopyableText";
 import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
+import AccessibleButton from "../elements/AccessibleButton";
+import LogoutDialog, { shouldShowLogoutDialog } from "../dialogs/LogoutDialog";
+import Modal from "../../../Modal";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Flex } from "../../utils/Flex";
 
-const SpinnerToast: React.FC = ({ children }) => (
+const SpinnerToast: React.FC<{ children?: ReactNode }> = ({ children }) => (
     <>
         <InlineSpinner />
         {children}
@@ -55,7 +62,47 @@ const UsernameBox: React.FC<UsernameBoxProps> = ({ username }) => {
     );
 };
 
+interface ManageAccountButtonProps {
+    externalAccountManagementUrl: string;
+}
+
+const ManageAccountButton: React.FC<ManageAccountButtonProps> = ({ externalAccountManagementUrl }) => (
+    <AccessibleButton
+        onClick={null}
+        element="a"
+        kind="primary"
+        target="_blank"
+        rel="noreferrer noopener"
+        href={externalAccountManagementUrl}
+        data-testid="external-account-management-link"
+    >
+        <PopOutIcon className="mx_UserProfileSettings_accountmanageIcon" width="24" height="24" />
+        {_t("settings|general|oidc_manage_button")}
+    </AccessibleButton>
+);
+
+const SignOutButton: React.FC = () => {
+    const client = useMatrixClientContext();
+
+    const onClick = useCallback(async () => {
+        if (await shouldShowLogoutDialog(client)) {
+            Modal.createDialog(LogoutDialog);
+        } else {
+            defaultDispatcher.dispatch({ action: "logout" });
+        }
+    }, [client]);
+
+    return (
+        <AccessibleButton onClick={onClick} kind="danger_outline">
+            <SignOutIcon className="mx_UserProfileSettings_accountmanageIcon" width="24" height="24" />
+            {_t("action|sign_out")}
+        </AccessibleButton>
+    );
+};
+
 interface UserProfileSettingsProps {
+    // The URL to redirect the user to in order to manage their account.
+    externalAccountManagementUrl?: string;
     // Whether the homeserver allows the user to set their display name.
     canSetDisplayName: boolean;
     // Whether the homeserver allows the user to set their avatar.
@@ -65,7 +112,11 @@ interface UserProfileSettingsProps {
 /**
  * A group of settings views to allow the user to set their profile information.
  */
-const UserProfileSettings: React.FC<UserProfileSettingsProps> = ({ canSetDisplayName, canSetAvatar }) => {
+const UserProfileSettings: React.FC<UserProfileSettingsProps> = ({
+    externalAccountManagementUrl,
+    canSetDisplayName,
+    canSetAvatar,
+}) => {
     const [avatarURL, setAvatarURL] = useState(OwnProfileStore.instance.avatarMxc);
     const [displayName, setDisplayName] = useState(OwnProfileStore.instance.displayName ?? "");
     const [avatarError, setAvatarError] = useState<boolean>(false);
@@ -192,6 +243,12 @@ const UserProfileSettings: React.FC<UserProfileSettingsProps> = ({ canSetDisplay
                 </Alert>
             )}
             {userIdentifier && <UsernameBox username={userIdentifier} />}
+            <Flex gap="var(--cpd-space-4x)" className="mx_UserProfileSettings_profile_buttons">
+                {externalAccountManagementUrl && (
+                    <ManageAccountButton externalAccountManagementUrl={externalAccountManagementUrl} />
+                )}
+                <SignOutButton />
+            </Flex>
         </div>
     );
 };

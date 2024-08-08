@@ -18,13 +18,14 @@ limitations under the License.
 import React from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
-import { defer, sleep } from "matrix-js-sdk/src/utils";
+import { IDeferred, defer, sleep } from "matrix-js-sdk/src/utils";
 import { TypedEventEmitter } from "matrix-js-sdk/src/matrix";
 import { Glass } from "@vector-im/compound-web";
 
-import dis from "./dispatcher/dispatcher";
+import dis, { defaultDispatcher } from "./dispatcher/dispatcher";
 import AsyncWrapper from "./AsyncWrapper";
 import { Defaultize } from "./@types/common";
+import { ActionPayload } from "./dispatcher/payloads";
 
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
 const STATIC_DIALOG_CONTAINER_ID = "mx_Dialog_StaticContainer";
@@ -47,11 +48,12 @@ export interface IModal<C extends ComponentType> {
     elem: React.ReactNode;
     className?: string;
     beforeClosePromise?: Promise<boolean>;
-    closeReason?: string;
-    onBeforeClose?(reason?: string): Promise<boolean>;
+    closeReason?: ModalCloseReason;
+    onBeforeClose?(reason?: ModalCloseReason): Promise<boolean>;
     onFinished: ComponentProps<C>["onFinished"];
     close(...args: Parameters<ComponentProps<C>["onFinished"]>): void;
     hidden?: boolean;
+    deferred?: IDeferred<Parameters<ComponentProps<C>["onFinished"]>>;
 }
 
 export interface IHandle<C extends ComponentType> {
@@ -72,6 +74,8 @@ type HandlerMap = {
     [ModalManagerEvent.Opened]: () => void;
     [ModalManagerEvent.Closed]: () => void;
 };
+
+type ModalCloseReason = "backgroundClick";
 
 export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMap> {
     private counter = 0;
@@ -111,6 +115,21 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         return container;
     }
 
+    public constructor() {
+        super();
+
+        // We never unregister this, but the Modal class is a singleton so there would
+        // never be an opportunity to do so anyway, except in the entirely theoretical
+        // scenario of instantiating a non-singleton instance of the Modal class.
+        defaultDispatcher.register(this.onAction);
+    }
+
+    private onAction = (payload: ActionPayload): void => {
+        if (payload.action === "logout") {
+            this.forceCloseAllModals();
+        }
+    };
+
     public toggleCurrentDialogVisibility(): void {
         const modal = this.getCurrentModal();
         if (!modal) return;
@@ -148,10 +167,14 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
     }
 
     /**
+     * DEPRECATED.
+     * This is used only for tests. They should be using forceCloseAllModals but that
+     * caused a chunk of tests to fail, so for now they continue to use this.
+     *
      * @param reason either "backgroundClick" or undefined
      * @return whether a modal was closed
      */
-    public closeCurrentModal(reason?: string): boolean {
+    public closeCurrentModal(reason?: ModalCloseReason): boolean {
         const modal = this.getCurrentModal();
         if (!modal) {
             return false;
@@ -159,6 +182,22 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         modal.closeReason = reason;
         modal.close();
         return true;
+    }
+
+    /**
+     * Forces closes all open modals. The modals onBeforeClose function will not be
+     * run and the modal will not have a chance to prevent closing. Intended for
+     * situations like the user logging out of the app.
+     */
+    public forceCloseAllModals(): void {
+        for (const modal of this.modals) {
+            modal.deferred?.resolve([]);
+            if (modal.onFinished) modal.onFinished.apply(null);
+            this.emitClosed();
+        }
+
+        this.modals = [];
+        this.reRender();
     }
 
     private buildModal<C extends ComponentType>(
@@ -199,7 +238,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
         modal: IModal<C>,
         props?: ComponentProps<C>,
     ): [IHandle<C>["close"], IHandle<C>["finished"]] {
-        const deferred = defer<Parameters<ComponentProps<C>["onFinished"]>>();
+        modal.deferred = defer<Parameters<ComponentProps<C>["onFinished"]>>();
         return [
             async (...args: Parameters<ComponentProps<C>["onFinished"]>): Promise<void> => {
                 if (modal.beforeClosePromise) {
@@ -212,7 +251,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
                         return;
                     }
                 }
-                deferred.resolve(args);
+                modal.deferred?.resolve(args);
                 if (props?.onFinished) props.onFinished.apply(null, args);
                 const i = this.modals.indexOf(modal);
                 if (i >= 0) {
@@ -236,7 +275,7 @@ export class ModalManager extends TypedEventEmitter<ModalManagerEvent, HandlerMa
                 this.reRender();
                 this.emitClosed();
             },
-            deferred.promise,
+            modal.deferred.promise,
         ];
     }
 
