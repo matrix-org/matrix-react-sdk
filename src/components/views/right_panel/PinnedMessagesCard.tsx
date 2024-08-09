@@ -14,27 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState, JSX } from "react";
 import { Room, RoomEvent, RoomStateEvent, MatrixEvent, EventType, RelationType } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
+import { Button, Separator } from "@vector-im/compound-web";
+import classNames from "classnames";
+import PinIcon from "@vector-im/compound-design-tokens/assets/web/icons/pin";
 
-import { Icon as ContextMenuIcon } from "../../../../res/img/element-icons/context-menu.svg";
-import { Icon as EmojiIcon } from "../../../../res/img/element-icons/room/message-bar/emoji.svg";
-import { Icon as ReplyIcon } from "../../../../res/img/element-icons/room/message-bar/reply.svg";
 import { _t } from "../../../languageHandler";
 import BaseCard from "./BaseCard";
 import Spinner from "../elements/Spinner";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import MatrixClientContext, { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import PinningUtils from "../../../utils/PinningUtils";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
-import PinnedEventTile from "../rooms/PinnedEventTile";
+import { PinnedEventTile } from "../rooms/PinnedEventTile";
 import { useRoomState } from "../../../hooks/useRoomState";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { ReadPinsEventId } from "./types";
 import Heading from "../typography/Heading";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { filterBoolean } from "../../../utils/arrays";
+import Modal from "../../../Modal";
+import { UnpinAllDialog } from "../dialogs/UnpinAllDialog";
+import EmptyState from "./EmptyState";
 
 interface IProps {
     room: Room;
@@ -95,7 +98,6 @@ export const useReadPinnedEvents = (room?: Room): Set<string> => {
 const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator }) => {
     const cli = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const canUnpin = useRoomState(room, (state) => state.mayClientSendStateEvent(EventType.RoomPinnedEvents, cli));
     const pinnedEventIds = usePinnedEvents(room);
     const readPinnedEvents = useReadPinnedEvents(room);
 
@@ -118,6 +120,11 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
                     ?.getTimelineForEvent(eventId)
                     ?.getEvents()
                     .find((e) => e.getId() === eventId);
+
+                if (localEvent?.isEncrypted()) {
+                    await cli.decryptEventIfNeeded(localEvent);
+                }
+
                 if (localEvent) return PinningUtils.isPinnable(localEvent) ? localEvent : null;
 
                 try {
@@ -133,7 +140,7 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
                     ]);
                     const event = new MatrixEvent(evJson);
                     if (event.isEncrypted()) {
-                        await cli.decryptEventIfNeeded(event); // TODO await?
+                        await cli.decryptEventIfNeeded(event);
                     }
                     await room.processPollEvents([event]);
 
@@ -162,58 +169,16 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
     let content: JSX.Element[] | JSX.Element | undefined;
     if (!pinnedEventIds.length) {
         content = (
-            <div className="mx_PinnedMessagesCard_empty_wrapper">
-                <div className="mx_PinnedMessagesCard_empty">
-                    {/* XXX: We reuse the classes for simplicity, but deliberately not the components for non-interactivity. */}
-                    <div className="mx_MessageActionBar mx_PinnedMessagesCard_MessageActionBar">
-                        <div className="mx_MessageActionBar_iconButton">
-                            <EmojiIcon />
-                        </div>
-                        <div className="mx_MessageActionBar_iconButton">
-                            <ReplyIcon />
-                        </div>
-                        <div className="mx_MessageActionBar_iconButton mx_MessageActionBar_optionsButton">
-                            <ContextMenuIcon />
-                        </div>
-                    </div>
-
-                    <Heading size="4" className="mx_PinnedMessagesCard_empty_header">
-                        {_t("right_panel|pinned_messages|empty")}
-                    </Heading>
-                    {_t(
-                        "right_panel|pinned_messages|explainer",
-                        {},
-                        {
-                            b: (sub) => <b>{sub}</b>,
-                        },
-                    )}
-                </div>
-            </div>
+            <EmptyState
+                Icon={PinIcon}
+                title={_t("right_panel|pinned_messages|empty_title")}
+                description={_t("right_panel|pinned_messages|empty_description")}
+            />
         );
     } else if (pinnedEvents?.length) {
-        const onUnpinClicked = async (event: MatrixEvent): Promise<void> => {
-            const pinnedEvents = room.currentState.getStateEvents(EventType.RoomPinnedEvents, "");
-            if (pinnedEvents?.getContent()?.pinned) {
-                const pinned = pinnedEvents.getContent().pinned;
-                const index = pinned.indexOf(event.getId());
-                if (index !== -1) {
-                    pinned.splice(index, 1);
-                    await cli.sendStateEvent(room.roomId, EventType.RoomPinnedEvents, { pinned }, "");
-                }
-            }
-        };
-
-        // show them in reverse, with latest pinned at the top
-        content = filterBoolean(pinnedEvents)
-            .reverse()
-            .map((ev) => (
-                <PinnedEventTile
-                    key={ev.getId()}
-                    event={ev}
-                    onUnpinClicked={canUnpin ? () => onUnpinClicked(ev) : undefined}
-                    permalinkCreator={permalinkCreator}
-                />
-            ));
+        content = (
+            <PinnedMessages events={filterBoolean(pinnedEvents)} room={room} permalinkCreator={permalinkCreator} />
+        );
     } else {
         content = <Spinner />;
     }
@@ -223,7 +188,7 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
             header={
                 <div className="mx_BaseCard_header_title">
                     <Heading size="4" className="mx_BaseCard_header_title_heading">
-                        {_t("right_panel|pinned_messages|title")}
+                        {_t("right_panel|pinned_messages|header", { count: pinnedEventIds.length })}
                     </Heading>
                 </div>
             }
@@ -243,3 +208,75 @@ const PinnedMessagesCard: React.FC<IProps> = ({ room, onClose, permalinkCreator 
 };
 
 export default PinnedMessagesCard;
+
+/**
+ * The pinned messages in a room.
+ */
+interface PinnedMessagesProps {
+    /**
+     * The pinned events.
+     */
+    events: MatrixEvent[];
+    /**
+     * The room the events are in.
+     */
+    room: Room;
+    /**
+     * The permalink creator to use.
+     */
+    permalinkCreator: RoomPermalinkCreator;
+}
+
+/**
+ * The pinned messages in a room.
+ */
+function PinnedMessages({ events, room, permalinkCreator }: PinnedMessagesProps): JSX.Element {
+    const matrixClient = useMatrixClientContext();
+
+    /**
+     * Whether the client can unpin events from the room.
+     */
+    const canUnpin = useRoomState(room, (state) =>
+        state.mayClientSendStateEvent(EventType.RoomPinnedEvents, matrixClient),
+    );
+
+    /**
+     * Opens the unpin all dialog.
+     */
+    const onUnpinAll = useCallback(async (): Promise<void> => {
+        Modal.createDialog(UnpinAllDialog, {
+            roomId: room.roomId,
+            matrixClient,
+        });
+    }, [room, matrixClient]);
+
+    return (
+        <>
+            <div
+                className={classNames("mx_PinnedMessagesCard_wrapper", {
+                    mx_PinnedMessagesCard_wrapper_unpin_all: canUnpin,
+                })}
+            >
+                {events.reverse().map((event, i) => (
+                    <>
+                        <PinnedEventTile
+                            key={event.getId()}
+                            event={event}
+                            permalinkCreator={permalinkCreator}
+                            room={room}
+                        />
+                        {/* Add a separator if this isn't the last pinned message */}
+                        {events.length - 1 !== i && <Separator key={i} className="mx_PinnedMessagesCard_Separator" />}
+                    </>
+                ))}
+            </div>
+            {canUnpin && (
+                <div className="mx_PinnedMessagesCard_unpin">
+                    <Button kind="tertiary" onClick={onUnpinAll}>
+                        {_t("right_panel|pinned_messages|unpin_all|button")}
+                    </Button>
+                </div>
+            )}
+        </>
+    );
+}
