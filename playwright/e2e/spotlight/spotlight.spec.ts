@@ -159,7 +159,7 @@ test.describe("Spotlight", () => {
         await expect(resultLocator).toHaveCount(1);
         await expect(resultLocator.first()).toContainText(room2Name);
         await expect(resultLocator.first()).toContainText("Join");
-        await resultLocator.first().click();
+        await resultLocator.first().getByRole("button").click();
         expect(page.url()).toContain(room2Id);
         await expect(page.locator(".mx_RoomView_MessageList")).toHaveCount(1);
         await expect(roomHeaderName(page)).toContainText(room2Name);
@@ -174,7 +174,7 @@ test.describe("Spotlight", () => {
         await expect(resultLocator).toHaveCount(1);
         await expect(resultLocator.first()).toContainText(room3Name);
         await expect(resultLocator.first()).toContainText("View");
-        await resultLocator.first().click();
+        await resultLocator.first().getByRole("button").click();
         expect(page.url()).toContain(room3Id);
         await page.getByRole("button", { name: "Join the discussion" }).click();
         await expect(roomHeaderName(page)).toHaveText(room3Name);

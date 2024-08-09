@@ -291,7 +291,7 @@ test.describe("Knock Into Room", () => {
         const spotlightDialog = await app.openSpotlight();
         await spotlightDialog.filter(Filter.PublicRooms);
         await expect(spotlightDialog.results.nth(0)).toContainText("Cybersecurity");
-        await spotlightDialog.results.nth(0).click();
+        await spotlightDialog.results.nth(0).getByRole("button").click();
 
         const roomPreviewBar = page.locator(".mx_RoomPreviewBar");
         await expect(roomPreviewBar.getByRole("heading", { name: "Ask to join?" })).toBeVisible();
