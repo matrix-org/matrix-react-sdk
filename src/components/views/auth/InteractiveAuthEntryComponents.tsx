@@ -950,7 +950,9 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
     };
 
     private onReceiveMessage = (event: MessageEvent): void => {
-        if (event.data === "authDone" && event.origin === this.props.matrixClient.getHomeserverUrl()) {
+        // We don't check the origin here as we don't trust any incoming data and just use it as a ping to retry the request,
+        // and the HS may delegate the fallback to another origin, due to CORS we cannot inspect the origin of the popupWindow.
+        if (event.data === "authDone") {
             this.props.submitAuthDict({});
         }
     };
