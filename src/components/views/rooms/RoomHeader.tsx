@@ -342,18 +342,6 @@ export default function RoomHeader({
                         );
                     })}
 
-                    {isViewingCall && <CallGuestLinkButton room={room} />}
-                    {((isConnectedToCall && isViewingCall) || isVideoRoom) && <VideoRoomChatButton room={room} />}
-
-                    {hasActiveCallSession && !isConnectedToCall && !isViewingCall ? (
-                        joinCallButton
-                    ) : (
-                        <>
-                            {!isVideoRoom && videoCallButton}
-                            {!useElementCallExclusively && !isVideoRoom && voiceCallButton}
-                        </>
-                    )}
-
                     <Tooltip label={_t("right_panel|room_summary_card|title")}>
                         <IconButton
                             onClick={(evt) => {
@@ -365,19 +353,17 @@ export default function RoomHeader({
                             <RoomInfoIcon />
                         </IconButton>
                     </Tooltip>
-                    {showChatButton && (
-                        <Tooltip label={_t("common|chat")}>
-                            <IconButton
-                                indicator={notificationLevelToIndicator(roomNotifications)}
-                                onClick={(evt) => {
-                                    evt.stopPropagation();
-                                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.Timeline);
-                                }}
-                                aria-label={_t("common|chat")}
-                            >
-                                <ThreadsIcon />
-                            </IconButton>
-                        </Tooltip>
+
+                    {isViewingCall && <CallGuestLinkButton room={room} />}
+                    {showChatButton && <VideoRoomChatButton room={room} />}
+
+                    {hasActiveCallSession && !isConnectedToCall && !isViewingCall ? (
+                        joinCallButton
+                    ) : (
+                        <>
+                            {!isVideoRoom && videoCallButton}
+                            {!useElementCallExclusively && !isVideoRoom && voiceCallButton}
+                        </>
                     )}
                     <Tooltip label={_t("common|threads")}>
                         <IconButton
