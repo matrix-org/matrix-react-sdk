@@ -106,6 +106,7 @@ export const UserPersonalInfoSettings: React.FC<UserPersonalInfoSettingsProps> =
                         threepids={emails!}
                         onChange={onEmailsChange}
                         disabled={!canMake3pidChanges}
+                        isLoading={loadingState === "loading"}
                     />
                 </ThreepidSectionWrapper>
             </SettingsSubsection>
@@ -125,6 +126,7 @@ export const UserPersonalInfoSettings: React.FC<UserPersonalInfoSettingsProps> =
                         threepids={phoneNumbers!}
                         onChange={onMsisdnsChange}
                         disabled={!canMake3pidChanges}
+                        isLoading={loadingState === "loading"}
                     />
                 </ThreepidSectionWrapper>
             </SettingsSubsection>

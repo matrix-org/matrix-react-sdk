@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddRemoveThreepids should handle no email addresses 1`] = `
+<div>
+  <div
+    class="mx_AddRemoveThreepids_existing"
+  >
+    <span
+      class="mx_AddRemoveThreepids_existing_address"
+    >
+      alice@nowhere.dummy
+    </span>
+    <div
+      class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_danger_sm"
+      role="button"
+      tabindex="0"
+    >
+      Remove
+    </div>
+  </div>
+  <form
+    autocomplete="off"
+    novalidate=""
+  >
+    <div
+      class="mx_Field mx_Field_input"
+    >
+      <input
+        autocomplete="email"
+        id="mx_Field_1"
+        label="Email Address"
+        placeholder="Email Address"
+        type="text"
+        value=""
+      />
+      <label
+        for="mx_Field_1"
+      >
+        Email Address
+      </label>
+    </div>
+    <div
+      class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      role="button"
+      tabindex="0"
+    >
+      Add
+    </div>
+  </form>
+</div>
+`;
+
+exports[`AddRemoveThreepids should render email addresses 1`] = `
+<div>
+  <form
+    autocomplete="off"
+    novalidate=""
+  >
+    <div
+      class="mx_Field mx_Field_input"
+    >
+      <input
+        autocomplete="email"
+        id="mx_Field_1"
+        label="Email Address"
+        placeholder="Email Address"
+        type="text"
+        value=""
+      />
+      <label
+        for="mx_Field_1"
+      >
+        Email Address
+      </label>
+    </div>
+    <div
+      class="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary"
+      role="button"
+      tabindex="0"
+    >
+      Add
+    </div>
+  </form>
+</div>
+`;

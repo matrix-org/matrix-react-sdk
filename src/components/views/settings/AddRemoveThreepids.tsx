@@ -33,6 +33,7 @@ import Field from "../elements/Field";
 import { looksValid as emailLooksValid } from "../../../email";
 import CountryDropdown from "../auth/CountryDropdown";
 import { PhoneNumberCountryDefinition } from "../../../phonenumber";
+import InlineSpinner from "../elements/InlineSpinner";
 
 // Whether we're adding 3pids to the user's account on the homeserver or sharing them on an identity server
 type TheepidControlMode = "hs" | "is";
@@ -499,6 +500,8 @@ interface AddRemoveThreepidsProps {
     disabled?: boolean;
     // Called when changes are made to the list of third party identifiers
     onChange: () => void;
+    // If true, a spinner is shown instead of the component
+    isLoading: boolean;
 }
 
 export const AddRemoveThreepids: React.FC<AddRemoveThreepidsProps> = ({
@@ -507,7 +510,12 @@ export const AddRemoveThreepids: React.FC<AddRemoveThreepidsProps> = ({
     threepids,
     disabled,
     onChange,
+    isLoading,
 }) => {
+    if (isLoading) {
+        return <InlineSpinner />;
+    }
+
     const existingEmailElements = threepids.map((e) => {
         return <ExistingThreepid mode={mode} threepid={e} onChange={onChange} key={e.address} disabled={disabled} />;
     });

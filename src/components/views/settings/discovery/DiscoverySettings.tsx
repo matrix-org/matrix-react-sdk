@@ -35,7 +35,6 @@ import { useDispatcher } from "../../../../hooks/useDispatcher";
 import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../../dispatcher/payloads";
 import { AddRemoveThreepids } from "../AddRemoveThreepids";
-import InlineSpinner from "../../elements/InlineSpinner";
 
 type RequiredPolicyInfo =
     | {
@@ -162,9 +161,7 @@ export const DiscoverySettings: React.FC = () => {
     }
 
     let threepidSection;
-    if (isLoadingThreepids) {
-        threepidSection = <InlineSpinner />;
-    } else if (idServerName) {
+    if (idServerName) {
         threepidSection = (
             <>
                 <AddRemoveThreepids
@@ -173,6 +170,7 @@ export const DiscoverySettings: React.FC = () => {
                     threepids={emails}
                     onChange={getThreepidState}
                     disabled={!canMake3pidChanges}
+                    isLoading={isLoadingThreepids}
                 />
                 <AddRemoveThreepids
                     mode="is"
@@ -180,6 +178,7 @@ export const DiscoverySettings: React.FC = () => {
                     threepids={phoneNumbers}
                     onChange={getThreepidState}
                     disabled={!canMake3pidChanges}
+                    isLoading={isLoadingThreepids}
                 />
             </>
         );
