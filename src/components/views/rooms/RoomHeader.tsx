@@ -59,9 +59,6 @@ import { useIsReleaseAnnouncementOpen } from "../../../hooks/useIsReleaseAnnounc
 import { ReleaseAnnouncementStore } from "../../../stores/ReleaseAnnouncementStore";
 import WithPresenceIndicator, { useDmMember } from "../avatars/WithPresenceIndicator";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
-import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
-import { useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
-import { NotificationStateEvents } from "../../../stores/notifications/NotificationState";
 import RoomContext from "../../../contexts/RoomContext";
 import { MainSplitContentType } from "../../structures/RoomView";
 
@@ -105,12 +102,6 @@ export default function RoomHeader({
         return SdkConfig.get("element_call").use_exclusively && groupCallsEnabled;
     }, [groupCallsEnabled]);
 
-    const roomNotificationState = RoomNotificationStateStore.instance.getRoomState(room);
-    const roomNotifications = useTypedEventEmitterState(
-        roomNotificationState,
-        NotificationStateEvents.Update,
-        () => roomNotificationState.level,
-    );
     const threadNotifications = useRoomThreadNotifications(room);
     const globalNotificationState = useGlobalNotificationState();
 
