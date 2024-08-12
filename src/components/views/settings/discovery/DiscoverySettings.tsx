@@ -19,8 +19,6 @@ import { SERVICE_TYPES, ThreepidMedium } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Alert } from "@vector-im/compound-web";
 
-import DiscoveryEmailAddresses from "../discovery/EmailAddresses";
-import DiscoveryPhoneNumbers from "../discovery/PhoneNumbers";
 import { getThreepidsWithBindStatus } from "../../../../boundThreepids";
 import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext";
 import { ThirdPartyIdentifier } from "../../../../AddThreepid";
@@ -36,6 +34,8 @@ import { abbreviateUrl } from "../../../../utils/UrlUtils";
 import { useDispatcher } from "../../../../hooks/useDispatcher";
 import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../../dispatcher/payloads";
+import { AddRemoveThreepids } from "../AddRemoveThreepids";
+import InlineSpinner from "../../elements/InlineSpinner";
 
 type RequiredPolicyInfo =
     | {
@@ -56,9 +56,9 @@ type RequiredPolicyInfo =
 export const DiscoverySettings: React.FC = () => {
     const client = useMatrixClientContext();
 
+    const [isLoadingThreepids, setIsLoadingThreepids] = useState<boolean>(true);
     const [emails, setEmails] = useState<ThirdPartyIdentifier[]>([]);
     const [phoneNumbers, setPhoneNumbers] = useState<ThirdPartyIdentifier[]>([]);
-    const [loadingState, setLoadingState] = useState<"loading" | "loaded" | "error">("loading");
     const [idServerName, setIdServerName] = useState<string | undefined>(abbreviateUrl(client.getIdentityServerUrl()));
     const [canMake3pidChanges, setCanMake3pidChanges] = useState<boolean>(false);
 
@@ -71,9 +71,11 @@ export const DiscoverySettings: React.FC = () => {
     const [hasTerms, setHasTerms] = useState<boolean>(false);
 
     const getThreepidState = useCallback(async () => {
+        setIsLoadingThreepids(true);
         const threepids = await getThreepidsWithBindStatus(client);
         setEmails(threepids.filter((a) => a.medium === ThreepidMedium.Email));
         setPhoneNumbers(threepids.filter((a) => a.medium === ThreepidMedium.Phone));
+        setIsLoadingThreepids(false);
     }, [client]);
 
     useDispatcher(
@@ -133,11 +135,7 @@ export const DiscoverySettings: React.FC = () => {
                     );
                     logger.warn(e);
                 }
-
-                setLoadingState("loaded");
-            } catch (e) {
-                setLoadingState("error");
-            }
+            } catch (e) {}
         })();
     }, [client, getThreepidState]);
 
@@ -163,23 +161,32 @@ export const DiscoverySettings: React.FC = () => {
         );
     }
 
-    const threepidSection = idServerName ? (
-        <>
-            <DiscoveryEmailAddresses
-                emails={emails}
-                isLoading={loadingState === "loading"}
-                disabled={!canMake3pidChanges}
-            />
-            <DiscoveryPhoneNumbers
-                msisdns={phoneNumbers}
-                isLoading={loadingState === "loading"}
-                disabled={!canMake3pidChanges}
-            />
-        </>
-    ) : null;
+    let threepidSection;
+    if (isLoadingThreepids) {
+        threepidSection = <InlineSpinner />;
+    } else if (idServerName) {
+        threepidSection = (
+            <>
+                <AddRemoveThreepids
+                    mode="is"
+                    medium={ThreepidMedium.Email}
+                    threepids={emails}
+                    onChange={getThreepidState}
+                    disabled={!canMake3pidChanges}
+                />
+                <AddRemoveThreepids
+                    mode="is"
+                    medium={ThreepidMedium.Phone}
+                    threepids={phoneNumbers}
+                    onChange={getThreepidState}
+                    disabled={!canMake3pidChanges}
+                />
+            </>
+        );
+    }
 
     return (
-        <SettingsSubsection heading={_t("settings|discovery|title")} data-testid="discoverySection">
+        <SettingsSubsection heading={_t("settings|discovery|title")} data-testid="discoverySection" stretchContent>
             {threepidSection}
             {/* has its own heading as it includes the current identity server */}
             <SetIdServer missingTerms={false} />
