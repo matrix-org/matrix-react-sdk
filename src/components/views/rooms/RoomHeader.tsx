@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import { Body as BodyText, Button, IconButton, Menu, MenuItem, Tooltip } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 import { Icon as VoiceCallIcon } from "@vector-im/compound-design-tokens/icons/voice-call.svg";
@@ -50,7 +50,7 @@ import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { VideoRoomChatButton } from "./RoomHeader/VideoRoomChatButton";
 import { RoomKnocksBar } from "./RoomKnocksBar";
-import { isVideoRoom } from "../../../utils/video-rooms";
+import { useIsVideoRoom } from "../../../utils/video-rooms";
 import { notificationLevelToIndicator } from "../../../utils/notifications";
 import { CallGuestLinkButton } from "./RoomHeader/CallGuestLinkButton";
 import { ButtonEvent } from "../elements/AccessibleButton";
@@ -59,6 +59,11 @@ import { useIsReleaseAnnouncementOpen } from "../../../hooks/useIsReleaseAnnounc
 import { ReleaseAnnouncementStore } from "../../../stores/ReleaseAnnouncementStore";
 import WithPresenceIndicator, { useDmMember } from "../avatars/WithPresenceIndicator";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
+import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
+import { useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
+import { NotificationStateEvents } from "../../../stores/notifications/NotificationState";
+import RoomContext from "../../../contexts/RoomContext";
+import { MainSplitContentType } from "../../structures/RoomView";
 
 export default function RoomHeader({
     room,
@@ -100,6 +105,12 @@ export default function RoomHeader({
         return SdkConfig.get("element_call").use_exclusively && groupCallsEnabled;
     }, [groupCallsEnabled]);
 
+    const roomNotificationState = RoomNotificationStateStore.instance.getRoomState(room);
+    const roomNotifications = useTypedEventEmitterState(
+        roomNotificationState,
+        NotificationStateEvents.Update,
+        () => roomNotificationState.level,
+    );
     const threadNotifications = useRoomThreadNotifications(room);
     const globalNotificationState = useGlobalNotificationState();
 
@@ -233,6 +244,13 @@ export default function RoomHeader({
 
     const isReleaseAnnouncementOpen = useIsReleaseAnnouncementOpen("newRoomHeader");
 
+    const roomContext = useContext(RoomContext);
+    const isVideoRoom = useIsVideoRoom(room);
+    const showChatButton =
+        isVideoRoom ||
+        roomContext.mainSplitContentType === MainSplitContentType.MaximisedWidget ||
+        roomContext.mainSplitContentType === MainSplitContentType.Call;
+
     return (
         <>
             <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
@@ -325,14 +343,14 @@ export default function RoomHeader({
                     })}
 
                     {isViewingCall && <CallGuestLinkButton room={room} />}
-                    {((isConnectedToCall && isViewingCall) || isVideoRoom(room)) && <VideoRoomChatButton room={room} />}
+                    {((isConnectedToCall && isViewingCall) || isVideoRoom) && <VideoRoomChatButton room={room} />}
 
                     {hasActiveCallSession && !isConnectedToCall && !isViewingCall ? (
                         joinCallButton
                     ) : (
                         <>
-                            {!isVideoRoom(room) && videoCallButton}
-                            {!useElementCallExclusively && !isVideoRoom(room) && voiceCallButton}
+                            {!isVideoRoom && videoCallButton}
+                            {!useElementCallExclusively && !isVideoRoom && voiceCallButton}
                         </>
                     )}
 
@@ -347,6 +365,20 @@ export default function RoomHeader({
                             <RoomInfoIcon />
                         </IconButton>
                     </Tooltip>
+                    {showChatButton && (
+                        <Tooltip label={_t("common|chat")}>
+                            <IconButton
+                                indicator={notificationLevelToIndicator(roomNotifications)}
+                                onClick={(evt) => {
+                                    evt.stopPropagation();
+                                    RightPanelStore.instance.showOrHidePanel(RightPanelPhases.Timeline);
+                                }}
+                                aria-label={_t("common|chat")}
+                            >
+                                <ThreadsIcon />
+                            </IconButton>
+                        </Tooltip>
+                    )}
                     <Tooltip label={_t("common|threads")}>
                         <IconButton
                             indicator={notificationLevelToIndicator(threadNotifications)}
