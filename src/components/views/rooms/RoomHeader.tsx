@@ -333,6 +333,17 @@ export default function RoomHeader({
                         );
                     })}
 
+                    {isViewingCall && <CallGuestLinkButton room={room} />}
+
+                    {hasActiveCallSession && !isConnectedToCall && !isViewingCall ? (
+                        joinCallButton
+                    ) : (
+                        <>
+                            {!isVideoRoom && videoCallButton}
+                            {!useElementCallExclusively && !isVideoRoom && voiceCallButton}
+                        </>
+                    )}
+
                     <Tooltip label={_t("right_panel|room_summary_card|title")}>
                         <IconButton
                             onClick={(evt) => {
@@ -345,17 +356,8 @@ export default function RoomHeader({
                         </IconButton>
                     </Tooltip>
 
-                    {isViewingCall && <CallGuestLinkButton room={room} />}
                     {showChatButton && <VideoRoomChatButton room={room} />}
 
-                    {hasActiveCallSession && !isConnectedToCall && !isViewingCall ? (
-                        joinCallButton
-                    ) : (
-                        <>
-                            {!isVideoRoom && videoCallButton}
-                            {!useElementCallExclusively && !isVideoRoom && voiceCallButton}
-                        </>
-                    )}
                     <Tooltip label={_t("common|threads")}>
                         <IconButton
                             indicator={notificationLevelToIndicator(threadNotifications)}
