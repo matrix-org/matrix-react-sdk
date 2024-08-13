@@ -27,14 +27,14 @@ exports[`AddRemoveThreepids should handle no email addresses 1`] = `
     >
       <input
         autocomplete="email"
-        id="mx_Field_1"
+        id="mx_Field_2"
         label="Email Address"
         placeholder="Email Address"
         type="text"
         value=""
       />
       <label
-        for="mx_Field_1"
+        for="mx_Field_2"
       >
         Email Address
       </label>
