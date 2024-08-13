@@ -417,13 +417,8 @@ const AddThreepidSection: React.FC<{ medium: "email" | "msisdn"; disabled?: bool
         setVerificationCodeInput(e.target.value);
     }, []);
 
-    let addSection = (
-        <AccessibleButton onClick={onAddClick} kind="primary" disabled={disabled}>
-            {_t("action|add")}
-        </AccessibleButton>
-    );
     if (isVerifying && medium === "email") {
-        addSection = (
+        return (
             <div>
                 <div>{_t("settings|general|add_email_instructions")}</div>
                 <AccessibleButton onClick={onContinueClick} kind="primary" disabled={continueDisabled}>
@@ -432,7 +427,7 @@ const AddThreepidSection: React.FC<{ medium: "email" | "msisdn"; disabled?: bool
             </div>
         );
     } else if (isVerifying) {
-        addSection = (
+        return (
             <div>
                 <div>
                     {_t("settings|general|add_msisdn_instructions", { msisdn: sentToMsisdn })}
@@ -486,7 +481,9 @@ const AddThreepidSection: React.FC<{ medium: "email" | "msisdn"; disabled?: bool
                 onChange={onNewThreepidInputChange}
                 prefixComponent={phoneCountry}
             />
-            {addSection}
+            <AccessibleButton onClick={onAddClick} kind="primary" disabled={disabled}>
+                {_t("action|add")}
+            </AccessibleButton>
         </form>
     );
 };
