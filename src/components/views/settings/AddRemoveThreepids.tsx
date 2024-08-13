@@ -349,12 +349,18 @@ const AddThreepidSection: React.FC<{ medium: "email" | "msisdn"; disabled?: bool
                         underlyingError.errcode === "M_THREEPID_AUTH_FAILED"
                     ) {
                         Modal.createDialog(ErrorDialog, {
-                            title: _t("settings|general|email_not_verified"),
+                            title:
+                                medium === "email"
+                                    ? _t("settings|general|email_not_verified")
+                                    : _t("settings|general|error_msisdn_verification"),
                             description: _t("settings|general|email_verification_instructions"),
                         });
                     } else {
                         Modal.createDialog(ErrorDialog, {
-                            title: _t("settings|general|error_email_verification"),
+                            title:
+                                medium == "email"
+                                    ? _t("settings|general|error_email_verification")
+                                    : _t("settings|general|error_msisdn_verification"),
                             description: extractErrorMessageFromError(err, _t("invite|failed_generic")),
                         });
                     }

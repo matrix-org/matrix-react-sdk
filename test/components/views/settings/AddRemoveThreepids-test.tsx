@@ -23,6 +23,7 @@ import { mocked } from "jest-mock";
 import { AddRemoveThreepids } from "../../../../src/components/views/settings/AddRemoveThreepids";
 import { stubClient } from "../../../test-utils";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
+import Modal from "../../../../src/Modal";
 
 const MOCK_IDENTITY_ACCESS_TOKEN = "mock_identity_access_token";
 const mockGetAccessToken = jest.fn().mockResolvedValue(MOCK_IDENTITY_ACCESS_TOKEN);
@@ -149,6 +150,45 @@ describe("AddRemoveThreepids", () => {
         expect(onChangeFn).toHaveBeenCalled();
     });
 
+    it("should display an error if the link has not been clicked", async () => {
+        const onChangeFn = jest.fn();
+        const createDialogFn = jest.spyOn(Modal, "createDialog");
+        mocked(client.requestAdd3pidEmailToken).mockResolvedValue({ sid: "1" });
+
+        render(
+            <AddRemoveThreepids
+                mode="hs"
+                medium={ThreepidMedium.Email}
+                threepids={[]}
+                isLoading={false}
+                onChange={onChangeFn}
+            />,
+            {
+                wrapper: clientProviderWrapper,
+            },
+        );
+
+        const input = screen.getByRole("textbox", { name: "Email Address" });
+        await userEvent.type(input, EMAIL1.address);
+        const addButton = screen.getByRole("button", { name: "Add" });
+        await userEvent.click(addButton);
+
+        const continueButton = screen.getByRole("button", { name: "Continue" });
+
+        expect(continueButton).toBeEnabled();
+
+        mocked(client).addThreePidOnly.mockRejectedValueOnce(new Error("Unauthorized"));
+
+        await userEvent.click(continueButton);
+
+        expect(createDialogFn).toHaveBeenCalledWith(expect.anything(), {
+            description: "Unauthorized",
+            title: "Unable to verify email address.",
+        });
+
+        expect(onChangeFn).not.toHaveBeenCalled();
+    });
+
     it("should add a phone number", async () => {
         const onChangeFn = jest.fn();
         mocked(client.requestAdd3pidMsisdnToken).mockResolvedValue({
@@ -208,6 +248,57 @@ describe("AddRemoveThreepids", () => {
         expect(onChangeFn).toHaveBeenCalled();
     });
 
+    it("should display an error if the code is incorrect", async () => {
+        const onChangeFn = jest.fn();
+        const createDialogFn = jest.spyOn(Modal, "createDialog");
+        mocked(client.requestAdd3pidMsisdnToken).mockResolvedValue({
+            sid: "1",
+            msisdn: PHONE1.address,
+            intl_fmt: "+" + PHONE1.address,
+            success: true,
+            submit_url: "https://example.dummy",
+        });
+
+        render(
+            <AddRemoveThreepids
+                mode="hs"
+                medium={ThreepidMedium.Phone}
+                threepids={[]}
+                isLoading={false}
+                onChange={onChangeFn}
+            />,
+            {
+                wrapper: clientProviderWrapper,
+            },
+        );
+
+        const input = screen.getByRole("textbox", { name: "Phone Number" });
+        await userEvent.type(input, PHONE1_LOCALNUM);
+
+        const countryDropdown = screen.getByRole("button", { name: "Country Dropdown" });
+        await userEvent.click(countryDropdown);
+        const gbOption = screen.getByRole("option", { name: "🇬🇧 United Kingdom (+44)" });
+        await userEvent.click(gbOption);
+
+        const addButton = screen.getByRole("button", { name: "Add" });
+        await userEvent.click(addButton);
+
+        mocked(client).addThreePidOnly.mockRejectedValueOnce(new Error("Unauthorized"));
+
+        const verificationInput = screen.getByRole("textbox", { name: "Verification code" });
+        await userEvent.type(verificationInput, "123457");
+
+        const continueButton = screen.getByRole("button", { name: "Continue" });
+        await userEvent.click(continueButton);
+
+        expect(createDialogFn).toHaveBeenCalledWith(expect.anything(), {
+            description: "Unauthorized",
+            title: "Unable to verify phone number.",
+        });
+
+        expect(onChangeFn).not.toHaveBeenCalled();
+    });
+
     it("should remove an email address", async () => {
         const onChangeFn = jest.fn();
         render(
@@ -235,7 +326,7 @@ describe("AddRemoveThreepids", () => {
         expect(onChangeFn).toHaveBeenCalled();
     });
 
-    it("should return to default view if addign is cancelled", async () => {
+    it("should return to default view if adding is cancelled", async () => {
         const onChangeFn = jest.fn();
         render(
             <AddRemoveThreepids
