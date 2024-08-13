@@ -164,22 +164,34 @@ export const DiscoverySettings: React.FC = () => {
     if (idServerName) {
         threepidSection = (
             <>
-                <AddRemoveThreepids
-                    mode="is"
-                    medium={ThreepidMedium.Email}
-                    threepids={emails}
-                    onChange={getThreepidState}
-                    disabled={!canMake3pidChanges}
-                    isLoading={isLoadingThreepids}
-                />
-                <AddRemoveThreepids
-                    mode="is"
-                    medium={ThreepidMedium.Phone}
-                    threepids={phoneNumbers}
-                    onChange={getThreepidState}
-                    disabled={!canMake3pidChanges}
-                    isLoading={isLoadingThreepids}
-                />
+                <SettingsSubsection
+                    heading={_t("settings|general|emails_heading")}
+                    description={emails.length === 0 ? _t("settings|general|discovery_email_empty") : undefined}
+                    stretchContent
+                >
+                    <AddRemoveThreepids
+                        mode="is"
+                        medium={ThreepidMedium.Email}
+                        threepids={emails}
+                        onChange={getThreepidState}
+                        disabled={!canMake3pidChanges}
+                        isLoading={isLoadingThreepids}
+                    />
+                </SettingsSubsection>
+                <SettingsSubsection
+                    heading={_t("settings|general|msisdns_heading")}
+                    description={phoneNumbers.length === 0 ? _t("settings|general|discovery_msisdn_empty") : undefined}
+                    stretchContent
+                >
+                    <AddRemoveThreepids
+                        mode="is"
+                        medium={ThreepidMedium.Phone}
+                        threepids={phoneNumbers}
+                        onChange={getThreepidState}
+                        disabled={!canMake3pidChanges}
+                        isLoading={isLoadingThreepids}
+                    />
+                </SettingsSubsection>
             </>
         );
     }

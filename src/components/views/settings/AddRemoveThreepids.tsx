@@ -212,7 +212,9 @@ const ExistingThreepid: React.FC<ExistingThreepidProps> = ({ mode, threepid, onC
         return (
             <div className="mx_AddRemoveThreepids_existing">
                 <span className="mx_AddRemoveThreepids_existing_promptText">
-                    {_t("settings|general|remove_email_prompt", { email: threepid.address })}
+                    {threepid.medium === ThreepidMedium.Email
+                        ? _t("settings|general|remove_email_prompt", { email: threepid.address })
+                        : _t("settings|general|remove_msisdn_prompt", { phone: threepid.address })}
                 </span>
                 <AccessibleButton
                     onClick={onConfirmRemoveClick}
