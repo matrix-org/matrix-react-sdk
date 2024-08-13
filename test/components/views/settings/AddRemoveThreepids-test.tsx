@@ -24,6 +24,14 @@ import { AddRemoveThreepids } from "../../../../src/components/views/settings/Ad
 import { stubClient } from "../../../test-utils";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
+const MOCK_IDENTITY_ACCESS_TOKEN = "mock_identity_access_token";
+const mockGetAccessToken = jest.fn().mockResolvedValue(MOCK_IDENTITY_ACCESS_TOKEN);
+jest.mock("../../../../src/IdentityAuthClient", () =>
+    jest.fn().mockImplementation(() => ({
+        getAccessToken: mockGetAccessToken,
+    })),
+);
+
 const EMAIL1 = {
     medium: ThreepidMedium.Email,
     address: "alice@nowhere.dummy",
@@ -251,6 +259,151 @@ describe("AddRemoveThreepids", () => {
         await userEvent.click(confirmRemoveButton);
 
         expect(client.deleteThreePid).toHaveBeenCalledWith(ThreepidMedium.Phone, PHONE1.address);
+        expect(onChangeFn).toHaveBeenCalled();
+    });
+
+    it("should bind an email address", async () => {
+        mocked(client).requestEmailToken.mockResolvedValue({ sid: "1" });
+
+        mocked(client).getIdentityServerUrl.mockReturnValue("https://the_best_id_server.dummy");
+
+        const onChangeFn = jest.fn();
+        render(
+            <AddRemoveThreepids
+                mode="is"
+                medium={ThreepidMedium.Email}
+                threepids={[Object.assign({}, EMAIL1, { bound: false })]}
+                isLoading={false}
+                onChange={onChangeFn}
+            />,
+            {
+                wrapper: clientProviderWrapper,
+            },
+        );
+
+        expect(screen.getByText(EMAIL1.address)).toBeVisible();
+        const shareButton = screen.getByRole("button", { name: "Share" });
+        await userEvent.click(shareButton);
+
+        expect(screen.getByText("Verify the link in your inbox")).toBeVisible();
+
+        expect(client.requestEmailToken).toHaveBeenCalledWith(
+            EMAIL1.address,
+            client.generateClientSecret(),
+            1,
+            undefined,
+            MOCK_IDENTITY_ACCESS_TOKEN,
+        );
+
+        const completeButton = screen.getByRole("button", { name: "Complete" });
+        await userEvent.click(completeButton);
+
+        expect(client.bindThreePid).toHaveBeenCalledWith({
+            sid: "1",
+            client_secret: client.generateClientSecret(),
+            id_server: "https://the_best_id_server.dummy",
+            id_access_token: MOCK_IDENTITY_ACCESS_TOKEN,
+        });
+
+        expect(onChangeFn).toHaveBeenCalled();
+    });
+
+    it("should bind a phone number", async () => {
+        mocked(client).requestMsisdnToken.mockResolvedValue({
+            success: true,
+            sid: "1",
+            msisdn: PHONE1.address,
+            intl_fmt: "+" + PHONE1.address,
+        });
+
+        mocked(client).getIdentityServerUrl.mockReturnValue("https://the_best_id_server.dummy");
+
+        const onChangeFn = jest.fn();
+        render(
+            <AddRemoveThreepids
+                mode="is"
+                medium={ThreepidMedium.Phone}
+                threepids={[Object.assign({}, PHONE1, { bound: false })]}
+                isLoading={false}
+                onChange={onChangeFn}
+            />,
+            {
+                wrapper: clientProviderWrapper,
+            },
+        );
+
+        expect(screen.getByText(PHONE1.address)).toBeVisible();
+        const shareButton = screen.getByRole("button", { name: "Share" });
+        await userEvent.click(shareButton);
+
+        expect(screen.getByText("Please enter verification code sent via text.")).toBeVisible();
+
+        expect(client.requestMsisdnToken).toHaveBeenCalledWith(
+            null,
+            "+" + PHONE1.address,
+            client.generateClientSecret(),
+            1,
+            undefined,
+            MOCK_IDENTITY_ACCESS_TOKEN,
+        );
+
+        const codeInput = screen.getByRole("textbox", { name: "Verification code" });
+        await userEvent.type(codeInput, "123456");
+        await userEvent.keyboard("{Enter}");
+
+        expect(client.bindThreePid).toHaveBeenCalledWith({
+            sid: "1",
+            client_secret: client.generateClientSecret(),
+            id_server: "https://the_best_id_server.dummy",
+            id_access_token: MOCK_IDENTITY_ACCESS_TOKEN,
+        });
+
+        expect(onChangeFn).toHaveBeenCalled();
+    });
+
+    it("should revoke a bound email address", async () => {
+        const onChangeFn = jest.fn();
+        render(
+            <AddRemoveThreepids
+                mode="is"
+                medium={ThreepidMedium.Email}
+                threepids={[Object.assign({}, EMAIL1, { bound: true })]}
+                isLoading={false}
+                onChange={onChangeFn}
+            />,
+            {
+                wrapper: clientProviderWrapper,
+            },
+        );
+
+        expect(screen.getByText(EMAIL1.address)).toBeVisible();
+        const revokeButton = screen.getByRole("button", { name: "Revoke" });
+        await userEvent.click(revokeButton);
+
+        expect(client.unbindThreePid).toHaveBeenCalledWith(ThreepidMedium.Email, EMAIL1.address);
+        expect(onChangeFn).toHaveBeenCalled();
+    });
+
+    it("should revoke a bound phone number", async () => {
+        const onChangeFn = jest.fn();
+        render(
+            <AddRemoveThreepids
+                mode="is"
+                medium={ThreepidMedium.Phone}
+                threepids={[Object.assign({}, PHONE1, { bound: true })]}
+                isLoading={false}
+                onChange={onChangeFn}
+            />,
+            {
+                wrapper: clientProviderWrapper,
+            },
+        );
+
+        expect(screen.getByText(PHONE1.address)).toBeVisible();
+        const revokeButton = screen.getByRole("button", { name: "Revoke" });
+        await userEvent.click(revokeButton);
+
+        expect(client.unbindThreePid).toHaveBeenCalledWith(ThreepidMedium.Phone, PHONE1.address);
         expect(onChangeFn).toHaveBeenCalled();
     });
 });
