@@ -21,7 +21,7 @@ import userEvent from "@testing-library/user-event";
 import { mocked } from "jest-mock";
 
 import { AddRemoveThreepids } from "../../../../src/components/views/settings/AddRemoveThreepids";
-import { stubClient } from "../../../test-utils";
+import { clearAllModals, stubClient } from "../../../test-utils";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import Modal from "../../../../src/Modal";
 
@@ -50,6 +50,11 @@ describe("AddRemoveThreepids", () => {
 
     beforeEach(() => {
         client = stubClient();
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
+        clearAllModals();
     });
 
     const clientProviderWrapper: React.FC = ({ children }) => (
@@ -212,13 +217,13 @@ describe("AddRemoveThreepids", () => {
             },
         );
 
-        const input = screen.getByRole("textbox", { name: "Phone Number" });
-        await userEvent.type(input, PHONE1_LOCALNUM);
-
         const countryDropdown = screen.getByRole("button", { name: "Country Dropdown" });
         await userEvent.click(countryDropdown);
         const gbOption = screen.getByRole("option", { name: "🇬🇧 United Kingdom (+44)" });
         await userEvent.click(gbOption);
+
+        const input = screen.getByRole("textbox", { name: "Phone Number" });
+        await userEvent.type(input, PHONE1_LOCALNUM);
 
         const addButton = screen.getByRole("button", { name: "Add" });
         await userEvent.click(addButton);
