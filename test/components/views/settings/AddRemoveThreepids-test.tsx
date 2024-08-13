@@ -235,7 +235,36 @@ describe("AddRemoveThreepids", () => {
         expect(onChangeFn).toHaveBeenCalled();
     });
 
-    it("should remove an phone number", async () => {
+    it("should return to default view if addign is cancelled", async () => {
+        const onChangeFn = jest.fn();
+        render(
+            <AddRemoveThreepids
+                mode="hs"
+                medium={ThreepidMedium.Email}
+                threepids={[EMAIL1]}
+                isLoading={false}
+                onChange={onChangeFn}
+            />,
+            {
+                wrapper: clientProviderWrapper,
+            },
+        );
+
+        const removeButton = screen.getByRole("button", { name: "Remove" });
+        await userEvent.click(removeButton);
+
+        expect(screen.getByText(`Remove ${EMAIL1.address}?`)).toBeVisible();
+
+        const confirmRemoveButton = screen.getByRole("button", { name: "Cancel" });
+        await userEvent.click(confirmRemoveButton);
+
+        expect(screen.queryByText(`Remove ${EMAIL1.address}?`)).not.toBeInTheDocument();
+
+        expect(client.deleteThreePid).not.toHaveBeenCalledWith(ThreepidMedium.Email, EMAIL1.address);
+        expect(onChangeFn).not.toHaveBeenCalled();
+    });
+
+    it("should remove a phone number", async () => {
         const onChangeFn = jest.fn();
         render(
             <AddRemoveThreepids
