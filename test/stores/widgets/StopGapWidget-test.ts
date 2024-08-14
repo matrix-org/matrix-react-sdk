@@ -16,7 +16,7 @@ limitations under the License.
 
 import { mocked, MockedObject } from "jest-mock";
 import { last } from "lodash";
-import { MatrixEvent, MatrixClient, ClientEvent, EventTimeline } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, MatrixClient, ClientEvent, EventTimeline, MatrixEventEvent } from "matrix-js-sdk/src/matrix";
 import { ClientWidgetApi, WidgetApiFromWidgetAction } from "matrix-widget-api";
 import { waitFor } from "@testing-library/react";
 
@@ -184,6 +184,43 @@ describe("StopGapWidget", () => {
             client.emit(ClientEvent.Event, event1);
             expect(messaging.feedEvent).toHaveBeenCalledTimes(2);
             expect(messaging.feedEvent).toHaveBeenLastCalledWith(event.getEffectiveEvent(), "!1:example.org");
+        });
+
+        describe("e2ee", () => {
+            it("should not feed events that failed decryption", async () => {
+                event1.isDecryptionFailure = jest.fn().mockReturnValue(true);
+                client.emit(ClientEvent.Event, event1);
+                expect(messaging.feedEvent).toHaveBeenCalledTimes(0);
+
+                client.emit(MatrixEventEvent.Decrypted, event1);
+                expect(messaging.feedEvent).toHaveBeenCalledTimes(0);
+            });
+
+            it("should feed event after decryption retry success", async () => {
+                event1.isDecryptionFailure = jest.fn().mockReturnValue(true);
+                client.emit(ClientEvent.Event, event1);
+                expect(messaging.feedEvent).toHaveBeenCalledTimes(0);
+
+                event1.isDecryptionFailure = jest.fn().mockReturnValue(false);
+                client.emit(MatrixEventEvent.Decrypted, event1);
+                expect(messaging.feedEvent).toHaveBeenCalledTimes(1);
+                expect(messaging.feedEvent).toHaveBeenLastCalledWith(event1.getEffectiveEvent(), "!1:example.org");
+            });
+
+            it("should feed event after decryption success even if older", async () => {
+                event1.isDecryptionFailure = jest.fn().mockReturnValue(true);
+                client.emit(ClientEvent.Event, event1);
+                expect(messaging.feedEvent).toHaveBeenCalledTimes(0);
+
+                client.emit(ClientEvent.Event, event2);
+                expect(messaging.feedEvent).toHaveBeenCalledTimes(1);
+                expect(messaging.feedEvent).toHaveBeenLastCalledWith(event2.getEffectiveEvent(), "!1:example.org");
+
+                event1.isDecryptionFailure = jest.fn().mockReturnValue(false);
+                client.emit(MatrixEventEvent.Decrypted, event1);
+                expect(messaging.feedEvent).toHaveBeenCalledTimes(2);
+                expect(messaging.feedEvent).toHaveBeenLastCalledWith(event1.getEffectiveEvent(), "!1:example.org");
+            });
         });
     });
 

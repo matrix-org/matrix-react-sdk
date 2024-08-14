@@ -472,14 +472,16 @@ export class StopGapWidget extends EventEmitter {
     }
 
     private onEvent = (ev: MatrixEvent): void => {
+        // It looks like we don't await this because if it does later succeed then we assume that
+        // a MatrixEventEvent.Decrypted will be emitted and we'll handle it there.
         this.client.decryptEventIfNeeded(ev);
         if (ev.isBeingDecrypted() || ev.isDecryptionFailure()) return;
-        this.feedEvent(ev);
+        this.feedEvent(ev, ClientEvent.Event);
     };
 
     private onEventDecrypted = (ev: MatrixEvent): void => {
         if (ev.isDecryptionFailure()) return;
-        this.feedEvent(ev);
+        this.feedEvent(ev, MatrixEventEvent.Decrypted);
     };
 
     private onToDeviceEvent = async (ev: MatrixEvent): Promise<void> => {
@@ -488,7 +490,7 @@ export class StopGapWidget extends EventEmitter {
         await this.messaging?.feedToDevice(ev.getEffectiveEvent() as IRoomEvent, ev.isEncrypted());
     };
 
-    private feedEvent(ev: MatrixEvent): void {
+    private feedEvent(ev: MatrixEvent, reason: ClientEvent | MatrixEventEvent): void {
         if (!this.messaging) return;
 
         // Check to see if this event would be before or after our "read up to" marker. If it's
@@ -519,12 +521,21 @@ export class StopGapWidget extends EventEmitter {
             const timeline = room.getLiveTimeline();
             const events = arrayFastClone(timeline.getEvents()).reverse().slice(0, 100);
 
-            for (const timelineEvent of events) {
-                if (timelineEvent.getId() === upToEventId) {
-                    break;
-                } else if (timelineEvent.getId() === ev.getId()) {
-                    shouldForward = true;
-                    break;
+            if (reason === MatrixEventEvent.Decrypted) {
+                // If the event has just been decrypted, we should forward it if it appears anywhere in
+                // the timeline
+                shouldForward = events.some((timelineEvent) => timelineEvent.getId() === ev.getId());
+            } else {
+                // otherwise we search backwards in time until we either find the last event we have seen
+                // or the event we are looking for, or the events are exhausted.
+                for (const timelineEvent of events) {
+                    if (timelineEvent.getId() === upToEventId) {
+                        // no need to do shouldForward = false as set above
+                        break;
+                    } else if (timelineEvent.getId() === ev.getId()) {
+                        shouldForward = true;
+                        break;
+                    }
                 }
             }
 
