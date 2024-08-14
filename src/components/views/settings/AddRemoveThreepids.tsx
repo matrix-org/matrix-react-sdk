@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import {
     IRequestMsisdnTokenResponse,
@@ -46,13 +46,13 @@ interface ExistingThreepidProps {
 }
 
 const ExistingThreepid: React.FC<ExistingThreepidProps> = ({ mode, threepid, onChange, disabled }) => {
-    const [isConfirming, setIsConfirming] = React.useState(false);
+    const [isConfirming, setIsConfirming] = useState(false);
     const client = useMatrixClientContext();
     const bindTask = useRef<AddThreepid | undefined>();
 
-    const [isVerifyingBind, setIsVerifyingBind] = React.useState(false);
-    const [continueDisabled, setContinueDisabled] = React.useState(false);
-    const [verificationCode, setVerificationCode] = React.useState("");
+    const [isVerifyingBind, setIsVerifyingBind] = useState(false);
+    const [continueDisabled, setContinueDisabled] = useState(false);
+    const [verificationCode, setVerificationCode] = useState("");
 
     const onRemoveClick = useCallback((e: ButtonEvent) => {
         e.stopPropagation();
@@ -298,12 +298,12 @@ const AddThreepidSection: React.FC<{ medium: "email" | "msisdn"; disabled?: bool
     onChange,
 }) => {
     const addTask = React.useRef<AddThreepid | undefined>();
-    const [newThreepidInput, setNewThreepidInput] = React.useState("");
-    const [phoneCountryInput, setPhoneCountryInput] = React.useState("");
-    const [verificationCodeInput, setVerificationCodeInput] = React.useState("");
-    const [isVerifying, setIsVerifying] = React.useState(false);
-    const [continueDisabled, setContinueDisabled] = React.useState(false);
-    const [sentToMsisdn, setSentToMsisdn] = React.useState("");
+    const [newThreepidInput, setNewThreepidInput] = useState("");
+    const [phoneCountryInput, setPhoneCountryInput] = useState("");
+    const [verificationCodeInput, setVerificationCodeInput] = useState("");
+    const [isVerifying, setIsVerifying] = useState(false);
+    const [continueDisabled, setContinueDisabled] = useState(false);
+    const [sentToMsisdn, setSentToMsisdn] = useState("");
 
     const client = useMatrixClientContext();
 
