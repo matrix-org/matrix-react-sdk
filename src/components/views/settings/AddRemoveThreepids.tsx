@@ -297,7 +297,7 @@ const AddThreepidSection: React.FC<{ medium: "email" | "msisdn"; disabled?: bool
     disabled,
     onChange,
 }) => {
-    const addTask = React.useRef<AddThreepid | undefined>();
+    const addTask = useRef<AddThreepid | undefined>();
     const [newThreepidInput, setNewThreepidInput] = useState("");
     const [phoneCountryInput, setPhoneCountryInput] = useState("");
     const [verificationCodeInput, setVerificationCodeInput] = useState("");
