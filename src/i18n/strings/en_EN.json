@@ -383,7 +383,9 @@
             "sso_preauth_body": "To continue, use Single Sign On to prove your identity.",
             "sso_title": "Use Single Sign On to continue",
             "terms": "Please review and accept the policies of this homeserver:",
-            "terms_invalid": "Please review and accept all of the homeserver's policies"
+            "terms_invalid": "Please review and accept all of the homeserver's policies",
+            "mas_cross_signing_reset_description": "Reset your identity through your account provider and then come back and click “Retry”.",
+            "mas_cross_signing_reset_cta": "Go to your account"
         },
         "unsupported_auth": "This homeserver doesn't offer any login flows that are supported by this client.",
         "unsupported_auth_email": "This homeserver does not support login using email address.",
