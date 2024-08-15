@@ -833,9 +833,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
     };
 
     private onReceiveMessage = (event: MessageEvent): void => {
-        // We don't check the origin here as we don't trust any incoming data and just use it as a ping to retry the request,
-        // and the HS may delegate the fallback to another origin, due to CORS we cannot inspect the origin of the popupWindow.
-        if (event.data === "authDone") {
+        if (event.data === "authDone" && event.source === this.popupWindow) {
             if (this.popupWindow) {
                 this.popupWindow.close();
                 this.popupWindow = null;
@@ -952,9 +950,7 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
     };
 
     private onReceiveMessage = (event: MessageEvent): void => {
-        // We don't check the origin here as we don't trust any incoming data and just use it as a ping to retry the request,
-        // and the HS may delegate the fallback to another origin, due to CORS we cannot inspect the origin of the popupWindow.
-        if (event.data === "authDone") {
+        if (event.data === "authDone" && event.source === this.popupWindow) {
             this.props.submitAuthDict({});
         }
     };
