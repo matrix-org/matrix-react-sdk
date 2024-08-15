@@ -369,6 +369,8 @@
             "email_resend_prompt": "Did not receive it? <a>Resend it</a>",
             "email_resent": "Resent!",
             "fallback_button": "Start authentication",
+            "mas_cross_signing_reset_cta": "Go to your account",
+            "mas_cross_signing_reset_description": "Reset your identity through your account provider and then come back and click “Retry”.",
             "msisdn": "A text message has been sent to %(msisdn)s",
             "msisdn_token_incorrect": "Token incorrect",
             "msisdn_token_prompt": "Please enter the code it contains:",
@@ -383,9 +385,7 @@
             "sso_preauth_body": "To continue, use Single Sign On to prove your identity.",
             "sso_title": "Use Single Sign On to continue",
             "terms": "Please review and accept the policies of this homeserver:",
-            "terms_invalid": "Please review and accept all of the homeserver's policies",
-            "mas_cross_signing_reset_description": "Reset your identity through your account provider and then come back and click “Retry”.",
-            "mas_cross_signing_reset_cta": "Go to your account"
+            "terms_invalid": "Please review and accept all of the homeserver's policies"
         },
         "unsupported_auth": "This homeserver doesn't offer any login flows that are supported by this client.",
         "unsupported_auth_email": "This homeserver does not support login using email address.",
