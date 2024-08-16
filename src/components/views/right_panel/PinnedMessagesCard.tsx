@@ -238,7 +238,9 @@ export function PinnedMessagesCard({ room, onClose, permalinkCreator }: PinnedMe
             <EmptyState
                 Icon={PinIcon}
                 title={_t("right_panel|pinned_messages|empty_title")}
-                description={_t("right_panel|pinned_messages|empty_description")}
+                description={_t("right_panel|pinned_messages|empty_description", {
+                    pinAction: _t("action|pin"),
+                })}
             />
         );
     } else if (pinnedEvents?.length) {

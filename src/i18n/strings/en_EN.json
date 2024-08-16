@@ -1839,7 +1839,7 @@
         "files_button": "Files",
         "info": "Info",
         "pinned_messages": {
-            "empty_description": "Select a message and choose “Pin message” to include here.",
+            "empty_description": "Select a message and choose “%(pinAction)s” to it include here.",
             "empty_title": "Pin important messages so that they can be easily discovered",
             "header": {
                 "one": "1 Pinned message",

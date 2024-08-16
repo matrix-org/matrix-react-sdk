@@ -71,7 +71,7 @@ exports[`<PinnedMessagesCard /> should show the empty state when there are no pi
         <p
           class="_typography_yh5dq_162 _font-body-md-regular_yh5dq_59"
         >
-          Select a message and choose “Pin message” to include here.
+          Select a message and choose “Pin” to it include here.
         </p>
       </div>
     </div>
