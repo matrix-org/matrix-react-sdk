@@ -952,7 +952,7 @@ export class FallbackAuthEntry<T = {}> extends React.Component<IAuthEntryProps &
         this.popupWindow = window.open(url, "_blank");
     };
 
-    protected onReceiveMessage = (event: MessageEvent): void => {
+    private onReceiveMessage = (event: MessageEvent): void => {
         if (event.data === "authDone" && event.source === this.popupWindow) {
             this.props.submitAuthDict({});
         }
