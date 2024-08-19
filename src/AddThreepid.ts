@@ -149,6 +149,8 @@ export default class AddThreepid {
                 throw new UserFriendlyError("settings|general|msisdn_in_use", { cause: err });
             } else if (err instanceof MatrixError && err.errcode === "M_THREEPID_MEDIUM_NOT_SUPPORTED") {
                 throw new UserFriendlyError("settings|general|msisdn_adding_unsupported_by_hs", { cause: err });
+            } else if (err instanceof MatrixError && err.errcode === "M_INVALID_PARAM") {
+                throw new UserFriendlyError("settings|general|invalid_phone_number", { cause: err });
             }
             // Otherwise, just blurt out the same error
             throw err;
