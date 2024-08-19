@@ -56,6 +56,8 @@ import { MainGrouper } from "./grouper/MainGrouper";
 import { CreationGrouper } from "./grouper/CreationGrouper";
 import { _t } from "../../languageHandler";
 import { getLateEventInfo } from "./grouper/LateEventGrouper";
+import PinningUtils from "../../utils/PinningUtils";
+import { PinnedSeparator } from "../views/messages/PinnedSeparator";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -767,6 +769,15 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
 
         const cli = MatrixClientPeg.safeGet();
+
+        if (SettingsStore.getValue<boolean>("feature_pinning") && PinningUtils.isPinned(cli, mxEv)) {
+            ret.push(
+                <li key={`${ts1}-pinned`}>
+                    <PinnedSeparator />
+                </li>,
+            );
+        }
+
         let lastInSection = true;
         if (nextEventWithTile) {
             const nextEv = nextEventWithTile;

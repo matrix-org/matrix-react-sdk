@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent, EventType, M_POLL_START } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, EventType, M_POLL_START, MatrixClient, EventTimeline } from "matrix-js-sdk/src/matrix";
 
 export default class PinningUtils {
     /**
@@ -37,5 +37,23 @@ export default class PinningUtils {
         if (event.isRedacted()) return false;
 
         return true;
+    }
+
+    /**
+     * Determines if the given event is pinned.
+     * @param matrixClient
+     * @param mxEvent
+     */
+    public static isPinned(matrixClient: MatrixClient, mxEvent: MatrixEvent): boolean {
+        const room = matrixClient.getRoom(mxEvent.getRoomId());
+        if (!room) return false;
+
+        const pinnedEvent = room
+            .getLiveTimeline()
+            .getState(EventTimeline.FORWARDS)
+            ?.getStateEvents(EventType.RoomPinnedEvents, "");
+        if (!pinnedEvent) return false;
+        const content = pinnedEvent.getContent();
+        return content.pinned && Array.isArray(content.pinned) && content.pinned.includes(mxEvent.getId());
     }
 }

@@ -3523,6 +3523,8 @@
         "no_permission_messages_before_join": "You don't have permission to view messages from before you joined.",
         "pending_moderation": "Message pending moderation",
         "pending_moderation_reason": "Message pending moderation: %(reason)s",
+        "pinned_separator": "pinned",
+        "pinned_separator_description": "The following message is pinned.",
         "reactions": {
             "add_reaction_prompt": "Add reaction",
             "custom_reaction_fallback_label": "Custom reaction",
