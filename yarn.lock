@@ -1857,6 +1857,11 @@
   dependencies:
     eslint-plugin-unicorn "^54.0.0"
 
+"@matrix-org/olm@3.2.15":
+  version "3.2.15"
+  resolved "https://registry.yarnpkg.com/@matrix-org/olm/-/olm-3.2.15.tgz#55f3c1b70a21bbee3f9195cecd6846b1083451ec"
+  integrity sha512-S7lOrndAK9/8qOtaTq/WhttJC/o4GAzdfK0MUPpo8ApzsJEC0QjtwrkC3KBXdFP1cD1MXi/mlKR7aaoVMKgs6Q==
+
 "@matrix-org/react-sdk-module-api@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@matrix-org/react-sdk-module-api/-/react-sdk-module-api-2.4.0.tgz#5e4552acbe728141f42c1d54d75dcb4efea9301c"
@@ -3014,10 +3019,10 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.2.0.tgz#756641adb587851b5ccb3e095daf27ae581c8406"
   integrity sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==
 
-"@vector-im/compound-design-tokens@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@vector-im/compound-design-tokens/-/compound-design-tokens-1.6.1.tgz#3f1bb5b2b9f8aff10144aab19dfa11165c3c927b"
-  integrity sha512-u5xG/8AN7QkPPWhugj0ZrQtWsAjuKHzuOoP0s3bbDg7ZkKTE9l5tM29bdOHnSv9mEYKO+KVMMfsl0W1rlaTmAw==
+"@vector-im/compound-design-tokens@^1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@vector-im/compound-design-tokens/-/compound-design-tokens-1.8.0.tgz#bc844cb6b9842c1eb8e5c42f5cedcaf51a49b86f"
+  integrity sha512-PtQMG7kDzwtjw/fLKD63uWP5rJ8cgWc/aXarfEzxYUf9ceWxBajnYOBI2jDqtE3WIUe9uTVBzNEvmOBG/VIgTA==
 
 "@vector-im/compound-web@^5.5.0":
   version "5.5.0"
@@ -6909,11 +6914,12 @@ matrix-events-sdk@0.0.1:
   integrity sha512-1QEOsXO+bhyCroIe2/A5OwaxHvBm7EsSQ46DEDn8RBIfQwN5HWBpFvyWWR4QY0KHPPnnJdI99wgRiAl7Ad5qaA==
 
 "matrix-js-sdk@github:matrix-org/matrix-js-sdk#develop":
-  version "34.2.0"
-  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/b8e40ad2a8c26b0cb96def2f95fe16b088530e77"
+  version "34.3.1"
+  resolved "https://codeload.github.com/matrix-org/matrix-js-sdk/tar.gz/8d19782c57ba5264f06a80c724b41cf4ba8482e8"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@matrix-org/matrix-sdk-crypto-wasm" "^7.0.0"
+    "@matrix-org/olm" "3.2.15"
     another-json "^0.2.0"
     bs58 "^6.0.0"
     content-type "^1.0.4"
@@ -6937,14 +6943,6 @@ matrix-web-i18n@^3.2.1:
     lodash "^4.17.21"
     minimist "^1.2.8"
     walk "^2.3.15"
-
-matrix-widget-api@^1.8.2:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/matrix-widget-api/-/matrix-widget-api-1.8.2.tgz#28d344502a85593740f560b0f8120e474a054505"
-  integrity sha512-kdmks3CvFNPIYN669Y4rO13KrazDvX8KHC7i6jOzJs8uZ8s54FNkuRVVyiQHeVCSZG5ixUqW9UuCj9lf03qxTQ==
-  dependencies:
-    "@types/events" "^3.0.0"
-    events "^3.2.0"
 
 matrix-widget-api@^1.8.2:
   version "1.8.2"

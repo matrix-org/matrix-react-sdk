@@ -1839,12 +1839,25 @@
         "files_button": "Files",
         "info": "Info",
         "pinned_messages": {
-            "empty": "Nothing pinned, yet",
-            "explainer": "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.",
+            "empty_description": "Select a message and choose “%(pinAction)s” to it include here.",
+            "empty_title": "Pin important messages so that they can be easily discovered",
+            "header": {
+                "one": "1 Pinned message",
+                "other": "%(count)s Pinned messages",
+                "zero": "Pinned message"
+            },
             "limits": {
                 "other": "You can only pin up to %(count)s widgets"
             },
-            "title": "Pinned messages"
+            "menu": "Open menu",
+            "reply_thread": "Reply to a <link>thread message</link>",
+            "title": "Pinned messages",
+            "unpin_all": {
+                "button": "Unpin all messages",
+                "content": "Make sure that you really want to remove all pinned messages. This action can’t be undone.",
+                "title": "Unpin all messages?"
+            },
+            "view": "View in timeline"
         },
         "pinned_messages_button": "Pinned messages",
         "poll": {
@@ -2532,7 +2545,6 @@
             "error_share_msisdn_discovery": "Unable to share phone number",
             "identity_server_no_token": "No identity access token found",
             "identity_server_not_set": "Identity server not set",
-            "incorrect_msisdn_verification": "Incorrect verification code",
             "language_section": "Language",
             "msisdn_in_use": "This phone number is already in use",
             "msisdn_label": "Phone Number",
