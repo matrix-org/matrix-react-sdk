@@ -454,7 +454,7 @@ describe("MessageComposer", () => {
 
     it("wysiwyg correctly persists state to and from localStorage", async () => {
         const room = mkStubRoom("!roomId:server", "Room 1", cli);
-        const messateText = "Test Text";
+        const messageText = "Test Text";
         await SettingsStore.setValue("feature_wysiwyg_composer", null, SettingLevel.DEVICE, true);
         const { renderResult, rawComponent } = wrapAndRender({ room });
         const { unmount, rerender } = renderResult;
@@ -469,11 +469,11 @@ describe("MessageComposer", () => {
             await userEvent.click(screen.getByRole("textbox"));
         });
         fireEvent.input(screen.getByRole("textbox"), {
-            data: messateText,
+            data: messageText,
             inputType: "insertText",
         });
 
-        await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(messateText));
+        await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(messageText));
 
         // Wait for event dispatch to happen
         await act(async () => {
@@ -488,13 +488,13 @@ describe("MessageComposer", () => {
 
         // assert the persisted state
         expect(JSON.parse(localStorage.getItem(key)!)).toStrictEqual({
-            content: messateText,
+            content: messageText,
             isRichText: true,
         });
 
         // ensure the correct state is re-loaded
         rerender(rawComponent);
-        await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(messateText));
+        await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(messageText));
     });
 });
 
