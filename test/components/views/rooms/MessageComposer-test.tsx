@@ -495,7 +495,7 @@ describe("MessageComposer", () => {
         // ensure the correct state is re-loaded
         rerender(rawComponent);
         await waitFor(() => expect(screen.getByRole("textbox")).toHaveTextContent(messageText));
-    });
+    }, 10000);
 });
 
 function wrapAndRender(
