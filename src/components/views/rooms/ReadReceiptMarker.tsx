@@ -48,7 +48,7 @@ interface IProps {
     suppressAnimation?: boolean;
 
     // an opaque object for storing information about this user's RR in this room
-    readReceiptInfo?: IReadReceiptPosition;
+    readReceiptPosition?: IReadReceiptPosition;
 
     // A function which is used to check if the parent panel is being
     // unmounted, to avoid unnecessary work. Should return true if we
@@ -90,7 +90,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
     public componentWillUnmount(): void {
         // before we remove the rr, store its location in the map, so that if
         // it reappears, it can be animated from the right place.
-        const rrInfo = this.props.readReceiptInfo;
+        const rrInfo = this.props.readReceiptPosition;
         if (!rrInfo) {
             return;
         }
@@ -144,7 +144,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
     }
 
     private animateMarker(): void {
-        const oldInfo = this.props.readReceiptInfo;
+        const oldInfo = this.props.readReceiptPosition;
         const newInfo = this.buildReadReceiptInfo();
 
         const newPosition = newInfo.top ?? 0;

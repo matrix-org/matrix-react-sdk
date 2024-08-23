@@ -111,13 +111,13 @@ export function ReadReceiptGroup({
             const { hidden, position } = determineAvatarPosition(index, maxAvatars);
 
             const userId = receipt.userId;
-            let readReceiptInfo: IReadReceiptPosition | undefined;
+            let readReceiptPosition: IReadReceiptPosition | undefined;
 
             if (readReceiptMap) {
-                readReceiptInfo = readReceiptMap[userId];
-                if (!readReceiptInfo) {
-                    readReceiptInfo = {};
-                    readReceiptMap[userId] = readReceiptInfo;
+                readReceiptPosition = readReceiptMap[userId];
+                if (!readReceiptPosition) {
+                    readReceiptPosition = {};
+                    readReceiptMap[userId] = readReceiptPosition;
                 }
             }
 
@@ -128,7 +128,7 @@ export function ReadReceiptGroup({
                     fallbackUserId={userId}
                     offset={position * READ_AVATAR_OFFSET}
                     hidden={hidden}
-                    readReceiptInfo={readReceiptInfo}
+                    readReceiptPosition={readReceiptPosition}
                     checkUnmounting={checkUnmounting}
                     suppressAnimation={suppressAnimation}
                     timestamp={receipt.ts}
