@@ -18,7 +18,7 @@ import React, { PropsWithChildren } from "react";
 import { User } from "matrix-js-sdk/src/matrix";
 import { Tooltip } from "@vector-im/compound-web";
 
-import ReadReceiptMarker, { IReadReceiptInfo } from "./ReadReceiptMarker";
+import ReadReceiptMarker, { IReadReceiptPosition } from "./ReadReceiptMarker";
 import { IReadReceiptProps } from "./EventTile";
 import AccessibleButton from "../elements/AccessibleButton";
 import MemberAvatar from "../avatars/MemberAvatar";
@@ -41,7 +41,7 @@ export const READ_AVATAR_SIZE = 16;
 
 interface Props {
     readReceipts: IReadReceiptProps[];
-    readReceiptMap: { [userId: string]: IReadReceiptInfo };
+    readReceiptMap: { [userId: string]: IReadReceiptPosition };
     checkUnmounting?: () => boolean;
     suppressAnimation: boolean;
     isTwelveHour?: boolean;
@@ -111,7 +111,7 @@ export function ReadReceiptGroup({
             const { hidden, position } = determineAvatarPosition(index, maxAvatars);
 
             const userId = receipt.userId;
-            let readReceiptInfo: IReadReceiptInfo | undefined;
+            let readReceiptInfo: IReadReceiptPosition | undefined;
 
             if (readReceiptMap) {
                 readReceiptInfo = readReceiptMap[userId];
