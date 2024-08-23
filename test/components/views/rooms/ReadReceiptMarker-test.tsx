@@ -21,6 +21,7 @@ import ReadReceiptMarker, { IReadReceiptPosition } from "../../../../src/compone
 
 describe("ReadReceiptMarker", () => {
     afterEach(() => {
+        jest.restoreAllMocks();
         jest.useRealTimers();
     });
 
@@ -56,5 +57,23 @@ describe("ReadReceiptMarker", () => {
         unmount();
 
         expect(pos.top).toBe(0);
+    });
+
+    it("should update readReceiptPosition to current position", () => {
+        const pos: IReadReceiptPosition = {};
+        jest.spyOn(HTMLElement.prototype, "offsetParent", "get").mockImplementation(function (): Element | null {
+            return {
+                getBoundingClientRect: jest.fn().mockReturnValue({ top: 0, right: 0 } as DOMRect),
+            } as unknown as Element;
+        });
+        jest.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue({ top: 100, right: 0 } as DOMRect);
+
+        const { unmount } = render(<ReadReceiptMarker fallbackUserId="bob" offset={0} readReceiptPosition={pos} />);
+
+        expect(pos.top).toBeUndefined();
+
+        unmount();
+
+        expect(pos.top).toBe(100);
     });
 });
