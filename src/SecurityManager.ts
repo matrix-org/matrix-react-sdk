@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Crypto, ICryptoCallbacks, encodeBase64, SecretStorage } from "matrix-js-sdk/src/matrix";
+import { ICryptoCallbacks, SecretStorage } from "matrix-js-sdk/src/matrix";
 import { deriveKey } from "matrix-js-sdk/src/crypto/key_passphrase";
 import { decodeRecoveryKey } from "matrix-js-sdk/src/crypto/recoverykey";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -232,49 +232,9 @@ function cacheSecretStorageKey(
     }
 }
 
-async function onSecretRequested(
-    userId: string,
-    deviceId: string,
-    requestId: string,
-    name: string,
-    deviceTrust: Crypto.DeviceVerificationStatus,
-): Promise<string | undefined> {
-    logger.log("onSecretRequested", userId, deviceId, requestId, name, deviceTrust);
-    const client = MatrixClientPeg.safeGet();
-    if (userId !== client.getUserId()) {
-        return;
-    }
-    if (!deviceTrust?.isVerified()) {
-        logger.log(`Ignoring secret request from untrusted device ${deviceId}`);
-        return;
-    }
-    if (
-        name === "m.cross_signing.master" ||
-        name === "m.cross_signing.self_signing" ||
-        name === "m.cross_signing.user_signing"
-    ) {
-        const callbacks = client.getCrossSigningCacheCallbacks();
-        if (!callbacks?.getCrossSigningKeyCache) return;
-        const keyId = name.replace("m.cross_signing.", "");
-        const key = await callbacks.getCrossSigningKeyCache(keyId);
-        if (!key) {
-            logger.log(`${keyId} requested by ${deviceId}, but not found in cache`);
-        }
-        return key ? encodeBase64(key) : undefined;
-    } else if (name === "m.megolm_backup.v1") {
-        const key = await client.crypto?.getSessionBackupPrivateKey();
-        if (!key) {
-            logger.log(`session backup key requested by ${deviceId}, but not found in cache`);
-        }
-        return key ? encodeBase64(key) : undefined;
-    }
-    logger.warn("onSecretRequested didn't recognise the secret named ", name);
-}
-
 export const crossSigningCallbacks: ICryptoCallbacks = {
     getSecretStorageKey,
     cacheSecretStorageKey,
-    onSecretRequested,
     getDehydrationKey,
 };
 
