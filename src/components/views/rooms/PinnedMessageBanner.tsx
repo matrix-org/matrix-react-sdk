@@ -31,6 +31,7 @@ import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewSto
 import dis from "../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { Action } from "../../../dispatcher/actions";
+import MessageEvent from "../messages/MessageEvent";
 
 /**
  * The props for the {@link PinnedMessageBanner} component.
@@ -49,7 +50,7 @@ interface PinnedMessageBannerProps {
 /**
  * A banner that displays the pinned messages in a room.
  */
-export function PinnedMessageBanner({ room }: PinnedMessageBannerProps): JSX.Element | null {
+export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBannerProps): JSX.Element | null {
     const pinnedEventIds = usePinnedEvents(room);
     const pinnedEvents = useSortedFetchedPinnedEvents(room, pinnedEventIds);
     const eventCount = pinnedEvents.length;
@@ -68,7 +69,7 @@ export function PinnedMessageBanner({ room }: PinnedMessageBannerProps): JSX.Ele
     const pinnedEvent = pinnedEvents[currentEventIndex];
     // Generate a preview for the pinned event
     const eventPreview = useMemo(() => {
-        if (!pinnedEvent) return null;
+        if (!pinnedEvent || pinnedEvent.isRedacted()) return null;
         return MessagePreviewStore.instance.generatePreviewForEvent(pinnedEvent);
     }, [pinnedEvent]);
 
@@ -116,6 +117,17 @@ export function PinnedMessageBanner({ room }: PinnedMessageBannerProps): JSX.Ele
                     </div>
                 )}
                 {eventPreview && <span className="mx_PinnedMessageBanner_message">{eventPreview}</span>}
+                {/* In case of redacted event, we want to display the nice sentence of the message event like in the timeline or in the pinned message list */}
+                {pinnedEvent.isRedacted() && (
+                    <div className="mx_PinnedMessageBanner_redactedMessage">
+                        <MessageEvent
+                            mxEvent={pinnedEvent}
+                            maxImageHeight={20}
+                            permalinkCreator={permalinkCreator}
+                            replacingEventId={pinnedEvent.replacingEventId()}
+                        />
+                    </div>
+                )}
             </button>
             {!isSinglePinnedEvent && <BannerButton room={room} />}
         </div>

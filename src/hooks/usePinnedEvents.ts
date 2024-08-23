@@ -130,8 +130,9 @@ async function fetchPinnedEvent(room: Room, pinnedEventId: string, cli: MatrixCl
     }
 
     // If the event is available locally, return it if it's pinnable
+    // or if it's redacted (to show the redacted event and to be able to unpin it)
     // Otherwise, return null
-    if (localEvent) return PinningUtils.isPinnable(localEvent) ? localEvent : null;
+    if (localEvent) return PinningUtils.isUnpinnable(localEvent) ? localEvent : null;
 
     try {
         // The event is not available locally, so we fetch the event and latest edit in parallel
@@ -156,7 +157,7 @@ async function fetchPinnedEvent(room: Room, pinnedEventId: string, cli: MatrixCl
         await room.processPollEvents([event]);
 
         const senderUserId = event.getSender();
-        if (senderUserId && PinningUtils.isPinnable(event)) {
+        if (senderUserId && PinningUtils.isUnpinnable(event)) {
             // Inject sender information
             event.sender = room.getMember(senderUserId);
             // Also inject any edits we've found
