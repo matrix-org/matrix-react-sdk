@@ -2410,9 +2410,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             </AuxPanel>
         );
 
-        const pinnedMessageBanner = (
-            <PinnedMessageBanner room={this.state.room} permalinkCreator={this.permalinkCreator} />
-        );
+        const isPinningEnabled = SettingsStore.getValue<boolean>("feature_pinning");
+        let pinnedMessageBanner;
+        if (isPinningEnabled) {
+            pinnedMessageBanner = (
+                <PinnedMessageBanner room={this.state.room} permalinkCreator={this.permalinkCreator} />
+            );
+        }
 
         let messageComposer;
         const showComposer =
