@@ -39,11 +39,6 @@ let secretStorageKeys: Record<string, Uint8Array> = {};
 let secretStorageKeyInfo: Record<string, SecretStorage.SecretStorageKeyDescription> = {};
 let secretStorageBeingAccessed = false;
 
-let dehydrationCache: {
-    key?: Uint8Array;
-    keyInfo?: SecretStorage.SecretStorageKeyDescription;
-} = {};
-
 /**
  * This can be used by other components to check if secret storage access is in
  * progress, so that we can e.g. avoid intermittently showing toasts during
@@ -117,14 +112,6 @@ async function getSecretStorageKey({
     if (secretStorageBeingAccessed && secretStorageKeys[keyId]) {
         logger.debug(`getSecretStorageKey: returning key ${keyId} from cache`);
         return [keyId, secretStorageKeys[keyId]];
-    }
-
-    if (dehydrationCache.key) {
-        if (await MatrixClientPeg.safeGet().checkSecretStorageKey(dehydrationCache.key, keyInfo)) {
-            logger.debug("getSecretStorageKey: returning key from dehydration cache");
-            cacheSecretStorageKey(keyId, keyInfo, dehydrationCache.key);
-            return [keyId, dehydrationCache.key];
-        }
     }
 
     const keyFromCustomisations = ModuleRunner.instance.extensions.cryptoSetup.getSecretStorageKey();
