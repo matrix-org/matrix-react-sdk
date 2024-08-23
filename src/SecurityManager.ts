@@ -171,56 +171,6 @@ async function getSecretStorageKey({
     return [keyId, key];
 }
 
-export async function getDehydrationKey(
-    keyInfo: SecretStorage.SecretStorageKeyDescription,
-    checkFunc: (data: Uint8Array) => void,
-): Promise<Uint8Array> {
-    const keyFromCustomisations = ModuleRunner.instance.extensions.cryptoSetup.getSecretStorageKey();
-    if (keyFromCustomisations) {
-        logger.log("CryptoSetupExtension: Using key from extension (dehydration)");
-        return keyFromCustomisations;
-    }
-
-    const inputToKey = makeInputToKey(keyInfo);
-    const { finished } = Modal.createDialog(
-        AccessSecretStorageDialog,
-        /* props= */
-        {
-            keyInfo,
-            checkPrivateKey: async (input: KeyParams): Promise<boolean> => {
-                const key = await inputToKey(input);
-                try {
-                    checkFunc(key);
-                    return true;
-                } catch (e) {
-                    return false;
-                }
-            },
-        },
-        /* className= */ undefined,
-        /* isPriorityModal= */ false,
-        /* isStaticModal= */ false,
-        /* options= */ {
-            onBeforeClose: async (reason): Promise<boolean> => {
-                if (reason === "backgroundClick") {
-                    return confirmToDismiss();
-                }
-                return true;
-            },
-        },
-    );
-    const [input] = await finished;
-    if (!input) {
-        throw new AccessCancelledError();
-    }
-    const key = await inputToKey(input);
-
-    // need to copy the key because rehydration (unpickling) will clobber it
-    dehydrationCache = { key: new Uint8Array(key), keyInfo };
-
-    return key;
-}
-
 function cacheSecretStorageKey(
     keyId: string,
     keyInfo: SecretStorage.SecretStorageKeyDescription,
@@ -235,7 +185,6 @@ function cacheSecretStorageKey(
 export const crossSigningCallbacks: ICryptoCallbacks = {
     getSecretStorageKey,
     cacheSecretStorageKey,
-    getDehydrationKey,
 };
 
 /**
