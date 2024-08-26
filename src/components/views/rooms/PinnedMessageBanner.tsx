@@ -69,11 +69,13 @@ export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBan
     const pinnedEvent = pinnedEvents[currentEventIndex];
     // Generate a preview for the pinned event
     const eventPreview = useMemo(() => {
-        if (!pinnedEvent || pinnedEvent.isRedacted()) return null;
+        if (!pinnedEvent || pinnedEvent.isRedacted() || pinnedEvent.isDecryptionFailure()) return null;
         return MessagePreviewStore.instance.generatePreviewForEvent(pinnedEvent);
     }, [pinnedEvent]);
 
     if (!pinnedEvent) return null;
+
+    const shouldUseMessageEvent = pinnedEvent.isRedacted() || pinnedEvent.isDecryptionFailure();
 
     return (
         <div
@@ -118,7 +120,7 @@ export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBan
                 )}
                 {eventPreview && <span className="mx_PinnedMessageBanner_message">{eventPreview}</span>}
                 {/* In case of redacted event, we want to display the nice sentence of the message event like in the timeline or in the pinned message list */}
-                {pinnedEvent.isRedacted() && (
+                {shouldUseMessageEvent && (
                     <div className="mx_PinnedMessageBanner_redactedMessage">
                         <MessageEvent
                             mxEvent={pinnedEvent}
