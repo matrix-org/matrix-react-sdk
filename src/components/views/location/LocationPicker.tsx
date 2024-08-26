@@ -50,13 +50,13 @@ const isSharingOwnLocation = (shareType: LocationShareType): boolean =>
 
 class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
+    public declare context: React.ContextType<typeof MatrixClientContext>;
     private map?: maplibregl.Map;
     private geolocate?: maplibregl.GeolocateControl;
     private marker?: maplibregl.Marker;
 
-    public constructor(props: ILocationPickerProps) {
-        super(props);
+    public constructor(props: ILocationPickerProps, context: React.ContextType<typeof MatrixClientContext>) {
+        super(props, context);
 
         this.state = {
             position: undefined,

@@ -20,9 +20,11 @@ import GenericToast from "../components/views/toasts/GenericToast";
 import ToastStore from "../stores/ToastStore";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getLocalNotificationAccountDataEventType } from "../utils/notifications";
+import SettingsStore from "../settings/SettingsStore";
+import { SettingLevel } from "../settings/SettingLevel";
 
-const onAccept = (): void => {
-    Notifier.setEnabled(true);
+const onAccept = async (): Promise<void> => {
+    await SettingsStore.setValue("notificationsEnabled", null, SettingLevel.DEVICE, true);
     const cli = MatrixClientPeg.safeGet();
     const eventType = getLocalNotificationAccountDataEventType(cli.deviceId!);
     cli.setAccountData(eventType, {
@@ -44,10 +46,10 @@ export const showToast = (fromMessageSend: boolean): void => {
             : _t("notifications|enable_prompt_toast_title"),
         props: {
             description: _t("notifications|enable_prompt_toast_description"),
-            acceptLabel: _t("action|enable"),
-            onAccept,
-            rejectLabel: _t("action|dismiss"),
-            onReject,
+            primaryLabel: _t("action|enable"),
+            onPrimaryClick: onAccept,
+            secondaryLabel: _t("action|dismiss"),
+            onSecondaryClick: onReject,
         },
         component: GenericToast,
         priority: 30,

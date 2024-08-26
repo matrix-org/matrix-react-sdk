@@ -14,12 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
-// eslint-disable-next-line no-restricted-imports
-import { MatrixRTCSessionManagerEvents } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSessionManager";
-// eslint-disable-next-line no-restricted-imports
-import { MatrixRTCSession } from "matrix-js-sdk/src/matrixrtc/MatrixRTCSession";
+import React, { useCallback, useEffect, useState } from "react";
+import { MatrixEvent, RoomMember } from "matrix-js-sdk/src/matrix";
 import { Button, Tooltip } from "@vector-im/compound-web";
 import { Icon as VideoCallIcon } from "@vector-im/compound-design-tokens/icons/video-call-solid.svg";
 
@@ -39,9 +35,9 @@ import { useCall, useJoinCallButtonDisabledTooltip } from "../hooks/useCall";
 import AccessibleButton, { ButtonEvent } from "../components/views/elements/AccessibleButton";
 import { useDispatcher } from "../hooks/useDispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
-import { Call } from "../models/Call";
-import { AudioID } from "../LegacyCallHandler";
-import { useEventEmitter, useTypedEventEmitter } from "../hooks/useEventEmitter";
+import { Call, CallEvent } from "../models/Call";
+import LegacyCallHandler, { AudioID } from "../LegacyCallHandler";
+import { useEventEmitter } from "../hooks/useEventEmitter";
 import { CallStore, CallStoreEvent } from "../stores/CallStore";
 
 export const getIncomingCallToastKey = (callId: string, roomId: string): string => `call_${callId}_${roomId}`;
@@ -82,36 +78,47 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
     const roomId = notifyEvent.getRoomId()!;
     const room = MatrixClientPeg.safeGet().getRoom(roomId) ?? undefined;
     const call = useCall(roomId);
-    const audio = useMemo(() => document.getElementById(AudioID.Ring) as HTMLMediaElement, []);
-    const [activeCalls, setActiveCalls] = useState<Call[]>(Array.from(CallStore.instance.activeCalls));
-    useEventEmitter(CallStore.instance, CallStoreEvent.ActiveCalls, () => {
-        setActiveCalls(Array.from(CallStore.instance.activeCalls));
+    const [connectedCalls, setConnectedCalls] = useState<Call[]>(Array.from(CallStore.instance.connectedCalls));
+    useEventEmitter(CallStore.instance, CallStoreEvent.ConnectedCalls, () => {
+        setConnectedCalls(Array.from(CallStore.instance.connectedCalls));
     });
-    const otherCallIsOngoing = activeCalls.find((call) => call.roomId !== roomId);
+    const otherCallIsOngoing = connectedCalls.find((call) => call.roomId !== roomId);
     // Start ringing if not already.
     useEffect(() => {
         const isRingToast = (notifyEvent.getContent() as unknown as { notify_type: string })["notify_type"] == "ring";
-        if (isRingToast && audio.paused) {
-            audio.play();
+        if (isRingToast && !LegacyCallHandler.instance.isPlaying(AudioID.Ring)) {
+            LegacyCallHandler.instance.play(AudioID.Ring);
         }
-    }, [audio, notifyEvent]);
+    }, [notifyEvent]);
 
     // Stop ringing on dismiss.
     const dismissToast = useCallback((): void => {
         ToastStore.sharedInstance().dismissToast(
             getIncomingCallToastKey(notifyEvent.getContent().call_id ?? "", roomId),
         );
-        audio.pause();
-    }, [audio, notifyEvent, roomId]);
+        LegacyCallHandler.instance.pause(AudioID.Ring);
+    }, [notifyEvent, roomId]);
 
     // Dismiss if session got ended remotely.
-    const onSessionEnded = useCallback(
-        (endedSessionRoomId: string, session: MatrixRTCSession): void => {
-            if (roomId == endedSessionRoomId && session.callId == notifyEvent.getContent().call_id) {
+    const onCall = useCallback(
+        (call: Call, callRoomId: string): void => {
+            const roomId = notifyEvent.getRoomId();
+            if (!roomId && roomId !== callRoomId) return;
+            if (call === null || call.participants.size === 0) {
                 dismissToast();
             }
         },
-        [dismissToast, notifyEvent, roomId],
+        [dismissToast, notifyEvent],
+    );
+
+    // Dismiss if antother device from this user joins.
+    const onParticipantChange = useCallback(
+        (participants: Map<RoomMember, Set<string>>, prevParticipants: Map<RoomMember, Set<string>>) => {
+            if (Array.from(participants.keys()).some((p) => p.userId == room?.client.getUserId())) {
+                dismissToast();
+            }
+        },
+        [dismissToast, room?.client],
     );
 
     // Dismiss on timeout.
@@ -160,11 +167,8 @@ export function IncomingCallToast({ notifyEvent }: Props): JSX.Element {
         [dismissToast],
     );
 
-    useTypedEventEmitter(
-        MatrixClientPeg.safeGet().matrixRTC,
-        MatrixRTCSessionManagerEvents.SessionEnded,
-        onSessionEnded,
-    );
+    useEventEmitter(CallStore.instance, CallStoreEvent.Call, onCall);
+    useEventEmitter(call ?? undefined, CallEvent.Participants, onParticipantChange);
 
     return (
         <>

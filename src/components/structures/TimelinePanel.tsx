@@ -241,7 +241,7 @@ interface IEventIndexOpts {
  */
 class TimelinePanel extends React.Component<IProps, IState> {
     public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    public declare context: React.ContextType<typeof RoomContext>;
 
     // a map from room id to read marker event timestamp
     public static roomReadMarkerTsMap: Record<string, number> = {};
@@ -273,7 +273,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
-        this.context = context;
 
         debuglog("mounting");
 
@@ -969,8 +968,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     private readMarkerTimeout(readMarkerPosition: number | null): number {
         return readMarkerPosition === 0
-            ? this.context?.readMarkerInViewThresholdMs ?? this.state.readMarkerInViewThresholdMs
-            : this.context?.readMarkerOutOfViewThresholdMs ?? this.state.readMarkerOutOfViewThresholdMs;
+            ? (this.context?.readMarkerInViewThresholdMs ?? this.state.readMarkerInViewThresholdMs)
+            : (this.context?.readMarkerOutOfViewThresholdMs ?? this.state.readMarkerOutOfViewThresholdMs);
     }
 
     private async updateReadMarkerOnUserActivity(): Promise<void> {

@@ -62,7 +62,7 @@ exports[`ThreadsActivityCentre renders notifications matching the snapshot 1`] =
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M8.7 17.3a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7l3.9-3.9-3.9-3.9a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7.948.948 0 0 1 .7-.275.95.95 0 0 1 .7.275l4.6 4.6c.1.1.17.208.213.325.041.117.062.242.062.375s-.02.258-.063.375a.876.876 0 0 1-.212.325l-4.6 4.6a.948.948 0 0 1-.7.275.948.948 0 0 1-.7-.275Z"
+          d="M8.7 17.3a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7l3.9-3.9-3.9-3.9a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7.948.948 0 0 1 .7-.275.95.95 0 0 1 .7.275l4.6 4.6c.1.1.17.208.213.325.041.117.062.242.062.375s-.02.258-.063.375a.877.877 0 0 1-.212.325l-4.6 4.6a.948.948 0 0 1-.7.275.948.948 0 0 1-.7-.275Z"
         />
       </svg>
       <div
@@ -110,7 +110,7 @@ exports[`ThreadsActivityCentre renders notifications matching the snapshot 1`] =
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M8.7 17.3a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7l3.9-3.9-3.9-3.9a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7.948.948 0 0 1 .7-.275.95.95 0 0 1 .7.275l4.6 4.6c.1.1.17.208.213.325.041.117.062.242.062.375s-.02.258-.063.375a.876.876 0 0 1-.212.325l-4.6 4.6a.948.948 0 0 1-.7.275.948.948 0 0 1-.7-.275Z"
+          d="M8.7 17.3a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7l3.9-3.9-3.9-3.9a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7.948.948 0 0 1 .7-.275.95.95 0 0 1 .7.275l4.6 4.6c.1.1.17.208.213.325.041.117.062.242.062.375s-.02.258-.063.375a.877.877 0 0 1-.212.325l-4.6 4.6a.948.948 0 0 1-.7.275.948.948 0 0 1-.7-.275Z"
         />
       </svg>
       <div
@@ -150,7 +150,7 @@ exports[`ThreadsActivityCentre should close the release announcement when the TA
         aria-expanded="true"
         aria-haspopup="menu"
         aria-label="Threads"
-        class="_icon-button_16nk7_17 mx_ThreadsActivityCentreButton"
+        class="_icon-button_bh2qc_17 mx_ThreadsActivityCentreButton"
         data-state="open"
         id="radix-2"
         role="button"
@@ -312,7 +312,7 @@ exports[`ThreadsActivityCentre should order the room with the same notification 
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M8.7 17.3a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7l3.9-3.9-3.9-3.9a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7.948.948 0 0 1 .7-.275.95.95 0 0 1 .7.275l4.6 4.6c.1.1.17.208.213.325.041.117.062.242.062.375s-.02.258-.063.375a.876.876 0 0 1-.212.325l-4.6 4.6a.948.948 0 0 1-.7.275.948.948 0 0 1-.7-.275Z"
+          d="M8.7 17.3a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7l3.9-3.9-3.9-3.9a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7.948.948 0 0 1 .7-.275.95.95 0 0 1 .7.275l4.6 4.6c.1.1.17.208.213.325.041.117.062.242.062.375s-.02.258-.063.375a.877.877 0 0 1-.212.325l-4.6 4.6a.948.948 0 0 1-.7.275.948.948 0 0 1-.7-.275Z"
         />
       </svg>
       <div
@@ -360,7 +360,7 @@ exports[`ThreadsActivityCentre should order the room with the same notification 
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M8.7 17.3a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7l3.9-3.9-3.9-3.9a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7.948.948 0 0 1 .7-.275.95.95 0 0 1 .7.275l4.6 4.6c.1.1.17.208.213.325.041.117.062.242.062.375s-.02.258-.063.375a.876.876 0 0 1-.212.325l-4.6 4.6a.948.948 0 0 1-.7.275.948.948 0 0 1-.7-.275Z"
+          d="M8.7 17.3a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7l3.9-3.9-3.9-3.9a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7.948.948 0 0 1 .7-.275.95.95 0 0 1 .7.275l4.6 4.6c.1.1.17.208.213.325.041.117.062.242.062.375s-.02.258-.063.375a.877.877 0 0 1-.212.325l-4.6 4.6a.948.948 0 0 1-.7.275.948.948 0 0 1-.7-.275Z"
         />
       </svg>
       <div
@@ -408,7 +408,7 @@ exports[`ThreadsActivityCentre should order the room with the same notification 
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M8.7 17.3a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7l3.9-3.9-3.9-3.9a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7.948.948 0 0 1 .7-.275.95.95 0 0 1 .7.275l4.6 4.6c.1.1.17.208.213.325.041.117.062.242.062.375s-.02.258-.063.375a.876.876 0 0 1-.212.325l-4.6 4.6a.948.948 0 0 1-.7.275.948.948 0 0 1-.7-.275Z"
+          d="M8.7 17.3a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7l3.9-3.9-3.9-3.9a.948.948 0 0 1-.275-.7.95.95 0 0 1 .275-.7.948.948 0 0 1 .7-.275.95.95 0 0 1 .7.275l4.6 4.6c.1.1.17.208.213.325.041.117.062.242.062.375s-.02.258-.063.375a.877.877 0 0 1-.212.325l-4.6 4.6a.948.948 0 0 1-.7.275.948.948 0 0 1-.7-.275Z"
         />
       </svg>
       <div
@@ -437,7 +437,7 @@ exports[`ThreadsActivityCentre should render the release announcement 1`] = `
         aria-expanded="true"
         aria-haspopup="dialog"
         aria-label="Threads"
-        class="_icon-button_16nk7_17 mx_ThreadsActivityCentreButton"
+        class="_icon-button_bh2qc_17 mx_ThreadsActivityCentreButton"
         role="button"
         style="--cpd-icon-button-size: 32px;"
         tabindex="0"
@@ -528,7 +528,7 @@ exports[`ThreadsActivityCentre should render the release announcement 1`] = `
         Threads notifications have moved, find them here from now on.
       </span>
       <button
-        class="_button_dyfp8_17 _button_1oa1y_57"
+        class="_button_zt6rp_17 _button_1oa1y_57"
         data-kind="secondary"
         data-size="sm"
         role="button"

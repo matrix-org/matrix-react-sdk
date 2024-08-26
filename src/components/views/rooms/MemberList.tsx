@@ -1,8 +1,6 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
-Copyright 2017, 2018 New Vector Ltd
-Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
+Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,176 +15,316 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from "react";
-import { Button, Tooltip } from "@vector-im/compound-web";
-import { Icon as UserAddIcon } from "@vector-im/compound-design-tokens/icons/user-add-solid.svg";
+import React, { ChangeEvent } from "react";
+import { Room, RoomState, RoomStateEvent, RoomMember, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { throttle } from "lodash";
 
-import { _t } from "../../../languageHandler";
-import BaseCard from "../right_panel/BaseCard";
-import TruncatedList from "../elements/TruncatedList";
-import Spinner from "../elements/Spinner";
-import SearchBox from "../../structures/SearchBox";
-import { ButtonEvent } from "../elements/AccessibleButton";
-import EntityTile from "./EntityTile";
-import MemberTile from "./MemberTile";
-import BaseAvatar from "../avatars/BaseAvatar";
-import PosthogTrackers from "../../../PosthogTrackers";
-import { RoomMember } from "../../../models/rooms/RoomMember";
-import { ThreePIDInvite } from "../../../models/rooms/ThreePIDInvite";
-import { useMemberListViewModel } from "../../../view-models/rooms/memberlist/MemberListViewModel";
+import dis from "../../dispatcher/dispatcher";
+import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
+import MatrixClientContext from "../../contexts/MatrixClientContext";
+import RoomSummaryCard from "../views/right_panel/RoomSummaryCard";
+import WidgetCard from "../views/right_panel/WidgetCard";
+import SettingsStore from "../../settings/SettingsStore";
+import MemberList from "../views/rooms/MemberList";
+import UserInfo from "../views/right_panel/UserInfo";
+import ThirdPartyMemberInfo from "../views/rooms/ThirdPartyMemberInfo";
+import FilePanel from "./FilePanel";
+import ThreadView from "./ThreadView";
+import ThreadPanel from "./ThreadPanel";
+import NotificationPanel from "./NotificationPanel";
+import ResizeNotifier from "../../utils/ResizeNotifier";
+import { PinnedMessagesCard } from "../views/right_panel/PinnedMessagesCard";
+import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
+import { E2EStatus } from "../../utils/ShieldUtils";
+import TimelineCard from "../views/right_panel/TimelineCard";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
+import { IRightPanelCard, IRightPanelCardState } from "../../stores/right-panel/RightPanelStoreIPanelState";
+import { Action } from "../../dispatcher/actions";
+import { XOR } from "../../@types/common";
+import { RightPanelTabs } from "../views/right_panel/RightPanelTabs";
+import ExtensionsCard from "../views/right_panel/ExtensionsCard";
 
-interface IProps {
-    roomId: string;
-    header?: ReactNode;
-    onClose(): void;
-    onInviteButtonClick(roomId: string): void;
-    onThreePIDInviteClick(eventId: string): void;
+interface BaseProps {
+    overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
+    resizeNotifier: ResizeNotifier;
+    e2eStatus?: E2EStatus;
 }
 
-const MemberList: React.FC<IProps> = (propsIn: IProps) => {
-    const viewModel = useMemberListViewModel(propsIn.roomId);
-    const props = { ...propsIn, ...viewModel };
+interface RoomlessProps extends BaseProps {
+    room?: undefined;
+    permalinkCreator?: undefined;
+}
 
-    const createOverflowTileJoined = (overflowCount: number, totalCount: number): JSX.Element => {
-        return createOverflowTile(overflowCount, totalCount, props.showMoreJoinedMemberList);
-    };
+interface RoomProps extends BaseProps {
+    room: Room;
+    permalinkCreator: RoomPermalinkCreator;
+    onSearchChange?: (e: ChangeEvent) => void;
+    onSearchCancel?: () => void;
+}
 
-    const createOverflowTileInvited = (overflowCount: number, totalCount: number): JSX.Element => {
-        return createOverflowTile(overflowCount, totalCount, props.showMoreInvitedMemberList);
-    };
+type Props = XOR<RoomlessProps, RoomProps>;
 
-    const createOverflowTile = (overflowCount: number, totalCount: number, onClick: () => void): JSX.Element => {
-        // For now we'll pretend this is any entity. It should probably be a separate tile.
-        const text = _t("common|and_n_others", { count: overflowCount });
-        return (
-            <EntityTile
-                className="mx_EntityTile_ellipsis"
-                avatarJsx={
-                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg").default} name="..." size="36px" />
-                }
-                name={text}
-                showPresence={false}
-                onClick={onClick}
-            />
-        );
-    };
+interface IState {
+    phase?: RightPanelPhases;
+    searchQuery: string;
+    cardState?: IRightPanelCardState;
+}
 
-    function makeMemberTiles(members: Array<RoomMember | ThreePIDInvite>): JSX.Element[] {
-        return members.map((m) => {
-            if ("userId" in m) {
-                // Is a Matrix invite
-                return <MemberTile key={m.userId} member={m} showPresence={props.showPresence} />;
-            } else {
-                // Is a 3pid invite
-                return (
-                    <EntityTile
-                        key={m.stateKey}
-                        name={m.displayName}
-                        showPresence={false}
-                        onClick={() => props.onThreePIDInviteClick(m.eventId)}
-                    />
-                );
-            }
-        });
+export default class RightPanel extends React.Component<Props, IState> {
+    public static contextType = MatrixClientContext;
+    public declare context: React.ContextType<typeof MatrixClientContext>;
+
+    public constructor(props: Props, context: React.ContextType<typeof MatrixClientContext>) {
+        super(props, context);
+
+        this.state = {
+            searchQuery: "",
+        };
     }
 
-    const getChildrenJoined = (start: number, end: number): Array<JSX.Element> => {
-        return makeMemberTiles(props.joinedMembers.slice(start, end));
-    };
+    private readonly delayedUpdate = throttle(
+        (): void => {
+            this.forceUpdate();
+        },
+        500,
+        { leading: true, trailing: true },
+    );
 
-    const getChildCountJoined = (): number => props.joinedMembers.length;
-
-    const getChildrenInvited = (start: number, end: number): Array<JSX.Element> => {
-        return makeMemberTiles(props.invitedMembers.slice(start, end));
-    };
-
-    const getChildCountInvited = (): number => {
-        return props.invitedMembers.length;
-    };
-
-    const onInviteButtonClick = (ev: ButtonEvent): void => {
-        PosthogTrackers.trackInteraction("WebRightPanelMemberListInviteButton", ev);
-        props.onInviteButtonClick(props.roomId);
-    };
-
-    if (props.loading) {
-        return (
-            <BaseCard className="mx_MemberList" onClose={props.onClose}>
-                <Spinner />
-            </BaseCard>
-        );
+    public componentDidMount(): void {
+        this.context.on(RoomStateEvent.Members, this.onRoomStateMember);
+        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
     }
 
-    let inviteButton: JSX.Element | undefined;
+    public componentWillUnmount(): void {
+        this.context?.removeListener(RoomStateEvent.Members, this.onRoomStateMember);
+        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
+    }
 
-    if (props.shouldShowInvite) {
-        const inviteButtonText = props.isSpaceRoom ? _t("space|invite_this_space") : _t("room|invite_this_room");
-
-        const button = (
-            <Button
-                size="sm"
-                kind="secondary"
-                className="mx_MemberList_invite"
-                onClick={onInviteButtonClick}
-                disabled={!props.canInvite}
-            >
-                <UserAddIcon width="1em" height="1em" />
-                {inviteButtonText}
-            </Button>
-        );
-
-        if (props.canInvite) {
-            inviteButton = button;
-        } else {
-            inviteButton = <Tooltip label={_t("member_list|invite_button_no_perms_tooltip")}>{button}</Tooltip>;
+    public static getDerivedStateFromProps(props: Props): Partial<IState> {
+        let currentCard: IRightPanelCard | undefined;
+        if (props.room) {
+            currentCard = RightPanelStore.instance.currentCardForRoom(props.room.roomId);
         }
+
+        return {
+            cardState: currentCard?.state,
+            phase: currentCard?.phase ?? undefined,
+        };
     }
 
-    let invitedHeader;
-    let invitedSection;
-    if (getChildCountInvited() > 0) {
-        invitedHeader = <h2>{_t("member_list|invited_list_heading")}</h2>;
-        invitedSection = (
-            <TruncatedList
-                className="mx_MemberList_section mx_MemberList_invited"
-                truncateAt={props.truncateAtInvited}
-                createOverflowElement={createOverflowTileInvited}
-                getChildren={getChildrenInvited}
-                getChildCount={getChildCountInvited}
-            />
+    private onRoomStateMember = (ev: MatrixEvent, state: RoomState, member: RoomMember): void => {
+        if (!this.props.room || member.roomId !== this.props.room.roomId) {
+            return;
+        }
+
+        // redraw the badge on the membership list
+        if (this.state.phase === RightPanelPhases.RoomMemberList) {
+            this.delayedUpdate();
+        } else if (
+            this.state.phase === RightPanelPhases.RoomMemberInfo &&
+            member.userId === this.state.cardState?.member?.userId
+        ) {
+            // refresh the member info (e.g. new power level)
+            this.delayedUpdate();
+        }
+    };
+
+    private onRightPanelStoreUpdate = (): void => {
+        this.setState({ ...(RightPanel.getDerivedStateFromProps(this.props) as IState) });
+    };
+
+    private onClose = (): void => {
+        // XXX: There are three different ways of 'closing' this panel depending on what state
+        // things are in... this knows far more than it should do about the state of the rest
+        // of the app and is generally a bit silly.
+        if (this.props.overwriteCard?.state?.member) {
+            // If we have a user prop then we're displaying a user from the 'user' page type
+            // in LoggedInView, so need to change the page type to close the panel (we switch
+            // to the home page which is not obviously the correct thing to do, but I'm not sure
+            // anything else is - we could hide the close button altogether?)
+            dis.dispatch({
+                action: Action.ViewHomePage,
+            });
+        } else if (
+            this.state.phase === RightPanelPhases.EncryptionPanel &&
+            this.state.cardState?.verificationRequest?.pending
+        ) {
+            // When the user clicks close on the encryption panel cancel the pending request first if any
+            this.state.cardState.verificationRequest.cancel();
+        } else {
+            RightPanelStore.instance.togglePanel(this.props.room?.roomId ?? null);
+        }
+    };
+
+    private onSearchQueryChanged = (searchQuery: string): void => {
+        this.setState({ searchQuery });
+    };
+
+    public render(): React.ReactNode {
+        let card = <div />;
+        const roomId = this.props.room?.roomId;
+        const phase = this.props.overwriteCard?.phase ?? this.state.phase;
+        const cardState = this.props.overwriteCard?.state ?? this.state.cardState;
+        switch (phase) {
+            case RightPanelPhases.RoomMemberList:
+                if (!!roomId) {
+                    card = (
+                        <MemberList
+                            roomId={roomId}
+                            key={roomId}
+                            hideHeaderButtons
+                            onClose={this.onClose}
+                            searchQuery={this.state.searchQuery}
+                            onSearchQueryChanged={this.onSearchQueryChanged}
+                        />
+                    );
+                }
+                break;
+            case RightPanelPhases.SpaceMemberList:
+                if (!!cardState?.spaceId || !!roomId) {
+                    card = (
+                        <MemberList
+                            roomId={cardState?.spaceId ?? roomId!}
+                            key={cardState?.spaceId ?? roomId!}
+                            onClose={this.onClose}
+                            searchQuery={this.state.searchQuery}
+                            onSearchQueryChanged={this.onSearchQueryChanged}
+                        />
+                    );
+                }
+                break;
+
+            case RightPanelPhases.RoomMemberInfo:
+            case RightPanelPhases.SpaceMemberInfo:
+            case RightPanelPhases.EncryptionPanel: {
+                if (!!cardState?.member) {
+                    const roomMember = cardState.member instanceof RoomMember ? cardState.member : undefined;
+                    card = (
+                        <UserInfo
+                            user={cardState.member}
+                            room={this.context.getRoom(roomMember?.roomId) ?? this.props.room}
+                            key={roomId ?? cardState.member.userId}
+                            onClose={this.onClose}
+                            phase={phase}
+                            verificationRequest={cardState.verificationRequest}
+                            verificationRequestPromise={cardState.verificationRequestPromise}
+                        />
+                    );
+                }
+                break;
+            }
+            case RightPanelPhases.Room3pidMemberInfo:
+            case RightPanelPhases.Space3pidMemberInfo:
+                if (!!cardState?.memberInfoEvent) {
+                    card = (
+                        <ThirdPartyMemberInfo event={cardState.memberInfoEvent} key={roomId} onClose={this.onClose} />
+                    );
+                }
+                break;
+
+            case RightPanelPhases.NotificationPanel:
+                card = <NotificationPanel onClose={this.onClose} />;
+                break;
+
+            case RightPanelPhases.PinnedMessages:
+                if (!!this.props.room && SettingsStore.getValue("feature_pinning")) {
+                    card = (
+                        <PinnedMessagesCard
+                            room={this.props.room}
+                            onClose={this.onClose}
+                            permalinkCreator={this.props.permalinkCreator}
+                        />
+                    );
+                }
+                break;
+            case RightPanelPhases.Timeline:
+                if (!!this.props.room) {
+                    card = (
+                        <TimelineCard
+                            classNames="mx_ThreadPanel mx_TimelineCard"
+                            room={this.props.room}
+                            timelineSet={this.props.room.getUnfilteredTimelineSet()}
+                            resizeNotifier={this.props.resizeNotifier}
+                            onClose={this.onClose}
+                            permalinkCreator={this.props.permalinkCreator}
+                            e2eStatus={this.props.e2eStatus}
+                        />
+                    );
+                }
+                break;
+            case RightPanelPhases.FilePanel:
+                if (!!roomId) {
+                    card = (
+                        <FilePanel roomId={roomId} resizeNotifier={this.props.resizeNotifier} onClose={this.onClose} />
+                    );
+                }
+                break;
+
+            case RightPanelPhases.ThreadView:
+                if (!!this.props.room && !!cardState?.threadHeadEvent) {
+                    card = (
+                        <ThreadView
+                            room={this.props.room}
+                            resizeNotifier={this.props.resizeNotifier}
+                            onClose={this.onClose}
+                            mxEvent={cardState.threadHeadEvent}
+                            initialEvent={cardState.initialEvent}
+                            isInitialEventHighlighted={cardState.isInitialEventHighlighted}
+                            initialEventScrollIntoView={cardState.initialEventScrollIntoView}
+                            permalinkCreator={this.props.permalinkCreator}
+                            e2eStatus={this.props.e2eStatus}
+                        />
+                    );
+                }
+                break;
+
+            case RightPanelPhases.ThreadPanel:
+                if (!!this.props.room) {
+                    card = (
+                        <ThreadPanel
+                            roomId={this.props.room.roomId}
+                            resizeNotifier={this.props.resizeNotifier}
+                            onClose={this.onClose}
+                            permalinkCreator={this.props.permalinkCreator}
+                        />
+                    );
+                }
+                break;
+
+            case RightPanelPhases.RoomSummary:
+                if (!!this.props.room) {
+                    card = (
+                        <RoomSummaryCard
+                            room={this.props.room}
+                            // whenever RightPanel is passed a room it is passed a permalinkcreator
+                            permalinkCreator={this.props.permalinkCreator!}
+                            onSearchChange={this.props.onSearchChange}
+                            onSearchCancel={this.props.onSearchCancel}
+                            focusRoomSearch={cardState?.focusRoomSearch}
+                        />
+                    );
+                }
+                break;
+
+            case RightPanelPhases.Extensions:
+                if (!!this.props.room) {
+                    card = <ExtensionsCard room={this.props.room} onClose={this.onClose} />;
+                }
+                break;
+
+            case RightPanelPhases.Widget:
+                if (!!this.props.room && !!cardState?.widgetId) {
+                    card = <WidgetCard room={this.props.room} widgetId={cardState.widgetId} onClose={this.onClose} />;
+                }
+                break;
+        }
+
+        return (
+            <aside className="mx_RightPanel" id="mx_RightPanel">
+                {phase && <RightPanelTabs room={this.props.room} phase={phase} />}
+                {card}
+            </aside>
         );
     }
-
-    const footer = (
-        <SearchBox
-            className="mx_MemberList_query mx_textinput_icon mx_textinput_search"
-            placeholder={_t("member_list|filter_placeholder")}
-            onSearch={props.onSearchQueryChanged}
-            initialValue={props.searchQuery}
-        />
-    );
-
-    return (
-        <BaseCard
-            className="mx_MemberList"
-            header={props.header && <React.Fragment>{props.header}</React.Fragment>}
-            footer={footer}
-            onClose={props.onClose}
-        >
-            {inviteButton}
-            <div className="mx_MemberList_wrapper">
-                <TruncatedList
-                    className="mx_MemberList_section mx_MemberList_joined"
-                    truncateAt={props.truncateAtJoined}
-                    createOverflowElement={createOverflowTileJoined}
-                    getChildren={getChildrenJoined}
-                    getChildCount={getChildCountJoined}
-                />
-                {invitedHeader}
-                {invitedSection}
-            </div>
-        </BaseCard>
-    );
-};
-
-export default MemberList;
+}

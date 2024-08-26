@@ -18,7 +18,7 @@ limitations under the License.
 import React, { FC, useState, useMemo, useCallback } from "react";
 import classNames from "classnames";
 import { throttle } from "lodash";
-import { RoomStateEvent, ISearchResults } from "matrix-js-sdk/src/matrix";
+import { RoomStateEvent } from "matrix-js-sdk/src/matrix";
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 import { IconButton, Tooltip } from "@vector-im/compound-web";
 import { ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
@@ -38,7 +38,6 @@ import RoomName from "../elements/RoomName";
 import { E2EStatus } from "../../../utils/ShieldUtils";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
 import { RoomKnocksBar } from "./RoomKnocksBar";
-import { SearchScope } from "./SearchBar";
 import { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from "./RoomTile";
@@ -55,7 +54,7 @@ import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../../LegacyCallHa
 import { useFeatureEnabled, useSettingValue } from "../../../hooks/useSettings";
 import SdkConfig from "../../../SdkConfig";
 import { useEventEmitterState, useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
-import { useWidgets } from "../right_panel/RoomSummaryCard";
+import { useWidgets } from "../../../utils/WidgetUtils";
 import { WidgetType } from "../../../widgets/WidgetType";
 import { useCall, useLayout } from "../../../hooks/useCall";
 import { getJoinedNonFunctionalMembers } from "../../../utils/room/getJoinedNonFunctionalMembers";
@@ -70,6 +69,7 @@ import { SessionDuration } from "../voip/CallDuration";
 import RoomCallBanner from "../beacon/RoomCallBanner";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import { SearchInfo } from "../../../Searching";
 
 class DisabledWithReason {
     public constructor(public readonly reason: string) {}
@@ -456,18 +456,6 @@ const CallLayoutSelector: FC<CallLayoutSelectorProps> = ({ call }) => {
     );
 };
 
-export interface ISearchInfo {
-    searchId: number;
-    roomId?: string;
-    term: string;
-    scope: SearchScope;
-    promise: Promise<ISearchResults>;
-    abortController?: AbortController;
-
-    inProgress?: boolean;
-    count?: number;
-}
-
 export interface IProps {
     room: Room;
     oobData?: IOOBData;
@@ -478,7 +466,7 @@ export interface IProps {
     onAppsClick: (() => void) | null;
     e2eStatus: E2EStatus;
     appsShown: boolean;
-    searchInfo?: ISearchInfo;
+    searchInfo?: SearchInfo;
     excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
     showButtons?: boolean;
     enableRoomOptionsMenu?: boolean;
@@ -505,11 +493,11 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     };
 
     public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    public declare context: React.ContextType<typeof RoomContext>;
     private readonly client = this.props.room.client;
     private readonly featureAskToJoinWatcher: string;
 
-    public constructor(props: IProps, context: IState) {
+    public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
         const notiStore = RoomNotificationStateStore.instance.getRoomState(props.room);
         notiStore.on(NotificationStateEvents.Update, this.onNotificationUpdate);

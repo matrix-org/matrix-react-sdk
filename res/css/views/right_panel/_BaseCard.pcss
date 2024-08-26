@@ -27,7 +27,7 @@ limitations under the License.
 
     .mx_BaseCard_header {
         height: 64px;
-        padding: var(--cpd-space-3x);
+        padding: var(--cpd-space-4x);
         box-sizing: border-box;
         /* changing the color from $separator to transparent as it is
            the best visual output during the transition period. This will be
@@ -36,8 +36,13 @@ limitations under the License.
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: var(--cpd-space-2x);
+        gap: var(--cpd-space-3x);
         flex-shrink: 0;
+        border-block-end: var(--cpd-border-width-1) solid $separator;
+
+        .mx_BaseCard_header_spacer {
+            flex: 1;
+        }
 
         > h2 {
             margin: 0 44px;
@@ -55,10 +60,11 @@ limitations under the License.
             flex: 1;
 
             .mx_BaseCard_header_title_heading {
-                color: $primary-content;
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
+                font: var(--cpd-font-body-md-medium);
+                color: var(--cpd-color-text-secondary);
             }
 
             .mx_BaseCard_header_title_button--option {
@@ -93,50 +99,6 @@ limitations under the License.
         scrollbar-gutter: stable;
     }
 
-    .mx_BaseCard_Group {
-        margin: $spacing-20 0 $spacing-16;
-
-        & > * {
-            margin-left: $spacing-12;
-            margin-right: $spacing-12;
-        }
-
-        > h2 {
-            color: $tertiary-content;
-            font: var(--cpd-font-body-sm-medium);
-            margin: $spacing-12;
-        }
-
-        .mx_BaseCard_Button {
-            padding: 10px;
-            padding-inline-start: $spacing-12;
-            margin: 0;
-            position: relative;
-            font: var(--cpd-font-heading-sm-medium);
-            height: 20px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            display: flex;
-
-            .mx_BaseCard_Button_sublabel {
-                color: $tertiary-content;
-                margin-left: auto;
-            }
-
-            &:hover {
-                background-color: rgba(141, 151, 165, 0.1);
-            }
-
-            &.mx_AccessibleButton_disabled {
-                padding-right: $spacing-12;
-                &::after {
-                    content: unset;
-                }
-            }
-        }
-    }
-
     .mx_BaseCard_footer {
         padding-top: $spacing-4;
         text-align: center;
@@ -152,52 +114,6 @@ limitations under the License.
         .mx_AccessibleButton_disabled {
             cursor: not-allowed;
         }
-    }
-}
-
-.mx_BaseCard_back,
-.mx_BaseCard_close {
-    flex-shrink: 0;
-    position: relative;
-    /* @TODO(kerrya) background colours here are not semantic
-       these buttons to be replaced with IconButton after secondary variant is added
-       https://github.com/vector-im/compound/issues/279 */
-    background-color: var(--cpd-color-bg-subtle-secondary);
-    width: var(--BaseCard_header-button-size);
-    height: var(--BaseCard_header-button-size);
-    border-radius: 50%;
-
-    &:hover {
-        background-color: var(--cpd-color-bg-subtle-primary);
-    }
-
-    &::before {
-        content: "";
-        position: absolute;
-        height: inherit;
-        width: inherit;
-        top: 0;
-        left: 0;
-        mask-repeat: no-repeat;
-        mask-position: center;
-        mask-size: 20px;
-        background-color: var(--cpd-color-icon-secondary);
-    }
-}
-
-.mx_BaseCard_back {
-    order: 0; /* always first! */
-    &::before {
-        transform: rotate(90deg);
-        mask-size: 22px;
-        mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
-    }
-}
-
-.mx_BaseCard_close {
-    order: 999; /* always last */
-    &::before {
-        mask-image: url("@vector-im/compound-design-tokens/icons/close.svg");
     }
 }
 
@@ -234,8 +150,4 @@ limitations under the License.
             left: -8px;
         }
     }
-}
-
-.mx_BaseCard_headerProp {
-    flex: 1 1 100%;
 }

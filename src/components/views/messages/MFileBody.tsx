@@ -106,7 +106,9 @@ interface IState {
 
 export default class MFileBody extends React.Component<IProps, IState> {
     public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    public declare context: React.ContextType<typeof RoomContext>;
+
+    public state: IState = {};
 
     public static defaultProps = {
         showGenericPlaceholder: true,
@@ -116,12 +118,6 @@ export default class MFileBody extends React.Component<IProps, IState> {
     private dummyLink: React.RefObject<HTMLAnchorElement> = createRef();
     private userDidClick = false;
     private fileDownloader: FileDownloader = new FileDownloader(() => this.iframe.current);
-
-    public constructor(props: IProps) {
-        super(props);
-
-        this.state = {};
-    }
 
     private getContentUrl(): string | null {
         if (this.props.forExport) return null;
@@ -288,7 +284,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                                 src={url}
                                 onLoad={() => this.downloadFile(this.fileName, this.linkText)}
                                 ref={this.iframe}
-                                sandbox="allow-scripts allow-downloads allow-downloads-without-user-activation"
+                                sandbox="allow-scripts allow-downloads"
                             />
                         </div>
                     )}

@@ -24,6 +24,7 @@ import AutoHideScrollbar from "./AutoHideScrollbar";
 import { PosthogScreenTracker, ScreenName } from "../../PosthogTrackers";
 import { NonEmptyArray } from "../../@types/common";
 import { RovingAccessibleButton, RovingTabIndexProvider } from "../../accessibility/RovingTabIndex";
+import { useWindowWidth } from "../../hooks/useWindowWidth";
 
 /**
  * Represents a tab for the TabbedView.
@@ -33,14 +34,14 @@ export class Tab<T extends string> {
      * Creates a new tab.
      * @param {string} id The tab's ID.
      * @param {string} label The untranslated tab label.
-     * @param {string} icon The class for the tab icon. This should be a simple mask.
+     * @param {string|JSX.Element} icon An SVG element to use for the tab icon. Can also be a string for legacy icons, in which case it is the class for the tab icon. This should be a simple mask.
      * @param {React.ReactNode} body The JSX for the tab container.
      * @param {string} screenName The screen name to report to Posthog.
      */
     public constructor(
         public readonly id: T,
         public readonly label: TranslationKey,
-        public readonly icon: string | null,
+        public readonly icon: string | JSX.Element | null,
         public readonly body: React.ReactNode,
         public readonly screenName?: ScreenName,
     ) {}
@@ -87,17 +88,22 @@ function TabPanel<T extends string>({ tab }: ITabPanelProps<T>): JSX.Element {
 interface ITabLabelProps<T extends string> {
     tab: Tab<T>;
     isActive: boolean;
+    showToolip: boolean;
     onClick: () => void;
 }
 
-function TabLabel<T extends string>({ tab, isActive, onClick }: ITabLabelProps<T>): JSX.Element {
+function TabLabel<T extends string>({ tab, isActive, showToolip, onClick }: ITabLabelProps<T>): JSX.Element {
     const classes = classNames("mx_TabbedView_tabLabel", {
         mx_TabbedView_tabLabel_active: isActive,
     });
 
     let tabIcon: JSX.Element | undefined;
     if (tab.icon) {
-        tabIcon = <span className={`mx_TabbedView_maskedIcon ${tab.icon}`} />;
+        if (typeof tab.icon === "object") {
+            tabIcon = tab.icon;
+        } else if (typeof tab.icon === "string") {
+            tabIcon = <span className={`mx_TabbedView_maskedIcon ${tab.icon}`} />;
+        }
     }
 
     const id = domIDForTabID(tab.id);
@@ -112,6 +118,7 @@ function TabLabel<T extends string>({ tab, isActive, onClick }: ITabLabelProps<T
             aria-selected={isActive}
             aria-controls={id}
             element="li"
+            title={showToolip ? label : undefined}
         >
             {tabIcon}
             <span className="mx_TabbedView_tabLabel_text" id={`${id}_label`}>
@@ -152,12 +159,16 @@ export default function TabbedView<T extends string>(props: IProps<T>): JSX.Elem
         return props.tabs.find((tab) => tab.id === id);
     };
 
+    const windowWidth = useWindowWidth();
+
     const labels = props.tabs.map((tab) => (
         <TabLabel
             key={"tab_label_" + tab.id}
             tab={tab}
             isActive={tab.id === props.activeTabId}
             onClick={() => props.onChange(tab.id)}
+            // This should be the same as the the CSS breakpoint at which the tab labels are hidden
+            showToolip={windowWidth < 1024 && tabLocation == TabLocation.LEFT}
         />
     ));
     const tab = getTabById(props.activeTabId);

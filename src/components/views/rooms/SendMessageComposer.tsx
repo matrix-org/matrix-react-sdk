@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React, { createRef, KeyboardEvent, SyntheticEvent } from "react";
-import EMOJI_REGEX from "emojibase-regex";
 import {
     IContent,
     MatrixEvent,
@@ -70,6 +69,10 @@ import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 import { Caret } from "../../../editor/caret";
 import { IDiff } from "../../../editor/diff";
 import { getBlobSafeMimeType } from "../../../utils/blobs";
+import { EMOJI_REGEX } from "../../../HtmlUtils";
+
+// The prefix used when persisting editor drafts to localstorage.
+export const EDITOR_STATE_STORAGE_PREFIX = "mx_cider_state_";
 
 /**
  * Build the mentions information based on the editor model (and any related events):
@@ -254,7 +257,7 @@ interface ISendMessageComposerProps extends MatrixClientProps {
 
 export class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
     public static contextType = RoomContext;
-    public context!: React.ContextType<typeof RoomContext>;
+    public declare context: React.ContextType<typeof RoomContext>;
 
     private readonly prepareToEncrypt?: DebouncedFunc<() => void>;
     private readonly editorRef = createRef<BasicMessageComposer>();
@@ -269,7 +272,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     public constructor(props: ISendMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
-        this.context = context; // otherwise React will only set it prior to render due to type def above
 
         if (this.props.mxClient.isCryptoEnabled() && this.props.mxClient.isRoomEncrypted(this.props.room.roomId)) {
             this.prepareToEncrypt = throttle(
@@ -605,7 +607,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     }
 
     private get editorStateKey(): string {
-        let key = `mx_cider_state_${this.props.room.roomId}`;
+        let key = EDITOR_STATE_STORAGE_PREFIX + this.props.room.roomId;
         if (this.props.relation?.rel_type === THREAD_RELATION_TYPE.name) {
             key += `_${this.props.relation.event_id}`;
         }
