@@ -703,7 +703,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     const event = ev as React.KeyboardEvent;
                     // We want to be able to interact with the content of the row without joining automatically a room
                     // But we want to keep the listener for keyboard action
-                    if (event.key === Key.ENTER) {
+                    // We check `event.detail` because of an unknown reason on some cases, `event.key` is undefined on an `Enter` key press
+                    if (event.key === Key.ENTER || event.key === Key.SPACE || event.detail === 0) {
                         listener(ev);
                     }
                 };
