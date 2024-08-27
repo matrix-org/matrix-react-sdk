@@ -104,32 +104,34 @@ export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBan
                     );
                 }}
             >
-                {!isSinglePinnedEvent && <Indicators count={eventCount} currentIndex={currentEventIndex} />}
-                <PinIcon width="20" className="mx_PinnedMessageBanner_PinIcon" />
-                {!isSinglePinnedEvent && (
-                    <div className="mx_PinnedMessageBanner_title">
-                        {_t(
-                            "room|pinned_message_banner|title",
-                            {
-                                index: currentEventIndex + 1,
-                                length: eventCount,
-                            },
-                            { bold: (sub) => <span className="mx_PinnedMessageBanner_title_counter">{sub}</span> },
-                        )}
-                    </div>
-                )}
-                {eventPreview && <span className="mx_PinnedMessageBanner_message">{eventPreview}</span>}
-                {/* In case of redacted event, we want to display the nice sentence of the message event like in the timeline or in the pinned message list */}
-                {shouldUseMessageEvent && (
-                    <div className="mx_PinnedMessageBanner_redactedMessage">
-                        <MessageEvent
-                            mxEvent={pinnedEvent}
-                            maxImageHeight={20}
-                            permalinkCreator={permalinkCreator}
-                            replacingEventId={pinnedEvent.replacingEventId()}
-                        />
-                    </div>
-                )}
+                <div className="mx_PinnedMessageBanner_content">
+                    {!isSinglePinnedEvent && <Indicators count={eventCount} currentIndex={currentEventIndex} />}
+                    <PinIcon width="20" className="mx_PinnedMessageBanner_PinIcon" />
+                    {!isSinglePinnedEvent && (
+                        <div className="mx_PinnedMessageBanner_title">
+                            {_t(
+                                "room|pinned_message_banner|title",
+                                {
+                                    index: currentEventIndex + 1,
+                                    length: eventCount,
+                                },
+                                { bold: (sub) => <span className="mx_PinnedMessageBanner_title_counter">{sub}</span> },
+                            )}
+                        </div>
+                    )}
+                    {eventPreview && <span className="mx_PinnedMessageBanner_message">{eventPreview}</span>}
+                    {/* In case of redacted event, we want to display the nice sentence of the message event like in the timeline or in the pinned message list */}
+                    {shouldUseMessageEvent && (
+                        <div className="mx_PinnedMessageBanner_redactedMessage">
+                            <MessageEvent
+                                mxEvent={pinnedEvent}
+                                maxImageHeight={20}
+                                permalinkCreator={permalinkCreator}
+                                replacingEventId={pinnedEvent.replacingEventId()}
+                            />
+                        </div>
+                    )}
+                </div>
             </button>
             {!isSinglePinnedEvent && <BannerButton room={room} />}
         </div>

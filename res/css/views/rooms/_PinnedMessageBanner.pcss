@@ -35,11 +35,18 @@
         text-align: start;
         cursor: pointer;
 
-        display: grid;
-        grid-template:
-            "indicators pinIcon title" auto
-            "indicators pinIcon message" auto;
-        column-gap: var(--cpd-space-2x);
+        height: 100%;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+
+        .mx_PinnedMessageBanner_content {
+            display: grid;
+            grid-template:
+                "indicators pinIcon title" auto
+                "indicators pinIcon message" auto;
+            column-gap: var(--cpd-space-2x);
+        }
 
         .mx_PinnedMessageBanner_Indicators {
             grid-area: indicators;
@@ -106,7 +113,7 @@
     /* 64px = 63px + 1px from the bottom border */
     height: 63px;
 
-    .mx_PinnedMessageBanner_main {
+    .mx_PinnedMessageBanner_content {
         grid-template: "pinIcon message" auto;
     }
 }
