@@ -103,16 +103,21 @@ export default class PinningUtils {
                 ?.getStateEvents(EventType.RoomPinnedEvents, "")
                 ?.getContent().pinned || [];
 
+        let roomAccountDataPromise: Promise<{} | void> = Promise.resolve();
         // If the event is already pinned, unpin it
         if (pinnedIds.includes(eventId)) {
             pinnedIds.splice(pinnedIds.indexOf(eventId), 1);
         } else {
             // Otherwise, pin it
             pinnedIds.push(eventId);
-            await matrixClient.setRoomAccountData(room.roomId, ReadPinsEventId, {
+            // We don't want to wait for the roomAccountDataPromise to resolve before sending the state event
+            roomAccountDataPromise = matrixClient.setRoomAccountData(room.roomId, ReadPinsEventId, {
                 event_ids: [...(room.getAccountData(ReadPinsEventId)?.getContent()?.event_ids || []), eventId],
             });
         }
-        await matrixClient.sendStateEvent(room.roomId, EventType.RoomPinnedEvents, { pinned: pinnedIds }, "");
+        await Promise.all([
+            matrixClient.sendStateEvent(room.roomId, EventType.RoomPinnedEvents, { pinned: pinnedIds }, ""),
+            roomAccountDataPromise,
+        ]);
     }
 }
