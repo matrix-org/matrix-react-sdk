@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/playwright:v1.45.3-jammy
 WORKDIR /work/matrix-react-sdk
 VOLUME ["/work/element-web/node_modules"]
 
-RUN apt-get update && apt-get -y install docker.io
+RUN apt-get update && apt-get -y install docker.io fonts-dejavu
 
 COPY docker-entrypoint.sh /opt/docker-entrypoint.sh
 ENTRYPOINT ["bash", "/opt/docker-entrypoint.sh"]
