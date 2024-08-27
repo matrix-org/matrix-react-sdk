@@ -629,13 +629,13 @@ describe("StopGapWidgetDriver", () => {
             // eslint-disable-next-line no-restricted-properties
             client.mxcUrlToHttp.mockImplementation((mxcUrl) => {
                 if (mxcUrl === "mxc://example.com/test_file") {
-                    return "https://example.com/_matrix/media/v3/download/test_file";
+                    return "https://example.com/_matrix/media/v3/download/example.com/test_file";
                 }
 
                 return null;
             });
 
-            fetchMockJest.get("https://example.com/_matrix/media/v3/download/test_file", "test contents");
+            fetchMockJest.get("https://example.com/_matrix/media/v3/download/example.com/test_file", "test contents");
 
             const result = await driver.downloadFile("mxc://example.com/test_file");
             // A type test is impossible here because of
