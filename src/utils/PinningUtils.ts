@@ -16,7 +16,7 @@ limitations under the License.
 
 import { MatrixEvent, EventType, M_POLL_START, MatrixClient, EventTimeline } from "matrix-js-sdk/src/matrix";
 
-import { canPinEvent, isContentActionable } from "./EventUtils";
+import { isContentActionable } from "./EventUtils";
 import SettingsStore from "../settings/SettingsStore";
 import { ReadPinsEventId } from "../components/views/right_panel/types";
 
@@ -31,7 +31,8 @@ export default class PinningUtils {
     ];
 
     /**
-     * Determines if the given event may be pinned.
+     * Determines if the given event can be pinned.
+     * This is a simple check to see if the event is of a type that can be pinned.
      * @param {MatrixEvent} event The event to check.
      * @return {boolean} True if the event may be pinned, false otherwise.
      */
@@ -62,7 +63,8 @@ export default class PinningUtils {
     }
 
     /**
-     * Determines if the given event may be pinned or unpinned.
+     * Determines if the given event may be pinned or unpinned by the current user.
+     * This checks if the user has the necessary permissions to pin or unpin the event, and if the event is pinnable.
      * @param matrixClient
      * @param mxEvent
      */
@@ -77,7 +79,7 @@ export default class PinningUtils {
             room
                 .getLiveTimeline()
                 .getState(EventTimeline.FORWARDS)
-                ?.mayClientSendStateEvent(EventType.RoomPinnedEvents, matrixClient) && canPinEvent(mxEvent),
+                ?.mayClientSendStateEvent(EventType.RoomPinnedEvents, matrixClient) && PinningUtils.isPinnable(mxEvent),
         );
     }
 
