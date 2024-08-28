@@ -82,6 +82,7 @@ export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBan
             className="mx_PinnedMessageBanner"
             data-single-message={isSinglePinnedEvent}
             aria-label={_t("room|pinned_message_banner|description")}
+            data-testid="pinned-message-banner"
         >
             <button
                 aria-label={_t("room|pinned_message_banner|go_to_message")}
