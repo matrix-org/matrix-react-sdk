@@ -6952,6 +6952,13 @@ matrix-widget-api@^1.8.2:
     "@types/events" "^3.0.0"
     events "^3.2.0"
 
+"matrix-widget-api@github:nordeck/matrix-widget-api#download-file":
+  version "1.8.2"
+  resolved "https://codeload.github.com/nordeck/matrix-widget-api/tar.gz/7c06a33680cdef6873e5e70070db11e79ed39979"
+  dependencies:
+    "@types/events" "^3.0.0"
+    events "^3.2.0"
+
 md5@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/md5/-/md5-2.3.0.tgz#c3da9a6aae3a30b46b7b0c349b87b110dc3bda4f"
