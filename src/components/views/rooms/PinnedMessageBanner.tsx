@@ -108,7 +108,7 @@ export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBan
                     {!isSinglePinnedEvent && <Indicators count={eventCount} currentIndex={currentEventIndex} />}
                     <PinIcon width="20" className="mx_PinnedMessageBanner_PinIcon" />
                     {!isSinglePinnedEvent && (
-                        <div className="mx_PinnedMessageBanner_title">
+                        <div className="mx_PinnedMessageBanner_title" data-testid="banner-counter">
                             {_t(
                                 "room|pinned_message_banner|title",
                                 {
@@ -203,6 +203,7 @@ interface IndicatorProps {
 function Indicator({ active, hided }: IndicatorProps): JSX.Element {
     return (
         <div
+            data-testid="banner-indicator"
             className={classNames("mx_PinnedMessageBanner_Indicator", {
                 "mx_PinnedMessageBanner_Indicator--active": active,
                 "mx_PinnedMessageBanner_Indicator--hided": hided,
