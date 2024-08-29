@@ -89,11 +89,11 @@ exports[`<PinnedMessageBanner /> should render 4 pinned event 1`] = `
             data-testid="banner-indicator"
           />
           <div
-            class="mx_PinnedMessageBanner_Indicator mx_PinnedMessageBanner_Indicator--hided"
+            class="mx_PinnedMessageBanner_Indicator mx_PinnedMessageBanner_Indicator--hidden"
             data-testid="banner-indicator"
           />
           <div
-            class="mx_PinnedMessageBanner_Indicator mx_PinnedMessageBanner_Indicator--hided"
+            class="mx_PinnedMessageBanner_Indicator mx_PinnedMessageBanner_Indicator--hidden"
             data-testid="banner-indicator"
           />
         </div>

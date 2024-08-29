@@ -77,6 +77,21 @@ export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBan
 
     const shouldUseMessageEvent = pinnedEvent.isRedacted() || pinnedEvent.isDecryptionFailure();
 
+    const onBannerClick = (): void => {
+        // Scroll to the pinned message
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            event_id: pinnedEvent.getId(),
+            highlighted: true,
+            room_id: room.roomId,
+            metricsTrigger: undefined, // room doesn't change
+        });
+
+        // Cycle through the pinned messages
+        // When we reach the first message, we go back to the last message
+        setCurrentEventIndex((currentEventIndex) => (--currentEventIndex === -1 ? eventCount - 1 : currentEventIndex));
+    };
+
     return (
         <div
             className="mx_PinnedMessageBanner"
@@ -88,22 +103,7 @@ export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBan
                 aria-label={_t("room|pinned_message_banner|go_to_message")}
                 type="button"
                 className="mx_PinnedMessageBanner_main"
-                onClick={() => {
-                    // Scroll to the pinned message
-                    dis.dispatch<ViewRoomPayload>({
-                        action: Action.ViewRoom,
-                        event_id: pinnedEvent.getId(),
-                        highlighted: true,
-                        room_id: room.roomId,
-                        metricsTrigger: undefined, // room doesn't change
-                    });
-
-                    // Cycle through the pinned messages
-                    // When we reach the first message, we go back to the last message
-                    setCurrentEventIndex((currentEventIndex) =>
-                        --currentEventIndex === -1 ? eventCount - 1 : currentEventIndex,
-                    );
-                }}
+                onClick={onBannerClick}
             >
                 <div className="mx_PinnedMessageBanner_content">
                     {!isSinglePinnedEvent && <Indicators count={eventCount} currentIndex={currentEventIndex} />}
@@ -178,7 +178,7 @@ function Indicators({ count, currentIndex }: IndicatorsProps): JSX.Element {
     return (
         <div className="mx_PinnedMessageBanner_Indicators">
             {Array.from({ length: numberOfIndicators }).map((_, i) => (
-                <Indicator key={i} active={i === index} hided={isLastCycle && lastCycleIndex <= i} />
+                <Indicator key={i} active={i === index} hidden={isLastCycle && lastCycleIndex <= i} />
             ))}
         </div>
     );
@@ -193,21 +193,21 @@ interface IndicatorProps {
      */
     active: boolean;
     /**
-     * Whether the indicator is hided
+     * Whether the indicator is hidden
      */
-    hided: boolean;
+    hidden: boolean;
 }
 
 /**
  * A component that displays a vertical indicator for a pinned message.
  */
-function Indicator({ active, hided }: IndicatorProps): JSX.Element {
+function Indicator({ active, hidden }: IndicatorProps): JSX.Element {
     return (
         <div
             data-testid="banner-indicator"
             className={classNames("mx_PinnedMessageBanner_Indicator", {
                 "mx_PinnedMessageBanner_Indicator--active": active,
-                "mx_PinnedMessageBanner_Indicator--hided": hided,
+                "mx_PinnedMessageBanner_Indicator--hidden": hidden,
             })}
         />
     );

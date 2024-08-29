@@ -17,6 +17,7 @@
 import { act, screen, render } from "@testing-library/react";
 import React from "react";
 import { EventType, IEvent, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import userEvent from "@testing-library/user-event";
 
 import * as pinnedEventHooks from "../../../../src/hooks/usePinnedEvents";
 import { PinnedMessageBanner } from "../../../../src/components/views/rooms/PinnedMessageBanner";
@@ -40,6 +41,10 @@ describe("<PinnedMessageBanner />", () => {
         room = new Room(roomId, mockClient, userId);
         permalinkCreator = new RoomPermalinkCreator(room);
         jest.spyOn(dis, "dispatch").mockReturnValue(undefined);
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     /**
@@ -84,6 +89,7 @@ describe("<PinnedMessageBanner />", () => {
 
     it("should render nothing when there are no pinned events", async () => {
         jest.spyOn(pinnedEventHooks, "usePinnedEvents").mockReturnValue([]);
+        jest.spyOn(pinnedEventHooks, "useSortedFetchedPinnedEvents").mockReturnValue([]);
         const { container } = renderBanner();
         expect(container).toBeEmptyDOMElement();
     });
@@ -137,9 +143,7 @@ describe("<PinnedMessageBanner />", () => {
         renderBanner();
         expect(screen.getByText("Second pinned message")).toBeVisible();
 
-        act(() => {
-            screen.getByRole("button", { name: "View the pinned message in the timeline." }).click();
-        });
+        await userEvent.click(screen.getByRole("button", { name: "View the pinned message in the timeline." }));
         expect(screen.getByText("First pinned message")).toBeVisible();
         expect(screen.getByTestId("banner-counter")).toHaveTextContent("1 of 2 Pinned messages");
         expect(dis.dispatch).toHaveBeenCalledWith({
@@ -150,9 +154,7 @@ describe("<PinnedMessageBanner />", () => {
             metricsTrigger: undefined, // room doesn't change
         });
 
-        act(() => {
-            screen.getByRole("button", { name: "View the pinned message in the timeline." }).click();
-        });
+        await userEvent.click(screen.getByRole("button", { name: "View the pinned message in the timeline." }));
         expect(screen.getByText("Second pinned message")).toBeVisible();
         expect(screen.getByTestId("banner-counter")).toHaveTextContent("2 of 2 Pinned messages");
         expect(dis.dispatch).toHaveBeenCalledWith({
@@ -209,7 +211,7 @@ describe("<PinnedMessageBanner />", () => {
             jest.spyOn(RightPanelStore.instance, "showOrHidePhase").mockReturnValue();
 
             renderBanner();
-            act(() => screen.getByRole("button", { name: "Close list" }).click());
+            await userEvent.click(screen.getByRole("button", { name: "Close list" }));
             expect(RightPanelStore.instance.showOrHidePhase).toHaveBeenCalledWith(RightPanelPhases.PinnedMessages);
         });
 
