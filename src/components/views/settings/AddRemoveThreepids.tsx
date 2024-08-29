@@ -355,6 +355,28 @@ const AddThreepidSection: React.FC<{ medium: "email" | "msisdn"; disabled?: bool
                                     : _t("settings|general|error_msisdn_verification"),
                             description: _t("settings|general|email_verification_instructions"),
                         });
+                    } else if (
+                        underlyingError instanceof MatrixError &&
+                        underlyingError.errcode === "M_SESSION_EXPIRED"
+                    ) {
+                        Modal.createDialog(ErrorDialog, {
+                            title: _t("settings|general|error_3pid_session_expired"),
+                            description: _t("settings|general|session_expired_instructions"),
+                        });
+                    } else if (
+                        underlyingError instanceof MatrixError &&
+                        underlyingError.errcode === "M_TOKEN_INCORRECT"
+                    ) {
+                        Modal.createDialog(ErrorDialog, {
+                            title:
+                                medium === "email"
+                                    ? _t("settings|general|token_incorrect_header")
+                                    : _t("settings|general|token_incorrect_header"),
+                            description:
+                                medium === "msisdn"
+                                    ? _t("settings|general|msisdn_token_incorrect_body")
+                                    : _t("invite|failed_generic"),
+                        });
                     } else {
                         Modal.createDialog(ErrorDialog, {
                             title:
