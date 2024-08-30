@@ -689,9 +689,9 @@ export class StopGapWidgetDriver extends WidgetDriver {
      */
     public async downloadFile(contentUri: string): Promise<{ file: XMLHttpRequestBodyInit }> {
         const client = MatrixClientPeg.safeGet();
-        const media = new Media({mxc: contentUri}, client);
+        const media = new Media({ mxc: contentUri }, client);
         const response = await media.downloadSource();
         const blob = await response.blob();
-        return { file:  blob };
+        return { file: blob };
     }
 }
