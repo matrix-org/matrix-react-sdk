@@ -2221,6 +2221,8 @@
             "no_aliases_space": "This space has no local addresses",
             "other_section": "Other",
             "publish_toggle": "Publish this room to the public in %(domain)s's room directory?",
+            "error_publishing": "There was an error publishing this room",
+            "error_publishing_detail": "Not allowed to publish room",
             "published_aliases_description": "To publish an address, it needs to be set as a local address first.",
             "published_aliases_explainer_room": "Published addresses can be used by anyone on any server to join your room.",
             "published_aliases_explainer_space": "Published addresses can be used by anyone on any server to join your space.",
