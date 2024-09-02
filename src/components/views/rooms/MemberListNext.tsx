@@ -15,11 +15,13 @@ limitations under the License.
 */
 
 import { Form, IconButton, Search, Separator, Text } from "@vector-im/compound-web";
-import { Icon as InviteIcon } from "@vector-im/compound-design-tokens/icons/user-add-solid.svg";
 import React, { useEffect, useRef, useState } from "react";
-import { Flex } from "../../utils/Flex";
 import { List, ListRowProps } from "react-virtualized/dist/commonjs/List";
+import { Icon as InviteIcon } from "@vector-im/compound-design-tokens/icons/user-add-solid.svg";
+
+import { Flex } from "../../utils/Flex";
 import { useMemberListViewModel } from "../../../view-models/rooms/memberlist/MemberListViewModelNext";
+import MemberTileNext from "./MemberTileNext";
 
 interface IProps {
     roomId: string;
@@ -44,14 +46,14 @@ const MemberListNext: React.FC<IProps> = (props: IProps) => {
         }
     }, [listParent]);
 
-    function rowRenderer({ key, index, style }: ListRowProps) {
+    const rowRenderer = ({ key, index, style }: ListRowProps): React.JSX.Element => {
         const member = viewModel.members[index];
         return (
             <div key={key} style={style}>
-                {member.name}
+                <MemberTileNext member={member} showPresence={false} />
             </div>
         );
-    }
+    };
 
     return (
         <Flex align="stretch" direction="column" className="mx_MemberList_container">

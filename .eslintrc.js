@@ -225,6 +225,7 @@ module.exports = {
                 "src/components/views/messages/MVoiceMessageBody.tsx",
                 "src/components/views/right_panel/EncryptionPanel.tsx",
                 "src/components/views/rooms/EntityTile.tsx",
+                "src/components/views/rooms/EntityTileRefactored.tsx",
                 "src/components/views/rooms/LinkPreviewGroup.tsx",
                 "src/components/views/rooms/MemberList.tsx",
                 "src/components/views/rooms/MessageComposer.tsx",

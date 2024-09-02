@@ -168,11 +168,11 @@ export function useMemberListViewModel(roomId: string): MemberListViewModelHook 
 }
 
 export class MockMemberListViewModelHook implements MemberListViewModelHook {
-    loading: boolean = false;
-    members: RoomMember[] = [];
-    showInvite: boolean = true;
-    enableInvite: boolean = true;
-    searchQuery?: string | undefined = undefined;
+    public loading: boolean = false;
+    public members: RoomMember[] = [];
+    public showInvite: boolean = true;
+    public enableInvite: boolean = true;
+    public searchQuery?: string | undefined = undefined;
 
     constructor() {
         this.members = [...Array(100).keys()].map((i): RoomMember => {
@@ -190,14 +190,14 @@ export class MockMemberListViewModelHook implements MemberListViewModelHook {
             };
         });
     }
-    setUp(): Promise<void> {
+    public setUp(): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    tearDown(): void {
+    public tearDown(): void {
         throw new Error("Method not implemented.");
     }
 
-    onSearchQueryChanged(query: string): Promise<void> {
+    public onSearchQueryChanged(query: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
 }
