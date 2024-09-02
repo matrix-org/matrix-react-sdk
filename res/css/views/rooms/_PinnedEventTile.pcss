@@ -24,6 +24,8 @@ limitations under the License.
         flex-direction: column;
         gap: var(--cpd-space-1x);
         width: 100%;
+        /* Prevent a long sender name to overflow the tile */
+        overflow: hidden;
 
         .mx_PinnedEventTile_top {
             display: flex;
