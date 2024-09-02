@@ -59,6 +59,7 @@ export default class RoomPublishSetting extends React.PureComponent<IProps, ISta
         client
             .setRoomDirectoryVisibility(this.props.roomId, newValue ? Visibility.Public : Visibility.Private)
             .catch(() => {
+                // Roll back the local echo on the change
                 this.showError();
                 this.setState({ isRoomPublished: valueBefore });
             });
