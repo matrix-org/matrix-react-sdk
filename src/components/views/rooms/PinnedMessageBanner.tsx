@@ -147,10 +147,15 @@ function EventPreview({ pinnedEvent }: EventPreviewProps): JSX.Element | null {
     if (!preview) return null;
 
     const prefix = getPreviewPrefix(pinnedEvent.getType(), pinnedEvent.getContent().msgtype as MsgType);
-    if (!prefix) return <span className="mx_PinnedMessageBanner_message">{preview}</span>;
+    if (!prefix)
+        return (
+            <span className="mx_PinnedMessageBanner_message" data-testid="banner-message">
+                {preview}
+            </span>
+        );
 
     return (
-        <span className="mx_PinnedMessageBanner_message">
+        <span className="mx_PinnedMessageBanner_message" data-testid="banner-message">
             {_t(
                 "room|pinned_message_banner|preview",
                 {
