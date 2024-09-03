@@ -17,7 +17,7 @@
 import React, { JSX, useEffect, useMemo, useState } from "react";
 import { Icon as PinIcon } from "@vector-im/compound-design-tokens/icons/pin-solid.svg";
 import { Button } from "@vector-im/compound-web";
-import { MatrixEvent, MsgType, Room } from "matrix-js-sdk/src/matrix";
+import { M_POLL_START, MatrixEvent, MsgType, Room } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
 import { usePinnedEvents, useSortedFetchedPinnedEvents } from "../../../hooks/usePinnedEvents";
@@ -146,7 +146,7 @@ function EventPreview({ pinnedEvent }: EventPreviewProps): JSX.Element | null {
     const preview = useEventPreview(pinnedEvent);
     if (!preview) return null;
 
-    const prefix = getPreviewPrefix(pinnedEvent.getContent().msgtype as MsgType);
+    const prefix = getPreviewPrefix(pinnedEvent.getType(), pinnedEvent.getContent().msgtype as MsgType);
     if (!prefix) return <span className="mx_PinnedMessageBanner_message">{preview}</span>;
 
     return (
@@ -177,10 +177,17 @@ function useEventPreview(pinnedEvent: MatrixEvent | null): string | null {
 }
 
 /**
- * Get the prefix for the preview based on the message type.
+ * Get the prefix for the preview based on the type and the message type.
+ * @param type
  * @param msgType
  */
-function getPreviewPrefix(msgType: MsgType): string | null {
+function getPreviewPrefix(type: string, msgType: MsgType): string | null {
+    switch (type) {
+        case M_POLL_START.name:
+            return _t("room|pinned_message_banner|prefix|poll");
+        default:
+    }
+
     switch (msgType) {
         case MsgType.Audio:
             return _t("room|pinned_message_banner|prefix|audio");

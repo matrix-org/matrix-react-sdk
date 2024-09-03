@@ -2057,6 +2057,7 @@
                 "audio": "Audio",
                 "file": "File",
                 "image": "Image",
+                "poll": "Poll",
                 "video": "Video"
             },
             "preview": "<bold>%(prefix)s:</bold> %(preview)s",
