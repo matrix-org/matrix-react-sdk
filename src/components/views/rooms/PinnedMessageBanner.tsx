@@ -59,7 +59,7 @@ export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBan
     const [currentEventIndex, setCurrentEventIndex] = useState(eventCount - 1);
     // When the number of pinned messages changes, we want to display the last message
     useEffect(() => {
-        setCurrentEventIndex((currentEventIndex) => eventCount - 1);
+        setCurrentEventIndex(() => eventCount - 1);
     }, [eventCount]);
 
     const pinnedEvent = pinnedEvents[currentEventIndex];
