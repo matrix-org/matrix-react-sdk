@@ -17,7 +17,7 @@
 import React, { JSX, useEffect, useMemo, useState } from "react";
 import { Icon as PinIcon } from "@vector-im/compound-design-tokens/icons/pin-solid.svg";
 import { Button } from "@vector-im/compound-web";
-import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, MsgType, Room } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
 import { usePinnedEvents, useSortedFetchedPinnedEvents } from "../../../hooks/usePinnedEvents";
@@ -146,7 +146,23 @@ function EventPreview({ pinnedEvent }: EventPreviewProps): JSX.Element | null {
     const preview = useEventPreview(pinnedEvent);
     if (!preview) return null;
 
-    return <span className="mx_PinnedMessageBanner_message">{preview}</span>;
+    const prefix = getPreviewPrefix(pinnedEvent.getContent().msgtype as MsgType);
+    if (!prefix) return <span className="mx_PinnedMessageBanner_message">{preview}</span>;
+
+    return (
+        <span className="mx_PinnedMessageBanner_message">
+            {_t(
+                "room|pinned_message_banner|preview",
+                {
+                    prefix,
+                    preview,
+                },
+                {
+                    bold: (sub) => <span className="mx_PinnedMessageBanner_prefix">{sub}</span>,
+                },
+            )}
+        </span>
+    );
 }
 
 /**
@@ -158,6 +174,25 @@ function useEventPreview(pinnedEvent: MatrixEvent | null): string | null {
         if (!pinnedEvent || pinnedEvent.isRedacted() || pinnedEvent.isDecryptionFailure()) return null;
         return MessagePreviewStore.instance.generatePreviewForEvent(pinnedEvent);
     }, [pinnedEvent]);
+}
+
+/**
+ * Get the prefix for the preview based on the message type.
+ * @param msgType
+ */
+function getPreviewPrefix(msgType: MsgType): string | null {
+    switch (msgType) {
+        case MsgType.Audio:
+            return _t("room|pinned_message_banner|prefix|audio");
+        case MsgType.Image:
+            return _t("room|pinned_message_banner|prefix|image");
+        case MsgType.Video:
+            return _t("room|pinned_message_banner|prefix|video");
+        case MsgType.File:
+            return _t("room|pinned_message_banner|prefix|file");
+        default:
+            return null;
+    }
 }
 
 const MAX_INDICATORS = 3;
