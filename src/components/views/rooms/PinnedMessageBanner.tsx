@@ -17,7 +17,7 @@
 import React, { JSX, useEffect, useMemo, useState } from "react";
 import { Icon as PinIcon } from "@vector-im/compound-design-tokens/icons/pin-solid.svg";
 import { Button } from "@vector-im/compound-web";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
 import { usePinnedEvents, useSortedFetchedPinnedEvents } from "../../../hooks/usePinnedEvents";
@@ -63,12 +63,6 @@ export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBan
     }, [eventCount]);
 
     const pinnedEvent = pinnedEvents[currentEventIndex];
-    // Generate a preview for the pinned event
-    const eventPreview = useMemo(() => {
-        if (!pinnedEvent || pinnedEvent.isRedacted() || pinnedEvent.isDecryptionFailure()) return null;
-        return MessagePreviewStore.instance.generatePreviewForEvent(pinnedEvent);
-    }, [pinnedEvent]);
-
     if (!pinnedEvent) return null;
 
     const shouldUseMessageEvent = pinnedEvent.isRedacted() || pinnedEvent.isDecryptionFailure();
@@ -116,7 +110,7 @@ export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBan
                             )}
                         </div>
                     )}
-                    {eventPreview && <span className="mx_PinnedMessageBanner_message">{eventPreview}</span>}
+                    <EventPreview pinnedEvent={pinnedEvent} />
                     {/* In case of redacted event, we want to display the nice sentence of the message event like in the timeline or in the pinned message list */}
                     {shouldUseMessageEvent && (
                         <div className="mx_PinnedMessageBanner_redactedMessage">
@@ -133,6 +127,37 @@ export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBan
             {!isSinglePinnedEvent && <BannerButton room={room} />}
         </div>
     );
+}
+
+/**
+ * The props for the {@link EventPreview} component.
+ */
+interface EventPreviewProps {
+    /**
+     * The pinned event to display the preview for
+     */
+    pinnedEvent: MatrixEvent;
+}
+
+/**
+ * A component that displays a preview for the pinned event.
+ */
+function EventPreview({ pinnedEvent }: EventPreviewProps): JSX.Element | null {
+    const preview = useEventPreview(pinnedEvent);
+    if (!preview) return null;
+
+    return <span className="mx_PinnedMessageBanner_message">{preview}</span>;
+}
+
+/**
+ * Hooks to generate a preview for the pinned event.
+ * @param pinnedEvent
+ */
+function useEventPreview(pinnedEvent: MatrixEvent | null): string | null {
+    return useMemo(() => {
+        if (!pinnedEvent || pinnedEvent.isRedacted() || pinnedEvent.isDecryptionFailure()) return null;
+        return MessagePreviewStore.instance.generatePreviewForEvent(pinnedEvent);
+    }, [pinnedEvent]);
 }
 
 const MAX_INDICATORS = 3;
