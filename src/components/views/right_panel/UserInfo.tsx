@@ -34,7 +34,7 @@ import { KnownMembership } from "matrix-js-sdk/src/types";
 import { UserVerificationStatus, VerificationRequest } from "matrix-js-sdk/src/crypto-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { Heading, MenuItem, Text } from "@vector-im/compound-web";
+import { Heading, MenuItem, Text, Tooltip } from "@vector-im/compound-web";
 import ChatIcon from "@vector-im/compound-design-tokens/assets/web/icons/chat";
 import CheckIcon from "@vector-im/compound-design-tokens/assets/web/icons/check";
 import ShareIcon from "@vector-im/compound-design-tokens/assets/web/icons/share";
@@ -1702,6 +1702,30 @@ export const UserInfoHeader: React.FC<{
         );
     }
 
+
+    // TODO: Check for support for this property.
+    const [timezone, setTimezone] = useState<{friendly: string, tz: string}>();
+    useEffect(() => {
+        cli.getExtendedProfileProperty(member.userId, 'us.cloke.msc4175.tz').then((value) => {
+            if (typeof value !== "string") {
+                // Err, definitely not a tz.
+                return;
+            }
+            try {
+                setTimezone(
+                    {
+                        friendly: new Date().toLocaleString(undefined, { timeZone: value, hour12: true, hour: "2-digit", minute: "2-digit", timeZoneName: "shortOffset"}),
+                        tz: value
+                    }
+                );
+            } catch (ex) {
+                console.error('Could not render current time for user', ex);
+            }
+        }).catch((ex) => {
+            console.error('Unable to load user timezone', ex);
+        });
+    }, [member.userId]);
+
     const e2eIcon = e2eStatus ? <E2EIcon size={18} status={e2eStatus} isUser={true} /> : null;
     const userIdentifier = UserIdentifierCustomisations.getDisplayUserIdentifier?.(member.userId, {
         roomId,
@@ -1734,7 +1758,7 @@ export const UserInfoHeader: React.FC<{
                             {e2eIcon}
                         </Flex>
                     </Heading>
-                    {presenceLabel}
+                    {presenceLabel} {timezone && <Tooltip label={timezone.tz}><span>{timezone.friendly}</span></Tooltip>}
                     <Text size="sm" weight="semibold" className="mx_UserInfo_profile_mxid">
                         <CopyableText getTextToCopy={() => userIdentifier} border={false}>
                             {userIdentifier}
