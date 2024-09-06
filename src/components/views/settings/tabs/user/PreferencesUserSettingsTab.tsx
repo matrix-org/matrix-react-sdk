@@ -143,7 +143,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         "MessageComposerInput.insertTrailingColon",
     ];
 
-    private static TIME_SETTINGS = ["showTwelveHourTimestamps", "alwaysShowTimestamps"];
+    private static TIME_SETTINGS = ["showTwelveHourTimestamps", "alwaysShowTimestamps", "userTimezonePublish"];
 
     private static CODE_BLOCKS_SETTINGS = [
         "enableSyntaxHighlightLanguageDetection",

@@ -654,6 +654,12 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("settings|preferences|user_timezone"),
         default: "",
     },
+    // TODO: How to make this visible based on server feature levels?
+    "userTimezonePublish": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td("settings|preferences|publish_timezone"),
+        default: false,
+    },
     "autoplayGifs": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("settings|autoplay_gifs"),
