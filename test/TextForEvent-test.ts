@@ -103,7 +103,7 @@ describe("TextForEvent", () => {
             const plainText = textForEvent(event, mockClient);
             const component = render(textForEvent(event, mockClient, true) as ReactElement);
 
-            const expectedText = "@foo:example.com unpinned a message from this room. See all pinned messages.";
+            const expectedText = "@foo:example.com unpinned a message from this room.";
             expect(plainText).toBe(expectedText);
             expect(component.container).toHaveTextContent(expectedText);
         });

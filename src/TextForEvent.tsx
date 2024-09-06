@@ -615,9 +615,36 @@ function textForPinnedEvent(event: MatrixEvent, client: MatrixClient, allowJSX: 
     }
 
     if (newlyUnpinned.length === 1 && newlyPinned.length === 0) {
+        const emptyPinned = pinned.length === 0;
+
         // A single message was unpinned, include a link to that message.
         if (allowJSX) {
             const messageId = newlyUnpinned.pop()!;
+
+            // If there are no remaining pinned messages, don't show the link to all the pinned messages
+            if (emptyPinned) {
+                return () => (
+                    <span>
+                        {_t(
+                            "timeline|m.room.pinned_events|unpinned_last_link",
+                            { senderName },
+                            {
+                                a: (sub) => (
+                                    <AccessibleButton
+                                        kind="link_inline"
+                                        onClick={() => {
+                                            PosthogTrackers.trackInteraction("PinnedMessageStateEventClick");
+                                            highlightEvent(roomId, messageId);
+                                        }}
+                                    >
+                                        {sub}
+                                    </AccessibleButton>
+                                ),
+                            },
+                        )}
+                    </span>
+                );
+            }
 
             return () => (
                 <span>
@@ -647,7 +674,10 @@ function textForPinnedEvent(event: MatrixEvent, client: MatrixClient, allowJSX: 
             );
         }
 
-        return () => _t("timeline|m.room.pinned_events|unpinned", { senderName });
+        return () =>
+            emptyPinned
+                ? _t("timeline|m.room.pinned_events|unpinned_last", { senderName })
+                : _t("timeline|m.room.pinned_events|unpinned", { senderName });
     }
 
     if (allowJSX) {
