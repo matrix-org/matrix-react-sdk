@@ -271,6 +271,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private callEventGroupers = new Map<string, LegacyCallEventGrouper>();
     private initialReadMarkerId: string | null = null;
 
+    /**
+     * True when the user has scrolled
+     * Reset to false after a call of `loadTimeline`
+     * @private
+     */
+    private scrolled = false;
+
     public constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
         super(props, context);
 
@@ -367,6 +374,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.initTimeline(this.props);
         } else if (differentOverlayTimeline) {
             logger.log(`TimelinePanel updating overlay timeline.`);
+            this.initTimeline(this.props);
+        } else if (this.props.eventScrollIntoView && this.scrolled) {
+            // If the user has scrolled, and we want to display again the same event
             this.initTimeline(this.props);
         }
     }
@@ -659,6 +669,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     private onMessageListScroll = (e: Event): void => {
         this.props.onScroll?.(e);
+        this.scrolled = true;
+
         if (this.props.manageReadMarkers) {
             this.doManageReadMarkers();
         }
@@ -1560,6 +1572,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             // We need to skip over any which have subsequently been sent.
             this.advanceReadMarkerPastMyEvents();
 
+            this.scrolled = false;
             this.setState(
                 {
                     canBackPaginate:
