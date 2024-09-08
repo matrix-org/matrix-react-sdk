@@ -43,6 +43,7 @@ import ServerSupportUnstableFeatureController from "./controllers/ServerSupportU
 import { WatchManager } from "./WatchManager";
 import { CustomTheme } from "../theme";
 import AnalyticsController from "./controllers/AnalyticsController";
+import { UNSTABLE_MSC4133_EXTENDED_PROFILES } from "matrix-js-sdk/src/client"
 
 export const defaultWatchManager = new WatchManager();
 
@@ -654,11 +655,17 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         displayName: _td("settings|preferences|user_timezone"),
         default: "",
     },
-    // TODO: How to make this visible based on server feature levels?
     "userTimezonePublish": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td("settings|preferences|publish_timezone"),
         default: false,
+        controller: new ServerSupportUnstableFeatureController(
+            "userTimezonePublish",
+            defaultWatchManager,
+            [[UNSTABLE_MSC4133_EXTENDED_PROFILES]],
+            undefined,
+            _td("labs|extended_profiles_msc_support"),
+        ),
     },
     "autoplayGifs": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
