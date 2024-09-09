@@ -214,9 +214,10 @@ class LoggedInView extends React.Component<IProps, IState> {
             }
             return;
         }
-        const currentTimezone = SettingsStore.getValue("userTimezone") 
-        // If the timezone is empty, then use the browser timezone.
-            || Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const currentTimezone =
+            SettingsStore.getValue("userTimezone") ||
+            // If the timezone is empty, then use the browser timezone.
+            Intl.DateTimeFormat().resolvedOptions().timeZone;
         if (!currentTimezone || typeof currentTimezone !== "string") {
             return;
         }
