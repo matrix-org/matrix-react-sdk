@@ -191,19 +191,9 @@ class LoggedInView extends React.Component<IProps, IState> {
             this.refreshBackgroundImage,
         );
 
-
         this.timezoneProfileUpdateRef = [
-            SettingsStore.watchSetting(
-                "userTimezonePublish",
-                null,
-                this.onTimezoneUpdate,
-            ),
-            SettingsStore.watchSetting(
-                "userTimezone",
-                null,
-                this.onTimezoneUpdate,
-            ),
-
+            SettingsStore.watchSetting("userTimezonePublish", null, this.onTimezoneUpdate),
+            SettingsStore.watchSetting("userTimezone", null, this.onTimezoneUpdate),
         ];
 
         this.resizer = this.createResizer();
@@ -215,7 +205,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     }
 
     private onTimezoneUpdate = async (): Promise<void> => {
-        console.log('Triggering timezoen update', SettingsStore);
+        console.log("Triggering timezoen update", SettingsStore);
         if (!SettingsStore.getValue("userTimezonePublish")) {
             // Ensure it's deleted
             try {
@@ -230,7 +220,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             return;
         }
         try {
-            await this._matrixClient.setExtendedProfileProperty("us.cloke.msc4175.tz", currentTimezone)
+            await this._matrixClient.setExtendedProfileProperty("us.cloke.msc4175.tz", currentTimezone);
         } catch (ex) {
             console.warn("Failed to update user profile with current timezone", ex);
         }
@@ -246,7 +236,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         if (this.layoutWatcherRef) SettingsStore.unwatchSetting(this.layoutWatcherRef);
         if (this.compactLayoutWatcherRef) SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
         if (this.backgroundImageWatcherRef) SettingsStore.unwatchSetting(this.backgroundImageWatcherRef);
-        this.timezoneProfileUpdateRef?.forEach(s => SettingsStore.unwatchSetting(s));
+        this.timezoneProfileUpdateRef?.forEach((s) => SettingsStore.unwatchSetting(s));
         this.resizer?.detach();
     }
 

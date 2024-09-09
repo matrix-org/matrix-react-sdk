@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from "react";
+import { UNSTABLE_MSC4133_EXTENDED_PROFILES } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td, TranslationKey } from "../languageHandler";
 import {
@@ -43,7 +44,6 @@ import ServerSupportUnstableFeatureController from "./controllers/ServerSupportU
 import { WatchManager } from "./WatchManager";
 import { CustomTheme } from "../theme";
 import AnalyticsController from "./controllers/AnalyticsController";
-import { UNSTABLE_MSC4133_EXTENDED_PROFILES } from "matrix-js-sdk/src/client"
 
 export const defaultWatchManager = new WatchManager();
 

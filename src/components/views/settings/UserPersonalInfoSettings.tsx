@@ -131,11 +131,7 @@ export const UserPersonalInfoSettings: React.FC<UserPersonalInfoSettingsProps> =
                 </ThreepidSectionWrapper>
             </SettingsSubsection>
 
-            <SettingsSubsection
-                heading={_t("settings|general|timezone")}
-                stretchContent
-                legacy={false}
-            >
+            <SettingsSubsection heading={_t("settings|general|timezone")} stretchContent legacy={false}>
                 <ThreepidSectionWrapper
                     error={_t("settings|general|unable_to_load_msisdns")}
                     loadingState={loadingState}

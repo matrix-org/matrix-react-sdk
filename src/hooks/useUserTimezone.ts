@@ -1,6 +1,22 @@
+/*
+Copyright 2024 New Vector Ltd
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 import { useEffect, useState } from "react";
-import { MatrixClientPeg } from "../MatrixClientPeg";
 import { MatrixError } from "matrix-js-sdk/src/matrix";
+
+import { MatrixClientPeg } from "../MatrixClientPeg";
 
 /**
  * Fetch a user's delclared timezone through their profile, and return
@@ -12,7 +28,7 @@ import { MatrixError } from "matrix-js-sdk/src/matrix";
  *          null if the user has no timezone or the timezone was not recognised
  *          by the browser.
  */
-export const useUserTimezone = (userId: string): { timezone: string, friendly: string }|null => {
+export const useUserTimezone = (userId: string): { timezone: string; friendly: string } | null => {
     const [timezone, setTimezone] = useState<string>();
     const [updateInterval, setUpdateInterval] = useState<number>();
     const [friendly, setFriendly] = useState<string>();
@@ -23,17 +39,19 @@ export const useUserTimezone = (userId: string): { timezone: string, friendly: s
         if (supported !== undefined) {
             return;
         }
-        cli.doesServerSupportExtendedProfiles().then(setSupported).catch((ex) => {
-            console.warn("Unable to determine if extended profiles are supported", ex);
-        });
-    }, [supported]);
+        cli.doesServerSupportExtendedProfiles()
+            .then(setSupported)
+            .catch((ex) => {
+                console.warn("Unable to determine if extended profiles are supported", ex);
+            });
+    }, [supported, cli]);
 
     useEffect(() => {
         return () => {
             if (updateInterval) {
                 clearInterval(updateInterval);
             }
-        }
+        };
     }, [updateInterval]);
 
     useEffect(() => {
@@ -42,21 +60,28 @@ export const useUserTimezone = (userId: string): { timezone: string, friendly: s
         }
         (async () => {
             try {
-                const tz = await cli.getExtendedProfileProperty(userId, 'us.cloke.msc4175.tz');
+                const tz = await cli.getExtendedProfileProperty(userId, "us.cloke.msc4175.tz");
                 if (typeof tz !== "string") {
                     // Err, definitely not a tz.
-                    throw Error('Timezone value was not a string');
+                    throw Error("Timezone value was not a string");
                 }
                 // This will validate the timezone for us.
-                Intl.DateTimeFormat(undefined, {timeZone: tz});
+                // eslint-disable-next-line new-cap
+                Intl.DateTimeFormat(undefined, { timeZone: tz });
 
-                const updateTime = () => {
+                const updateTime = (): void => {
                     const currentTime = new Date();
-                    const friendly = currentTime.toLocaleString(undefined, { timeZone: tz, hour12: true, hour: "2-digit", minute: "2-digit", timeZoneName: "shortOffset"});
+                    const friendly = currentTime.toLocaleString(undefined, {
+                        timeZone: tz,
+                        hour12: true,
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        timeZoneName: "shortOffset",
+                    });
                     setTimezone(tz);
                     setFriendly(friendly);
                     setUpdateInterval(setTimeout(updateTime, (60 - currentTime.getSeconds()) * 1000));
-                }
+                };
                 updateTime();
             } catch (ex) {
                 setTimezone(undefined);
@@ -66,10 +91,10 @@ export const useUserTimezone = (userId: string): { timezone: string, friendly: s
                     // No timezone set, ignore.
                     return;
                 }
-                console.error('Could not render current timezone for user', ex);
+                console.error("Could not render current timezone for user", ex);
             }
         })();
-    }, [supported, userId]);
+    }, [supported, userId, cli]);
 
     if (!timezone || !friendly) {
         return null;
@@ -77,6 +102,6 @@ export const useUserTimezone = (userId: string): { timezone: string, friendly: s
 
     return {
         friendly,
-        timezone
+        timezone,
     };
-}
+};

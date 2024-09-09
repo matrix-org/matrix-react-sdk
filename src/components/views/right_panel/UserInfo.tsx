@@ -29,7 +29,6 @@ import {
     User,
     Device,
     EventType,
-    MatrixError,
 } from "matrix-js-sdk/src/matrix";
 import { KnownMembership } from "matrix-js-sdk/src/types";
 import { UserVerificationStatus, VerificationRequest } from "matrix-js-sdk/src/crypto-api";
@@ -1703,7 +1702,6 @@ export const UserInfoHeader: React.FC<{
         );
     }
 
-
     const timezoneInfo = useUserTimezone(member.userId);
 
     const e2eIcon = e2eStatus ? <E2EIcon size={18} status={e2eStatus} isUser={true} /> : null;
@@ -1738,7 +1736,14 @@ export const UserInfoHeader: React.FC<{
                             {e2eIcon}
                         </Flex>
                     </Heading>
-                    {presenceLabel} {timezoneInfo && <Tooltip label={timezoneInfo.timezone}><span>{timezoneInfo.friendly}</span></Tooltip>}
+                    {presenceLabel}
+                    <Tooltip label={timezoneInfo?.timezone ?? ""}>
+                        <span className="mx_UserInfo_timezone">
+                            <Text size="sm" weight="regular">
+                                {timezoneInfo?.friendly ?? ""}
+                            </Text>
+                        </span>
+                    </Tooltip>
                     <Text size="sm" weight="semibold" className="mx_UserInfo_profile_mxid">
                         <CopyableText getTextToCopy={() => userIdentifier} border={false}>
                             {userIdentifier}
