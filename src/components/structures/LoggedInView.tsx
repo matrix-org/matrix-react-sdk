@@ -217,6 +217,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         const currentTimezone =
             SettingsStore.getValue("userTimezone") ||
             // If the timezone is empty, then use the browser timezone.
+            // eslint-disable-next-line new-cap
             Intl.DateTimeFormat().resolvedOptions().timeZone;
         if (!currentTimezone || typeof currentTimezone !== "string") {
             return;
