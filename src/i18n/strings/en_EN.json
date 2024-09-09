@@ -2579,6 +2579,7 @@
             "remove_email_prompt": "Remove %(email)s?",
             "remove_msisdn_prompt": "Remove %(phone)s?",
             "spell_check_locale_placeholder": "Choose a locale",
+            "timezone": "settings|general|timezone",
             "unable_to_load_emails": "Unable to load email addresses",
             "unable_to_load_msisdns": "Unable to load phone numbers",
             "username": "Username"
