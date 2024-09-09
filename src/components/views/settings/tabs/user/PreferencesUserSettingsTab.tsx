@@ -143,7 +143,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         "MessageComposerInput.insertTrailingColon",
     ];
 
-    private static TIME_SETTINGS = ["showTwelveHourTimestamps", "alwaysShowTimestamps", "userTimezonePublish"];
+    private static TIME_SETTINGS = ["showTwelveHourTimestamps", "alwaysShowTimestamps"];
 
     private static CODE_BLOCKS_SETTINGS = [
         "enableSyntaxHighlightLanguageDetection",
@@ -310,6 +310,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                         </div>
 
                         {this.renderGroup(PreferencesUserSettingsTab.TIME_SETTINGS)}
+                        <SettingsFlag name="userTimezonePublish" level={SettingLevel.DEVICE} />
                     </SettingsSubsection>
 
                     <SettingsSubsection

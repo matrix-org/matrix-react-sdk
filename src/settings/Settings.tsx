@@ -656,7 +656,8 @@ export const SETTINGS: { [setting: string]: ISetting } = {
         default: "",
     },
     "userTimezonePublish": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        // This is per-device so you can avoid having devices overwrite each other.
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td("settings|preferences|publish_timezone"),
         default: false,
         controller: new ServerSupportUnstableFeatureController(
