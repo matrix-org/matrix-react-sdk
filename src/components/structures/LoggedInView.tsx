@@ -205,7 +205,6 @@ class LoggedInView extends React.Component<IProps, IState> {
     }
 
     private onTimezoneUpdate = async (): Promise<void> => {
-        console.log("Triggering timezoen update", SettingsStore);
         if (!SettingsStore.getValue("userTimezonePublish")) {
             // Ensure it's deleted
             try {
@@ -215,7 +214,9 @@ class LoggedInView extends React.Component<IProps, IState> {
             }
             return;
         }
-        const currentTimezone = SettingsStore.getValue("userTimezone");
+        const currentTimezone = SettingsStore.getValue("userTimezone") 
+        // If the timezone is empty, then use the browser timezone.
+            || Intl.DateTimeFormat().resolvedOptions().timeZone;
         if (!currentTimezone || typeof currentTimezone !== "string") {
             return;
         }
