@@ -100,6 +100,7 @@ let mockRoom: Mocked<Room>;
 let mockSpace: Mocked<Room>;
 let mockClient: Mocked<MatrixClient>;
 let mockCrypto: Mocked<CryptoApi>;
+const origDate = global.Date.prototype.toLocaleString;
 
 beforeEach(() => {
     mockRoom = mocked({
@@ -240,10 +241,14 @@ describe("<UserInfo />", () => {
         });
 
         it("renders user timezone if set", async () => {
+            // For timezone, force a consistent locale.
+            jest.spyOn(global.Date.prototype, "toLocaleString").mockImplementation(function (_locale, opts) {
+                return origDate.call(this, "en-US", opts); // eslint-disable-line @typescript-eslint/no-invalid-this
+            });
             mockClient.doesServerSupportExtendedProfiles.mockResolvedValue(true);
             mockClient.getExtendedProfileProperty.mockResolvedValue("Europe/London");
             renderComponent();
-            await expect(screen.findByText(/\d\d:\d\d (am|pm)/)).resolves.toBeInTheDocument();
+            await expect(screen.findByText(/\d\d:\d\d (AM|PM)/)).resolves.toBeInTheDocument();
         });
 
         it("renders encryption info panel without pending verification", () => {
