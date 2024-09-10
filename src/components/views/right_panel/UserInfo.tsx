@@ -1738,13 +1738,13 @@ export const UserInfoHeader: React.FC<{
                         </Flex>
                     </Heading>
                     {presenceLabel}
-                    <Tooltip label={timezoneInfo?.timezone ?? ""}>
+                    {timezoneInfo && <Tooltip label={timezoneInfo?.timezone ?? ""}>
                         <span className="mx_UserInfo_timezone">
                             <Text size="sm" weight="regular">
                                 {timezoneInfo?.friendly ?? ""}
                             </Text>
                         </span>
-                    </Tooltip>
+                    </Tooltip>}
                     <Text size="sm" weight="semibold" className="mx_UserInfo_profile_mxid">
                         <CopyableText getTextToCopy={() => userIdentifier} border={false}>
                             {userIdentifier}
