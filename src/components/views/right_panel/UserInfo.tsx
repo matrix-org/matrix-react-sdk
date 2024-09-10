@@ -1702,7 +1702,7 @@ export const UserInfoHeader: React.FC<{
         );
     }
 
-    const timezoneInfo = useUserTimezone(member.userId);
+    const timezoneInfo = useUserTimezone(cli, member.userId);
 
     const e2eIcon = e2eStatus ? <E2EIcon size={18} status={e2eStatus} isUser={true} /> : null;
     const userIdentifier = UserIdentifierCustomisations.getDisplayUserIdentifier?.(member.userId, {
@@ -1710,6 +1710,7 @@ export const UserInfoHeader: React.FC<{
         withDisplayName: true,
     });
     const displayName = (member as RoomMember).rawDisplayName;
+    console.log("booop", timezoneInfo);
     return (
         <React.Fragment>
             <div className="mx_UserInfo_avatar">

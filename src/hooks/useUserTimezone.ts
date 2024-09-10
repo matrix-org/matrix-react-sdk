@@ -14,29 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { useEffect, useState } from "react";
-import { MatrixError } from "matrix-js-sdk/src/matrix";
-
-import { MatrixClientPeg } from "../MatrixClientPeg";
+import { MatrixClient, MatrixError } from "matrix-js-sdk/src/matrix";
 
 /**
  * Fetch a user's delclared timezone through their profile, and return
  * a friendly string of the current time for that user. This will keep
  * in sync with the current time, and will be refreshed once a minute.
  *
+ * @param cli The Matrix Client instance.
  * @param userId The userID to fetch the timezone for.
  * @returns A timezone name and friendly string for the user's timezone, or
  *          null if the user has no timezone or the timezone was not recognised
  *          by the browser.
  */
-export const useUserTimezone = (userId: string): { timezone: string; friendly: string } | null => {
+export const useUserTimezone = (cli: MatrixClient, userId: string): { timezone: string; friendly: string } | null => {
     const [timezone, setTimezone] = useState<string>();
     const [updateInterval, setUpdateInterval] = useState<number>();
     const [friendly, setFriendly] = useState<string>();
     const [supported, setSupported] = useState<boolean>();
-    const cli = MatrixClientPeg.safeGet();
 
     useEffect(() => {
-        if (supported !== undefined) {
+        if (!cli || supported !== undefined) {
             return;
         }
         cli.doesServerSupportExtendedProfiles()
@@ -59,6 +57,7 @@ export const useUserTimezone = (userId: string): { timezone: string; friendly: s
             return;
         }
         (async () => {
+            console.log("Trying to fetch TZ");
             try {
                 const tz = await cli.getExtendedProfileProperty(userId, "us.cloke.msc4175.tz");
                 if (typeof tz !== "string") {
