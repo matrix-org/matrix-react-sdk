@@ -158,6 +158,8 @@ beforeEach(() => {
         isSynapseAdministrator: jest.fn().mockResolvedValue(false),
         isRoomEncrypted: jest.fn().mockReturnValue(false),
         doesServerSupportUnstableFeature: jest.fn().mockReturnValue(false),
+        doesServerSupportExtendedProfiles: jest.fn().mockResolvedValue(false),
+        getExtendedProfileProperty: jest.fn().mockRejectedValue(new Error("Not supported")),
         mxcUrlToHttp: jest.fn().mockReturnValue("mock-mxcUrlToHttp"),
         removeListener: jest.fn(),
         currentState: {
@@ -235,6 +237,13 @@ describe("<UserInfo />", () => {
         it("renders user info", () => {
             renderComponent();
             expect(screen.getByRole("heading", { name: defaultUserId })).toBeInTheDocument();
+        });
+
+        it("renders user timezone if set", async () => {
+            mockClient.doesServerSupportExtendedProfiles.mockResolvedValue(true);
+            mockClient.getExtendedProfileProperty.mockResolvedValue("Europe/London");
+            renderComponent();
+            await expect(screen.findByText(/\d\d:\d\d (am|pm)/)).resolves.toBeInTheDocument();
         });
 
         it("renders encryption info panel without pending verification", () => {
