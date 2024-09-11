@@ -592,10 +592,11 @@ export async function restoreSessionFromStorage(opts?: { ignoreGuest?: boolean }
         if (pickleKey) {
             logger.log(`Got pickle key for ${userId}|${deviceId}`);
         } else {
-            logger.log("No pickle key available");
+            logger.log(`No pickle key available for ${userId}|${deviceId}`);
         }
         const decryptedAccessToken = await tryDecryptToken(pickleKey, accessToken, ACCESS_TOKEN_IV);
-        const decryptedRefreshToken = await tryDecryptToken(pickleKey, refreshToken, REFRESH_TOKEN_IV);
+        const decryptedRefreshToken =
+            refreshToken && (await tryDecryptToken(pickleKey, refreshToken, REFRESH_TOKEN_IV));
 
         const freshLogin = sessionStorage.getItem("mx_fresh_login") === "true";
         sessionStorage.removeItem("mx_fresh_login");
@@ -605,7 +606,7 @@ export async function restoreSessionFromStorage(opts?: { ignoreGuest?: boolean }
             {
                 userId: userId,
                 deviceId: deviceId,
-                accessToken: decryptedAccessToken!,
+                accessToken: decryptedAccessToken,
                 refreshToken: decryptedRefreshToken,
                 homeserverUrl: hsUrl,
                 identityServerUrl: isUrl,

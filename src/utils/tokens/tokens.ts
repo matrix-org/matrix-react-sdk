@@ -68,10 +68,6 @@ async function pickleKeyToAesKey(pickleKey: string): Promise<Uint8Array> {
     );
 }
 
-const isEncryptedPayload = (token?: IEncryptedPayload | string | undefined): token is IEncryptedPayload => {
-    return !!token && typeof token !== "string";
-};
-
 /**
  * Try to decrypt a token retrieved from storage
  *
@@ -86,24 +82,27 @@ const isEncryptedPayload = (token?: IEncryptedPayload | string | undefined): tok
  * @param tokenName Name of the token. Used in logging, but also used as an input when generating the actual AES key,
  *    so the same value must be provided to {@link persistTokenInStorage}.
  *
- * @returns the decrypted token, or the plain text token. Returns undefined when token cannot be decrypted
+ * @returns the decrypted token, or the plain text token.
  */
 export async function tryDecryptToken(
     pickleKey: string | undefined,
-    token: IEncryptedPayload | string | undefined,
+    token: IEncryptedPayload | string,
     tokenName: string,
-): Promise<string | undefined> {
-    if (pickleKey && isEncryptedPayload(token)) {
-        const encrKey = await pickleKeyToAesKey(pickleKey);
-        const decryptedToken = await decryptAES(token, encrKey, tokenName);
-        encrKey.fill(0);
-        return decryptedToken;
-    }
-    // if the token wasn't encrypted (plain string) just return it back
+): Promise<string> {
     if (typeof token === "string") {
+        // Looks like an unencrypted token
         return token;
     }
-    // otherwise return undefined
+
+    // Otherwise, it must be an encrypted token.
+    if (!pickleKey) {
+        throw new Error(`Error decrypting secret ${tokenName}: no pickle key found.`);
+    }
+
+    const encrKey = await pickleKeyToAesKey(pickleKey);
+    const decryptedToken = await decryptAES(token, encrKey, tokenName);
+    encrKey.fill(0);
+    return decryptedToken;
 }
 
 /**

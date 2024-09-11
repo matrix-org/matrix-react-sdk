@@ -145,7 +145,12 @@ describe("Lifecycle", () => {
                     mockStore[tableKey] = table;
                 },
             );
-        jest.spyOn(StorageAccess, "idbDelete").mockClear().mockResolvedValue(undefined);
+        jest.spyOn(StorageAccess, "idbDelete")
+            .mockClear()
+            .mockImplementation(async (tableKey: string, key: string | string[]) => {
+                const table = mockStore[tableKey];
+                delete table?.[key as string];
+            });
     };
 
     const homeserverUrl = "https://server.org";
@@ -519,6 +524,22 @@ describe("Lifecycle", () => {
                 initIdbMock(idbStorageSession);
                 mockClient.isVersionSupported.mockRejectedValue(new Error("Oh, noes, the server is down!"));
 
+                expect(await restoreSessionFromStorage()).toEqual(true);
+            });
+
+            it("should throw if the token was persisted with a pickle key but there is no pickle key available now", async () => {
+                initLocalStorageMock(localStorageSession);
+                initIdbMock({});
+
+                // Create a pickle key, and store it, encrypted, in IDB.
+                const pickleKey = (await PlatformPeg.get()!.createPickleKey(credentials.userId, credentials.deviceId))!;
+                localStorage.setItem("mx_has_pickle_key", "true");
+                await persistAccessTokenInStorage(credentials.accessToken, pickleKey);
+
+                // Now destroy the pickle key
+                await PlatformPeg.get()!.destroyPickleKey(credentials.userId, credentials.deviceId);
+
+                console.log("10");
                 expect(await restoreSessionFromStorage()).toEqual(true);
             });
         });
