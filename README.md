@@ -11,6 +11,7 @@
 # matrix-react-sdk
 
 ## matrix-react-sdk is now actively maintained at [element-hq/matrix-react-sdk](https://github.com/element-hq/matrix-react-sdk)
+
 This is a react-based SDK for inserting a Matrix chat/voip client into a web page developed from 2015 through 2024 as part of the Matrix.org Foundation.
 
 This package provides the React components needed to build a Matrix web client using React. It is not usable in isolation, and instead must be used from a 'skin'.
@@ -18,8 +19,9 @@ This package provides the React components needed to build a Matrix web client u
 The only skin that existed during its development was [ vector-im/element-web](https://github.com/element-hq/element-web); it and `matrix-org/matrix-react-sdk` have effectively been considered as a single project (for instance, matrix-react-sdk bugs have been filed against vector-im/element-web rather than this project). For this reason it is now maintained at [element-hq/matrix-react-sdk](https://github.com/element-hq/matrix-react-sdk).
 
 See the following blog posts for more information:
-- https://matrix.org/blog/2024/08/heart-of-matrix/
-- https://element.io/blog/sustainable-licensing-at-element-with-agpl/ 
+
+-   https://matrix.org/blog/2024/08/heart-of-matrix/
+-   https://element.io/blog/sustainable-licensing-at-element-with-agpl/
 
 ## Developer Guide
 
