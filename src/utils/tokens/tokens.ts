@@ -30,7 +30,7 @@ export const ACCESS_TOKEN_STORAGE_KEY = "mx_access_token";
 export const REFRESH_TOKEN_STORAGE_KEY = "mx_refresh_token";
 /*
  * Names of the tokens. Used as part of the calculation to derive AES keys during encryption in persistTokenInStorage,
- * and decryption in restoreFromLocalStorage.
+ * and decryption in restoreSessionFromStorage.
  */
 export const ACCESS_TOKEN_IV = "access_token";
 export const REFRESH_TOKEN_IV = "refresh_token";
