@@ -430,33 +430,28 @@ export class StopGapWidgetDriver extends WidgetDriver {
         const client = MatrixClientPeg.safeGet();
 
         if (encrypted) {
-            const deviceInfoMap = await client.crypto!.deviceList.downloadKeys(Object.keys(contentMap), false);
+            const crypto = client.getCrypto();
+            if (!crypto) throw new Error("E2EE not enabled");
 
-            await Promise.all(
-                Object.entries(contentMap).flatMap(([userId, userContentMap]) =>
-                    Object.entries(userContentMap).map(async ([deviceId, content]): Promise<void> => {
-                        const devices = deviceInfoMap.get(userId);
-                        if (!devices) return;
+            // attempt to re-batch these up into a single request
+            const invertedContentMap: { [content: string]: { userId: string; deviceId: string }[] } = {};
 
-                        if (deviceId === "*") {
-                            // Send the message to all devices we have keys for
-                            await client.encryptAndSendToDevices(
-                                Array.from(devices.values()).map((deviceInfo) => ({
-                                    userId,
-                                    deviceInfo,
-                                })),
-                                content,
-                            );
-                        } else if (devices.has(deviceId)) {
-                            // Send the message to a specific device
-                            await client.encryptAndSendToDevices(
-                                [{ userId, deviceInfo: devices.get(deviceId)! }],
-                                content,
-                            );
-                        }
-                    }),
-                ),
-            );
+            Object.entries(contentMap).forEach(([userId, userContentMap]) =>
+                Object.entries(userContentMap).forEach(([deviceId, content]) => {
+                    const stringifiedContent = JSON.stringify(content);
+                    invertedContentMap[stringifiedContent] = invertedContentMap[stringifiedContent] || [];
+
+                    invertedContentMap[stringifiedContent].push({ userId, deviceId });
+                }),
+            ),
+
+            await Promise.all(Object.entries(invertedContentMap).map(
+                async ([stringifiedContent, recipients]) => {
+                    const batch = await crypto.encryptToDeviceMessages(eventType, recipients, JSON.parse(stringifiedContent));
+
+                    await client.queueToDevice(batch);
+                },
+            ));
         } else {
             await client.queueToDevice({
                 eventType,
